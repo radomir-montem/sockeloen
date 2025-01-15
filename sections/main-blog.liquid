@@ -26,13 +26,13 @@
         {% endif %}
       </h2>
     {% endif %}
-    <h1 class="title--primary h1 uppercase">
+    <h2 class="title--primary h1 uppercase">
       {% if blog.title != blank %}
         {{ blog.title | escape }}
       {% else %}
         {{ page.title | escape }}
       {% endif %}
-    </h1>
+    </h2>
     {% if blog.metafields.custom.description or page.metafields.custom.description %}
       <div class="rte">
         {% if blog.metafields.custom.description %}
