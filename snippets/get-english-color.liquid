@@ -1,0 +1,13 @@
+{%- assign textarea = settings.product_colors | strip | newline_to_br | split: '<br />' -%}
+{%- for text_row in textarea -%}
+  {%- assign text_row_array = text_row | split: '|' -%}
+  {%- assign color_dutch = text_row_array[0] | strip | downcase -%}
+  {%- assign color_english = text_row_array[1] | strip | downcase -%}
+  {%- if color == color_dutch -%}
+    {{- color_english -}}
+    {% break %}
+  {%- endif -%}
+  {% if forloop.last and color != color_dutch %}
+    {{- color -}}
+  {% endif %}
+{%- endfor -%}

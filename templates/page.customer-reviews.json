@@ -1,0 +1,78 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "f9ef2236-98b7-4704-828d-7f5cb4b11aa2": {
+      "type": "image-banner",
+      "blocks": {
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Customer reviews",
+            "heading_size": "h0"
+          }
+        },
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-1": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "",
+            "text_style": "body"
+          }
+        },
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-2": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-0",
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-1",
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-2"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/about-sockeloen.png",
+        "image_mobile": "shopify:\/\/shop_images\/about-sockeloen.png",
+        "image_overlay_opacity": 0,
+        "adapt_height_first_image": true,
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "custom_liquid_7zrRcM": {
+      "type": "custom-liquid",
+      "settings": {
+        "heading": "",
+        "heading_size": 16,
+        "custom_liquid": "<script src=\"https:\/\/widget.reviews.io\/polaris\/build.js\"><\/script>\n<div id=\"ReviewsWidget\"><\/div>\n<script>\nnew ReviewsWidget('#ReviewsWidget', {\n\/\/Your REVIEWS.io Store ID and widget type:\nstore: 'sockeloen-nl',\nwidget: 'polaris',\n\n\/\/Content settings (store_review,product_review,third_party_review,questions). Choose what to display in this widget:\noptions: {\n    types: 'store_review',\n    lang: 'en',\n    \/\/Possible layout options: bordered, large and reverse.\n    layout: '',\n    \/\/How many reviews & questions to show per page?\n    per_page: 15,\n    store_review:{\n      hide_if_no_results: false,\n    },\n    third_party_review:{\n      hide_if_no_results: false,\n    },\n    product_review: {\n      sku: \"{{ product.variants | map: 'sku' | join: ';' }};{{ product.variants | map: 'id' | join: ';' }}\",\n      enable_rich_snippets: true,\n\n      \/* Your custom Structured Data *\/\n      structured_data: {\n\n        category: {{ product.type | json }},\n        {% capture gtin_length %}{{ product.variants.first.barcode | size }}{% endcapture %}\n\n\n        {% if gtin_length == \"14\" %}\n           gtin14:\"{{product.variants.first.barcode}}\",\n        {% elsif gtin_length == \"13\" %}\n           gtin13:\"{{product.variants.first.barcode}}\",\n        {% elsif gtin_length == \"12\" %}\n           gtin12:\"{{product.variants.first.barcode}}\",\n        {% endif %}\n\n        url: \"{{ shop.url }}{{ product.url }}\",\n\n        {%- if product.featured_image -%}\n          image: \"https:{{ product.featured_image | product_img_url: 'grande' }}\",\n        {%- endif -%}\n\n        {% if variant.image %}\n          {% assign variant_image_size = variant.image.width | append: 'x' %}\n          image: \"http:{{ variant.image.src | img_url: variant_image_size }}\",\n        {% endif %}\n\n        description: \"{{ product.description | strip_html | strip_newlines | escape }}\",\n        {% assign ruk_current_variant = product.selected_or_first_available_variant %}\n        {% assign ruk_variant_count = product.variants | size %}\n        {% assign ruk_count = 0 %}\n\n        {% if product.variants %}\n          {% assign ruk_count = ruk_count | plus: 1 %}\n\n          offers: [{\n              type: \"Offer\",\n              priceCurrency: \"{{ cart.currency.iso_code }}\",\n              price: \"{{ ruk_current_variant.price | money_without_currency }}\",\n              itemCondition: \"http:\/\/schema.org\/NewCondition\",\n              availability: \"http:\/\/schema.org\/{% if product.available %}InStock{% else %}OutOfStock{% endif %}\",\n              url: \"{{ shop.url }}{{ ruk_current_variant.url }}\",\n\n              {% if ruk_current_variant.image %}\n                  {% assign variant_image_size = ruk_current_variant.image.width | append: 'x' %}\n                  image: \"https:{{ ruk_current_variant.image.src | img_url: variant_image_size }}\",\n              {% else %}\n                  image: \"https:{{ product.featured_image.src | img_url: 'grande' }}\",\n              {% endif %}\n\n              {% if ruk_current_variant.title != 'Default Title' %}\n                  name: \"{{ product.title | strip_html | escape }} - {{ fa_current_variant.title | escape }}\",\n              {% else %}\n                  name: \"{{ product.title | strip_html | escape }}\",\n              {% endif %}\n\n              {% if ruk_current_variant.barcode.size == 12 %}\n                  gtin12: \"{{ ruk_current_variant.barcode }}\",\n              {% endif %}\n\n              {% if ruk_current_variant.barcode.size == 13 %}\n                  gtin13: \"{{ ruk_current_variant.barcode }}\",\n              {% endif %}\n\n              {% if ruk_current_variant.barcode.size == 14 %}\n                  gtin14: \"{{ ruk_current_variant.barcode }}\",\n              {% endif %}\n\n              {% if ruk_current_variant.sku != blank %}\n                  sku: \"{{ ruk_current_variant.sku }}\",\n              {% else %}\n                  sku: \"{{ ruk_current_variant.id }}\",\n              {% endif %}\n\n              {% if product.description != blank %}\n                  description: \"{{ product.description | strip_html | escape | strip_newlines }}\",\n              {% endif %}\n\n              priceValidUntil: \"{{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' | replace:' ','%20' }}\"\n          }],\n        {% endif %}\n\n        brand: {\n          type: 'Brand',\n          name: '{{ product.vendor | escape }}',\n        },\n      },\n    },\n\n    \/* Toggle Options *\/\n    questions:{\n          hide_if_no_results:false,\n          enable_ask_question:true,\n          show_dates:true,\n          grouping:\"{{ product.variants | map: 'sku' | join: ';' }};{{ product.variants | map: 'id' | join: ';' }}\"\n    },\n\n    \/\/Header settings:\n    header:{\n        enable_summary: true, \/\/Show overall rating & review count\n        enable_ratings: true,\n        enable_attributes: true,\n        enable_image_gallery: true, \/\/Show photo & video gallery\n        enable_percent_recommended: false, \/\/Show what percentage of reviewers recommend it\n        enable_write_review: true, \/\/Show \"Write Review\" button\n        enable_ask_question: true, \/\/Show \"Ask Question\" button\n        enable_sub_header: true, \/\/Show subheader\n        rating_decimal_places: 2,\n        use_write_review_button:  false, \/\/Show \"be the first to leave a review\" text as a button\n    },\n\n    \/\/Filtering settings:\n    filtering:{\n        enable: true, \/\/Show filtering options\n        enable_text_search: true, \/\/Show search field\n        enable_sorting: true, \/\/Show sorting options (most recent, most popular)\n        enable_product_filter: false, \/\/Show product options filter\n        enable_media_filter: true, \/\/Show reviews with images\/video\/media options\n        enable_overall_rating_filter: true, \/\/Show overall rating breakdown filter\n        enable_language_filter: false, \/\/ Filter by review language\n        enable_language_filter_language_change: false, \/\/ Update widget language based on language selected\n        enable_ratings_filters: true, \/\/Show product attributes filter\n        enable_attributes_filters: true, \/\/Show author attributes filter\n        enable_expanded_filters: false, \/\/Show filters as a section instead of dropdown\n    },\n\n    \/\/Review settings:\n    reviews:{\n        enable_avatar: true, \/\/Show author avatar\n        enable_reviewer_name:  true, \/\/Show author name\n        enable_reviewer_address:  true, \/\/Show author location\n        reviewer_address_format: 'city, country', \/\/Author location display format\n        enable_verified_badge: true, \/\/Show \"Verified Customer\" badge\n        enable_subscriber_badge: true, \/\/Show \"Verified Subscriber\" badge\n        review_content_filter: 'undefined', \/\/Filter content\n        enable_reviewer_recommends: true, \/\/Show \"I recommend it\" badge\n        enable_attributes: true, \/\/Show author attributes\n        enable_product_name: true, \/\/Show display product name\n        enable_review_title: undefined, \/\/Show review title\n        enable_replies: true, \/\/Show review replies\n        enable_images: true, \/\/Show display review photos\n        enable_ratings: true, \/\/Show product attributes (additional ratings)\n        enable_share: true, \/\/Show share buttons\n        enable_helpful_vote: true, \/\/Show \"was this helpful?\" section\n        enable_helpful_display: true, \/\/Show how many times times review upvoted\n        enable_report: true, \/\/Show report button\n        enable_date: true, \/\/Show when review was published\n        enable_third_party_source: true, \/\/Show third party source\n        enable_duplicate_reviews: undefined, \/\/Show multiple reviews from the same user\n\n    },\n},\n\/\/Translation settings\ntranslations: {\n    'Verified Customer': 'Verified Customer'\n},\n\/\/Style settings:\nstyles: {\n    \/\/Base font size is a reference size for all text elements. When base value gets changed, all TextHeading and TexBody elements get proportionally adjusted.\n    '--base-font-size': '16px',\n\n    \/\/Button styles (shared between buttons):\n    '--common-button-font-family': 'inherit',\n    '--common-button-font-size':'16px',\n    '--common-button-font-weight':'500',\n    '--common-button-letter-spacing':'0',\n    '--common-button-text-transform':'none',\n    '--common-button-vertical-padding':'10px',\n    '--common-button-horizontal-padding':'20px',\n    '--common-button-border-width':'2px',\n    '--common-button-border-radius':'0px',\n\n    \/\/Primary button styles:\n    '--primary-button-bg-color': '#0E1311',\n    '--primary-button-border-color': '#0E1311',\n    '--primary-button-text-color': '#ffffff',\n\n    \/\/Secondary button styles:\n    '--secondary-button-bg-color': 'transparent',\n    '--secondary-button-border-color': '#0E1311',\n    '--secondary-button-text-color': '#0E1311',\n\n    \/\/Star styles:\n    '--common-star-color': '#0E1311',\n    '--common-star-disabled-color': 'rgba(0,0,0,0.25)',\n    '--medium-star-size': '22px',\n    '--small-star-size': '19px',\n\n    \/\/Heading styles:\n    '--heading-text-color': '#0E1311',\n    '--heading-text-font-weight': '600',\n    '--heading-text-font-family': 'inherit',\n    '--heading-text-line-height': '1.4',\n    '--heading-text-letter-spacing': '0',\n    '--heading-text-transform': 'none',\n\n    \/\/Body text styles:\n    '--body-text-color': '#0E1311',\n    '--body-text-font-weight': '400',\n    '--body-text-font-family': 'inherit',\n    '--body-text-line-height': '1.4',\n    '--body-text-letter-spacing': '0',\n    '--body-text-transform': 'none',\n\n    \/\/Input field styles:\n    '--inputfield-text-font-family': 'inherit',\n    '--input-text-font-size': '14px',\n    '--inputfield-text-font-weight': '400',\n    '--inputfield-text-color': '#0E1311',\n    '--inputfield-border-color': 'rgba(0,0,0,0.2)',\n    '--inputfield-background-color': 'transparent',\n    '--inputfield-border-width': '1px',\n    '--inputfield-border-radius': '0px',\n\n    '--common-border-color': 'rgba(0,0,0,0.15)',\n    '--common-border-width': '1px',\n    '--common-sidebar-width': '190px',\n\n    \/\/Filters panel styles:\n    '--filters-panel-bg-color': 'transparent',\n    '--filters-panel-font-size': '16px',\n    '--filters-panel-text-color': '16px',\n    '--filters-panel-horizontal-padding': '0',\n    '--filters-panel-vertical-padding': '0',\n\n    \/\/Slider indicator (for attributes) styles:\n    '--slider-indicator-bg-color': 'rgba(0,0,0,0.1)',\n    '--slider-indicator-button-color': '#0E1311',\n    '--slider-indicator-width': '190px',\n\n    \/\/Badge styles:\n    '--badge-icon-color': '#0E1311',\n    '--badge-icon-font-size': 'inherit',\n    '--badge-text-color': '#0E1311',\n    '--badge-text-font-size': 'inherit',\n    '--badge-text-letter-spacing': 'inherit',\n    '--badge-text-transform': 'inherit',\n\n    \/\/Author styles:\n    '--author-font-size': 'inherit',\n    '--author-text-transform': 'none',\n\n    \/\/Author avatar styles:\n    '--avatar-thumbnail-size': '60px',\n    '--avatar-thumbnail-border-radius': '100px',\n    '--avatar-thumbnail-text-color': '#0E1311',\n    '--avatar-thumbnail-bg-color': 'rgba(0,0,0,0.1)',\n\n    \/\/Product photo or review photo styles:\n    '--photo-video-thumbnail-size': '80px',\n    '--photo-video-thumbnail-border-radius': '0px',\n\n    \/\/Media (photo & video) slider styles:\n    '--mediaslider-scroll-button-icon-color': '#0E1311',\n    '--mediaslider-scroll-button-bg-color': 'rgba(255, 255, 255, 0.85)',\n    '--mediaslider-overlay-text-color': '#ffffff',\n    '--mediaslider-overlay-bg-color': 'rgba(0, 0, 0, 0.8))',\n    '--mediaslider-item-size': '110px',\n\n    \/\/Pagination & tabs styles (normal):\n    '--pagination-tab-text-color': '#0E1311',\n    '--pagination-tab-text-transform': 'none',\n    '--pagination-tab-text-letter-spacing': '0',\n    '--pagination-tab-text-font-size': '16px',\n    '--pagination-tab-text-font-weight': '600',\n\n    \/\/Pagination & tabs styles (active):\n    '--pagination-tab-active-text-color': '#0E1311',\n    '--pagination-tab-active-text-font-weight': '600',\n    '--pagination-tab-active-border-color': '#0E1311',\n    '--pagination-tab-border-width': '3px',\n},\n});\n<\/script>",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "main",
+    "f9ef2236-98b7-4704-828d-7f5cb4b11aa2",
+    "custom_liquid_7zrRcM"
+  ]
+}

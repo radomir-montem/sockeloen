@@ -1,0 +1,195 @@
+<div class="sales-{{section.id}} grid md:grid-cols-2 lg:grid-cols-4 flex-wrap color-background-1">
+    {% for block in section.blocks %}
+      {% if block.type == "image" %}
+        <div class="relative flex items-center justify-center w-full">
+            {% if block.settings.image != blank %}
+              {% render 'image-element', image: block.settings.image, class: 'w-full' %}
+              <div class="w-full absolute h-full bg-black top-0 !block" style="opacity: {{ block.settings.opacity | divided_by: 100.0 }}"></div>
+            {% endif %}
+            <div class="text-container absolute">
+              {% if block.settings.title != blank %}
+                  <h4 
+                    class="column-heading text-center uppercase text-white font-black tracking-[0.04em] mb-[10px]"
+                    style="font-size: {{ section.settings.font_size }}px;"
+                  >{{block.settings.title}} {{block.order}}</h4>
+              {% endif %}
+              {% if block.settings.button_label != blank %}
+                  <a href="{{block.settings.button_url}}" class="inline-flex py-5 px-12 border-none uppercase font-medium !shadow-none bg-white text-black border-white">{{block.settings.button_label}}</a>
+              {% endif %}
+            </div>
+        </div>
+      {% else  %}
+        {% style %}
+          @media (min-width: 1024px){
+            .sales-{{section.id}} .text-alignment{text-align: {{block.settings.text_align}};}
+          }
+        {% endstyle %}
+      
+        {% assign handle = block.settings.text_align %}
+        {% case handle %}
+          {% when 'center' %}
+            {% style %}
+              @media (min-width: 1024px){
+                .sales-{{section.id}} .button_alignment{
+                  left: 50%;
+                  transform: translateX(-50%);
+                }
+              }
+            {% endstyle %}
+          {% when 'left' %}
+            {% style %}
+              @media (min-width: 1024px){
+                .sales-{{section.id}} .button_alignment{left: 4rem;}
+                .sales-{{section.id}} .flex_justify{justify-content: flex-start;}
+              }
+            {% endstyle %}
+          {% when 'right' %}
+            {% style %}
+              @media (min-width: 1024px){
+                .sales-{{section.id}} .flex_justify{justify-content: flex-end;}
+                .sales-{{section.id}} .button_alignment{right: 4rem;}
+              }
+            {% endstyle %}
+          {% else %}
+            {% style %}
+              @media (min-width: 1024px){
+                .sales-{{section.id}} .button_alignment{
+                  left: 50%;
+                  transform: translateX(-50%);
+                }
+              }
+            {% endstyle %}
+        {% endcase %}
+
+
+        <div class="col-span-full lg:col-span-2 sales-section h-[100vw] md:h-auto bg-sale-red flex items-center p-16 relative text-white justify-center flex_justify w-full">
+          <div class="text-alignment text-center">
+            {% if block.settings.title != blank %}
+              <h2 class="text-white text-8xl font-bold uppercase mb-2.5">{{block.settings.title}}</h2>
+            {% endif %}
+      
+            {% if block.settings.description != blank %} 
+              <div>{{block.settings.description}}</div>
+            {% endif %}
+      
+            {% if block.settings.button_label != blank and block.settings.button_url != blank %}
+              <div class="lg:absolute lg:bottom-16 my-4 lg:my-0 button_alignment">
+                <a href="{{block.settings.button_url}}" class="inline-flex py-5 px-12 border-none uppercase font-medium !shadow-none bg-white text-black border-white">{{block.settings.button_label}}</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+</div>
+
+
+{% schema %}
+  {
+    "name": "Image Columns & Section",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "range",
+        "id": "font_size",
+        "label": "Columns header font size",
+        "min": 14,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "default": 26
+      }
+    ],
+    "blocks": [
+      {
+        "type": "richtext",
+        "name": "Sale",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button label"
+          },
+          {
+            "type": "url",
+            "id": "button_url",
+            "label": "Button url"
+          },
+          {
+            "type": "select",
+            "id": "text_align",
+            "options": [
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "center",
+            "label": "Text alignment"
+          }
+        ]
+      },
+      {
+          "type": "image",
+          "name": "Image",
+          "limit": 2,
+          "settings": [
+              {
+                  "type": "image_picker",
+                  "id": "image",
+                  "label": "Image"
+              },
+              {
+                "type": "range",
+                "id": "opacity",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "%",
+                "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
+                "default": 50
+              },
+              {
+                  "type": "text",
+                  "id": "title",
+                  "label": "Heading"
+              },
+              {
+                  "type": "text",
+                  "id": "button_label",
+                  "label": "Button label"
+              },
+              {
+                  "type": "url",
+                  "id": "button_url",
+                  "label": "Button url"
+              }
+          ]
+      }
+    ],
+    "presets": [
+      {
+          "name": "Image Columns & Section"
+      }
+    ]
+  }
+{% endschema %}

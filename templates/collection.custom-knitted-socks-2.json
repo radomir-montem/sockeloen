@@ -1,0 +1,102 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "custom_css": [],
+      "settings": {
+        "products_per_page": 8,
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 8
+      }
+    },
+    "d3a39493-e2de-483c-aa4e-d6d706833e4b": {
+      "type": "usp-blackbg",
+      "blocks": {
+        "67037a2e-8c03-4373-8f05-f3f12f552a27": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+          }
+        },
+        "8f91ef24-ec60-4164-b4e5-1c520f80b648": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+          }
+        },
+        "138a255c-13dd-4310-b431-af41eda11de0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+          }
+        },
+        "442a2231-b866-48c4-8fbd-30063b8c7598": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+          }
+        }
+      },
+      "block_order": [
+        "67037a2e-8c03-4373-8f05-f3f12f552a27",
+        "8f91ef24-ec60-4164-b4e5-1c520f80b648",
+        "138a255c-13dd-4310-b431-af41eda11de0",
+        "442a2231-b866-48c4-8fbd-30063b8c7598"
+      ],
+      "settings": {}
+    },
+    "d37a2506-ed61-40de-8072-52e5bffc33fa": {
+      "type": "rich-text",
+      "blocks": {
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>CUSTOM KNITTED SOCKS<\/p>",
+            "heading_size": "h2"
+          }
+        },
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Individually crafted with care, our custom knitted socks offer a cozy fit and personalized style. Whether you're lounging at home or on the go, our custom-made socks provide the perfect blend of comfort and individuality.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0",
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1"
+      ],
+      "custom_css": [],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "accent-1",
+        "full_width": true,
+        "padding_top": 24,
+        "padding_bottom": 40
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "d3a39493-e2de-483c-aa4e-d6d706833e4b",
+    "d37a2506-ed61-40de-8072-52e5bffc33fa"
+  ]
+}

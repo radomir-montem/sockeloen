@@ -1,0 +1,112 @@
+{% assign global_products = settings.global_upsells %}
+{% assign collection_products = product.metafields.my_fields.collection_upsell.value %}
+{% assign selected_products = product.metafields.my_fields.product_upsells.value %}
+
+{% assign is_a_pdp = false %}
+
+{% if product.handle != blank %}
+  {% assign is_a_pdp = true %}
+{% endif %}
+
+{% assign available_products = "" %}
+
+{% if is_a_pdp %}
+
+  {% assign product_has_selected_products = false %}
+  {% assign product_has_collection_products = false %}
+
+  
+  {% if selected_products != blank %}
+
+    {% for selected_product in selected_products %}
+
+      {% assign is_a_valid_product = true %}  
+
+      {%- for item in cart.items -%}
+        {%- if item.product.handle == selected_product.handle -%}
+            {% assign is_a_valid_product = false %}
+        {%- endif -%}         
+      {% endfor %}
+
+      {% if is_a_valid_product == true and selected_product.handle != product.handle %}
+        {% assign product_has_selected_products = true %}
+        {% assign available_products = available_products | append: "," | append: selected_product.handle %}
+      {% endif %}
+
+    {% endfor %}  
+
+  {% endif %}
+
+  {% if product_has_selected_products == false %}
+
+    {% for collection_item in collection_products.products %}
+
+      {% assign is_a_valid_product = true %}
+
+      {%- for item in cart.items -%}
+        {%- if item.product.handle == collection_item.handle -%}
+          {% assign is_a_valid_product = false %}
+        {%- endif -%}   
+      {% endfor %}
+
+      {% if is_a_valid_product == true and collection_item.handle != product.handle %}
+        {% assign product_has_collection_products = true %}
+        {% assign available_products = available_products | append: "," | append: collection_item.handle %}
+      {% endif %}
+ 
+    {% endfor %}
+
+  {% endif %}
+
+  {% if product_has_selected_products == false and product_has_collection_products == false %}
+    {% for global_product in global_products.products %}
+
+      {% assign is_a_valid_product = true %}
+
+      {%- for item in cart.items -%}
+        {%- if item.product.handle == global_product.handle -%}
+          {% assign is_a_valid_product = false %}
+        {%- endif -%}   
+      {% endfor %}
+
+      {% if is_a_valid_product == true and collection_item.handle != product.handle %}
+        {% assign available_products = available_products | append: "," | append: global_product.handle %}
+      {% endif %}
+
+    {% endfor %}
+  {% endif %}
+
+{% else %}
+  
+  {% for global_product in global_products.products %}
+
+    {% assign is_a_valid_product = true %}
+
+    {%- for item in cart.items -%}      
+      {%- if item.product.handle != global_product.handle -%}
+        {% assign is_a_valid_product = false %}
+      {%- endif -%}   
+    {% endfor %}
+
+    {% if is_a_valid_product == true and collection_item.handle != product.handle %}
+      {% assign available_products = available_products | append: "," | append: global_product.handle %}
+    {% endif %}
+
+  {% endfor %}
+
+{% endif %}
+
+{% assign product_handles = available_products | split: "," %}
+
+<ul class="upsell_list flex flex-col gap-5" x-data>
+  {%- for product_handle in product_handles limit: 2 -%}    
+    {% if product_handle != blank %}
+      {% assign productUpsell = all_products[product_handle] %}
+      {% if productUpsell.available %}
+        <li id="{{ productUpsell.selected_or_first_available_variant.id }}" x-data="{ show: true }" x-show="show">
+          {% render 'upsell-product', product_ref: productUpsell %}
+        </li>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+</ul>

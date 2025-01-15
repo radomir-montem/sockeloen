@@ -1,0 +1,332 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign banner_image = article.metafields.custom.banner_image
+  assign banner_image_mobile = article.metafields.custom.banner_image | default: banner_image
+%}
+{% if banner_image != blank %}
+{%- style -%}
+  {%- if section.settings.adapt_height_first_image and banner_image != blank -%}
+    @media screen and (max-width: 749px) {
+      #Banner-{{ section.id }}::before,
+      #Banner-{{ section.id }} .banner__media::before,
+      #Banner-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
+        padding-bottom: {{ 1 | divided_by: banner_image.aspect_ratio | times: 100 }}%;
+        content: '';
+        display: block;
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      #Banner-{{ section.id }}::before,
+      #Banner-{{ section.id }} .banner__media::before {
+        padding-bottom: {{ 1 | divided_by: banner_image.aspect_ratio | times: 100 }}%;
+        content: '';
+        display: block;
+      }
+    }
+  {%- endif -%}
+
+  {% if section.settings.adapt_height_first_image and banner_image_mobile != blank %}
+    @media screen and (max-width: 749px) {
+      #Banner-{{ section.id }}:not(.banner--mobile-bottom),
+      #Banner-{{ section.id }}.banner--mobile-bottom .banner__media {
+        aspect-ratio: {{ banner_image_mobile.aspect_ratio }};
+      }
+    }
+  {% endif %}
+
+  {% unless section.settings.adapt_height_first_image and banner_image == blank %}
+    @media screen and (max-width: 749px) {
+      #Banner-{{ section.id }} {
+        min-height: {{ section.settings.image_height_mobile }}px;
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      #Banner-{{ section.id }} {
+        min-height: {{ section.settings.banner_image_height }}px;
+      }
+    }
+  {% endunless %}
+{%- endstyle -%}
+
+{%- style -%}
+  #Banner-{{ section.id }}::after {
+    opacity: {{ banner_image_overlay_opacity | divided_by: 100.0 }};
+  }
+{%- endstyle -%}
+
+<div id="Banner-{{ section.id }}" class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} {% if section.settings.stack_images_on_mobile and banner_image != blank and banner_image_2 != blank %} banner--stacked{% endif %}{% if section.settings.adapt_height_first_image and banner_image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}">
+  {%- if banner_image != blank and banner_image == blank -%}
+    <div class="banner__media media{% if banner_image == blank %} placeholder{% endif %}">
+      {%-liquid
+        assign image_height = banner_image.width | divided_by: banner_image.aspect_ratio
+        assign sizes = "100vw"
+      -%}
+      {{ banner_image | image_url: width: 1500 | image_tag:
+        loading: 'lazy',
+        width: banner_image.width,
+        height: image_height,
+        class: "",
+        sizes: sizes,
+        widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+        alt: banner_image.alt | escape
+      }}
+    </div>
+  {%- elsif banner_image != blank and banner_image != blank -%}
+  <div class="banner__media hidden md:!block media{% if banner_image == blank %} placeholder{% endif %}">
+    {%-liquid
+      assign image_height = banner_image.width | divided_by: banner_image.aspect_ratio
+        assign sizes = "100vw"
+    -%}
+    {{ banner_image | image_url: width: 1500 | image_tag:
+      loading: 'lazy',
+      width: banner_image.width,
+      height: image_height,
+      class: "",
+      sizes: sizes,
+      widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+      alt: banner_image.alt | escape
+    }}
+  </div>
+  <div class="banner__media media md:hidden">
+    {% render 'image-element', image: banner_image_mobile, class: 'w-full' %}
+  </div>
+  {%- endif -%}
+  {% if article.metafields.custom.banner_heading != blank or article.metafields.custom.banner_description %}
+    <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width">
+      <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient center">
+        {% if article.metafields.custom.banner_heading != blank %}
+            <h2 class="banner__heading h2">
+                <span>{{ article.metafields.custom.banner_heading | escape }}</span>
+            </h2>
+        {% endif %}
+        {% if article.metafields.custom.banner_description != blank %}
+        <div class="banner__text max-w-[438px] body mx-auto">
+            {{ article.metafields.custom.banner_description | metafield_tag }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<div class="collection-tags">
+  <div class="page-width">
+    {% if collection.all_tags.size > 0 %}
+      <div class="tags-swiper overflow-hidden relative">
+        <div class="swiper-wrapper">
+          {% for tag in collection.all_tags %}
+            {% if tag contains 'filter' %}
+              <div class="swiper-slide whitespace-nowrap">
+                {% if current_tags contains tag %}
+                  <button class="tag-button bg-black text-white uppercase">
+                    {{ tag | link_to_remove_tag: tag | remove: 'filter ' }}
+                  </button>
+                {% else %}
+                  <button class="tag-button bg-white text-black uppercase">
+                    {{ tag | link_to_add_tag: tag | remove: 'filter ' }}
+                  </button>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="tags-swiper-next !items-start">
+          {% render 'icon-arrow-right' %}
+        </div>
+        <div class="tags-swiper-prev !items-start">
+          {% render 'icon-arraw-left' %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Article banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "banner_image_height",
+      "default": 550,
+      "min": 50,
+      "max": 1000,
+      "step": 50,
+      "label": "t:sections.image-banner.settings.image_height.label"
+    },
+    {
+      "type": "range",
+      "id": "image_height_mobile",
+      "default": 450,
+      "min": 50,
+      "max": 750,
+      "step": 50,
+      "label": "Banner height for mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "adapt_height_first_image",
+      "default": false,
+      "label": "t:sections.image-banner.settings.adapt_height_first_image.label",
+      "info": "t:sections.image-banner.settings.adapt_height_first_image.info"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__1.label"
+        },
+        {
+          "value": "top-center",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__2.label"
+        },
+        {
+          "value": "top-right",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__3.label"
+        },
+        {
+          "value": "middle-left",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__4.label"
+        },
+        {
+          "value": "middle-center",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__5.label"
+        },
+        {
+          "value": "middle-right",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__6.label"
+        },
+        {
+          "value": "bottom-left",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__7.label"
+        },
+        {
+          "value": "bottom-center",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__8.label"
+        },
+        {
+          "value": "bottom-right",
+          "label": "t:sections.image-banner.settings.desktop_content_position.options__9.label"
+        }
+      ],
+      "default": "middle-center",
+      "label": "t:sections.image-banner.settings.desktop_content_position.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_box",
+      "default": true,
+      "label": "t:sections.image-banner.settings.show_text_box.label"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.image-banner.settings.desktop_content_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.image-banner.settings.desktop_content_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.image-banner.settings.desktop_content_alignment.options__3.label"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.image-banner.settings.desktop_content_alignment.label"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label",
+      "info": "t:sections.image-banner.settings.color_scheme.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.image-banner.settings.header.content"
+    },
+    {
+      "type": "select",
+      "id": "mobile_content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.image-banner.settings.mobile_content_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.image-banner.settings.mobile_content_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.image-banner.settings.mobile_content_alignment.options__3.label"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.image-banner.settings.mobile_content_alignment.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "stack_images_on_mobile",
+      "default": false,
+      "label": "t:sections.image-banner.settings.stack_images_on_mobile.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_below",
+      "default": false,
+      "label": "t:sections.image-banner.settings.show_text_below.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Article banner"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,43 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "faq_yB34G8": {
+      "type": "faq",
+      "blocks": {
+        "heading_YAcniH": {
+          "type": "heading",
+          "settings": {
+            "heading": "test question"
+          }
+        },
+        "faq_dqUF6f": {
+          "type": "faq",
+          "settings": {
+            "question": "how to run ads",
+            "answer": "<p>blblablablablabal abla <\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_YAcniH",
+        "faq_dqUF6f"
+      ],
+      "settings": {
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "padding_top_mob": 50,
+        "padding_bottom_mob": 50
+      }
+    }
+  },
+  "order": [
+    "main",
+    "faq_yB34G8"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "parent": "article.json",
+  "context": {
+    "market": "north-america"
+  },
+  "sections": {
+    "featured_blog_NLUKAQ": {
+      "disabled": false,
+      "settings": {},
+      "blocks": {}
+    }
+  }
+}

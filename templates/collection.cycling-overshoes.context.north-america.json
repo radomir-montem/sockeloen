@@ -1,0 +1,18 @@
+{
+  "parent": "collection.cycling-overshoes.json",
+  "context": {
+    "market": "north-america"
+  },
+  "sections": {
+    "d37a2506-ed61-40de-8072-52e5bffc33fa": {
+      "settings": {},
+      "blocks": {
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
+          "settings": {
+            "text": "<p>Introducing our premium collection of professional cycling overshoes – designed to provide unparalleled protection and performance on every ride. Crafted with precision and attention to detail, our waterproof overshoes offer a perfect blend of durability, functionality, and style.<\/p>"
+          }
+        }
+      }
+    }
+  }
+}

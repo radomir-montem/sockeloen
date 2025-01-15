@@ -1,0 +1,7 @@
+{
+  "parent": "page.custom-made-home-page.json",
+  "context": {
+    "market": "eu"
+  },
+  "sections": {}
+}

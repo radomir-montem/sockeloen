@@ -1,0 +1,67 @@
+{% comment %} 
+  Use example:
+    {%- render 'kf-image-element',
+      image: section.settings.image,
+      position: section.settings.image_position,
+      lazy: true,
+      class: "img-class",
+      brightness: section.settings.brightness,
+      opacity: section.settings.opacity
+    -%}
+    max_width, fixed_width, class, brightness and opacity are optional
+{% endcomment %}
+
+{%- assign width = image.width -%}
+{%- if max_width != blank and max_width <= image.width -%}
+  {%- assign width = max_width -%}
+{%- endif -%}
+
+<picture class="{{ pictureClassName }}">
+  {%- if fixed_width == blank -%}
+    {%- if width > 1500 -%}
+      <source srcset="{{ image | image_url: width: 1920 }}" media="(min-width: 1500px)">
+    {%- endif -%}
+
+    {%- if width > 1200 -%}
+      <source srcset="{{ image | image_url: width: 1500 }}" media="(min-width: 1200px)">
+    {%- endif -%}
+
+    {%- if width > 900 -%}
+      <source srcset="{{ image | image_url: width: 1200 }}" media="(min-width: 900px)">
+    {%- endif -%}
+
+    {%- if width > 700 -%}
+      <source srcset="{{ image | image_url: width: 900 }}" media="(min-width: 700px)">
+    {%- endif -%}
+
+    {%- if width > 500 -%}
+      <source srcset="{{ image | image_url: width: 700 }}" media="(min-width: 500px)">
+    {%- endif -%}
+
+    {%- if width > 200 -%}
+      <source srcset="{{ image | image_url: width: 500 }}" media="(min-width: 200px)">
+    {%- endif -%}
+  {%- endif -%}
+
+  <img
+    src="
+      {%- if fixed_width == blank -%}
+        {{- image | image_url: width: 500 -}}
+      {%- else -%}
+        {{- image | image_url: width: fixed_width -}}
+      {%- endif -%}
+    "
+    {%- if lazy != false -%}
+      loading="lazy"
+    {%- endif -%}
+    {%- if image.alt != blank -%}
+      alt="{{ image.alt | escape }}"
+    {%- endif -%}
+    width="{{ image.width }}"
+    height="{{ image.height }}"
+    class="{{ class }}"
+    {%- if brightness != blank or opacity != blank or position != blank -%}
+      style="{% if position != blank %} object-position:{{ position }}; {% endif %} filter: {% if brightness != blank %} brightness(0.{{ brightness }}){% endif %}{% if opacity != blank %} opacity(0.{{ opacity }}) {% endif %}"
+    {%- endif -%}
+  >
+</picture>

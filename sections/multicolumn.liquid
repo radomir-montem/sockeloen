@@ -1,0 +1,51 @@
+<section class="m-[32px] md:my-[64px] bg-[##E2E2E2]">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-y-[32px] gap-x-[20px]">
+    {% for block in section.blocks %}
+      <div class="flex gap-[23px]">
+        <img src="{{ block.settings.column_svg | file_url }}" alt="Column image" class="justify-self-center self-start">
+        <div class="space-y-[16px]">
+          <h3 class="font-roboto text-[18px] font-medium leading-[20px] text-[##121212]">
+            {{ block.settings.heading | upcase }}
+          </h3>
+          <p class="font-roboto font-light leading-[26px] text-[16px]">
+            {{ block.settings.column_content }}
+          </p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Multicolumn",
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "column_svg",
+          "label": "Column svg",
+          "placeholder": "example.svg",
+          "info": "Type the name of the svg and add .svg to the end of it."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Column title",
+          "default": "Column"
+        },
+        {
+          "type": "textarea",
+          "id": "column_content",
+          "label": "Column content",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

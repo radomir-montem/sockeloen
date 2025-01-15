@@ -1,0 +1,131 @@
+<div class="relative" x-data="{
+      activeMenu: 0,
+      childMenu: 0,
+      collectionMenu: 0,
+      get isActive() {
+        return this.activeMenu 
+      },
+      get isChild() {
+        return this.childMenu 
+      },
+      get isCollection() {
+        return this.collectionMenu 
+      },
+      setActive(_sel) {
+        this.activeMenu = _sel == this.activeMenu ? 0 : _sel 
+      },
+      setChild(_sel) {
+        this.childMenu = _sel == this.childMenu ? 0 : _sel 
+      },
+      setCollection(_sel) {
+        this.collectionMenu = _sel == this.collectionMenu ? 0 : _sel 
+      },
+    }" x-transition.scale>
+
+  <div class="mobile-navigation h-full w-full bg-white absolute top-0 z-30 overflow-auto"
+    x-show="(isActive == {{ forloop.index }})"
+    x-transition:enter-end="left-0"
+    x-transition:enter-start="-left-full"
+    x-transition:enter="transition-all ease-out duration-200"
+    x-transition:leave-end="-left-full"
+    x-transition:leave-start="left-0"
+    x-transition:leave="transition-all ease-in duration-200">
+    <div class="mobile-menu__panel px-[32px] py-[64px] flex flex-col">
+      <ul> 
+        {%- for link in menu.links -%}
+          {% assign has_links = false %}
+          {% assign link_url = link.url %}
+          {%- if link.links.size > 0 -%}
+            {% assign has_links = true %}
+            {% assign link_url = '#' %}
+          {%- endif -%}
+          <li class="text-[20px] text-[#111111] mb-[32px]" data-item-title="{{ link.title | escape }}" >
+            <a class="text-[20px] text-[#111111] font-bold uppercase flex items-center justify-between"
+              href="{{ link_url }}"
+              {% if link.title == 'SALE' %}style="color: #ff0000"{% endif %}
+              {% if has_links %} @click="setActive({{forloop.index }})" {% endif %}>
+              {{- link.title -}}
+              {%- if has_links -%}{% render 'icon-arrow-right' %}{%- endif -%}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {%- for link in menu.links -%}
+      {%- if link.links.size > 0 -%}
+        <div class="mobile-navigation w-full bg-white absolute top-0 z-30"
+          style="height: 100vh"
+          x-show="(isActive == {{ forloop.index }})"
+          x-transition:enter-end="left-0"
+          x-transition:enter-start="-left-full"
+          x-transition:enter="transition-all ease-out duration-200"
+          x-transition:leave-end="-left-full"
+          x-transition:leave-start="left-0"
+          x-transition:leave="transition-all ease-in duration-200">
+          <div @click="setActive(0)" class="px-5 py-4 flex flex-row items-center cursor-pointer">
+            <div>
+              {%- render 'icon-arraw-left', class: 'mr-[8px]' -%}
+            </div>
+            <div class="text-[14px] text-[#111111]">Back</div>
+          </div>
+          <ul class="px-[32px] py-[23px]">
+            {% for sub_link in link.links %}
+                {% assign has_childlinks = false %}
+                {% assign sub_link_url = sub_link.url %}
+                {%- if sub_link.links.size > 0 -%}
+                  {% assign has_childlinks = true %}
+                  {% assign sub_link_url = '#' %}
+                {%- endif -%}
+                <li class="mb-[32px]">
+                  <a class="text-[20px] text-[#111111] font-bold uppercase flex items-center justify-between" href="{{ sub_link_url }}"
+                {% if has_childlinks %} @click="setChild({{forloop.index }})" {% endif %}>
+                    {{- sub_link.title -}}
+                {%- if has_childlinks -%}{% render 'icon-arrow-right' %}{%- endif -%}
+                  </a>
+                </li>
+            {% endfor %}
+          </ul>
+          {% for sub_link in link.links %}
+            <div class="mobile-navigation w-full bg-white absolute top-0 z-30"
+              style="height: 100vh"
+              x-show="(isChild == {{ forloop.index }})"
+              x-transition:enter-end="left-0"
+              x-transition:enter-start="-left-full"
+              x-transition:enter="transition-all ease-out duration-200"
+              x-transition:leave-end="-left-full"
+              x-transition:leave-start="left-0"
+              x-transition:leave="transition-all ease-in duration-200">
+              <div @click="setChild(0)" class="px-5 py-4 flex flex-row items-center cursor-pointer">
+                <div>
+                  {%- render 'icon-arraw-left', class: 'mr-[8px]' -%}
+                </div>
+                <div class="text-[14px] text-[#111111]">Back</div>
+              </div>
+              <ul class="px-[32px] py-[23px]">
+                {%- for grandchildlink in sub_link.links -%}
+                  <li class="mb-[32px]">
+                      <a 
+                      href="{{grandchildlink.url}}" class="text-[20px] submenu-img text-[#111111] font-bold uppercase flex items-center justify-start">
+                      {% for block in section.blocks %}
+                        {% assign collection = block.settings.title %}
+                        {% assign collection_translated = block.settings.title_translate %}
+                        {% if grandchildlink.title == collection or grandchildlink.title == collection_translated %}
+                          {%- render 'c-image-element',
+                            image: block.settings.image_item,
+                            lazy: true,
+                            class: "w-[60px] h-[70px] object-contain mr-[16px] bg-[#E2E2E2]"
+                          -%}
+                        {% endif %}
+                      {% endfor %}
+                        <span class="w-[71%]">{{ grandchildlink.title }}</span>
+                      </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>

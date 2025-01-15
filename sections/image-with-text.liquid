@@ -1,0 +1,121 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    flex-direction: {{ section.settings.order_mobile }};
+  }
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      flex-direction: {{ section.settings.order_desktop }};
+      }
+  }
+{% endstyle %}
+
+<div
+  class="xs:px-2 px-4 md:px-8 xl:px-24 mx-auto w-full py-12 flex justify-center"
+  style="background: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px"
+>
+  <div class="flex items-center gap-6 md:gap-32" id="shopify-section-{{ section.id }}">
+    <div class="flex flex-col flex-1 gap-8 items-center justify-center text-center md:items-start md:text-start">
+      <h3 class="text-[32px] font-bold">{{ section.settings.heading }}</h3>
+      <div
+        class="regular-text !font-normal space-y-4"
+      >
+        {{ section.settings.main_text }}
+      </div>
+    </div>
+
+    <div class="flex-1 flex items-center">
+      {%- if section.settings.image != blank -%}
+        {%- render 'c-image-element', image: section.settings.image, lazy: true -%}
+      {% else %}
+        {{ 'collection-1' | placeholder_svg_tag }}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image with text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "order_mobile",
+      "label": "Order for mobile",
+      "options": [
+        {
+          "label": "Image first",
+          "value": "column-reverse"
+        },
+        {
+          "label": "Text first",
+          "value": "column"
+        }
+      ],
+      "default": "column-reverse"
+    },
+    {
+      "type": "select",
+      "id": "order_desktop",
+      "label": "Order for dektop",
+      "options": [
+        {
+          "label": "Text first",
+          "value": "row"
+        },
+        {
+          "label": "Image first",
+          "value": "row-reverse"
+        }
+      ],
+      "default": "row"
+    },
+    {
+      "type": "color",
+      "default": "#E2E2E2",
+      "id": "bg_color",
+      "label": "Background Color"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Header"
+    },
+    {
+      "type": "richtext",
+      "id": "main_text",
+      "label": "Main Text"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with text"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+{
+  "parent": "collection.tdf-sale.json",
+  "context": {
+    "market": "nl"
+  },
+  "sections": {
+    "c1c1952d-9ed0-46d9-84fe-165c1d4f0750": {
+      "settings": {
+        "image": "shopify:\/\/shop_images\/TDF_sale_banner-12.png"
+      },
+      "blocks": {}
+    }
+  }
+}

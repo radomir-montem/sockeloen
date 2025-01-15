@@ -1,0 +1,52 @@
+{% comment %} <custom-quick-add class="custom-quick-add">
+{% liquid
+    assign option1_size = 0
+    assign option2_size = 0
+    for option in card_product.options_with_values
+        if option.name != 'Color' and option.name != 'Kleur' and option.values.size > 1
+            if option1_size == 0
+                assign option1_size = option.values.size
+            else
+                assign option2_size = option.values.size
+            endif
+        endif
+    endfor
+%}
+ {% if option1_size > 1 or option2_size > 1 %}
+    <div class="cqa-size-list">
+        {% for variant in card_product.variants %}
+            {% if card_product.options_by_name.Color == null %}
+                {% assign optionByName = card_product.options_by_name.Kleur %}
+            {% else %}
+                {% assign optionByName = card_product.options_by_name.Color %}
+            {% endif %}
+            {% if color == blank %}
+                {% assign color = optionByName.values[0] | strip %}
+            {% else %}
+                {% assign color = color | strip %}
+            {% endif %}
+            {% if variant.option1 == color or variant.option2 == color or variant.option3 == color or optionByName == blank %}
+                <button class="cqa-add-to-cart cqa-size-item" {% unless variant.available %}disabled{% endunless %} data-id="{{ variant.id }}" data-url="/products/{{ product.handle }}">
+                    {% if optionByName == blank %}
+                        {{ variant.title | replace: '/', ' * ' }}
+                    {% else %}
+                        {{ variant.title | replace: color, '' | replace: '/', '' |  strip }}
+                    {% endif %}
+                </button>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% else %}
+    {% assign first_variant = card_product.selected_or_first_available_variant %}
+    {% if card_variant != blank %}
+        {% assign first_variant = card_variant %}
+    {% endif %}
+    <button class="cqa-add-to-cart" {% unless first_variant.available %}disabled{% endunless %} data-id="{{ first_variant.id }}">
+        {% if first_variant.available %}
+            {{ 'products.product.add_to_cart' | t }}
+        {% else %}
+            {{ 'products.product.sold_out' | t }}
+        {% endif %}
+    </button>
+ {% endif %}
+</custom-quick-add> {% endcomment %}

@@ -1,0 +1,161 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "image_banner_Jn7RTW": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_KJBt3q": {
+          "type": "heading",
+          "settings": {
+            "heading": "WHATSAPP COMUNITY",
+            "heading_size": "h2"
+          }
+        },
+        "buttons_9m3n8t": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_KJBt3q",
+        "buttons_9m3n8t"
+      ],
+      "settings": {
+        "image_overlay_opacity": 0,
+        "adapt_height_first_image": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "fe42fd9b-9eb1-4f3c-993c-d85dd59d1118": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_RXQjVz": {
+          "type": "heading",
+          "settings": {
+            "heading": "<h6>Welcome to the Sockeloen Whatsapp page. We splitted into 3 groups. Click below to join 1 of the groups.<\/h6>",
+            "heading_size": "h2"
+          }
+        },
+        "button_y7jnGc": {
+          "type": "button",
+          "settings": {
+            "button_label": "Sockeloen Community - Chat Group",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        },
+        "button_UGFLiP": {
+          "type": "button",
+          "settings": {
+            "button_label": "OOOW - Announcement Group",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "#Glazenbolcup - Poll Group",
+            "button_link_2": "https:\/\/chat.whatsapp.com\/D5jNlBiGGSS2DqO9e4kNcK",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_RXQjVz",
+        "button_y7jnGc",
+        "button_UGFLiP"
+      ],
+      "custom_css": [],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-2",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "b0029d14-ee69-4389-80ec-b267786613f1": {
+      "type": "image-with-text",
+      "settings": {
+        "order_mobile": "column-reverse",
+        "order_desktop": "row-reverse",
+        "bg_color": "#ffffff",
+        "image": "shopify:\/\/shop_images\/GLAZENBOL_FREE_SOCKS.png",
+        "heading": "GLAZENBOLCUP",
+        "main_text": "<p>Win free cycling socks if you predict the winner of the next race via the in chat Poll.<br\/><br\/><strong>-<\/strong> Everybody can join this group.<br\/><strong>-<\/strong> No chat.<br\/><strong>-<\/strong> Poll is shared 2hrs before the race starts.<br\/>- We predict 2-4 times a month<a href=\"https:\/\/chat.whatsapp.com\/D5jNlBiGGSS2DqO9e4kNcK\" target=\"_blank\" title=\"Join GLAZENBOLCUP here\"><br\/><\/a><\/p>",
+        "padding_top": 32,
+        "padding_bottom": 0
+      }
+    },
+    "33e98e73-6cfc-439d-a0ed-b31c7ae9ce0e": {
+      "type": "image-with-text",
+      "settings": {
+        "order_mobile": "column-reverse",
+        "order_desktop": "row",
+        "bg_color": "#ffffff",
+        "image": "shopify:\/\/shop_images\/Ontwerp_zonder_titel-6.png",
+        "heading": "SOCKELOEN COMMUNITY",
+        "main_text": "<p>Are you looking for tips tricks and a lot of fun with other cyclist? This is the group for you! <\/p><ul><li><strong>-<\/strong> <strong>Everybody<\/strong> can join this group. <\/li><li><strong>-<\/strong> You can <strong>chat 24\/7<\/strong> with other cyclist<\/li><li><strong>-<\/strong> <strong>Rules: <\/strong>Respect all members, no spam, use correct language. <\/li><\/ul>",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "4bbe5988-c166-47ae-8f8c-edf219e8d319": {
+      "type": "image-with-text",
+      "settings": {
+        "order_mobile": "column-reverse",
+        "order_desktop": "row-reverse",
+        "bg_color": "#ffffff",
+        "image": "shopify:\/\/shop_images\/OOOW_OMSLAG_FOTO.png",
+        "heading": "OOOW",
+        "main_text": "<p>Recieve GPX, time and place and join our adventures <strong>#OOOW<\/strong> let's make memories together!<\/p><ul><li><strong>-<\/strong> <strong>Everybody can join<\/strong> this group.<\/li><li><strong>-<\/strong> We are riding <strong>10-20 times a year<\/strong>. <\/li><li><strong>-<\/strong> <strong>A month planning<\/strong> is provided.<\/li><li><strong>-<\/strong> Exact data a week in advance. <\/li><li><strong>-<\/strong> Let us know if you <strong>join the ride<\/strong> via the poll. <\/li><\/ul><p><a href=\"https:\/\/chat.whatsapp.com\/HORg2Q4hhP9Gl1tfv2TwWE\" target=\"_blank\" title=\"Join OOOW here\"><strong>Join OOOW here<\/strong><\/a><\/p>",
+        "padding_top": 0,
+        "padding_bottom": 32
+      }
+    },
+    "dc6c1e06-9cca-444d-a11b-849b54ee7780": {
+      "type": "image-with-text",
+      "disabled": true,
+      "settings": {
+        "order_mobile": "column-reverse",
+        "order_desktop": "row-reverse",
+        "bg_color": "#ffffff",
+        "image": "shopify:\/\/shop_images\/rogelli-maattabel-sockeloen-07-11-2019.jpg",
+        "heading": "GLOVES",
+        "main_text": "<p>- <strong>Size S<\/strong> index finger: 7.5 cm<br\/>- <strong>Size M<\/strong> index finger: 8 cm<br\/>- <strong>Size L<\/strong> index finger: 8.5 cm<br\/>- <strong>Size XL<\/strong> index finger: 9 cm<br\/><em><br\/>The gloves also have an extra long fit so that the wrists also remain protected.<\/em><\/p>",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_Jn7RTW",
+    "fe42fd9b-9eb1-4f3c-993c-d85dd59d1118",
+    "b0029d14-ee69-4389-80ec-b267786613f1",
+    "33e98e73-6cfc-439d-a0ed-b31c7ae9ce0e",
+    "4bbe5988-c166-47ae-8f8c-edf219e8d319",
+    "dc6c1e06-9cca-444d-a11b-849b54ee7780"
+  ]
+}

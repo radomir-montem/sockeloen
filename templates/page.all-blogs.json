@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "blocks": {
+        "all_posts_76jYwg": {
+          "type": "all_posts",
+          "settings": {
+            "page": "all-posts",
+            "title": "All Posts"
+          }
+        },
+        "blog_hp6wDe": {
+          "type": "blog",
+          "settings": {
+            "blog": "stories"
+          }
+        },
+        "blog_YfCRVp": {
+          "type": "blog",
+          "settings": {
+            "blog": "aero-socks"
+          }
+        },
+        "blog_P8WMeb": {
+          "type": "blog",
+          "settings": {
+            "blog": "cycling-socks"
+          }
+        },
+        "blog_78FEar": {
+          "type": "blog",
+          "settings": {
+            "blog": "custom-socks"
+          }
+        },
+        "blog_ipWHNr": {
+          "type": "blog",
+          "settings": {
+            "blog": "overshoes"
+          }
+        }
+      },
+      "block_order": [
+        "all_posts_76jYwg",
+        "blog_hp6wDe",
+        "blog_YfCRVp",
+        "blog_P8WMeb",
+        "blog_78FEar",
+        "blog_ipWHNr"
+      ],
+      "settings": {
+        "layout": "grid",
+        "show_image": true,
+        "image_height": "large",
+        "show_date": false,
+        "show_author": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

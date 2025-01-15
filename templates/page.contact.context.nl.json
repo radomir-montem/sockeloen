@@ -1,0 +1,24 @@
+{
+  "parent": "page.contact.json",
+  "context": {
+    "market": "nl"
+  },
+  "sections": {
+    "dd0488ea-bf6a-4738-9762-18ec80be5800": {
+      "settings": {},
+      "blocks": {
+        "template--17760594690328__dd0488ea-bf6a-4738-9762-18ec80be5800-text-1": {
+          "settings": {
+            "text": "<p>For custom sock price requests please <a href=\"https:\/\/custom.en.sockeloen.nl\/\" target=\"_blank\" title=\"https:\/\/custom.en.sockeloen.nl\/\"><span style=\"text-decoration:underline\"><strong>click here to get in contact.<br\/><\/strong><\/span><\/a>Or call us at: <span style=\"text-decoration:underline\"><strong>+31 6 16 49 78 73<br\/><\/strong><\/span>Or email directly to <span style=\"text-decoration:underline\"><strong>custom@sockeloen.nl<\/strong><\/span><\/p>"
+          }
+        },
+        "template--17760594690328__dd0488ea-bf6a-4738-9762-18ec80be5800-button-1": {
+          "settings": {
+            "button_label": "Book a call",
+            "button_link": "https:\/\/sockeloen-8b3b9d.pipedrive.com\/scheduler\/G9vEwDuO\/sockeloen-custom-call"
+          }
+        }
+      }
+    }
+  }
+}

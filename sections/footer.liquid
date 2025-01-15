@@ -1,0 +1,144 @@
+<footer class="bg-black py-36 md:py-16 mt-[-1px]">
+  <div class="flex flex-col-reverse lg:flex-row">
+    <div class="grid grid-cols-1 md:grid-cols-3 justify-center mx-8 lg:w-4/5" x-data="{ selected: null}">
+      {% for link in section.settings.footer_list.links %}
+        <div class="border-t-[1px] border-[#d0d0d0] last:border-b-[1px] md:border-none">
+          <div
+            class="flex justify-between items-center p-3 cursor-pointer"
+            @click="selected !== {{ forloop.index }} ? selected = {{ forloop.index }} : selected = null"
+          >
+            <h3 class="text-base-footer bold-title">
+              {{ link.title | upcase }}
+            </h3>
+            <span class="md:hidden" x-bind:class="selected == {{ forloop.index }} && 'rotate-180'">
+              {% render 'icon-caret-down' %}
+            </span>
+          </div>
+          {% if link.links != blank %}
+            <div
+              class="flex flex-col space-y-3 px-4 transition-all overflow-hidden max-h-0 md:max-h-full"
+              x-ref="container{{ forloop.index }}"
+              x-bind:style="selected == {{ forloop.index }} ? 'max-height: ' + $refs.container{{ forloop.index }}.scrollHeight + 'px' : ''"
+            >
+              {% for childlink in link.links %}
+                <a href="{{ childlink.url }}" class="cursor-pointer regular-text text-white">
+                  {{- childlink.title -}}
+                </a>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="mx-11 mb-16">
+      <h3 class="text-base-footer bold-title mb-[16px]">
+        {{section.settings.newsletter_text}}
+      </h3>
+      <form
+        id="subscribe"
+        class="klaviyo_gdpr_embed_{{section.settings.klaviyo_id}} contact-form"
+        action="//manage.kmail-lists.com/subscriptions/subscribe"
+        data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe"
+        method="GET"
+        target="_blank"
+      >
+      <input type="hidden" name="g" value="{{section.settings.klaviyo_id}}">
+      <input type="hidden" name="$fields" value="$consent">
+      <input type="hidden" name="$list_fields" value="$consent">
+      <div class="newsletter_form_input_group klaviyo_field_group w-full md:w-fit flex items-center justify-end relative">
+        <input
+          id="newsletter-email-input"
+          class="newsletter_input_email bg-black text-[#7D7D7D] border border-[#ABABAB] py-[11px] w-full md:w-[266px] tracking-[0.04em] font-light pl-[16px] pr-[46px]"
+          type="email"
+          name="email"
+          placeholder="Email"
+          action="//manage.kmail-lists.com/subscriptions/subscribe"
+          data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe"
+          method="GET"
+          target="_blank"
+        >
+        <button class="newsletter_input_button absolute right-[20px]" type="submit">
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.537 0.969734C8.5684 0.893502 8.61816 0.826218 8.68186 0.773871C8.74555 0.721525 8.8212 0.68574 8.90207 0.669705C8.98294 0.65367 9.06652 0.65788 9.14537 0.681962C9.22422 0.706045 9.29589 0.749251 9.354 0.807734L13.354 4.80773C13.4006 4.85418 13.4375 4.90935 13.4627 4.9701C13.4879 5.03085 13.5009 5.09597 13.5009 5.16173C13.5009 5.2275 13.4879 5.29262 13.4627 5.35337C13.4375 5.41411 13.4006 5.46929 13.354 5.51573L9.354 9.51573C9.26011 9.60962 9.13278 9.66236 9 9.66236C8.86722 9.66236 8.73989 9.60962 8.646 9.51573C8.55211 9.42185 8.49937 9.29451 8.49937 9.16173C8.49937 9.02896 8.55211 8.90162 8.646 8.80773L11.793 5.66173H1C0.867392 5.66173 0.740215 5.60906 0.646447 5.51529C0.552678 5.42152 0.5 5.29434 0.5 5.16173C0.5 5.02913 0.552678 4.90195 0.646447 4.80818C0.740215 4.71441 0.867392 4.66173 1 4.66173H11.793L8.646 1.51573C8.57575 1.44578 8.52788 1.35653 8.50847 1.25931C8.48906 1.16209 8.49899 1.0613 8.537 0.969734Z" fill="white"/>
+          </svg>
+        </button>
+      </div>
+      <div class="klaviyo_messages">
+        <div class="success_message_wrapper">
+          <div class="success_message" style="display: none;"></div>
+        </div>
+        <div class="error_message" style="display: none;"></div>
+      </div>
+    </form>
+    <script src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js"></script>
+    <script>
+      KlaviyoSubscribe.attachToForms('#subscribe', {
+        hide_form_on_success: true,
+        success_message: "<p class='newsletter-form__success-message regular-text text-white'>Thank you for joining!</p>",
+        success: function () {
+          document.querySelector('.newsletter_form_input_group').style.display = 'none';
+        }
+      });
+    </script>
+    </div>
+  </div>
+  <div class="mt-16 md:px-8">
+    <div class="grid grid-cols-1 md2:grid-cols-3 place-items-center pt-6 px-8 border-t-[1px] border-[#d0d0d0]">
+      <div class="flex gap-x-[18px] md2:col-start-2">
+        {% assign payMethods = 'shop_pay,visa,mastercard,apple_pay,google_pay,amex' | split: ',' %}
+        {% for payMethod in payMethods %}
+          {% assign handle = payMethod | handleize %}
+          {% assign iconName = handle | append: '.svg' %}
+          <img src="{{ iconName | asset_url }}" alt="{{ payMethod }}" loading="lazy">
+        {% endfor %}
+      </div>
+      <div class="md2:place-self-end">
+        <p class="font-roboto font-light text-[10px] leading-3 text-white mt-3 md:">
+          {{ section.settings.copyright }}
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<style>
+  footer input:-webkit-autofill,
+  footer input:-webkit-autofill:hover, 
+  footer input:-webkit-autofill:focus, 
+  footer input:-webkit-autofill:active{
+      -webkit-box-shadow: 0 0 0 30px black inset !important;
+  }
+  footer input:-webkit-autofill{
+    -webkit-text-fill-color: #7D7D7D !important;
+  }
+</style>
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright text",
+      "default": "© Copyright 2023 Sockeloen Netherlands - Sockeloen"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_list",
+      "label": "Footer menu",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Newsletter heading",
+      "default": "Subscribe to our NEWSLETTER"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_id",
+      "label": "Klaviyo list id",
+      "default": "YcGWXh"
+    }
+  ]
+}
+{% endschema %}

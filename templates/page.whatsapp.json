@@ -1,0 +1,236 @@
+{
+  "sections": {
+    "b6fa03c9-c481-43c1-b5fe-86af6b8d4630": {
+      "type": "image-banner",
+      "blocks": {
+        "template--20074165141828__b6fa03c9-c481-43c1-b5fe-86af6b8d4630-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "WHATSAPP COMMUNITY",
+            "heading_size": "h2"
+          }
+        },
+        "template--20074165141828__b6fa03c9-c481-43c1-b5fe-86af6b8d4630-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "Join our community, and get in contact with like-minded people, win free socks, or join one of our Out Of Office Wednesday - rides.",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "template--20074165141828__b6fa03c9-c481-43c1-b5fe-86af6b8d4630-heading-1",
+        "template--20074165141828__b6fa03c9-c481-43c1-b5fe-86af6b8d4630-text-1"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/2.whatsapp.custom.banner.collectie.TDT---All-White-_1.jpg",
+        "image_mobile": "shopify:\/\/shop_images\/mobile.whatsapp.custom.banner.collectie.TDT---All-White-_1.jpg",
+        "image_overlay_opacity": 40,
+        "adapt_height_first_image": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "d87b5960-1f92-48c4-8223-cc52b7b532cf": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/800.800.OOOW.jpg",
+            "color": "",
+            "text_color": "#000000",
+            "font_size": 48,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "",
+            "button_url": "#",
+            "button_pos": "mt-0"
+          }
+        },
+        "ecaa607f-a456-4c64-8b1d-82c823de6917": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Whatsapp_Pagina_Iconen.png",
+            "color": "#343434",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "SOCKELOEN COMMUNITY",
+            "description": "<p>Join our Sockeloen Cumminity to chat and connect with like-minded people. <br\/>Discuss race tactics, material, routes and other tips and tricks within this chat. <br\/><br\/>Respect all members, no spam, don’t advertise, use correct language. <br\/><\/p><p><\/p><p><\/p>",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "JOIN - COMMUNITY CHAT",
+            "button_url": "https:\/\/chat.whatsapp.com\/DvEjuVk0UMNJ6wJoP1FlVW",
+            "button_pos": "mt-auto"
+          }
+        }
+      },
+      "block_order": [
+        "d3c61b13-8dbb-4c88-8c39-6529210ef951",
+        "ecaa607f-a456-4c64-8b1d-82c823de6917"
+      ],
+      "settings": {}
+    },
+    "c0ae6bb8-b408-4bb8-ab2a-16173ffb2d84": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "77af4022-b537-4deb-828c-d590c7af5183": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Whatsapp_Pagina_Iconen.png",
+            "color": "#343434",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "GLAZENBOLCUP - POLL",
+            "description": "<p>Win a free pair of socks by predicting the correct winner of the upcoming races. <br\/>Vote in the poll we share in thsi chat.<\/p>",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "JOIN OUR GLAZENBOLCUP POLL",
+            "button_url": "https:\/\/chat.whatsapp.com\/IC8AEa8DHEx4r0DT9NsAdh",
+            "button_pos": "mt-auto"
+          }
+        },
+        "f47fe3ef-df81-429a-82c4-e3c7432f016f": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/MVDP_Glazenbol_content.png",
+            "color": "",
+            "text_color": "#000000",
+            "font_size": 48,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "",
+            "button_url": "#",
+            "button_pos": "mt-0"
+          }
+        }
+      },
+      "block_order": [
+        "77af4022-b537-4deb-828c-d590c7af5183",
+        "f47fe3ef-df81-429a-82c4-e3c7432f016f"
+      ],
+      "settings": {}
+    },
+    "544da41d-30ed-4ef9-bec8-135a34583024": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "831bf338-6657-40a8-a68d-274afb3d6571": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/OOOW_pagina_content_V1.png",
+            "color": "#343434",
+            "text_color": "#ffffff",
+            "font_size": 48,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "",
+            "button_url": "#",
+            "button_pos": "mt-0"
+          }
+        },
+        "9688e6c0-a54f-4973-9a01-5841652bc9ad": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Whatsapp_Pagina_Iconen.png",
+            "color": "#343434",
+            "text_color": "#ffffff",
+            "font_size": 34,
+            "heading": "OOOW - Announcements",
+            "description": "<p>Get announcements when we organise an open Out Of Office Wednesday ride <br\/>.GPX times and locations will be shared the monday before the ride.<br\/><\/p>",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "JOIN OUR OOOW RIDES",
+            "button_url": "https:\/\/chat.whatsapp.com\/HORg2Q4hhP9Gl1tfv2TwWE",
+            "button_pos": "mt-auto"
+          }
+        }
+      },
+      "block_order": [
+        "831bf338-6657-40a8-a68d-274afb3d6571",
+        "9688e6c0-a54f-4973-9a01-5841652bc9ad"
+      ],
+      "settings": {}
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "column1": {
+          "type": "column",
+          "disabled": true,
+          "settings": {
+            "column_svg": "box.svg",
+            "heading": "Free Shipping",
+            "column_content": "Unexpected shapes with smart details, functionality, a new luxury feel with a contemporary price point."
+          }
+        },
+        "column2": {
+          "type": "column",
+          "disabled": true,
+          "settings": {
+            "column_svg": "plane.svg",
+            "heading": "ORDER BEFORE 15:00? SHIPPED SAME DAY!",
+            "column_content": "Unexpected shapes with smart details, functionality, a new luxury feel with a contemporary price point."
+          }
+        },
+        "column3": {
+          "type": "column",
+          "disabled": true,
+          "settings": {
+            "column_svg": "truck.svg",
+            "heading": "Free RETURNS",
+            "column_content": "Unexpected shapes with smart details, functionality, a new luxury feel with a contemporary price point."
+          }
+        }
+      },
+      "block_order": [
+        "column1",
+        "column2",
+        "column3"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "image_text": {
+      "type": "image-text",
+      "disabled": true,
+      "custom_css": [
+        "H2 {font-size: 18;}"
+      ],
+      "settings": {
+        "bg_color": "#ffffff",
+        "image": "shopify:\/\/shop_images\/VIERKANT.Fastest_sock_on_the_planet_468_all_white_aero_socks_7_FRONT_3D.png",
+        "main_text": "<p><strong>WE WORK WITH THE BIGGEST IN THE GAME<\/strong><\/p>",
+        "main_text_color": "#121212",
+        "button_text": "",
+        "button_url": "shopify:\/\/collections\/fsotp",
+        "button_bg_color": "#a28044",
+        "button_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "b6fa03c9-c481-43c1-b5fe-86af6b8d4630",
+    "d87b5960-1f92-48c4-8223-cc52b7b532cf",
+    "c0ae6bb8-b408-4bb8-ab2a-16173ffb2d84",
+    "544da41d-30ed-4ef9-bec8-135a34583024",
+    "multicolumn",
+    "image_text"
+  ]
+}

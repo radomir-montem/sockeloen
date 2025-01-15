@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "custom_liquid_PCjY7d": {
+      "type": "custom-liquid",
+      "settings": {
+        "heading": "",
+        "heading_size": 16,
+        "custom_liquid": "<script>\n!(function (u, p, v, i, r, a, l) {\nif (u.upq) return;\nr = u.upq = function () {\nr.callMethod ? r.callMethod.apply(r, arguments) : r.queue.push(arguments);};\nr.push = r;\nr.loaded = !0;\nr.version = \"1.0\";\nr.queue = [];\na = p.createElement(v);\na.src = i;\nl = p.getElementsByTagName(v)[0];\nl.parentNode.insertBefore(a, l);})(window, document, \"script\", \"https:\/\/snippet.upviral.com\/upviral.min.js\");upq('init', {camp:\"G&&$MA\", snippet_id:\"66504d899e172\",\nwidget_style:'iframe',width:\"100%\"});\n<\/script>\n\n<iframe class=\"uvembed158081\" frameborder=\"0\"\n src=\"https:\/\/static.upviral.com\/loader.html\" allowfullscreen=\"allowfullscreen\" \n style=\"margin: 0 auto;display: block;\"><\/iframe>",
+        "color_scheme": "background-2",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_liquid_PCjY7d"
+  ]
+}

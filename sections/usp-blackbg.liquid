@@ -1,0 +1,37 @@
+<section class="py-10">
+  <div class="grid grid-cols-2 md:grid-cols-4 justify-items-center gap-x-4">
+    {% for block in section.blocks %}
+      <div class="text-center"> 
+        {% if block.settings.image != blank %}
+          {% render 'image-element', image: block.settings.image, class: "" %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "USPs",
+  "class": "bg-black",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "image",
+      "name": "USP",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image selector"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "USPs black background"
+    }
+  ]
+}
+{% endschema %}

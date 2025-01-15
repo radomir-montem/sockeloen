@@ -1,0 +1,416 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "caption": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.metafields.descriptors.subtitle.value }}",
+            "text_style": "subtitle"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "inventory_status_qrtERa": {
+          "type": "inventory_status",
+          "settings": {
+            "inventory_threshold": 20,
+            "inventory_transfers_enable": false
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "a82d9b45-1b3b-4c51-9913-271732bc495f": {
+          "type": "restock-date",
+          "settings": {
+            "restock_text": "Expected availability:",
+            "restock_date": "{{ product.metafields.custom.re_stock_date | metafield_text }}"
+          }
+        },
+        "9818c7f0-7715-4e56-af03-fb7a9cca40f4": {
+          "type": "shipping_info",
+          "settings": {
+            "no_shipment_text": "There is no shipment for your country"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true
+          }
+        },
+        "d448a9b5-1ba8-45fe-a44b-8f604142911f": {
+          "type": "usps",
+          "settings": {
+            "usp1": "shopify:\/\/shop_images\/Copia_de_STAMP.USPS.png",
+            "usp1_text": "<p><a href=\"\/policies\/shipping-policy\" title=\"Shipping Policy\"><strong>Free <\/strong>Shipping &gt; €75,-<\/a><\/p>",
+            "usp2": "shopify:\/\/shop_images\/Copia_de_PELOTON.USPS.png",
+            "usp2_text": "<p><strong>Born<\/strong> in the peloton<\/p>",
+            "usp3": "shopify:\/\/shop_images\/copia_6.lastkm.USP.TRANS_2a8877e2-c653-43ee-9192-49baddd27640.png",
+            "usp3_text": "<p>100% <strong>Satisfaction<\/strong><\/p>",
+            "usp4": "shopify:\/\/shop_images\/copia_6.KING.USP.TRANS_6759367c-458f-41a8-a161-01f9ac0d5a8b.png",
+            "usp4_text": "<p><a href=\"https:\/\/www.reviews.io\/company-reviews\/store\/sockeloen-nl\" title=\"https:\/\/www.reviews.io\/company-reviews\/store\/sockeloen-nl\"><strong>Customer <\/strong>is king<\/a><\/p>"
+          }
+        },
+        "31d4cb82-9836-481d-b31f-0d99044260ea": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Description",
+            "icon": "chat_bubble",
+            "content": "",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "0c280d07-e2f9-4b4f-b7a3-02978b0ec8ee": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Height",
+            "icon": "ruler",
+            "content": "<p>{{ product.metafields.custom.height.value }}<\/p>",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "collapsible-row-0": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Materials",
+            "icon": "lightning_bolt",
+            "content": "{{ product.metafields.custom.materials | metafield_tag }}",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "71843997-7709-44ae-af15-f07b7a0bd8ce": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Knit Structure",
+            "icon": "carrot",
+            "content": "<p>{{ product.metafields.custom.knit_structure.value }}<\/p>",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "c75964dc-b7af-47f7-a23d-7dd6281c338b": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Terry Mesh",
+            "icon": "snowflake",
+            "content": "<p>{{ product.metafields.custom.terry_mesh.value }}<\/p>",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "5671736d-dcc1-4ae0-b02c-fc5f6842ef6f": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Type of Sock",
+            "icon": "shoe",
+            "content": "<p>{{ product.metafields.custom.type_of_sock.value }}<\/p>",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "collapsible-row-1": {
+          "type": "collapsible_tab",
+          "disabled": true,
+          "settings": {
+            "heading": "Washing & Care",
+            "icon": "washing",
+            "content": "<p>{{ product.metafields.custom.washing_care | metafield_tag }}<\/p>",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "collapsible-row-2": {
+          "type": "collapsible_tab",
+          "disabled": true,
+          "settings": {
+            "heading": "Shipping",
+            "icon": "truck",
+            "content": "",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "collapsible-row-3": {
+          "type": "collapsible_tab",
+          "disabled": true,
+          "settings": {
+            "heading": "Pros & Cons",
+            "icon": "check_mark",
+            "content": "{{ product.metafields.custom.pros_cons | metafield_tag }}",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "592f1237-906d-486e-af43-974d5d87a6be": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Logo's",
+            "icon": "clipboard",
+            "content": "{{ product.metafields.custom.logo_s | metafield_tag }}",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "99a821b7-64aa-4e7c-a75b-b1cc84f37174": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Aero",
+            "icon": "banana",
+            "content": "<p>{{ product.metafields.custom.aero.value }}<\/p>",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "outlinks_pYD9NK": {
+          "type": "outlinks",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "caption",
+        "price",
+        "inventory_status_qrtERa",
+        "variant_picker",
+        "quantity_selector",
+        "a82d9b45-1b3b-4c51-9913-271732bc495f",
+        "9818c7f0-7715-4e56-af03-fb7a9cca40f4",
+        "buy_buttons",
+        "d448a9b5-1ba8-45fe-a44b-8f604142911f",
+        "31d4cb82-9836-481d-b31f-0d99044260ea",
+        "0c280d07-e2f9-4b4f-b7a3-02978b0ec8ee",
+        "collapsible-row-0",
+        "71843997-7709-44ae-af15-f07b7a0bd8ce",
+        "c75964dc-b7af-47f7-a23d-7dd6281c338b",
+        "5671736d-dcc1-4ae0-b02c-fc5f6842ef6f",
+        "collapsible-row-1",
+        "collapsible-row-2",
+        "collapsible-row-3",
+        "592f1237-906d-486e-af43-974d5d87a6be",
+        "99a821b7-64aa-4e7c-a75b-b1cc84f37174",
+        "outlinks_pYD9NK"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "notifyme_button": "Notify me when available",
+        "media_position": "left",
+        "gallery_layout": "columns",
+        "media_size": "medium",
+        "mobile_thumbnails": "hide",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "column-0": {
+          "type": "column",
+          "settings": {
+            "column_svg": "",
+            "heading": "Column",
+            "column_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          }
+        },
+        "column-1": {
+          "type": "column",
+          "settings": {
+            "column_svg": "",
+            "heading": "Column",
+            "column_content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          }
+        }
+      },
+      "block_order": [
+        "column-0",
+        "column-1"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "9148c605-c3d3-4457-a7d9-718e5b06ad2d": {
+      "type": "usp-blackbg",
+      "blocks": {
+        "cdbd0cb4-2ce5-4d43-81b3-cf8af48f1dea": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/1.SHIPPING.USP.zwart.png"
+          }
+        },
+        "4eafd2d7-ffe9-4d85-9d3c-1c5257810662": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/2.PELOTON.USP.WIT.png"
+          }
+        },
+        "59aa8067-54fc-449f-975b-d765af1aa2d4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/3.SATISFACTION.USP.WIT.png"
+          }
+        },
+        "8191162b-59ec-4e9d-a84e-4fee271c0ab8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4.KING.USP.WIT.png"
+          }
+        }
+      },
+      "block_order": [
+        "cdbd0cb4-2ce5-4d43-81b3-cf8af48f1dea",
+        "4eafd2d7-ffe9-4d85-9d3c-1c5257810662",
+        "59aa8067-54fc-449f-975b-d765af1aa2d4",
+        "8191162b-59ec-4e9d-a84e-4fee271c0ab8"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "765d516d-8ae3-4a32-a2a0-20a43cc7fdc0": {
+      "type": "bought-often-together",
+      "settings": {
+        "title": "bought often together"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You may also like",
+        "products_to_show": 10,
+        "image_ratio": "adapt",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false
+      }
+    },
+    "8537c4d9-9c10-488a-bbd4-2c87e8b7e0a6": {
+      "type": "usp",
+      "blocks": {
+        "f1e6c323-4e34-4b13-8360-51bf6955f214": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/1.SHIPPING.USP.zwart.png"
+          }
+        },
+        "60bf623b-28be-4bba-9947-9913bd8d9cf1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/2.PELOTON.USP.TRANS.png"
+          }
+        },
+        "147a6ef5-caad-4b5a-a490-90c8496e34d9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/SYMBOLEN.USPS.SHOPIFY_1.png"
+          }
+        },
+        "284de428-db68-441f-8ea9-4fe42dc83449": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4.KING.USP.TRANS.png"
+          }
+        }
+      },
+      "block_order": [
+        "f1e6c323-4e34-4b13-8360-51bf6955f214",
+        "60bf623b-28be-4bba-9947-9913bd8d9cf1",
+        "147a6ef5-caad-4b5a-a490-90c8496e34d9",
+        "284de428-db68-441f-8ea9-4fe42dc83449"
+      ],
+      "settings": {}
+    },
+    "810ba789-2a8c-44fa-abe0-e8f36932e0cb": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "66f0e606-c41c-49d0-ada4-ff6e6f30e46b": {
+          "type": "column",
+          "settings": {
+            "color": "#4c3a60",
+            "text_color": "#ffffff",
+            "font_size": 33,
+            "heading": "",
+            "description": "<p>EXPLORE NOW \/\/ EXPLORE NOW \/\/ EXPLORE NOW \/\/<\/p>",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "CLICK HERE",
+            "button_url": "https:\/\/sockeloen.com\/nl\/collections\/all-weather-essentials",
+            "button_pos": "mt-0"
+          }
+        },
+        "6a0118df-4330-436a-b702-9317ff284f63": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/3-explore-AWE-overshoes-V2_1080x1080_aeeb2094-d9ea-438f-be9a-2aef043c91f9.png",
+            "color": "#64652e",
+            "text_color": "#000000",
+            "font_size": 48,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "",
+            "button_url": "#",
+            "button_pos": "mt-0"
+          }
+        }
+      },
+      "block_order": [
+        "66f0e606-c41c-49d0-ada4-ff6e6f30e46b",
+        "6a0118df-4330-436a-b702-9317ff284f63"
+      ],
+      "settings": {}
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "heading": "RECENTLY VIEWED ITEMS"
+      }
+    },
+    "7082e3df-38a9-43ef-bb51-a706f9bb048d": {
+      "type": "reviews-product",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "multicolumn",
+    "9148c605-c3d3-4457-a7d9-718e5b06ad2d",
+    "765d516d-8ae3-4a32-a2a0-20a43cc7fdc0",
+    "product-recommendations",
+    "8537c4d9-9c10-488a-bbd4-2c87e8b7e0a6",
+    "810ba789-2a8c-44fa-abe0-e8f36932e0cb",
+    "recently-viewed",
+    "7082e3df-38a9-43ef-bb51-a706f9bb048d"
+  ]
+}

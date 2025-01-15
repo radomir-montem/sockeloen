@@ -1,0 +1,35 @@
+{% if width == blank %}
+  {% assign width = image.width %}  
+{% endif %}
+
+{% assign width = width | plus: 0 %} 
+
+<img srcset="
+{%- if width >= 375 -%}{{ image | img_url: '375x' }} 375w,{%- endif -%}
+{%- if width >= 750 -%}{{ image | img_url: '750x' }} 750w,{%- endif -%}
+{%- if width >= 1100 -%}{{ image | img_url: '1100x' }} 1100w,{%- endif -%}
+{%- if width >= 1500 -%}{{ image | img_url: '1500x' }} 1500w,{%- endif -%}
+{%- if width >= 1780 -%}{{ image | img_url: '1780x' }} 1780w,{%- endif -%}
+{%- if width >= 2000 -%}{{ image | img_url: '2000x' }} 2000w,{%- endif -%}
+{%- if width >= 2800 -%}{{ image | img_url: '2800x' }} 2800w{%- endif -%}
+{{ image | img_url: 'master' }} {{ image.width }}w"
+sizes="(min-width: 750px) calc(100vw - 22rem), 1100px"
+src="{{ image | img_url: '1445x' }}"
+loading="lazy"
+alt="{{ image.alt | escape }}"
+width="{{ image.width }}"
+height="{{ image.height }}"
+class="{{class}}"
+>
+
+{%comment%} 
+
+Usage example: 
+
+{% 
+    render 'image-element', 
+    image: image_name_string, 
+    alt: image_name_string.alt 
+%}
+
+{%endcomment%}

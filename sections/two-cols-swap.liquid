@@ -1,0 +1,196 @@
+<section class="bg-[#E1E1E1]">
+  <div id="shopify-section-{{ section.id }}" class="{% if template contains 'product' %} flex flex-col-reverse md:grid md:grid-cols-2 {% else %} grid grid-cols-1 md:grid-cols-2 {% endif %}">
+    {% for block in section.blocks %}
+      <div class="two-cols-{{ block.id }} relative min-h-[325px]">
+        <style>
+          #shopify-section-{{ section.id }} .two-cols-{{ block.id }} .text-color {
+            color: {{ block.settings.text_color }}
+          }
+        </style>
+        {% if block.settings.image != blank %}
+          <div class="overflow-hidden">
+            {% render 'c-image-element',
+              image: block.settings.image,
+              lazy: true,
+              position: 'left bottom',
+              class: 'object-cover w-full'
+            %}
+          </div>
+        {% else %}
+          <style>
+            #shopify-section-{{ section.id }} .two-cols-{{ block.id }} .background-color {
+              background-color: {{ block.settings.color }};
+            }
+          </style>
+        {% endif %}
+        <div class="absolute w-full h-full top-0 left-0 background-color">
+          <div class="h-full flex flex-col p-8 {{ block.settings.horizontal_pos }} {{ block.settings.vertical_pos }}">
+            {% if block.settings.heading %}
+              <h2
+                style="font-size: {{block.settings.font_size}}px;"
+                class="
+                  h1 text-color mb-4
+                  {% if block.settings.horizontal_pos == 'items-center' %} text-center{% endif %}
+                  {% if block.settings.button_pos == 'mt-auto' and block.settings.vertical_pos == 'justify-center' %}
+                    mt-auto
+                  {% endif %}
+                "
+              >
+                {{ block.settings.heading | upcase }}
+              </h2>
+            {% endif %}
+            {% if block.settings.description %}
+          <div class="text-color regular-text flex flex-col {{ block.settings.horizontal_pos }} {% if block.settings.horizontal_pos == 'items-center' %} text-center{% endif %}">
+                {{ block.settings.description }}
+              </div>
+            {% endif %}
+            <div
+              class="pt-4 flex flex-col {{ block.settings.horizontal_pos }}
+                {% if block.settings.vertical_pos != 'justify-end' %}
+                  {{ block.settings.button_pos }}
+                {% endif %}
+              "
+            >
+              <p class="bold-title text-color">{{ block.settings.button_disclaimer }}</p>
+              <a
+                href="{{ block.settings.button_url }}"
+                class="regular-button text-color border"
+              >
+                {{- block.settings.button_text | upcase -}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Two columns swapable",
+  "max_blocks": 2,
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image selector"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Background color",
+          "info": "In case you dont select an image, this is going to be the background"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Header Font Size",
+          "default": 48,
+          "min": 24,
+          "max": 60,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Header"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "select",
+          "id": "vertical_pos",
+          "label": "Select text vertical position",
+          "options": [
+            {
+              "label": "Up",
+              "value": "justify-start"
+            },
+            {
+              "label": "Center",
+              "value": "justify-center"
+            },
+            {
+              "label": "Down",
+              "value": "justify-end"
+            }
+          ],
+          "default": "justify-center"
+        },
+        {
+          "type": "select",
+          "id": "horizontal_pos",
+          "label": "Select text horizontal position",
+          "options": [
+            {
+              "label": "Left",
+              "value": "items-start"
+            },
+            {
+              "label": "Center",
+              "value": "items-center"
+            },
+            {
+              "label": "Right",
+              "value": "items-end"
+            }
+          ],
+          "default": "items-center"
+        },
+        {
+          "type": "text",
+          "id": "button_disclaimer",
+          "label": "Disclaimer text"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+          "type": "text",
+          "id": "button_url",
+          "label": "Button link",
+          "default": "#"
+        },
+        {
+          "type": "select",
+          "id": "button_pos",
+          "label": "Select button position",
+          "options": [
+            {
+              "label": "With the content",
+              "value": "mt-0"
+            },
+            {
+              "label": "At the end",
+              "value": "mt-auto"
+            }
+          ],
+          "default": "mt-0"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cols with text"
+    }
+  ]
+}
+{% endschema %}

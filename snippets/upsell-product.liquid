@@ -1,0 +1,209 @@
+{%- assign product_id = product_ref.selected_or_first_available_variant.id -%}
+
+<div
+  id="CartDrawer-Item-{{ item.index | plus: 1 }}"
+  class="grid grid-cols-3 grid-rows-[auto] gap-3"
+  x-ref="main_container"
+  x-data="
+    {
+      active_options: [],
+      variant_id: {{ product_id }},
+      variants: [],
+      disabled_submit_button: true,
+      handleInit(variants_container){
+        if(!variants_container) return;
+        const all_variants = Array.from(variants_container.querySelectorAll('[data-options]'));
+        all_variants.forEach( variant => {
+          const id = variant.dataset.id;
+          const options = variant.dataset.options.split(',');
+          const variant_object = {id, options}
+          this.variants.push(variant_object);
+        });
+
+      },
+      handleChange(target, text){
+
+        const all_options = $refs.main_container.querySelectorAll('[data-option]');
+        $refs.submit_button.setAttribute('aria-disabled', false);
+        $refs.submit_button.querySelector('span').classList.remove('hidden');
+        $refs.submit_button.querySelector('.sold-out-message').classList.add('hidden');
+        $refs.submit_button.disabled = false;
+        all_options.forEach( option => {
+
+          if(option != target){
+
+            const options = option.querySelectorAll('option');
+            options.forEach(option => {
+
+              const both_options = [option.value, target.value];
+              const valid_option = this.variants.some( variant => both_options.every(option => variant.options.includes(option)));
+              valid_option ? option.disabled = false : option.disabled = true;
+
+            })
+
+          }
+
+        })
+
+        target.dataset.option = target.value;
+
+        const active_options = Array.from($refs.main_container.querySelectorAll('[data-option]')).map( el => el.dataset.option ) ;
+
+
+        const first_variant_active = this.variants.filter( variant => active_options.every(option => variant.options.includes(option)) )[0];
+
+        this.variant_id = first_variant_active?.id;
+
+        if(this.active_options.some(el => el == `${text}-true`)) return;
+
+        const option_index = this.active_options.findIndex(el => el == `${text}-false`);
+
+        if(option_index == -1) return;
+
+        this.active_options[option_index] = `${text}-true`;
+
+      }
+    }"
+  x-effect=" disabled_submit_button = !active_options.every(el => el.includes('true'));"
+>
+  <div class="row-[1/3]">
+    <a href="{{ product_ref.url }}">
+      <img
+        class="max-w-full h-auto relative md:align-top"
+        src="{{ product_ref.featured_image | img_url: '200px' }}"
+        alt="{{ product_ref.title }}"
+        loading="lazy"
+        width="150"
+        height="{{ 150 | divided_by: item.image.aspect_ratio | ceil }}"
+      >
+    </a>
+  </div>
+  <div class="col-span-2 ">
+    <div class="flex justify-between mb-3">
+      <div>
+        <a
+          href="{{ product_ref.url }}"
+          class="col-span-2 font-roboto font-medium text-[14px] text-base-text tracking-[0.03em] leading-[21px]"
+        >
+          {{ product_ref.title }}
+        </a>
+        {%- if product_ref.has_only_default_variant == false
+          or product_ref.properties.size != 0
+          or product_ref.selling_plan_allocation != null
+        -%}
+          <div>
+
+            <div class="!hidden" x-ref="variants" x-init="handleInit($refs.variants)">
+              {% for variant in product_ref.variants %}
+                {% if variant.available %}
+                  <div data-id="{{ variant.id }}" data-options="{{ variant.option1 }},{{ variant.option2 }},{{ variant.option3 }}"></div>
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            {%- if product_ref.has_only_default_variant == false -%}
+
+              {%- for option in product_ref.options_with_values -%}
+
+                {% assign option_values_length = option.values | size %}
+
+                <div class="product-option font-roboto font-light text-[14px] leading-5 tracking-[0.03em] text-base-text">
+                  <span>{{ option.name }}:</span>
+
+                  {% if option_values_length == 1 %}
+
+                    <span
+                      x-init="active_options.push(`{{ forloop.index }}-true`)"
+                      data-option="{{ option.values[0] }}"
+                    >
+                      {{ option.values[0] }}
+                    </span>
+
+                  {% else %}
+
+                    <select data-option="" x-init="active_options.push(`{{ forloop.index }}-false`)" @change="handleChange($event.target,`{{ forloop.index }}`)">
+
+                      <option value="" disabled selected>Select</option>
+
+                      {% for value in option.values %}
+
+                        <option
+                          value="{{ value }}"
+                        >
+                          {{ value }}
+                        </option>
+
+                      {% endfor %}
+
+                    </select>
+
+                  {% endif %}
+
+                </div>
+                              
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- for property in product_ref.properties -%}
+              {%- assign property_first_char = property.first | slice: 0 -%}
+              {%- if property.last != blank and property_first_char != '_' -%}
+                <div class="product-option font-roboto font-light text-[14px] leading-5 tracking-[0.03em] text-base-text">
+                  <span>{{ property.first }}:</span>
+                  <span>
+                    {%- if property.last contains '/uploads/' -%}
+                      <a
+                        href="{{ property.last }}"
+                        class="link"
+                        target="_blank"
+                        aria-describedby="a11y-new-window-message"
+                      >
+                        {{ property.last | split: '/' | last }}
+                      </a>
+                    {%- else -%}
+                      {{ property.last }}
+                    {%- endif -%}
+                  </span>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          <p class="product-option">{{ product_ref.selling_plan_allocation.selling_plan.name }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="mt-6 md:flex flex-row justify-between font-roboto text-[16px] tracking-wider">
+      <div class="product-option">
+        {{ product_ref.price | money }}
+      </div>
+      <product-form class="product-form upsell_product">
+        {% comment %}
+          Please dont add the action attribute to the form tag at upsell products, because the colorlab scripts read always the product id of the first form tag with this action
+        {% endcomment %}
+        <form
+          data-action="/cart/add"
+          class="flex items-center justify-between add-to-cart-form"
+          enctype="multipart/form-data"
+          x-bind:data-id="variant_id"
+        >
+          <input name="id" type="hidden" x-bind:value="variant_id">
+          <input name="quantity" type="hidden" value="1" readonly>
+
+          <button
+            type="submit"
+            name="add"
+            class="font-roboto text-[16px] leading-4 tracking-wider text-base-text border border-base-text py-[10px] px-[16px] add-to-cart submit_button"
+            {% comment %} @click="show = false" {% endcomment %}
+            x-ref="submit_button"
+            x-bind:disabled="disabled_submit_button"
+          >
+            <span>Add to bag</span>
+            <span class="sold-out-message hidden text-[20px] md:text-[13px]">
+              {{- settings.cart_drawer_out_of_stock_text -}}
+            </span>
+          </button>
+        </form>
+      </product-form>
+    </div>
+  </div>
+</div>

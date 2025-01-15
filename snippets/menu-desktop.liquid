@@ -1,0 +1,101 @@
+<nav 
+class="header__inline-menu"  
+x-data="{
+  activeMenu: -1,
+  isActive(_index) { return this.activeMenu == _index },
+  setActiveMenu(_sel) { this.activeMenu = _sel },
+  childMenu: -1,
+  isChild(_index) { return this.childMenu == _index },
+  setChildMenu(_sel) { this.childMenu = _sel },
+  productMenu: -1,
+  isProduct(_index) { return this.productMenu == _index },
+  setProductMenu(_sel) { this.productMenu = _sel },
+}" 
+>
+<ul class="list-menu list-menu--inline" role="list">
+  {%- for link in section.settings.menu.links -%}
+    <li class="{% if link.title == 'SALE' or link.title == 'BLACK FRIDAY SALE' %}link-color-red{% endif %}">
+      {%- if link.links != blank -%}
+        <header-menu>
+          <li 
+            class="leading-tight flex h-full items-center px-3 {% if link.title == 'SALE' %}link-color-red{% endif %} {% if mega_menu_block != '' %}has-dropdown{% endif %}"
+            data-item-title="{{ link.title | escape }}"
+            @mouseenter="setActiveMenu({{ forloop.index }}); document.body.classList.add('noscroll');"
+            @mouseleave="setActiveMenu(-1); document.body.classList.remove('noscroll');">
+            <a 
+              class="header__menu-item list-menu__item link link--text focus-inset link-only child-menu"
+              :class="isActive({{ forloop.index }}) ? '!text-[#111111]' : ''"
+              href="{{ link.url }}"
+              {% if link.links.size > 0 or mega_menu_block != '' %} aria-controls="desktop-menu-{{ forloop.index }}" aria-expanded="false"{% endif %}>
+              <span>{{ link.title }}</span>
+            </a>
+            <ul 
+              id="desktop-menu-{{ forloop.index }}" 
+              class="absolute top-0 pt-[45px] bg-white nav-dropdown space-y-4 w-[330px] lg:w-[366px] left-0 min-h-[728px] border-r border-r-[#E2E2E2] h-screen {% if link.levels == 1 %}nav-dropdown--restrict{% endif %} list--unstyled" role="list" 
+              x-show="isActive({{ forloop.index }})" x-cloak>
+              {%- for sub_link in link.links -%}
+                <li 
+                  class="{% if sub_link.links.size > 0 %}has-dropdown{% endif %} px-[32px] !mt-0"
+                  @click="setChildMenu({{ forloop.index }})"
+                  @clickaway="setChildMenu(-1)">
+                  {% assign sub_link_url = sub_link.url %}
+                  {%- if sub_link.links.size > 0 -%}
+                    {% assign sub_link_url = '#' %}
+                  {%- endif -%}
+                  <a 
+                    :class="isChild({{ forloop.index }}) ? '!text-[#111111]' : ''"
+                    class="py-[16px] hover:text-[#111111] font-bold text-[20px] tracking-[0.02em] uppercase text-[#7D7D7D] flex items-center justify-between" 
+                    href="{{ sub_link_url }}" {% if sub_link.links.size > 0 %}aria-controls="desktop-menu-{{ forloop.parentloop.index }}-{{ forloop.index }}" aria-expanded="false"{% endif %}>
+                    {{- sub_link.title -}}
+                    {% if sub_link.links.size > 0 %}
+                    {% render 'icon-arrow-right' %}
+                    {% endif %}
+                  </a>
+                  {%- if sub_link.links.size > 0 -%}
+                    <ul 
+                      x-show="isChild({{ forloop.index }})"
+                      id="desktop-menu-{{ forloop.parentloop.index }}-{{ forloop.index }}" 
+                      class="absolute left-[330px] lg:left-[366px] w-[330px] lg:w-[366px] top-0 bg-white h-screen pt-[45px] border-r border-r-[#E2E2E2] z-10 overflow-auto" 
+                      role="list">
+                      {%- for sub_sub_link in sub_link.links -%}
+                        <li 
+                          class=" bg-white"
+                          @click="setProductMenu({{ forloop.index }})"
+                          @clickaway="setProductMenu(-1)">
+                          <a 
+                            :class="isProduct({{ forloop.index }}) ? '!text-[#111111]' : ''"
+                            class="py-[16px] submenu-img font-bold text-[20px] tracking-[0.02em] px-[32px] uppercase text-[#7D7D7D] flex items-center justify-start hover:text-[#111111]" 
+                            href="{{sub_sub_link.url}}">
+                            {% for block in section.blocks %}
+                              {% assign collection = block.settings.title | replace: " ", "-" | downcase %}
+                              {% assign menu_link = sub_sub_link.title | replace: " ", "-" | downcase %}
+                              {% assign collection_translated = block.settings.title_translate | replace: " ", "-" | downcase %}
+                              {% assign collection_translated_german = block.settings.title_translate_german | replace: " ", "-" | downcase  %}
+                              {% if menu_link == collection or menu_link == collection_translated or menu_link == collection_translated_german %}
+                                {%- render 'c-image-element',
+                                  image: block.settings.image_item,
+                                  lazy: true,
+                                  class: "w-[60px] h-[70px] object-contain mr-[16px] bg-[#E2E2E2]"
+                                -%}
+                              {% endif %}
+                            {% endfor %}
+                            <span class="w-[74%]">{{ sub_sub_link.title }}</span>
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </li>
+        </header-menu>
+      {%- else -%}
+        <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset link-only"{% if link.current %} aria-current="page"{% endif %}>
+          <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+        </a>
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+</ul>
+</nav>

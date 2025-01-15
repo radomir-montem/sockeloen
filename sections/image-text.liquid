@@ -1,0 +1,74 @@
+<div class="xs:px-2 px-4 md:px-8 xl:px-24 mx-auto w-full min-h-[700px] py-12 flex justify-center" style="background: {{ section.settings.bg_color }};">
+  <div class="flex flex-col-reverse md:flex-row items-center gap-10 md:gap-0">
+    <div class="flex flex-col flex-1 gap-16 items-center justify-center text-center md:items-start md:text-start">
+      <div class="text-7xl flex flex-col gap-12 leading-tight md:leading-none" style="color: {{ section.settings.main_text_color }};">{{ section.settings.main_text }}</div>
+      <div>
+        <a
+          href="{{ section.settings.button_url }}"
+          class="uppercase py-7 px-14"
+          style="color: {{ section.settings.button_text_color }}; background: {{ section.settings.button_bg_color }};">{{ section.settings.button_text }}</a>
+      </div>
+    </div>
+
+    <div class="flex-1 flex items-center">
+      {%- if section.settings.image != blank -%}
+        {%- render 'c-image-element',
+          image: section.settings.image,
+          lazy: true -%}
+      {% else %}
+        {{ 'collection-1' | placeholder_svg_tag }}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image with text 2",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color",
+      "default": "#E2E2E2",
+      "id": "bg_color",
+      "label": "Background Color"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "richtext",
+      "id": "main_text",
+      "default": "<p><strong>KEEP THEM HIGH.</strong></p><p><strong>WEAR THEM PROUD.</strong></p>",
+      "label": "Main Text"
+    },
+    {
+      "type": "color",
+      "id": "main_text_color",
+      "default": "#000",
+      "label": "Main Text Color"
+    }, {
+      "type": "text",
+      "id": "button_text",
+      "default": "Shop now",
+      "label": "Button Text"
+    }, {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    }, {
+      "type": "color",
+      "default": "#000",
+      "id": "button_bg_color",
+      "label": "Button Background Color"
+    }, {
+      "type": "color",
+      "default": "#FFF",
+      "id": "button_text_color",
+      "label": "Button Text Color"
+    }
+  ]
+}
+{% endschema %}

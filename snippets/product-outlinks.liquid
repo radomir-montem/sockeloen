@@ -1,0 +1,16 @@
+{% if product.metafields.custom.outlinks.value != blank %}
+    <div class="product-outlinks">
+        {% for outlink in product.metafields.custom.outlinks.value %}
+            <div class="product-outlink-item flex items-center gap-8 mb-6">
+                <div class="product-outlink__media">
+                    {{ outlink.product_image | image_url: width: 100 | image_tag }}
+                </div>
+                <div class="product-outlink__details flex flex-col justify-center gap-2">
+                    <h4><a target="_blank" href="{{ outlink.button_link }}">{{ outlink.product_title }}</a></h4>
+                    <p class="product-outlink__price">{{ outlink.product_price | money }}</p>
+                    <a class="product-outlink__link badge badge--bottom-left uppercase mr-[6px]" style="background-color: #000000;" target="_blank" href="{{ outlink.button_link }}">{{ outlink.button_text }}</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

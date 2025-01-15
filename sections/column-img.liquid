@@ -1,0 +1,94 @@
+<div class="grid grid-cols-2 lg:grid-cols-4 color-background-1">
+  {% for block in section.blocks %}
+    <div class="relative flex items-center justify-center">
+      {% if block.settings.image != blank %}
+        {% render 'image-element', image: block.settings.image, class: 'w-full' %}
+        <div
+          class="w-full absolute h-full bg-black top-0 !block"
+          style="opacity: {{ block.settings.opacity | divided_by: 100.0 }}"
+        ></div>
+      {% endif %}
+      <div class="text-container absolute text-center">
+        {% if block.settings.title != blank %}
+          <h4
+            class="column-heading text-center uppercase text-white font-black tracking-[0.02em] mb-[10px]"
+            style="font-size: {{ section.settings.font_size }}px;"
+          >
+            {{ block.settings.title }}
+          </h4>
+        {% endif %}
+        {% if block.settings.button_label != blank %}
+          <a
+            href="{{block.settings.button_url}}"
+            class="inline-flex py-5 px-12 border-none uppercase font-medium !shadow-none bg-white text-black"
+          >
+            {{- block.settings.button_label -}}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Image columns",
+  "tag": "section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "range",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "default": 24,
+      "unit": "px",
+      "id": "font_size",
+      "label": "Title font size"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "opacity",
+          "min": 0,
+          "max": 100,
+          "step": 10,
+          "unit": "%",
+          "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
+          "default": 50
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button url"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image columns"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,23 @@
+<ul class="breadcrumbs page-width template-{{ template.name }}">
+    <li class="breadcrumb-item">
+        <a class="breadcrumb-item__link" href="{{ shop.url }}">{% render 'icon-home' %}</a>
+    </li>
+    <li class="breadcrumb-item">{% render 'icon-caret' %}</li>
+    {% if template.name == 'collection' %}
+        <li class="breadcrumb-item">
+            <a class="breadcrumb-item__link" href="{{ routes.collections_url }}">collections</a>
+        </li>
+        <li class="breadcrumb-item">{% render 'icon-caret' %}</li>
+        <li class="breadcrumb-item">{{ collection.title }}</li>
+    {% elsif template.name == 'product' %}
+        <li class="breadcrumb-item">
+            <a class="breadcrumb-item__link" href="{{ routes.collections_url }}">collections</a>
+        </li>
+        <li class="breadcrumb-item">{% render 'icon-caret' %}</li>
+        {% for collection in product.collections limit: 1 %}
+            <li class="breadcrumb-item"><a class="breadcrumb-item__link" href="{{ collection.url }}">{{ collection.title }}</a></li>
+            <li class="breadcrumb-item">{% render 'icon-caret' %}</li>
+        {% endfor %}
+        <li class="breadcrumb-item">{{ product.title }}</li>
+    {% endif %}
+</ul>

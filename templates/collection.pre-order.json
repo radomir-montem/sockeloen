@@ -1,0 +1,99 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {}
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "custom_css": [],
+      "settings": {
+        "products_per_page": 8,
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 8
+      }
+    },
+    "3dccd3f6-189f-4701-91e8-b85da8c70b90": {
+      "type": "usp-blackbg",
+      "blocks": {
+        "1f543cbc-9f39-499a-9016-c139c92896d3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+          }
+        },
+        "06418753-c11e-42ba-903a-10e77f8e4f2f": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+          }
+        },
+        "98a70ec6-d538-4770-ad14-ddd4d23d436c": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+          }
+        },
+        "1acca66e-41e6-4b67-8924-c27e53d05919": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+          }
+        }
+      },
+      "block_order": [
+        "1f543cbc-9f39-499a-9016-c139c92896d3",
+        "06418753-c11e-42ba-903a-10e77f8e4f2f",
+        "98a70ec6-d538-4770-ad14-ddd4d23d436c",
+        "1acca66e-41e6-4b67-8924-c27e53d05919"
+      ],
+      "settings": {}
+    },
+    "d37a2506-ed61-40de-8072-52e5bffc33fa": {
+      "type": "rich-text",
+      "blocks": {
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>PRE ORDER<\/p>",
+            "heading_size": "h2"
+          }
+        },
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Explore our pre-order selection of <strong>custom made<\/strong> socks. Start designing the perfect pair today!<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0",
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1"
+      ],
+      "custom_css": [],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "accent-1",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 68
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "3dccd3f6-189f-4701-91e8-b85da8c70b90",
+    "d37a2506-ed61-40de-8072-52e5bffc33fa"
+  ]
+}

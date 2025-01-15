@@ -1,0 +1,7 @@
+{
+  "parent": "product.gravel-ain-t-ready.json",
+  "context": {
+    "market": "nl"
+  },
+  "sections": {}
+}

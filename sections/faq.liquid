@@ -1,0 +1,155 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mob }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mob }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign posts_displayed = section.settings.blog.articles_count
+  if section.settings.post_limit <= section.settings.blog.articles_count
+    assign posts_exceed_limit = true
+    assign posts_displayed = section.settings.post_limit
+  endif
+-%}
+{% assign custom_page = true %}
+{% if template.name == 'product' %}
+{% unless product.tags contains 'custom socks' %}
+    {% assign custom_page = false %}
+{% endunless %}
+{% endif %}
+{% if custom_page and section.blocks.size > 0 %}
+    <div class="gradient">
+        <div class="page-width isolate section-{{ section.id }}-padding">
+          <div class="max-w-[1700px] m-auto md:px-12 px-5">
+            {% assign frist_faq = true %}
+              {% for block in section.blocks %}
+                  {% if block.type == 'heading' %}
+                      {% assign first = true %}
+                      {% if block.settings.heading != blank %}
+                          <h1 style="font-size: 40px;" class="text-black uppercase text-5xl md:text-7xl md:mb-8 mb-5 mt-8 md:mt-16 font-bold">{{ block.settings.heading }}</h1>
+                      {% endif %}
+                  {% endif %}
+                  {% if block.type == 'faq' %}
+                      <div class="faq-item py-5 md:py-8 border border-solid border-x-0 border-[#E3E3E3] {% unless first %}border-t-0{% endunless %}">
+                          <input class="faq-input hidden" type="checkbox" {% if frist_faq %}checked{% endif %} id="faq-question--{{ block.id }}">
+                          <label class="faq-question font-bold uppercase text-black text-2xl md:text-4xl flex justify-between items-center cursor-pointer" for="faq-question--{{ block.id }}">
+                              {{ block.settings.question }}
+                              <span class="icon-minus flex justify-center items-center md:w-8 w-6">
+                                  <svg width="21" height="5" viewBox="0 0 21 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <rect x="21" y="0.5" width="4" height="21" transform="rotate(90 21 0.5)" fill="black"/>
+                                  </svg>                                
+                              </span>
+                              <span class="icon-plus flex justify-center items-center md:w-8 w-6">
+                                  <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 0H8.5V8.5H0V12.5H8.5V21H12.5V12.5H21V8.5H12.5V0Z" fill="black"/>
+                                  </svg>                                
+                              </span>
+                          </label>
+                          <div class="faq-answer text-xl md:text-2xl mt-3 md:mt-5 text-black md:pr-32">
+                              {{ block.settings.answer }}
+                          </div>
+                      </div>
+                      {% assign frist_faq = false %}
+                      {% assign first = false %}
+                  {% endif %}
+              {% endfor %}
+          </div>
+        </div>
+    </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mob",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mob",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+        "type": "heading",
+        "name": "Heading",
+        "settings": [
+            {
+                "type": "text",
+                "id": "heading",
+                "label": "Heading"
+            }
+        ]
+    },
+    {
+        "type": "faq",
+        "name": "FAQ",
+        "settings": [
+            {
+                "type": "text",
+                "id": "question",
+                "label": "Question"
+            },
+            {
+                "type": "richtext",
+                "id": "answer",
+                "label": "Answer"
+            }
+        ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ"
+    }
+  ]
+}
+{% endschema %}

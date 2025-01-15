@@ -1,0 +1,23 @@
+<div class="py-[80px] px-5 max-w-[1600px] m-auto">
+  {%  render 'reviews-product' %}
+</div>
+
+{%  style  %} 
+  .ElementsWidget-prefix .u-textRight--all {
+    display: none;
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+      "name": "Product page reviews",
+      "tag": "section",
+      "class": "reviews-product bg-black",
+      "settings": [],
+      "presets": [
+          {
+              "name": "Product page reviews"
+          }
+      ]
+  }
+{% endschema %}

@@ -1,0 +1,50 @@
+{%- assign maxUpsellProducts = 5 -%}
+{%- assign availableUpsells = '' -%}
+{%- assign uniqueUpsellIds = '' -%}
+
+{%- for line_item in cart.items -%}
+  {%- assign uniqueUpsellIds = uniqueUpsellIds | append: ',' | append: line_item.product.id -%}
+  {%- for itemProductUpsell in line_item.product.metafields.my_fields.product_upsells.value -%}
+    {%- if itemProductUpsell != blank and itemProductUpsell.available -%}
+      {%- unless uniqueUpsellIds contains itemProductUpsell.id -%}
+        {%- assign availableUpsells = availableUpsells | append: ',' | append: itemProductUpsell.handle -%}
+        {%- assign uniqueUpsellIds = uniqueUpsellIds | append: ',' | append: itemProductUpsell.id -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {% if availableUpsells == blank %}
+    {% for itemProductUpsell in line_item.product.metafields.my_fields.collection_upsell.value.products %}
+      {% if itemProductUpsell != blank and itemProductUpsell.available %}
+        {%- unless uniqueUpsellIds contains itemProductUpsell.id -%}
+          {%- assign availableUpsells = availableUpsells | append: ',' | append: itemProductUpsell.handle -%}
+          {%- assign uniqueUpsellIds = uniqueUpsellIds | append: ',' | append: itemProductUpsell.id -%}
+        {%- endunless -%}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{%- endfor -%}
+
+{%- if settings.global_upsells != blank and availableUpsells == blank -%}
+  {%- assign collectionGlobalUpsells = settings.global_upsells -%}
+  {%- for itemProductUpsell in collectionGlobalUpsells.products -%}
+    {%- if itemProductUpsell.available -%}
+      {%- unless uniqueUpsellIds contains itemProductUpsell.id -%}
+        {%- assign availableUpsells = availableUpsells | append: ',' | append: itemProductUpsell.handle -%}
+        {%- assign uniqueUpsellIds = uniqueUpsellIds | append: ',' | append: itemProductUpsell.id -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- assign availableUpsells = availableUpsells | remove_first: ',' | split: ',' -%}
+
+{%- assign count_products = cart.items | size -%}
+
+<ul class="" x-data>
+  {%- for itemHandle in availableUpsells limit: maxUpsellProducts -%}
+    {% assign productUpsell = all_products[itemHandle] %}
+    <li id="{{ productUpsell.selected_or_first_available_variant.id }}" x-data="{ show: true }" x-show="show">
+      {% render 'upsell-product', product_ref: productUpsell %}
+    </li>
+  {% endfor %}
+</ul>

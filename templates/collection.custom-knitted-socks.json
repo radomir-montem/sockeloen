@@ -1,0 +1,139 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "custom_css": [],
+      "settings": {
+        "products_per_page": 8,
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 8
+      }
+    },
+    "faq_txte8r": {
+      "type": "faq",
+      "blocks": {
+        "heading_Nd3NCk": {
+          "type": "heading",
+          "settings": {
+            "heading": "FAQ"
+          }
+        },
+        "faq_8MAyjG": {
+          "type": "faq",
+          "settings": {
+            "question": "Are custom knitted socks suitable for athletic activities?",
+            "answer": "<p>Custom knitted socks can be tailored for various activities. While our socks originally are made for cycling sports, the socks are sutiable for any type of sports such as running, golf, tennis, badminton, hiking and more. <\/p>"
+          }
+        },
+        "faq_TJMiFN": {
+          "type": "faq",
+          "settings": {
+            "question": "Are there sock patterns specifically designed for different seasons?",
+            "answer": "<p>Yes, there are sock patterns designed for different seasons. For warmer months, you might opt for lightweight yarn and lace or mesh patterns. For colder months, thicker yarn and intricate cable or colorwork designs provide extra warmth and coziness.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Nd3NCk",
+        "faq_8MAyjG",
+        "faq_TJMiFN"
+      ],
+      "settings": {
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "padding_top_mob": 50,
+        "padding_bottom_mob": 50
+      }
+    },
+    "3dccd3f6-189f-4701-91e8-b85da8c70b90": {
+      "type": "usp-blackbg",
+      "blocks": {
+        "1f543cbc-9f39-499a-9016-c139c92896d3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+          }
+        },
+        "06418753-c11e-42ba-903a-10e77f8e4f2f": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+          }
+        },
+        "98a70ec6-d538-4770-ad14-ddd4d23d436c": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+          }
+        },
+        "1acca66e-41e6-4b67-8924-c27e53d05919": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+          }
+        }
+      },
+      "block_order": [
+        "1f543cbc-9f39-499a-9016-c139c92896d3",
+        "06418753-c11e-42ba-903a-10e77f8e4f2f",
+        "98a70ec6-d538-4770-ad14-ddd4d23d436c",
+        "1acca66e-41e6-4b67-8924-c27e53d05919"
+      ],
+      "settings": {}
+    },
+    "d37a2506-ed61-40de-8072-52e5bffc33fa": {
+      "type": "rich-text",
+      "blocks": {
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>CUSTOM KNITTED SOCKS<\/p>",
+            "heading_size": "h2"
+          }
+        },
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Be on top of the game with our unique and <strong>custom made<\/strong> socks service! Looking for a smaller quantity? <a href=\"https:\/\/sockeloen.com\/collections\/custom-printed-1-50-pairs\" target=\"_blank\" title=\"https:\/\/sockeloen.com\/collections\/custom-printed-1-50-pairs\">Click here<\/a> to check out our <strong>custom designed<\/strong> socks starting from 1 pair.<\/p><p>-<\/p><p>Looking for a bigger quantity? Then this is the right choice for you: 50 <strong>custom made<\/strong> unique pairs delivered within 4 to 8 weeks. Transform your personal wardrobe or corporate event with our premium custom <strong>knitted<\/strong> and <strong>athletic<\/strong> socks that can be customised using a large variety of colors, patterns and prints.   <\/p><p>-<\/p><p>Don't know where to start? Don't worry! Our highly skilled sock design team is here for you to offer advice and consultation if needed in material choice, sizing and patterns. C<strong>ustomize your own socks<\/strong> and let us take care of the rest. <\/p><p>-<\/p><p>Whether it's for corporate branding, special occasions, or personal wardrobe, our <strong>custom made<\/strong> socks services are crafted to ensure your comfort throughout the day. <\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0",
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1"
+      ],
+      "custom_css": [],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "accent-1",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 68
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "faq_txte8r",
+    "3dccd3f6-189f-4701-91e8-b85da8c70b90",
+    "d37a2506-ed61-40de-8072-52e5bffc33fa"
+  ]
+}

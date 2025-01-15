@@ -1,0 +1,18 @@
+{
+  "parent": "collection.cycling-socks.json",
+  "context": {
+    "market": "north-america"
+  },
+  "sections": {
+    "d37a2506-ed61-40de-8072-52e5bffc33fa": {
+      "settings": {},
+      "blocks": {
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
+          "settings": {
+            "text": "<p>Discover our premium collection of long cycling socks – meticulously crafted to enhance your performance on the road. Designed with cyclists in mind, our socks blend cutting-edge technology with superior comfort to provide the ultimate riding experience.<\/p>"
+          }
+        }
+      }
+    }
+  }
+}

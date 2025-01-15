@@ -1,0 +1,144 @@
+{
+  "sections": {
+    "image_banner_WqpDi6": {
+      "type": "image-banner",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/AWE.banner.collectie_de42ae0f-9a9f-4e52-82c1-dd08a948b585.png",
+        "image_mobile": "shopify:\/\/shop_images\/AWE.2.mobile.banner.collectie.png",
+        "image_overlay_opacity": 0,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "banner": {
+      "type": "main-collection-banner",
+      "disabled": true,
+      "settings": {
+        "image_overlay_opacity": 0,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "show_description": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 8,
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 8
+      }
+    },
+    "cb705c25-e9a8-4fa7-b01f-876e38bda057": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "ff3c3402-61b9-404b-8258-f603a60a684b": {
+          "type": "column",
+          "settings": {
+            "color": "",
+            "text_color": "#000000",
+            "font_size": 48,
+            "heading": "",
+            "description": "<p><a href=\"https:\/\/sockeloen.com\/collections\/all-products\" title=\"https:\/\/sockeloen.com\/collections\/all-products\">Click below<\/a> to see all our black friday deals.<\/p><p><\/p>",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "SHOP ALL DEALS",
+            "button_url": "https:\/\/sockeloen.com\/collections\/all-products",
+            "button_pos": "mt-0"
+          }
+        },
+        "7e10dc92-caae-448d-9a4a-8237c1700e9e": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/BLACK.FRIDAY.1000X1000.png",
+            "color": "",
+            "text_color": "#000000",
+            "font_size": 48,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "",
+            "button_url": "#",
+            "button_pos": "mt-0"
+          }
+        }
+      },
+      "block_order": [
+        "ff3c3402-61b9-404b-8258-f603a60a684b",
+        "7e10dc92-caae-448d-9a4a-8237c1700e9e"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "dc530aff-ed8f-4da9-bac4-3c972bf2e24c": {
+      "type": "usp-blackbg",
+      "blocks": {
+        "c54a8d87-0552-4f68-898c-ce5c105081f1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/2.PELOTON.USP.WIT.png"
+          }
+        },
+        "722a364a-0b8c-40aa-a27c-b60d19bca10f": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/3.SATISFACTION.USP.WIT.png"
+          }
+        },
+        "f3acf7cd-e22a-461b-8964-328f442dba7d": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/1.SHIPPING.USP.png"
+          }
+        },
+        "9c2902b8-73f0-4f9f-b30a-a240a22023e2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4.KING.USP.WIT.png"
+          }
+        }
+      },
+      "block_order": [
+        "c54a8d87-0552-4f68-898c-ce5c105081f1",
+        "722a364a-0b8c-40aa-a27c-b60d19bca10f",
+        "f3acf7cd-e22a-461b-8964-328f442dba7d",
+        "9c2902b8-73f0-4f9f-b30a-a240a22023e2"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "image_banner_WqpDi6",
+    "banner",
+    "product-grid",
+    "cb705c25-e9a8-4fa7-b01f-876e38bda057",
+    "dc530aff-ed8f-4da9-bac4-3c972bf2e24c"
+  ]
+}

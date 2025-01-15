@@ -1,0 +1,46 @@
+<div
+  class="sm:py-[50px] md2:py-[90px] 2xl:py-[170px] px-5 max-w-[1600px] m-auto overflow-hidden"
+  style="padding: {{ section.settings.vertical_padding }}px 0 calc({{ section.settings.vertical_padding }}px - 20px);"
+>
+  {% if section.settings.title != blank %}
+    <h2 class="uppercase text-white text-center text-[32px] font-bold mb-11">{{ section.settings.title }}</h2>
+  {% endif %}
+  {% render 'reviews-widget-custom' %}
+</div>
+
+{% style %}
+    .CarouselWidget-prefix .CarouselWidget:not(.CarouselWidget--scrollButtons-top) .CarouselWidget__footer {
+      display: none;
+    }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Reviews Carousel",
+  "tag": "section",
+  "class": "reviews-carousel bg-black",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "what others say"
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "min": 0,
+      "max": 210,
+      "step": 7,
+      "default": 140,
+      "unit": "px",
+      "label": "Vertical spacing"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews Carousel"
+    }
+  ]
+}
+{% endschema %}

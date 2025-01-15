@@ -1,0 +1,201 @@
+{
+  "sections": {
+    "c1c1952d-9ed0-46d9-84fe-165c1d4f0750": {
+      "type": "image-banner",
+      "blocks": {
+        "template--19260743450948__c1c1952d-9ed0-46d9-84fe-165c1d4f0750-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "CUSTOM SOCKS",
+            "heading_size": "h1"
+          }
+        },
+        "template--19260743450948__c1c1952d-9ed0-46d9-84fe-165c1d4f0750-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "Our custom socks come in different options, MOQ's and delivery times. Printed is delivered in 1 week, knitted in 4-8 weeks. See all options below.",
+            "text_style": "body"
+          }
+        },
+        "template--19260743450948__c1c1952d-9ed0-46d9-84fe-165c1d4f0750-buttons-1": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "CUSTOM PRINTED SOCKS > 1 PAIR",
+            "button_link_1": "shopify:\/\/collections\/custom-printed-1-50-pairs",
+            "button_style_secondary_1": false,
+            "button_label_2": "CUSTOM KNITTED SOCKS > 50 PAIRS",
+            "button_link_2": "shopify:\/\/collections\/custom-knitted-socks",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "template--19260743450948__c1c1952d-9ed0-46d9-84fe-165c1d4f0750-heading-1",
+        "template--19260743450948__c1c1952d-9ed0-46d9-84fe-165c1d4f0750-text-1",
+        "template--19260743450948__c1c1952d-9ed0-46d9-84fe-165c1d4f0750-buttons-1"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/desktop2.custom.banner.collectie.TDT---All-White.png",
+        "image_mobile": "shopify:\/\/shop_images\/mobile.custom.banner.collectie.TDT---All-White.png",
+        "image_overlay_opacity": 0,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "banner": {
+      "type": "main-collection-banner",
+      "disabled": true,
+      "settings": {
+        "image_overlay_opacity": 0,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "show_description": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "custom_css": [],
+      "settings": {
+        "products_per_page": 24,
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 8
+      }
+    },
+    "faq_8kPhmh": {
+      "type": "faq",
+      "blocks": {
+        "heading_e8FQNV": {
+          "type": "heading",
+          "settings": {
+            "heading": "FAQ"
+          }
+        },
+        "faq_3fzHQd": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does it take to receive my customized socks?",
+            "answer": "<p>The production time for customized socks can vary depending on the provider and the complexity of your design. Generally, it takes anywhere from a few days to a couple of weeks for your socks to be made and shipped. Be sure to check the estimated delivery time when placing your order to ensure they arrive in time for your intended purpose.<\/p>"
+          }
+        },
+        "faq_h6GFVq": {
+          "type": "faq",
+          "settings": {
+            "question": "What are some popular types of sock designs?",
+            "answer": "<p>Popular sock designs include stripes, polka dots, argyle, animal prints, and novelty patterns like food items or characters.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_e8FQNV",
+        "faq_3fzHQd",
+        "faq_h6GFVq"
+      ],
+      "settings": {
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "padding_top_mob": 50,
+        "padding_bottom_mob": 50
+      }
+    },
+    "29d4837c-5aa1-40b4-a777-fe357fa8deee": {
+      "type": "usp-blackbg",
+      "blocks": {
+        "723aa02e-dbf8-4617-9934-3727a9774b11": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+          }
+        },
+        "17d0de2c-bf54-4c04-be74-88f697598c34": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+          }
+        },
+        "20b9b506-3bf5-4970-a3ec-376982f4fbdf": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+          }
+        },
+        "236a11fb-d236-4a36-884d-7770c56e60a6": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+          }
+        }
+      },
+      "block_order": [
+        "723aa02e-dbf8-4617-9934-3727a9774b11",
+        "17d0de2c-bf54-4c04-be74-88f697598c34",
+        "20b9b506-3bf5-4970-a3ec-376982f4fbdf",
+        "236a11fb-d236-4a36-884d-7770c56e60a6"
+      ],
+      "settings": {}
+    },
+    "d37a2506-ed61-40de-8072-52e5bffc33fa": {
+      "type": "rich-text",
+      "blocks": {
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p><strong>CUSTOM SOCKS<\/strong><\/p>",
+            "heading_size": "h1"
+          }
+        },
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>High quality <strong>custom designed<\/strong> socks.<\/p><p>-<\/p><p>Our premium <strong>custom made<\/strong> socks service combines style and comfort. This is the perfect occassion for you to fully customize as you like, choosing from a large variety of colors, patterns, and materials to create the perfect pair of personalised socks. <\/p><p>-<\/p><p>The materials used in creating each pair of socks are concieved with comfort in mind, ensuring a snug and dry fit that lasts all day. <\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0",
+        "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1"
+      ],
+      "custom_css": [],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "accent-1",
+        "full_width": true,
+        "padding_top": 24,
+        "padding_bottom": 40
+      }
+    }
+  },
+  "order": [
+    "c1c1952d-9ed0-46d9-84fe-165c1d4f0750",
+    "banner",
+    "product-grid",
+    "faq_8kPhmh",
+    "29d4837c-5aa1-40b4-a777-fe357fa8deee",
+    "d37a2506-ed61-40de-8072-52e5bffc33fa"
+  ]
+}

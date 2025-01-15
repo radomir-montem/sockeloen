@@ -1,0 +1,44 @@
+{% if product.metafields.my_fields.product_upsells.value != blank %}
+  {% assign products = product.metafields.my_fields.product_upsells.value %}
+{% else %}
+  {% assign products = settings.global_upsells.products %}
+{% endif %}
+
+<div class="bg-background pt-[24px]">
+  <h4 class="h4 text-[#111111] pl-[32px] pb-[25px]">{{ section.settings.title | upcase }}</h4>
+  <div class="bot-swiper overflow-hidden relative">
+    <div class="swiper-wrapper">
+      {% for productItem in products %}
+        <div class="swiper-slide">
+          {% render 'card-product', card_product: productItem, media_aspect_ratio: 'adapt', section_id: section.id, show_secondary_image: true %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="bot-swiper-next">
+      {% render 'icon-arrow-right' %}
+    </div>
+    <div class="bot-swiper-prev">
+      {% render 'icon-arraw-left' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bought together",
+  "class": "bought-together",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "bought often together"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bought together"
+    }
+  ]
+}
+{% endschema %}

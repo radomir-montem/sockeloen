@@ -1,0 +1,110 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "169988084376a0f70e": {
+      "type": "apps",
+      "blocks": {
+        "d3195fb8-9eec-4937-9cbb-a6b53614aaf2": {
+          "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/form-embed-block\/2632fe16-c075-4321-a88b-50b567f42507",
+          "settings": {
+            "formId": "ULFWVw"
+          }
+        }
+      },
+      "block_order": [
+        "d3195fb8-9eec-4937-9cbb-a6b53614aaf2"
+      ],
+      "settings": {
+        "include_margins": false
+      }
+    },
+    "image_banner_WzBcBz": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_nmb6mT": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "You're in 👌",
+            "heading_size": "h0"
+          }
+        },
+        "text_DbimAX": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Keep an eye on your inbox & you'll be the first to shop our Black Friday deals. We have limited stock, so it’s first come, first served.",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_nmb6mT",
+        "text_DbimAX"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/BF_DARKBLUE_SALE_1920x1080_de8f9f1a-3654-4f11-955d-e710c851ef99.png",
+        "image_mobile": "shopify:\/\/shop_images\/BF_DARKBLUE_SALE_1920x1080_de8f9f1a-3654-4f11-955d-e710c851ef99.png",
+        "image_overlay_opacity": 0,
+        "image_height": "large",
+        "adapt_height_first_image": true,
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "48d25413-541c-46b4-8d1a-b9ebda1e3d01": {
+      "type": "usp-blackbg",
+      "blocks": {
+        "80cfa603-2ceb-400f-9f9c-f9405e6afc58": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/1.SHIPPING.USP.png"
+          }
+        },
+        "c2f128b6-3291-41d1-8ae3-46f7d618c8d3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/2.PELOTON.USP.WIT.png"
+          }
+        },
+        "6f5f0030-22ce-43dd-93e0-3c8fe9fad7d9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/3.SATISFACTION.USP.WIT.png"
+          }
+        },
+        "b5a44a46-3149-497f-b330-8628dceb5a55": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/4.KING.USP.WIT.png"
+          }
+        }
+      },
+      "block_order": [
+        "80cfa603-2ceb-400f-9f9c-f9405e6afc58",
+        "c2f128b6-3291-41d1-8ae3-46f7d618c8d3",
+        "6f5f0030-22ce-43dd-93e0-3c8fe9fad7d9",
+        "b5a44a46-3149-497f-b330-8628dceb5a55"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "169988084376a0f70e",
+    "image_banner_WzBcBz",
+    "48d25413-541c-46b4-8d1a-b9ebda1e3d01"
+  ]
+}

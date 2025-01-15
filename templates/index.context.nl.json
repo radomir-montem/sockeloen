@@ -1,0 +1,18 @@
+{
+  "parent": "index.json",
+  "context": {
+    "market": "nl"
+  },
+  "sections": {
+    "d87b5960-1f92-48c4-8223-cc52b7b532cf": {
+      "settings": {},
+      "blocks": {
+        "ecaa607f-a456-4c64-8b1d-82c823de6917": {
+          "settings": {
+            "description": "<p>Cycling, cycling, cycling. That's all we talk about at Sockeloen. <br\/>Not only made for cyclists, but also by cyclists. <br\/><br\/>At Sockeloen, we are dedicated to enhancing your cycling experience.<\/p><p><\/p><p><br\/><\/p>"
+          }
+        }
+      }
+    }
+  }
+}

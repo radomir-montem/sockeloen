@@ -1,0 +1,35 @@
+{
+  "parent": "product.fsotp.json",
+  "context": {
+    "market": "north-america"
+  },
+  "sections": {
+    "main": {
+      "blocks": {
+        "d448a9b5-1ba8-45fe-a44b-8f604142911f": {
+          "settings": {
+            "usp1_text": "<p><a href=\"https:\/\/store-localization.shopifyapps.com\/policies\/shipping-policy\" title=\"Shipping Policy\"><span style=\"text-decoration:underline\"><strong>Free <\/strong><\/span><span style=\"text-decoration:underline\">Shipping > $150,-<\/span><\/a><\/p>"
+          }
+        }
+      }
+    },
+    "9148c605-c3d3-4457-a7d9-718e5b06ad2d": {
+      "blocks": {
+        "cdbd0cb4-2ce5-4d43-81b3-cf8af48f1dea": {
+          "settings": {
+            "image": "shopify:\/\/shop_images\/1.SHIPPING.USP.wit_USA.png"
+          }
+        }
+      }
+    },
+    "8537c4d9-9c10-488a-bbd4-2c87e8b7e0a6": {
+      "blocks": {
+        "f1e6c323-4e34-4b13-8360-51bf6955f214": {
+          "settings": {
+            "image": "shopify:\/\/shop_images\/1.SHIPPING.USP.zwart_USA.png"
+          }
+        }
+      }
+    }
+  }
+}

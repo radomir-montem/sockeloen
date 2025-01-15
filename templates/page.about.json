@@ -1,0 +1,134 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "f9ef2236-98b7-4704-828d-7f5cb4b11aa2": {
+      "type": "image-banner",
+      "blocks": {
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "About Sockeloen",
+            "heading_size": "h0"
+          }
+        },
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-1": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "",
+            "text_style": "body"
+          }
+        },
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-2": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-0",
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-1",
+        "template--18355947274520__f9ef2236-98b7-4704-828d-7f5cb4b11aa2-16796820275239a54c-2"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/about-sockeloen.png",
+        "image_mobile": "shopify:\/\/shop_images\/about-sockeloen.png",
+        "image_overlay_opacity": 0,
+        "adapt_height_first_image": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "image_with_text_aqbCWa": {
+      "type": "image-with-text",
+      "settings": {
+        "order_mobile": "column",
+        "order_desktop": "row",
+        "bg_color": "#ffffff",
+        "image": "shopify:\/\/shop_images\/CUSTOM.SOCKS.banner.2.png",
+        "heading": "IT STARTED AT THE CUFF OF A SOCK",
+        "main_text": "<p>Or better, with the curling cuff of a sock. It still seemed like such a good idea to cut the seam out of his Rabobank socks. So he could pull them just a few centimeters higher. But after one wash it didn't look good anymore. Then the cuff slowly curled down and his socks slid back to his ankles.<\/p>",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "b0029d14-ee69-4389-80ec-b267786613f1": {
+      "type": "image-with-text",
+      "settings": {
+        "order_mobile": "column",
+        "order_desktop": "row-reverse",
+        "bg_color": "#ffffff",
+        "image": "shopify:\/\/shop_images\/BANNER.2.NEUTRAL.BANNER.HOME_DESKTOP_1920X980_affefda2-0c01-439a-8667-99d4df065930-_2.png",
+        "heading": "THAT HAD TO BE DIFFERENT",
+        "main_text": "<p>Jasper Ockeloen was - and is - one of those riders with a sock fetish. One of those countless riders for whom the socks should have exactly that one color, that one design and made from that one material. They shouldn't be too low, but not too high either. Not too tight and not too loose, not too thick and not too thin.<\/p><p>Since his nineteenth Jasper is half rider, half sock guru. He drove around in small teams for years, in races around the world. He became Dutch champion in beach racing and on the mountain bike.<\/p><p>He looked around, asked other riders for their experiences and experimented with<br\/>new materials and other designs. Countless teammates, colleagues and competitors started training and racing with his socks. His nickname in the peloton was quickly found: Sockeloen.<\/p>",
+        "padding_top": 26,
+        "padding_bottom": 26
+      }
+    },
+    "image_with_text_FxMWGH": {
+      "type": "image-with-text",
+      "settings": {
+        "order_mobile": "column",
+        "order_desktop": "row",
+        "bg_color": "#ffffff",
+        "image": "shopify:\/\/shop_images\/HOME.BANNER.GRAVEL.png",
+        "heading": "THE BRAND SOCKELOEN",
+        "main_text": "<p>Or better, with the curling cuff of a sock. It still seemed like such a good idea to cut the seam out of his Rabobank socks. So he could pull them just a few centimeters higher. But after one wash it didn't look good anymore. Then the cuff slowly curled down and his socks slid back to his ankles.<\/p>",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "33e98e73-6cfc-439d-a0ed-b31c7ae9ce0e": {
+      "type": "image-with-text",
+      "settings": {
+        "order_mobile": "column",
+        "order_desktop": "row-reverse",
+        "bg_color": "#ffffff",
+        "image": "shopify:\/\/shop_images\/tour-de-france-2022-mvdp-yellow-jersey.jpg",
+        "heading": "WORLD CHAMPIONS AND SAND DIGGERS",
+        "main_text": "<p>Today world champions and Olympic champions,<br\/>in various disciplines, ride with his socks. Some of the best riders and riders, choose Sockeloen. Because of the materials, due to the results of wind tunnel tests, but often simply because they like them. But Sockeloen is more. More than just socks for the Mathieu van der Poels and Anna van der Breggens of this planet.<\/p><p>The offer also includes countless socks for: the plate sprinters, the fair-weather cyclists, the adventurers, the sand grabs and even for the couch potatoes among us. Whether you want merino socks and shoe covers, that keeps your feet warm during a gravel ride like the downpour of rain. A pair of personalized socks with which you surprise a birthday friend. Or a set of socks to slump on the couch,<br\/>look at the course: they are there.<\/p>",
+        "padding_top": 26,
+        "padding_bottom": 26
+      }
+    },
+    "527b72c5-c9d8-4da7-bf8a-6145058fd4ae": {
+      "type": "custom-liquid",
+      "settings": {
+        "heading": "LISTEN TO THE STORY BEHIND SOCKELOEN, INTERVIEW BY THIJS ZONNEVELD [DUTCH]",
+        "heading_size": 18,
+        "custom_liquid": "<iframe style=\"border-radius:12px\" src=\"https:\/\/open.spotify.com\/embed\/episode\/4ptmhtPLnc0b1gUqydRV8G?utm_source=generator\" width=\"100%\" height=\"152\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"><\/iframe>",
+        "color_scheme": "background-1",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    }
+  },
+  "order": [
+    "main",
+    "f9ef2236-98b7-4704-828d-7f5cb4b11aa2",
+    "image_with_text_aqbCWa",
+    "b0029d14-ee69-4389-80ec-b267786613f1",
+    "image_with_text_FxMWGH",
+    "33e98e73-6cfc-439d-a0ed-b31c7ae9ce0e",
+    "527b72c5-c9d8-4da7-bf8a-6145058fd4ae"
+  ]
+}
