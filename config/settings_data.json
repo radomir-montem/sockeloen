@@ -1,6 +1,15 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
-    "product_colors": "Wit | White\nJongen | Boy\nMeisje | Girl\nGekleurd | Colored\nEffen | Plain\nGlanzend | Glossy\nWit V1 | White V1\nWit V2 | White V2\nWit\/Zilver | White\/Silver\nWit\/Zwart | White\/Black\nWit\/Oranje | White\/Orange\nWit\/Geel | White\/Yellow\nLogowit | Logowhite\nhelemaal wit | Allwhite\nZwart | Black\nhelemaal zwart | Allblack\nZwart\/Goud | Black\/Gold\nZwart\/Goud | Black\/Gold\nZwart\/Wit | Black\/White\nZwart\/Grijs | Black\/Grey\nZwart\/Groen | Black\/Green\nDonker | Dark\nGeel | Yellow\nModder | Mud\nDen | Pine\nCommute | Communte\nBlauw | Blue\nGrijs | Grey\nOranje | Orange\nSalie | Sage\nSomber | Murk\nSchors | Bark\nBeige | Beige\nGroen | Green\nBruin | Brown\nOranje | Orange\nGirasole | Girasole\nBonnie Blue | Bonnie Blue\nLamswol | Lamb's Wool\nTarroco | Tarroco\nOlijf | Oliva\nPansé | Pansé\nStaal | Acero\nBlauw | Blue\nItalië | Italy\nFrankrijk | France\nDuitsland | Germany\nBelgië | Belgium\nEuropa | Europe\nNederland | Netherlands\nWerelden | Worlds\nBordeauxrood | Bordeaux red\nNacht | Notte\nStandard | Standard\nBEAT | BEAT\nLSRF | LSRF\nCanyon | Canyon\nLa Machine | La Machine\nS-Bikes | S-Bikes\nSRAM | SRAM",
+    "product_colors": "Wit | White\nJongen | Boy\nMeisje | Girl\nGekleurd | Colored\nEffen | Plain\nGlanzend | Glossy\nWit V1 | White V1\nWit V2 | White V2\nWit/Zilver | White/Silver\nWit/Zwart | White/Black\nWit/Oranje | White/Orange\nWit/Geel | White/Yellow\nLogowit | Logowhite\nhelemaal wit | Allwhite\nZwart | Black\nhelemaal zwart | Allblack\nZwart/Goud | Black/Gold\nZwart/Goud | Black/Gold\nZwart/Wit | Black/White\nZwart/Grijs | Black/Grey\nZwart/Groen | Black/Green\nDonker | Dark\nGeel | Yellow\nModder | Mud\nDen | Pine\nCommute | Communte\nBlauw | Blue\nGrijs | Grey\nOranje | Orange\nSalie | Sage\nSomber | Murk\nSchors | Bark\nBeige | Beige\nGroen | Green\nBruin | Brown\nOranje | Orange\nGirasole | Girasole\nBonnie Blue | Bonnie Blue\nLamswol | Lamb's Wool\nTarroco | Tarroco\nOlijf | Oliva\nPansé | Pansé\nStaal | Acero\nBlauw | Blue\nItalië | Italy\nFrankrijk | France\nDuitsland | Germany\nBelgië | Belgium\nEuropa | Europe\nNederland | Netherlands\nWerelden | Worlds\nBordeauxrood | Bordeaux red\nNacht | Notte\nStandard | Standard\nBEAT | BEAT\nLSRF | LSRF\nCanyon | Canyon\nLa Machine | La Machine\nS-Bikes | S-Bikes\nSRAM | SRAM",
     "one_day_shipment": "Netherlands, Belgium",
     "two_days_shipment": "Germany, Austria, France",
     "three_five_days_shipment": "Bulgaria, Croatia, Cyprus, Czechia, Denmark, Estonia, Finland, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden",
@@ -121,7 +130,7 @@
     "predictive_search_enabled": true,
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": false,
-    "favicon": "shopify:\/\/shop_images\/sockeloen-bike-socks-fietssokken.png",
+    "favicon": "shopify://shop_images/sockeloen-bike-socks-fietssokken.png",
     "currency_code_enabled": false,
     "free_shipping": 75,
     "global_upsells": "best-sellers-1",
@@ -130,7 +139,7 @@
     "show_cart_note": false,
     "cart_drawer_collection": "best-sellers-1",
     "cart_drawer_button_2_cta": "Go to Cart",
-    "checkout_logo_image": "shopify:\/\/shop_images\/sockeloen-bike-socks-fietssokken.png",
+    "checkout_logo_image": "shopify://shop_images/sockeloen-bike-socks-fietssokken.png",
     "checkout_logo_position": "center",
     "checkout_logo_size": "small",
     "checkout_accent_color": "#a28044",
@@ -182,7 +191,7 @@
               "title": "All products",
               "title_translate": "Alle producten",
               "title_translate_german": "Alle Produkte",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_ALL.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png"
             }
           },
           "e57893bb-9bd9-4643-ba27-55705f4639c0": {
@@ -191,7 +200,7 @@
               "title": "Latest Products",
               "title_translate": "Nieuwste producten",
               "title_translate_german": "Neueste Produkte",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_LATEST.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_LATEST.png"
             }
           },
           "134d6ef9-c639-4b7d-9751-ce8b307614a6": {
@@ -200,7 +209,7 @@
               "title": "Best sellers",
               "title_translate": "Beste sellers",
               "title_translate_german": "Bestseller",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_BEST.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_BEST.png"
             }
           },
           "7c608162-18ea-4086-b1e3-7d58c02c3d71": {
@@ -209,7 +218,7 @@
               "title": "Bundles",
               "title_translate": "Bundles",
               "title_translate_german": "Bündel",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_BUNDLE_b5cc4bdd-118b-4b56-a234-4782add2f354.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_BUNDLE_b5cc4bdd-118b-4b56-a234-4782add2f354.png"
             }
           },
           "1c9bd5df-b3b4-4bd3-aeb7-d723e9b966df": {
@@ -218,7 +227,7 @@
               "title": "SALE",
               "title_translate": "SALE",
               "title_translate_german": "AUSVERKAUF",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_SALE.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_SALE.png"
             }
           },
           "51f8e2ce-0435-4378-a496-eaabd004ad09": {
@@ -227,7 +236,7 @@
               "title": "All socks",
               "title_translate": "Alle sokken",
               "title_translate_german": "Alle Socken",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_ALL_2.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_ALL_2.png"
             }
           },
           "5cd9bfaa-61ec-42ff-a41b-bf91f595a144": {
@@ -236,7 +245,7 @@
               "title": "Cycling socks",
               "title_translate": "Fietssokken",
               "title_translate_german": "Radsocken",
-              "image_item": "shopify:\/\/shop_images\/Img_1.png"
+              "image_item": "shopify://shop_images/Img_1.png"
             }
           },
           "9e8aa072-3265-4d04-950b-df3d8c82f1da": {
@@ -245,7 +254,7 @@
               "title": "Aero socks",
               "title_translate": "Aero sokken",
               "title_translate_german": "Aero-Socken",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_FSOTP_SOCKS.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_FSOTP_SOCKS.png"
             }
           },
           "0b48bb84-8fc0-412a-9006-582fcc9758a7": {
@@ -254,7 +263,7 @@
               "title": "Casual socks",
               "title_translate": "Casual sokken",
               "title_translate_german": "Freizeitsocken",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_CASUAL_SOCKS.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CASUAL_SOCKS.png"
             }
           },
           "b71aba7c-f8e0-4c39-a57e-f9233f4ff521": {
@@ -263,7 +272,7 @@
               "title": "Compression socks",
               "title_translate": "COMPRESSIEKOUSEN",
               "title_translate_german": "Kompressionssocken",
-              "image_item": "shopify:\/\/shop_images\/Sockeloen-Race-mode-black-low-compression-socks_1_OUTSIDE_3D.png"
+              "image_item": "shopify://shop_images/Sockeloen-Race-mode-black-low-compression-socks_1_OUTSIDE_3D.png"
             }
           },
           "2a38c836-e963-433b-aa46-ea845863580c": {
@@ -272,7 +281,7 @@
               "title": "Printed socks",
               "title_translate": "Bedrukte sokken",
               "title_translate_german": "Bedruckte Socken",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_2_PRINTED_SOCKS.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_2_PRINTED_SOCKS.png"
             }
           },
           "8a85390c-533f-419f-af4e-dc86c14a8c9f": {
@@ -281,7 +290,7 @@
               "title": "Custom Printed Socks > 1 Pair",
               "title_translate": "Custom bedrukte sokken > 1 Paar",
               "title_translate_german": "Custom bedruckte Socken > 1 Paar",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_CUSTOM_PRINTED_SOCKS.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_PRINTED_SOCKS.png"
             }
           },
           "1a5c69a5-62b0-4869-8c95-6e04a6cd4094": {
@@ -290,7 +299,7 @@
               "title": "Custom Knitted Socks > 50 Pairs",
               "title_translate": "Custom verweven sokken > 50 Paar",
               "title_translate_german": "Custom gestrickte Socken > 50 Paar",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png"
             }
           },
           "f224b581-b3e0-4a92-acc1-5b3071db8347": {
@@ -299,7 +308,7 @@
               "title": "Custom Socks",
               "title_translate": "Custom Sokken",
               "title_translate_german": "Custom Socken",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png"
             }
           },
           "a9fa6cbe-f983-4cd8-ab86-d4ad2593ea3c": {
@@ -308,7 +317,7 @@
               "title": "All Custom Socks",
               "title_translate": "Alle Custom Sokken",
               "title_translate_german": "Alle Custom Socken",
-              "image_item": "shopify:\/\/shop_images\/2MENU_BLOCK_CUSTOM_KNITTED_SOCKS_805f7b44-4859-41d8-a82c-47682aca9a6c.png"
+              "image_item": "shopify://shop_images/2MENU_BLOCK_CUSTOM_KNITTED_SOCKS_805f7b44-4859-41d8-a82c-47682aca9a6c.png"
             }
           },
           "3be6738c-3970-4997-b960-df503e4d6177": {
@@ -317,7 +326,7 @@
               "title": "CUSTOM PRINTED SOCKS > 1 PAAR",
               "title_translate": "BEDRUKTE SOKKEN > 1 PAAR",
               "title_translate_german": "Custom bedruckte Socken > 1 Paar",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_CUSTOM_PRINTED_SOCKS.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_PRINTED_SOCKS.png"
             }
           },
           "e76e46ad-5639-42fc-a658-9c7de3ce3aca": {
@@ -326,7 +335,7 @@
               "title": "CUSTOM KNITTED SOCKS > 50 PAIRS",
               "title_translate": "VERWEVEN SOKKEN > 50 PAAR",
               "title_translate_german": "",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png"
             }
           },
           "b0810af8-fff5-4ba2-af54-2a6155ae8b7a": {
@@ -335,7 +344,7 @@
               "title": "CUSTOM SOCK EXAMPLES",
               "title_translate": "CUSTOM SOK VOORBEELDEN",
               "title_translate_german": "Custom Sock Beispiele",
-              "image_item": "shopify:\/\/shop_images\/EXAMPLE.2MENU_BLOCK_CUSTOM_KNITTED_SOCKS_805f7b44-4859-41d8-a82c-47682aca9a6c.png"
+              "image_item": "shopify://shop_images/EXAMPLE.2MENU_BLOCK_CUSTOM_KNITTED_SOCKS_805f7b44-4859-41d8-a82c-47682aca9a6c.png"
             }
           },
           "text_wRnFtX": {
@@ -344,7 +353,7 @@
               "title": "Pre Orders",
               "title_translate": "Pre Orders",
               "title_translate_german": "Vorbestellungen",
-              "image_item": "shopify:\/\/shop_images\/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_0e7e9651-14cc-4901-892b-7cd90fbd0183.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_0e7e9651-14cc-4901-892b-7cd90fbd0183.png"
             }
           }
         },
@@ -372,7 +381,7 @@
         ],
         "settings": {
           "color_scheme": "background-1",
-          "logo": "shopify:\/\/shop_images\/logo.svg",
+          "logo": "shopify://shop_images/logo.svg",
           "logo_width": 50,
           "logo_position": "middle-center",
           "menu": "main-menu",
@@ -421,7 +430,7 @@
       "giftcard-header": {
         "type": "giftcard-header",
         "settings": {
-          "logo": "shopify:\/\/shop_images\/logo_b7f5445f-f333-4a6d-932d-dfa574335a69.svg",
+          "logo": "shopify://shop_images/logo_b7f5445f-f333-4a6d-932d-dfa574335a69.svg",
           "logo_width": 50,
           "logo_width_mobile": 50,
           "padding_top": 36,
@@ -432,7 +441,7 @@
     "content_for_index": [],
     "blocks": {
       "15316669992541710076": {
-        "type": "shopify:\/\/apps\/reviews-io\/blocks\/reviewsio-rating-snippet\/92a082e5-b297-4e88-b428-ac96cbc505f9",
+        "type": "shopify://apps/reviews-io/blocks/reviewsio-rating-snippet/92a082e5-b297-4e88-b428-ac96cbc505f9",
         "disabled": false,
         "settings": {
           "star": "#000",
@@ -449,12 +458,12 @@
         }
       },
       "855628211100114053": {
-        "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/klaviyo-onsite-embed\/2632fe16-c075-4321-a88b-50b567f42507",
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
         "disabled": false,
         "settings": {}
       },
       "10830403595879607806": {
-        "type": "shopify:\/\/apps\/reviews-io\/blocks\/reviewsio-core\/92a082e5-b297-4e88-b428-ac96cbc505f9",
+        "type": "shopify://apps/reviews-io/blocks/reviewsio-core/92a082e5-b297-4e88-b428-ac96cbc505f9",
         "disabled": false,
         "settings": {
           "url_key": "sockeloen-nl",
@@ -462,33 +471,33 @@
         }
       },
       "9796887843177960256": {
-        "type": "shopify:\/\/apps\/colorlab\/blocks\/app-embed\/65e75e18-2d15-42fd-99e4-95daf8c89e93",
+        "type": "shopify://apps/colorlab/blocks/app-embed/65e75e18-2d15-42fd-99e4-95daf8c89e93",
         "disabled": false,
         "settings": {
-          "product_form_selector": "form[action*=\"\/cart\/add\"]",
+          "product_form_selector": "form[action*=\"/cart/add\"]",
           "generate_thumbnail": true,
           "cart_row_selector": "tr"
         }
       },
       "12657775114333427046": {
-        "type": "shopify:\/\/apps\/essential-countdown-timer-bar\/blocks\/app_embed\/722378e8-5a70-4eae-aa89-9e44e8e9f6de",
+        "type": "shopify://apps/essential-countdown-timer-bar/blocks/app_embed/722378e8-5a70-4eae-aa89-9e44e8e9f6de",
         "disabled": false,
         "settings": {}
       },
       "15351435345818755577": {
-        "type": "shopify:\/\/apps\/pandectes-gdpr-compliance\/blocks\/banner\/58c0baa2-6cc1-480c-9ea6-38d6d559556a",
+        "type": "shopify://apps/pandectes-gdpr-compliance/blocks/banner/58c0baa2-6cc1-480c-9ea6-38d6d559556a",
         "disabled": false,
         "settings": {
           "programmatic_inject": false
         }
       },
       "17676059084223943535": {
-        "type": "shopify:\/\/apps\/triplewhale\/blocks\/triple_pixel_snippet\/483d496b-3f1a-4609-aea7-8eee3b6b7a2a",
+        "type": "shopify://apps/triplewhale/blocks/triple_pixel_snippet/483d496b-3f1a-4609-aea7-8eee3b6b7a2a",
         "disabled": false,
         "settings": {}
       },
       "18228966181090706294": {
-        "type": "shopify:\/\/apps\/selleasy\/blocks\/app-embed\/790c1a03-a71f-4bc1-9869-00dad526d3c2",
+        "type": "shopify://apps/selleasy/blocks/app-embed/790c1a03-a71f-4bc1-9869-00dad526d3c2",
         "disabled": false,
         "settings": {
           "storefrontAccessToken": "cbe1ddf3d60caf77ed22f766660e9e98"
