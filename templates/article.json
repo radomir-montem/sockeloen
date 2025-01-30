@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "article_banner_XGqirG": {
@@ -39,6 +48,7 @@
     },
     "featured_collection_bg_Fd7wKF": {
       "type": "Featured-Collection-BG",
+      "disabled": true,
       "settings": {
         "title": "Best Sellers",
         "collection": "best-sellers-1",
@@ -58,41 +68,41 @@
         "image_fffJnB": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/CATEGORY5_DESKTOP_474X680_4a9444aa-e1e2-4d27-ba14-e6aff38f548a.jpg",
+            "image": "shopify://shop_images/CATEGORY5_DESKTOP_474X680_4a9444aa-e1e2-4d27-ba14-e6aff38f548a.jpg",
             "opacity": 50,
             "title": "SOCKS",
             "button_label": "Shop Now",
-            "button_url": "shopify:\/\/collections\/cycling-socks"
+            "button_url": "shopify://collections/cycling-socks"
           }
         },
         "image_YBkfbh": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/CATEGORY2_DESKTOP_474X680_29b8d959-7944-4600-94b7-0e40915bd0d9.jpg",
+            "image": "shopify://shop_images/CATEGORY2_DESKTOP_474X680_29b8d959-7944-4600-94b7-0e40915bd0d9.jpg",
             "opacity": 50,
             "title": "GLOVES",
             "button_label": "Shop Now",
-            "button_url": "shopify:\/\/collections\/cycling-gloves"
+            "button_url": "shopify://collections/cycling-gloves"
           }
         },
         "image_JPMEfG": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/HOME.PAGE.BANNER.SHOECOVERS.jpg",
+            "image": "shopify://shop_images/HOME.PAGE.BANNER.SHOECOVERS.jpg",
             "opacity": 50,
             "title": "OVERSHOES",
             "button_label": "SHOP NOW",
-            "button_url": "shopify:\/\/collections\/cycling-overshoes"
+            "button_url": "shopify://collections/cycling-overshoes"
           }
         },
         "image_XwJJ9Q": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/HOME_CATEGORY_DESKTOP_474X680_024fdbff-dc0d-4c7a-8bf0-951e1eb0f15a.jpg",
+            "image": "shopify://shop_images/HOME_CATEGORY_DESKTOP_474X680_024fdbff-dc0d-4c7a-8bf0-951e1eb0f15a.jpg",
             "opacity": 50,
             "title": "AERO  SOCKS",
             "button_label": "SHOP NOW",
-            "button_url": "shopify:\/\/collections\/aero-cycling-socks"
+            "button_url": "shopify://collections/aero-cycling-socks"
           }
         }
       },
@@ -113,25 +123,25 @@
         "heading_PFqMh9": {
           "type": "heading",
           "settings": {
-            "heading": "<p>Talk about your brand<\/p>",
+            "heading": "<p>Explore Our Products</p>",
             "heading_size": "h1"
           }
         },
         "text_KjAzUJ": {
           "type": "text",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
+            "text": "<p>Elliot H - \"Rapid socks and fitt very well. Looks great with the white and gold design!!\"</p>"
           }
         },
         "button_RXALGX": {
           "type": "button",
           "settings": {
-            "button_label": "Button label",
-            "button_link": "",
+            "button_label": "All Socks",
+            "button_link": "shopify://collections/all-socks",
             "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "button_label_2": "All Products",
+            "button_link_2": "shopify://collections/all-products",
+            "button_style_secondary_2": true
           }
         }
       },
@@ -140,7 +150,6 @@
         "text_KjAzUJ",
         "button_RXALGX"
       ],
-      "disabled": true,
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
