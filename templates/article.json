@@ -136,12 +136,12 @@
         "button_RXALGX": {
           "type": "button",
           "settings": {
-            "button_label": "All Socks",
-            "button_link": "shopify://collections/all-socks",
-            "button_style_secondary": false,
-            "button_label_2": "All Products",
-            "button_link_2": "shopify://collections/all-products",
-            "button_style_secondary_2": true
+            "button_label": "All Products",
+            "button_link": "shopify://collections/all",
+            "button_style_secondary": true,
+            "button_label_2": "SALE",
+            "button_link_2": "shopify://collections/sale",
+            "button_style_secondary_2": false
           }
         }
       },
