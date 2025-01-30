@@ -137,7 +137,7 @@
           "type": "button",
           "settings": {
             "button_label": "All Products",
-            "button_link": "shopify://collections/all",
+            "button_link": "https://sockeloen.com/nl/collections/all-socks/1-pair",
             "button_style_secondary": true,
             "button_label_2": "SALE",
             "button_link_2": "shopify://collections/sale",
