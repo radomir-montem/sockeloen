@@ -15,25 +15,25 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "EXPLORE 612",
+            "heading": "CX WORLDS AERO",
             "heading_size": "h2"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "STAY ALWAYS WHITE WITH THE 612 OVERSHOES",
+            "text": "Explore aero socks worn during the Cyclocross World Championships",
             "text_style": "body"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "SHOP OVERSHOES",
-            "button_link_1": "shopify://products/aero-overshoe-612",
+            "button_label_1": "SHOP AERO WHITE",
+            "button_link_1": "shopify://products/sockeloen-aero-cycling-socks",
             "button_style_secondary_1": false,
-            "button_label_2": "SHOP WINTER",
-            "button_link_2": "shopify://collections/all-weather-essentials",
+            "button_label_2": "AERO COLLECTION",
+            "button_link_2": "shopify://collections/aero-cycling-socks",
             "button_style_secondary_2": true
           }
         }
@@ -47,7 +47,7 @@
         "h2 {font-size: 48px;}"
       ],
       "settings": {
-        "image": "shopify://shop_images/Website_WHITE_612_V7_80ccac8f-1729-4982-b6b6-999b5ba9ca36.png",
+        "image": "shopify://shop_images/Studiobanner_WK_25_5d817711-6f77-4ce6-90a7-cd24c2b3f162.png",
         "image_mobile": "shopify://shop_images/612_Mobile_banner_2.png",
         "image_overlay_opacity": 0,
         "banner_image_height": 600,
