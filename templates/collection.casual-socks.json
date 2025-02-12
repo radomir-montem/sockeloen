@@ -2,10 +2,7 @@
   "sections": {
     "banner": {
       "type": "main-collection-banner",
-      "settings": {
-        "show_collection_description": false,
-        "show_collection_image": false
-      }
+      "settings": {}
     },
     "product-grid": {
       "type": "main-collection-product-grid",

@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "image_banner": {
@@ -30,10 +21,10 @@
           "type": "buttons",
           "settings": {
             "button_label_1": "SHOP AERO WHITE",
-            "button_link_1": "shopify://products/sockeloen-aero-cycling-socks",
+            "button_link_1": "shopify:\/\/products\/sockeloen-aero-cycling-socks",
             "button_style_secondary_1": false,
             "button_label_2": "AERO COLLECTION",
-            "button_link_2": "shopify://collections/aero-cycling-socks",
+            "button_link_2": "shopify:\/\/collections\/aero-cycling-socks",
             "button_style_secondary_2": true
           }
         }
@@ -47,8 +38,8 @@
         "h2 {font-size: 48px;}"
       ],
       "settings": {
-        "image": "shopify://shop_images/Studiobanner_WK_25_0fb8acea-634a-4b8e-a87a-01e92ed73097.png",
-        "image_mobile": "shopify://shop_images/Studiobanner_WK_25_Mobile_v2.png",
+        "image": "shopify:\/\/shop_images\/Studiobanner_WK_25_0fb8acea-634a-4b8e-a87a-01e92ed73097.png",
+        "image_mobile": "shopify:\/\/shop_images\/Studiobanner_WK_25_Mobile_v2.png",
         "image_overlay_opacity": 0,
         "banner_image_height": 600,
         "image_height_mobile": 550,
@@ -68,41 +59,41 @@
         "eef4ba6c-f921-4b50-98a4-4507f6975f2a": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/CATEGORY5_DESKTOP_474X680_4a9444aa-e1e2-4d27-ba14-e6aff38f548a.jpg",
+            "image": "shopify:\/\/shop_images\/CATEGORY5_DESKTOP_474X680_4a9444aa-e1e2-4d27-ba14-e6aff38f548a.jpg",
             "opacity": 10,
             "title": "SOCKS",
             "button_label": "Shop Now",
-            "button_url": "shopify://collections/cycling-socks"
+            "button_url": "shopify:\/\/collections\/cycling-socks"
           }
         },
         "019acde6-345b-4b53-8c89-106563c84fb2": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/CATEGORY2_DESKTOP_474X680_29b8d959-7944-4600-94b7-0e40915bd0d9.jpg",
+            "image": "shopify:\/\/shop_images\/CATEGORY2_DESKTOP_474X680_29b8d959-7944-4600-94b7-0e40915bd0d9.jpg",
             "opacity": 10,
             "title": "GLOVES",
             "button_label": "Shop Now",
-            "button_url": "shopify://collections/cycling-gloves"
+            "button_url": "shopify:\/\/collections\/cycling-gloves"
           }
         },
         "6d8ba610-7a14-4d56-aec7-aab43b31460b": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/HOME.PAGE.BANNER.SHOECOVERS.jpg",
+            "image": "shopify:\/\/shop_images\/HOME.PAGE.BANNER.SHOECOVERS.jpg",
             "opacity": 10,
             "title": "OVERSHOES",
             "button_label": "Shop Now",
-            "button_url": "shopify://collections/cycling-overshoes"
+            "button_url": "shopify:\/\/collections\/cycling-overshoes"
           }
         },
         "70fc3b03-a6c3-48e5-b2b0-9eb9da4cb5d6": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/HOME_CATEGORY_DESKTOP_474X680_024fdbff-dc0d-4c7a-8bf0-951e1eb0f15a.jpg",
+            "image": "shopify:\/\/shop_images\/HOME_CATEGORY_DESKTOP_474X680_024fdbff-dc0d-4c7a-8bf0-951e1eb0f15a.jpg",
             "opacity": 10,
             "title": "AERO SOCKS",
             "button_label": "Shop Now",
-            "button_url": "shopify://collections/aero-cycling-socks"
+            "button_url": "shopify:\/\/collections\/aero-cycling-socks"
           }
         }
       },
@@ -123,25 +114,25 @@
         "a68819bb-0e6b-48c9-863f-10a1074f5d16": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/1.SHIPPING.USP.png"
+            "image": "shopify:\/\/shop_images\/1.SHIPPING.USP.png"
           }
         },
         "e5266b35-ea27-4c04-aa02-b709db6a4999": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/2.PELOTON.USP.WIT.png"
+            "image": "shopify:\/\/shop_images\/2.PELOTON.USP.WIT.png"
           }
         },
         "0cd61b2f-4ae5-4495-8470-6db7647649c0": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/3.SATISFACTION.USP.WIT.png"
+            "image": "shopify:\/\/shop_images\/3.SATISFACTION.USP.WIT.png"
           }
         },
         "20a37a02-b535-4c77-9abf-ee2feb677b95": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/4.KING.USP.WIT.png"
+            "image": "shopify:\/\/shop_images\/4.KING.USP.WIT.png"
           }
         }
       },
@@ -181,7 +172,7 @@
         "a8a72217-bd02-490a-b90f-0b812e1cec08": {
           "type": "text",
           "settings": {
-            "text": "FREE 15MIN CONSULT // FREE SAMPLE SOCKS // STARTING FROM 1 PAIR // DELIVERY WITHIN 1 WEEK // OWNED PRODUCTION FACILITIES // 100% SATISFACTION",
+            "text": "FREE 15MIN CONSULT \/\/ FREE SAMPLE SOCKS \/\/ STARTING FROM 1 PAIR \/\/ DELIVERY WITHIN 1 WEEK \/\/ OWNED PRODUCTION FACILITIES \/\/ 100% SATISFACTION",
             "text_style": "body"
           }
         },
@@ -189,10 +180,10 @@
           "type": "buttons",
           "settings": {
             "button_label_1": "LEARN MORE",
-            "button_link_1": "shopify://pages/custom-made",
+            "button_link_1": "shopify:\/\/pages\/custom-made",
             "button_style_secondary_1": true,
             "button_label_2": "EXPLORE CUSTOM SOCKS",
-            "button_link_2": "shopify://collections/custom-socks",
+            "button_link_2": "shopify:\/\/collections\/custom-socks",
             "button_style_secondary_2": false
           }
         }
@@ -203,8 +194,8 @@
         "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2"
       ],
       "settings": {
-        "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1_f2234b29-35ac-49bb-94c7-d87c0f5c7949.png",
-        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
+        "image": "shopify:\/\/shop_images\/CUSTOM.SOCKS.banner_1_f2234b29-35ac-49bb-94c7-d87c0f5c7949.png",
+        "image_mobile": "shopify:\/\/shop_images\/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
         "image_overlay_opacity": 20,
         "banner_image_height": 600,
         "image_height_mobile": 450,
@@ -225,30 +216,30 @@
           "type": "richtext",
           "settings": {
             "title": "SALE",
-            "description": "<p>Explore our last chance products here. </p><p>Special prices. Minimum waste.</p><p></p><p></p><p></p><p></p><p></p>",
+            "description": "<p>Explore our last chance products here. <\/p><p>Special prices. Minimum waste.<\/p><p><\/p><p><\/p><p><\/p><p><\/p><p><\/p>",
             "button_label": "SHOP NOW",
-            "button_url": "shopify://collections/sale",
+            "button_url": "shopify:\/\/collections\/sale",
             "text_align": "center"
           }
         },
         "4904019c-ebe9-48ae-adae-d8c50c33e729": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/COLLECTION_DESKTOP_474X680_543907b2-02ca-4f56-a798-dfecf1a578ea.jpg",
+            "image": "shopify:\/\/shop_images\/COLLECTION_DESKTOP_474X680_543907b2-02ca-4f56-a798-dfecf1a578ea.jpg",
             "opacity": 20,
             "title": "FSOTP",
             "button_label": "SHOP NOW",
-            "button_url": "shopify://collections/fsotp"
+            "button_url": "shopify:\/\/collections\/fsotp"
           }
         },
         "86de9b6b-4b96-465d-89c3-3525b1066c20": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/COLLECTION2_DESKTOP_474X680_0272a9cf-96ef-47b1-8b19-c202eca3412a.jpg",
+            "image": "shopify:\/\/shop_images\/COLLECTION2_DESKTOP_474X680_0272a9cf-96ef-47b1-8b19-c202eca3412a.jpg",
             "opacity": 20,
             "title": "A.W.E.",
             "button_label": "SHOP NOW",
-            "button_url": "shopify://collections/all-weather-essentials"
+            "button_url": "shopify:\/\/collections\/all-weather-essentials"
           }
         }
       },
@@ -267,12 +258,12 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/3-explore-AWE-overshoes-V2_1080x1080_aeeb2094-d9ea-438f-be9a-2aef043c91f9.png",
+            "image": "shopify:\/\/shop_images\/3-explore-AWE-overshoes-V2_1080x1080_aeeb2094-d9ea-438f-be9a-2aef043c91f9.png",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
             "heading": "",
-            "description": "<p></p><p></p><p></p>",
+            "description": "<p><\/p><p><\/p><p><\/p>",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
@@ -288,12 +279,12 @@
             "text_color": "#ffffff",
             "font_size": 40,
             "heading": "",
-            "description": "<p><br/>LIVE NOW // LIVE NOW  // LIVE NOW</p>",
+            "description": "<p><br\/>LIVE NOW \/\/ LIVE NOW  \/\/ LIVE NOW<\/p>",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "EXPLORE A.W.E.",
-            "button_url": "https://sockeloen.com/nl/collections/all-weather-essentials",
+            "button_url": "https:\/\/sockeloen.com\/nl\/collections\/all-weather-essentials",
             "button_pos": "mt-0"
           }
         }
@@ -312,11 +303,11 @@
       ],
       "settings": {
         "bg_color": "#e2e2e2",
-        "image": "shopify://shop_images/Fastest_sock_on_the_planet_468_all_white_aero_socks_7_FRONT_3D.png",
-        "main_text": "<p><strong>FASTEST SOCKS ON THE PLANET</strong></p>",
+        "image": "shopify:\/\/shop_images\/Fastest_sock_on_the_planet_468_all_white_aero_socks_7_FRONT_3D.png",
+        "main_text": "<p><strong>FASTEST SOCKS ON THE PLANET<\/strong><\/p>",
         "main_text_color": "#121212",
         "button_text": "Shop now",
-        "button_url": "shopify://collections/fsotp",
+        "button_url": "shopify:\/\/collections\/fsotp",
         "button_bg_color": "#a28044",
         "button_text_color": "#ffffff"
       }
@@ -370,49 +361,49 @@
           "type": "faq",
           "settings": {
             "question": "What makes cycling socks different from regular socks?",
-            "answer": "<p>Cycling socks are typically made from technical fabrics like merino wool or synthetic blends that offer moisture management and temperature regulation. They often have padding in key areas to reduce pressure points and are designed to fit snugly without bunching up, providing better support and comfort during long rides.</p>"
+            "answer": "<p>Cycling socks are typically made from technical fabrics like merino wool or synthetic blends that offer moisture management and temperature regulation. They often have padding in key areas to reduce pressure points and are designed to fit snugly without bunching up, providing better support and comfort during long rides.<\/p>"
           }
         },
         "faq_yLqVtL": {
           "type": "faq",
           "settings": {
             "question": "Can I customize the design of my socks?",
-            "answer": "<p>Absolutely! With custom made socks, you have full control over the design. You can choose everything from colors and patterns to logos and text.</p>"
+            "answer": "<p>Absolutely! With custom made socks, you have full control over the design. You can choose everything from colors and patterns to logos and text.<\/p>"
           }
         },
         "faq_jE7HRw": {
           "type": "faq",
           "settings": {
             "question": "How can I design my own socks?",
-            "answer": "<p>We offer online design tools specifically tailored for designing printed socks. For knitted socks, you can either use our provided templates to design them yourself, or you can opt for our free design service where we create the design based on your specific input.</p>"
+            "answer": "<p>We offer online design tools specifically tailored for designing printed socks. For knitted socks, you can either use our provided templates to design them yourself, or you can opt for our free design service where we create the design based on your specific input.<\/p>"
           }
         },
         "faq_e7aXaE": {
           "type": "faq",
           "settings": {
             "question": "Do you also have sustainable options for the custom socks?",
-            "answer": "<p>Yes, at Sockeloen we strive to make our socks durable in terms of usage and materials. Our yarns are standard certified with Oeko tex Reach.</p>"
+            "answer": "<p>Yes, at Sockeloen we strive to make our socks durable in terms of usage and materials. Our yarns are standard certified with Oeko tex Reach.<\/p>"
           }
         },
         "faq_rmDy6B": {
           "type": "faq",
           "settings": {
             "question": "Do you also produce white-label custom socks?",
-            "answer": "<p>Yes, we can make our custom socks with white label as well. With our transparent or custom packaging, there is no tracing to the producer and you can enjoy your unique designs!Can I design the left and right socks separately? Yes, with Custom woven socks you can design both the left and right socks separately, giving you more creative freedom. This is possible with any of our custom models, with a minimum order of 200 pairs.</p>"
+            "answer": "<p>Yes, we can make our custom socks with white label as well. With our transparent or custom packaging, there is no tracing to the producer and you can enjoy your unique designs!Can I design the left and right socks separately? Yes, with Custom woven socks you can design both the left and right socks separately, giving you more creative freedom. This is possible with any of our custom models, with a minimum order of 200 pairs.<\/p>"
           }
         },
         "faq_EpFbmc": {
           "type": "faq",
           "settings": {
             "question": "What are the delivery time for your products?",
-            "answer": "<p>Our delivery times vary depending on the type of product you order.</p><p></p><p>Custom printed socks: Typically, it takes around 1 week for delivery.</p><p> </p><p>Knitted socks: Due to their intricate manufacturing process, knitted socks usually require 8 weeks for delivery.</p><p></p><p>Rush orders: If you need your items urgently, we offer a rush order option which shortens the delivery time to 4 weeks. Please note that rush orders may incur additional fees.</p>"
+            "answer": "<p>Our delivery times vary depending on the type of product you order.<\/p><p><\/p><p>Custom printed socks: Typically, it takes around 1 week for delivery.<\/p><p> <\/p><p>Knitted socks: Due to their intricate manufacturing process, knitted socks usually require 8 weeks for delivery.<\/p><p><\/p><p>Rush orders: If you need your items urgently, we offer a rush order option which shortens the delivery time to 4 weeks. Please note that rush orders may incur additional fees.<\/p>"
           }
         },
         "faq_WzfbzK": {
           "type": "faq",
           "settings": {
             "question": "How long does it take to receive my custom socks?",
-            "answer": "<p>The production time for custom socks can vary depending on the materials and quantity. The standard delivery is 8 weeks, and with rush delivery, we can deliver the socks within 4 weeks.</p>"
+            "answer": "<p>The production time for custom socks can vary depending on the materials and quantity. The standard delivery is 8 weeks, and with rush delivery, we can deliver the socks within 4 weeks.<\/p>"
           }
         }
       },
@@ -440,7 +431,7 @@
         "f72a7a31-0fb1-49c1-859c-ab673d507bad": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/2.PELOTON.USP.TRANS.png",
+            "image": "shopify:\/\/shop_images\/2.PELOTON.USP.TRANS.png",
             "opacity": 50,
             "title": "",
             "button_label": "",
@@ -450,7 +441,7 @@
         "66c1e5f3-94d0-4c5d-8920-92ad5dc332d7": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/4.KING.USP.TRANS.png",
+            "image": "shopify:\/\/shop_images\/4.KING.USP.TRANS.png",
             "opacity": 50,
             "title": "",
             "button_label": "",
