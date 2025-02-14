@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "parent": "index.json",
   "context": {
@@ -9,7 +18,7 @@
       "blocks": {
         "ecaa607f-a456-4c64-8b1d-82c823de6917": {
           "settings": {
-            "description": "<p>Cycling, cycling, cycling. That's all we talk about at Sockeloen. <br\/>Not only made for cyclists, but also by cyclists. <br\/><br\/>At Sockeloen, we are dedicated to enhancing your cycling experience.<\/p><p><\/p><p><br\/><\/p>"
+            "description": "<p>SOCKELOEN // AERO COLLECTION<br/></p>"
           }
         }
       }
