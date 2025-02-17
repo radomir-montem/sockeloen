@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -14,7 +23,7 @@
         "template--18355947274520__fe42fd9b-9eb1-4f3c-993c-d85dd59d1118-1679682152fc5d404d-0": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>SIZE GUIDE<\/strong><\/p>",
+            "heading": "<p><strong>SOCK SIZE CHART</strong></p>",
             "heading_size": "hxl"
           }
         }
@@ -31,15 +40,37 @@
         "padding_bottom": 52
       }
     },
+    "rich_text_LrmRyB": {
+      "type": "rich-text",
+      "blocks": {
+        "text_D3CXPg": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The following sock size guide will help you find your perfect fit. Designed for comfort and performance, our socks fit snugly to prevent bunching, pinching, and blisters. Simply refer to the size charts below to choose the ideal size for you.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_D3CXPg"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "b0029d14-ee69-4389-80ec-b267786613f1": {
       "type": "image-with-text",
       "settings": {
         "order_mobile": "column-reverse",
         "order_desktop": "row",
         "bg_color": "#ffffff",
-        "image": "shopify:\/\/shop_images\/sock_height_2.png",
+        "image": "shopify://shop_images/sock_height_2.png",
         "heading": "SOCK HEIGHT",
-        "main_text": "<p>At Sockeloen we know best how valuable the wright sockheight is for a cyclist. That's why our socks allready have a perfect height optimised by the size and usage of the socks.<br\/><strong><br\/>We have socks between 17cm to 21cm \/\/ 6.7 inch to 8.3 inch <\/strong><br\/><br\/>But if you wanna check your height you can measure it: starting from the top, to just above the heel of the sock. Like the picture attached.<br\/><br\/><\/p>",
+        "main_text": "<p>At Sockeloen we know best how valuable the right sock height is for a cyclist. That's why our socks already have a perfect height optimised by the size and usage of the socks.<br/><strong><br/>We have socks between 17cm to 21cm // 6.7 inch to 8.3 inch </strong><br/><br/>But if you wanna check your sock height you can measure it: starting from the top, to just above the heel of the sock. Like the picture attached.<br/><br/></p>",
         "padding_top": 12,
         "padding_bottom": 12
       }
@@ -54,9 +85,9 @@
         "order_mobile": "column-reverse",
         "order_desktop": "row-reverse",
         "bg_color": "#ffffff",
-        "image": "shopify:\/\/shop_images\/one_size_2.png",
+        "image": "shopify://shop_images/one_size_2.png",
         "heading": "SOCK SIZES",
-        "main_text": "<p><strong>ONE SIZE  <\/strong>    EU 39-46  <strong>\/\/<\/strong>  US 6.5-12  <strong>\/\/<\/strong>  US 8-13.5<br\/><br\/><strong>2 SIZES  <\/strong>       EU 36-42  <strong>\/\/<\/strong>  US 4-8.5  <strong>\/\/<\/strong>  US 5.5-10         <br\/><strong>2 SIZES   <\/strong>      EU 43-48  <strong>\/\/<\/strong>  US 9-13.5  <strong>\/\/<\/strong>  US 10.5-15<br\/><br\/><strong>3 SIZES   <\/strong>      EU 35-40  <strong>\/\/<\/strong>  US 3-7  <strong>\/\/<\/strong>  US 4.5-8.5 <br\/><strong>3 SIZES   <\/strong>      EU 40-45  <strong>\/\/<\/strong>  US 7-11  <strong>\/\/<\/strong>  US 8.5-12.5<br\/><strong>3 SIZES   <\/strong>      EU 45-50  <strong>\/\/<\/strong>  US 11-15  <strong>\/\/<\/strong>  US 12.5-16.5<\/p>",
+        "main_text": "<p><strong>ONE SIZE  </strong>    EU 39-46  <strong>//</strong>  US 6.5-12  <strong>//</strong>  US 8-13.5<br/><br/><strong>2 SIZES  </strong>       EU 36-42  <strong>//</strong>  US 4-8.5  <strong>//</strong>  US 5.5-10         <br/><strong>2 SIZES   </strong>      EU 43-48  <strong>//</strong>  US 9-13.5  <strong>//</strong>  US 10.5-15<br/><br/><strong>3 SIZES   </strong>      EU 35-40  <strong>//</strong>  US 3-7  <strong>//</strong>  US 4.5-8.5 <br/><strong>3 SIZES   </strong>      EU 40-45  <strong>//</strong>  US 7-11  <strong>//</strong>  US 8.5-12.5<br/><strong>3 SIZES   </strong>      EU 45-50  <strong>//</strong>  US 11-15  <strong>//</strong>  US 12.5-16.5</p>",
         "padding_top": 12,
         "padding_bottom": 12
       }
@@ -67,9 +98,9 @@
         "order_mobile": "column-reverse",
         "order_desktop": "row",
         "bg_color": "#ffffff",
-        "image": "shopify:\/\/shop_images\/maattabel-sockeloen-gloves.png",
-        "heading": "GLOVES",
-        "main_text": "<p>- <strong>Size S<\/strong> index finger: 7.5 cm \/\/ 2.95 inch<br\/>- <strong>Size M<\/strong> index finger: 8 cm \/\/ 3.15 inch<br\/>- <strong>Size L<\/strong> index finger: 8.5 cm \/\/ 3.35 inch<br\/>- <strong>Size XL<\/strong> index finger: 9 cm \/\/ 3.55 inch<br\/><em><br\/>The gloves also have an extra long fit so that the wrists also remain protected.<\/em><\/p>",
+        "image": "shopify://shop_images/maattabel-sockeloen-gloves.png",
+        "heading": "GLOVES SIZE",
+        "main_text": "<p>- <strong>Size S</strong> index finger: 7.5 cm // 2.95 inch<br/>- <strong>Size M</strong> index finger: 8 cm // 3.15 inch<br/>- <strong>Size L</strong> index finger: 8.5 cm // 3.35 inch<br/>- <strong>Size XL</strong> index finger: 9 cm // 3.55 inch<br/><em><br/>The gloves also have an extra long fit so that the wrists also remain protected.</em></p>",
         "padding_top": 12,
         "padding_bottom": 12
       }
@@ -78,6 +109,7 @@
   "order": [
     "main",
     "fe42fd9b-9eb1-4f3c-993c-d85dd59d1118",
+    "rich_text_LrmRyB",
     "b0029d14-ee69-4389-80ec-b267786613f1",
     "33e98e73-6cfc-439d-a0ed-b31c7ae9ce0e",
     "4bbe5988-c166-47ae-8f8c-edf219e8d319"
