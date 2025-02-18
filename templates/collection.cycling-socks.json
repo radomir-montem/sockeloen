@@ -61,6 +61,23 @@
         "show_text_below": true
       }
     },
+    "image_banner_nC3gk6": {
+      "type": "image-banner",
+      "settings": {
+        "image": "shopify://shop_images/FISH_EYE_CROSS_EXPORT.jpg",
+        "image_overlay_opacity": 0,
+        "banner_image_height": 350,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": true,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
     "d3a39493-e2de-483c-aa4e-d6d706833e4b": {
       "type": "usp-blackbg",
       "blocks": {
@@ -133,6 +150,7 @@
     "banner",
     "product-grid",
     "image_banner_dRHhRn",
+    "image_banner_nC3gk6",
     "d3a39493-e2de-483c-aa4e-d6d706833e4b",
     "d37a2506-ed61-40de-8072-52e5bffc33fa"
   ]
