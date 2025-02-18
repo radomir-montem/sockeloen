@@ -234,7 +234,7 @@
         "4904019c-ebe9-48ae-adae-d8c50c33e729": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/COLLECTION_DESKTOP_474X680_543907b2-02ca-4f56-a798-dfecf1a578ea.jpg",
+            "image": "shopify://shop_images/FSOTP_homepage_action_06bfb69a-7007-4400-bc65-95f8fa3bd467.png",
             "opacity": 20,
             "title": "FSOTP",
             "button_label": "SHOP NOW",
@@ -244,10 +244,10 @@
         "86de9b6b-4b96-465d-89c3-3525b1066c20": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/COLLECTION2_DESKTOP_474X680_0272a9cf-96ef-47b1-8b19-c202eca3412a.jpg",
-            "opacity": 20,
-            "title": "A.W.E.",
-            "button_label": "SHOP NOW",
+            "image": "shopify://shop_images/Champ_homepage_studio.png",
+            "opacity": 0,
+            "title": "",
+            "button_label": "",
             "button_url": "shopify://collections/all-weather-essentials"
           }
         }
