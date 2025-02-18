@@ -29,10 +29,10 @@
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "SHOP COLLECTION",
+            "button_label_1": "EXPLORE COLLECTION",
             "button_link_1": "shopify://products/sockeloen-aero-cycling-socks",
             "button_style_secondary_1": false,
-            "button_label_2": "",
+            "button_label_2": "SHOP AERO WHITE",
             "button_link_2": "shopify://collections/aero-cycling-socks",
             "button_style_secondary_2": true
           }
