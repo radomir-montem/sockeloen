@@ -66,6 +66,7 @@
       "type": "image-banner",
       "settings": {
         "image": "shopify://shop_images/FISH_EYE_CROSS_EXPORT.jpg",
+        "image_mobile": "shopify://shop_images/FISH_EYE_CROSS_EXPORT_MOBILE.jpg",
         "image_overlay_opacity": 0,
         "banner_image_height": 350,
         "image_height_mobile": 450,
