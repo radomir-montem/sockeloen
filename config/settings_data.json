@@ -689,5 +689,10 @@
         }
       }
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".product--sold-out .add-to-cart-button {display: none;}"
+    ]
   }
 }
