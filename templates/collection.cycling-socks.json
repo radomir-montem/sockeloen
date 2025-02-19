@@ -68,7 +68,7 @@
         "image": "shopify://shop_images/FISH_EYE_CROSS_EXPORT.jpg",
         "image_mobile": "shopify://shop_images/FISH_EYE_CROSS_EXPORT_MOBILE.jpg",
         "image_overlay_opacity": 0,
-        "banner_image_height": 350,
+        "banner_image_height": 400,
         "image_height_mobile": 450,
         "adapt_height_first_image": true,
         "desktop_content_position": "middle-center",
