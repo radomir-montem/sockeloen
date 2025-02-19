@@ -83,7 +83,7 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": false
+            "show_dynamic_checkout": true
           }
         },
         "d448a9b5-1ba8-45fe-a44b-8f604142911f": {
