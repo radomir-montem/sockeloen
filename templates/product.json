@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -41,6 +50,7 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
         },
         "a82d9b45-1b3b-4c51-9913-271732bc495f": {
@@ -59,20 +69,20 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": true
+            "show_dynamic_checkout": false
           }
         },
         "d448a9b5-1ba8-45fe-a44b-8f604142911f": {
           "type": "usps",
           "settings": {
-            "usp1": "shopify:\/\/shop_images\/Copia_de_STAMP.USPS.png",
-            "usp1_text": "<p><a href=\"\/policies\/shipping-policy\" title=\"Shipping Policy\"><strong>Free <\/strong>Shipping &gt; €75,-<\/a><\/p>",
-            "usp2": "shopify:\/\/shop_images\/Copia_de_PELOTON.USPS.png",
-            "usp2_text": "<p><strong>Born<\/strong> in the peloton<\/p>",
-            "usp3": "shopify:\/\/shop_images\/copia_6.lastkm.USP.TRANS_2a8877e2-c653-43ee-9192-49baddd27640.png",
-            "usp3_text": "<p>100% <strong>Satisfaction<\/strong><\/p>",
-            "usp4": "shopify:\/\/shop_images\/copia_6.KING.USP.TRANS_6759367c-458f-41a8-a161-01f9ac0d5a8b.png",
-            "usp4_text": "<p><a href=\"https:\/\/www.reviews.io\/company-reviews\/store\/sockeloen-nl\" title=\"https:\/\/www.reviews.io\/company-reviews\/store\/sockeloen-nl\"><strong>Customer <\/strong>is king<\/a><\/p>"
+            "usp1": "shopify://shop_images/Copia_de_STAMP.USPS.png",
+            "usp1_text": "<p><a href=\"/policies/shipping-policy\" title=\"Shipping Policy\"><strong>Free </strong>Shipping &gt; €75,-</a></p>",
+            "usp2": "shopify://shop_images/Copia_de_PELOTON.USPS.png",
+            "usp2_text": "<p><strong>Born</strong> in the peloton</p>",
+            "usp3": "shopify://shop_images/copia_6.lastkm.USP.TRANS_2a8877e2-c653-43ee-9192-49baddd27640.png",
+            "usp3_text": "<p>100% <strong>Satisfaction</strong></p>",
+            "usp4": "shopify://shop_images/copia_6.KING.USP.TRANS_6759367c-458f-41a8-a161-01f9ac0d5a8b.png",
+            "usp4_text": "<p><a href=\"https://www.reviews.io/company-reviews/store/sockeloen-nl\" title=\"https://www.reviews.io/company-reviews/store/sockeloen-nl\"><strong>Customer </strong>is king</a></p>"
           }
         },
         "31d4cb82-9836-481d-b31f-0d99044260ea": {
@@ -90,7 +100,7 @@
           "settings": {
             "heading": "Height",
             "icon": "ruler",
-            "content": "<p>{{ product.metafields.custom.height.value }}<\/p>",
+            "content": "<p>{{ product.metafields.custom.height.value }}</p>",
             "page": "",
             "logos_size": 26
           }
@@ -110,7 +120,7 @@
           "settings": {
             "heading": "Knit Structure",
             "icon": "carrot",
-            "content": "<p>{{ product.metafields.custom.knit_structure.value }}<\/p>",
+            "content": "<p>{{ product.metafields.custom.knit_structure.value }}</p>",
             "page": "",
             "logos_size": 26
           }
@@ -120,7 +130,7 @@
           "settings": {
             "heading": "Terry Mesh",
             "icon": "snowflake",
-            "content": "<p>{{ product.metafields.custom.terry_mesh.value }}<\/p>",
+            "content": "<p>{{ product.metafields.custom.terry_mesh.value }}</p>",
             "page": "",
             "logos_size": 26
           }
@@ -130,7 +140,7 @@
           "settings": {
             "heading": "Type of Sock",
             "icon": "shoe",
-            "content": "<p>{{ product.metafields.custom.type_of_sock.value }}<\/p>",
+            "content": "<p>{{ product.metafields.custom.type_of_sock.value }}</p>",
             "page": "",
             "logos_size": 26
           }
@@ -141,7 +151,7 @@
           "settings": {
             "heading": "Washing & Care",
             "icon": "washing",
-            "content": "<p>{{ product.metafields.custom.washing_care | metafield_tag }}<\/p>",
+            "content": "<p>{{ product.metafields.custom.washing_care | metafield_tag }}</p>",
             "page": "",
             "logos_size": 26
           }
@@ -183,7 +193,7 @@
           "settings": {
             "heading": "Aero",
             "icon": "banana",
-            "content": "<p>{{ product.metafields.custom.aero.value }}<\/p>",
+            "content": "<p>{{ product.metafields.custom.aero.value }}</p>",
             "page": "",
             "logos_size": 26
           }
@@ -264,25 +274,25 @@
         "cdbd0cb4-2ce5-4d43-81b3-cf8af48f1dea": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/1.SHIPPING.USP.zwart.png"
+            "image": "shopify://shop_images/1.SHIPPING.USP.zwart.png"
           }
         },
         "4eafd2d7-ffe9-4d85-9d3c-1c5257810662": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/2.PELOTON.USP.WIT.png"
+            "image": "shopify://shop_images/2.PELOTON.USP.WIT.png"
           }
         },
         "59aa8067-54fc-449f-975b-d765af1aa2d4": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/3.SATISFACTION.USP.WIT.png"
+            "image": "shopify://shop_images/3.SATISFACTION.USP.WIT.png"
           }
         },
         "8191162b-59ec-4e9d-a84e-4fee271c0ab8": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/4.KING.USP.WIT.png"
+            "image": "shopify://shop_images/4.KING.USP.WIT.png"
           }
         }
       },
@@ -318,25 +328,25 @@
         "f1e6c323-4e34-4b13-8360-51bf6955f214": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/1.SHIPPING.USP.zwart.png"
+            "image": "shopify://shop_images/1.SHIPPING.USP.zwart.png"
           }
         },
         "60bf623b-28be-4bba-9947-9913bd8d9cf1": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/2.PELOTON.USP.TRANS.png"
+            "image": "shopify://shop_images/2.PELOTON.USP.TRANS.png"
           }
         },
         "147a6ef5-caad-4b5a-a490-90c8496e34d9": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/SYMBOLEN.USPS.SHOPIFY_1.png"
+            "image": "shopify://shop_images/SYMBOLEN.USPS.SHOPIFY_1.png"
           }
         },
         "284de428-db68-441f-8ea9-4fe42dc83449": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/4.KING.USP.TRANS.png"
+            "image": "shopify://shop_images/4.KING.USP.TRANS.png"
           }
         }
       },
@@ -358,19 +368,19 @@
             "text_color": "#ffffff",
             "font_size": 33,
             "heading": "",
-            "description": "<p>EXPLORE NOW \/\/ EXPLORE NOW \/\/ EXPLORE NOW \/\/<\/p>",
+            "description": "<p>EXPLORE NOW // EXPLORE NOW // EXPLORE NOW //</p>",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "CLICK HERE",
-            "button_url": "https:\/\/sockeloen.com\/nl\/collections\/all-weather-essentials",
+            "button_url": "https://sockeloen.com/nl/collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
         },
         "6a0118df-4330-436a-b702-9317ff284f63": {
           "type": "column",
           "settings": {
-            "image": "shopify:\/\/shop_images\/3-explore-AWE-overshoes-V2_1080x1080_aeeb2094-d9ea-438f-be9a-2aef043c91f9.png",
+            "image": "shopify://shop_images/3-explore-AWE-overshoes-V2_1080x1080_aeeb2094-d9ea-438f-be9a-2aef043c91f9.png",
             "color": "#64652e",
             "text_color": "#000000",
             "font_size": 48,
