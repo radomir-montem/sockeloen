@@ -65,6 +65,7 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
         },
         "a82d9b45-1b3b-4c51-9913-271732bc495f": {
