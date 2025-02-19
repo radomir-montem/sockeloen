@@ -48,9 +48,23 @@
             "picker_type": "button"
           }
         },
+        "custom_button_iFjaR9": {
+          "type": "custom-button",
+          "settings": {
+            "button_text": "",
+            "button_url": "",
+            "button_color": "",
+            "button_text_color": ""
+          }
+        },
+        "custom_liquid_jrCLVk": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": ""
+          }
+        },
         "quantity_selector": {
           "type": "quantity_selector",
-          "disabled": true,
           "settings": {}
         },
         "a82d9b45-1b3b-4c51-9913-271732bc495f": {
@@ -210,6 +224,8 @@
         "price",
         "inventory_status_qrtERa",
         "variant_picker",
+        "custom_button_iFjaR9",
+        "custom_liquid_jrCLVk",
         "quantity_selector",
         "a82d9b45-1b3b-4c51-9913-271732bc495f",
         "9818c7f0-7715-4e56-af03-fb7a9cca40f4",
