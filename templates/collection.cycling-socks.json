@@ -48,9 +48,10 @@
       "type": "image-banner",
       "settings": {
         "image": "shopify://shop_images/Collection_studio_KNWU_bd922eb2-7a3d-4777-8ad3-9ed276016ba1.jpg",
+        "image_mobile": "shopify://shop_images/Collection_studio_KNWU_MOBILE.jpg",
         "image_overlay_opacity": 0,
         "banner_image_height": 350,
-        "image_height_mobile": 450,
+        "image_height_mobile": 350,
         "adapt_height_first_image": true,
         "desktop_content_position": "middle-center",
         "show_text_box": true,
