@@ -40,6 +40,12 @@
             "picker_type": "button"
           }
         },
+        "klaviyo_email_marketing_sms_form_embed_block_3T3z9A": {
+          "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/form-embed-block/2632fe16-c075-4321-a88b-50b567f42507",
+          "settings": {
+            "formId": "TjMbXt"
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -208,6 +214,7 @@
         "price",
         "inventory_status_qrtERa",
         "variant_picker",
+        "klaviyo_email_marketing_sms_form_embed_block_3T3z9A",
         "buy_buttons",
         "a82d9b45-1b3b-4c51-9913-271732bc495f",
         "custom_liquid_jrCLVk",
