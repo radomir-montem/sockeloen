@@ -666,6 +666,10 @@ fieldset.product-form__input {
     object-position: center;
 }
 
+.product-section .grid.product--medium {
+    margin-bottom: 0;
+}
+
 @media (max-width: 768px) {
     .footer-form {
         margin-bottom: 4rem;
