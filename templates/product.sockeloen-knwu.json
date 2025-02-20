@@ -12,14 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
         "title": {
           "type": "title",
           "settings": {}
@@ -77,6 +69,7 @@
         },
         "9818c7f0-7715-4e56-af03-fb7a9cca40f4": {
           "type": "shipping_info",
+          "disabled": true,
           "settings": {
             "no_shipment_text": "There is no shipment for your country"
           }
@@ -219,7 +212,6 @@
         }
       },
       "block_order": [
-        "vendor",
         "title",
         "caption",
         "price",
