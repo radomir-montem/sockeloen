@@ -40,13 +40,17 @@
             "picker_type": "button"
           }
         },
-        "custom_button_iFjaR9": {
-          "type": "custom-button",
+        "buy_buttons": {
+          "type": "buy_buttons",
           "settings": {
-            "button_text": "",
-            "button_url": "",
-            "button_color": "",
-            "button_text_color": ""
+            "show_dynamic_checkout": true
+          }
+        },
+        "a82d9b45-1b3b-4c51-9913-271732bc495f": {
+          "type": "restock-date",
+          "settings": {
+            "restock_text": "Expected availability:",
+            "restock_date": "{{ product.metafields.custom.re_stock_date | metafield_text }}"
           }
         },
         "custom_liquid_jrCLVk": {
@@ -60,24 +64,11 @@
           "disabled": true,
           "settings": {}
         },
-        "a82d9b45-1b3b-4c51-9913-271732bc495f": {
-          "type": "restock-date",
-          "settings": {
-            "restock_text": "Expected availability:",
-            "restock_date": "{{ product.metafields.custom.re_stock_date | metafield_text }}"
-          }
-        },
         "9818c7f0-7715-4e56-af03-fb7a9cca40f4": {
           "type": "shipping_info",
           "disabled": true,
           "settings": {
             "no_shipment_text": "There is no shipment for your country"
-          }
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": false
           }
         },
         "d448a9b5-1ba8-45fe-a44b-8f604142911f": {
@@ -217,12 +208,11 @@
         "price",
         "inventory_status_qrtERa",
         "variant_picker",
-        "custom_button_iFjaR9",
+        "buy_buttons",
+        "a82d9b45-1b3b-4c51-9913-271732bc495f",
         "custom_liquid_jrCLVk",
         "quantity_selector",
-        "a82d9b45-1b3b-4c51-9913-271732bc495f",
         "9818c7f0-7715-4e56-af03-fb7a9cca40f4",
-        "buy_buttons",
         "d448a9b5-1ba8-45fe-a44b-8f604142911f",
         "31d4cb82-9836-481d-b31f-0d99044260ea",
         "0c280d07-e2f9-4b4f-b7a3-02978b0ec8ee",
