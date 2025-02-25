@@ -87,7 +87,7 @@
         "bg_color": "#ffffff",
         "image": "shopify://shop_images/one_size_2.png",
         "heading": "SOCK SIZES",
-        "main_text": "<p><strong>ONE SIZE  </strong>    EU 39-46  <strong>//</strong>  US 6.5-12  <strong>//</strong>  US 8-13.5<br/><br/><strong>2 SIZES  </strong>       EU 36-42  <strong>//</strong>  US 4-8.5  <strong>//</strong>  US 5.5-10         <br/><strong>2 SIZES   </strong>      EU 43-48  <strong>//</strong>  US 9-13.5  <strong>//</strong>  US 10.5-15<br/><br/><strong>3 SIZES   </strong>      EU 35-40  <strong>//</strong>  US 3-7  <strong>//</strong>  US 4.5-8.5 <br/><strong>3 SIZES   </strong>      EU 40-45  <strong>//</strong>  US 7-11  <strong>//</strong>  US 8.5-12.5<br/><strong>3 SIZES   </strong>      EU 45-50  <strong>//</strong>  US 11-15  <strong>//</strong>  US 12.5-16.5</p>",
+        "main_text": "<p><strong>ONE SIZE  </strong>    EU 39-46  <strong>//</strong>  UK 6.5-12  <strong>//</strong>  US 8-13.5<br/><br/><strong>2 SIZES  </strong>       EU 36-42  <strong>//</strong>  UK 4-8.5  <strong>//</strong>  US 5.5-10         <br/><strong>2 SIZES   </strong>      EU 43-48  <strong>//</strong>  UK 9-13.5  <strong>//</strong>  US 10.5-15<br/><br/><strong>3 SIZES   </strong>      EU 35-40  <strong>//</strong>  UK 3-7  <strong>//</strong>  US 4.5-8.5 <br/><strong>3 SIZES   </strong>      EU 40-45  <strong>//</strong>  UK 7-11  <strong>//</strong>  US 8.5-12.5<br/><strong>3 SIZES   </strong>      EU 45-50  <strong>//</strong>  UK 11-15  <strong>//</strong>  US 12.5-16.5</p>",
         "padding_top": 12,
         "padding_bottom": 12
       }
