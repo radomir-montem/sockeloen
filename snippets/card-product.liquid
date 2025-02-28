@@ -247,7 +247,7 @@
           </div>
         {%- endif -%}
         <div class="absolute top-[15px] left-[12px]">
-          {%- if card_product.available == false and coming_soon == true -%}
+          {%- if card_product.available == false and coming_soon == false -%}
             {% assign renderComingSoon = card_product.metafields.custom.coming_soon | default: false %}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
