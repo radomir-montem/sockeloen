@@ -16,6 +16,7 @@
 {% endcomment %}
 
 {% assign hideProductPrice = card_product.metafields.custom.hide_product_price | default: false %}
+{% assign coming_soon = card_product.metafields.custom.coming_soon | default: false %}
 
 {%- if card_product and card_product != empty -%}
   {%- liquid
@@ -246,7 +247,7 @@
           </div>
         {%- endif -%}
         <div class="absolute top-[15px] left-[12px]">
-          {%- if card_product.available == false -%}
+          {%- if card_product.available == false and coming_soon == false -%}
             {% assign renderComingSoon = card_product.metafields.custom.coming_soon | default: false %}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
