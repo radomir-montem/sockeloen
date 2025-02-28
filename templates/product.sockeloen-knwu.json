@@ -29,6 +29,7 @@
         },
         "inventory_status_qrtERa": {
           "type": "inventory_status",
+          "disabled": true,
           "settings": {
             "inventory_threshold": 20,
             "inventory_transfers_enable": false
