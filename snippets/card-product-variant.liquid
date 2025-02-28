@@ -19,6 +19,10 @@
 
 {% assign hideProductPrice = card_product.product.metafields.custom.hide_product_price | default: false %}
 {% assign coming_soon = card_product.product.metafields.custom.coming_soon | default: false %}
+{% assign soldout = card_product.available %}
+{% if coming_soon %}
+  {% assign soldout = false %}
+{% endif %}
 
 {{ 'component-rating.css' | asset_url | stylesheet_tag }}
 
@@ -335,7 +339,7 @@
           </div>
         {%- endif -%}
         <div class="absolute top-[15px] left-[12px] product-variant">
-          {%- unless card_product.available and coming_soon -%}
+          {%- unless soldout -%}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left"
