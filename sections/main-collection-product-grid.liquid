@@ -152,7 +152,6 @@
             >
               {%- for product in collection.products -%}
                 {% assign lazy_load = false %}
-                {% assign coming_soon = product.metafields.custom.coming_soon | default: false %}
                 {%- if forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
@@ -163,7 +162,7 @@
                     {% assign optionByName = product.options_by_name.Color %}
                   {% endif %}
                   {% if optionByName.values == null or optionByName.values.size == 1 %}
-                    {% if shop.metafields.soldout_variants.enable or product.available or coming_soon %}
+                    {% if shop.metafields.soldout_variants.enable or product.available %}
                       <li id="product" class="w-full">
                         {% render 'card-product',
                           card_product: product,
@@ -184,7 +183,7 @@
                     {% assign color = '' %}
                     {% assign atLeastOneAvailable = false %}
                     {% for variant in product.variants %}
-                      {% if shop.metafields.soldout_variants.enable or variant.available or coming_soon %}
+                      {% if shop.metafields.soldout_variants.enable or variant.available %}
                         {% capture color %}
                           {{ variant.options[index] }}
                         {% endcapture %}
@@ -198,7 +197,7 @@
                         {% endfor %}
                       {% endif %}
                       {% unless colorlist contains color %}
-                        {% if shop.metafields.soldout_variants.enable or variant.available or coming_soon %}
+                        {% if shop.metafields.soldout_variants.enable or variant.available %}
                           <li id="product" class="w-full relative">
                             {% render 'card-product-variant',
                               card_product: variant,
