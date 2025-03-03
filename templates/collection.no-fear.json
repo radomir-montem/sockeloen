@@ -47,10 +47,11 @@
     "image_banner_dRHhRn": {
       "type": "image-banner",
       "settings": {
+        "image": "shopify://shop_images/IMPRESS_LB_Collection_page_2_4f9f789a-2f0b-4c84-8b31-1734ca686b58.png",
         "image_mobile": "shopify://shop_images/IMPRESS_LB_Collection_page_mobile2.jpg",
         "image_overlay_opacity": 0,
-        "banner_image_height": 350,
-        "image_height_mobile": 350,
+        "banner_image_height": 550,
+        "image_height_mobile": 550,
         "adapt_height_first_image": true,
         "desktop_content_position": "middle-center",
         "show_text_box": true,
