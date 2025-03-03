@@ -19,7 +19,7 @@
 {% assign coming_soon = card_product.metafields.custom.coming_soon | default: false %}
 {% assign soldout = card_product.available %}
 {% if coming_soon %}
-  {% assign soldout = false %}
+  {% assign soldout = true %}
 {% endif %}
 
 {%- if card_product and card_product != empty -%}
