@@ -51,7 +51,7 @@
         "image_mobile": "shopify://shop_images/IMPRESS_LB_Collection_page_mobile4.jpg",
         "image_overlay_opacity": 0,
         "banner_image_height": 550,
-        "image_height_mobile": 550,
+        "image_height_mobile": 500,
         "adapt_height_first_image": true,
         "desktop_content_position": "middle-center",
         "show_text_box": true,
@@ -59,7 +59,7 @@
         "color_scheme": "background-1",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": true,
-        "show_text_below": true
+        "show_text_below": false
       }
     },
     "image_banner_nC3gk6": {
