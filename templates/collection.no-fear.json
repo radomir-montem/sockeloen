@@ -14,7 +14,7 @@
       "settings": {
         "image_overlay_opacity": 0,
         "banner_image_height": 300,
-        "image_height_mobile": 450,
+        "image_height_mobile": 550,
         "adapt_height_first_image": true,
         "show_description": false,
         "desktop_content_position": "middle-center",
