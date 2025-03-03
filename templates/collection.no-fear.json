@@ -46,6 +46,7 @@
     },
     "image_banner_dRHhRn": {
       "type": "image-banner",
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/IMPRESS_LB_Collection_page_4_594de6bc-7362-464e-bf15-bfbf9f95bc34.png",
         "image_mobile": "shopify://shop_images/Collection_studio_KNWU_MOBILE.jpg",
