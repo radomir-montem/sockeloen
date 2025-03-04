@@ -363,21 +363,24 @@
           {%- endunless -%}
           {% for badge in product.metafields.custom.badge.value %}
             {% unless badge contains '-' and badge contains '%' %}
-              <span
-                id="Badge-{{ section_id }}-{{ card_product.id }}"
-                class="badge badge--bottom-left uppercase mr-[6px]"
-                {% if product.metafields.custom.first_badge_color and forloop.index == 1 %}
-                  style="background-color: {{ product.metafields.custom.first_badge_color.value }};"
-                {% elsif product.metafields.custom.second_badge_color and forloop.index == 2 %}
-                  style="background-color: {{ product.metafields.custom.second_badge_color.value }};"
-                {% elsif product.metafields.custom.third_badge_color and forloop.index == 3 %}
-                  style="background-color: {{ product.metafields.custom.third_badge_color.value }};"
-                {% else %}
-                  style="background-color: {{ settings.sold_out_badge_color }};"
-                {% endif %}
-              >
-                {{ badge }}
-              </span>
+              {% assign badge_handle = badge | handle %}
+              {% unless badge_handle == 'coming-soon' and card_product.available and coming_soon == true %}
+                <span
+                  id="Badge-{{ section_id }}-{{ card_product.id }}"
+                  class="badge badge--bottom-left uppercase mr-[6px]"
+                  {% if product.metafields.custom.first_badge_color and forloop.index == 1 %}
+                    style="background-color: {{ product.metafields.custom.first_badge_color.value }};"
+                  {% elsif product.metafields.custom.second_badge_color and forloop.index == 2 %}
+                    style="background-color: {{ product.metafields.custom.second_badge_color.value }};"
+                  {% elsif product.metafields.custom.third_badge_color and forloop.index == 3 %}
+                    style="background-color: {{ product.metafields.custom.third_badge_color.value }};"
+                  {% else %}
+                    style="background-color: {{ settings.sold_out_badge_color }};"
+                  {% endif %}
+                >
+                  {{ badge }}
+                </span>
+              {% endunless %}
             {% endunless %}
           {% endfor %}
           {% if product.compare_at_price > product.price and product.metafields.custom.show_from_text == blank %}

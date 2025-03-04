@@ -871,6 +871,11 @@
                     <script type="application/json" class="tags">
                       {{ product.tags | json }}
                     </script>
+                    <div class="hidden product-metafields">
+                      {% for variant in product.variants %}
+                        <span data-variant-id="{{ variant.id }}" data-disabled="{{ variant.metafields.custom.disable }}"></span>
+                      {% endfor %}
+                    </div>
                   </variant-radios>
                 {%- else -%}
                   <variant-selects

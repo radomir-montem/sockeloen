@@ -924,6 +924,12 @@ class VariantSelects extends HTMLElement {
     this.addEventListener('change', this.onVariantChange)
   }
 
+  connectedCallback() {
+    setTimeout(() => {
+      this.onVariantChange();
+    }, 500);
+  }
+
   onVariantChange() {
     this.updateOptions()
     this.updateMasterId()
@@ -948,6 +954,61 @@ class VariantSelects extends HTMLElement {
     }
 
     this.changeInventoryState();
+    this.checkAvaiable()
+  }
+
+  checkAvaiable() {
+    const isAvailable = this.querySelector('.product-metafields').querySelector(`[data-variant-id="${this.currentVariant.id}"]`).dataset.disabled.trim() === "true";
+    if(!isAvailable) {
+      const _this = this;
+      const fieldsets = this.querySelectorAll('.product-form__input');
+
+      // Unhide all inputs
+      fieldsets.forEach(fieldset => {
+        fieldset.querySelectorAll('input').forEach(input => {
+          input.nextElementSibling.classList.remove('hidden');
+        });
+      });
+
+      // Function to handle input visibility based on variant data
+      const updateInputVisibility = (optionIndex) => {
+        const fieldset = fieldsets[optionIndex];
+        const inputs = fieldset.querySelectorAll(`input:not([value="${this.currentVariant.options[optionIndex]}"])`);
+
+        inputs.forEach(input => {
+          const option = input.value;
+          _this.variantData.forEach(variant => {
+            const isMatchingVariant = variant.options.every((opt, index) => 
+              opt === (index === optionIndex ? option : _this.currentVariant.options[index])
+            );
+            if(isMatchingVariant) {
+              const disabled = _this.querySelector('.product-metafields').querySelector(`[data-variant-id="${variant.id}"]`).dataset.disabled.trim() === "true";
+              if(disabled)input.nextElementSibling.classList.add('hidden');
+            }
+          });
+        });
+      };
+
+      // Check the length of options and call the function accordingly
+      for (let i = 0; i < this.currentVariant.options.length; i++) {
+        updateInputVisibility(i);
+      }
+    } else {
+      for (const variant of this.variantData) {
+        const disabled = this.querySelector('.product-metafields').querySelector(`[data-variant-id="${variant.id}"]`).dataset.disabled.trim() === "true";
+        if (variant.available && !disabled) {
+          console.log(variant.options);
+          for (const option of variant.options) {
+            const inputElement = this.querySelector(`input[value="${option}"]:not(:checked)`);
+            console.log(inputElement, "<=========inputElement");
+            if (inputElement && inputElement.nextElementSibling) {
+              inputElement.nextElementSibling.click();
+            }
+          }
+          break; // Exit after processing the first available variant
+        }
+      }      
+    }
   }
 
   updateSizeOptions(variantsData) {
