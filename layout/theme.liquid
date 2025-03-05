@@ -27,6 +27,11 @@
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
+    {% if template contains 'product' %}
+      <script type="text/javascript">
+        var comingSoon = {{ product.metafields.custom.coming_soon | default: false }};
+      </script>
+    {% endif %}
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <!-- OutlinkStickyBtn CODE Start -->{% if template.name == 'product'%}{% render('outlink-sticky') %}{% endif %}<!-- OutlinkStickyBtn END --> {{ content_for_header }}
 

@@ -1009,6 +1009,7 @@ class VariantSelects extends HTMLElement {
         }
       }      
     }
+    if(comingSoon) document.querySelector('.product-block--sales-point').classList.add('hidden');
   }
 
   updateSizeOptions(variantsData) {
@@ -1040,6 +1041,7 @@ class VariantSelects extends HTMLElement {
 
   checkDynamicCheckout() {
     var variant_available = this.currentVariant?.available
+    if(comingSoon) variant_available = false;
     const dynamicCheckout = document.querySelector(
       '.dynamic-checkout__container'
     )
@@ -1052,6 +1054,7 @@ class VariantSelects extends HTMLElement {
     var shipmentMessage = document.getElementById('shipment-message')
     let backInStockText = document.getElementById('restock_date')
     var variant_available = this.currentVariant?.available
+    if(comingSoon) variant_available = false;
     if (variant_available) {
       outOfStockNotificationElement.style.display = 'none'
       if (shipmentMessage) shipmentMessage.style.display = 'block'
@@ -1207,7 +1210,7 @@ class VariantSelects extends HTMLElement {
     const pickUpAvailability = document.querySelector('pickup-availability')
     if (!pickUpAvailability) return
 
-    if (this.currentVariant && this.currentVariant.available) {
+    if (this.currentVariant && this.currentVariant.available && !comingSoon) {
       pickUpAvailability.fetchAvailability(this.currentVariant.id)
     } else {
       pickUpAvailability.removeAttribute('available')
@@ -1249,7 +1252,7 @@ class VariantSelects extends HTMLElement {
           '#coming-soon-product span'
         )
         if (comingSoonProduct) {
-          this.toggleAddButton(!this.currentVariant?.available, 'COMING SOON')
+          this.toggleAddButton(true, 'COMING SOON')
         } else {
           this.toggleAddButton(
             !this.currentVariant?.available,

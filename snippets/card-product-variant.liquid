@@ -363,8 +363,6 @@
           {%- endunless -%}
           {% for badge in product.metafields.custom.badge.value %}
             {% unless badge contains '-' and badge contains '%' %}
-              {% assign badge_handle = badge | handle %}
-              {% unless badge_handle == 'coming-soon' and card_product.available and coming_soon == true %}
                 <span
                   id="Badge-{{ section_id }}-{{ card_product.id }}"
                   class="badge badge--bottom-left uppercase mr-[6px]"
@@ -380,7 +378,6 @@
                 >
                   {{ badge }}
                 </span>
-              {% endunless %}
             {% endunless %}
           {% endfor %}
           {% if product.compare_at_price > product.price and product.metafields.custom.show_from_text == blank %}
