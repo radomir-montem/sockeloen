@@ -7,111 +7,81 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "main": {
       "type": "main-page",
-      "disabled": true,
       "settings": {
-        "padding_top": 28,
+        "padding_top": 24,
         "padding_bottom": 28
       }
     },
-    "fe42fd9b-9eb1-4f3c-993c-d85dd59d1118": {
-      "type": "rich-text",
+    "faq_7RY47y": {
+      "type": "faq",
       "blocks": {
-        "template--18355947274520__fe42fd9b-9eb1-4f3c-993c-d85dd59d1118-1679682152fc5d404d-0": {
+        "heading_QKnMrf": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>SOCK SIZE CHART</strong></p>",
-            "heading_size": "hxl"
+            "heading": "Sock Sizing FAQs"
           }
-        }
-      },
-      "block_order": [
-        "template--18355947274520__fe42fd9b-9eb1-4f3c-993c-d85dd59d1118-1679682152fc5d404d-0"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "background-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "rich_text_LrmRyB": {
-      "type": "rich-text",
-      "blocks": {
-        "text_D3CXPg": {
-          "type": "text",
+        },
+        "faq_tQrUKw": {
+          "type": "faq",
           "settings": {
-            "text": "<p>The following sock size guide will help you find your perfect fit. Designed for comfort and performance, our socks fit snugly to prevent bunching, pinching, and blisters. Simply refer to the size charts below to choose the ideal size for you.</p>"
+            "question": "How do I choose the right sock size?",
+            "answer": "<p>To select the correct sock size, begin with your shoe size. Our sock sizes correspond to a range of shoe sizes, so simply match your shoe size with the options on our sizing chart. If you fall between two sizes, opt for the larger one.</p>"
+          }
+        },
+        "faq_UPUxt9": {
+          "type": "faq",
+          "settings": {
+            "question": "How can I make sure my socks fit properly?",
+            "answer": "<p>For a proper sock fit, ensure your socks align with your shoe size range on our sizing chart. A well-fitted sock should feel snug around the arch and ankle without pinching or sliding down.</p>"
+          }
+        },
+        "faq_PWbTCJ": {
+          "type": "faq",
+          "settings": {
+            "question": "Are socks truly one size fits all?",
+            "answer": "<p>Socks are not truly “one size fits all.” Each size accommodates a specific range of shoe sizes. While socks stretch to fit various feet, choosing the correct size from our chart ensures the best comfort and performance.</p>"
+          }
+        },
+        "faq_g7fdyy": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I wear socks that are too big or too small?",
+            "answer": "<p>Wearing socks that are too small can cause discomfort and restrict circulation, while socks that are too big may slip down or bunch up. For optimal comfort and performance, always choose the correct sock size according to your shoe size.</p>"
+          }
+        },
+        "faq_PjCkX9": {
+          "type": "faq",
+          "settings": {
+            "question": "What if I’m in between sock sizes?",
+            "answer": "<p>If you're between two sock sizes, it’s best to size up to ensure a comfortable, snug fit. This will prevent the socks from being too tight or uncomfortable.</p>"
           }
         }
       },
       "block_order": [
-        "text_D3CXPg"
+        "heading_QKnMrf",
+        "faq_tQrUKw",
+        "faq_UPUxt9",
+        "faq_PWbTCJ",
+        "faq_g7fdyy",
+        "faq_PjCkX9"
       ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "background-1",
-        "full_width": true,
-        "padding_top": 8,
-        "padding_bottom": 12
-      }
-    },
-    "b0029d14-ee69-4389-80ec-b267786613f1": {
-      "type": "image-with-text",
-      "settings": {
-        "order_mobile": "column-reverse",
-        "order_desktop": "row",
-        "bg_color": "#ffffff",
-        "image": "shopify://shop_images/sock_height_2.png",
-        "heading": "SOCK HEIGHT",
-        "main_text": "<p>At Sockeloen we know best how valuable the right sock height is for a cyclist. That's why our socks already have a perfect height optimised by the size and usage of the socks.<br/><strong><br/>We have socks between 17cm to 21cm // 6.7 inch to 8.3 inch </strong><br/><br/>But if you wanna check your sock height you can measure it: starting from the top, to just above the heel of the sock. Like the picture attached.<br/><br/></p>",
-        "padding_top": 12,
-        "padding_bottom": 12
-      }
-    },
-    "33e98e73-6cfc-439d-a0ed-b31c7ae9ce0e": {
-      "type": "image-with-text",
       "custom_css": [
-        "h2 {text-align: left;}",
-        "@media screen and (max-width: 415px) {.container {text-align: left; }}"
+        "h1 {margin-bottom: 3rem; text-align: center;}"
       ],
       "settings": {
-        "order_mobile": "column-reverse",
-        "order_desktop": "row-reverse",
-        "bg_color": "#ffffff",
-        "image": "shopify://shop_images/one_size_2.png",
-        "heading": "SOCK SIZES",
-        "main_text": "<p><strong>ONE SIZE  </strong>    EU 39-46  <strong>//</strong>  UK 6.5-12  <strong>//</strong>  US 8-13.5<br/><br/><strong>2 SIZES  </strong>       EU 36-42  <strong>//</strong>  UK 4-8.5  <strong>//</strong>  US 5.5-10         <br/><strong>2 SIZES   </strong>      EU 43-48  <strong>//</strong>  UK 9-13.5  <strong>//</strong>  US 10.5-15<br/><br/><strong>3 SIZES   </strong>      EU 35-40  <strong>//</strong>  UK 3-7  <strong>//</strong>  US 4.5-8.5 <br/><strong>3 SIZES   </strong>      EU 40-45  <strong>//</strong>  UK 7-11  <strong>//</strong>  US 8.5-12.5<br/><strong>3 SIZES   </strong>      EU 45-50  <strong>//</strong>  UK 11-15  <strong>//</strong>  US 12.5-16.5</p>",
-        "padding_top": 12,
-        "padding_bottom": 12
-      }
-    },
-    "4bbe5988-c166-47ae-8f8c-edf219e8d319": {
-      "type": "image-with-text",
-      "settings": {
-        "order_mobile": "column-reverse",
-        "order_desktop": "row",
-        "bg_color": "#ffffff",
-        "image": "shopify://shop_images/maattabel-sockeloen-gloves.png",
-        "heading": "GLOVES SIZE",
-        "main_text": "<p>- <strong>Size S</strong> index finger: 7.5 cm // 2.95 inch<br/>- <strong>Size M</strong> index finger: 8 cm // 3.15 inch<br/>- <strong>Size L</strong> index finger: 8.5 cm // 3.35 inch<br/>- <strong>Size XL</strong> index finger: 9 cm // 3.55 inch<br/><em><br/>The gloves also have an extra long fit so that the wrists also remain protected.</em></p>",
-        "padding_top": 12,
-        "padding_bottom": 12
+        "padding_top": 0,
+        "padding_bottom": 50,
+        "padding_top_mob": 0,
+        "padding_bottom_mob": 50
       }
     }
   },
   "order": [
     "main",
-    "fe42fd9b-9eb1-4f3c-993c-d85dd59d1118",
-    "rich_text_LrmRyB",
-    "b0029d14-ee69-4389-80ec-b267786613f1",
-    "33e98e73-6cfc-439d-a0ed-b31c7ae9ce0e",
-    "4bbe5988-c166-47ae-8f8c-edf219e8d319"
+    "faq_7RY47y"
   ]
 }
