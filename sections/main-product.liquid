@@ -1,3 +1,4 @@
+{% assign coming_soon = product.metafields.custom.coming_soon | default: false %}
 {% render 'breadcrumbs' %}
 <section
   id="MainProduct-{{ section.id }}"
@@ -645,12 +646,12 @@
                               id="coming-soon-product"
                             {% endif %}
                             class="product-form__submit bg-black font-medium tracking-[0.02em] uppercase button button--full-width {% if block.settings.show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
-                            {% if product.selected_or_first_available_variant.available == false %}
+                            {% if product.selected_or_first_available_variant.available == false or renderComingSoon %}
                               disabled
                             {% endif %}
                           >
                             <span>
-                              {%- if product.selected_or_first_available_variant.available -%}
+                              {%- if product.selected_or_first_available_variant.available and renderComingSoon == false -%}
                                 {% render 'icon-product-cart' %}{{ 'products.product.add_to_cart' | t }}
                               {%- else -%}
                                 {% if renderComingSoon %}
@@ -1494,6 +1495,9 @@
         let outOfStockNotificationElement = document.getElementById('out-of-stock');
         let shipmentMessage = document.getElementById('shipment-message');
         let variant_available = {{ product.selected_or_first_available_variant.available | json }};
+        {% if coming_soon %}
+          variant_available = false;
+        {% endif %}
         let backInStockText = document.getElementById('restock_date')
         let dynamicCheckout = document.querySelector('.dynamic-checkout__container')
         if (variant_available) {
@@ -1573,7 +1577,7 @@
             {%- if variant.barcode.size == 14 -%}
               "gtin14": {{ variant.barcode }},
             {%- endif -%}
-            "availability" : "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+            "availability" : "http://schema.org/{% if variant.available and coming_soon == false %}InStock{% else %}OutOfStock{% endif %}",
             "price" : {{ variant.price | divided_by: 100.00 | json }},
             "priceCurrency" : {{ cart.currency.iso_code | json }},
             "url" : {{ request.origin | append: variant.url | json }}
