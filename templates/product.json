@@ -377,26 +377,10 @@
     "810ba789-2a8c-44fa-abe0-e8f36932e0cb": {
       "type": "two-cols-swap",
       "blocks": {
-        "66f0e606-c41c-49d0-ada4-ff6e6f30e46b": {
-          "type": "column",
-          "settings": {
-            "color": "#4c3a60",
-            "text_color": "#ffffff",
-            "font_size": 33,
-            "heading": "",
-            "description": "<p>EXPLORE NOW // EXPLORE NOW // EXPLORE NOW //</p>",
-            "vertical_pos": "justify-center",
-            "horizontal_pos": "items-center",
-            "button_disclaimer": "",
-            "button_text": "CLICK HERE",
-            "button_url": "https://sockeloen.com/nl/collections/all-weather-essentials",
-            "button_pos": "mt-0"
-          }
-        },
         "6a0118df-4330-436a-b702-9317ff284f63": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/3-explore-AWE-overshoes-V2_1080x1080_aeeb2094-d9ea-438f-be9a-2aef043c91f9.png",
+            "image": "shopify://shop_images/Product_page_NOFEAR_banner-01.jpg",
             "color": "#64652e",
             "text_color": "#000000",
             "font_size": 48,
@@ -409,11 +393,28 @@
             "button_url": "#",
             "button_pos": "mt-0"
           }
+        },
+        "66f0e606-c41c-49d0-ada4-ff6e6f30e46b": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Product_page_NOFEAR_banner-02.jpg",
+            "color": "#4c3a60",
+            "text_color": "#ffffff",
+            "font_size": 33,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-end",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "CLICK HERE",
+            "button_url": "https://sockeloen.com/nl/collections/no-fear-collectie",
+            "button_pos": "mt-0"
+          }
         }
       },
       "block_order": [
-        "66f0e606-c41c-49d0-ada4-ff6e6f30e46b",
-        "6a0118df-4330-436a-b702-9317ff284f63"
+        "6a0118df-4330-436a-b702-9317ff284f63",
+        "66f0e606-c41c-49d0-ada4-ff6e6f30e46b"
       ],
       "settings": {}
     },
