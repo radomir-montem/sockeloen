@@ -19,9 +19,11 @@
 {%- endstyle -%}
 
 <div class="page-width page-width--narrow section-{{ section.id }}-padding">
-  <h1 class="main-page-title page-title h0">
-    {{ page.title | escape }}
-  </h1>
+  {% unless template.suffix == 'size-guide' %}
+    <h1 class="main-page-title page-title h0">
+      {{ page.title | escape }}
+    </h1>
+  {% endunless %}
   <div class="rte">
     {{ page.content }}
   </div>

@@ -670,6 +670,34 @@ fieldset.product-form__input {
     margin-bottom: 0;
 }
 
+.template--size-guide #MainContent .rte a {
+    text-decoration: underline;
+    color: #c0543f;
+}
+
+.template--size-guide #MainContent .rte h1 {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.template--size-guide #MainContent .rte h2 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.template--size-guide .shopify-section .page-width:not(.page-width--narrow) {
+    max-width: 120rem;
+}
+
+.template--size-guide .faq-item {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.template--size-guide .faq-answer {
+    margin-top: 2rem;
+}
+
 @media (max-width: 768px) {
     .footer-form {
         margin-bottom: 4rem;
