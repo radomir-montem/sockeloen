@@ -267,7 +267,7 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/NO_FEAR_LB2_09256dd0-4145-44b7-9f9b-61ba02f08157.png",
+            "image": "shopify://shop_images/NO_FEAR_LB_4.jpg",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
@@ -284,7 +284,7 @@
         "ecaa607f-a456-4c64-8b1d-82c823de6917": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/NO_FEAR_LB2_product_29bec006-4f6b-4580-a839-58eeb67cd2b8.png",
+            "image": "shopify://shop_images/NO_FEAR_LB_42.jpg",
             "color": "#0e112e",
             "text_color": "#561f5e",
             "font_size": 40,
