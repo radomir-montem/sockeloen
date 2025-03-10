@@ -267,7 +267,7 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Sockeloen_shop_aero_banner_V1.png",
+            "image": "shopify://shop_images/NO_FEAR_LB2_09256dd0-4145-44b7-9f9b-61ba02f08157.png",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
@@ -284,15 +284,16 @@
         "ecaa607f-a456-4c64-8b1d-82c823de6917": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/NO_FEAR_LB2_product_29bec006-4f6b-4580-a839-58eeb67cd2b8.png",
             "color": "#0e112e",
-            "text_color": "#ffffff",
+            "text_color": "#561f5e",
             "font_size": 40,
             "heading": "",
-            "description": "<p>SOCKELOEN AERO COLLECTION</p>",
-            "vertical_pos": "justify-center",
+            "description": "",
+            "vertical_pos": "justify-end",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "SHOP AERO",
+            "button_text": "SHOP CASUAL",
             "button_url": "https://sockeloen.com/collections/aero-cycling-socks/1-pair",
             "button_pos": "mt-0"
           }
