@@ -289,12 +289,12 @@
             "text_color": "#561f5e",
             "font_size": 40,
             "heading": "",
-            "description": "<p>NO FEAR CASUAL</p>",
+            "description": "",
             "vertical_pos": "justify-end",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "SHOP CASUAL",
-            "button_url": "https://sockeloen.com/collections/aero-cycling-socks/1-pair",
+            "button_url": "https://sockeloen.com/nl/collections/no-fear-collectie",
             "button_pos": "mt-0"
           }
         }
