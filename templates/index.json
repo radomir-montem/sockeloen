@@ -272,7 +272,7 @@
             "text_color": "#ffffff",
             "font_size": 40,
             "heading": "",
-            "description": "<p></p><p></p><p></p>",
+            "description": "",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
