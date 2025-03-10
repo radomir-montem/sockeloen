@@ -15,14 +15,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "WORN BY CHAMPIONS",
+            "heading": "NO FEAR CASUAL",
             "heading_size": "h2"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "Explore all the products worn by the top athletes",
+            "text": "New casual collection now available",
             "text_style": "body"
           }
         },
@@ -30,7 +30,7 @@
           "type": "buttons",
           "settings": {
             "button_label_1": "EXPLORE COLLECTION",
-            "button_link_1": "shopify://collections/sockeloen-x-knwu",
+            "button_link_1": "shopify://collections/no-fear-collectie",
             "button_style_secondary_1": false,
             "button_label_2": "SHOP AERO WHITE",
             "button_link_2": "shopify://products/sockeloen-aero-cycling-socks",
@@ -47,8 +47,8 @@
         "h2 {font-size: 48px;}"
       ],
       "settings": {
-        "image": "shopify://shop_images/Studio_AERO_homepage_6e6a506a-9aed-4796-a6f7-f009f19e9801.jpg",
-        "image_mobile": "shopify://shop_images/Studio_AERO_homepage_Mobile_bf4cb8a0-7992-4b19-8877-96dc1fc1bb3c.jpg",
+        "image": "shopify://shop_images/Sockeloen_webshop_banner_NO_FEAR_2_d81b6fab-2c00-43fa-84a8-b669d0bcbadf.png",
+        "image_mobile": "shopify://shop_images/Sockeloen_webshop_banner_NO_FEAR_2_mobile_f69d921d-241c-464f-9df9-5e70d072444b.png",
         "image_overlay_opacity": 0,
         "banner_image_height": 600,
         "image_height_mobile": 550,
