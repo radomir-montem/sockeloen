@@ -1,8 +1,53 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
       "type": "main-collection-banner",
-      "settings": {}
+      "settings": {
+        "image_overlay_opacity": 0,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "show_description": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "rich_text_f8yF43": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_zAeAP4": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Custom sock examples from our  customers</p>",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_zAeAP4"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     },
     "product-grid": {
       "type": "main-collection-product-grid",
@@ -35,14 +80,14 @@
           "type": "faq",
           "settings": {
             "question": "Are casual socks suitable for sports or athletic activities?",
-            "answer": "<p>While casual socks are designed for everyday wear, they may not provide the specific support and moisture-wicking capabilities needed for intense physical activities. For sports or athletic endeavors, we recommend to opt for socks specifically engineered for performance to ensure comfort and reduce the risk of blisters or discomfort.<\/p>"
+            "answer": "<p>While casual socks are designed for everyday wear, they may not provide the specific support and moisture-wicking capabilities needed for intense physical activities. For sports or athletic endeavors, we recommend to opt for socks specifically engineered for performance to ensure comfort and reduce the risk of blisters or discomfort.</p>"
           }
         },
         "faq_d7RzPc": {
           "type": "faq",
           "settings": {
             "question": "Are compression socks considered the best sports socks?",
-            "answer": "<p>Compression socks can be beneficial for certain sports as they improve blood circulation and reduce muscle fatigue. However, the best sports socks depend on individual preferences and the specific activity. Compression socks are ideal for activities like running, while others may prefer cushioned socks for activities like hiking.<\/p>"
+            "answer": "<p>Compression socks can be beneficial for certain sports as they improve blood circulation and reduce muscle fatigue. However, the best sports socks depend on individual preferences and the specific activity. Compression socks are ideal for activities like running, while others may prefer cushioned socks for activities like hiking.</p>"
           }
         }
       },
@@ -64,25 +109,25 @@
         "1f543cbc-9f39-499a-9016-c139c92896d3": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+            "image": "shopify://shop_images/wit.USPS.sock.design_1.png"
           }
         },
         "06418753-c11e-42ba-903a-10e77f8e4f2f": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+            "image": "shopify://shop_images/wit.6.CIRCULAR.USP.TRANS_1.png"
           }
         },
         "98a70ec6-d538-4770-ad14-ddd4d23d436c": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+            "image": "shopify://shop_images/wit.SYMBOLEN.USPS.png"
           }
         },
         "1acca66e-41e6-4b67-8924-c27e53d05919": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+            "image": "shopify://shop_images/wit.USPS.KING_1.png"
           }
         }
       },
@@ -100,14 +145,14 @@
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
           "type": "heading",
           "settings": {
-            "heading": "<p>CUSTOM SOCK EXAMPLES<\/p>",
+            "heading": "<p>CUSTOM SOCK EXAMPLES</p>",
             "heading_size": "h2"
           }
         },
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Need a little inspiration? Then check out our <strong>custom made<\/strong> socks examples from top known brands such as:<\/p><p>-<\/p><p>BEATS<br\/>WV DE AMSTEL<br\/>LAMBORGHINI<br\/>REDBULL<br\/>JAGERMEISTER<br\/>CANYONS<br\/>BIKES<\/p><p>-<\/p><p>Still need some extra guidence in your creativity journey? Don't hesitate to reach out to our highly skilled customer support.<\/p>"
+            "text": "<p>Need a little inspiration? Then check out our <strong>custom made</strong> socks examples from top known brands such as:</p><p>-</p><p>BEATS<br/>WV DE AMSTEL<br/>LAMBORGHINI<br/>REDBULL<br/>JAGERMEISTER<br/>CANYONS<br/>BIKES</p><p>-</p><p>Still need some extra guidence in your creativity journey? Don't hesitate to reach out to our highly skilled customer support.</p>"
           }
         }
       },
@@ -128,6 +173,7 @@
   },
   "order": [
     "banner",
+    "rich_text_f8yF43",
     "product-grid",
     "faq_kgTA69",
     "3dccd3f6-189f-4701-91e8-b85da8c70b90",
