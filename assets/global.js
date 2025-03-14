@@ -1067,6 +1067,11 @@ class VariantSelects extends HTMLElement {
   }
 
   filterMedia() {
+    const thumbnailColors = new Set();
+    $('.product__media-list [thumbnail-color]').each(function () {
+      thumbnailColors.add($(this).attr('thumbnail-color').trim());
+    });
+    if (thumbnailColors.size <= 1) return;
     $('[thumbnail-color]').hide()
     var selected_variant = this.currentVariant.featured_media?.alt
     if(!selected_variant) return;

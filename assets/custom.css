@@ -698,6 +698,29 @@ fieldset.product-form__input {
     margin-top: 2rem;
 }
 
+footer .localization-label {
+    color: #000;
+    width: 160px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+footer .localization-list {
+    bottom: calc(100% + 10px);
+    width: 160px;
+    left: 0;
+    text-align: left;
+    z-index: 99;
+}
+
+@media (min-width: 768px) {
+    footer localization-selector {
+        margin-top: 1rem;
+        margin-bottom: 0;
+    }
+}
+
 @media (max-width: 768px) {
     .footer-form {
         margin-bottom: 4rem;
@@ -710,6 +733,10 @@ fieldset.product-form__input {
     footer .localization-label {
         width: 140px;
         font-size: 10px;
+    }
+
+    footer .localization-list {
+        width: 140px;
     }
 }
 
