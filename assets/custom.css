@@ -706,6 +706,11 @@ fieldset.product-form__input {
     .footer-logo {
         margin: 3rem auto 0;
     }
+
+    footer .localization-label {
+        width: 140px;
+        font-size: 10px;
+    }
 }
 
 @keyframes fadeOut {

@@ -398,7 +398,7 @@
       "footer": {
         "type": "footer",
         "settings": {
-          "copyright": "© Copyright 2023 Sockeloen Netherlands - Sockeloen",
+          "copyright": "Sockeloen Netherlands - Sockeloen",
           "footer_list": "footer",
           "newsletter_text": "Subscribe to our NEWSLETTER",
           "klaviyo_id": "UmGHP8",
@@ -669,7 +669,7 @@
         "footer": {
           "type": "footer",
           "settings": {
-            "copyright": "© Copyright 2023 Sockeloen Netherlands - Sockeloen",
+            "copyright": "Sockeloen Netherlands - Sockeloen",
             "footer_list": "footer"
           }
         },
