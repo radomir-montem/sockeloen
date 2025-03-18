@@ -760,6 +760,27 @@ footer .localization-list {
     .footer-bottom > div:last-of-type p {
         margin-top: 0;
     }
+
+    .footer-top {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .footer-top > div:first-of-type {
+        margin-left: 0;
+    }
+
+    .footer-top > div:last-of-type {
+        margin-right: 0;
+    }
+
+    .footer-top>div:first-of-type > div:first-of-type >div {
+        padding-left: 0;
+    }
+
+    .footer-logo {
+        margin-left: auto;
+    }
 }
 
 @media (max-width: 768px) {
