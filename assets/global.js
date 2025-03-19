@@ -914,6 +914,7 @@ class VariantSelects extends HTMLElement {
     )
     // Check if it is a bundle product
     this.isBundle = this.tags.includes('bundle-product')
+    this.isBundle = false;
 
     if (!this.isBundle) {
       this.addEventListener(
@@ -1013,6 +1014,7 @@ class VariantSelects extends HTMLElement {
   }
 
   updateSizeOptions(variantsData) {
+    console.log(variantsData, 'variantData');
     const fieldsets = this.querySelectorAll('fieldset');
     if(fieldsets.length <= 1) return;
     let colorInput = document.querySelector('.color-input input:checked')
