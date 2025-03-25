@@ -15,25 +15,25 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "NO FEAR CASUAL",
+            "heading": "AERO WHITE",
             "heading_size": "h2"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "We are here to impress. Explore the NO FEAR collection",
+            "text": "One of our best products the stylish Classic Aero White.",
             "text_style": "body"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "SHOP NO FEAR",
-            "button_link_1": "shopify://collections/no-fear-collectie",
+            "button_label_1": "SHOP AERO WHITE",
+            "button_link_1": "shopify://products/sockeloen-aero-cycling-socks",
             "button_style_secondary_1": false,
-            "button_label_2": "SHOP AERO SOCKS",
-            "button_link_2": "shopify://products/sockeloen-aero-cycling-socks",
+            "button_label_2": "SHOP FSOTP",
+            "button_link_2": "shopify://collections/fsotp",
             "button_style_secondary_2": true
           }
         }
@@ -47,8 +47,8 @@
         "h2 {font-size: 48px;}"
       ],
       "settings": {
-        "image": "shopify://shop_images/Sockeloen_webshop_banner_NO_FEAR_2_d81b6fab-2c00-43fa-84a8-b669d0bcbadf.png",
-        "image_mobile": "shopify://shop_images/Sockeloen_webshop_banner_NO_FEAR_4_mobile_63853856-d55c-4e5d-a1de-b1b7febf14d2.png",
+        "image": "shopify://shop_images/White_aero_classic_logo_website_banner.jpg",
+        "image_mobile": "shopify://shop_images/White_aero_classic_logo_website_banner_mobile.jpg",
         "image_overlay_opacity": 0,
         "banner_image_height": 600,
         "image_height_mobile": 550,
