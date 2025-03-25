@@ -15,7 +15,8 @@
   "sections": {
     "image_banner": {
       "settings": {
-        "image": "shopify://shop_images/White_aero_classic_logo_website_banner.jpg"
+        "image": "shopify://shop_images/White_aero_classic_logo_website_banner.jpg",
+        "image_mobile": "shopify://shop_images/White_aero_classic_logo_website_banner_mobile.jpg"
       },
       "blocks": {
         "heading": {
@@ -31,8 +32,8 @@
         "button": {
           "settings": {
             "button_label_1": "SHOP AERO WHITE",
-            "button_label_2": "SHOP FSOTP",
             "button_link_1": "shopify://products/sockeloen-aero-cycling-socks",
+            "button_label_2": "SHOP FSOTP",
             "button_link_2": "shopify://collections/fsotp"
           }
         }
