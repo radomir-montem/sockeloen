@@ -143,13 +143,13 @@
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'heading' -%}
-          <h2 class="banner__heading {% if block.settings.heading_size == 'h0' %} text-[56px] font-bold {% else %}{{ block.settings.heading_size }}{% endif %}" {{ block.shopify_attributes }}>
+          <h1 class="banner__heading {% if block.settings.heading_size == 'h0' %} text-[56px] font-bold {% else %}{{ block.settings.heading_size }}{% endif %}" {{ block.shopify_attributes }}>
               <span>{{ block.settings.heading | escape }}</span>
-            </h2>
+            </h1>
           {%- when 'text' -%}
-            <div class="banner__text max-w-[438px] {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
+            <h2 class="banner__text max-w-[438px] {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
               <span>{{ block.settings.text | escape }}</span>
-            </div>
+            </h2>
           {%- when 'buttons' -%}
             <div class="banner__buttons w-full md:w-[unset]{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}" {{ block.shopify_attributes }}>
               {%- if block.settings.button_label_1 != blank -%}
