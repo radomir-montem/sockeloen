@@ -43,9 +43,6 @@
         "text",
         "button"
       ],
-      "custom_css": [
-        "h2 {font-size: 48px;}"
-      ],
       "settings": {
         "image": "shopify://shop_images/White_aero_classic_logo_website_banner.jpg",
         "image_mobile": "shopify://shop_images/White_aero_classic_logo_website_banner_mobile.jpg",

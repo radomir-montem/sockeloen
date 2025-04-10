@@ -34,9 +34,6 @@
         "text",
         "button"
       ],
-      "custom_css": [
-        "h2 {font-size: 48px;}"
-      ],
       "settings": {
         "image": "shopify:\/\/shop_images\/CUSTOM.SOCKS.banner.png",
         "image_mobile": "shopify:\/\/shop_images\/CUSTOM.SOCKS.banner.MOBILE_597a2174-ebd2-4a07-be0b-5c176d2b4e2a.png",
