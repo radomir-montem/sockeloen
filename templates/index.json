@@ -46,7 +46,7 @@
       "settings": {
         "image": "shopify://shop_images/tibor.banner2.jpg",
         "image_mobile": "shopify://shop_images/tibor.banner1.jpg",
-        "image_overlay_opacity": 0,
+        "image_overlay_opacity": 10,
         "banner_image_height": 550,
         "image_height_mobile": 550,
         "adapt_height_first_image": true,
