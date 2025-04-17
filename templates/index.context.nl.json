@@ -17,26 +17,6 @@
       "settings": {
         "image": "shopify://shop_images/tibor.banner2.jpg",
         "image_mobile": "shopify://shop_images/tibor.banner1.jpg"
-      },
-      "blocks": {
-        "heading": {
-          "settings": {
-            "heading": "AERO WHITE"
-          }
-        },
-        "text": {
-          "settings": {
-            "text": "One of our best products the stylish Classic Aero White."
-          }
-        },
-        "button": {
-          "settings": {
-            "button_label_1": "SHOP AERO WHITE",
-            "button_link_1": "shopify://products/sockeloen-aero-cycling-socks",
-            "button_label_2": "SHOP FSOTP",
-            "button_link_2": "shopify://collections/fsotp"
-          }
-        }
       }
     }
   }
