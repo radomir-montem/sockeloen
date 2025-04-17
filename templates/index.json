@@ -15,25 +15,25 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "AERO WHITE",
+            "heading": "WHITE SHOECOVERS",
             "heading_size": "h2"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "One of our best products the stylish Classic Aero White.",
+            "text": "BACK IN STOCK // BACK IN STOCK // BACK IN STOCK //",
             "text_style": "body"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "SHOP AERO WHITE",
-            "button_link_1": "shopify://products/sockeloen-aero-cycling-socks",
+            "button_label_1": "SHOP SHOECOVERS",
+            "button_link_1": "shopify://collections/white-overshoes",
             "button_style_secondary_1": false,
-            "button_label_2": "SHOP FSOTP",
-            "button_link_2": "shopify://collections/fsotp",
+            "button_label_2": "SHOP ALL PRODUCTS",
+            "button_link_2": "shopify://collections/all",
             "button_style_secondary_2": true
           }
         }
