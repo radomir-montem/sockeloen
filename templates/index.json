@@ -44,19 +44,34 @@
         "button"
       ],
       "settings": {
-        "image": "shopify://shop_images/White_aero_classic_logo_website_banner.jpg",
-        "image_mobile": "shopify://shop_images/White_aero_classic_logo_website_banner_mobile.jpg",
+        "image": "shopify://shop_images/tibor.banner2.jpg",
+        "image_mobile": "shopify://shop_images/tibor.banner1.jpg",
         "image_overlay_opacity": 0,
         "banner_image_height": 600,
         "image_height_mobile": 550,
         "adapt_height_first_image": true,
-        "desktop_content_position": "bottom-left",
+        "desktop_content_position": "bottom-center",
         "show_text_box": false,
-        "desktop_content_alignment": "left",
+        "desktop_content_alignment": "center",
         "color_scheme": "background-1",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
         "show_text_below": false
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Best sellers",
+        "collection": "best-sellers-1",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2"
       }
     },
     "8b0b527a-f477-4927-970f-cc63855e24be": {
@@ -149,21 +164,6 @@
         "20a37a02-b535-4c77-9abf-ee2feb677b95"
       ],
       "settings": {}
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Best sellers",
-        "collection": "best-sellers-1",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "image_ratio": "portrait",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "enable_quick_add": false,
-        "columns_mobile": "2"
-      }
     },
     "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5": {
       "type": "image-banner",
@@ -487,9 +487,9 @@
   },
   "order": [
     "image_banner",
+    "featured_collection",
     "8b0b527a-f477-4927-970f-cc63855e24be",
     "c279238b-8499-4eaf-81d5-673521b38c4a",
-    "featured_collection",
     "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5",
     "dd2f8929-ca91-4a21-8114-9128c971c079",
     "d87b5960-1f92-48c4-8223-cc52b7b532cf",
