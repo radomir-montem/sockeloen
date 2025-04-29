@@ -339,11 +339,11 @@
         "buttons_xMFBV8": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "LEARN MORE",
-            "button_link_1": "shopify://pages/custom-made",
+            "button_label_1": "SHOP ALL SOCKS",
+            "button_link_1": "shopify://collections/all-socks",
             "button_style_secondary_1": true,
-            "button_label_2": "EXPLORE CUSTOM SOCKS",
-            "button_link_2": "shopify://collections/custom-socks",
+            "button_label_2": "EXPLORE FSOTP",
+            "button_link_2": "shopify://collections/fsotp",
             "button_style_secondary_2": false
           }
         }
@@ -353,10 +353,13 @@
         "text_hfdXtU",
         "buttons_xMFBV8"
       ],
+      "custom_css": [
+        "h1 {font-size: 40px;}"
+      ],
       "settings": {
         "image": "shopify://shop_images/SOCKELOEN_7.jpg",
-        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
-        "image_overlay_opacity": 0,
+        "image_mobile": "shopify://shop_images/SOCKELOEN_13.jpg",
+        "image_overlay_opacity": 20,
         "banner_image_height": 600,
         "image_height_mobile": 450,
         "adapt_height_first_image": true,
