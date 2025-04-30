@@ -143,9 +143,15 @@
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'heading' -%}
-          <h1 class="banner__heading {% if block.settings.heading_size == 'h0' %} text-[56px] font-bold {% else %}{{ block.settings.heading_size }}{% endif %}" {{ block.shopify_attributes }}>
-              <span>{{ block.settings.heading | escape }}</span>
-            </h1>
+            {% if block.settings.use_h1_tag %}
+              <h1 class="banner__heading {% if block.settings.heading_size == 'h0' %} text-[56px] font-bold {% else %}{{ block.settings.heading_size }}{% endif %}" {{ block.shopify_attributes }}>
+                <span>{{ block.settings.heading | escape }}</span>
+              </h1>
+            {% else %}
+              <h3 class="banner__heading {% if block.settings.heading_size == 'h0' %} text-[56px] font-bold {% else %}{{ block.settings.heading_size }}{% endif %}" {{ block.shopify_attributes }}>
+                <span>{{ block.settings.heading | escape }}</span>
+              </h3>
+            {% endif %}
           {%- when 'text' -%}
             <h2 class="banner__text max-w-[438px] {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
               <span>{{ block.settings.text | escape }}</span>
@@ -389,6 +395,12 @@
           ],
           "default": "h1",
           "label": "t:sections.all.heading_size.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_h1_tag",
+          "label": "Enable H1 Tag",
+          "default": false
         }
       ]
     },

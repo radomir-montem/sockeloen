@@ -16,7 +16,8 @@
           "type": "heading",
           "settings": {
             "heading": "WHITE SHOECOVERS",
-            "heading_size": "h2"
+            "heading_size": "h2",
+            "use_h1_tag": false
           }
         },
         "text": {
@@ -172,7 +173,8 @@
           "type": "heading",
           "settings": {
             "heading": "CUSTOM MADE SOCKS",
-            "heading_size": "h0"
+            "heading_size": "h0",
+            "use_h1_tag": true
           }
         },
         "a8a72217-bd02-490a-b90f-0b812e1cec08": {
@@ -326,7 +328,8 @@
           "type": "heading",
           "settings": {
             "heading": "COMFORTABLE HIGH PERFORMANCE SOCKS",
-            "heading_size": "h0"
+            "heading_size": "h0",
+            "use_h1_tag": true
           }
         },
         "text_hfdXtU": {
