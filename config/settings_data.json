@@ -165,22 +165,10 @@
               "font_color": "#ffffff",
               "link": ""
             }
-          },
-          "announcement_zLk496": {
-            "type": "announcement",
-            "settings": {
-              "text": "Welcome to our store",
-              "usd_text": "FREE SHIPPING > $150 // BORN IN THE PELOTON // 100% SATISFACTION // CUSTOMER IS KING //",
-              "text_alignment": "center",
-              "bg_color": "#000000",
-              "font_color": "#ffffff",
-              "link": ""
-            }
           }
         },
         "block_order": [
-          "announcement-bar-0",
-          "announcement_zLk496"
+          "announcement-bar-0"
         ],
         "settings": {
           "autoplay_speed": 7
