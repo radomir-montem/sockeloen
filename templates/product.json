@@ -90,7 +90,7 @@
           "type": "usps",
           "settings": {
             "usp1": "shopify://shop_images/Copia_de_STAMP.USPS.png",
-            "usp1_text": "<p><a href=\"/policies/shipping-policy\" title=\"Shipping Policy\"><strong>Free </strong>Shipping &gt; €75,-</a></p>",
+            "usp1_text": "<p><a href=\"/policies/shipping-policy\" title=\"Shipping Policy\"><strong>Free </strong>Shipping &gt; €85,-</a></p>",
             "usp2": "shopify://shop_images/Copia_de_PELOTON.USPS.png",
             "usp2_text": "<p><strong>Born</strong> in the peloton</p>",
             "usp3": "shopify://shop_images/copia_6.lastkm.USP.TRANS_2a8877e2-c653-43ee-9192-49baddd27640.png",
