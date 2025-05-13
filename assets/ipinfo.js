@@ -1,12 +1,12 @@
 if (!navigator.userAgent.match(/bot|spider/i)) {
-    //Let's check if we have the value in localstorage
-    if (!localStorage.getItem('country')) {
+    //Let's check if we have the value in sessionStorage
+    if (!sessionStorage.getItem('country')) {
         // No cached data, let's get it from IPinfo
         fetch('https://ipinfo.io/json?token=5be139d763948e')
             .then(res => res.json())
             .then(data => {
-                //We have the data, let's cache it in localStorage before redirecting
-                localStorage.setItem('country', data.country);
+                //We have the data, let's cache it in sessionStorage before redirecting
+                sessionStorage.setItem('country', data.country);
                 const form = document.getElementById('HeaderLocalizationForm');
                 const country_code = data.country;
                 if(country_code == 'NL' || country_code == 'BE') {
