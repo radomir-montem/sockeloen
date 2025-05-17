@@ -18,6 +18,15 @@
         "image": "shopify://shop_images/tibor.banner2.jpg",
         "image_mobile": "shopify://shop_images/tibor.banner1.jpg"
       }
+    },
+    "image_banner_PTNcRi": {
+      "blocks": {
+        "heading_XaazFp": {
+          "settings": {
+            "heading": "SNELLE HOGE PERFORMANCE SOKKEN"
+          }
+        }
+      }
     }
   }
 }
