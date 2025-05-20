@@ -19,7 +19,7 @@
       productImg: '{{ product.featured_media | image_url }}',
       imgWidth: '{{ product.featured_media.width }}',
       imgHeight: '{{ product.featured_media.height }}',
-      price: '{{ product.price | money_with_currency }}',
+      price: '{{ product.price | money }}',
       productUrl: '{{ product.url }}',
       productImageAltText: '{{ product.featured_media.alt | escape }}',
     };
@@ -84,7 +84,7 @@
                   <div class="price ">
                     <div class="price__container">
                       <div class="price-item price-item--regular">
-                        <span class="regular-text">${item.price}</span>
+                        <span class="regular-text text-[#c0543f]">${item.price}</span>
                       </div>
                     </div>
                   </div>

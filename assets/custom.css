@@ -167,12 +167,12 @@
 
 .price__sale .regular-text {
     text-decoration: line-through;
-    font-size: 14px !important;
+    font-size: 12px !important;
 }
 
 .price__sale .real-price {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .product-grid-container .price__sale .regular-text {
@@ -181,6 +181,12 @@
 
 .product-grid-container .price__sale .real-price {
     font-size: 15px !important;
+}
+
+.recently-viewed .card__information .regular-text {
+    font-size: 15px !important;
+    font-weight: bold;
+    
 }
 
 .featured-blog .blog__posts.articles-wrapper {
