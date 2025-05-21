@@ -67,11 +67,17 @@ x-data="{
                             class="py-[16px] submenu-img font-bold text-[20px] tracking-[0.02em] px-[32px] uppercase text-[#7D7D7D] flex items-center justify-start hover:text-[#111111]" 
                             href="{{sub_sub_link.url}}">
                             {% for block in section.blocks %}
-                              {% assign collection = block.settings.title | replace: " ", "-" | downcase %}
-                              {% assign menu_link = sub_sub_link.title | replace: " ", "-" | downcase %}
-                              {% assign collection_translated = block.settings.title_translate | replace: " ", "-" | downcase %}
-                              {% assign collection_translated_german = block.settings.title_translate_german | replace: " ", "-" | downcase  %}
-                              {% if menu_link == collection or menu_link == collection_translated or menu_link == collection_translated_german %}
+                              {% assign collection = block.settings.title | remove: "&gt;" | remove: ">" | replace: " ", "-" | downcase %}
+                              {% assign menu_link = sub_sub_link.title | remove: "&gt;" | remove: ">" | replace: " ", "-" | downcase %}
+                              {% assign collection_translated = block.settings.title_translate | remove: "&gt;" | remove: ">" | replace: " ", "-" | downcase %}
+                              {% assign collection_translated_german = block.settings.title_translate_german | remove: "&gt;" | remove: ">" | replace: " ", "-" | downcase  %}
+                              {% assign collection_translated_french = block.settings.title_translate_french | remove: "&gt;" | remove: ">" | replace: " ", "-" | downcase  %}
+
+                              {% comment %} {% if sub_sub_link.title == 'Beispiele für benutzerdefinierte Socken' %}
+                                {{ menu_link }} -- {{ collection }}
+                                <br>
+                              {% endif %} {% endcomment %}
+                              {% if menu_link == collection or menu_link == collection_translated or menu_link == collection_translated_german or menu_link == collection_translated_french %}
                                 {%- render 'c-image-element',
                                   image: block.settings.image_item,
                                   lazy: true,
