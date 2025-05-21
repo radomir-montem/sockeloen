@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "current": {
     "product_colors": "Wit | White\nJongen | Boy\nMeisje | Girl\nGekleurd | Colored\nEffen | Plain\nGlanzend | Glossy\nWit V1 | White V1\nWit V2 | White V2\nWit/Zilver | White/Silver\nWit/Zwart | White/Black\nWit/Oranje | White/Orange\nWit/Geel | White/Yellow\nLogowit | Logowhite\nhelemaal wit | Allwhite\nZwart | Black\nhelemaal zwart | Allblack\nZwart/Goud | Black/Gold\nZwart/Goud | Black/Gold\nZwart/Wit | Black/White\nZwart/Grijs | Black/Grey\nZwart/Groen | Black/Green\nDonker | Dark\nGeel | Yellow\nModder | Mud\nDen | Pine\nCommute | Communte\nBlauw | Blue\nGrijs | Grey\nOranje | Orange\nSalie | Sage\nSomber | Murk\nSchors | Bark\nBeige | Beige\nGroen | Green\nBruin | Brown\nOranje | Orange\nGirasole | Girasole\nBonnie Blue | Bonnie Blue\nLamswol | Lamb's Wool\nTarroco | Tarroco\nOlijf | Oliva\nPansé | Pansé\nStaal | Acero\nBlauw | Blue\nItalië | Italy\nFrankrijk | France\nDuitsland | Germany\nBelgië | Belgium\nEuropa | Europe\nNederland | Netherlands\nWerelden | Worlds\nBordeauxrood | Bordeaux red\nNacht | Notte\nStandard | Standard\nBEAT | BEAT\nLSRF | LSRF\nCanyon | Canyon\nLa Machine | La Machine\nS-Bikes | S-Bikes\nSRAM | SRAM",
     "one_day_shipment": "Netherlands, Belgium",
@@ -210,7 +210,7 @@
             "type": "text",
             "settings": {
               "title": "Best sellers",
-              "title_translate": "Beste sellers",
+              "title_translate": "Beste verkopers",
               "title_translate_german": "Bestsellers",
               "title_translate_french": "Meilleures ventes",
               "image_item": "shopify://shop_images/MENU_BLOCK_BEST.png"
