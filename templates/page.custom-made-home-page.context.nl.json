@@ -52,6 +52,21 @@
           }
         }
       }
+    },
+    "featured_collection": {
+      "settings": {
+        "title": "CUSTOM BEDRUKTE SOKKEN > 50 PAAR"
+      }
+    },
+    "dd2f8929-ca91-4a21-8114-9128c971c079": {
+      "blocks": {
+        "fd0f966c-3c50-4673-9dbf-aa8e6aedd6f8": {
+          "settings": {
+            "title": "GRATIS CONSULT",
+            "button_label": "BOEK EEN BELAFSPRAAK"
+          }
+        }
+      }
     }
   }
 }
