@@ -125,6 +125,44 @@
           }
         }
       }
+    },
+    "544da41d-30ed-4ef9-bec8-135a34583024": {
+      "blocks": {
+        "9688e6c0-a54f-4973-9a01-5841652bc9ad": {
+          "settings": {
+            "heading": "PRIJZEN",
+            "description": "<p>Ontdek meer over de verschillende prijzen<br/>voor onze gepersonaliseerde sokken op de productpagina’s.</p>",
+            "button_text": "BEKIJK PRODUCTEN"
+          }
+        }
+      }
+    },
+    "multicolumn": {
+      "blocks": {
+        "column1": {
+          "settings": {
+            "heading": "Gratis Verzending",
+            "column_content": "Onverwachte vormen met slimme details, functionaliteit, een nieuwe luxe uitstraling tegen een eigentijdse prijs."
+          }
+        },
+        "column2": {
+          "settings": {
+            "heading": "BESTEL VOOR 15:00 UUR? DAN VERZENDEN WE NOG DEZELFDE DAG!",
+            "column_content": "Onverwachte vormen met slimme details, functionaliteit, een nieuwe luxe uitstraling tegen een moderne prijs."
+          }
+        },
+        "column3": {
+          "settings": {
+            "heading": "Gratis retourneren",
+            "column_content": "Onverwachte vormen met slimme details, functionaliteit, een nieuwe luxe uitstraling tegen een moderne prijs."
+          }
+        }
+      }
+    },
+    "collapsible_content_PPcR8U": {
+      "settings": {
+        "caption": "Veelgestelde vragen"
+      }
     }
   }
 }
