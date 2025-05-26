@@ -67,6 +67,43 @@
           }
         }
       }
+    },
+    "8b0b527a-f477-4927-970f-cc63855e24be": {
+      "blocks": {
+        "019acde6-345b-4b53-8c89-106563c84fb2": {
+          "settings": {
+            "button_label": "BEKIJK VOORBEELDEN"
+          }
+        },
+        "6d8ba610-7a14-4d56-aec7-aab43b31460b": {
+          "settings": {
+            "title": "MERKEN",
+            "button_label": "BEKIJK VOORBEELDEN"
+          }
+        },
+        "70fc3b03-a6c3-48e5-b2b0-9eb9da4cb5d6": {
+          "settings": {
+            "title": "EVENEMENTEN",
+            "button_label": "BEKIJK VOORBEELDEN"
+          }
+        }
+      }
+    },
+    "de5adc24-a83f-4024-94f6-e2ca486b41ca": {
+      "settings": {
+        "title": "CUSTOM BEDRUKTE SOKKEN > 1 PAAR"
+      }
+    },
+    "d87b5960-1f92-48c4-8223-cc52b7b532cf": {
+      "blocks": {
+        "ecaa607f-a456-4c64-8b1d-82c823de6917": {
+          "settings": {
+            "heading": "ZAKKELIJK PROGRAMMA",
+            "description": "<p>1. Wij werken voor de grootste namen binnen het vak.<br/>2. Volledig custom.<br/>3.Concurrerende prijzen binnen de branche.</p><p><br/><br/></p><p><br/></p><p><br/><br/></p><p><br/></p>",
+            "button_text": "BOEK EEN BELAFSPRAAK"
+          }
+        }
+      }
     }
   }
 }
