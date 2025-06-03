@@ -178,6 +178,61 @@
         "padding_bottom": 0
       }
     },
+    "image_banner_PTNcRi": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_XaazFp": {
+          "type": "heading",
+          "settings": {
+            "heading": "COMFORTABLE HIGH PERFORMANCE SOCKS",
+            "heading_size": "h0",
+            "use_h1_tag": true
+          }
+        },
+        "text_hfdXtU": {
+          "type": "text",
+          "settings": {
+            "text": "KEEP THEM HIGH WEAR THEM PROUD // MEET THE FASTEST SOCKS ON THE PLANET",
+            "text_style": "body"
+          }
+        },
+        "buttons_xMFBV8": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "SHOP ALL SOCKS",
+            "button_link_1": "shopify://collections/all-socks",
+            "button_style_secondary_1": true,
+            "button_label_2": "EXPLORE FSOTP",
+            "button_link_2": "shopify://collections/fsotp",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_XaazFp",
+        "text_hfdXtU",
+        "buttons_xMFBV8"
+      ],
+      "custom_css": [
+        "h1 {font-size: 36px;}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/SOCKELOEN_7.jpg",
+        "image_mobile": "shopify://shop_images/SOCKELOEN_13.jpg",
+        "image_overlay_opacity": 100,
+        "banner_image_height": 600,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
     "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5": {
       "type": "image-banner",
       "blocks": {
@@ -378,60 +433,6 @@
         "button_text_color": "#ffffff"
       }
     },
-    "image_banner_PTNcRi": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_XaazFp": {
-          "type": "heading",
-          "settings": {
-            "heading": "COMFORTABLE HIGH PERFORMANCE SOCKS",
-            "heading_size": "h0",
-            "use_h1_tag": true
-          }
-        },
-        "text_hfdXtU": {
-          "type": "text",
-          "settings": {
-            "text": "KEEP THEM HIGH WEAR THEM PROUD // MEET THE FASTEST SOCKS ON THE PLANET",
-            "text_style": "body"
-          }
-        },
-        "buttons_xMFBV8": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "SHOP ALL SOCKS",
-            "button_link_1": "shopify://collections/all-socks",
-            "button_style_secondary_1": true,
-            "button_label_2": "EXPLORE FSOTP",
-            "button_link_2": "shopify://collections/fsotp",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_XaazFp",
-        "text_hfdXtU",
-        "buttons_xMFBV8"
-      ],
-      "custom_css": [
-        "h1 {font-size: 36px;}"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/SOCKELOEN_7.jpg",
-        "image_mobile": "shopify://shop_images/SOCKELOEN_13.jpg",
-        "image_overlay_opacity": 20,
-        "banner_image_height": 600,
-        "image_height_mobile": 450,
-        "adapt_height_first_image": true,
-        "desktop_content_position": "middle-left",
-        "show_text_box": false,
-        "desktop_content_alignment": "left",
-        "color_scheme": "background-1",
-        "mobile_content_alignment": "left",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
-    },
     "multicolumn": {
       "type": "multicolumn",
       "blocks": {
@@ -604,12 +605,12 @@
     "8b0b527a-f477-4927-970f-cc63855e24be",
     "c279238b-8499-4eaf-81d5-673521b38c4a",
     "custom_liquid_rMhgeN",
+    "image_banner_PTNcRi",
     "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5",
     "dd2f8929-ca91-4a21-8114-9128c971c079",
     "d87b5960-1f92-48c4-8223-cc52b7b532cf",
     "two_cols_swap_n6jVTM",
     "image_text",
-    "image_banner_PTNcRi",
     "multicolumn",
     "faq_ipn7BU",
     "64491ddd-d6b6-4d88-97d2-17092b70850d",
