@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "WHITE SHOECOVERS",
+            "heading": "WHITE AERO SOCKS",
             "heading_size": "h2",
             "use_h1_tag": false
           }
@@ -30,8 +30,8 @@
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "SHOP SHOECOVERS",
-            "button_link_1": "shopify://collections/white-overshoes",
+            "button_label_1": "SHOP AERO SOCKS",
+            "button_link_1": "shopify://collections/aero-cycling-socks",
             "button_style_secondary_1": false,
             "button_label_2": "SHOP ALL PRODUCTS",
             "button_link_2": "shopify://collections/all",
@@ -45,13 +45,13 @@
         "button"
       ],
       "settings": {
-        "image": "shopify://shop_images/tibor.banner2.jpg",
+        "image": "shopify://shop_images/IMG_8470.jpg",
         "image_mobile": "shopify://shop_images/tibor.banner1.jpg",
-        "image_overlay_opacity": 10,
+        "image_overlay_opacity": 40,
         "banner_image_height": 550,
         "image_height_mobile": 550,
         "adapt_height_first_image": true,
-        "desktop_content_position": "middle-center",
+        "desktop_content_position": "bottom-center",
         "show_text_box": false,
         "desktop_content_alignment": "center",
         "color_scheme": "background-1",
