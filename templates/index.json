@@ -275,23 +275,6 @@
     "d87b5960-1f92-48c4-8223-cc52b7b532cf": {
       "type": "two-cols-swap",
       "blocks": {
-        "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/Homepagebanners_export_7.jpg",
-            "color": "",
-            "text_color": "#ffffff",
-            "font_size": 40,
-            "heading": "",
-            "description": "",
-            "vertical_pos": "justify-center",
-            "horizontal_pos": "items-center",
-            "button_disclaimer": "",
-            "button_text": "",
-            "button_url": "#",
-            "button_pos": "mt-0"
-          }
-        },
         "ecaa607f-a456-4c64-8b1d-82c823de6917": {
           "type": "column",
           "settings": {
@@ -308,11 +291,28 @@
             "button_url": "https://sockeloen.com/collections/summer-cycling-socks",
             "button_pos": "mt-0"
           }
+        },
+        "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Homepagebanners_export_7.jpg",
+            "color": "",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "",
+            "button_url": "#",
+            "button_pos": "mt-0"
+          }
         }
       },
       "block_order": [
-        "d3c61b13-8dbb-4c88-8c39-6529210ef951",
-        "ecaa607f-a456-4c64-8b1d-82c823de6917"
+        "ecaa607f-a456-4c64-8b1d-82c823de6917",
+        "d3c61b13-8dbb-4c88-8c39-6529210ef951"
       ],
       "settings": {}
     },
