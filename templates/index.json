@@ -232,16 +232,6 @@
     "dd2f8929-ca91-4a21-8114-9128c971c079": {
       "type": "column-image-and-section",
       "blocks": {
-        "fd0f966c-3c50-4673-9dbf-aa8e6aedd6f8": {
-          "type": "richtext",
-          "settings": {
-            "title": "SALE",
-            "description": "<p>Explore our last chance products here. </p><p>Special prices. Minimum waste.</p><p></p><p></p><p></p><p></p><p></p>",
-            "button_label": "SHOP NOW",
-            "button_url": "shopify://collections/sale",
-            "text_align": "center"
-          }
-        },
         "4904019c-ebe9-48ae-adae-d8c50c33e729": {
           "type": "image",
           "settings": {
@@ -261,12 +251,22 @@
             "button_label": "SHOP NOW",
             "button_url": "shopify://collections/sockeloen-x-knwu"
           }
+        },
+        "fd0f966c-3c50-4673-9dbf-aa8e6aedd6f8": {
+          "type": "richtext",
+          "settings": {
+            "title": "SALE",
+            "description": "<p>Explore our last chance products here. </p><p>Special prices. Minimum waste.</p><p></p><p></p><p></p><p></p><p></p>",
+            "button_label": "SHOP NOW",
+            "button_url": "shopify://collections/sale",
+            "text_align": "center"
+          }
         }
       },
       "block_order": [
-        "fd0f966c-3c50-4673-9dbf-aa8e6aedd6f8",
         "4904019c-ebe9-48ae-adae-d8c50c33e729",
-        "86de9b6b-4b96-465d-89c3-3525b1066c20"
+        "86de9b6b-4b96-465d-89c3-3525b1066c20",
+        "fd0f966c-3c50-4673-9dbf-aa8e6aedd6f8"
       ],
       "settings": {
         "font_size": 22
@@ -276,6 +276,50 @@
       "type": "two-cols-swap",
       "blocks": {
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Homepagebanners_export_7.jpg",
+            "color": "",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "",
+            "button_url": "#",
+            "button_pos": "mt-0"
+          }
+        },
+        "ecaa607f-a456-4c64-8b1d-82c823de6917": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Homepagebanners_export_72.jpg",
+            "color": "#0e112e",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "COMING SOON",
+            "button_url": "https://sockeloen.com/collections/summer-cycling-socks",
+            "button_pos": "mt-0"
+          }
+        }
+      },
+      "block_order": [
+        "d3c61b13-8dbb-4c88-8c39-6529210ef951",
+        "ecaa607f-a456-4c64-8b1d-82c823de6917"
+      ],
+      "settings": {}
+    },
+    "two_cols_swap_n6jVTM": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "column_YN3gax": {
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/NO_FEAR_LB_4.jpg",
@@ -292,7 +336,7 @@
             "button_pos": "mt-0"
           }
         },
-        "ecaa607f-a456-4c64-8b1d-82c823de6917": {
+        "column_pYHJ3N": {
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/NO_FEAR_LB_42.jpg",
@@ -311,9 +355,10 @@
         }
       },
       "block_order": [
-        "d3c61b13-8dbb-4c88-8c39-6529210ef951",
-        "ecaa607f-a456-4c64-8b1d-82c823de6917"
+        "column_YN3gax",
+        "column_pYHJ3N"
       ],
+      "disabled": true,
       "settings": {}
     },
     "image_text": {
@@ -562,6 +607,7 @@
     "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5",
     "dd2f8929-ca91-4a21-8114-9128c971c079",
     "d87b5960-1f92-48c4-8223-cc52b7b532cf",
+    "two_cols_swap_n6jVTM",
     "image_text",
     "image_banner_PTNcRi",
     "multicolumn",
