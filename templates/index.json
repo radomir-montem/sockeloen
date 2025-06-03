@@ -48,7 +48,7 @@
         "image": "shopify://shop_images/IMG_8470.jpg",
         "image_mobile": "shopify://shop_images/JASPER.banner1-_1.gif",
         "image_overlay_opacity": 30,
-        "banner_image_height": 1000,
+        "banner_image_height": 750,
         "image_height_mobile": 750,
         "adapt_height_first_image": true,
         "desktop_content_position": "bottom-center",
