@@ -31,9 +31,10 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/COLLECTION_BANNER_SUMMER_3.jpg",
+        "image_mobile": "shopify://shop_images/COLLECTION_BANNER_MOBILE_2.jpg",
         "image_overlay_opacity": 0,
-        "banner_image_height": 200,
-        "image_height_mobile": 150,
+        "banner_image_height": 50,
+        "image_height_mobile": 50,
         "adapt_height_first_image": true,
         "desktop_content_position": "middle-center",
         "show_text_box": true,
