@@ -49,15 +49,15 @@
         "image_mobile": "shopify://shop_images/mobile.custom.banner.collectie.TDT---All-White.png",
         "image_overlay_opacity": 100,
         "banner_image_height": 550,
-        "image_height_mobile": 450,
+        "image_height_mobile": 500,
         "adapt_height_first_image": false,
         "desktop_content_position": "middle-center",
         "show_text_box": true,
         "desktop_content_alignment": "center",
-        "color_scheme": "background-1",
+        "color_scheme": "inverse",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": true,
-        "show_text_below": true
+        "show_text_below": false
       }
     },
     "banner": {
