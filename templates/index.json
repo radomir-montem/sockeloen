@@ -301,11 +301,11 @@
             "font_size": 40,
             "heading": "",
             "description": "",
-            "vertical_pos": "justify-center",
+            "vertical_pos": "justify-end",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "",
-            "button_url": "#",
+            "button_text": "EXLORE NOW",
+            "button_url": "https://sockeloen.com/collections/summer-cycling-socks",
             "button_pos": "mt-0"
           }
         }

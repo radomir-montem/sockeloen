@@ -38,11 +38,12 @@
     },
     "image_banner_PTNcRi": {
       "settings": {
+        "image_overlay_opacity": 100,
+        "adapt_height_first_image": false,
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
         "mobile_content_alignment": "center",
-        "image_overlay_opacity": 100,
-        "adapt_height_first_image": false
+        "color_scheme": "inverse"
       },
       "blocks": {
         "heading_XaazFp": {
@@ -50,15 +51,15 @@
             "heading": "SNELLE HOGE PERFORMANCE SOKKEN"
           }
         },
+        "text_hfdXtU": {
+          "settings": {
+            "text": "keep them high, wear them proud - meet the fastest socks on the planet",
+            "text_style": "subtitle"
+          }
+        },
         "buttons_xMFBV8": {
           "disabled": true,
           "settings": {}
-        },
-        "text_hfdXtU": {
-          "settings": {
-            "text_style": "subtitle",
-            "text": "keep them high, wear them proud - meet the fastest socks on the planet"
-          }
         }
       }
     }
