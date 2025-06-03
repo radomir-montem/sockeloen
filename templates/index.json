@@ -48,8 +48,8 @@
         "image": "shopify://shop_images/IMG_8470.jpg",
         "image_mobile": "shopify://shop_images/JASPER.banner1-_1.gif",
         "image_overlay_opacity": 30,
-        "banner_image_height": 750,
-        "image_height_mobile": 750,
+        "banner_image_height": 650,
+        "image_height_mobile": 550,
         "adapt_height_first_image": true,
         "desktop_content_position": "bottom-center",
         "show_text_box": false,
@@ -240,57 +240,6 @@
         "vertical_padding": 70
       }
     },
-    "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5": {
-      "type": "image-banner",
-      "blocks": {
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0": {
-          "type": "heading",
-          "settings": {
-            "heading": "CUSTOM MADE SOCKS",
-            "heading_size": "h0",
-            "use_h1_tag": true
-          }
-        },
-        "a8a72217-bd02-490a-b90f-0b812e1cec08": {
-          "type": "text",
-          "settings": {
-            "text": "FREE 15MIN CONSULT // FREE SAMPLE SOCKS // STARTING FROM 1 PAIR // DELIVERY WITHIN 1 WEEK // OWNED PRODUCTION FACILITIES // 100% SATISFACTION",
-            "text_style": "body"
-          }
-        },
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "LEARN MORE",
-            "button_link_1": "shopify://pages/custom-made",
-            "button_style_secondary_1": true,
-            "button_label_2": "EXPLORE CUSTOM SOCKS",
-            "button_link_2": "shopify://collections/custom-socks",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0",
-        "a8a72217-bd02-490a-b90f-0b812e1cec08",
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1_f2234b29-35ac-49bb-94c7-d87c0f5c7949.png",
-        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
-        "image_overlay_opacity": 20,
-        "banner_image_height": 600,
-        "image_height_mobile": 450,
-        "adapt_height_first_image": true,
-        "desktop_content_position": "middle-left",
-        "show_text_box": false,
-        "desktop_content_alignment": "left",
-        "color_scheme": "background-1",
-        "mobile_content_alignment": "left",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
-    },
     "dd2f8929-ca91-4a21-8114-9128c971c079": {
       "type": "column-image-and-section",
       "blocks": {
@@ -378,6 +327,57 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951"
       ],
       "settings": {}
+    },
+    "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5": {
+      "type": "image-banner",
+      "blocks": {
+        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "CUSTOM MADE SOCKS",
+            "heading_size": "h0",
+            "use_h1_tag": true
+          }
+        },
+        "a8a72217-bd02-490a-b90f-0b812e1cec08": {
+          "type": "text",
+          "settings": {
+            "text": "FREE 15MIN CONSULT // FREE SAMPLE SOCKS // STARTING FROM 1 PAIR // DELIVERY WITHIN 1 WEEK // OWNED PRODUCTION FACILITIES // 100% SATISFACTION",
+            "text_style": "body"
+          }
+        },
+        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "LEARN MORE",
+            "button_link_1": "shopify://pages/custom-made",
+            "button_style_secondary_1": true,
+            "button_label_2": "EXPLORE CUSTOM SOCKS",
+            "button_link_2": "shopify://collections/custom-socks",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0",
+        "a8a72217-bd02-490a-b90f-0b812e1cec08",
+        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1_f2234b29-35ac-49bb-94c7-d87c0f5c7949.png",
+        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
+        "image_overlay_opacity": 20,
+        "banner_image_height": 600,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": true,
+        "desktop_content_position": "middle-left",
+        "show_text_box": false,
+        "desktop_content_alignment": "left",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "left",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
     },
     "two_cols_swap_n6jVTM": {
       "type": "two-cols-swap",
@@ -608,9 +608,9 @@
     "image_banner_PTNcRi",
     "custom_liquid_rMhgeN",
     "de9aa240-54a4-4bba-bc14-853948711e79",
-    "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5",
     "dd2f8929-ca91-4a21-8114-9128c971c079",
     "d87b5960-1f92-48c4-8223-cc52b7b532cf",
+    "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5",
     "two_cols_swap_n6jVTM",
     "image_text",
     "multicolumn",
