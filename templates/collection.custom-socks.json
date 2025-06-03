@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "c1c1952d-9ed0-46d9-84fe-165c1d4f0750": {
@@ -7,7 +16,8 @@
           "type": "heading",
           "settings": {
             "heading": "CUSTOM SOCKS",
-            "heading_size": "h1"
+            "heading_size": "h1",
+            "use_h1_tag": false
           }
         },
         "template--19260743450948__c1c1952d-9ed0-46d9-84fe-165c1d4f0750-text-1": {
@@ -21,10 +31,10 @@
           "type": "buttons",
           "settings": {
             "button_label_1": "CUSTOM PRINTED SOCKS > 1 PAIR",
-            "button_link_1": "shopify:\/\/collections\/custom-printed-1-50-pairs",
+            "button_link_1": "shopify://collections/custom-printed-1-50-pairs",
             "button_style_secondary_1": false,
             "button_label_2": "CUSTOM KNITTED SOCKS > 50 PAIRS",
-            "button_link_2": "shopify:\/\/collections\/custom-knitted-socks",
+            "button_link_2": "shopify://collections/custom-knitted-socks",
             "button_style_secondary_2": false
           }
         }
@@ -35,9 +45,9 @@
         "template--19260743450948__c1c1952d-9ed0-46d9-84fe-165c1d4f0750-buttons-1"
       ],
       "settings": {
-        "image": "shopify:\/\/shop_images\/desktop2.custom.banner.collectie.TDT---All-White.png",
-        "image_mobile": "shopify:\/\/shop_images\/mobile.custom.banner.collectie.TDT---All-White.png",
-        "image_overlay_opacity": 0,
+        "image": "shopify://shop_images/desktop2.custom.banner.collectie.TDT---All-White.png",
+        "image_mobile": "shopify://shop_images/mobile.custom.banner.collectie.TDT---All-White.png",
+        "image_overlay_opacity": 100,
         "banner_image_height": 550,
         "image_height_mobile": 450,
         "adapt_height_first_image": false,
@@ -99,14 +109,14 @@
           "type": "faq",
           "settings": {
             "question": "How long does it take to receive my customized socks?",
-            "answer": "<p>The production time for customized socks can vary depending on the provider and the complexity of your design. Generally, it takes anywhere from a few days to a couple of weeks for your socks to be made and shipped. Be sure to check the estimated delivery time when placing your order to ensure they arrive in time for your intended purpose.<\/p>"
+            "answer": "<p>The production time for customized socks can vary depending on the provider and the complexity of your design. Generally, it takes anywhere from a few days to a couple of weeks for your socks to be made and shipped. Be sure to check the estimated delivery time when placing your order to ensure they arrive in time for your intended purpose.</p>"
           }
         },
         "faq_h6GFVq": {
           "type": "faq",
           "settings": {
             "question": "What are some popular types of sock designs?",
-            "answer": "<p>Popular sock designs include stripes, polka dots, argyle, animal prints, and novelty patterns like food items or characters.<\/p>"
+            "answer": "<p>Popular sock designs include stripes, polka dots, argyle, animal prints, and novelty patterns like food items or characters.</p>"
           }
         }
       },
@@ -128,25 +138,25 @@
         "723aa02e-dbf8-4617-9934-3727a9774b11": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+            "image": "shopify://shop_images/wit.USPS.sock.design_1.png"
           }
         },
         "17d0de2c-bf54-4c04-be74-88f697598c34": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+            "image": "shopify://shop_images/wit.6.CIRCULAR.USP.TRANS_1.png"
           }
         },
         "20b9b506-3bf5-4970-a3ec-376982f4fbdf": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+            "image": "shopify://shop_images/wit.USPS.KING_1.png"
           }
         },
         "236a11fb-d236-4a36-884d-7770c56e60a6": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+            "image": "shopify://shop_images/wit.SYMBOLEN.USPS.png"
           }
         }
       },
@@ -164,14 +174,14 @@
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>CUSTOM SOCKS<\/strong><\/p>",
+            "heading": "<p><strong>CUSTOM SOCKS</strong></p>",
             "heading_size": "h1"
           }
         },
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
           "type": "text",
           "settings": {
-            "text": "<p>High quality <strong>custom designed<\/strong> socks.<\/p><p>-<\/p><p>Our premium <strong>custom made<\/strong> socks service combines style and comfort. This is the perfect occassion for you to fully customize as you like, choosing from a large variety of colors, patterns, and materials to create the perfect pair of personalised socks. <\/p><p>-<\/p><p>The materials used in creating each pair of socks are concieved with comfort in mind, ensuring a snug and dry fit that lasts all day. <\/p>"
+            "text": "<p>High quality <strong>custom designed</strong> socks.</p><p>-</p><p>Our premium <strong>custom made</strong> socks service combines style and comfort. This is the perfect occassion for you to fully customize as you like, choosing from a large variety of colors, patterns, and materials to create the perfect pair of personalised socks. </p><p>-</p><p>The materials used in creating each pair of socks are concieved with comfort in mind, ensuring a snug and dry fit that lasts all day. </p>"
           }
         }
       },
