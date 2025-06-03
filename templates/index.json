@@ -166,18 +166,6 @@
       ],
       "settings": {}
     },
-    "custom_liquid_rMhgeN": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "heading": "SOCKELOEN COMMUNITY",
-        "heading_size": 26,
-        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
-        "color_scheme": "accent-1",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
     "image_banner_PTNcRi": {
       "type": "image-banner",
       "blocks": {
@@ -231,6 +219,18 @@
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
         "show_text_below": false
+      }
+    },
+    "custom_liquid_rMhgeN": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "heading": "SOCKELOEN COMMUNITY",
+        "heading_size": 26,
+        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
+        "color_scheme": "accent-1",
+        "padding_top": 20,
+        "padding_bottom": 0
       }
     },
     "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5": {
@@ -604,8 +604,8 @@
     "featured_collection",
     "8b0b527a-f477-4927-970f-cc63855e24be",
     "c279238b-8499-4eaf-81d5-673521b38c4a",
-    "custom_liquid_rMhgeN",
     "image_banner_PTNcRi",
+    "custom_liquid_rMhgeN",
     "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5",
     "dd2f8929-ca91-4a21-8114-9128c971c079",
     "d87b5960-1f92-48c4-8223-cc52b7b532cf",
