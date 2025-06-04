@@ -230,9 +230,9 @@
             "type": "text",
             "settings": {
               "title": "SALE",
-              "title_translate": "VERKOOP",
-              "title_translate_german": "VERKAUF",
-              "title_translate_french": "VENTE",
+              "title_translate": "SALE",
+              "title_translate_german": "SALE",
+              "title_translate_french": "SOLDES",
               "image_item": "shopify://shop_images/MENU_BLOCK_SALE.png"
             }
           },
