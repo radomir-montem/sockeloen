@@ -209,7 +209,7 @@
         "image": "shopify://shop_images/SOCKELOEN_7.jpg",
         "image_mobile": "shopify://shop_images/SOCKELOEN_13.jpg",
         "image_overlay_opacity": 100,
-        "banner_image_height": 450,
+        "banner_image_height": 250,
         "image_height_mobile": 450,
         "adapt_height_first_image": false,
         "desktop_content_position": "middle-center",
