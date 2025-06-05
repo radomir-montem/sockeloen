@@ -12,5 +12,33 @@
   "context": {
     "market": "nl"
   },
-  "sections": {}
+  "sections": {
+    "image_banner_MJ6rNw": {
+      "settings": {
+        "image_height_mobile": 50,
+        "banner_image_height": 50,
+        "image_mobile": "shopify://shop_images/COLLECTION_BANNER_MOBILE_9ae2d873-1de9-40b3-8145-6b62c6b5270f.jpg",
+        "show_text_below": false
+      },
+      "blocks": {}
+    },
+    "banner": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    },
+    "image_banner_N6aXNV": {
+      "settings": {
+        "image_mobile": "shopify://shop_images/COLLECTION_BANNER_MOBILE_3.jpg",
+        "adapt_height_first_image": true,
+        "banner_image_height": 50,
+        "image_height_mobile": 50,
+        "stack_images_on_mobile": true,
+        "show_text_below": false,
+        "show_text_box": true,
+        "desktop_content_position": "middle-center"
+      },
+      "blocks": {}
+    }
+  }
 }
