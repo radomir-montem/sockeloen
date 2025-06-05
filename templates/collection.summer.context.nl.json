@@ -29,6 +29,7 @@
     },
     "image_banner_N6aXNV": {
       "settings": {
+        "image": "shopify://shop_images/COLLECTION_BANNER_SUMMER_6.jpg",
         "image_mobile": "shopify://shop_images/COLLECTION_BANNER_MOBILE_3.jpg",
         "banner_image_height": 50,
         "image_height_mobile": 50,
@@ -36,8 +37,7 @@
         "desktop_content_position": "middle-center",
         "show_text_box": true,
         "stack_images_on_mobile": true,
-        "show_text_below": false,
-        "image": "shopify://shop_images/COLLECTION_BANNER_SUMMER_5.jpg"
+        "show_text_below": false
       },
       "blocks": {}
     }
