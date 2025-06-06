@@ -17,9 +17,9 @@
       "settings": {
         "image": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER.jpg",
         "image_overlay_opacity": 10,
-        "banner_image_height": 600,
-        "desktop_content_position": "bottom-center",
-        "adapt_height_first_image": true
+        "banner_image_height": 850,
+        "adapt_height_first_image": false,
+        "desktop_content_position": "bottom-center"
       },
       "blocks": {
         "heading": {
