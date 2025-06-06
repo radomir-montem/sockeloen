@@ -16,12 +16,12 @@
     "image_banner": {
       "settings": {
         "image": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER.jpg",
+        "image_mobile": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER_MOBILE.jpg",
         "image_overlay_opacity": 10,
         "banner_image_height": 850,
         "adapt_height_first_image": false,
         "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "image_mobile": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER_MOBILE.jpg"
+        "desktop_content_alignment": "center"
       },
       "blocks": {
         "heading": {
@@ -38,6 +38,16 @@
           "settings": {
             "button_label_1": "SHOP SUMMER COLLECTION",
             "button_link_1": "shopify://collections/summer-cycling-socks"
+          }
+        }
+      }
+    },
+    "d87b5960-1f92-48c4-8223-cc52b7b532cf": {
+      "settings": {},
+      "blocks": {
+        "ecaa607f-a456-4c64-8b1d-82c823de6917": {
+          "settings": {
+            "button_text": "SHOP NOW"
           }
         }
       }
