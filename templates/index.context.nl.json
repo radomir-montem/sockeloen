@@ -19,7 +19,7 @@
         "image_overlay_opacity": 10,
         "banner_image_height": 850,
         "adapt_height_first_image": false,
-        "desktop_content_position": "bottom-center"
+        "desktop_content_position": "middle-center"
       },
       "blocks": {
         "heading": {
