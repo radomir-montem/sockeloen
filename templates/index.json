@@ -48,7 +48,7 @@
         "image": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER.jpg",
         "image_mobile": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER_MOBILE.jpg",
         "image_overlay_opacity": 10,
-        "banner_image_height": 800,
+        "banner_image_height": 850,
         "image_height_mobile": 550,
         "adapt_height_first_image": false,
         "desktop_content_position": "bottom-center",
