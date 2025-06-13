@@ -376,7 +376,6 @@
     },
     "custom_liquid_yHjaLL": {
       "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "heading": "SOCKELOEN COMMUNITY",
         "heading_size": 20,
@@ -447,8 +446,8 @@
     "765d516d-8ae3-4a32-a2a0-20a43cc7fdc0",
     "product-recommendations",
     "8537c4d9-9c10-488a-bbd4-2c87e8b7e0a6",
-    "9148c605-c3d3-4457-a7d9-718e5b06ad2d",
     "custom_liquid_yHjaLL",
+    "9148c605-c3d3-4457-a7d9-718e5b06ad2d",
     "810ba789-2a8c-44fa-abe0-e8f36932e0cb",
     "recently-viewed",
     "7082e3df-38a9-43ef-bb51-a706f9bb048d"
