@@ -11,6 +11,9 @@
   "markets": {
     "nl": {
       "parent": "@default"
+    },
+    "eu": {
+      "parent": "@default"
     }
   }
 }
