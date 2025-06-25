@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "image_banner": {
@@ -7,13 +16,14 @@
           "type": "heading",
           "settings": {
             "heading": "CUSTOM MADE SOCKS",
-            "heading_size": "h2"
+            "heading_size": "h2",
+            "use_h1_tag": false
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "FREE 15MIN CONSULT \/\/ FREE SAMPLE SOCKS \/\/ STARTING FROM 1 PAIR \/\/ DELIVERY WITHIN 1 WEEK \/\/ OWNED PRODUCTION FACILITIES \/\/ 100% SATISFACTION",
+            "text": "FREE 15MIN CONSULT // FREE SAMPLE SOCKS // STARTING FROM 1 PAIR // DELIVERY WITHIN 1 WEEK // OWNED PRODUCTION FACILITIES // 100% SATISFACTION",
             "text_style": "body"
           }
         },
@@ -21,10 +31,10 @@
           "type": "buttons",
           "settings": {
             "button_label_1": "VIEW PRODUCTS",
-            "button_link_1": "shopify:\/\/collections\/custom-socks",
+            "button_link_1": "shopify://collections/custom-socks",
             "button_style_secondary_1": false,
             "button_label_2": "BOOK A CALL",
-            "button_link_2": "https:\/\/sockeloen-8b3b9d.pipedrive.com\/scheduler\/pP43qXU9\/custom-call",
+            "button_link_2": "https://sockeloen-8b3b9d.pipedrive.com/scheduler/pP43qXU9/custom-call",
             "button_style_secondary_2": true
           }
         }
@@ -35,10 +45,12 @@
         "button"
       ],
       "settings": {
-        "image": "shopify:\/\/shop_images\/CUSTOM.SOCKS.banner.png",
-        "image_mobile": "shopify:\/\/shop_images\/CUSTOM.SOCKS.banner.MOBILE_597a2174-ebd2-4a07-be0b-5c176d2b4e2a.png",
+        "image": "shopify://shop_images/CUSTOM.SOCKS.banner.png",
+        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_597a2174-ebd2-4a07-be0b-5c176d2b4e2a.png",
         "image_overlay_opacity": 40,
-        "adapt_height_first_image": false,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": true,
         "desktop_content_position": "middle-left",
         "show_text_box": false,
         "desktop_content_alignment": "left",
@@ -54,25 +66,25 @@
         "a68819bb-0e6b-48c9-863f-10a1074f5d16": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+            "image": "shopify://shop_images/wit.USPS.sock.design_1.png"
           }
         },
         "e5266b35-ea27-4c04-aa02-b709db6a4999": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+            "image": "shopify://shop_images/wit.6.CIRCULAR.USP.TRANS_1.png"
           }
         },
         "20a37a02-b535-4c77-9abf-ee2feb677b95": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+            "image": "shopify://shop_images/wit.SYMBOLEN.USPS.png"
           }
         },
         "0cd61b2f-4ae5-4495-8470-6db7647649c0": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+            "image": "shopify://shop_images/wit.USPS.KING_1.png"
           }
         }
       },
@@ -91,7 +103,8 @@
           "type": "heading",
           "settings": {
             "heading": "CUSTOM SOCKS",
-            "heading_size": "h1"
+            "heading_size": "h1",
+            "use_h1_tag": false
           }
         },
         "template--20074165141828__b6fa03c9-c481-43c1-b5fe-86af6b8d4630-text-1": {
@@ -106,10 +119,10 @@
           "disabled": true,
           "settings": {
             "button_label_1": "CUSTOM PRINTED SOCKS> 1 PAIR",
-            "button_link_1": "shopify:\/\/collections\/custom-printed-1-50-pairs",
+            "button_link_1": "shopify://collections/custom-printed-1-50-pairs",
             "button_style_secondary_1": false,
             "button_label_2": "CUSTOM KNITTED SOCKS > 50 PAIRS",
-            "button_link_2": "shopify:\/\/collections\/custom-knitted-socks",
+            "button_link_2": "shopify://collections/custom-knitted-socks",
             "button_style_secondary_2": false
           }
         }
@@ -121,9 +134,11 @@
       ],
       "disabled": true,
       "settings": {
-        "image": "shopify:\/\/shop_images\/desktop2.custom.banner.collectie.TDT---All-White.png",
-        "image_mobile": "shopify:\/\/shop_images\/800.800.tdt.mobile.custom.banner.collectie.TDT---All-White-_1.png",
+        "image": "shopify://shop_images/desktop2.custom.banner.collectie.TDT---All-White.png",
+        "image_mobile": "shopify://shop_images/800.800.tdt.mobile.custom.banner.collectie.TDT---All-White-_1.png",
         "image_overlay_opacity": 50,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
         "adapt_height_first_image": false,
         "desktop_content_position": "middle-center",
         "show_text_box": true,
@@ -155,25 +170,25 @@
         "54024bfd-1ea7-4505-b3b6-760cb5788137": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/USPS-CANYON.jpg"
+            "image": "shopify://shop_images/USPS-CANYON.jpg"
           }
         },
         "b80a44b5-adf3-47cc-b9df-dbfd7d2458c2": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/USPS-LSRF-LOGO.jpg"
+            "image": "shopify://shop_images/USPS-LSRF-LOGO.jpg"
           }
         },
         "b41eab73-b1f5-4378-91a1-bf7b7982f21d": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/USPS-LA-MACHINE-LOGO.jpg"
+            "image": "shopify://shop_images/USPS-LA-MACHINE-LOGO.jpg"
           }
         },
         "3e580c5a-56ac-40ea-a955-65df96ac8d5e": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/USPS-SRAM.jpg"
+            "image": "shopify://shop_images/USPS-SRAM.jpg"
           }
         }
       },
@@ -192,30 +207,30 @@
           "type": "richtext",
           "settings": {
             "title": "FREE CONSULT",
-            "description": "<p>Our custom sock specialists can answere questions about colors, prices, delivery times, materials, samples and everthing else you want to know.<\/p><p><\/p><p><\/p>",
+            "description": "<p>Our custom sock specialists can answere questions about colors, prices, delivery times, materials, samples and everthing else you want to know.</p><p></p><p></p>",
             "button_label": "BOOK A CALL",
-            "button_url": "https:\/\/sockeloen-8b3b9d.pipedrive.com\/scheduler\/pP43qXU9\/custom-call",
+            "button_url": "https://sockeloen-8b3b9d.pipedrive.com/scheduler/pP43qXU9/custom-call",
             "text_align": "center"
           }
         },
         "86de9b6b-4b96-465d-89c3-3525b1066c20": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/BOOK.A.CLL.COLLECTION_DESKTOP_474X680_7da116a4-3725-470a-8698-e820f9196d5d.png",
+            "image": "shopify://shop_images/BOOK.A.CLL.COLLECTION_DESKTOP_474X680_7da116a4-3725-470a-8698-e820f9196d5d.png",
             "opacity": 40,
             "title": "",
             "button_label": "BOOK A CALL",
-            "button_url": "https:\/\/sockeloen-8b3b9d.pipedrive.com\/scheduler\/pP43qXU9\/custom-call"
+            "button_url": "https://sockeloen-8b3b9d.pipedrive.com/scheduler/pP43qXU9/custom-call"
           }
         },
         "4904019c-ebe9-48ae-adae-d8c50c33e729": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/ASK.US.COLLECTION_DESKTOP_474X680_543907b2-02ca-4f56-a798-dfecf1a578ea.png",
+            "image": "shopify://shop_images/ASK.US.COLLECTION_DESKTOP_474X680_543907b2-02ca-4f56-a798-dfecf1a578ea.png",
             "opacity": 40,
             "title": "",
             "button_label": "SEE EXAMPLES",
-            "button_url": "shopify:\/\/collections\/custom-socks"
+            "button_url": "shopify://collections/custom-socks"
           }
         }
       },
@@ -234,41 +249,41 @@
         "eef4ba6c-f921-4b50-98a4-4507f6975f2a": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/TEAMS_CATEGORY_DESKTOP_474X680_dc0477b1-c4d6-40e0-8ca2-8bb4b6ca4ba3.png",
+            "image": "shopify://shop_images/TEAMS_CATEGORY_DESKTOP_474X680_dc0477b1-c4d6-40e0-8ca2-8bb4b6ca4ba3.png",
             "opacity": 10,
-            "title": "TEAMS \/ CLUBS",
+            "title": "TEAMS / CLUBS",
             "button_label": "SEE EXAMPLES",
-            "button_url": "shopify:\/\/collections\/custom-sock-examples"
+            "button_url": "shopify://collections/custom-sock-examples"
           }
         },
         "019acde6-345b-4b53-8c89-106563c84fb2": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/SHOPS_CATEGORY_DESKTOP_474X680_b881fe68-9b78-46ee-b170-9bbad98e4772.png",
+            "image": "shopify://shop_images/SHOPS_CATEGORY_DESKTOP_474X680_b881fe68-9b78-46ee-b170-9bbad98e4772.png",
             "opacity": 10,
             "title": "SHOPS",
             "button_label": "SEE EXAMPLES",
-            "button_url": "shopify:\/\/collections\/custom-sock-examples"
+            "button_url": "shopify://collections/custom-sock-examples"
           }
         },
         "6d8ba610-7a14-4d56-aec7-aab43b31460b": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/BRANDS_CATEGORY_DESKTOP_474X680_856d9e60-fa88-493f-ad5a-601f8a728215.png",
+            "image": "shopify://shop_images/BRANDS_CATEGORY_DESKTOP_474X680_856d9e60-fa88-493f-ad5a-601f8a728215.png",
             "opacity": 10,
             "title": "BRANDS",
             "button_label": "SEE EXAMPLES",
-            "button_url": "shopify:\/\/collections\/custom-sock-examples"
+            "button_url": "shopify://collections/custom-sock-examples"
           }
         },
         "70fc3b03-a6c3-48e5-b2b0-9eb9da4cb5d6": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/EVEENTS_CATEGORY_DESKTOP_474X680_6b66e517-320d-41e5-af0c-1710ce2a882e.png",
+            "image": "shopify://shop_images/EVEENTS_CATEGORY_DESKTOP_474X680_6b66e517-320d-41e5-af0c-1710ce2a882e.png",
             "opacity": 10,
             "title": "EVENTS",
             "button_label": "SEE EXAMPLES",
-            "button_url": "shopify:\/\/collections\/custom-sock-examples"
+            "button_url": "shopify://collections/custom-sock-examples"
           }
         }
       },
@@ -304,25 +319,25 @@
         "5413c838-8dcd-4bdf-9567-c36e21c6b44b": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/USPS-TDT_839acf47-5031-4b3f-beb4-4a941e6b4a3a.jpg"
+            "image": "shopify://shop_images/USPS-TDT_839acf47-5031-4b3f-beb4-4a941e6b4a3a.jpg"
           }
         },
         "d7e984c8-9378-4894-991e-3c75722378a7": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/USPS-KAPTEIN.jpg"
+            "image": "shopify://shop_images/USPS-KAPTEIN.jpg"
           }
         },
         "b7366413-5172-442e-a756-b73ce5bd9b53": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/USPS-LSRF-LOGO.jpg"
+            "image": "shopify://shop_images/USPS-LSRF-LOGO.jpg"
           }
         },
         "5bda4731-74fd-493b-a13e-58a8f9e1c5ef": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/USPS-cycling4climate.jpg"
+            "image": "shopify://shop_images/USPS-cycling4climate.jpg"
           }
         }
       },
@@ -344,19 +359,19 @@
             "text_color": "#343434",
             "font_size": 40,
             "heading": "ENTERPRISE PROGRAM",
-            "description": "<ol><li>We work for the biggest in the game. <\/li><li>Completely custom.<\/li><li>Competitive industry pricing.<br\/><\/li><\/ol><p><\/p><p><\/p>",
+            "description": "<ol><li>We work for the biggest in the game. </li><li>Completely custom.</li><li>Competitive industry pricing.<br/></li></ol><p></p><p></p>",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "BOOK A CALL",
-            "button_url": "https:\/\/sockeloen-8b3b9d.pipedrive.com\/scheduler\/G9vEwDuO\/sockeloen-custom-call",
+            "button_url": "https://sockeloen-8b3b9d.pipedrive.com/scheduler/G9vEwDuO/sockeloen-custom-call",
             "button_pos": "mt-0"
           }
         },
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
           "type": "column",
           "settings": {
-            "image": "shopify:\/\/shop_images\/VIERKANT.Fastest_sock_on_the_planet_468_all_white_aero_socks_7_FRONT_3D.png",
+            "image": "shopify://shop_images/VIERKANT.Fastest_sock_on_the_planet_468_all_white_aero_socks_7_FRONT_3D.png",
             "color": "",
             "text_color": "#000000",
             "font_size": 48,
@@ -383,25 +398,25 @@
         "ed1f74fa-222f-43a5-a617-3d4adced549b": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/USPS.sock.design.png"
+            "image": "shopify://shop_images/USPS.sock.design.png"
           }
         },
         "5aef4022-7e80-48d9-9ca6-a8a6aa7e9e6b": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/6.CIRCULAR.USP.TRANS.png"
+            "image": "shopify://shop_images/6.CIRCULAR.USP.TRANS.png"
           }
         },
         "4cf04a41-abd5-426e-b61f-1762c70d1f52": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/SYMBOLEN.USPS.SHOPIFY_1_a9efabcf-8465-4673-8b9a-9ed43058628a.png"
+            "image": "shopify://shop_images/SYMBOLEN.USPS.SHOPIFY_1_a9efabcf-8465-4673-8b9a-9ed43058628a.png"
           }
         },
         "f4012de1-66de-4a0b-8b9f-41638abb5e2d": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/USPS.KING.png"
+            "image": "shopify://shop_images/USPS.KING.png"
           }
         }
       },
@@ -419,7 +434,7 @@
         "f47fe3ef-df81-429a-82c4-e3c7432f016f": {
           "type": "column",
           "settings": {
-            "image": "shopify:\/\/shop_images\/design.lsrf.example.banner.800.800.png",
+            "image": "shopify://shop_images/design.lsrf.example.banner.800.800.png",
             "color": "",
             "text_color": "#000000",
             "font_size": 48,
@@ -440,12 +455,12 @@
             "text_color": "#343434",
             "font_size": 40,
             "heading": "FREE SOCK DESIGN",
-            "description": "<p><strong>from the best designers in the game<br\/><\/strong><em>only for knitted socks &gt; 50 pairs<\/em><\/p>",
+            "description": "<p><strong>from the best designers in the game<br/></strong><em>only for knitted socks &gt; 50 pairs</em></p>",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "REQUEST FREE DESIGN",
-            "button_url": "https:\/\/custom.sockeloen.nl\/en-custom-design-checkout\/",
+            "button_url": "https://custom.sockeloen.nl/en-custom-design-checkout/",
             "button_pos": "mt-0"
           }
         }
@@ -466,19 +481,19 @@
             "text_color": "#ffffff",
             "font_size": 40,
             "heading": "ON A MISSION",
-            "description": "<p><strong>to a circular sock industry<\/strong><br\/><br\/>Let us teach you about sustainability and<\/p><p>our sustainable sock solutions.<\/p>",
+            "description": "<p><strong>to a circular sock industry</strong><br/><br/>Let us teach you about sustainability and</p><p>our sustainable sock solutions.</p>",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "BOOK A CALL",
-            "button_url": "https:\/\/sockeloen-8b3b9d.pipedrive.com\/scheduler\/G9vEwDuO\/sockeloen-custom-call",
+            "button_url": "https://sockeloen-8b3b9d.pipedrive.com/scheduler/G9vEwDuO/sockeloen-custom-call",
             "button_pos": "mt-0"
           }
         },
         "36199c40-b2b0-45ed-9278-6f7cb8328836": {
           "type": "column",
           "settings": {
-            "image": "shopify:\/\/shop_images\/2.MISSION_BANNER_800X800_ccb93bfa-43c8-48f8-9494-488647777ebd_1.jpg",
+            "image": "shopify://shop_images/2.MISSION_BANNER_800X800_ccb93bfa-43c8-48f8-9494-488647777ebd_1.jpg",
             "color": "",
             "text_color": "#000000",
             "font_size": 48,
@@ -505,7 +520,7 @@
         "831bf338-6657-40a8-a68d-274afb3d6571": {
           "type": "column",
           "settings": {
-            "image": "shopify:\/\/shop_images\/PRICES.2.1000.1000.png",
+            "image": "shopify://shop_images/PRICES.2.1000.1000.png",
             "color": "",
             "text_color": "#000000",
             "font_size": 48,
@@ -526,7 +541,7 @@
             "text_color": "#343434",
             "font_size": 40,
             "heading": "PRICES",
-            "description": "<p>Find out more about the different prices <br\/>for our custom socks on the product pages.<\/p>",
+            "description": "<p>Find out more about the different prices <br/>for our custom socks on the product pages.</p>",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
@@ -586,7 +601,7 @@
           "settings": {
             "heading": "Wat is de MOQ?",
             "icon": "check_mark",
-            "row_content": "<p><strong>Bedrukte fietssokken<\/strong> zijn vanaf 1 paar te bestellen. Deze kun je online zelf ontwerpen. <strong>Geborduurde fietssokken<\/strong> zijn vanaf 50 paar te bestellen.<\/p>",
+            "row_content": "<p><strong>Bedrukte fietssokken</strong> zijn vanaf 1 paar te bestellen. Deze kun je online zelf ontwerpen. <strong>Geborduurde fietssokken</strong> zijn vanaf 50 paar te bestellen.</p>",
             "page": ""
           }
         },
@@ -595,7 +610,7 @@
           "settings": {
             "heading": "Wat zijn de prijzen voor custom sokken?",
             "icon": "check_mark",
-            "row_content": "<p>De b<strong>edrukte sokken<\/strong> zijn te verkrijgen vanaf <strong>€10.95<\/strong> per paar. De <strong>verweven sokken<\/strong> zijn te bestellen <strong>vanaf €4.10<\/strong> per paar. Prijzen zijn ex BTW.<\/p>",
+            "row_content": "<p>De b<strong>edrukte sokken</strong> zijn te verkrijgen vanaf <strong>€10.95</strong> per paar. De <strong>verweven sokken</strong> zijn te bestellen <strong>vanaf €4.10</strong> per paar. Prijzen zijn ex BTW.</p>",
             "page": ""
           }
         },
@@ -604,7 +619,7 @@
           "settings": {
             "heading": "Hoe lang duurt het voordat de custom sokken worden geleverd?",
             "icon": "check_mark",
-            "row_content": "<p>De levertijd van de custom sokken bij Sockeloen kan variëren, afhankelijk van de drukte en het seizoen. Over het algemeen streven we ernaar om de sokken binnen een paar weken na het plaatsen van de bestelling te leveren. Houd er rekening mee dat personalisatie extra tijd kan kosten.<\/p>",
+            "row_content": "<p>De levertijd van de custom sokken bij Sockeloen kan variëren, afhankelijk van de drukte en het seizoen. Over het algemeen streven we ernaar om de sokken binnen een paar weken na het plaatsen van de bestelling te leveren. Houd er rekening mee dat personalisatie extra tijd kan kosten.</p>",
             "page": ""
           }
         },
@@ -613,7 +628,7 @@
           "settings": {
             "heading": "Kan ik mijn custom sokken met eiegen logo laten maken?",
             "icon": "check_mark",
-            "row_content": "<p>Ja, wij bieden de mogelijkheid om je eigen logo, ontwerp of tekst op de fietssokken te laten drukken. Met onze gebruiksvriendelijke ontwerptool kun je eenvoudig je eigen unieke ontwerp maken.<\/p>",
+            "row_content": "<p>Ja, wij bieden de mogelijkheid om je eigen logo, ontwerp of tekst op de fietssokken te laten drukken. Met onze gebruiksvriendelijke ontwerptool kun je eenvoudig je eigen unieke ontwerp maken.</p>",
             "page": ""
           }
         }
@@ -653,77 +668,77 @@
           "type": "faq",
           "settings": {
             "question": "How can I design my own custom socks?",
-            "answer": "<p>Designing your own custom socks is easy! At our online custom sock builder you can upload your logo or graphic easily and quickly. Select your own designs, choose colors, and even decide on the sock type and size. Simply follow the steps provided, and your custom socks will be ready to order with fast delivery.<\/p>"
+            "answer": "<p>Designing your own custom socks is easy! At our online custom sock builder you can upload your logo or graphic easily and quickly. Select your own designs, choose colors, and even decide on the sock type and size. Simply follow the steps provided, and your custom socks will be ready to order with fast delivery.</p>"
           }
         },
         "faq_r6Hg6N": {
           "type": "faq",
           "settings": {
             "question": "What makes Sockeloen socks unique?",
-            "answer": "<p>Sockeloen socks are crafted with premium materials and innovative designs, providing superior comfort and performance for athletes and everyday wearers alike. Founded by Jasper, a former elite race cyclist, who knows how much a good pair of socks makes a difference in performance and comfort. <\/p>"
+            "answer": "<p>Sockeloen socks are crafted with premium materials and innovative designs, providing superior comfort and performance for athletes and everyday wearers alike. Founded by Jasper, a former elite race cyclist, who knows how much a good pair of socks makes a difference in performance and comfort. </p>"
           }
         },
         "faq_8g3jAE": {
           "type": "faq",
           "settings": {
             "question": "Can I have my logo woven onto Sockeloen custom socks?",
-            "answer": "<p>Yes, you can have your logo and other design elements woven into the custom socks. If you already have a logo or design idea, you can send it to info@sockeloen.nl so we can review it and create a no-obligation design!<\/p>"
+            "answer": "<p>Yes, you can have your logo and other design elements woven into the custom socks. If you already have a logo or design idea, you can send it to info@sockeloen.nl so we can review it and create a no-obligation design!</p>"
           }
         },
         "faq_VHb7dd": {
           "type": "faq",
           "settings": {
             "question": "What materials are available for custom socks?",
-            "answer": "<p>At Sockeloen we offer Custom socks in almost every material. We have standard high-quality blends with Cotton, Polyamide, and Elestan. We also offer blends with Polyamide Q-Skin, Merino wool, Cashmere, and Polyester. Each material has its unique properties, so you can select the one that best suits your needs in terms of comfort, durability, and performance.<\/p>"
+            "answer": "<p>At Sockeloen we offer Custom socks in almost every material. We have standard high-quality blends with Cotton, Polyamide, and Elestan. We also offer blends with Polyamide Q-Skin, Merino wool, Cashmere, and Polyester. Each material has its unique properties, so you can select the one that best suits your needs in terms of comfort, durability, and performance.</p>"
           }
         },
         "faq_M9LRYf": {
           "type": "faq",
           "settings": {
             "question": "What makes cycling socks different from regular socks?",
-            "answer": "<p>Cycling socks are typically made from technical fabrics like merino wool or synthetic blends that offer moisture management and temperature regulation. They often have padding in key areas to reduce pressure points and are designed to fit snugly without bunching up, providing better support and comfort during long rides.<\/p>"
+            "answer": "<p>Cycling socks are typically made from technical fabrics like merino wool or synthetic blends that offer moisture management and temperature regulation. They often have padding in key areas to reduce pressure points and are designed to fit snugly without bunching up, providing better support and comfort during long rides.</p>"
           }
         },
         "faq_MwAh9c": {
           "type": "faq",
           "settings": {
             "question": "Can I customize the design of my socks?",
-            "answer": "<p>Absolutely! With custom made socks, you have full control over the design. You can choose everything from colors and patterns to logos and text.<\/p>"
+            "answer": "<p>Absolutely! With custom made socks, you have full control over the design. You can choose everything from colors and patterns to logos and text.</p>"
           }
         },
         "faq_9RUfJq": {
           "type": "faq",
           "settings": {
             "question": "How can I design my own socks?",
-            "answer": "<p>We offer online design tools specifically tailored for designing printed socks. For knitted socks, you can either use our provided templates to design them yourself, or you can opt for our free design service where we create the design based on your specific input.<\/p>"
+            "answer": "<p>We offer online design tools specifically tailored for designing printed socks. For knitted socks, you can either use our provided templates to design them yourself, or you can opt for our free design service where we create the design based on your specific input.</p>"
           }
         },
         "faq_Pqmjzd": {
           "type": "faq",
           "settings": {
             "question": "Do you also have sustainable options for the custom socks?",
-            "answer": "<p>Yes, at Sockeloen we strive to make our socks durable in terms of usage and materials. Our yarns are standard certified with Oeko tex Reach.<\/p>"
+            "answer": "<p>Yes, at Sockeloen we strive to make our socks durable in terms of usage and materials. Our yarns are standard certified with Oeko tex Reach.</p>"
           }
         },
         "faq_MwQn74": {
           "type": "faq",
           "settings": {
             "question": "Do you also produce white-label custom socks?",
-            "answer": "<p>Yes, we can make our custom socks with white label as well. With our transparent or custom packaging, there is no tracing to the producer and you can enjoy your unique designs!Can I design the left and right socks separately? Yes, with Custom woven socks you can design both the left and right socks separately, giving you more creative freedom. This is possible with any of our custom models, with a minimum order of 200 pairs.<\/p>"
+            "answer": "<p>Yes, we can make our custom socks with white label as well. With our transparent or custom packaging, there is no tracing to the producer and you can enjoy your unique designs!Can I design the left and right socks separately? Yes, with Custom woven socks you can design both the left and right socks separately, giving you more creative freedom. This is possible with any of our custom models, with a minimum order of 200 pairs.</p>"
           }
         },
         "faq_myXnrK": {
           "type": "faq",
           "settings": {
             "question": "What are the delivery time for your products?",
-            "answer": "<p>Our delivery times vary depending on the type of product you order:Custom printed socks: Typically, it takes around 1 week for delivery.Knitted socks: Due to their intricate manufacturing process, knitted socks usually require 8 weeks for delivery.Rush orders: If you need your items urgently, we offer a rush order option which shortens the delivery time to 4 weeks. Please note that rush orders may incur additional fees.<\/p>"
+            "answer": "<p>Our delivery times vary depending on the type of product you order:Custom printed socks: Typically, it takes around 1 week for delivery.Knitted socks: Due to their intricate manufacturing process, knitted socks usually require 8 weeks for delivery.Rush orders: If you need your items urgently, we offer a rush order option which shortens the delivery time to 4 weeks. Please note that rush orders may incur additional fees.</p>"
           }
         },
         "faq_pE9KeW": {
           "type": "faq",
           "settings": {
             "question": "How long does it take to receive my custom socks?",
-            "answer": "<p>The production time for custom socks can vary depending on the materials and quantity. The standard delivery is 8 weeks, and with rush delivery, we can deliver the socks within 4 weeks.<\/p>"
+            "answer": "<p>The production time for custom socks can vary depending on the materials and quantity. The standard delivery is 8 weeks, and with rush delivery, we can deliver the socks within 4 weeks.</p>"
           }
         }
       },
@@ -763,11 +778,11 @@
       ],
       "settings": {
         "bg_color": "#ffffff",
-        "image": "shopify:\/\/shop_images\/VIERKANT.Fastest_sock_on_the_planet_468_all_white_aero_socks_7_FRONT_3D.png",
-        "main_text": "<p><strong>WE WORK WITH THE BIGGEST IN THE GAME<\/strong><\/p>",
+        "image": "shopify://shop_images/VIERKANT.Fastest_sock_on_the_planet_468_all_white_aero_socks_7_FRONT_3D.png",
+        "main_text": "<p><strong>WE WORK WITH THE BIGGEST IN THE GAME</strong></p>",
         "main_text_color": "#121212",
         "button_text": "",
-        "button_url": "shopify:\/\/collections\/fsotp",
+        "button_url": "shopify://collections/fsotp",
         "button_bg_color": "#a28044",
         "button_text_color": "#ffffff"
       }
