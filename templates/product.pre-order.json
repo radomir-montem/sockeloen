@@ -381,7 +381,7 @@
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "LEARN MORE",
-            "button_url": "/collections/gravel-aint-ready",
+            "button_url": "shopify://collections/gravel-aint-ready",
             "button_pos": "mt-0"
           }
         },

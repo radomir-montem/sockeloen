@@ -380,7 +380,7 @@
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "CLICK HERE",
-            "button_url": "https://sockeloen.com/nl/collections/all-weather-essentials",
+            "button_url": "shopify://collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
         },

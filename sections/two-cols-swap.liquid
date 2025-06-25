@@ -53,7 +53,11 @@
             >
               <p class="bold-title text-color">{{ block.settings.button_disclaimer }}</p>
               <a
+                {% if block.settings.button_url !=" blank" %}
                 href="{{ block.settings.button_url }}"
+                {% else %}
+                role="link" aria-disabled="true"
+                {% endif %}
                 class="regular-button text-color border"
               >
                 {{- block.settings.button_text | upcase -}}
@@ -163,10 +167,9 @@
           "label": "Button text"
         },
         {
-          "type": "text",
+          "type": "url",
           "id": "button_url",
-          "label": "Button link",
-          "default": "#"
+          "label": "Button link"
         },
         {
           "type": "select",

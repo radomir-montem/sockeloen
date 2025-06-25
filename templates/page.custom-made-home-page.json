@@ -531,7 +531,7 @@
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "VIEW PRODUCTS",
-            "button_url": "https:\/\/sockeloen.com\/nl\/collections\/custom-socks\/",
+            "button_url": "shopify://collections/custom-socks",
             "button_pos": "mt-0"
           }
         }

@@ -158,7 +158,7 @@
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
-              "text": "FREE SHIPPING ON ORDERS > 85,-",
+              "text": "FREE SHIPPING ON ORDERS > 75,-",
               "usd_text": "FREE SHIPPING ON ORDERS > $100,-",
               "text_alignment": "center",
               "bg_color": "#000000",
