@@ -1,7 +1,42 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "parent": "product.json",
   "context": {
     "market": "nl"
   },
-  "sections": {}
+  "sections": {
+    "9148c605-c3d3-4457-a7d9-718e5b06ad2d": {
+      "settings": {},
+      "blocks": {
+        "cdbd0cb4-2ce5-4d43-81b3-cf8af48f1dea": {
+          "settings": {
+            "image": "shopify://shop_images/NL_USPS-SHIPPING.UPDATE.75.WIT_6f420c4e-52b6-4c01-901c-135934576c12.png"
+          }
+        },
+        "4eafd2d7-ffe9-4d85-9d3c-1c5257810662": {
+          "settings": {
+            "image": "shopify://shop_images/NL_USPS-peloton.WIT.png"
+          }
+        },
+        "59aa8067-54fc-449f-975b-d765af1aa2d4": {
+          "settings": {
+            "image": "shopify://shop_images/NL_USPS-tevredenheid.WIT.png"
+          }
+        },
+        "8191162b-59ec-4e9d-a84e-4fee271c0ab8": {
+          "settings": {
+            "image": "shopify://shop_images/NL_USPS-KONING.WIT_698c83e2-9286-4f14-a834-f5f44830742d.png"
+          }
+        }
+      }
+    }
+  }
 }
