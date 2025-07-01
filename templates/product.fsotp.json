@@ -39,7 +39,7 @@
           "type": "usps",
           "settings": {
             "usp1": "shopify://shop_images/Copia_de_STAMP.USPS.png",
-            "usp1_text": "<p><a href=\"/policies/shipping-policy\" target=\"_blank\" title=\"Shipping Policy\"><strong>Free </strong>Shipping &gt; €85,-</a></p>",
+            "usp1_text": "<p><a href=\"/policies/shipping-policy\" target=\"_blank\" title=\"Shipping Policy\"><strong>Free </strong>Shipping &gt; €75,-</a></p>",
             "usp2": "shopify://shop_images/Copia_de_PELOTON.USPS.png",
             "usp2_text": "<p><strong>Born</strong> in the peloton</p>",
             "usp3": "shopify://shop_images/copia_6.lastkm.USP.TRANS_2a8877e2-c653-43ee-9192-49baddd27640.png",
@@ -270,54 +270,6 @@
       "disabled": true,
       "settings": {}
     },
-    "custom_liquid_C8YmWK": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "heading": "SOCKELOEN COMMUNITY",
-        "heading_size": 20,
-        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\" data-filter-type=\"product\" data-filter-id=\"{{product.id}}\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
-        "color_scheme": "accent-1",
-        "padding_top": 8,
-        "padding_bottom": 0
-      }
-    },
-    "9148c605-c3d3-4457-a7d9-718e5b06ad2d": {
-      "type": "usp-blackbg",
-      "blocks": {
-        "cdbd0cb4-2ce5-4d43-81b3-cf8af48f1dea": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/1.SHIPPING.USP.WIT.png"
-          }
-        },
-        "4eafd2d7-ffe9-4d85-9d3c-1c5257810662": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/2.PELOTON.USP.WIT.png"
-          }
-        },
-        "59aa8067-54fc-449f-975b-d765af1aa2d4": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/3.SATISFACTION.USP.WIT.png"
-          }
-        },
-        "8191162b-59ec-4e9d-a84e-4fee271c0ab8": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/4.KING.USP.WIT.png"
-          }
-        }
-      },
-      "block_order": [
-        "cdbd0cb4-2ce5-4d43-81b3-cf8af48f1dea",
-        "4eafd2d7-ffe9-4d85-9d3c-1c5257810662",
-        "59aa8067-54fc-449f-975b-d765af1aa2d4",
-        "8191162b-59ec-4e9d-a84e-4fee271c0ab8"
-      ],
-      "settings": {}
-    },
     "765d516d-8ae3-4a32-a2a0-20a43cc7fdc0": {
       "type": "bought-often-together",
       "settings": {
@@ -370,6 +322,54 @@
         "284de428-db68-441f-8ea9-4fe42dc83449"
       ],
       "disabled": true,
+      "settings": {}
+    },
+    "custom_liquid_C8YmWK": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "heading": "SOCKELOEN COMMUNITY",
+        "heading_size": 20,
+        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\" data-filter-type=\"product\" data-filter-id=\"{{product.id}}\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
+        "color_scheme": "accent-1",
+        "padding_top": 8,
+        "padding_bottom": 0
+      }
+    },
+    "9148c605-c3d3-4457-a7d9-718e5b06ad2d": {
+      "type": "usp-blackbg",
+      "blocks": {
+        "cdbd0cb4-2ce5-4d43-81b3-cf8af48f1dea": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/1.SHIPPING.USP.WIT.png"
+          }
+        },
+        "4eafd2d7-ffe9-4d85-9d3c-1c5257810662": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2.PELOTON.USP.WIT.png"
+          }
+        },
+        "59aa8067-54fc-449f-975b-d765af1aa2d4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/3.SATISFACTION.USP.WIT.png"
+          }
+        },
+        "8191162b-59ec-4e9d-a84e-4fee271c0ab8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/4.KING.USP.WIT.png"
+          }
+        }
+      },
+      "block_order": [
+        "cdbd0cb4-2ce5-4d43-81b3-cf8af48f1dea",
+        "4eafd2d7-ffe9-4d85-9d3c-1c5257810662",
+        "59aa8067-54fc-449f-975b-d765af1aa2d4",
+        "8191162b-59ec-4e9d-a84e-4fee271c0ab8"
+      ],
       "settings": {}
     },
     "810ba789-2a8c-44fa-abe0-e8f36932e0cb": {
