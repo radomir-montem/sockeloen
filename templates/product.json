@@ -219,14 +219,6 @@
         "outlinks_pYD9NK": {
           "type": "outlinks",
           "settings": {}
-        },
-        "aov_bundle_upsell_offer_volume_d6VCWz": {
-          "type": "shopify://apps/aov-bundle-upsell/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
-          "settings": {}
-        },
-        "aov_bundle_upsell_mix_match_offer_inline_NjAQaB": {
-          "type": "shopify://apps/aov-bundle-upsell/blocks/mix-match-offer-inline/0335d423-143c-4ad7-b224-99a1db74a9ee",
-          "settings": {}
         }
       },
       "block_order": [
@@ -255,9 +247,7 @@
         "collapsible-row-3",
         "592f1237-906d-486e-af43-974d5d87a6be",
         "99a821b7-64aa-4e7c-a75b-b1cc84f37174",
-        "outlinks_pYD9NK",
-        "aov_bundle_upsell_offer_volume_d6VCWz",
-        "aov_bundle_upsell_mix_match_offer_inline_NjAQaB"
+        "outlinks_pYD9NK"
       ],
       "settings": {
         "enable_sticky_info": true,
