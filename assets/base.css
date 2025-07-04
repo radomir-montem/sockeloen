@@ -2965,7 +2965,6 @@ body.noscroll .header__menu-item.link-only {
   display: none;
 }
 .template-search__results .grid {
-    display: flex;
     flex-wrap: wrap;
     margin-bottom: 2rem;
     padding: 0;
