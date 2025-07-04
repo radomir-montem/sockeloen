@@ -399,6 +399,9 @@
           "b0810af8-fff5-4ba2-af54-2a6155ae8b7a",
           "text_wRnFtX"
         ],
+        "custom_css": [
+          "a.nav__link:contains(\"TDF SALE\") {color: #FFD700 !important; /* Gele tekst */ font-weight: bold;}"
+        ],
         "settings": {
           "color_scheme": "background-1",
           "logo": "shopify://shop_images/logo.svg",
