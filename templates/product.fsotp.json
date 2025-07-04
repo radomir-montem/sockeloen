@@ -35,19 +35,6 @@
           "type": "price",
           "settings": {}
         },
-        "d448a9b5-1ba8-45fe-a44b-8f604142911f": {
-          "type": "usps",
-          "settings": {
-            "usp1": "shopify://shop_images/Copia_de_STAMP.USPS.png",
-            "usp1_text": "<p><a href=\"/policies/shipping-policy\" target=\"_blank\" title=\"Shipping Policy\"><strong>Free </strong>Shipping &gt; €75,-</a></p>",
-            "usp2": "shopify://shop_images/Copia_de_PELOTON.USPS.png",
-            "usp2_text": "<p><strong>Born</strong> in the peloton</p>",
-            "usp3": "shopify://shop_images/copia_6.lastkm.USP.TRANS_2a8877e2-c653-43ee-9192-49baddd27640.png",
-            "usp3_text": "<p><a href=\"https://www.reviews.io/company-reviews/store/sockeloen-nl\" title=\"Reviews\"><strong>100% </strong>Satisfaction</a></p>",
-            "usp4": "shopify://shop_images/copia_6.KING.USP.TRANS_6759367c-458f-41a8-a161-01f9ac0d5a8b.png",
-            "usp4_text": "<p><strong>Customer </strong>is king</p>"
-          }
-        },
         "inventory_status_WpGKiT": {
           "type": "inventory_status",
           "settings": {
@@ -82,6 +69,19 @@
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true
+          }
+        },
+        "d448a9b5-1ba8-45fe-a44b-8f604142911f": {
+          "type": "usps",
+          "settings": {
+            "usp1": "shopify://shop_images/Copia_de_STAMP.USPS.png",
+            "usp1_text": "<p><a href=\"/policies/shipping-policy\" target=\"_blank\" title=\"Shipping Policy\"><strong>Free </strong>Shipping &gt; €75,-</a></p>",
+            "usp2": "shopify://shop_images/Copia_de_PELOTON.USPS.png",
+            "usp2_text": "<p><strong>Born</strong> in the peloton</p>",
+            "usp3": "shopify://shop_images/copia_6.lastkm.USP.TRANS_2a8877e2-c653-43ee-9192-49baddd27640.png",
+            "usp3_text": "<p><a href=\"https://www.reviews.io/company-reviews/store/sockeloen-nl\" title=\"Reviews\"><strong>100% </strong>Satisfaction</a></p>",
+            "usp4": "shopify://shop_images/copia_6.KING.USP.TRANS_6759367c-458f-41a8-a161-01f9ac0d5a8b.png",
+            "usp4_text": "<p><strong>Customer </strong>is king</p>"
           }
         },
         "31d4cb82-9836-481d-b31f-0d99044260ea": {
@@ -207,13 +207,13 @@
         "title",
         "caption",
         "price",
-        "d448a9b5-1ba8-45fe-a44b-8f604142911f",
         "inventory_status_WpGKiT",
         "variant_picker",
         "quantity_selector",
         "77cffc44-365b-4ba9-9409-0e92ec305ef6",
         "9818c7f0-7715-4e56-af03-fb7a9cca40f4",
         "buy_buttons",
+        "d448a9b5-1ba8-45fe-a44b-8f604142911f",
         "31d4cb82-9836-481d-b31f-0d99044260ea",
         "0c280d07-e2f9-4b4f-b7a3-02978b0ec8ee",
         "collapsible-row-0",
