@@ -14,6 +14,9 @@
     },
     "eu": {
       "parent": "@default"
+    },
+    "international": {
+      "parent": "@default"
     }
   }
 }

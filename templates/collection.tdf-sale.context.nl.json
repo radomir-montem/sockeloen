@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "parent": "collection.tdf-sale.json",
   "context": {
@@ -6,7 +15,7 @@
   "sections": {
     "c1c1952d-9ed0-46d9-84fe-165c1d4f0750": {
       "settings": {
-        "image": "shopify:\/\/shop_images\/TDF_sale_banner-12.png"
+        "image": "shopify://shop_images/COLLECTION_BANNER_TOUR_SALE.jpg"
       },
       "blocks": {}
     }
