@@ -158,12 +158,12 @@
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
-              "text": "FREE SHIPPING ON ORDERS > 75,-",
-              "usd_text": "FREE SHIPPING ON ORDERS > $100,-",
+              "text": "FREE SHIPPING ON ORDERS > 75,- // SHOP THE TDF SALE",
+              "usd_text": "FREE SHIPPING ON ORDERS > $100,- // SHOP THE TDF SALE",
               "text_alignment": "center",
               "bg_color": "#000000",
               "font_color": "#ffffff",
-              "link": ""
+              "link": "shopify://collections/tour-de-france-sale"
             }
           }
         },
@@ -400,7 +400,7 @@
           "text_wRnFtX"
         ],
         "custom_css": [
-          "a.nav__link:contains(\"TDF SALE\") {color: #FFD700 !important; /* Gele tekst */ font-weight: bold;}"
+          "a.nav__link:contains(\"TDF SALE\") {color: #ffd700 !important; /* Gele tekst */ font-weight: bold;}"
         ],
         "settings": {
           "color_scheme": "background-1",
