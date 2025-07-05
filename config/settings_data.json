@@ -158,8 +158,8 @@
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
-              "text": "FREE SHIPPING ON ORDERS > 75,- // SHOP THE TOUR DEALS",
-              "usd_text": "FREE SHIPPING ON ORDERS > $100,- // SHOP THE TDF SALE",
+              "text": "FREE SHIPPING ON ORDERS > 75,- // SHOP THE TOUR DE FRANCE SALE",
+              "usd_text": "FREE SHIPPING ON ORDERS > $100,- // SHOP THE TOUR DE FRANCE SALE",
               "text_alignment": "center",
               "bg_color": "#000000",
               "font_color": "#ffffff",
