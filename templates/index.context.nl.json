@@ -15,8 +15,8 @@
   "sections": {
     "image_banner": {
       "settings": {
-        "image": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER.jpg",
-        "image_mobile": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER_MOBILE.jpg",
+        "image": "shopify://shop_images/HOME_BANNER_1.jpg",
+        "image_mobile": "shopify://shop_images/WEB_BANNER_MOBILE_1.jpg",
         "image_overlay_opacity": 10,
         "banner_image_height": 750,
         "adapt_height_first_image": false,
@@ -26,7 +26,7 @@
       "blocks": {
         "heading": {
           "settings": {
-            "heading": "SUMMER COLLECTION"
+            "heading": "TOUR DE FRANCE SALE"
           }
         },
         "text": {
@@ -36,8 +36,8 @@
         },
         "button": {
           "settings": {
-            "button_label_1": "SHOP SUMMER COLLECTION",
-            "button_link_1": "shopify://collections/summer-cycling-socks"
+            "button_label_1": "SHOP TDF SALE",
+            "button_link_1": "shopify://collections/tour-de-france-sale"
           }
         }
       }
