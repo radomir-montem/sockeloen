@@ -1,10 +1,18 @@
-<div class="mb-8 free_shipping_container">
+{% liquid 
+  assign free_shipping = settings.free_shipping | times: 100
+  assign percent = cart.total_price | times: 1.0 | divided_by: free_shipping | times: 100
+%}
+<div class="mb-8 free_shipping_container" data-total="{{ cart.total_price }}">
   <h4 class="text-[14px] leading-6 tracking-wider font-light text-base-text mb-3 {{ classes }}">
-    <span class="free_shipping_prev_text">You're</span>
-    <span data-limit="{{ settings.free_shipping }}" class="free_shipping font-bold text-black"></span>
-    <span class="free_shipping_text">away from <span class="font-bold text-black uppercase">free shipping!</span></span>
+    {% if cart.total_price >= free_shipping %}
+      <span class="free_shipping_text ml-0">Your order is ready for free shipping!</span>
+    {% else %}
+      <span class="free_shipping_prev_text">You're</span>
+      <span data-limit="{{ settings.free_shipping }}" class="free_shipping font-bold text-black">{{ free_shipping | minus: cart.total_price | money }}</span>
+      <span class="free_shipping_text">away from <span class="font-bold text-black uppercase">free shipping!</span></span>
+    {% endif %}
   </h4>
   <div class="w-full h-[8px] bg-[#D9D9D9] rounded-[4px] flex">
-    <div class="w-0 h-full bg-[#c0533f] !inline-block rounded-[4px] progressive_bar_shipping_price"></div>
+    <div class="w-0 h-full !inline-block rounded-[4px] progressive_bar_shipping_price {% if cart.total_price >= free_shipping %}bg-green{% else %}bg-[#c0533f]{% endif %}" style="width: {{ percent }}%"></div>
   </div>
 </div>
