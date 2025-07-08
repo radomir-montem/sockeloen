@@ -1,9 +1,9 @@
 // if (!navigator.userAgent.match(/bot|spider/i)) {
 //     //Let's check if we have the value in sessionStorage
-//     if (!sessionStorage.getItem('country')) {
+//     if (!sessionStorage.getItem('visitor_country')) {
 //         $.get("https://ipinfo.io", function(response) {
 //             console.log(response.city, response.country);
-//             sessionStorage.setItem('country', response.country);
+//             sessionStorage.setItem('visitor_country', response.country);
 //             const form = document.getElementById('HeaderLocalizationForm');
 //             const country_code = response.country;
 //             if(country_code == 'NL' || country_code == 'BE') {

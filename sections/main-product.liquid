@@ -816,7 +816,8 @@
                     {{ block.shopify_attributes }}
                   >
                     {%- for option in product.options_with_values -%}
-                      <fieldset class="js product-form__input {% if option.name contains 'Color' or option.name contains 'Kleur' or option.name contains 'Couleur' %}color-input{% endif %}">
+                      {% assign option_name = option.name | handleize %}
+                      <fieldset class="js product-form__input {% if option_name contains 'color' or option_name contains 'kleur' or option_name contains 'couleur' %}color-input{% endif %}">
                         <legend class="form__label">{{ option.name }}</legend>
                         {%- for value in option.values -%}
                           <input
@@ -835,7 +836,8 @@
                             </label>
                           {% endcomment %}
                           <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-                            {% if option.name contains 'Color' or option.name contains 'Kleur' or option.name contains 'Couleur' %}
+                            {% assign option_name = option.name | handleize %}
+                            {% if option_name contains 'color' or option_name contains 'kleur' or option_name contains 'couleur' %}
                               {% assign found = false %}
                               {% for variant in product.variants %}
                                 {% for opt in variant.options %}
