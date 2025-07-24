@@ -531,6 +531,11 @@
         "type": "shopify://apps/aov-bundle-upsell/blocks/aov-offer/0335d423-143c-4ad7-b224-99a1db74a9ee",
         "disabled": false,
         "settings": {}
+      },
+      "14041968213898805026": {
+        "type": "shopify://apps/aov-ai-free-gift-bxgy/blocks/app-embed-free-gift/de98edfe-90fa-4145-8a57-1055e0058723",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
