@@ -97,14 +97,14 @@ if (!customElements.get('product-form')) {
           })
       }
 
-      getFinalPrice() {
-        fetch('/cart.json')
-          .then(res => res.json())
-          .then(res => {
-            this.updateProgressBar(res.total_price)
-          })
-          .catch(err => console.error(err))
-      }
+      // getFinalPrice() {
+      //   fetch('/cart.json')
+      //     .then(res => res.json())
+      //     .then(res => {
+      //       this.updateProgressBar(res.total_price)
+      //     })
+      //     .catch(err => console.error(err))
+      // }
       updateProgressBar(finalPrice) {
         const freeShipContainer = document.querySelectorAll('.free_shipping_container')
 

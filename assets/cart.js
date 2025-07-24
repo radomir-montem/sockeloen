@@ -124,7 +124,7 @@ class CartItems extends HTMLElement {
         } else if (document.querySelector('.cart-item') && cartDrawerWrapper) {
           trapFocus(cartDrawerWrapper, document.querySelector('.cart-item__name'))
         }
-        this.updateProgressBar(parsedState.total_price)
+        // this.updateProgressBar(parsedState.total_price)
         this.disableLoading()
       })
       .catch(err => {
