@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "TOUR DE FRANCE FEMMES SALE",
+            "heading": "SUMMER CYCLING SOCKS",
             "heading_size": "h2",
             "use_h1_tag": false
           }
@@ -30,8 +30,8 @@
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "SHOP TDFF SALE",
-            "button_link_1": "shopify://collections/tour-de-france-sale",
+            "button_label_1": "SHOP SUMMER SOCKS",
+            "button_link_1": "shopify://collections/summer-cycling-socks",
             "button_style_secondary_1": false,
             "button_label_2": "SHOP ALL PRODUCTS",
             "button_link_2": "shopify://collections/all",
