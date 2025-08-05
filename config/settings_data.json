@@ -158,12 +158,12 @@
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
-              "text": "FREE SHIPPING ON ORDERS > 75,- // SHOP THE TOUR DE FRANCE FEMMES SALE",
+              "text": "FREE SHIPPING ON ORDERS > 75,-",
               "usd_text": "FREE SHIPPING ON ORDERS > $100,- // SHOP THE TOUR DE FRANCE SALE",
               "text_alignment": "center",
               "bg_color": "#000000",
               "font_color": "#ffffff",
-              "link": "shopify://collections/tour-de-france-sale"
+              "link": "shopify://policies/shipping-policy"
             }
           }
         },
