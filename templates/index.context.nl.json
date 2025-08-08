@@ -36,14 +36,12 @@
         },
         "button": {
           "settings": {
-            "button_label_1": "SHOP SUMMER SOCKS",
-            "button_link_1": "shopify://collections/tour-de-france-sale"
+            "button_label_1": "SHOP SUMMER SOCKS"
           }
         }
       }
     },
     "d87b5960-1f92-48c4-8223-cc52b7b532cf": {
-      "settings": {},
       "blocks": {
         "ecaa607f-a456-4c64-8b1d-82c823de6917": {
           "settings": {
