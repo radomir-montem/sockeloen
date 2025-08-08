@@ -138,7 +138,8 @@
     "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "best-sellers-1",
-    "cart_drawer_button_2_cta": "Go to Cart",
+    "cart_drawer_button_1_cta": "CHECK OUT SECURELY",
+    "cart_drawer_button_2_cta": "",
     "checkout_logo_image": "shopify://shop_images/sockeloen-bike-socks-fietssokken.png",
     "checkout_logo_position": "center",
     "checkout_logo_size": "small",
@@ -529,11 +530,6 @@
       },
       "16605207545338212596": {
         "type": "shopify://apps/aov-bundle-upsell/blocks/aov-offer/0335d423-143c-4ad7-b224-99a1db74a9ee",
-        "disabled": false,
-        "settings": {}
-      },
-      "14041968213898805026": {
-        "type": "shopify://apps/aov-ai-free-gift-bxgy/blocks/app-embed-free-gift/de98edfe-90fa-4145-8a57-1055e0058723",
         "disabled": false,
         "settings": {}
       }
