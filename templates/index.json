@@ -44,6 +44,7 @@
         "text",
         "button"
       ],
+      "custom_css": [],
       "settings": {
         "image": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER.jpg",
         "image_mobile": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER_MOBILE.jpg",
