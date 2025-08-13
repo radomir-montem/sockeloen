@@ -15,8 +15,8 @@
   "sections": {
     "image_banner": {
       "settings": {
-        "image": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER.jpg",
-        "image_mobile": "shopify://shop_images/HOMEPAGE_SUMMER_BANNER_MOBILE.jpg",
+        "image": "shopify://shop_images/Website_banner_desktop_FADE_COLLECTION.jpg",
+        "image_mobile": "shopify://shop_images/Website_banner_mobile_FADE_COLLECTION.jpg",
         "image_overlay_opacity": 10,
         "banner_image_height": 750,
         "adapt_height_first_image": false,
@@ -26,22 +26,23 @@
       "blocks": {
         "heading": {
           "settings": {
-            "heading": " AERO FADE CYCLING SOCKS"
+            "heading": "AERO FADE CYCLING SOCKS"
           }
         },
         "text": {
           "settings": {
-            "text": " Ready when you are // New materials // New design"
+            "text": "Ready when you are // New materials // New design"
           }
         },
         "button": {
           "settings": {
-            "button_label_1": " SHOP AERO FADE"
+            "button_label_1": "SHOP AERO FADE"
           }
         }
       }
     },
     "d87b5960-1f92-48c4-8223-cc52b7b532cf": {
+      "settings": {},
       "blocks": {
         "ecaa607f-a456-4c64-8b1d-82c823de6917": {
           "settings": {
