@@ -30,7 +30,7 @@
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "AERO FADE CYCLING SOCKS",
+            "button_label_1": "SHOP AERO FADE",
             "button_link_1": "shopify://collections/aero-fade-collection",
             "button_style_secondary_1": false,
             "button_label_2": "SHOP ALL PRODUCTS",
@@ -44,7 +44,11 @@
         "text",
         "button"
       ],
-      "custom_css": [],
+      "custom_css": [
+        "h3,h2,a {color: #100b33;}",
+        "button, .btn, .button {background-color: #100b33; color: #ffffff; }",
+        ".button--secondary, .btn--secondary {border: 2px solid #100b33; background-color: transparent; color: #100b33;"
+      ],
       "settings": {
         "image": "shopify://shop_images/Website_banner_desktop_FADE_COLLECTION.jpg",
         "image_mobile": "shopify://shop_images/Website_banner_mobile_FADE_COLLECTION.jpg",
