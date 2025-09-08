@@ -44,22 +44,18 @@
         "text",
         "button"
       ],
-      "custom_css": [
-        "h3,h2,a {color: #100b33;}",
-        "button, .btn, .button {background-color: #100b33; color: #ffffff; }",
-        ".button--secondary, .btn--secondary {border: 2px solid #100b33; background-color: transparent; color: #100b33;"
-      ],
+      "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/Website_banner_desktop_FADE_COLLECTION.jpg",
-        "image_mobile": "shopify://shop_images/Website_banner_mobile_FADE_COLLECTION.jpg",
+        "image": "shopify://shop_images/Website_banner_desktop_FADE_COLLECTION_a7e834cf-4b7d-4601-848c-33da4b6997a6.jpg",
+        "image_mobile": "shopify://shop_images/Website_banner_mobile_MTB_COLLECTION.jpg",
         "image_overlay_opacity": 10,
         "banner_image_height": 750,
-        "image_height_mobile": 550,
+        "image_height_mobile": 650,
         "adapt_height_first_image": false,
         "desktop_content_position": "bottom-center",
         "show_text_box": false,
         "desktop_content_alignment": "center",
-        "color_scheme": "background-1",
+        "color_scheme": "accent-2",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
         "show_text_below": false
