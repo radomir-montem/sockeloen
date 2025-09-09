@@ -342,7 +342,7 @@
         "cdbd0cb4-2ce5-4d43-81b3-cf8af48f1dea": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/1.SHIPPING.USP.WIT.png"
+            "image": "shopify://shop_images/1.SHIPPING.USP.png"
           }
         },
         "4eafd2d7-ffe9-4d85-9d3c-1c5257810662": {
@@ -370,6 +370,7 @@
         "59aa8067-54fc-449f-975b-d765af1aa2d4",
         "8191162b-59ec-4e9d-a84e-4fee271c0ab8"
       ],
+      "custom_css": [],
       "settings": {}
     },
     "810ba789-2a8c-44fa-abe0-e8f36932e0cb": {
