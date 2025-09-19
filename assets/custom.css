@@ -419,7 +419,7 @@
     text-transform: capitalize;
 }
 
-.product-form__submit, .continue-shopping, .cart__checkout-animation {
+.product-form__submit, .continue-shopping, .cart__checkout-animation, .product-sticky-atc {
     color: #000;
     border: 1px solid #abcc15;
     background-image: url(https://cdn.shopify.com/s/files/1/0705/7496/5016/files/button-arrow-black.png?v=1726565499);
@@ -436,7 +436,8 @@
 
 .product-form__submit span,
 .continue-shopping span,
-.cart__checkout-animation span {
+.cart__checkout-animation span,
+.product-sticky-atc span {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -444,7 +445,8 @@
 
 .product-form__submit span svg,
 .continue-shopping span svg,
-.cart__checkout-animation span svg {
+.cart__checkout-animation span svg,
+.product-sticky-atc span svg {
     width: 22px;
     margin-right: 5px;
     stroke: #000;
@@ -452,20 +454,23 @@
 
 .product-form__submit span svg, 
 .continue-shopping span svg path,
-.cart__checkout-animation span svg path {
+.cart__checkout-animation span svg path,
+.product-sticky-atc span svg path {
     fill: #000;
 }
 
 .product-form__submit:hover:not([disabled]),
 .continue-shopping:hover:not([disabled]),
-.cart__checkout-animation:hover:not([disabled]) {
+.cart__checkout-animation:hover:not([disabled]),
+.product-sticky-atc:hover:not([disabled]) {
     background-position: 95% 35%;
     padding-right: 55px;
 }
 
 .product-form__submit::before, .product-form__submit::after,
 .continue-shopping::before, .continue-shopping::after,
-.cart__checkout-animation::before, .cart__checkout-animation::after {
+.cart__checkout-animation::before, .cart__checkout-animation::after,
+.product-sticky-atc::before, .product-sticky-atc::after {
     display: none;
 }
 
@@ -798,6 +803,40 @@ footer .localization-list {
 
     .footer-logo {
         margin: 3rem auto 0;
+    }
+}
+
+sticky-atc {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    background: #fff;
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2pxx 4px 2px #0000000d;
+    transform: translate(-50%, 100%);
+    z-index: 999;
+    transition: transform 0.55s ease-in-out;
+    max-width: 400px;
+}
+
+sticky-atc.hidden {
+    display: none;
+    transform: translate(-50%, 100%);
+    transition: 0.55s ease-in-out;
+}
+
+sticky-atc.show {
+    bottom: 1rem;
+    transform: translate(-50%);
+    transition: 0.55s ease-in-out;
+}
+
+@media (min-width: 768px) {
+    sticky-atc {
+        display: none;
     }
 }
 
