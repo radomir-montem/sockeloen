@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "AERO FADE CYCLING SOCKS",
+            "heading": "WORN BY CHAMPIONS",
             "heading_size": "h2",
             "use_h1_tag": false
           }
@@ -23,15 +23,15 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "// READY WHEN YOU ARE // EXPLORE NOW //",
+            "text": "driven by performance",
             "text_style": "body"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "SHOP AERO FADE",
-            "button_link_1": "shopify://collections/aero-fade-collection",
+            "button_label_1": "TOP 8 - BEST SELLERS",
+            "button_link_1": "shopify://collections/best-sellers-1",
             "button_style_secondary_1": false,
             "button_label_2": "SHOP ALL PRODUCTS",
             "button_link_2": "shopify://collections/all",
