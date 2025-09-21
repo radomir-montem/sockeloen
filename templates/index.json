@@ -64,7 +64,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Best sellers",
+        "title": "Top 8 best selling products",
         "collection": "best-sellers-1",
         "products_to_show": 8,
         "columns_desktop": 4,
