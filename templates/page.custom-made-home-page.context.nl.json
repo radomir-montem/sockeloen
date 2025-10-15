@@ -13,46 +13,6 @@
     "market": "nl"
   },
   "sections": {
-    "image_banner": {
-      "blocks": {
-        "heading": {
-          "settings": {
-            "heading": "CUSTOM GEMAAKTE SOKKEN"
-          }
-        },
-        "text": {
-          "settings": {
-            "text": "GRATIS 15 MIN CONSULT // GRATIS SAMPLE SOKKEN // VANAF 1 PAAR // LEVERING BINNEN 1 WEEK // EIGEN PRODUCTIEFACILITEITEN // 100% TEVREDENHEID"
-          }
-        },
-        "button": {
-          "settings": {
-            "button_label_1": "BEKIJK PRODUCTEN",
-            "button_label_2": "BOEK EEN BEL AFSPRAAK"
-          }
-        }
-      }
-    },
-    "b6fa03c9-c481-43c1-b5fe-86af6b8d4630": {
-      "blocks": {
-        "template--20074165141828__b6fa03c9-c481-43c1-b5fe-86af6b8d4630-heading-1": {
-          "settings": {
-            "heading": "CUSTOM SOKKEN"
-          }
-        },
-        "template--20074165141828__b6fa03c9-c481-43c1-b5fe-86af6b8d4630-text-1": {
-          "settings": {
-            "text": "Met onze Custom verweven SoKKEN krijg je persoonlijke hulp van onze sokkenexperts en worden ze geleverd binnen 4–8 weken.\nOnze Custom bedrukte sokken kun je zelf online ontwerpen en bestellen – levering al binnen 1 week."
-          }
-        },
-        "template--20074165141828__b6fa03c9-c481-43c1-b5fe-86af6b8d4630-buttons-1": {
-          "settings": {
-            "button_label_1": "CUSTOM BEDRUKTE SOKKEN> 1 PAAR",
-            "button_label_2": "CUSTOM VERWEVEN SOKKEN > 50 PAAR"
-          }
-        }
-      }
-    },
     "featured_collection": {
       "settings": {
         "title": "CUSTOM BEDRUKTE SOKKEN > 50 PAAR"
