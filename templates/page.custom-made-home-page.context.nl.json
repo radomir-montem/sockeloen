@@ -13,21 +13,6 @@
     "market": "nl"
   },
   "sections": {
-    "featured_collection": {
-      "settings": {
-        "title": "CUSTOM BEDRUKTE SOKKEN > 50 PAAR"
-      }
-    },
-    "dd2f8929-ca91-4a21-8114-9128c971c079": {
-      "blocks": {
-        "fd0f966c-3c50-4673-9dbf-aa8e6aedd6f8": {
-          "settings": {
-            "title": "GRATIS CONSULT",
-            "button_label": "BOEK EEN BELAFSPRAAK"
-          }
-        }
-      }
-    },
     "8b0b527a-f477-4927-970f-cc63855e24be": {
       "blocks": {
         "019acde6-345b-4b53-8c89-106563c84fb2": {
@@ -45,11 +30,6 @@
           "settings": {
             "title": "EVENEMENTEN",
             "button_label": "BEKIJK VOORBEELDEN"
-          }
-        },
-        "eef4ba6c-f921-4b50-98a4-4507f6975f2a": {
-          "settings": {
-            "button_label": "BEKIJK VOORBEEELDEN"
           }
         }
       }
