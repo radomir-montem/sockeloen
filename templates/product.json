@@ -369,7 +369,7 @@
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "",
-            "button_url": "#",
+            "button_url": "shopify://collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
         },
