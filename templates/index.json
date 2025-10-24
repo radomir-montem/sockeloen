@@ -343,15 +343,15 @@
         "a8a72217-bd02-490a-b90f-0b812e1cec08": {
           "type": "text",
           "settings": {
-            "text": "Free 15min consult // Free sample socks // Starting from 1 pair // Delivery within 1 week // Owned production facilities // 100% satisfaction",
+            "text": "",
             "text_style": "subtitle"
           }
         },
         "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "LEARN MORE",
-            "button_link_1": "shopify://pages/custom-made",
+            "button_label_1": "ASK A QUOTE",
+            "button_link_1": "https://custom.sockeloen.nl/en-custom-design-checkout/",
             "button_style_secondary_1": true,
             "button_label_2": "EXPLORE CUSTOM SOCKS",
             "button_link_2": "shopify://collections/custom-socks",
