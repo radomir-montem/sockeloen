@@ -291,7 +291,7 @@
         "ecaa607f-a456-4c64-8b1d-82c823de6917": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Homepagebanners_export_72.jpg",
+            "image": "shopify://shop_images/WEB_Home_module_SHOP_NOW.jpg",
             "color": "#0e112e",
             "text_color": "#ffffff",
             "font_size": 40,
@@ -301,14 +301,14 @@
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "SHOP NOW",
-            "button_url": "shopify://collections/summer-cycling-socks",
+            "button_url": "shopify://collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
         },
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Homepagebanners_export_8.jpg",
+            "image": "shopify://shop_images/WEB_Home_module_EXPLORE.jpg",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
@@ -317,8 +317,8 @@
             "vertical_pos": "justify-end",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "EXLORE NOW",
-            "button_url": "shopify://collections/summer-cycling-socks",
+            "button_text": "",
+            "button_url": "shopify://collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
         }
