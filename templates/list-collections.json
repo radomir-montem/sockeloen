@@ -11,6 +11,10 @@
   "sections": {
     "main": {
       "type": "main-list-collections",
+      "custom_css": [
+        "/* Zet hover-zoom/overlay uit op collectiekaarten binnen de collectielijst */.collection-list .card--media:hover .media--hover-effect img,.collection-list .card--media:focus .media--hover-effect img,.collection-list .card:hover .media--hover-effect img {transform: none !important;}",
+        "/* Schakel overgangsanimaties uit zodat er niets “verspringt” */.collection-list .media--hover-effect img,.collection-list .card,.collection-list .card * {transition: none !important;}"
+      ],
       "settings": {
         "title": "Collections",
         "sort": "date_reversed",
