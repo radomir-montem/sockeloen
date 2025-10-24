@@ -11,6 +11,18 @@
   "sections": {
     "image_banner_WqpDi6": {
       "type": "image-banner",
+      "blocks": {
+        "text_kkB98V": {
+          "type": "text",
+          "settings": {
+            "text": "A.W.E. -- All Weather Essentials -- Winter Collection",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "text_kkB98V"
+      ],
       "settings": {
         "image": "shopify://shop_images/WEB_collection_banner_desktop_3.jpg",
         "image_mobile": "shopify://shop_images/WEB_collection_banner_desktop_3.jpg",
@@ -19,9 +31,9 @@
         "image_height_mobile": 350,
         "adapt_height_first_image": false,
         "desktop_content_position": "middle-center",
-        "show_text_box": true,
+        "show_text_box": false,
         "desktop_content_alignment": "center",
-        "color_scheme": "background-1",
+        "color_scheme": "inverse",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
         "show_text_below": false
