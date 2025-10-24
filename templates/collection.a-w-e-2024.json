@@ -74,50 +74,6 @@
         "padding_bottom": 8
       }
     },
-    "cb705c25-e9a8-4fa7-b01f-876e38bda057": {
-      "type": "two-cols-swap",
-      "blocks": {
-        "ff3c3402-61b9-404b-8258-f603a60a684b": {
-          "type": "column",
-          "settings": {
-            "color": "",
-            "text_color": "#000000",
-            "font_size": 48,
-            "heading": "",
-            "description": "<p><a href=\"https://sockeloen.com/collections/all-products\" title=\"https://sockeloen.com/collections/all-products\">Click below</a> to see all our black friday deals.</p><p></p>",
-            "vertical_pos": "justify-center",
-            "horizontal_pos": "items-center",
-            "button_disclaimer": "",
-            "button_text": "SHOP ALL DEALS",
-            "button_url": "https://sockeloen.com/collections/all-products",
-            "button_pos": "mt-0"
-          }
-        },
-        "7e10dc92-caae-448d-9a4a-8237c1700e9e": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/BLACK.FRIDAY.1000X1000.png",
-            "color": "",
-            "text_color": "#000000",
-            "font_size": 48,
-            "heading": "",
-            "description": "",
-            "vertical_pos": "justify-center",
-            "horizontal_pos": "items-center",
-            "button_disclaimer": "",
-            "button_text": "",
-            "button_url": "#",
-            "button_pos": "mt-0"
-          }
-        }
-      },
-      "block_order": [
-        "ff3c3402-61b9-404b-8258-f603a60a684b",
-        "7e10dc92-caae-448d-9a4a-8237c1700e9e"
-      ],
-      "disabled": true,
-      "settings": {}
-    },
     "dc530aff-ed8f-4da9-bac4-3c972bf2e24c": {
       "type": "usp-blackbg",
       "blocks": {
@@ -151,6 +107,50 @@
         "722a364a-0b8c-40aa-a27c-b60d19bca10f",
         "f3acf7cd-e22a-461b-8964-328f442dba7d",
         "9c2902b8-73f0-4f9f-b30a-a240a22023e2"
+      ],
+      "settings": {}
+    },
+    "cb705c25-e9a8-4fa7-b01f-876e38bda057": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "7e10dc92-caae-448d-9a4a-8237c1700e9e": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/WEB_Home_module_SHOP_NOW.jpg",
+            "color": "",
+            "text_color": "#000000",
+            "font_size": 48,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "",
+            "button_url": "#",
+            "button_pos": "mt-0"
+          }
+        },
+        "column_Ber73z": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/WEB_Home_module_EXPLORE.jpg",
+            "color": "",
+            "text_color": "#000000",
+            "font_size": 48,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "",
+            "button_url": "#",
+            "button_pos": "mt-0"
+          }
+        }
+      },
+      "block_order": [
+        "7e10dc92-caae-448d-9a4a-8237c1700e9e",
+        "column_Ber73z"
       ],
       "settings": {}
     }
