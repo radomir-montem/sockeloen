@@ -361,14 +361,14 @@
           "settings": {
             "image": "shopify://shop_images/WEB_Home_module_SHOP_NOW.jpg",
             "color": "#64652e",
-            "text_color": "#000000",
+            "text_color": "#ffffff",
             "font_size": 48,
             "heading": "",
             "description": "",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "",
+            "button_text": "EXPLORE HERE",
             "button_url": "shopify://collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
