@@ -48,7 +48,7 @@
       "settings": {
         "image": "shopify://shop_images/WEB_Home_banner_desktop_V4.png",
         "image_mobile": "shopify://shop_images/WEB-Home-banner-mobile-V4.png",
-        "image_overlay_opacity": 10,
+        "image_overlay_opacity": 30,
         "banner_image_height": 750,
         "image_height_mobile": 650,
         "adapt_height_first_image": false,
