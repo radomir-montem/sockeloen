@@ -385,8 +385,8 @@
             "vertical_pos": "justify-end",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "CLICK HERE",
-            "button_url": "shopify://collections/no-fear-collectie",
+            "button_text": "",
+            "button_url": "shopify://collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
         }
