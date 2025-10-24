@@ -231,7 +231,7 @@
         ".product {padding-top: 0 !important;}"
       ],
       "settings": {
-        "enable_sticky_info": true,
+        "enable_sticky_info": false,
         "notifyme_button": "Notify me when available",
         "media_position": "left",
         "gallery_layout": "columns",
