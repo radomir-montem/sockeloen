@@ -359,7 +359,7 @@
         "6a0118df-4330-436a-b702-9317ff284f63": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Product_page_NOFEAR_banner-01.jpg",
+            "image": "shopify://shop_images/WEB_Home_module_SHOP_NOW.jpg",
             "color": "#64652e",
             "text_color": "#000000",
             "font_size": 48,
@@ -376,7 +376,7 @@
         "66f0e606-c41c-49d0-ada4-ff6e6f30e46b": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Product_page_NOFEAR_banner-02.jpg",
+            "image": "shopify://shop_images/WEB_Home_module_EXPLORE.jpg",
             "color": "#4c3a60",
             "text_color": "#ffffff",
             "font_size": 33,
