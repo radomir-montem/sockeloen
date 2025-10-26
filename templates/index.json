@@ -32,10 +32,10 @@
           "settings": {
             "button_label_1": "TOP 8 - BEST SELLERS",
             "button_link_1": "shopify://collections/best-sellers-1",
-            "button_style_secondary_1": true,
+            "button_style_secondary_1": false,
             "button_label_2": "SHOP WINTER PRODUCTS",
             "button_link_2": "shopify://collections/all-weather-essentials",
-            "button_style_secondary_2": false
+            "button_style_secondary_2": true
           }
         }
       },
