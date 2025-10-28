@@ -959,9 +959,11 @@
 
               <div class="variant-notes">
                 {% for variant in product.variants %}
-                  <div class="font-roboto font-normal text-2xl py-[10px] break-words !m-0 {% unless variant.id == product.selected_or_first_available_variant.id %}hidden{% endunless %}" data-id="{{ variant.id }}">
-                    {{ variant.metafields.custom.note | metafield_tag }}
-                  </div>
+                  {% if variant.metafields.custom.note != blank %}
+                    <div class="font-roboto font-normal text-2xl py-[10px] break-words !m-0 {% unless variant.id == product.selected_or_first_available_variant.id %}hidden{% endunless %}" data-id="{{ variant.id }}">
+                      {{ variant.metafields.custom.note | metafield_tag }}
+                    </div>
+                  {% endif %}
                 {% endfor %}
               </div>
             {%- when 'buy_buttons' -%}
