@@ -863,3 +863,7 @@ sticky-atc.show {
 .variant-notes {
     margin: 0 !important;
 }
+
+.variant-notes [data-id]:empty {
+    display: none;
+}
