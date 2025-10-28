@@ -956,6 +956,14 @@ class VariantSelects extends HTMLElement {
 
     this.changeInventoryState();
     this.checkAvaiable()
+    this.changeNote()
+  }
+
+  changeNote() {
+    const notes = document.querySelector('.variant-notes').querySelectorAll('[data-id]');
+    notes.forEach(note => {
+      note.classList.toggle('hidden', note.dataset.id != this.currentVariant.id);
+    })
   }
 
   checkAvaiable() {
