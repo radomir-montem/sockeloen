@@ -859,3 +859,7 @@ sticky-atc.show {
         opacity: 1;
     }
 }
+
+.variant-notes {
+    margin: 0 !important;
+}
