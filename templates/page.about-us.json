@@ -71,10 +71,10 @@
       "name": "About",
       "settings": {
         "color_scheme": "background-1",
-        "heading": "About Sockeloen",
+        "heading": "<h1>About</h1><h1>Sockeloen</h1>",
         "heading_size": "h1",
         "text": "<p>How is it possible that pro cyclists all over the world buy their socks from me, even though they get their socks for free from their teams? I’ll explain.<br/><br/>Ten years ago, when I was riding in the Rabobank Continental Team together with Wilco Kelderman, I wasn’t satisfied with the socks we were wearing. They never quite fit right: too low, uncomfortable, and far from the quality we wanted. I even tried cutting the seams off my socks to pull them a few centimeters higher, but after one wash, they curled down and slid to my ankles. That had to change.<br/><br/>From that moment, I became obsessed with creating the perfect cycling sock: not too high or too low, not too tight or too loose, not too thick or too thin. I started experimenting, asking other riders for feedback, and testing materials across Europe until I finally found what I was looking for. Together with an Italian family business, we developed the best cycling sock in the world. <br/><br/>That’s when the brand Sockeloen was born. It all started from a simple frustration that turned into a mission for perfection. And luckily, we weren’t the only ones happy with the result. Since then, more than 40,000 cyclists have become happy Sockeloen customers.<br/><br/>But the real reason pro cyclists want to ride with our socks is this: the fastest sock on the planet. We went to the wind tunnel in Eindhoven and scientifically compared all competitors on the market with our sample, and that’s how we found the fastest sock.<br/><br/>Today, world and Olympic champions ride with our socks, not only for the performance or the aerodynamic results but because they simply love them. And Sockeloen has grown into more than a pro-level brand.<br/><br/>From merino socks and shoe covers that keep your feet warm on cold gravel rides, to personalized socks for a special gift — we’ve created socks for every kind of rider: racers, adventurers, weekend cyclists, and even those who just enjoy watching the race from the couch.</p>",
-        "button_label": "Join the ride",
+        "button_label": "JOIN THE RIDE",
         "button_link": "#",
         "button_stye": "link",
         "top_padding": 50,
