@@ -26,7 +26,7 @@
             "visibility": "small-hide",
             "text": "<p>What began as a small frustration on the bike turned into a mission: create the perfect sock for every ride.</p>",
             "max_width": 300,
-            "alignment": "center",
+            "alignment": "left",
             "alignment_mobile": "center"
           }
         },
