@@ -82,11 +82,78 @@
         "top_padding_mobile": 50,
         "bottom_padding_mobile": 50
       }
+    },
+    "rich_text_tUjC3D": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_FrmWEb": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>My favourites</p>",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FrmWEb"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "left",
+        "content_alignment": "left",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "featured_collection_RLamQF": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "title": "",
+        "collection": "best-sellers-1",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2"
+      }
+    },
+    "rich_text_HV3xEy": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_UNiGE8": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>The collection</p>",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_UNiGE8"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "left",
+        "content_alignment": "left",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
     "main",
     "multicolumns_8jzRiE",
-    "about_6VW9Nm"
+    "about_6VW9Nm",
+    "rich_text_tUjC3D",
+    "featured_collection_RLamQF",
+    "rich_text_HV3xEy"
   ]
 }
