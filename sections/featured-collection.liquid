@@ -19,7 +19,7 @@
   endif
 -%}
 
-<div class="isolate gradient bg-background pt-20">
+<div class="isolate gradient bg-background {% unless section.settings.disable_padding %}pt-20{% endunless %}">
   <div class="collection section-{{ section.id }}-padding">
     <div class="ml-[32px] mb-[24px]">
       {%- if section.settings.title != blank -%}
@@ -88,7 +88,12 @@
       "default": 4,
       "label": "t:sections.featured-collection.settings.columns_desktop.label"
     },
-
+    {
+      "type": "checkbox",
+      "id": "disable_padding",
+      "label": "Disabled padding",
+      "default": false
+    },
     {
       "type": "header",
       "content": "t:sections.featured-collection.settings.header.content"
