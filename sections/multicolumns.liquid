@@ -5,24 +5,30 @@
 <noscript>{{ 'section-multicolumns.css' | asset_url | stylesheet_tag }}</noscript>
 
 {%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.top_padding_mobile }}px;
-    padding-bottom: {{ section.settings.bottom_padding_mobile }}px;
-  }
-
-  @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.top_padding }}px;
-      padding-bottom: {{ section.settings.bottom_padding }}px;
+        padding-top: {{ section.settings.top_padding_mobile }}px;
+        padding-bottom: {{ section.settings.bottom_padding_mobile }}px;
     }
-  }
+
+    @media screen and (min-width: 750px) {
+        .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.top_padding }}px;
+        padding-bottom: {{ section.settings.bottom_padding }}px;
+        }
+    }
+
+    {% for block in section.blocks %}
+        #multicolumns--{{ block.id }} .multicolumns-item-wrapper {
+            max-width: {{ block.settings.max_width }}px;
+        }
+    {% endfor %}
 {%- endstyle -%}
 
 <div class="isolate section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} {{ section.settings.color_scheme }}">
     <div class="page-width">
         <div class="multicolumns grid grid--1-col grid--{{ section.settings.columns }}-col-tablet grid--{{ section.settings.columns }}-col-desktop">
             {% for block in section.blocks %}
-                <div class="{{ block.settings.visibility }} multicolumns-item" {{ block.shopify_attributes }}>
+                <div id="multicolumns--{{ block.id }}" class="{{ block.settings.visibility }} multicolumns-item" {{ block.shopify_attributes }}>
                     <div class="multicolumns-item-wrapper algin-{{ block.settings.alignment }} algin-{{ block.settings.alignment_mobile }}-down">
                         {% if block.type == 'text' %}
                             <div class="multicolumns-item-text">{{ block.settings.text }}</div>
