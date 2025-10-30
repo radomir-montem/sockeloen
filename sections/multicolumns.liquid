@@ -20,7 +20,7 @@
 
 <div class="isolate section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} {{ section.settings.color_scheme }}">
     <div class="page-width">
-        <div class="multicolumns grid grid--1-col grid--{{ section.settings.columns }}-tablet grid--{{ section.settings.columns }}-desktop">
+        <div class="multicolumns grid grid--1-col grid--{{ section.settings.columns }}-col-tablet grid--{{ section.settings.columns }}-col-desktop">
             {% for block in section.blocks %}
                 <div class="grid__item {{ block.settings.visibility }} multicolumns-item" {{ block.shopify_attributes }}>
                     <div class="multicolumns-item-wrapper">
