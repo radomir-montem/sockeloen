@@ -20,8 +20,20 @@
 
 <div class="isolate section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} {{ section.settings.color_scheme }}">
     <div class="page-width">
-        <div class="multicolumns">
-
+        <div class="multicolumns grid grid--1-col grid--{{ section.settings.columns }}-tablet grid--{{ section.settings.columns }}-desktop">
+            {% for block in section.blcoks %}
+                <div class="grid__item {{ block.settings.visibility }} multicolumns-item" {{ block.shopify_attributes }}>
+                    <div class="multicolumns-item-wrapper">
+                        {% if block.type == 'text' %}
+                            <div class="multicolumns-item-text">{{ block.settings.text }}</div>
+                        {% else %}
+                            <div class="multicolumns-item-image">
+                                {{ block.settings.image | image_url: width: block.settings.image.width | image_tag }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>
