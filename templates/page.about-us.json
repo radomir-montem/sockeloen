@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
@@ -18,6 +19,40 @@
     },
     "multicolumns_8jzRiE": {
       "type": "multicolumns",
+      "blocks": {
+        "text_bNci3E": {
+          "type": "text",
+          "settings": {
+            "visibility": "small-hide",
+            "text": "<p>What began as a small frustration on the bike turned into a mission: create the perfect sock for every ride.</p>",
+            "padding_left": 0,
+            "padding_right": 0
+          }
+        },
+        "image_jUGVV4": {
+          "type": "image",
+          "settings": {
+            "visibility": "",
+            "image": "shopify://shop_images/Group_1021.png",
+            "padding_left": 0,
+            "padding_right": 0
+          }
+        },
+        "text_idQegm": {
+          "type": "text",
+          "settings": {
+            "visibility": "small-hide",
+            "text": "<p>Years later, that mission still drives us: to push limits, refine details, and keep every rider one step ahead.</p>",
+            "padding_left": 0,
+            "padding_right": 0
+          }
+        }
+      },
+      "block_order": [
+        "text_bNci3E",
+        "image_jUGVV4",
+        "text_idQegm"
+      ],
       "name": "Multicolumns",
       "settings": {
         "color_scheme": "background-1",
