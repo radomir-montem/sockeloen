@@ -1,0 +1,196 @@
+
+
+{{ 'section-about.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+    .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.top_padding_mobile }}px;
+        padding-bottom: {{ section.settings.bottom_padding_mobile }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+        .section-{{ section.id }}-padding {
+            padding-top: {{ section.settings.top_padding }}px;
+            padding-bottom: {{ section.settings.bottom_padding }}px;
+        }
+    }
+{%- endstyle -%}
+
+<div class="isolate color-{{ section.settings.color_scheme }} {{ section.settings.color_scheme }}">
+    <div class="page-width">
+        <div class="section-{{ section.id }}-padding about-section">
+            <div class="about-grid">
+                <div class="about-header">
+                    <h1 class="about-heading {{ section.settings.heading_size }}">{{ section.settings.heading }}</h1>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        {{ section.settings.text }}
+                    </div>
+                    {% if section.settings.button_label != blank %}
+                        <a{% if section.settings.button_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ section.settings.button_link }}"{% endif %} class="{{ section.settings.button_stye }}">{{ section.settings.button_label | escape }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "About",
+    "settings": [
+        {
+            "type": "select",
+            "id": "color_scheme",
+            "options": [
+                {
+                "value": "accent-1",
+                "label": "t:sections.all.colors.accent_1.label"
+                },
+                {
+                "value": "accent-2",
+                "label": "t:sections.all.colors.accent_2.label"
+                },
+                {
+                "value": "background-1",
+                "label": "t:sections.all.colors.background_1.label"
+                },
+                {
+                "value": "background-2",
+                "label": "t:sections.all.colors.background_2.label"
+                },
+                {
+                "value": "inverse",
+                "label": "t:sections.all.colors.inverse.label"
+                },
+                {
+                "value": "bg-background",
+                "label": "Collection Background"
+                }
+            ],
+            "default": "background-1",
+            "label": "t:sections.all.colors.label"
+        },
+        {
+            "type": "inline_richtext",
+            "id": "heading",
+            "label": "Heading",
+            "default": "About Sockeloen"
+        },
+        {
+            "type": "select",
+            "id": "heading_size",
+            "options": [
+                {
+                "value": "h2",
+                "label": "t:sections.all.heading_size.options__1.label"
+                },
+                {
+                "value": "h1",
+                "label": "t:sections.all.heading_size.options__2.label"
+                },
+                {
+                "value": "h0",
+                "label": "t:sections.all.heading_size.options__3.label"
+                },
+                {
+                "value": "hxl",
+                "label": "t:sections.all.heading_size.options__4.label"
+                }
+            ],
+            "default": "h1",
+            "label": "t:sections.all.heading_size.label"
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+        },
+        {
+            "type": "header",
+            "content": "Button"
+        },
+        {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button label",
+            "default": "Join the ride"
+        },
+        {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button link"
+        },
+        {
+            "type": "select",
+            "id": "button_stye",
+            "label": "Button style",
+            "options": [
+                {
+                    "value": "button button--primary",
+                    "label": "Primary"
+                },
+                {
+                    "value": "button button--secondary",
+                    "label": "Secondary"
+                },
+                {
+                    "value": "link",
+                    "label": "Link"
+                }
+            ],
+            "default": "button button--primary"
+        },
+        {
+            "type": "header",
+            "content": "Padding"
+        },
+        {
+            "type": "range",
+            "id": "top_padding",
+            "label": "Top padding",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "default": 50,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "bottom_padding",
+            "label": "Bottom padding",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "default": 50,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "top_padding_mobile",
+            "label": "Mobile top padding",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "default": 50,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "bottom_padding_mobile",
+            "label": "Mobile bottom padding",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "default": 50,
+            "unit": "px"
+        }
+    ],
+    "presets": [
+        {
+            "name": "About"
+        }
+    ]
+}
+{% endschema %}
