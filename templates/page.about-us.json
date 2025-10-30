@@ -15,9 +15,22 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "multicolumns_8jzRiE": {
+      "type": "multicolumns",
+      "name": "Multicolumns",
+      "settings": {
+        "color_scheme": "background-1",
+        "columns": 3,
+        "top_padding": 50,
+        "bottom_padding": 100,
+        "top_padding_mobile": 20,
+        "bottom_padding_mobile": 50
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "multicolumns_8jzRiE"
   ]
 }
