@@ -4,3 +4,29 @@
     height: 100%;
     align-items: center;
 }
+
+.multicolumns-item-wrapper.align-left {
+    justify-content: flex-start;
+}
+
+.multicolumns-item-wrapper.align-center {
+    justify-content: flex-center;
+}
+
+.multicolumns-item-wrapper.align-right {
+    justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+    .multicolumns-item-wrapper.align-left-down {
+        justify-content: flex-start;
+    }
+
+    .multicolumns-item-wrapper.align-center-down {
+        justify-content: flex-center;
+    }
+
+    .multicolumns-item-wrapper.align-right-down {
+        justify-content: flex-end;
+    }
+}
