@@ -8,7 +8,17 @@
     gap: 10px;
 }
 
+.about-button {
+    margin-top: 48px;
+}
+
 @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .about-button {
+        margin-top: 24px;
+    }
 }
