@@ -1,0 +1,216 @@
+<link rel="stylesheet" href="{{ 'component-rte.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'section-multicolumns.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'section-multicolumns.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.top_padding_mobile }}px;
+    padding-bottom: {{ section.settings.bottom_padding_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.top_padding }}px;
+      padding-bottom: {{ section.settings.bottom_padding }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="isolate section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} {{ section.settings.color_scheme }}">
+    <div class="page-width">
+        <div></div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Multicolumns",
+    "settings": [
+        {
+            "type": "select",
+            "id": "color_scheme",
+            "options": [
+                {
+                "value": "accent-1",
+                "label": "t:sections.all.colors.accent_1.label"
+                },
+                {
+                "value": "accent-2",
+                "label": "t:sections.all.colors.accent_2.label"
+                },
+                {
+                "value": "background-1",
+                "label": "t:sections.all.colors.background_1.label"
+                },
+                {
+                "value": "background-2",
+                "label": "t:sections.all.colors.background_2.label"
+                },
+                {
+                "value": "inverse",
+                "label": "t:sections.all.colors.inverse.label"
+                },
+                {
+                "value": "bg-background",
+                "label": "Collection Background"
+                }
+            ],
+            "default": "background-1",
+            "label": "t:sections.all.colors.label"
+        },
+        {
+            "type": "header",
+            "content": "Padding"
+        },
+        {
+            "type": "range",
+            "id": "top_padding",
+            "label": "Top padding",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "default": 50,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "bottom_padding",
+            "label": "Bottom padding",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "default": 50,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "top_padding_mobile",
+            "label": "Mobile top padding",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "default": 50,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "bottom_padding_mobile",
+            "label": "Mobile bottom padding",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "default": 50,
+            "unit": "px"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "text",
+            "name": "Text",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "visibility",
+                    "label": "Visibility",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "Both"
+                        },
+                        {
+                            "value": "small-hide",
+                            "label": "Desktop only"
+                        },
+                        {
+                            "value": "large-up-hide medium-hide",
+                            "label": "Mobile only"
+                        }
+                    ]
+                },
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "range",
+                    "id": "padding_left",
+                    "label": "Padding left",
+                    "min": 0,
+                    "max": 200,
+                    "step": 2,
+                    "default": 0,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "padding_right",
+                    "label": "Padding Right",
+                    "min": 0,
+                    "max": 200,
+                    "step": 2,
+                    "default": 0,
+                    "unit": "px"
+                }
+            ]
+        },
+        {
+            "type": "image",
+            "name": "Image",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "visibility",
+                    "label": "Visibility",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "Both"
+                        },
+                        {
+                            "value": "small-hide",
+                            "label": "Desktop only"
+                        },
+                        {
+                            "value": "large-up-hide medium-hide",
+                            "label": "Mobile only"
+                        }
+                    ]
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "range",
+                    "id": "padding_left",
+                    "label": "Padding left",
+                    "min": 0,
+                    "max": 200,
+                    "step": 2,
+                    "default": 0,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "padding_right",
+                    "label": "Padding Right",
+                    "min": 0,
+                    "max": 200,
+                    "step": 2,
+                    "default": 0,
+                    "unit": "px"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Multicolumns"
+        }
+    ]
+}
+{% endschema %}
