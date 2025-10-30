@@ -25,8 +25,9 @@
           "settings": {
             "visibility": "small-hide",
             "text": "<p>What began as a small frustration on the bike turned into a mission: create the perfect sock for every ride.</p>",
-            "padding_left": 0,
-            "padding_right": 0
+            "max_width": 300,
+            "alignment": "center",
+            "alignment_mobile": "center"
           }
         },
         "image_jUGVV4": {
@@ -34,8 +35,9 @@
           "settings": {
             "visibility": "",
             "image": "shopify://shop_images/Group_1021.png",
-            "padding_left": 0,
-            "padding_right": 0
+            "max_width": 800,
+            "alignment": "center",
+            "alignment_mobile": "center"
           }
         },
         "text_idQegm": {
@@ -43,8 +45,9 @@
           "settings": {
             "visibility": "small-hide",
             "text": "<p>Years later, that mission still drives us: to push limits, refine details, and keep every rider one step ahead.</p>",
-            "padding_left": 0,
-            "padding_right": 0
+            "max_width": 300,
+            "alignment": "right",
+            "alignment_mobile": "center"
           }
         }
       },
