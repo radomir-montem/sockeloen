@@ -10,7 +10,7 @@
 }
 
 .multicolumns-item-wrapper.align-center {
-    justify-content: flex-center;
+    justify-content: center;
 }
 
 .multicolumns-item-wrapper.align-right {
@@ -23,7 +23,7 @@
     }
 
     .multicolumns-item-wrapper.align-center-down {
-        justify-content: flex-center;
+        justify-content: center;
     }
 
     .multicolumns-item-wrapper.align-right-down {
