@@ -18,7 +18,7 @@
     }
 
     {% for block in section.blocks %}
-        #multicolumns--{{ block.id }} .multicolumns-item-wrapper {
+        #multicolumns--{{ block.id }} .multicolumns-item-wrapper > div {
             max-width: {{ block.settings.max_width }}px;
         }
     {% endfor %}
