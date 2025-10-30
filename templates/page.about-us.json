@@ -146,6 +146,61 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "column_img_E3WWKW": {
+      "type": "column-img",
+      "blocks": {
+        "image_VMtmHm": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/CATEGORY5_DESKTOP_474X680_4a9444aa-e1e2-4d27-ba14-e6aff38f548a.jpg",
+            "opacity": 30,
+            "title": "SOCKS",
+            "button_label": "Shop Now",
+            "button_url": "shopify://collections/cycling-socks"
+          }
+        },
+        "image_RA8TAj": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/CATEGORY2_DESKTOP_474X680_29b8d959-7944-4600-94b7-0e40915bd0d9.jpg",
+            "opacity": 30,
+            "title": "GLOVES",
+            "button_label": "Shop Now",
+            "button_url": "shopify://collections/cycling-gloves"
+          }
+        },
+        "image_hrELWp": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HOME.PAGE.BANNER.SHOECOVERS.jpg",
+            "opacity": 30,
+            "title": "OVERSHOES",
+            "button_label": "Shop Now",
+            "button_url": "shopify://collections/cycling-overshoes"
+          }
+        },
+        "image_dYqFix": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/HOME_CATEGORY_DESKTOP_474X680_024fdbff-dc0d-4c7a-8bf0-951e1eb0f15a.jpg",
+            "opacity": 30,
+            "title": "AERO SOCKS",
+            "button_label": "Shop Now",
+            "button_url": "shopify://collections/aero-cycling-socks"
+          }
+        }
+      },
+      "block_order": [
+        "image_VMtmHm",
+        "image_RA8TAj",
+        "image_hrELWp",
+        "image_dYqFix"
+      ],
+      "name": "Image columns",
+      "settings": {
+        "font_size": 24
+      }
     }
   },
   "order": [
@@ -154,6 +209,7 @@
     "about_6VW9Nm",
     "rich_text_tUjC3D",
     "featured_collection_RLamQF",
-    "rich_text_HV3xEy"
+    "rich_text_HV3xEy",
+    "column_img_E3WWKW"
   ]
 }
