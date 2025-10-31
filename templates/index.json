@@ -68,6 +68,7 @@
         "collection": "best-sellers-1",
         "products_to_show": 8,
         "columns_desktop": 4,
+        "disable_padding": false,
         "image_ratio": "portrait",
         "show_secondary_image": true,
         "show_vendor": false,
@@ -85,7 +86,7 @@
             "image": "shopify://shop_images/CATEGORY5_DESKTOP_474X680_4a9444aa-e1e2-4d27-ba14-e6aff38f548a.jpg",
             "opacity": 10,
             "title": "SOCKS",
-            "button_label": "Shop Now",
+            "button_label": "",
             "button_url": "shopify://collections/cycling-socks"
           }
         },
@@ -95,7 +96,7 @@
             "image": "shopify://shop_images/CATEGORY2_DESKTOP_474X680_29b8d959-7944-4600-94b7-0e40915bd0d9.jpg",
             "opacity": 10,
             "title": "GLOVES",
-            "button_label": "Shop Now",
+            "button_label": "",
             "button_url": "shopify://collections/cycling-gloves"
           }
         },
@@ -105,7 +106,7 @@
             "image": "shopify://shop_images/HOME.PAGE.BANNER.SHOECOVERS.jpg",
             "opacity": 10,
             "title": "OVERSHOES",
-            "button_label": "Shop Now",
+            "button_label": "",
             "button_url": "shopify://collections/cycling-overshoes"
           }
         },
@@ -115,7 +116,7 @@
             "image": "shopify://shop_images/HOME_CATEGORY_DESKTOP_474X680_024fdbff-dc0d-4c7a-8bf0-951e1eb0f15a.jpg",
             "opacity": 10,
             "title": "AERO SOCKS",
-            "button_label": "Shop Now",
+            "button_label": "",
             "button_url": "shopify://collections/aero-cycling-socks"
           }
         }
