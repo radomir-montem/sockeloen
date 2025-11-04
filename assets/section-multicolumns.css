@@ -30,3 +30,7 @@
         justify-content: flex-end;
     }
 }
+
+.about-text {
+    font-size: 18px;
+}
