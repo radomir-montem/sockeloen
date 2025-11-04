@@ -43,6 +43,7 @@
 }
 
 .multicolumns-item-image {
+    width: 100%;
     position: relative;
     overflow: hidden;
     aspect-ratio: 0.56;
