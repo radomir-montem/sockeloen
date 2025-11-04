@@ -25,7 +25,7 @@
         <div class="multicolumns grid grid--1-col grid--{{ section.settings.columns }}-col-tablet grid--{{ section.settings.columns }}-col-desktop">
             {% for block in section.blocks %}
                 <div id="multicolumns--{{ block.id }}" class="{{ block.settings.visibility }} multicolumns-item" {{ block.shopify_attributes }}>
-                    <div class="multicolumns-item-wrapper align-{{ block.settings.alignment }} align-{{ block.settings.alignment_mobile }}-down">
+                    <div class="multicolumns-item-wrapper multicolumns-item--{{ block.type }} align-{{ block.settings.alignment }} align-{{ block.settings.alignment_mobile }}-down">
                         {% if block.type == 'text' %}
                             <div class="multicolumns-item-text">{{ block.settings.text }}</div>
                         {% else %}
