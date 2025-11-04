@@ -37,6 +37,11 @@
     }
 }
 
+.multicolumns-item-image {
+    position: relative;
+    overflow: hidden;
+}
+
 .about-text {
     font-size: 18px;
 }
