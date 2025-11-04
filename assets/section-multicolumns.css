@@ -17,6 +17,12 @@
     justify-content: flex-end;
 }
 
+.multicolumns-item-wrapper .multicolumns-item-image img,
+.multicolumns-item-wrapper .multicolumns-item-image video {
+    width: 100%;
+    height: auto;
+}
+
 @media (max-width: 768px) {
     .multicolumns-item-wrapper.align-left-down {
         justify-content: flex-start;
