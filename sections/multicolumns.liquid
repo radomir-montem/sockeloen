@@ -30,7 +30,11 @@
                             <div class="multicolumns-item-text">{{ block.settings.text }}</div>
                         {% else %}
                             <div class="multicolumns-item-image">
-                                {{ block.settings.image | image_url: width: block.settings.image.width | image_tag }}
+                                {% if block.type == 'image' %}
+                                    {{ block.settings.image | image_url: width: block.settings.image.width | image_tag }}
+                                {% else %}
+                                    {{ block.settings.video | video_tag: controls: false, autoplay: true, muted: true, loop: true }}
+                                {% endif %}
                             </div>
                         {% endif %}
                     </div>
