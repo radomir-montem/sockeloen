@@ -401,7 +401,7 @@
           "text_wRnFtX"
         ],
         "custom_css": [
-          "a.nav__link:contains(\"TDF SALE\") {color: #ffd700 !important; /* Gele tekst */ font-weight: bold;}"
+          "a.nav__link:contains(\"SALE\") {color: #ffd700 !important; /* Gele tekst */ font-weight: bold;}"
         ],
         "settings": {
           "color_scheme": "background-1",
