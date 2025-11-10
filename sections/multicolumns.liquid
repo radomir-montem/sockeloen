@@ -51,10 +51,12 @@
 
 <script>
     const videoWrapepr = document.querySelector('.multicolumns-item-image');
-    const video = videoWrapepr.querySelector('video')
+    const video = videoWrapepr.querySelector('video');
+    const previewImage = videoWrapepr.querySelector('.preview-image');
     document.querySelector('.multicolumns-item-image .icon').addEventListener('click', (e) => {
         e.preventDefault();
         video.play();
+        previewImage.remove();
     })
 </script>
 
