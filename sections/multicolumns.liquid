@@ -48,6 +48,16 @@
     </div>
 </div>
 
+<script>
+    window.addEventListener("load", (event) => {
+        document.querySelector('.multicolumns-item-image .icon').addEventListener('click', (e) => {
+            e.preventDefault();
+            const video = e.currentTarget.querySelector('video');
+            video.play();
+        })
+    });
+</script>
+
 {% schema %}
 {
     "name": "Multicolumns",
