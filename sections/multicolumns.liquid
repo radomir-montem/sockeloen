@@ -49,13 +49,12 @@
 </div>
 
 <script>
-    window.addEventListener("load", (event) => {
-        document.querySelector('.multicolumns-item-image .icon').addEventListener('click', (e) => {
-            e.preventDefault();
-            const video = e.currentTarget.closest('.multicolumns-item-image').querySelector('video');
-            video.play();
-        })
-    });
+    const videoWrapepr = document.querySelector('.multicolumns-item-image');
+    const video = videoWrapepr.querySelector('video')
+    document.querySelector('.multicolumns-item-image .icon').addEventListener('click', (e) => {
+        e.preventDefault();
+        video.play();
+    })
 </script>
 
 {% schema %}
