@@ -190,10 +190,10 @@
           "b1013b07-0068-4c3b-93e4-5affe5867e98": {
             "type": "text",
             "settings": {
-              "title": "Ask free design",
-              "title_translate": "Vraag gratis design",
-              "title_translate_german": "Alle Produkte",
-              "title_translate_french": "Tous les produits",
+              "title": "Book a call",
+              "title_translate": "Boek een call",
+              "title_translate_german": "Termin buchen",
+              "title_translate_french": "Réserver un appel",
               "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png"
             }
           },
