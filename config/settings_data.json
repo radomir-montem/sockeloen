@@ -197,6 +197,16 @@
               "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png"
             }
           },
+          "text_LEUhgW": {
+            "type": "text",
+            "settings": {
+              "title": "Ask free design",
+              "title_translate": "Vraag gratis design",
+              "title_translate_german": "Kostenloses Design anfordern",
+              "title_translate_french": "Demander un design gratuit",
+              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png"
+            }
+          },
           "text_qQqJQ7": {
             "type": "text",
             "settings": {
@@ -401,6 +411,7 @@
         "block_order": [
           "text_kT6k68",
           "b1013b07-0068-4c3b-93e4-5affe5867e98",
+          "text_LEUhgW",
           "text_qQqJQ7",
           "e57893bb-9bd9-4643-ba27-55705f4639c0",
           "134d6ef9-c639-4b7d-9751-ce8b307614a6",
