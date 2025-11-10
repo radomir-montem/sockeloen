@@ -48,7 +48,7 @@
       "settings": {
         "image": "shopify://shop_images/1200x600_Running_Module_V4.jpg",
         "image_mobile": "shopify://shop_images/1080x1350_Running_Module_V12.jpg",
-        "image_overlay_opacity": 30,
+        "image_overlay_opacity": 0,
         "banner_image_height": 750,
         "image_height_mobile": 650,
         "adapt_height_first_image": false,
