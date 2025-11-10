@@ -277,6 +277,16 @@
               "image_item": "shopify://shop_images/Img_1-_1.png"
             }
           },
+          "text_qfbq4L": {
+            "type": "text",
+            "settings": {
+              "title": "Running",
+              "title_translate": "Hardloop",
+              "title_translate_german": "Running",
+              "title_translate_french": "Running",
+              "image_item": "shopify://shop_images/Img_1-_1.png"
+            }
+          },
           "text_daPbnD": {
             "type": "text",
             "settings": {
@@ -419,6 +429,7 @@
           "1c9bd5df-b3b4-4bd3-aeb7-d723e9b966df",
           "51f8e2ce-0435-4378-a496-eaabd004ad09",
           "5cd9bfaa-61ec-42ff-a41b-bf91f595a144",
+          "text_qfbq4L",
           "text_daPbnD",
           "9e8aa072-3265-4d04-950b-df3d8c82f1da",
           "0b48bb84-8fc0-412a-9006-582fcc9758a7",
