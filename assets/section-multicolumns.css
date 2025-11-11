@@ -75,6 +75,7 @@
     width: 12px;
     height: auto;
     border-radius: 0;
+    background: transparent;
 }
 
 .about-text {
