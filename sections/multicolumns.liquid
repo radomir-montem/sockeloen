@@ -39,6 +39,9 @@
                                     <span class="icon icon-play">
                                         {% render 'icon-play' %}
                                     </span>
+                                    <span class="icon icon-pause">
+                                        {% render 'icon-pause' %}
+                                    </span>
                                 {% endif %}
                             </div>
                         {% endif %}
@@ -52,13 +55,19 @@
 <script>
     const videoWrapepr = document.querySelector('.multicolumns-item-image');
     const video = videoWrapepr.querySelector('video');
-    const previewImage = videoWrapepr.querySelector('.preview-image');
-    document.querySelector('.multicolumns-item-image .icon').addEventListener('click', (e) => {
+    document.querySelector('.multicolumns-item-image .icon-play').addEventListener('click', (e) => {
         e.preventDefault();
         video.play();
-        previewImage.remove();
-        e.currentTarget.remove();
-    })
+        const previewImage = videoWrapepr.querySelector('.preview-image');
+        if(previewImage) previewImage.remove();
+        videoWrapepr.classList.add('playing');
+    });
+
+    document.querySelector('.multicolumns-item-image .icon-pause').addEventListener('click', (e) => {
+        e.preventDefault();
+        video.pause();
+        videoWrapepr.classList.remove('playing');
+    });
 </script>
 
 {% schema %}
