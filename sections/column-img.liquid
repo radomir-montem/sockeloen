@@ -8,6 +8,9 @@
           style="opacity: {{ block.settings.opacity | divided_by: 100.0 }}"
         ></div>
       {% endif %}
+      {% if block.settings.button_label == blank and block.settings.button_url != blank %}
+        <a class="w-full absolute h-full top-0 !block" href="{{ block.settings.button_url }}"><span class="visually-hidden">{{ block.settings.title }}</span></a>
+      {% endif %}
       <div class="text-container absolute text-center">
         {% if block.settings.title != blank %}
           <h2
@@ -24,9 +27,6 @@
           >
             {{- block.settings.button_label -}}
           </a>
-        {% endif %}
-        {% if block.settings.button_label == blank and block.settings.button_url != blank %}
-          <a class="w-full absolute h-full top-0 !block" href="{{ block.settings.button_url }}"><span class="visually-hidden">{{ block.settings.title }}</span></a>
         {% endif %}
       </div>
     </div>
