@@ -173,7 +173,7 @@
         ],
         "settings": {
           "autoplay_speed": 7,
-          "enable_sticky": true
+          "enable_sticky": false
         }
       },
       "header": {
