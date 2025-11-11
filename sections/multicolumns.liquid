@@ -33,7 +33,7 @@
                                 {% if block.type == 'image' %}
                                     {{ block.settings.image | image_url: width: block.settings.image.width | image_tag }}
                                 {% else %}
-                                    {{ block.settings.video | video_tag: controls: false, autoplay: false, muted: false, loop: true }}
+                                    {{ block.settings.video | video_tag: controls: true, autoplay: false, muted: false, loop: true }}
                                     <img src="{{ block.settings.video.preview_image | image_url: width: 500 }}" class="preview-image" alt="preview image">
                                     <img src="https://cdn.shopify.com/s/files/1/0705/7496/5016/files/iphone.png?v=1762874728?v=1762793213?v=1762790353&width=500" class="video-border" alt="video_border">
                                     <span class="icon icon-play">
