@@ -2175,7 +2175,7 @@ input[type='checkbox'] {
 
 .shopify-section-header-sticky {
   position: sticky;
-  top: 0;
+  top: 38px;
 }
 
 .shopify-section-header-hidden {
