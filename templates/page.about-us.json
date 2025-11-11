@@ -157,7 +157,7 @@
             "image": "shopify://shop_images/CATEGORY5_DESKTOP_474X680_4a9444aa-e1e2-4d27-ba14-e6aff38f548a.jpg",
             "opacity": 30,
             "title": "SOCKS",
-            "button_label": "Shop Now",
+            "button_label": "",
             "button_url": "shopify://collections/cycling-socks"
           }
         },
