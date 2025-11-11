@@ -3138,3 +3138,8 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 .show-arrow-button .slider-buttons .slider-button:disabled {
   opacity: 0;
 }
+
+.sticky-announcementbar {
+  position: sticky;
+  top: 0;
+}
