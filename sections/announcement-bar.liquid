@@ -1,4 +1,13 @@
-<div id="announcement-bar" {% if section.settings.enable_sticky %}class="sticky-announcementbar"{% endif %}>
+{% if section.settings.enable_sticky %}
+  <style>
+    #shopify-section-announcement-bar {
+      position: sticky;
+      top: 0;
+    }
+  </style>
+{% endif %}
+
+<div id="announcement-bar">
   {%- for block in section.blocks -%}
     {%- case block.type -%}
       {%- when 'announcement' -%}
