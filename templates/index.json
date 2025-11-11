@@ -116,7 +116,7 @@
             "image": "shopify://shop_images/HOME_CATEGORY_DESKTOP_474X680_024fdbff-dc0d-4c7a-8bf0-951e1eb0f15a.jpg",
             "opacity": 10,
             "title": "AERO SOCKS",
-            "button_label": "",
+            "button_label": "shop now",
             "button_url": "shopify://collections/aero-cycling-socks"
           }
         }
