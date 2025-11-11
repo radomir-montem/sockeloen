@@ -25,6 +25,9 @@
             {{- block.settings.button_label -}}
           </a>
         {% endif %}
+        {% if block.settings.button_label == blank and block.settings.button_url != blank %}
+          <a class="absolute w-full h-full" href="{{ block.settings.button_url }}"><span class="visually-hidden">{{ block.settings.title }}</span></a>
+        {% endif %}
       </div>
     </div>
   {% endfor %}
