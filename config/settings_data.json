@@ -172,7 +172,8 @@
           "announcement-bar-0"
         ],
         "settings": {
-          "autoplay_speed": 7
+          "autoplay_speed": 7,
+          "enable_sticky": true
         }
       },
       "header": {
