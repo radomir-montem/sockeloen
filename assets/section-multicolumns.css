@@ -64,7 +64,8 @@
 }
 
 .multicolumns-item-image.playing .icon-play,
-.multicolumns-item-image:not(.playing) .icon-pause {
+.multicolumns-item-image:not(.playing) .icon-pause,
+.multicolumns-item-image:not(:hover) .icon {
     display: none;
 }
 
