@@ -28,6 +28,11 @@
     object-position: center;
 }
 
+.multicolumns-item-wrapper .multicolumns-item-image video {
+    object-fit: contain;
+    object-position: top;
+}
+
 @media (max-width: 768px) {
     .multicolumns-item-wrapper.align-left-down {
         justify-content: flex-start;
