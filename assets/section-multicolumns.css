@@ -63,6 +63,11 @@
     color: #fff;
 }
 
+.multicolumns-item-image.playing .icon-play,
+.multicolumns-item-image:not(.playing) .icon-pause {
+    display: none;
+}
+
 .multicolumns-item-image .icon svg {
     width: 25px;
     height: auto;
