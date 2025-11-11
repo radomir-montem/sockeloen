@@ -167,7 +167,7 @@
             "image": "shopify://shop_images/CATEGORY2_DESKTOP_474X680_29b8d959-7944-4600-94b7-0e40915bd0d9.jpg",
             "opacity": 30,
             "title": "GLOVES",
-            "button_label": "Shop Now",
+            "button_label": "",
             "button_url": "shopify://collections/cycling-gloves"
           }
         },
@@ -177,7 +177,7 @@
             "image": "shopify://shop_images/HOME.PAGE.BANNER.SHOECOVERS.jpg",
             "opacity": 30,
             "title": "OVERSHOES",
-            "button_label": "Shop Now",
+            "button_label": "",
             "button_url": "shopify://collections/cycling-overshoes"
           }
         },
@@ -187,7 +187,7 @@
             "image": "shopify://shop_images/HOME_CATEGORY_DESKTOP_474X680_024fdbff-dc0d-4c7a-8bf0-951e1eb0f15a.jpg",
             "opacity": 30,
             "title": "AERO SOCKS",
-            "button_label": "Shop Now",
+            "button_label": "",
             "button_url": "shopify://collections/aero-cycling-socks"
           }
         }
