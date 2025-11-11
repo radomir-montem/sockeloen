@@ -35,7 +35,7 @@
           "settings": {
             "visibility": "",
             "video": "shopify://files/videos/Founder story Jasper ENG 1080x1920_Original.mp4",
-            "max_width": 500,
+            "max_width": 400,
             "alignment": "center",
             "alignment_mobile": "center"
           }
