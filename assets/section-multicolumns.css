@@ -24,11 +24,6 @@
     height: 100%;
     top: 0;
     left: 0;
-    object-fit: cover;
-    object-position: center;
-}
-
-.multicolumns-item-wrapper .multicolumns-item-image video {
     object-fit: contain;
     object-position: top;
 }
