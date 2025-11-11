@@ -1,4 +1,4 @@
-<div id="announcement-bar">
+<div id="announcement-bar" {% if section.settings.enable_sticky %}class="sticky-announcementbar"{% endif %}>
   {%- for block in section.blocks -%}
     {%- case block.type -%}
       {%- when 'announcement' -%}
@@ -72,6 +72,12 @@
       "max": 10,
       "step": 1,
       "unit": "s"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "Enable Sticky",
+      "default": false
     }
   ],
   "blocks": [
