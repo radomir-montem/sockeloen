@@ -74,6 +74,7 @@
 .multicolumns-item-image .icon svg {
     width: 12px;
     height: auto;
+    border-radius: 0;
 }
 
 .about-text {
