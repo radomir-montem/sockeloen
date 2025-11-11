@@ -65,7 +65,7 @@
 
 .multicolumns-item-image.playing .icon-play,
 .multicolumns-item-image:not(.playing) .icon-pause,
-.multicolumns-item-image:not(:hover) .icon {
+.multicolumns-item-image:not(:hover) .icon-pause {
     display: none;
 }
 
