@@ -134,7 +134,7 @@
               {% if color_options.values.size > 0 %}
                 {% assign color = color_options.values[0] %}
               {% endif %}
-              <span class="medium-hide large-up-hide">{{ card_product.title | escape | truncate: 15 }}</span><span class="small-hide">{{ card_product.title | escape }}</span>{% if color != blank %}<span class="card-title-color">{{ color }}</span>{% endif %}
+              <span class="medium-hide large-up-hide">{{ card_product.title | escape | truncate: 20 }}</span><span class="small-hide">{{ card_product.title | escape }}</span>{% if color != blank %}<span class="card-title-color">{{ color }}</span>{% endif %}
             </div>
           </h2>
           <div class="card-information">
