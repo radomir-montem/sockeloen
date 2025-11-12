@@ -3152,6 +3152,11 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   padding: 5px 0;
 }
 
+.mfc-swiper .swiper-wrapper,
+.bot-swiper .swiper-wrapper {
+  gap: 0 5px;
+}
+
 .product-card-wrapper .card__content {
   background: #fff;
 }
@@ -3241,7 +3246,9 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 }
 
 @media (max-width: 749px) {
-  .collection .grid {
+  .collection .grid,
+  .mfc-swiper .swiper-wrapper,
+  .bot-swiper .swiper-wrapper {
     gap: 5px;
   }
 
