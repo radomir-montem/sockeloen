@@ -3230,5 +3230,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 
   .card-title {
     flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
   }
 }
