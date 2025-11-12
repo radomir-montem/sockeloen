@@ -3194,6 +3194,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 .collection .grid .card__content * {
   text-transform: lowercase;
   font-size: 12px;
+  line-height: 1.2;
 }
 
 .collection .grid .card__content .price {
