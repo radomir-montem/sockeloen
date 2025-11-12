@@ -3193,7 +3193,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   background: #fafafa;
 }
 
-.product-card-wrapper .card__content .badge {
+.product-card-wrapper .badge {
   background: transparent !important;
   color: #000;
   padding: 0;
