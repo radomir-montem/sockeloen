@@ -52,7 +52,7 @@
   <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
     <div class="grid__item product__media-wrapper{% if section.settings.media_position == 'right' %} medium-hide large-up-hide{% endif %} relative">
       {% assign showOthersBadges = true %}
-      <div class=" absolute top-[15px] left-[12px] !py-6 z-[1]">
+      <div class=" absolute top-[15px] left-[12px] card-badge !py-6 z-[1]">
         {%- if product.available == false -%}
           {% assign renderComingSoon = product.metafields.custom.coming_soon | default: false %}
           {% unless renderComingSoon %}
@@ -69,7 +69,7 @@
               {% assign showOthersBadges = false %}
               <span
                 id="Badge-{{ section_id }}-{{ product.id }}"
-                class="badge badge--bottom-left absolute top-[15px] left-[12px] z-50"
+                class="badge badge--bottom-left absolute top-[15px] left-[12px] card-badge z-50"
                 style="background-color: {{ settings.sale_badge_color }};"
               >
                 {{- 'products.product.on_sale' | t -}}
