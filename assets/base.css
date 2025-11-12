@@ -3223,6 +3223,10 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   gap: 5px;
 }
 
+.card-title .card-title-color {
+  color: #8c8c8c;
+}
+
 @media (max-width: 749px) {
   .collection .grid {
     gap: 5px;
