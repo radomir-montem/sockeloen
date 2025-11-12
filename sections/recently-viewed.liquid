@@ -95,7 +95,7 @@
       </div>
    `);
     });
-    productData.map((item) => {
+    {% comment %} productData.map((item) => {
       const response = await fetch(`/products/${item.productHandle}?section_id=card-product`, {
         credentials: 'same-origin',
         method: 'GET',
@@ -103,7 +103,7 @@
       const responseText = await response.text()
 	    const responseHTML = new DOMParser().parseFromString(responseText, 'text/html')
       console.log(responseHTML)
-    });
+    }); {% endcomment %}
 
     const newProductData = `${recentlyViewedHtml.join('')}`;
     const fullContent = document.getElementsByClassName('recently-viewed');
