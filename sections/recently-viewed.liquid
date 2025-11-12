@@ -105,8 +105,7 @@
         });
         const responseText = await response.text();
         const responseHTML = new DOMParser().parseFromString(responseText, 'text/html');
-        productData.unshift(`<div class="swiper-slide">${responseHTML.querySelector('.shopify-section').innerHTML}</div>`);
-        console.log(responseHTML.querySelector('.shopify-section').innerHTML);
+        recentlyViewedHtml.unshift(`<div class="swiper-slide">${responseHTML.querySelector('.shopify-section').innerHTML}</div>`);
       })
     );
 
