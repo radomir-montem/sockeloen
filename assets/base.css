@@ -3224,7 +3224,8 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   gap: 5px;
 }
 
-.card-title .card-title-color {
+.card-title .card-title-color,
+.collection .grid .card__content .price .real-price {
   color: #8c8c8c;
 }
 
