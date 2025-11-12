@@ -296,7 +296,7 @@
                       <localization-selector class="relative flex items-center large-up-hide w-[180px]">
                         <label class="localization-label border border-[#7C7D80] flex justify-between items-center w-full text-black py-4 px-6">
                           <span>
-                            {{ localization.language.iso_code | upcase }} / {{ localization.country.currency.iso_code | upcase }}
+                            {{ localization.language.iso_code | downcase }} / {{ localization.country.currency.iso_code | downcase }}
                           </span>
                           <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 5L8 0.833333L7.2 8.58591e-08L4 3.33333L0.8 9.5399e-09L4.9687e-08 0.833333L4 5Z" fill="#7C7D80"/>
