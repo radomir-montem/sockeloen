@@ -191,6 +191,16 @@
           "b1013b07-0068-4c3b-93e4-5affe5867e98": {
             "type": "text",
             "settings": {
+              "title": "All Custom socks",
+              "title_translate": "Alle custom sokken",
+              "title_translate_german": "Alle custom socke",
+              "title_translate_french": "Toute les chaussutes custom",
+              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png"
+            }
+          },
+          "text_LPgrzm": {
+            "type": "text",
+            "settings": {
               "title": "Book a Call",
               "title_translate": "Boek een call",
               "title_translate_german": "Termin buchen",
@@ -422,6 +432,7 @@
         "block_order": [
           "text_kT6k68",
           "b1013b07-0068-4c3b-93e4-5affe5867e98",
+          "text_LPgrzm",
           "text_LEUhgW",
           "text_qQqJQ7",
           "e57893bb-9bd9-4643-ba27-55705f4639c0",
