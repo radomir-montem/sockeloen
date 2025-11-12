@@ -3217,8 +3217,17 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   padding: 0;
 }
 
+.card-title {
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 749px) {
   .collection .grid {
     gap: 5px;
+  }
+
+  .card-title {
+    flex-direction: column;
   }
 }
