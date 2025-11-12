@@ -21,7 +21,7 @@
               x-bind:style="selected == {{ forloop.index }} ? 'max-height: ' + $refs.container{{ forloop.index }}.scrollHeight + 'px' : ''"
             >
               {% for childlink in link.links %}
-                <a href="{{ childlink.url }}" class="cursor-pointer bold-title text-white">
+                <a href="{{ childlink.url }}" class="cursor-pointer bold-title text-white lowercase">
                   {{- childlink.title -}}
                 </a>
               {% endfor %}
