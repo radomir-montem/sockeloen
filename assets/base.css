@@ -3178,7 +3178,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   min-width: auto;
 }
 
-collection .grid .card__content * {
+.collection .grid .card__content * {
   text-transform: lowercase;
 }
 
