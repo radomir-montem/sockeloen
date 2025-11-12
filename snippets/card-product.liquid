@@ -129,6 +129,11 @@
               class="full-unstyled-link card-title"
               aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }} Badge-{{ section_id }}-{{ card_product.id }}"
             >
+              {% assign color = '' %}
+              {% assign color_options = card_product.options_by_name.Color | default: card_product.options_by_name.Kleur %}
+              {% if color_options.values == null or color_options.values.size == 1 %}
+                {% assign color = color_options.values[0] %}
+              {% endif %}
               <span class="medium-hide large-up-hide">{{ card_product.title | escape | truncate: 15 }}</span><span class="small-hide">{{ card_product.title | escape }}</span>{% if color != blank %}<span class="card-title-color">{{ color }}</span>{% endif %}
             </div>
           </h2>
