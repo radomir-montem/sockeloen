@@ -3143,3 +3143,21 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   position: sticky;
   top: 0;
 }
+
+.collection .grid {
+  background: #fff;
+  gap: 5px;
+}
+
+.collection .grid .card__content {
+  background: #fff;
+}
+
+.collection .grid .card__content .card__information {
+  padding: 0 5px !important;
+  margin: 0;
+}
+
+.collection .grid .card__content .card-information {
+  width: auto;
+}
