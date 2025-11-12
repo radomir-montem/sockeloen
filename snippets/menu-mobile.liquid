@@ -40,7 +40,7 @@
             {% assign link_url = '#' %}
           {%- endif -%}
           <li class="text-[20px] text-[#111111] mb-[32px]" data-item-title="{{ link.title | escape }}" >
-            <a class="text-[20px] text-[#111111] font-bold uppercase flex items-center justify-between"
+            <a class="text-[20px] text-[#111111] font-bold flex items-center justify-between"
               href="{{ link_url }}"
               {% if link.title == 'SALE' %}style="color: #ff0000"{% endif %}
               {% if has_links %} @click="setActive({{forloop.index }})" {% endif %}>
@@ -77,7 +77,7 @@
                   {% assign sub_link_url = '#' %}
                 {%- endif -%}
                 <li class="mb-[32px]">
-                  <a class="text-[20px] text-[#111111] font-bold uppercase flex items-center justify-between" href="{{ sub_link_url }}"
+                  <a class="text-[20px] text-[#111111] font-bold flex items-center justify-between" href="{{ sub_link_url }}"
                 {% if has_childlinks %} @click="setChild({{forloop.index }})" {% endif %}>
                     {{- sub_link.title -}}
                 {%- if has_childlinks -%}{% render 'icon-arrow-right' %}{%- endif -%}
