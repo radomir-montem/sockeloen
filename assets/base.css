@@ -3199,6 +3199,8 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   padding: 0;
   width: auto;
   min-width: auto;
+  font-size: 10px !important;
+  line-height: 1.2;
 }
 
 .product-card-wrapper .card__content * {
