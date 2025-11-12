@@ -305,7 +305,7 @@
             "vertical_pos": "justify-end",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "SHOP NOW",
+            "button_text": "",
             "button_url": "shopify://collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
@@ -317,12 +317,12 @@
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
-            "heading": "SOCKELOEN RUNNING",
+            "heading": "",
             "description": "",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "explore",
+            "button_text": "",
             "button_url": "shopify://collections/running",
             "button_pos": "mt-0"
           }
