@@ -3257,6 +3257,10 @@ slider-component:not(.show-arrow-button) .slider-buttons {
     align-items: flex-end;
     gap: 0;
   }
+
+  .footer-copy-text {
+    color: transparent !important;
+  }
 }
 
 #shopify-section-footer * {
