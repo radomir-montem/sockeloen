@@ -191,7 +191,7 @@
           "b1013b07-0068-4c3b-93e4-5affe5867e98": {
             "type": "text",
             "settings": {
-              "title": "Book a call",
+              "title": "Book a Call",
               "title_translate": "Boek een call",
               "title_translate_german": "Termin buchen",
               "title_translate_french": "Réserver un appel",
@@ -201,7 +201,7 @@
           "text_LEUhgW": {
             "type": "text",
             "settings": {
-              "title": "Ask free design",
+              "title": "Ask Free Design",
               "title_translate": "Vraag gratis design",
               "title_translate_german": "Kostenloses Design anfordern",
               "title_translate_french": "Demander un design gratuit",
