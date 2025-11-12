@@ -84,8 +84,8 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/CATEGORY5_DESKTOP_474X680_4a9444aa-e1e2-4d27-ba14-e6aff38f548a.jpg",
-            "opacity": 10,
-            "title": "SOCKS",
+            "opacity": 0,
+            "title": "",
             "button_label": "",
             "button_url": "shopify://collections/cycling-socks"
           }
@@ -95,7 +95,7 @@
           "settings": {
             "image": "shopify://shop_images/CATEGORY2_DESKTOP_474X680_29b8d959-7944-4600-94b7-0e40915bd0d9.jpg",
             "opacity": 10,
-            "title": "GLOVES",
+            "title": "",
             "button_label": "",
             "button_url": "shopify://collections/cycling-gloves"
           }
@@ -104,8 +104,8 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/HOME.PAGE.BANNER.SHOECOVERS.jpg",
-            "opacity": 10,
-            "title": "OVERSHOES",
+            "opacity": 0,
+            "title": "",
             "button_label": "",
             "button_url": "shopify://collections/cycling-overshoes"
           }
@@ -115,7 +115,7 @@
           "settings": {
             "image": "shopify://shop_images/HOME_CATEGORY_DESKTOP_474X680_024fdbff-dc0d-4c7a-8bf0-951e1eb0f15a.jpg",
             "opacity": 10,
-            "title": "AERO SOCKS",
+            "title": "",
             "button_label": "",
             "button_url": "shopify://collections/aero-cycling-socks"
           }
@@ -174,7 +174,7 @@
         "heading_XaazFp": {
           "type": "heading",
           "settings": {
-            "heading": "COMFORTABLE HIGH PERFORMANCE SOCKS",
+            "heading": "high performance socks",
             "heading_size": "h0",
             "use_h1_tag": true
           }
@@ -182,7 +182,7 @@
         "text_hfdXtU": {
           "type": "text",
           "settings": {
-            "text": "keep them high, wear them proud // meet the fastest socks on the planet",
+            "text": "driven by performance",
             "text_style": "subtitle"
           }
         },
