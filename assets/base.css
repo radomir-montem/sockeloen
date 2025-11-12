@@ -3146,7 +3146,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 
 .collection .grid {
   background: #fff;
-  gap: 5px;
+  gap: 0 5px;
   padding: 5px 0;
 }
 
