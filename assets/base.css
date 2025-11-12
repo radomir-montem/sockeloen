@@ -3177,3 +3177,9 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   width: auto;
   min-width: auto;
 }
+
+.card-badge {
+  top: 5px !important;
+  left: 5px !important;
+  line-height: 1!important;
+}
