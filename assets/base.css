@@ -3178,6 +3178,10 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   min-width: auto;
 }
 
+collection .grid .card__content * {
+  text-transform: lowercase;
+}
+
 .card-badge {
   top: 5px !important;
   left: 5px !important;
