@@ -104,7 +104,7 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/HOME.PAGE.BANNER.SHOECOVERS.jpg",
-            "opacity": 0,
+            "opacity": 20,
             "title": "",
             "button_label": "",
             "button_url": "shopify://collections/cycling-overshoes"
