@@ -3159,7 +3159,6 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   margin: 0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .collection .grid .card__content .card-information {
