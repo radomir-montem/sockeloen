@@ -44,7 +44,7 @@ x-data="{
                   {%- endif -%}
                   <a 
                     :class="isChild({{ forloop.index }}) ? '!text-[#111111]' : ''"
-                    class="py-[16px] hover:text-[#111111] font-bold text-[20px] tracking-[0.02em] uppercase text-[#7D7D7D] flex items-center justify-between" 
+                    class="py-[16px] hover:text-[#111111] font-bold text-[20px] tracking-[0.02em] text-[#7D7D7D] flex items-center justify-between" 
                     href="{{ sub_link_url }}" {% if sub_link.links.size > 0 %}aria-controls="desktop-menu-{{ forloop.parentloop.index }}-{{ forloop.index }}" aria-expanded="false"{% endif %}>
                     {{- sub_link.title -}}
                     {% if sub_link.links.size > 0 %}
