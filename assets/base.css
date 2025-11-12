@@ -3170,6 +3170,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 
 .collection .grid .card__content .card-information {
   width: auto;
+  white-space: nowrap;
 }
 
 .collection .grid .card__content .media {
