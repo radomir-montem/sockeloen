@@ -3226,6 +3226,12 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   line-height: 1!important;
 }
 
+.product-card-wrapper .card-bottom-badge {
+  bottom: 5px !important;
+  left: 5px !important;
+  line-height: 1!important;
+}
+
 .collection.page-width {
   max-width: 100%;
   padding: 0;
