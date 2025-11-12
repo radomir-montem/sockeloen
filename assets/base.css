@@ -3147,14 +3147,15 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 .collection .grid,
 .mfc-swiper,
 .bot-swiper,
-.recently-viewed {
+.rvi-swiper {
   background: #fff;
   gap: 0 5px;
   padding: 5px 0;
 }
 
 .mfc-swiper .swiper-wrapper,
-.bot-swiper .swiper-wrapper {
+.bot-swiper .swiper-wrapper,
+.swiper-wrapper {
   gap: 0 5px;
 }
 
