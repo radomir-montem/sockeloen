@@ -62,12 +62,12 @@
           x-transition:leave-end="-left-full"
           x-transition:leave-start="left-0"
           x-transition:leave="transition-all ease-in duration-200">
-          <div @click="setActive(0)" class="px-5 py-4 flex flex-row items-center cursor-pointer">
+          {% comment %} <div @click="setActive(0)" class="px-5 py-4 flex flex-row items-center cursor-pointer">
             <div>
               {%- render 'icon-arraw-left', class: 'mr-[8px]' -%}
             </div>
             <div class="text-[14px] text-[#111111]">Back</div>
-          </div>
+          </div> {% endcomment %}
           <ul class="px-[32px] py-[23px]">
             {% for sub_link in link.links %}
                 {% assign has_childlinks = false %}
