@@ -3205,11 +3205,13 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   line-height: 1.2;
 }
 
-.product-card-wrapper .card__content .price {
+.product-card-wrapper .card__content .price,
+.product-grid-container .product-card-wrapper .card__content .price {
   margin-top: 0 !important;
 }
 
-.product-card-wrapper .card__content .price * {
+.product-card-wrapper .card__content .price *,
+.product-grid-container .product-card-wrapper .card__content .price * {
   color: #000;
   font-size: 10px !important;
   line-height: 1.2;
