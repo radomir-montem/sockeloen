@@ -131,7 +131,7 @@
             >
               {% assign color = '' %}
               {% assign color_options = card_product.options_by_name.Color | default: card_product.options_by_name.Kleur %}
-              {% if color_options.values == null or color_options.values.size == 1 %}
+              {% if color_options.values.size > 0 %}
                 {% assign color = color_options.values[0] %}
               {% endif %}
               <span class="medium-hide large-up-hide">{{ card_product.title | escape | truncate: 15 }}</span><span class="small-hide">{{ card_product.title | escape }}</span>{% if color != blank %}<span class="card-title-color">{{ color }}</span>{% endif %}
