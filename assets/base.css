@@ -3220,6 +3220,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 .card-title {
   display: flex;
   align-items: center;
+  gap: 5px;
 }
 
 @media (max-width: 749px) {
