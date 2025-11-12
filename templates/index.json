@@ -242,7 +242,7 @@
         ".localization-label span {text-transform: lowercase !important;}"
       ],
       "settings": {
-        "title": "what they say",
+        "title": "",
         "vertical_padding": 70
       }
     },
