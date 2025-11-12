@@ -95,7 +95,7 @@
       </div>
    `);
     });
-    productData.map((item) => {
+    productData.map((item) => async () {
       const response = await fetch(`/products/${item.productHandle}?section_id=card-product`, {
         credentials: 'same-origin',
         method: 'GET',
