@@ -3258,3 +3258,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
     gap: 0;
   }
 }
+
+#shopify-section-footer * {
+  text-transform: lowercase;
+}
