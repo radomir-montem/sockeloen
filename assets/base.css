@@ -3192,6 +3192,10 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   margin-top: 0!important;
 }
 
+.collection .grid .card__content .price * {
+  color: #000;
+}
+
 .card-badge {
   top: 5px !important;
   left: 5px !important;
