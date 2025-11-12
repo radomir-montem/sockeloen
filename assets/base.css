@@ -3235,6 +3235,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   flex-direction: row-reverse;
   justify-content: flex-end;
   align-items: center;
+  gap: 5px;
 }
 
 @media (max-width: 749px) {
@@ -3254,5 +3255,6 @@ slider-component:not(.show-arrow-button) .slider-buttons {
     flex-direction: column-reverse;
     justify-content: flex-end;
     align-items: flex-end;
+    gap: 0;
   }
 }
