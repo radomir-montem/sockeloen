@@ -59,7 +59,7 @@
   async function getRecentlyViewedProducts() {
     const productData = JSON.parse(localStorage.getItem('recentlyViewedProduct'));
     const recentlyViewedHtml = [];
-    productData.map((item) => {
+    {% comment %} productData.map((item) => {
       recentlyViewedHtml.unshift(`
       <div class="swiper-slide">
         <div class="flex flex-col justify-center bg-gradient-to-r from-[#ECECEC]/100 to-[#E2E2E2]/100">
@@ -94,8 +94,9 @@
         </div>
       </div>
    `);
-    });
+    }); {% endcomment %}
 
+    const fullContent = document.querySelector('.recently-viewed');
     await Promise.all(
       productData.map(async (item) => {
         const response = await fetch(`/products/${item.productHandle}?section_id=card-product`, {
@@ -104,20 +105,21 @@
         });
         const responseText = await response.text();
         const responseHTML = new DOMParser().parseFromString(responseText, 'text/html');
+        productData.unshift(`<div class="swiper-slide">${responseHTML.querySelector('.shopify-section').innerHTML}</div>`);
         console.log(responseHTML);
       })
     );
 
 
     const newProductData = `${recentlyViewedHtml.join('')}`;
-    const fullContent = document.getElementsByClassName('recently-viewed');
-    fullContent[0].innerHTML = newProductData;
+    
+    fullContent.innerHTML = newProductData;
   }
 
   document.addEventListener('DOMContentLoaded', function (event) {
     getRecentlyViewedProducts();
 
-    const handleMissingImg = (img, productHandle) => {
+    {% comment %} const handleMissingImg = (img, productHandle) => {
       console.log({ img, productHandle })
       fetch(`/products/${productHandle}.js`)
         .then((response) => response.json())
@@ -131,7 +133,7 @@
       img.addEventListener('error', () => {
         handleMissingImg(img, img.alt);
       });
-    });
+    }); {% endcomment %}
   });
 </script>
 
