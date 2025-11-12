@@ -56,7 +56,7 @@
 
   setRecentlyViewedProducts();
   const localViewed = localStorage.recentlyViewedProduct;
-  function getRecentlyViewedProducts() {
+  async function getRecentlyViewedProducts() {
     const productData = JSON.parse(localStorage.getItem('recentlyViewedProduct'));
     const recentlyViewedHtml = [];
     productData.map((item) => {
