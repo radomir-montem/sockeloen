@@ -3216,3 +3216,9 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   max-width: 100%;
   padding: 0;
 }
+
+@media (max-width: 749px) {
+  .collection .grid {
+    gap: 5px;
+  }
+}
