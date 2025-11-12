@@ -3194,7 +3194,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 
 .collection .grid .card__content .price * {
   color: #000;
-  font-size: 12px;
+  font-size: 12px !important;
 }
 
 .card-badge {
