@@ -3193,7 +3193,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 
 .collection .grid .card__content * {
   text-transform: lowercase;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 1.2;
 }
 
@@ -3203,7 +3203,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 
 .collection .grid .card__content .price * {
   color: #000;
-  font-size: 12px !important;
+  font-size: 10px !important;
   line-height: 1.3;
 }
 
@@ -3228,6 +3228,14 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   color: #8c8c8c;
 }
 
+.collection .grid .price--on-sale .price__sale {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 @media (max-width: 749px) {
   .collection .grid {
     gap: 5px;
@@ -3237,5 +3245,13 @@ slider-component:not(.show-arrow-button) .slider-buttons {
     flex-direction: column;
     gap: 0;
     align-items: flex-start;
+  }
+
+  .collection .grid .price--on-sale .price__sale {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-items: flex-end;
   }
 }
