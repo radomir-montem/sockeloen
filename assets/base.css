@@ -3144,7 +3144,9 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   top: 0;
 }
 
-.collection .grid {
+.collection .grid,
+.mfc-swiper,
+.bot-swpier {
   background: #fff;
   gap: 0 5px;
   padding: 5px 0;
