@@ -3201,6 +3201,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   min-width: auto;
   font-size: 10px !important;
   line-height: 1.2;
+  text-transform: lowercase !important;
 }
 
 .product-card-wrapper .card__content * {
