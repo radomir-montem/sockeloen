@@ -3237,7 +3237,7 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 }
 
 .product-card-wrapper .card-title .card-title-color,
-.product-card-wrapper .card__content .price.price--on-sale .real-price {
+.product-card-wrapper .card__content .price.price--on-sale .regular-text {
   color: #8c8c8c;
 }
 
