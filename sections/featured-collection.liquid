@@ -19,13 +19,9 @@
   endif
 -%}
 
-<div class="isolate gradient bg-background {% unless section.settings.disable_padding %}pt-20{% endunless %}">
-  <div class="collection section-{{ section.id }}-padding">
-    <div class="ml-[32px] mb-[24px]">
-      {%- if section.settings.title != blank -%}
-        <h4 class="h4">{{ section.settings.title | escape | upcase }}</h4>
-      {%- endif -%}
-    </div>
+<div class="isolate gradient bg-background pt-0">
+  <div class="collection">
+    <!-- Titel boven producten verwijderd -->
 
     <div>
       <div class="grid grid-cols-2 md:grid-cols-4 contains-card--product{% if settings.card_style == 'standard' %} contains-card--standard{% endif %} grid--{{ section.settings.columns_desktop }}-col-desktop{% if section.settings.collection == blank %} grid--2-col-tablet-down{% else %} grid--{{ section.settings.columns_mobile }}-col-tablet-down{% endif %}">
