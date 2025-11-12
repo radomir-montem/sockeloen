@@ -296,19 +296,19 @@
                       <localization-selector class="relative flex items-center large-up-hide w-[180px]">
                         <label class="localization-label border border-[#7C7D80] flex justify-between items-center w-full text-black py-4 px-6">
                           <span>
-                            {{ localization.language.iso_code | downcase }} / {{ localization.country.currency.iso_code | upcase }}
+                            {{ localization.language.iso_code | downcase }} / {{ localization.country.currency.iso_code | downcase }}
                           </span>
                           <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 5L8 0.833333L7.2 8.58591e-08L4 3.33333L0.8 9.5399e-09L4.9687e-08 0.833333L4 5Z" fill="#7C7D80"/>
                           </svg>                            
                         </label>
                         <ul class="localization-list px-4 py-4 bg-white text-black absolute bottom-full left-1/2 -translate-x-1/2 w-48 text-center hidden">
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="en">EN / EUR</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">NL / EUR</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">DE / EUR</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">FR / EUR</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">EN / USD</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">FR / USD</a></li>
+                          <li class="localization-item cursor-pointer py-2 low"><a href="#" data-country-code="NL" data-language="en">en / eur</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">nl / eur</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">de / eur</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">fr / eur</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">en / usd</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">fr / usd</a></li>
                         </ul>
                         {%- form 'localization', id: 'HeaderLocalizationForm', class: 'hidden' -%}
                           <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
