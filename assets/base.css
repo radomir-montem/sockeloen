@@ -608,6 +608,10 @@ table:not([class]) th {
   text-transform: lowercase !important;
 }
 
+.font-normal {
+  font-weight: 400 !important;
+}
+
 .light {
   opacity: 0.7;
 }
