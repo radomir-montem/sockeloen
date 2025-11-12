@@ -3212,3 +3212,8 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 .template--collection .collection .grid {
   padding: 5px;
 }
+
+.collection.page-width {
+  max-width: 100%;
+  padding: 5px 0;
+}
