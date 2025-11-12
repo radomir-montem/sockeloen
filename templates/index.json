@@ -296,7 +296,7 @@
         "ecaa607f-a456-4c64-8b1d-82c823de6917": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/WEB_Home_module_SHOP_NOW.jpg",
+            "image": "shopify://shop_images/SHOECOVERWHITEGOLDLOGO_7_FRONT_3D.png",
             "color": "#0e112e",
             "text_color": "#ffffff",
             "font_size": 40,
@@ -313,7 +313,7 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/600x600_Running_Module_V3.jpg",
+            "image": "shopify://shop_images/FillinFillout_1080x1350_Dark.gif",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
