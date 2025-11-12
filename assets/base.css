@@ -3182,6 +3182,10 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   text-transform: lowercase;
 }
 
+.collection .grid .card__content .price {
+  margin-top: 0!important;
+}
+
 .card-badge {
   top: 5px !important;
   left: 5px !important;
