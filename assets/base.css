@@ -3146,7 +3146,8 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 
 .collection .grid,
 .mfc-swiper,
-.bot-swiper {
+.bot-swiper,
+.recently-viewed {
   background: #fff;
   gap: 0 5px;
   padding: 5px 0;
@@ -3248,7 +3249,8 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 @media (max-width: 749px) {
   .collection .grid,
   .mfc-swiper .swiper-wrapper,
-  .bot-swiper .swiper-wrapper {
+  .bot-swiper .swiper-wrapper,
+  .recently-viewed {
     gap: 5px;
   }
 
