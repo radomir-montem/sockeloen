@@ -2,7 +2,7 @@
   <div class="flex flex-col-reverse lg:flex-row footer-top">
     <div class="grid grid-cols-1 md:grid-cols-3 justify-center mx-8 lg:w-4/5" x-data="{ selected: null}">
       {% for link in section.settings.footer_list.links %}
-        <div class="border-t-[1px] border-[#d0d0d0] last:border-b-[1px] md:border-none">
+        <div class="">
           <div
             class="flex justify-between items-center p-3 cursor-pointer"
             @click="selected !== {{ forloop.index }} ? selected = {{ forloop.index }} : selected = null"
