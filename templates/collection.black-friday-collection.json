@@ -28,7 +28,7 @@
         "banner_image_height": 450,
         "image_height_mobile": 300,
         "adapt_height_first_image": false,
-        "show_description": true,
+        "show_description": false,
         "desktop_content_position": "middle-center",
         "show_text_box": true,
         "desktop_content_alignment": "center",
