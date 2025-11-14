@@ -1422,3 +1422,20 @@ class ProductRecommendations extends HTMLElement {
 }
 
 customElements.define('product-recommendations', ProductRecommendations)
+
+function initCountdownAnnouncementbar() {
+  const countDownBar = document.querySelector('.essential_countdown_announcement_bar_wrapper');
+  const stickyHeader = document.querySelector('.shopify-section-header-sticky');
+
+  if (!countDownBar || !stickyHeader) return;
+
+  // Use offsetHeight to get actual height
+  const barHeight = countDownBar.offsetHeight;
+
+  stickyHeader.style.top = `${barHeight}px`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initCountdownAnnouncementbar();
+  window.addEventListener('resize', initCountdownAnnouncementbar());
+});
