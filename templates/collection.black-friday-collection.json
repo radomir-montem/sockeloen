@@ -11,9 +11,21 @@
   "sections": {
     "banner": {
       "type": "main-collection-banner",
+      "blocks": {
+        "text_j9Urac": {
+          "type": "text",
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "text_j9Urac"
+      ],
       "settings": {
         "image_overlay_opacity": 0,
-        "banner_image_height": 350,
+        "banner_image_height": 450,
         "image_height_mobile": 300,
         "adapt_height_first_image": false,
         "show_description": true,
