@@ -3306,5 +3306,5 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 }
 
 .essential_countdown_annoucement_bar_wrapper ~ .shopify-section-header-sticky {
-  position: 51px;
+  top: 51px;
 }
