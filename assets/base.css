@@ -3300,3 +3300,11 @@ slider-component:not(.show-arrow-button) .slider-buttons {
 .header * {
   text-transform: lowercase;
 }
+
+.essential_countdown_annoucement_bar_wrapper {
+  z-index: 3 !important;
+}
+
+.essential_countdown_annoucement_bar_wrapper ~ .shopify-section-header-sticky {
+  position: 51px;
+}
