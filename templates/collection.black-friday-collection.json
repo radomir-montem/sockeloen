@@ -1,8 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
       "type": "main-collection-banner",
-      "settings": {}
+      "settings": {
+        "image_overlay_opacity": 0,
+        "banner_image_height": 350,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "show_description": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
     },
     "product-grid": {
       "type": "main-collection-product-grid",
@@ -25,7 +47,7 @@
       "type": "apps",
       "blocks": {
         "3e9154c6-1c8a-4e17-a800-008e7a2108c9": {
-          "type": "shopify:\/\/apps\/essential-countdown\/blocks\/app-block\/722378e8-5a70-4eae-aa89-9e44e8e9f6de",
+          "type": "shopify://apps/essential-countdown-timer/blocks/app-block/722378e8-5a70-4eae-aa89-9e44e8e9f6de",
           "settings": {
             "id": "clp893tue11442918xjxp130ojq"
           }
@@ -44,25 +66,25 @@
         "c54a8d87-0552-4f68-898c-ce5c105081f1": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/2.PELOTON.USP.WIT.png"
+            "image": "shopify://shop_images/2.PELOTON.USP.WIT.png"
           }
         },
         "722a364a-0b8c-40aa-a27c-b60d19bca10f": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/3.SATISFACTION.USP.WIT.png"
+            "image": "shopify://shop_images/3.SATISFACTION.USP.WIT.png"
           }
         },
         "f3acf7cd-e22a-461b-8964-328f442dba7d": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/1.SHIPPING.USP.png"
+            "image": "shopify://shop_images/1.SHIPPING.USP.png"
           }
         },
         "9c2902b8-73f0-4f9f-b30a-a240a22023e2": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/4.KING.USP.WIT.png"
+            "image": "shopify://shop_images/4.KING.USP.WIT.png"
           }
         }
       },
