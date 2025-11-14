@@ -1438,5 +1438,5 @@ function initCountdownAnnouncementbar() {
 
 document.addEventListener("DOMContentLoaded", () => {
   initCountdownAnnouncementbar();
-  window.addEventListener('resize', initCountdownAnnouncementbar());
+  window.addEventListener('resize', initCountdownAnnouncementbar);
 });
