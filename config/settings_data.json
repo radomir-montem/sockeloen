@@ -158,6 +158,7 @@
         "blocks": {
           "announcement-bar-0": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "free shipping on orders > 75,-",
               "usd_text": "free shipping on orders > $100,-",
