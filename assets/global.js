@@ -1426,6 +1426,7 @@ customElements.define('product-recommendations', ProductRecommendations)
 function initCountdownAnnouncementbar() {
   const countDownBar = document.querySelector('.essential_countdown_announcement_bar_wrapper');
   const stickyHeader = document.querySelector('.shopify-section-header-sticky');
+  console.log('here', countDownBar, stickyHeader);
 
   if (!countDownBar || !stickyHeader) return;
 
