@@ -3301,8 +3301,9 @@ slider-component:not(.show-arrow-button) .slider-buttons {
   text-transform: lowercase;
 }
 
-.essential_countdown_annoucement_bar_wrapper {
-  z-index: 3 !important;
+.essential_countdown_annoucement_bar_wrapper,
+.shopify-section-header-sticky {
+  z-index: 15 !important;
 }
 
 .essential_countdown_annoucement_bar_wrapper ~ .shopify-section-header-sticky {
