@@ -4,8 +4,11 @@
   {% assign products = settings.global_upsells.products %}
 {% endif %}
 
-<div class="bg-background pt-[24px]">
-  <h4 class="h4 text-[#111111] pl-[32px] pb-[25px]">{{ section.settings.title | upcase }}</h4>
+<div class="bg-white pt-[24px]">
+  <h4 class="text-center text-[14px] font-normal lowercase underline underline-offset-4 text-[#111111] mb-[20px]">
+    {{ section.settings.title }}
+  </h4>
+
   <div class="bot-swiper overflow-hidden relative">
     <div class="swiper-wrapper">
       {% for productItem in products %}
@@ -22,23 +25,3 @@
     </div>
   </div>
 </div>
-
-{% schema %}
-{
-  "name": "Bought together",
-  "class": "bought-together",
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "bought often together"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Bought together"
-    }
-  ]
-}
-{% endschema %}
