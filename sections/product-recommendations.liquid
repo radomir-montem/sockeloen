@@ -1,13 +1,14 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 
-<div class="bg-background no-js-hidden">
+<div class="bg-white no-js-hidden">
   {% if product.metafields.my_fields.collection_upsell != blank %}
-    <h4 class="h4 text-[#111111] pl-[32px] py-[25px] uppercase">
-      More from this collection
+    <h4 class="text-center text-[14px] font-normal lowercase underline underline-offset-4 text-[#111111] mb-[20px]">
+      
     </h4>
+
     <div
-    class="mfc-swiper overflow-hidden relative"
-    data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}"
+      class="mfc-swiper overflow-hidden relative"
+      data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}"
     >
       <div class="swiper-wrapper">
         {% for collection in product.collections %}
@@ -15,18 +16,18 @@
             {% assign collection_products = product.metafields.my_fields.collection_upsell.value %}
             {% for collection_item in collection_products.products %}
               {% assign available_products = "" %}
-                {% assign available_products = available_products | append: "," | append: collection_item.handle %}
-                {% assign product_handles = available_products | split: "," %}
-                {%- for product_handle in product_handles -%}    
-                  {% if product_handle != blank %}
-                    {% assign productUpsell = all_products[product_handle] %}
-                    {% if productUpsell.available %}
-                      <div class="swiper-slide">
-                        {% render 'card-product', card_product: productUpsell, media_aspect_ratio: 'adapt', section_id: section.id, show_secondary_image: true %}
-                      </div>
-                    {% endif %}
+              {% assign available_products = available_products | append: "," | append: collection_item.handle %}
+              {% assign product_handles = available_products | split: "," %}
+              {% for product_handle in product_handles %}
+                {% if product_handle != blank %}
+                  {% assign productUpsell = all_products[product_handle] %}
+                  {% if productUpsell.available %}
+                    <div class="swiper-slide">
+                      {% render 'card-product', card_product: productUpsell, media_aspect_ratio: 'adapt', section_id: section.id, show_secondary_image: true %}
+                    </div>
                   {% endif %}
-                {% endfor %}
+                {% endif %}
+              {% endfor %}
             {% endfor %}
             {% break %}
           {% endunless %}
@@ -40,112 +41,36 @@
       </div>
     </div>
   {% else %}
-  <product-recommendations
-    class="product-recommendations page-width section-{{ section.id }}-padding isolate contents"
-    data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}"
-  >
-
-    {% if recommendations.performed and recommendations.products_count > 0 %}
-      <h4 class="h4 text-[#111111] pl-[32px] pb-[25px]">
-        {{ section.settings.heading | escape | upcase }}
-      </h4>
-      <div
-        class="yml-swiper overflow-hidden relative"
-      >
-        <div class="swiper-wrapper">
-          {% for recommendation in recommendations.products %}
-            <div class="swiper-slide">
-              {% render 'card-product',
-                card_product: recommendation,
-                media_aspect_ratio: section.settings.image_ratio,
-                show_secondary_image: section.settings.show_secondary_image,
-                show_vendor: section.settings.show_vendor,
-                show_rating: section.settings.show_rating
-              %}
-            </div>
-          {% endfor %}
+    <product-recommendations
+      class="product-recommendations page-width isolate contents"
+      data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}"
+    >
+      {% if recommendations.performed and recommendations.products_count > 0 %}
+        <h4 class="text-center text-[14px] font-normal lowercase underline underline-offset-4 text-[#111111] mb-[20px]">
+          {{ section.settings.heading }}
+        </h4>
+        <div class="yml-swiper overflow-hidden relative">
+          <div class="swiper-wrapper">
+            {% for recommendation in recommendations.products %}
+              <div class="swiper-slide">
+                {% render 'card-product',
+                  card_product: recommendation,
+                  media_aspect_ratio: section.settings.image_ratio,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  show_vendor: section.settings.show_vendor,
+                  show_rating: section.settings.show_rating
+                %}
+              </div>
+            {% endfor %}
+          </div>
+          <div class="yml-swiper-next">
+            {% render 'icon-arrow-right' %}
+          </div>
+          <div class="yml-swiper-prev">
+            {% render 'icon-arraw-left' %}
+          </div>
         </div>
-        <div class="yml-swiper-next">
-          {% render 'icon-arrow-right' %}
-        </div>
-        <div class="yml-swiper-prev">
-          {% render 'icon-arraw-left' %}
-        </div>
-      </div>
-    {% endif %}
-
-  </product-recommendations>
-{% endif %}
+      {% endif %}
+    </product-recommendations>
+  {% endif %}
 </div>
-
-{% schema %}
-{
-  "name": "t:sections.product-recommendations.name",
-  "tag": "section",
-  "class": "section",
-  "settings": [
-    {
-      "type": "paragraph",
-      "content": "t:sections.product-recommendations.settings.paragraph__1.content"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "default": "You may also like",
-      "label": "t:sections.product-recommendations.settings.heading.label"
-    },
-    {
-      "type": "range",
-      "id": "products_to_show",
-      "min": 2,
-      "max": 10,
-      "step": 1,
-      "default": 4,
-      "label": "t:sections.product-recommendations.settings.products_to_show.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.product-recommendations.settings.header__2.content"
-    },
-    {
-      "type": "select",
-      "id": "image_ratio",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.product-recommendations.settings.image_ratio.options__1.label"
-        },
-        {
-          "value": "portrait",
-          "label": "t:sections.product-recommendations.settings.image_ratio.options__2.label"
-        },
-        {
-          "value": "square",
-          "label": "t:sections.product-recommendations.settings.image_ratio.options__3.label"
-        }
-      ],
-      "default": "adapt",
-      "label": "t:sections.product-recommendations.settings.image_ratio.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_secondary_image",
-      "default": false,
-      "label": "t:sections.product-recommendations.settings.show_secondary_image.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_vendor",
-      "default": false,
-      "label": "t:sections.product-recommendations.settings.show_vendor.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_rating",
-      "default": false,
-      "label": "t:sections.product-recommendations.settings.show_rating.label",
-      "info": "t:sections.product-recommendations.settings.show_rating.info"
-    }
-  ]
-}
-{% endschema %}
