@@ -291,20 +291,11 @@
     },
     "765d516d-8ae3-4a32-a2a0-20a43cc7fdc0": {
       "type": "bought-often-together",
-      "settings": {
-        "title": "often bought together"
-      }
+      "settings": {}
     },
     "product-recommendations": {
       "type": "product-recommendations",
-      "settings": {
-        "heading": "You may also like",
-        "products_to_show": 10,
-        "image_ratio": "adapt",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false
-      }
+      "settings": {}
     },
     "custom_liquid_yHjaLL": {
       "type": "custom-liquid",
@@ -400,7 +391,7 @@
     "recently-viewed": {
       "type": "recently-viewed",
       "settings": {
-        "heading": "RECENTLY VIEWED ITEMS"
+        "heading": ""
       }
     },
     "7082e3df-38a9-43ef-bb51-a706f9bb048d": {
