@@ -297,6 +297,51 @@
       "type": "product-recommendations",
       "settings": {}
     },
+    "rich_text_89Pj4q": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_CtwpEY": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "<p>Talk about your brand</p>",
+            "heading_size": "h1"
+          }
+        },
+        "text_pynHGi": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+          }
+        },
+        "button_H7E6Hz": {
+          "type": "button",
+          "settings": {
+            "button_label": "explore all",
+            "button_link": "shopify://collections/all",
+            "button_style_secondary": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_CtwpEY",
+        "text_pynHGi",
+        "button_H7E6Hz"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "custom_liquid_yHjaLL": {
       "type": "custom-liquid",
       "settings": {
@@ -404,6 +449,7 @@
     "multicolumn",
     "765d516d-8ae3-4a32-a2a0-20a43cc7fdc0",
     "product-recommendations",
+    "rich_text_89Pj4q",
     "custom_liquid_yHjaLL",
     "9148c605-c3d3-4457-a7d9-718e5b06ad2d",
     "810ba789-2a8c-44fa-abe0-e8f36932e0cb",
