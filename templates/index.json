@@ -343,7 +343,7 @@
             "vertical_pos": "justify-end",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "",
+            "button_text": "shop now",
             "button_url": "shopify://collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
@@ -357,10 +357,10 @@
             "font_size": 40,
             "heading": "",
             "description": "",
-            "vertical_pos": "justify-center",
+            "vertical_pos": "justify-end",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "",
+            "button_text": "explore more",
             "button_url": "shopify://collections/running",
             "button_pos": "mt-0"
           }
