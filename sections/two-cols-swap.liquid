@@ -16,6 +16,12 @@
               class: 'object-cover w-full'
             %}
           </div>
+
+          {% if block.settings.button_url != blank %}
+            <a href="{{ block.settings.button_url }}" class="absolute inset-0 z-10 block">
+              <span class="visually-hidden">{{ block.settings.heading }}</span>
+            </a>
+          {% endif %}
         {% else %}
           <style>
             #shopify-section-{{ section.id }} .two-cols-{{ block.id }} .background-color {
@@ -40,7 +46,7 @@
               </h2>
             {% endif %}
             {% if block.settings.description %}
-          <div class="text-color regular-text flex flex-col {{ block.settings.horizontal_pos }} {% if block.settings.horizontal_pos == 'items-center' %} text-center{% endif %}">
+              <div class="text-color regular-text flex flex-col {{ block.settings.horizontal_pos }} {% if block.settings.horizontal_pos == 'items-center' %} text-center{% endif %}">
                 {{ block.settings.description }}
               </div>
             {% endif %}
@@ -58,7 +64,7 @@
                 {% else %}
                 role="link" aria-disabled="true"
                 {% endif %}
-                class="regular-button text-color border text-[4px]"
+                class="regular-button text-color border"
               >
                 {{- block.settings.button_text | downcase -}}
               </a>
