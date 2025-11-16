@@ -351,7 +351,7 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/FillinFillout_1080x1350_Dark.gif",
+            "image": "shopify://shop_images/1080x1350_Running_Module_V12.jpg",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
@@ -360,7 +360,7 @@
             "vertical_pos": "justify-end",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "explore more",
+            "button_text": "",
             "button_url": "shopify://collections/running",
             "button_pos": "mt-0"
           }
