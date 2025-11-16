@@ -44,18 +44,22 @@
                 {{ block.settings.description }}
               </div>
             {% endif %}
-            <div
-              class="pt-4 flex flex-col {{ block.settings.horizontal_pos }}
-                {% if block.settings.vertical_pos != 'justify-end' %}
-                  {{ block.settings.button_pos }}
-                {% endif %}
-              "
-            >
-              <p class="bold-title text-color">{{ block.settings.button_disclaimer }}</p>
-              <span class="regular-button text-color border pointer-events-none">
-                {{- block.settings.button_text | downcase -}}
-              </span>
-            </div>
+            {% if block.settings.button_url != blank and block.settings.button_text != blank %}
+  <div
+    class="pt-4 flex flex-col {{ block.settings.horizontal_pos }}
+      {% if block.settings.vertical_pos != 'justify-end' %}
+        {{ block.settings.button_pos }}
+      {% endif %}
+    "
+  >
+    {% if block.settings.button_disclaimer != blank %}
+      <p class="bold-title text-color">{{ block.settings.button_disclaimer }}</p>
+    {% endif %}
+    <span class="regular-button text-color border pointer-events-none">
+      {{- block.settings.button_text | downcase -}}
+    </span>
+  </div>
+{% endif %}
           </div>
         </div>
       </a>
