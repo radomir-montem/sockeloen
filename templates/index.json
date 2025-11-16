@@ -377,6 +377,7 @@
       "blocks": {
         "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "CUSTOM MADE SOCKS",
             "heading_size": "h0",
