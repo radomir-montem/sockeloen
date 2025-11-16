@@ -188,6 +188,43 @@
         "padding_bottom": 52
       }
     },
+    "usp_HBx6Vd": {
+      "type": "usp",
+      "blocks": {
+        "image_6imDcq": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/1.SHIPPING.USP.zwart.png"
+          }
+        },
+        "image_9aFVqF": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/SYMBOLEN.USPS.SHOPIFY_1_a9efabcf-8465-4673-8b9a-9ed43058628a.png"
+          }
+        },
+        "image_AwX3kK": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/6.CIRCULAR.USP.TRANS.png"
+          }
+        },
+        "image_YJjNbc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/USPS.KING.png"
+          }
+        }
+      },
+      "block_order": [
+        "image_6imDcq",
+        "image_9aFVqF",
+        "image_AwX3kK",
+        "image_YJjNbc"
+      ],
+      "name": "USPs",
+      "settings": {}
+    },
     "c279238b-8499-4eaf-81d5-673521b38c4a": {
       "type": "usp-blackbg",
       "blocks": {
@@ -222,6 +259,7 @@
         "0cd61b2f-4ae5-4495-8470-6db7647649c0",
         "20a37a02-b535-4c77-9abf-ee2feb677b95"
       ],
+      "disabled": true,
       "settings": {}
     },
     "custom_liquid_rMhgeN": {
@@ -666,6 +704,7 @@
     "rich_text_BAQBfh",
     "8b0b527a-f477-4927-970f-cc63855e24be",
     "rich_text_aqpE7M",
+    "usp_HBx6Vd",
     "c279238b-8499-4eaf-81d5-673521b38c4a",
     "custom_liquid_rMhgeN",
     "de9aa240-54a4-4bba-bc14-853948711e79",
