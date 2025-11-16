@@ -16,6 +16,10 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+  .section-{{ section.id }}-padding .button {
+    font-size: 12px;
+    font-weight: 700; /* bold */
+  }
 {%- endstyle -%}
 
 <div class="isolate{% unless section.settings.full_width %} page-width{% endunless %}">
