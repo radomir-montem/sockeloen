@@ -395,8 +395,8 @@
         "6a0118df-4330-436a-b702-9317ff284f63": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/WEB_Home_module_SHOP_NOW.jpg",
-            "color": "#64652e",
+            "image": "shopify://shop_images/AWE_Instagram_slidepost_V2_2.jpg",
+            "color": "#ffffff",
             "text_color": "#ffffff",
             "font_size": 48,
             "heading": "",
@@ -404,7 +404,7 @@
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "EXPLORE HERE",
+            "button_text": "explore winter here",
             "button_url": "shopify://collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
@@ -412,13 +412,13 @@
         "66f0e606-c41c-49d0-ada4-ff6e6f30e46b": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/WEB_Home_module_EXPLORE.jpg",
-            "color": "#4c3a60",
+            "image": "shopify://shop_images/1080x1350_Running_Module_V12.jpg",
+            "color": "#ffffff",
             "text_color": "#ffffff",
             "font_size": 33,
             "heading": "",
             "description": "",
-            "vertical_pos": "justify-end",
+            "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "",
