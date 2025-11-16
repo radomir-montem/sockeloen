@@ -9,12 +9,18 @@
         </style>
         {% if block.settings.image != blank %}
           <div class="overflow-hidden">
-            {% render 'c-image-element',
-              image: block.settings.image,
-              lazy: true,
-              position: 'left bottom',
-              class: 'object-cover w-full'
-            %}
+            {% if block.settings.button_url != blank %}
+  <a href="{{ block.settings.button_url }}" class="block">
+{% endif %}
+  {% render 'c-image-element',
+    image: block.settings.image,
+    lazy: true,
+    position: 'left bottom',
+    class: 'object-cover w-full'
+  %}
+{% if block.settings.button_url != blank %}
+  </a>
+{% endif %}
           </div>
         {% else %}
           <style>
