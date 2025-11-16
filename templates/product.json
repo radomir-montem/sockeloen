@@ -348,10 +348,47 @@
         "heading": "",
         "heading_size": 20,
         "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\" data-filter-type=\"product\" data-filter-id=\"{{product.id}}\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
-        "color_scheme": "accent-1",
+        "color_scheme": "background-1",
         "padding_top": 20,
         "padding_bottom": 0
       }
+    },
+    "usp_gp66xK": {
+      "type": "usp",
+      "blocks": {
+        "image_kikxnL": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/1.SHIPPING.USP.zwart.png"
+          }
+        },
+        "image_xwj3wi": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/SYMBOLEN.USPS.SHOPIFY_1_a9efabcf-8465-4673-8b9a-9ed43058628a.png"
+          }
+        },
+        "image_kDLXBM": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/USPS.KING.png"
+          }
+        },
+        "image_CkWC6X": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/USPS.sock.design.png"
+          }
+        }
+      },
+      "block_order": [
+        "image_kikxnL",
+        "image_xwj3wi",
+        "image_kDLXBM",
+        "image_CkWC6X"
+      ],
+      "name": "USPs",
+      "settings": {}
     },
     "9148c605-c3d3-4457-a7d9-718e5b06ad2d": {
       "type": "usp-blackbg",
@@ -387,6 +424,7 @@
         "59aa8067-54fc-449f-975b-d765af1aa2d4",
         "8191162b-59ec-4e9d-a84e-4fee271c0ab8"
       ],
+      "disabled": true,
       "settings": {}
     },
     "810ba789-2a8c-44fa-abe0-e8f36932e0cb": {
@@ -451,6 +489,7 @@
     "product-recommendations",
     "rich_text_89Pj4q",
     "custom_liquid_yHjaLL",
+    "usp_gp66xK",
     "9148c605-c3d3-4457-a7d9-718e5b06ad2d",
     "810ba789-2a8c-44fa-abe0-e8f36932e0cb",
     "recently-viewed",
