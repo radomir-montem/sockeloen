@@ -458,8 +458,7 @@
           "text_wRnFtX"
         ],
         "custom_css": [
-          "a.nav__link:contains(\"SALE\") {color: #ffd700 !important; /* Gele tekst */ font-weight: bold;}",
-          ".localization-label span {text-transform: lowercase !important;}"
+          "a.nav__link:contains(\"SALE\") {color: #ffd700 !important; /* Gele tekst */ font-weight: bold;}"
         ],
         "settings": {
           "color_scheme": "background-1",
