@@ -1,7 +1,7 @@
 <section class="bg-[#E1E1E1]">
   <div id="shopify-section-{{ section.id }}" class="{% if template contains 'product' %} flex flex-col-reverse md:grid md:grid-cols-2 {% else %} grid grid-cols-1 md:grid-cols-2 {% endif %}">
     {% for block in section.blocks %}
-      <div class="two-cols-{{ block.id }} relative min-h-[325px]">
+      <a class="two-cols-{{ block.id }} relative min-h-[325px] block" {% if block.settings.button_url != blank %} href="{{ block.settings.button_url }}" {% else %} role="link" aria-disabled="true" {% endif %}>
         <style>
           #shopify-section-{{ section.id }} .two-cols-{{ block.id }} .text-color {
             color: {{ block.settings.text_color }}
@@ -16,12 +16,6 @@
               class: 'object-cover w-full'
             %}
           </div>
-
-          {% if block.settings.button_url != blank %}
-            <a href="{{ block.settings.button_url }}" class="absolute inset-0 z-10 block">
-              <span class="visually-hidden">{{ block.settings.heading }}</span>
-            </a>
-          {% endif %}
         {% else %}
           <style>
             #shopify-section-{{ section.id }} .two-cols-{{ block.id }} .background-color {
@@ -58,20 +52,13 @@
               "
             >
               <p class="bold-title text-color">{{ block.settings.button_disclaimer }}</p>
-              <a
-                {% if block.settings.button_url !=" blank" %}
-                href="{{ block.settings.button_url }}"
-                {% else %}
-                role="link" aria-disabled="true"
-                {% endif %}
-                class="regular-button text-color border"
-              >
+              <span class="regular-button text-color border pointer-events-none">
                 {{- block.settings.button_text | downcase -}}
-              </a>
+              </span>
             </div>
           </div>
         </div>
-      </div>
+      </a>
     {% endfor %}
   </div>
 </section>
