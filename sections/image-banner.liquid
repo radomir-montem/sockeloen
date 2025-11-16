@@ -2,10 +2,12 @@
 
 
 {%- style -%}
-  #Banner-{{ section.id }} .button {
-    font-size: 12px;
-    font-weight: 700;
-  }
+ #Banner-{{ section.id }} .button {
+  font-size: 12px;
+  font-weight: 700;
+  padding-left: 1rem;   /* 16px */
+  padding-right: 1rem;  /* 16px */
+}
   {%- if section.settings.adapt_height_first_image and section.settings.image != blank -%}
     @media screen and (max-width: 749px) {
       #Banner-{{ section.id }}::before,
