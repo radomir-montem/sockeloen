@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "SOCKELOEN RUNNING",
+            "heading": "BLACK FRIDAY SALE",
             "heading_size": "h2",
             "use_h1_tag": false
           }
@@ -23,7 +23,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "driven by performance",
+            "text": "👇",
             "text_style": "subtitle"
           }
         },
@@ -33,7 +33,7 @@
             "button_label_1": "top 8 - best sellers",
             "button_link_1": "shopify://collections/best-sellers-1",
             "button_style_secondary_1": true,
-            "button_label_2": "shop black friday",
+            "button_label_2": "black friday",
             "button_link_2": "shopify://collections/black-friday-cycling-sock-sale",
             "button_style_secondary_2": false
           }
@@ -46,9 +46,9 @@
       ],
       "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/1200x600_Running_Module_V4.jpg",
-        "image_mobile": "shopify://shop_images/1080x1350_Running_Module_V12.jpg",
-        "image_overlay_opacity": 0,
+        "image": "shopify://shop_images/Blackfriday_webbanner_grainy_V2_4ef466f6-75aa-4376-8acc-538f1b043767.png",
+        "image_mobile": "shopify://shop_images/Blackfriday_webbannermobile_grainy_V1_4c46ad15-d89b-4a4d-83e3-dfc2466d43e5.png",
+        "image_overlay_opacity": 20,
         "banner_image_height": 700,
         "image_height_mobile": 650,
         "adapt_height_first_image": false,
