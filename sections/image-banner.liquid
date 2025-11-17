@@ -5,9 +5,20 @@
  #Banner-{{ section.id }} .button {
   font-size: 12px;
   font-weight: 700;
-  padding-left: 1rem;   /* 16px */
-  padding-right: 1rem;  /* 16px */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border: 2px solid #217cef !important; /* Altijd blauwe rand */
+  color: #ffffff !important; /* Altijd witte tekst */
 }
+
+/* Als stijl is 'omstralen' (button--secondary), dan transparante achtergrond */
+#Banner-{{ section.id }} .button--secondary {
+  background-color: transparent !important;
+}
+
+/* Anders (default of primary), mag achtergrondkleur blijven zoals ingesteld,
+   maar de rand en tekst blijven zoals hierboven */
+   
   {%- if section.settings.adapt_height_first_image and section.settings.image != blank -%}
     @media screen and (max-width: 749px) {
       #Banner-{{ section.id }}::before,
