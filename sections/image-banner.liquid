@@ -2,6 +2,25 @@
 
 
 {%- style -%}
+#Banner-{{ section.id }} .button--primary {
+  border-color: #217cef !important;
+  background-color: #217cef !important;
+  color: white !important;
+  box-shadow: none !important;
+  outline: none !important;
+  outline-color: transparent !important;
+  text-shadow: none !important;
+  position: relative;
+}
+
+#Banner-{{ section.id }} .button--primary::before,
+#Banner-{{ section.id }} .button--primary::after {
+  content: none !important;
+  display: none !important;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
 a.button.button--secondary {
   border-color: #217cef !important;
   background-color: transparent !important;
