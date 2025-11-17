@@ -5,8 +5,22 @@
  #Banner-{{ section.id }} .button {
   font-size: 12px;
   font-weight: 700;
-  padding-left: 1rem;   /* 16px */
-  padding-right: 1rem;  /* 16px */
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* PRIMARY BUTTON = gekleurde knop */
+#Banner-{{ section.id }} .button--primary {
+  background-color: #217cef !important;
+  border-color: #217cef !important;
+  color: #ffffff !important;
+}
+
+/* SECONDARY BUTTON = omrande knop */
+#Banner-{{ section.id }} .button--secondary {
+  background-color: transparent !important;
+  border-color: #217cef !important;
+  color: #217cef !important;
 }
   {%- if section.settings.adapt_height_first_image and section.settings.image != blank -%}
     @media screen and (max-width: 749px) {
