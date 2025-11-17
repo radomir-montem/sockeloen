@@ -5,6 +5,13 @@
   assign banner_image_mobile = collection.metafields.custom.mobile_banner_image | default: banner_image
 %}
 {%- style -%}
+#Banner-{{ section.id }} .banner__text {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  text-transform: none !important; /* geen uppercase */
+  line-height: 1.4 !important;
+}
+
   {%- if section.settings.adapt_height_first_image and banner_image != blank -%}
     @media screen and (max-width: 749px) {
       #Banner-{{ section.id }}::before,
