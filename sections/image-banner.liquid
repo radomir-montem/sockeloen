@@ -2,13 +2,23 @@
 
 
 {%- style -%}
-#Banner-{{ section.id }} .button--primary {
+
+/* Algemene button styling */
+#Banner-{{ section.id }} .button {
+  font-size: 12px;
+  font-weight: 700;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: #ffffff !important;
   border-color: #217cef !important;
+}
+
+/* PRIMARY BUTTON */
+#Banner-{{ section.id }} .button--primary {
   background-color: #217cef !important;
-  color: white !important;
-  box-shadow: none !important;
+  border: none !important;
+  box-shadow: 0 0 0 2px #217cef !important;
   outline: none !important;
-  outline-color: transparent !important;
   text-shadow: none !important;
   position: relative;
 }
@@ -17,108 +27,66 @@
 #Banner-{{ section.id }} .button--primary::after {
   content: none !important;
   display: none !important;
-  border: none !important;
-  background: none !important;
-  box-shadow: none !important;
-}
-a.button.button--secondary {
-  border-color: #217cef !important;
-  background-color: transparent !important;
-  color: white !important;
-}
-#Banner-{{ section.id }} .button--secondary {
-  border-color: #217cef !important;
-}
-#Banner-{{ section.id }} a.button--secondary {
-  border-color: #217cef !important;
-  color: white !important;
-  background-color: transparent !important;
 }
 
-/* Tekst en borders blauw maken */
+/* SECONDARY BUTTON */
+#Banner-{{ section.id }} .button--secondary {
+  background-color: transparent !important;
+  border-color: #217cef !important;
+  color: #ffffff !important;
+}
+
+/* Koptekst en tekst kleur */
 #Banner-{{ section.id }} .banner__heading,
-#Banner-{{ section.id }} .banner__text,
-#Banner-{{ section.id }} .button {
+#Banner-{{ section.id }} .banner__text {
   color: #217cef !important;
-  border-color: #217cef !important;
 }
 
-/* Achtergrond van primary buttons blauw maken */
-#Banner-{{ section.id }} .button--primary {
-  background-color: #217cef !important;
-}
-
-/* Achtergrond van secondary buttons transparant houden */
-#Banner-{{ section.id }} .button--secondary {
-  background-color: transparent !important;
-}
-
-/* Zorg dat tekst in beide button-stijlen blauw is */
-#Banner-{{ section.id }} .button--primary,
-#Banner-{{ section.id }} .button--secondary {
-  color: #FFFFFF !important;
-}
-
- #Banner-{{ section.id }} .button {
-  font-size: 12px;
-  font-weight: 700;
-  padding-left: 1rem;   /* 16px */
-  padding-right: 1rem;  /* 16px */
-}
-
-#Banner-{{ section.id }} .button--primary {
-  border: none !important;
-  background-color: #217cef !important;
-  color: white !important;
-}
-#Banner-{{ section.id }} .button--primary {
-  box-shadow: 0 0 0 2px #217cef !important;
-}
-
-
-  {%- if section.settings.adapt_height_first_image and section.settings.image != blank -%}
-    @media screen and (max-width: 749px) {
-      #Banner-{{ section.id }}::before,
-      #Banner-{{ section.id }} .banner__media::before,
-      #Banner-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
-        padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
-        content: '';
-        display: block;
-      }
+/* Hoogte-instellingen */
+{%- if section.settings.adapt_height_first_image and section.settings.image != blank -%}
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }}::before,
+    #Banner-{{ section.id }} .banner__media::before,
+    #Banner-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
+      padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
+      content: '';
+      display: block;
     }
+  }
 
-    @media screen and (min-width: 750px) {
-      #Banner-{{ section.id }}::before,
-      #Banner-{{ section.id }} .banner__media::before {
-        padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
-        content: '';
-        display: block;
-      }
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }}::before,
+    #Banner-{{ section.id }} .banner__media::before {
+      padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
+      content: '';
+      display: block;
     }
-  {%- endif -%}
+  }
+{%- endif -%}
 
-  {% if section.settings.adapt_height_first_image and section.settings.image_mobile != blank %}
-    @media screen and (max-width: 749px) {
-      #Banner-{{ section.id }}:not(.banner--mobile-bottom),
-      #Banner-{{ section.id }}.banner--mobile-bottom .banner__media {
-        aspect-ratio: {{ section.settings.image_mobile.aspect_ratio }};
-      }
+{% if section.settings.adapt_height_first_image and section.settings.image_mobile != blank %}
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }}:not(.banner--mobile-bottom),
+    #Banner-{{ section.id }}.banner--mobile-bottom .banner__media {
+      aspect-ratio: {{ section.settings.image_mobile.aspect_ratio }};
     }
-  {% endif %}
+  }
+{% endif %}
 
-  {% unless section.settings.adapt_height_first_image and section.settings.image == blank %}
-    @media screen and (max-width: 749px) {
-      #Banner-{{ section.id }} {
-        min-height: {{ section.settings.image_height_mobile }}px;
-      }
+{% unless section.settings.adapt_height_first_image and section.settings.image == blank %}
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} {
+      min-height: {{ section.settings.image_height_mobile }}px;
     }
+  }
 
-    @media screen and (min-width: 750px) {
-      #Banner-{{ section.id }} {
-        min-height: {{ section.settings.banner_image_height }}px;
-      }
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }} {
+      min-height: {{ section.settings.banner_image_height }}px;
     }
-  {% endunless %}
+  }
+{% endunless %}
+
 {%- endstyle -%}
 
 {%- style -%}
