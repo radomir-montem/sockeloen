@@ -23,7 +23,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "👇",
+            "text": "👇👇👇👇",
             "text_style": "subtitle"
           }
         },
@@ -48,7 +48,7 @@
       "settings": {
         "image": "shopify://shop_images/Blackfriday_webbanner_grainy_V2_4ef466f6-75aa-4376-8acc-538f1b043767.png",
         "image_mobile": "shopify://shop_images/Blackfriday_webbannermobile_grainy_V1_4c46ad15-d89b-4a4d-83e3-dfc2466d43e5.png",
-        "image_overlay_opacity": 20,
+        "image_overlay_opacity": 0,
         "banner_image_height": 700,
         "image_height_mobile": 650,
         "adapt_height_first_image": false,
