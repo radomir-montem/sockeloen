@@ -2,6 +2,24 @@
 
 
 {%- style -%}
+/* Tekst en borders blauw maken */
+#Banner-{{ section.id }} .banner__heading,
+#Banner-{{ section.id }} .banner__text,
+#Banner-{{ section.id }} .button {
+  color: #217cef !important;
+  border-color: #217cef !important;
+}
+
+/* Achtergrond van primary buttons blauw maken */
+#Banner-{{ section.id }} .button--primary {
+  background-color: #217cef !important;
+}
+
+/* Achtergrond van secondary buttons transparant houden */
+#Banner-{{ section.id }} .button--secondary {
+  background-color: transparent !important;
+}
+
  #Banner-{{ section.id }} .button {
   font-size: 12px;
   font-weight: 700;
