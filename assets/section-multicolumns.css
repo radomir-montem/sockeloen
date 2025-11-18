@@ -78,6 +78,10 @@
     background: transparent;
 }
 
+.multicolumns-item-image:not(.loaded) video {
+    display: none;
+}
+
 .about-text {
     font-size: 18px;
 }
