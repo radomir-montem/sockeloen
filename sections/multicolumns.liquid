@@ -61,6 +61,7 @@
         const previewImage = videoWrapepr.querySelector('.preview-image');
         if(previewImage) previewImage.remove();
         videoWrapepr.classList.add('playing');
+        videoWrapepr.classList.add('loaded');
     });
 
     document.querySelector('.multicolumns-item-image .icon-pause').addEventListener('click', (e) => {
