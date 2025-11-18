@@ -12,6 +12,11 @@
     margin-top: 48px;
 }
 
+.about-button .link {
+    font-size: 18px;
+    font-weight: 700;
+}
+
 @media (max-width: 768px) {
     .about-grid {
         grid-template-columns: 1fr;
