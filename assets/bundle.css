@@ -2597,6 +2597,10 @@ $max-desktop-width: 2245px;
     padding-right: 5rem;
   }
 
+  .md\:pl-20 {
+    padding-left: 5rem;
+  }
+
   .md\:pl-0 {
     padding-left: 0px;
   }
