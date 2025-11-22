@@ -48,10 +48,6 @@
             "picker_type": "button"
           }
         },
-        "selleasy_lb_upsell_widget_pac_hPJQEw": {
-          "type": "shopify://apps/selleasy/blocks/lb-upsell-widget-pac/790c1a03-a71f-4bc1-9869-00dad526d3c2",
-          "settings": {}
-        },
         "custom_button_iFjaR9": {
           "type": "custom-button",
           "settings": {
@@ -106,6 +102,10 @@
             "usp4": "shopify://shop_images/copia_6.KING.USP.TRANS_6759367c-458f-41a8-a161-01f9ac0d5a8b.png",
             "usp4_text": "<p><a href=\"https://www.reviews.io/company-reviews/store/sockeloen-nl\" title=\"https://www.reviews.io/company-reviews/store/sockeloen-nl\"><strong>Customer </strong>is king</a></p>"
           }
+        },
+        "selleasy_lb_upsell_widget_pac_hPJQEw": {
+          "type": "shopify://apps/selleasy/blocks/lb-upsell-widget-pac/790c1a03-a71f-4bc1-9869-00dad526d3c2",
+          "settings": {}
         },
         "31d4cb82-9836-481d-b31f-0d99044260ea": {
           "type": "collapsible_tab",
@@ -232,7 +232,6 @@
         "price",
         "inventory_status_qrtERa",
         "variant_picker",
-        "selleasy_lb_upsell_widget_pac_hPJQEw",
         "custom_button_iFjaR9",
         "custom_liquid_jrCLVk",
         "aov_bundle_upsell_offer_volume_GnqccC",
@@ -241,6 +240,7 @@
         "9818c7f0-7715-4e56-af03-fb7a9cca40f4",
         "buy_buttons",
         "d448a9b5-1ba8-45fe-a44b-8f604142911f",
+        "selleasy_lb_upsell_widget_pac_hPJQEw",
         "31d4cb82-9836-481d-b31f-0d99044260ea",
         "0c280d07-e2f9-4b4f-b7a3-02978b0ec8ee",
         "collapsible-row-0",
