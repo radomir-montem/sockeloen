@@ -84,6 +84,10 @@
             "no_shipment_text": "There is no shipment for your country"
           }
         },
+        "selleasy_lb_upsell_widget_pac_hPJQEw": {
+          "type": "shopify://apps/selleasy/blocks/lb-upsell-widget-pac/790c1a03-a71f-4bc1-9869-00dad526d3c2",
+          "settings": {}
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -216,10 +220,6 @@
             "logos_size": 26
           }
         },
-        "selleasy_lb_upsell_widget_pac_hPJQEw": {
-          "type": "shopify://apps/selleasy/blocks/lb-upsell-widget-pac/790c1a03-a71f-4bc1-9869-00dad526d3c2",
-          "settings": {}
-        },
         "outlinks_pYD9NK": {
           "type": "outlinks",
           "settings": {}
@@ -238,6 +238,7 @@
         "quantity_selector",
         "a82d9b45-1b3b-4c51-9913-271732bc495f",
         "9818c7f0-7715-4e56-af03-fb7a9cca40f4",
+        "selleasy_lb_upsell_widget_pac_hPJQEw",
         "buy_buttons",
         "d448a9b5-1ba8-45fe-a44b-8f604142911f",
         "31d4cb82-9836-481d-b31f-0d99044260ea",
@@ -251,7 +252,6 @@
         "collapsible-row-3",
         "592f1237-906d-486e-af43-974d5d87a6be",
         "99a821b7-64aa-4e7c-a75b-b1cc84f37174",
-        "selleasy_lb_upsell_widget_pac_hPJQEw",
         "outlinks_pYD9NK"
       ],
       "settings": {
