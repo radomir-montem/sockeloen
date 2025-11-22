@@ -84,6 +84,10 @@
             "no_shipment_text": "There is no shipment for your country"
           }
         },
+        "selleasy_lb_upsell_widget_pal_PrLxGt": {
+          "type": "shopify://apps/selleasy/blocks/lb-upsell-widget-pal/790c1a03-a71f-4bc1-9869-00dad526d3c2",
+          "settings": {}
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -234,6 +238,7 @@
         "quantity_selector",
         "a82d9b45-1b3b-4c51-9913-271732bc495f",
         "9818c7f0-7715-4e56-af03-fb7a9cca40f4",
+        "selleasy_lb_upsell_widget_pal_PrLxGt",
         "buy_buttons",
         "d448a9b5-1ba8-45fe-a44b-8f604142911f",
         "31d4cb82-9836-481d-b31f-0d99044260ea",
@@ -480,6 +485,12 @@
     "7082e3df-38a9-43ef-bb51-a706f9bb048d": {
       "type": "reviews-product",
       "settings": {}
+    },
+    "176377673444125cd8": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -493,6 +504,7 @@
     "9148c605-c3d3-4457-a7d9-718e5b06ad2d",
     "810ba789-2a8c-44fa-abe0-e8f36932e0cb",
     "recently-viewed",
-    "7082e3df-38a9-43ef-bb51-a706f9bb048d"
+    "7082e3df-38a9-43ef-bb51-a706f9bb048d",
+    "176377673444125cd8"
   ]
 }
