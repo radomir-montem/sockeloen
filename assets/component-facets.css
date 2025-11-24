@@ -607,7 +607,7 @@ a.active-facets__button.focused .active-facets__button-inner,
 
 .mobile-facets__header {
   border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
-  padding: 1rem 2.5rem;
+  padding: 1.75rem 2.5rem;
   text-align: center;
   display: flex;
   position: sticky;
@@ -625,8 +625,9 @@ a.active-facets__button.focused .active-facets__button-inner,
 }
 
 .mobile-facets__heading {
-  font-size: calc(var(--font-heading-scale) * 1.4rem);
+  font-size: 12px !important;
   margin: 0;
+  font-weight: 700 !important;
 }
 
 .mobile-facets__count {
@@ -696,7 +697,7 @@ a.active-facets__button.focused .active-facets__button-inner,
 }
 
 .mobile-facets__close svg {
-  width: 2.2rem;
+  width: 1rem;
 }
 
 details.menu-opening .mobile-facets__close {
@@ -738,6 +739,10 @@ details.menu-opening .mobile-facets__close svg {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+}
+
+.mobile-facets__main * {
+  font-size: 12px !important;
 }
 
 .mobile-facets__details[open] .icon-caret {
@@ -833,6 +838,12 @@ input.mobile-facets__checkbox {
   transition: background-color 0.2s ease;
   word-break: break-word;
   display: flex;
+  font-weight: 400;
+  align-items: center;
+}
+
+.mobile-facets__label span {
+  transform: translateY(2px);
 }
 
 .mobile-facets__label > svg {
@@ -850,7 +861,8 @@ input.mobile-facets__checkbox {
   visibility: hidden;
 }
 
-.mobile-facets__label > input[type='checkbox']:checked ~ .icon-checkmark {
+.mobile-facets__label > input[type='checkbox']:checked ~ .icon-checkmark,
+.mobile-facets__label > input[type='radio']:checked ~ .icon-checkmark {
   visibility: visible;
 }
 
@@ -874,6 +886,11 @@ input.mobile-facets__checkbox {
   margin-top: auto;
   background-color:rgb(var(--color-background));
   background: var(--gradient-background);
+}
+
+.mobile-facets__footer * {
+  font-size: 12px !important;
+  font-weight: 700 !important;
 }
 
 .mobile-facets__footer > * + * {

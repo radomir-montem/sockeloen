@@ -130,8 +130,8 @@
   {% endif %}
 </div>
 
-<div class="collection-tags">
-  <div class="page-width">
+{% comment %} <div class="collection-tags">
+  <div class="">
     {% if collection.all_tags.size > 0 %}
       <div class="tags-swiper overflow-hidden relative">
         <div class="swiper-wrapper">
@@ -160,7 +160,7 @@
       </div>
     {% endif %}
   </div>
-</div>
+</div> {% endcomment %}
 {% endif %}
 
 {% schema %}

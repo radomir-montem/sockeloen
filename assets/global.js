@@ -1423,17 +1423,27 @@ class ProductRecommendations extends HTMLElement {
 
 customElements.define('product-recommendations', ProductRecommendations)
 
+class FacetsOpenButton extends HTMLElement {
+  constructor() {
+    super()
+    this.button = this.querySelector('button');
+    this.button.addEventListener('click', (e) => {
+      document.querySelector('.mobile-facets__open-wrapper').click();
+    })
+  }
+}
+
+customElements.define('facets-open-button', FacetsOpenButton)
+
 function initCountdownAnnouncementbar() {
   const countDownBar = document.querySelector('.essential_countdown_annoucement_bar_wrapper');
-  const stickyHeader = document.querySelector('.shopify-section-header-sticky');
-  console.log('here', countDownBar, stickyHeader);
 
-  if (!countDownBar || !stickyHeader) return;
+  if (!countDownBar) return;
 
   // Use offsetHeight to get actual height
   const barHeight = countDownBar.offsetHeight;
 
-  stickyHeader.style.top = `${barHeight}px`;
+  document.body.style.setProperty('--countdown-bar-height', `${barHeight}px`);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
