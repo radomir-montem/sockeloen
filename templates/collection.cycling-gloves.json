@@ -1,8 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
       "type": "main-collection-banner",
-      "settings": {}
+      "settings": {
+        "image_overlay_opacity": 0,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "show_description": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
     },
     "product-grid": {
       "type": "main-collection-product-grid",
@@ -29,25 +51,25 @@
         "67037a2e-8c03-4373-8f05-f3f12f552a27": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+            "image": "shopify://shop_images/wit.USPS.sock.design_1.png"
           }
         },
         "8f91ef24-ec60-4164-b4e5-1c520f80b648": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+            "image": "shopify://shop_images/wit.6.CIRCULAR.USP.TRANS_1.png"
           }
         },
         "138a255c-13dd-4310-b431-af41eda11de0": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+            "image": "shopify://shop_images/wit.SYMBOLEN.USPS.png"
           }
         },
         "442a2231-b866-48c4-8fbd-30063b8c7598": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+            "image": "shopify://shop_images/wit.USPS.KING_1.png"
           }
         }
       },
@@ -65,14 +87,14 @@
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
           "type": "heading",
           "settings": {
-            "heading": "<p>CYCLING GLOVES<\/p>",
+            "heading": "<p>CYCLING GLOVES</p>",
             "heading_size": "h2"
           }
         },
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Protect your hands with Sockeloen's cycling gloves. Crafted with quality materials and precision, our custom cycling gloves offer superior comfort and performance on every ride. Whether you're braving the winter chill or seeking a sleek black design, our gloves provide the perfect fit for your cycling adventures.<\/p>"
+            "text": "<p>Protect your hands with Sockeloen's cycling gloves. Crafted with quality materials and precision, our custom cycling gloves offer superior comfort and performance on every ride. Whether you're braving the winter chill or seeking a sleek black design, our gloves provide the perfect fit for your cycling adventures.</p>"
           }
         }
       },
