@@ -1,8 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
       "type": "main-collection-banner",
-      "settings": {}
+      "settings": {
+        "image_overlay_opacity": 0,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "show_description": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
     },
     "product-grid": {
       "type": "main-collection-product-grid",
@@ -36,14 +58,14 @@
           "type": "faq",
           "settings": {
             "question": "Are custom knitted socks suitable for athletic activities?",
-            "answer": "<p>Custom knitted socks can be tailored for various activities. While our socks originally are made for cycling sports, the socks are sutiable for any type of sports such as running, golf, tennis, badminton, hiking and more. <\/p>"
+            "answer": "<p>Custom knitted socks can be tailored for various activities. While our socks originally are made for cycling sports, the socks are sutiable for any type of sports such as running, golf, tennis, badminton, hiking and more. </p>"
           }
         },
         "faq_TJMiFN": {
           "type": "faq",
           "settings": {
             "question": "Are there sock patterns specifically designed for different seasons?",
-            "answer": "<p>Yes, there are sock patterns designed for different seasons. For warmer months, you might opt for lightweight yarn and lace or mesh patterns. For colder months, thicker yarn and intricate cable or colorwork designs provide extra warmth and coziness.<\/p>"
+            "answer": "<p>Yes, there are sock patterns designed for different seasons. For warmer months, you might opt for lightweight yarn and lace or mesh patterns. For colder months, thicker yarn and intricate cable or colorwork designs provide extra warmth and coziness.</p>"
           }
         }
       },
@@ -65,25 +87,25 @@
         "1f543cbc-9f39-499a-9016-c139c92896d3": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+            "image": "shopify://shop_images/wit.USPS.sock.design_1.png"
           }
         },
         "06418753-c11e-42ba-903a-10e77f8e4f2f": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+            "image": "shopify://shop_images/wit.6.CIRCULAR.USP.TRANS_1.png"
           }
         },
         "98a70ec6-d538-4770-ad14-ddd4d23d436c": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+            "image": "shopify://shop_images/wit.SYMBOLEN.USPS.png"
           }
         },
         "1acca66e-41e6-4b67-8924-c27e53d05919": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+            "image": "shopify://shop_images/wit.USPS.KING_1.png"
           }
         }
       },
@@ -101,14 +123,14 @@
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
           "type": "heading",
           "settings": {
-            "heading": "<p>CUSTOM KNITTED SOCKS<\/p>",
+            "heading": "<p>CUSTOM KNITTED SOCKS</p>",
             "heading_size": "h2"
           }
         },
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Be on top of the game with our unique and <strong>custom made<\/strong> socks service! Looking for a smaller quantity? <a href=\"https:\/\/sockeloen.com\/collections\/custom-printed-1-50-pairs\" target=\"_blank\" title=\"https:\/\/sockeloen.com\/collections\/custom-printed-1-50-pairs\">Click here<\/a> to check out our <strong>custom designed<\/strong> socks starting from 1 pair.<\/p><p>-<\/p><p>Looking for a bigger quantity? Then this is the right choice for you: 50 <strong>custom made<\/strong> unique pairs delivered within 4 to 8 weeks. Transform your personal wardrobe or corporate event with our premium custom <strong>knitted<\/strong> and <strong>athletic<\/strong> socks that can be customised using a large variety of colors, patterns and prints.   <\/p><p>-<\/p><p>Don't know where to start? Don't worry! Our highly skilled sock design team is here for you to offer advice and consultation if needed in material choice, sizing and patterns. C<strong>ustomize your own socks<\/strong> and let us take care of the rest. <\/p><p>-<\/p><p>Whether it's for corporate branding, special occasions, or personal wardrobe, our <strong>custom made<\/strong> socks services are crafted to ensure your comfort throughout the day. <\/p>"
+            "text": "<p>Be on top of the game with our unique and <strong>custom made</strong> socks service! Looking for a smaller quantity? <a href=\"https://sockeloen.com/collections/custom-printed-1-50-pairs\" target=\"_blank\" title=\"https://sockeloen.com/collections/custom-printed-1-50-pairs\">Click here</a> to check out our <strong>custom designed</strong> socks starting from 1 pair.</p><p>-</p><p>Looking for a bigger quantity? Then this is the right choice for you: 50 <strong>custom made</strong> unique pairs delivered within 4 to 8 weeks. Transform your personal wardrobe or corporate event with our premium custom <strong>knitted</strong> and <strong>athletic</strong> socks that can be customised using a large variety of colors, patterns and prints.   </p><p>-</p><p>Don't know where to start? Don't worry! Our highly skilled sock design team is here for you to offer advice and consultation if needed in material choice, sizing and patterns. C<strong>ustomize your own socks</strong> and let us take care of the rest. </p><p>-</p><p>Whether it's for corporate branding, special occasions, or personal wardrobe, our <strong>custom made</strong> socks services are crafted to ensure your comfort throughout the day. </p>"
           }
         }
       },
