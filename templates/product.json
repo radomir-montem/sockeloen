@@ -219,6 +219,10 @@
         "outlinks_pYD9NK": {
           "type": "outlinks",
           "settings": {}
+        },
+        "selleasy_lb_upsell_widget_pac_hPJQEw": {
+          "type": "shopify://apps/selleasy/blocks/lb-upsell-widget-pac/790c1a03-a71f-4bc1-9869-00dad526d3c2",
+          "settings": {}
         }
       },
       "block_order": [
@@ -247,7 +251,8 @@
         "collapsible-row-3",
         "592f1237-906d-486e-af43-974d5d87a6be",
         "99a821b7-64aa-4e7c-a75b-b1cc84f37174",
-        "outlinks_pYD9NK"
+        "outlinks_pYD9NK",
+        "selleasy_lb_upsell_widget_pac_hPJQEw"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -480,6 +485,12 @@
     "7082e3df-38a9-43ef-bb51-a706f9bb048d": {
       "type": "reviews-product",
       "settings": {}
+    },
+    "176377673444125cd8": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -493,6 +504,7 @@
     "9148c605-c3d3-4457-a7d9-718e5b06ad2d",
     "810ba789-2a8c-44fa-abe0-e8f36932e0cb",
     "recently-viewed",
-    "7082e3df-38a9-43ef-bb51-a706f9bb048d"
+    "7082e3df-38a9-43ef-bb51-a706f9bb048d",
+    "176377673444125cd8"
   ]
 }
