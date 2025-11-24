@@ -1,8 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
       "type": "main-collection-banner",
-      "settings": {}
+      "settings": {
+        "image_overlay_opacity": 0,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "show_description": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
     },
     "product-grid": {
       "type": "main-collection-product-grid",
@@ -36,35 +58,35 @@
           "type": "faq",
           "settings": {
             "question": "Do Aero socks make a difference?",
-            "answer": "<p>Yes, Aero socks are designed to reduce aerodynamic drag, which can enhance your cycling performance. By streamlining airflow over your legs, these socks can help you ride faster with less effort, especially at higher speeds.<\/p>"
+            "answer": "<p>Yes, Aero socks are designed to reduce aerodynamic drag, which can enhance your cycling performance. By streamlining airflow over your legs, these socks can help you ride faster with less effort, especially at higher speeds.</p>"
           }
         },
         "faq_dCxkLn": {
           "type": "faq",
           "settings": {
             "question": "Do Aero socks save watts?",
-            "answer": "<p>Yes, Aero socks can save watts by reducing aerodynamic drag. On average, you can save between 5 to 10 watts compared to standard socks. The exact amount of watts saved depends on factors such as your speed, leg size and shape, and the angle of your jaw. <\/p><p>This reduction in drag means you use less energy to maintain the same speed, leading to improved efficiency and potentially faster ride times.<\/p>"
+            "answer": "<p>Yes, Aero socks can save watts by reducing aerodynamic drag. On average, you can save between 5 to 10 watts compared to standard socks. The exact amount of watts saved depends on factors such as your speed, leg size and shape, and the angle of your jaw. </p><p>This reduction in drag means you use less energy to maintain the same speed, leading to improved efficiency and potentially faster ride times.</p>"
           }
         },
         "faq_Edpkrr": {
           "type": "faq",
           "settings": {
             "question": "Are Aero Cycling Socks Worth the Investment?",
-            "answer": "<p>While aero cycling socks may come at a higher price point than traditional socks, many cyclists find that the performance benefits justify the investment. By reducing drag and optimizing airflow, these socks can contribute to faster race times and improved overall riding efficiency, making them a valuable addition to any cyclist's gear arsenal.<\/p>"
+            "answer": "<p>While aero cycling socks may come at a higher price point than traditional socks, many cyclists find that the performance benefits justify the investment. By reducing drag and optimizing airflow, these socks can contribute to faster race times and improved overall riding efficiency, making them a valuable addition to any cyclist's gear arsenal.</p>"
           }
         },
         "faq_f4arzB": {
           "type": "faq",
           "settings": {
             "question": "What's the best way to clean & maintaining the effectiveness of aero socks?",
-            "answer": "<p>To ensure optimal performance and longevity of your aero socks, it's essential to follow proper care instructions. Always wash them according to <a href=\"https:\/\/sockeloen.com\/blogs\/stories\/washing-cycling-socks-how-do-you-keep-white-socks-longer-white\" target=\"_blank\" title=\"https:\/\/sockeloen.com\/blogs\/stories\/washing-cycling-socks-how-do-you-keep-white-socks-longer-white\"><span style=\"text-decoration:underline\">our guidelines<\/span><\/a>, using a gentle cycle and mild detergent. Avoid using fabric softeners or bleach, as these can degrade the fabric and affect aerodynamic properties.<\/p>"
+            "answer": "<p>To ensure optimal performance and longevity of your aero socks, it's essential to follow proper care instructions. Always wash them according to <a href=\"https://sockeloen.com/blogs/stories/washing-cycling-socks-how-do-you-keep-white-socks-longer-white\" target=\"_blank\" title=\"https://sockeloen.com/blogs/stories/washing-cycling-socks-how-do-you-keep-white-socks-longer-white\"><span style=\"text-decoration:underline\">our guidelines</span></a>, using a gentle cycle and mild detergent. Avoid using fabric softeners or bleach, as these can degrade the fabric and affect aerodynamic properties.</p>"
           }
         },
         "faq_NKLRzC": {
           "type": "faq",
           "settings": {
             "question": "How do I properly put on the Aero socks?",
-            "answer": "<p>Put on carefully: First, pull the foot piece well over the foot. Only then pull up the Aero part of the sock. This fast fabric is very sensitive.<\/p>"
+            "answer": "<p>Put on carefully: First, pull the foot piece well over the foot. Only then pull up the Aero part of the sock. This fast fabric is very sensitive.</p>"
           }
         }
       },
@@ -89,25 +111,25 @@
         "67037a2e-8c03-4373-8f05-f3f12f552a27": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+            "image": "shopify://shop_images/wit.USPS.sock.design_1.png"
           }
         },
         "8f91ef24-ec60-4164-b4e5-1c520f80b648": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+            "image": "shopify://shop_images/wit.6.CIRCULAR.USP.TRANS_1.png"
           }
         },
         "138a255c-13dd-4310-b431-af41eda11de0": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+            "image": "shopify://shop_images/wit.SYMBOLEN.USPS.png"
           }
         },
         "442a2231-b866-48c4-8fbd-30063b8c7598": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+            "image": "shopify://shop_images/wit.USPS.KING_1.png"
           }
         }
       },
@@ -125,14 +147,14 @@
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
           "type": "heading",
           "settings": {
-            "heading": "<p>AERO CYCLING SOCKS<\/p>",
+            "heading": "<p>AERO CYCLING SOCKS</p>",
             "heading_size": "h2"
           }
         },
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Introducing our innovative Aero Cycling Socks – where speed meets style. Crafted with precision and attention to detail, our Aero Cycling Socks offer superior aerodynamics, ensuring high performance cycling sessions. <\/p>"
+            "text": "<p>Introducing our innovative Aero Cycling Socks – where speed meets style. Crafted with precision and attention to detail, our Aero Cycling Socks offer superior aerodynamics, ensuring high performance cycling sessions. </p>"
           }
         }
       },
