@@ -1,8 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
       "type": "main-collection-banner",
-      "settings": {}
+      "settings": {
+        "image_overlay_opacity": 0,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "show_description": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
     },
     "product-grid": {
       "type": "main-collection-product-grid",
@@ -29,25 +51,25 @@
         "1f543cbc-9f39-499a-9016-c139c92896d3": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+            "image": "shopify://shop_images/wit.USPS.sock.design_1.png"
           }
         },
         "06418753-c11e-42ba-903a-10e77f8e4f2f": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+            "image": "shopify://shop_images/wit.6.CIRCULAR.USP.TRANS_1.png"
           }
         },
         "98a70ec6-d538-4770-ad14-ddd4d23d436c": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+            "image": "shopify://shop_images/wit.SYMBOLEN.USPS.png"
           }
         },
         "1acca66e-41e6-4b67-8924-c27e53d05919": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+            "image": "shopify://shop_images/wit.USPS.KING_1.png"
           }
         }
       },
@@ -65,14 +87,14 @@
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
           "type": "heading",
           "settings": {
-            "heading": "<p>PRE ORDER<\/p>",
+            "heading": "<p>PRE ORDER</p>",
             "heading_size": "h2"
           }
         },
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Explore our pre-order selection of <strong>custom made<\/strong> socks. Start designing the perfect pair today!<\/p>"
+            "text": "<p>Explore our pre-order selection of <strong>custom made</strong> socks. Start designing the perfect pair today!</p>"
           }
         }
       },
