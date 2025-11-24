@@ -83,7 +83,7 @@
         "button_agqc9Y": {
           "type": "button",
           "settings": {
-            "button_label": "shop all products",
+            "button_label": "shop more best sellers",
             "button_link": "shopify://collections/best-sellers-1",
             "button_style_secondary": true,
             "button_label_2": "",
