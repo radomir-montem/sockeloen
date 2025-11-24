@@ -1,8 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
       "type": "main-collection-banner",
-      "settings": {}
+      "settings": {
+        "image_overlay_opacity": 0,
+        "banner_image_height": 550,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": false,
+        "show_description": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
     },
     "product-grid": {
       "type": "main-collection-product-grid",
@@ -36,14 +58,14 @@
           "type": "faq",
           "settings": {
             "question": "What materials are custom printed socks made of?",
-            "answer": "<p>Custom printed socks are usually made from a blend of materials such as cotton, polyester, and spandex. These materials offer a comfortable fit, durability, and the ability to showcase vibrant prints without compromising on quality.<\/p>"
+            "answer": "<p>Custom printed socks are usually made from a blend of materials such as cotton, polyester, and spandex. These materials offer a comfortable fit, durability, and the ability to showcase vibrant prints without compromising on quality.</p>"
           }
         },
         "faq_6JJQFk": {
           "type": "faq",
           "settings": {
             "question": "How can I customize my cycling socks?",
-            "answer": "<p>You can customize your cycling socks by choosing the fabric, color, length, design, and any additional features such as compression zones or padding. We offer an online tool where you can upload your own designs, logos, or artwork to create unique socks that reflect your style and personality.<\/p>"
+            "answer": "<p>You can customize your cycling socks by choosing the fabric, color, length, design, and any additional features such as compression zones or padding. We offer an online tool where you can upload your own designs, logos, or artwork to create unique socks that reflect your style and personality.</p>"
           }
         }
       },
@@ -65,25 +87,25 @@
         "67037a2e-8c03-4373-8f05-f3f12f552a27": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.sock.design_1.png"
+            "image": "shopify://shop_images/wit.USPS.sock.design_1.png"
           }
         },
         "8f91ef24-ec60-4164-b4e5-1c520f80b648": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.6.CIRCULAR.USP.TRANS_1.png"
+            "image": "shopify://shop_images/wit.6.CIRCULAR.USP.TRANS_1.png"
           }
         },
         "138a255c-13dd-4310-b431-af41eda11de0": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.SYMBOLEN.USPS.png"
+            "image": "shopify://shop_images/wit.SYMBOLEN.USPS.png"
           }
         },
         "442a2231-b866-48c4-8fbd-30063b8c7598": {
           "type": "image",
           "settings": {
-            "image": "shopify:\/\/shop_images\/wit.USPS.KING_1.png"
+            "image": "shopify://shop_images/wit.USPS.KING_1.png"
           }
         }
       },
@@ -101,14 +123,14 @@
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-0": {
           "type": "heading",
           "settings": {
-            "heading": "<p>CUSTOM PRINTED SOCKS<\/p>",
+            "heading": "<p>CUSTOM PRINTED SOCKS</p>",
             "heading_size": "h2"
           }
         },
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Want to stand out from the crowd? Make each pair unique by <strong>designing your own socks<\/strong>.  Bigger quantities at a lower price. <a href=\"https:\/\/sockeloen.com\/collections\/custom-knitted-socks\" title=\"https:\/\/sockeloen.com\/collections\/custom-knitted-socks\"><strong>Click here<\/strong><\/a> to explore our <strong>custom knitted<\/strong> and <strong>athletic<\/strong> socks.<\/p><p>-<\/p><p>Whether you want 1 pair or multiple <strong>custom made<\/strong> pairs of socks, this is your opportunity to design something unique to your own style. We offer fast delivery within a week, ensuring your <strong>custom printed<\/strong> socks are ready for you to wear in no time!<\/p><p>-<\/p><p>You can<strong> make <\/strong>your<strong> custom socks<\/strong> using logos, patterns and different colors after choosing the material that fits you best. You create the design, we <strong>print<\/strong> the <strong>socks<\/strong> for you today.<\/p>"
+            "text": "<p>Want to stand out from the crowd? Make each pair unique by <strong>designing your own socks</strong>.  Bigger quantities at a lower price. <a href=\"https://sockeloen.com/collections/custom-knitted-socks\" title=\"https://sockeloen.com/collections/custom-knitted-socks\"><strong>Click here</strong></a> to explore our <strong>custom knitted</strong> and <strong>athletic</strong> socks.</p><p>-</p><p>Whether you want 1 pair or multiple <strong>custom made</strong> pairs of socks, this is your opportunity to design something unique to your own style. We offer fast delivery within a week, ensuring your <strong>custom printed</strong> socks are ready for you to wear in no time!</p><p>-</p><p>You can<strong> make </strong>your<strong> custom socks</strong> using logos, patterns and different colors after choosing the material that fits you best. You create the design, we <strong>print</strong> the <strong>socks</strong> for you today.</p>"
           }
         }
       },
