@@ -3,55 +3,6 @@
 
 {%- style -%}
 
-#Banner-{{ section.id }} .banner__heading {
-  background-color: none;
-  display: inline;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  line-height: 1.1;
-  padding: 0 0.15em;
-  text-transform: none;
-}
-
-/* Algemene button styling */
-#Banner-{{ section.id }} .button {
-  font-size: 12px;
-  font-weight: 700;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  color: #ffffff !important;
-  border-color: #ffffff !important;
-}
-
-/* PRIMARY BUTTON */
-#Banner-{{ section.id }} .button--primary {
-  background-color: none !important;
-  border: none !important;
-  box-shadow: 0 0 0 2px none !important;
-  outline: none !important;
-  text-shadow: none !important;
-  position: relative;
-}
-
-#Banner-{{ section.id }} .button--primary::before,
-#Banner-{{ section.id }} .button--primary::after {
-  content: none !important;
-  display: none !important;
-}
-
-/* SECONDARY BUTTON */
-#Banner-{{ section.id }} .button--secondary {
-  background-color: transparent !important;
-  border-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-/* Koptekst en tekst kleur */
-#Banner-{{ section.id }} .banner__heading,
-#Banner-{{ section.id }} .banner__text {
-  color: #ffffff !important;
-}
-
 /* Hoogte-instellingen */
 {%- if section.settings.adapt_height_first_image and section.settings.image != blank -%}
   @media screen and (max-width: 749px) {
