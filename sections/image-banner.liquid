@@ -3,6 +3,27 @@
 
 {%- style -%}
 
+#Banner-{{ section.id }} .banner__heading {
+  background-color: none;
+  display: inline;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  line-height: 1.1;
+  padding: 0 0.15em;
+  text-transform: none;
+}
+
+/* Algemene button styling */
+#Banner-{{ section.id }} .button {
+  font-size: 12px;
+  font-weight: 700;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+
 /* Hoogte-instellingen */
 {%- if section.settings.adapt_height_first_image and section.settings.image != blank -%}
   @media screen and (max-width: 749px) {
