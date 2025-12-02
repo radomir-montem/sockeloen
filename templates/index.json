@@ -23,7 +23,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "👇👇👇👇",
+            "text": "",
             "text_style": "subtitle"
           }
         },
@@ -48,7 +48,7 @@
       "settings": {
         "image": "shopify://shop_images/Gift_Mikecontent_1200x600_V3.jpg",
         "image_mobile": "shopify://shop_images/Gift_Mikecontent_750x1000_V2.jpg",
-        "image_overlay_opacity": 0,
+        "image_overlay_opacity": 30,
         "banner_image_height": 700,
         "image_height_mobile": 650,
         "adapt_height_first_image": false,
