@@ -158,10 +158,9 @@
         "blocks": {
           "announcement-bar-0": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
-              "text": "free shipping on orders > 75,-",
-              "usd_text": "free shipping on orders > $100,-",
+              "text": "free shipping on orders > 75,-    |  free gift packaging > 100,-",
+              "usd_text": "free shipping on orders > $100,-  |  free gift packaging > 100,-",
               "text_alignment": "center",
               "bg_color": "#000000",
               "font_color": "#ffffff",
@@ -174,7 +173,7 @@
         ],
         "settings": {
           "autoplay_speed": 7,
-          "enable_sticky": false
+          "enable_sticky": true
         }
       },
       "header": {
