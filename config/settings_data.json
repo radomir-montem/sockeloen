@@ -137,7 +137,7 @@
     "cart_type": "drawer",
     "show_vendor": false,
     "show_cart_note": false,
-    "cart_drawer_collection": "best-sellers-1",
+    "cart_drawer_collection": "gift-guide",
     "cart_drawer_button_1_cta": "CHECKOUT SECURELY",
     "cart_drawer_button_2_cta": "",
     "checkout_logo_image": "shopify://shop_images/sockeloen-bike-socks-fietssokken.png",
@@ -561,11 +561,6 @@
           "generate_thumbnail": true,
           "cart_row_selector": "tr"
         }
-      },
-      "12657775114333427046": {
-        "type": "shopify://apps/essential-countdown-timer-bar/blocks/app_embed/722378e8-5a70-4eae-aa89-9e44e8e9f6de",
-        "disabled": false,
-        "settings": {}
       },
       "15351435345818755577": {
         "type": "shopify://apps/pandectes-gdpr-compliance/blocks/banner/58c0baa2-6cc1-480c-9ea6-38d6d559556a",
