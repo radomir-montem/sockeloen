@@ -1446,7 +1446,22 @@ function initCountdownAnnouncementbar() {
   document.body.style.setProperty('--countdown-bar-height', `${barHeight}px`);
 }
 
+function initAnnouncementBar() {
+  const announcemetBar = document.getElementById('announcement-bar');
+
+  if (!announcemetBar) return;
+
+  // Use offsetHeight to get actual height
+  const barHeight = announcemetBar.offsetHeight;
+
+  document.body.style.setProperty('--announcemet-bar-height', `${barHeight}px`);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initCountdownAnnouncementbar();
-  window.addEventListener('resize', initCountdownAnnouncementbar);
+  initAnnouncementBar();
+  window.addEventListener('resize', function() {
+    initCountdownAnnouncementbar();
+    initAnnouncementBar();
+  });
 });
