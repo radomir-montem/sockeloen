@@ -156,6 +156,17 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
+          "announcement_RXnatL": {
+            "type": "announcement",
+            "settings": {
+              "text": "Born in the peloton // 100% Satisfaction // Customer = king",
+              "usd_text": "Born in the peloton // 100% Satisfaction // Customer = king",
+              "text_alignment": "center",
+              "bg_color": "#000000",
+              "font_color": "#ffffff",
+              "link": ""
+            }
+          },
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
@@ -169,6 +180,7 @@
           }
         },
         "block_order": [
+          "announcement_RXnatL",
           "announcement-bar-0"
         ],
         "settings": {
