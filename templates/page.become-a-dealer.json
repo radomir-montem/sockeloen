@@ -23,7 +23,7 @@
         "heading_zwweTp": {
           "type": "heading",
           "settings": {
-            "heading": "become a dealer",
+            "heading": "want to become a dealer?",
             "heading_size": "h1",
             "use_h1_tag": true
           }
@@ -35,11 +35,11 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/new.products.collection.banner.png",
-        "image_mobile": "shopify://shop_images/WEB_Home_banner_desktop_V4.png",
+        "image_mobile": "shopify://shop_images/WEB-Home-banner-mobile-V4.png",
         "image_overlay_opacity": 0,
         "banner_image_height": 350,
-        "image_height_mobile": 400,
-        "adapt_height_first_image": true,
+        "image_height_mobile": 350,
+        "adapt_height_first_image": false,
         "desktop_content_position": "middle-center",
         "show_text_box": false,
         "desktop_content_alignment": "center",
