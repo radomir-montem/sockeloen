@@ -19,23 +19,10 @@
     },
     "image_banner_TDKDkE": {
       "type": "image-banner",
-      "blocks": {
-        "heading_zwweTp": {
-          "type": "heading",
-          "settings": {
-            "heading": "want to become a dealer?",
-            "heading_size": "h1",
-            "use_h1_tag": true
-          }
-        }
-      },
-      "block_order": [
-        "heading_zwweTp"
-      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/new.products.collection.banner.png",
-        "image_mobile": "shopify://shop_images/WEB-Home-banner-mobile-V4.png",
+        "image": "shopify://shop_images/Scherm_afbeelding_2025-12-20_om_21.36.07.png",
+        "image_mobile": "shopify://shop_images/Scherm_afbeelding_2025-12-20_om_21.36.07.png",
         "image_overlay_opacity": 0,
         "banner_image_height": 350,
         "image_height_mobile": 350,
@@ -52,6 +39,13 @@
     "dd0488ea-bf6a-4738-9762-18ec80be5800": {
       "type": "rich-text",
       "blocks": {
+        "heading_i8BP8W": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Want to become a dealer?</p>",
+            "heading_size": "h1"
+          }
+        },
         "template--17760594690328__dd0488ea-bf6a-4738-9762-18ec80be5800-text-1": {
           "type": "text",
           "settings": {
@@ -60,6 +54,7 @@
         }
       },
       "block_order": [
+        "heading_i8BP8W",
         "template--17760594690328__dd0488ea-bf6a-4738-9762-18ec80be5800-text-1"
       ],
       "settings": {
@@ -78,29 +73,6 @@
         "heading_size": "h1",
         "color_scheme": "background-1",
         "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "rich_text_iBRktd": {
-      "type": "rich-text",
-      "blocks": {
-        "text_8GRfMA": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Do you run a webshop or physical store and want to add a unique collection of socks?<br/><br/></p><p>We offer a complete range of eye catching, high quality Sockeloen socks that practically sell themselves. Our collection drives growth and brings a fresh boost to the stores we partner with.</p><p><br/><br/></p><p>We are looking for partners who want to help us get Sockeloen in front of as many cycling enthusiasts as possible.</p><p><br/></p><p>With our experience, bold designs and reliable quality, we help stores of every size become more successful.</p><p><br/></p><p>Join one of the most enthusiastic communities in the cycling world and get access to top quality socks, combined with powerful marketing support.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "text_8GRfMA"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "background-1",
-        "full_width": true,
-        "padding_top": 20,
         "padding_bottom": 40
       }
     }
@@ -109,7 +81,6 @@
     "main",
     "image_banner_TDKDkE",
     "dd0488ea-bf6a-4738-9762-18ec80be5800",
-    "form",
-    "rich_text_iBRktd"
+    "form"
   ]
 }
