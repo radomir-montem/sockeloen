@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -15,14 +24,14 @@
           "type": "heading",
           "disabled": true,
           "settings": {
-            "heading": "<p>Contact<\/p>",
+            "heading": "<p>Contact</p>",
             "heading_size": "h1"
           }
         },
         "0c1679b1-27bf-47c5-9cc7-b6384f597ddc": {
           "type": "heading",
           "settings": {
-            "heading": "<p>CUSTOMER SERVICE<\/p>",
+            "heading": "<p>CUSTOMER SERVICE</p>",
             "heading_size": "h1"
           }
         },
@@ -30,7 +39,7 @@
           "type": "text",
           "disabled": true,
           "settings": {
-            "text": "<p><span style=\"text-decoration:underline\"><strong><br\/><\/strong><\/span>Mail us at: <a href=\"mailto:info@sockeloen.nl\" title=\"mailto:info@sockeloen.nl\"><span style=\"text-decoration:underline\"><strong>info@sockeloen.nl<br\/><\/strong><\/span><\/a>Call or WhatsApp us at: <span style=\"text-decoration:underline\"><strong>+31 6 47 812 840<\/strong><\/a><\/span><\/p><p><\/p>"
+            "text": "<p><span style=\"text-decoration:underline\"><strong><br/></strong></span>Mail us at: <a href=\"mailto:info@sockeloen.nl\" title=\"mailto:info@sockeloen.nl\"><span style=\"text-decoration:underline\"><strong>info@sockeloen.nl<br/></strong></span></a>Call or WhatsApp us at: <span style=\"text-decoration:underline\"><strong>+31 6 47 812 840</strong></a></span></p><p></p>"
           }
         }
       },
@@ -55,14 +64,14 @@
         "template--17760594690328__dd0488ea-bf6a-4738-9762-18ec80be5800-heading-1": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>CONTACT [BUSINESS]<\/strong><\/p>",
+            "heading": "<p><strong>CONTACT [BUSINESS]</strong></p>",
             "heading_size": "hxl"
           }
         },
         "template--17760594690328__dd0488ea-bf6a-4738-9762-18ec80be5800-text-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Here you can contact us for al your questions about custom knitted socks. <br\/><span style=\"text-decoration:underline\"><strong>So all orders &gt; 50 pairs.<\/strong><\/span><br\/><a href=\"mailto:info@sockeloen.nl\" title=\"mailto:info@sockeloen.nl\"><span style=\"text-decoration:underline\"><strong><br\/><\/strong><\/span><\/a>Call or WhatsApp us direct at: <a href=\"https:\/\/wa.me\/0031645635608\" title=\"https:\/\/wa.me\/0031645635608\"><span style=\"text-decoration:underline\"><strong>+31 6 45 63 56 08<\/strong><\/span><\/a><br\/>Or send us a message at <a href=\"mailto:custom@sockeloen.nl\" target=\"_blank\" title=\"mailto:custom@sockeloen.nl\"><span style=\"text-decoration:underline\"><strong>custom@sockeloen.nl<\/strong><\/span><\/a><span style=\"text-decoration:underline\"><strong><br\/><\/strong><\/span><\/p>"
+            "text": "<p>Here you can contact us for al your questions about custom knitted socks. <br/><span style=\"text-decoration:underline\"><strong>So all orders &gt; 50 pairs.</strong></span><br/><a href=\"mailto:info@sockeloen.nl\" title=\"mailto:info@sockeloen.nl\"><span style=\"text-decoration:underline\"><strong><br/></strong></span></a>Call or WhatsApp us direct at: <a href=\"https://wa.me/0031645635608\" title=\"https://wa.me/0031645635608\"><span style=\"text-decoration:underline\"><strong>+31 6 45 63 56 08</strong></span></a><br/>Or send us a message at <a href=\"mailto:custom@sockeloen.nl\" target=\"_blank\" title=\"mailto:custom@sockeloen.nl\"><span style=\"text-decoration:underline\"><strong>custom@sockeloen.nl</strong></span></a><span style=\"text-decoration:underline\"><strong><br/></strong></span></p>"
           }
         },
         "template--17760594690328__dd0488ea-bf6a-4738-9762-18ec80be5800-button-1": {
@@ -70,7 +79,7 @@
           "disabled": true,
           "settings": {
             "button_label": "BOOK A CALL",
-            "button_link": "https:\/\/sockeloen-8b3b9d.pipedrive.com\/scheduler\/G9vEwDuO\/sockeloen-custom-call",
+            "button_link": "https://sockeloen-8b3b9d.pipedrive.com/scheduler/G9vEwDuO/sockeloen-custom-call",
             "button_style_secondary": false,
             "button_label_2": "",
             "button_link_2": "",
@@ -94,7 +103,6 @@
     },
     "form": {
       "type": "contact-form",
-      "disabled": true,
       "settings": {
         "heading": "",
         "heading_size": "h1",
