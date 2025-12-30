@@ -47,7 +47,7 @@
       "custom_css": [],
       "settings": {
         "image": "shopify://shop_images/WEB_Home_banner_desktop_V4.png",
-        "image_mobile": "shopify://shop_images/Gift_Mikecontent_750x1000_V2.jpg",
+        "image_mobile": "shopify://shop_images/WEB-Home-banner-mobile-V4.png",
         "image_overlay_opacity": 30,
         "banner_image_height": 700,
         "image_height_mobile": 650,
