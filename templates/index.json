@@ -46,8 +46,8 @@
       ],
       "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/WEB_Home_banner_desktop_V4.png",
-        "image_mobile": "shopify://shop_images/WEB-Home-banner-mobile-V4.png",
+        "image": "shopify://shop_images/Test_banner_website_knwu_2.png",
+        "image_mobile": "shopify://shop_images/KNWU_SIDE_webbanner_d62ea286-e0a1-492d-a0c5-ad33746f0ec8.png",
         "image_overlay_opacity": 30,
         "banner_image_height": 700,
         "image_height_mobile": 650,
