@@ -159,8 +159,8 @@
           "announcement_3mDxXQ": {
             "type": "announcement",
             "settings": {
-              "text": "cyclocross worlds deal: shop before jan 31 for a chance to win your money back",
-              "usd_text": "cyclocross worlds deal: shop before jan 31 for a chance to win your money back",
+              "text": "your order could be free! 3 x cashback on all orders before 31st Jan",
+              "usd_text": "your order could be free! 3 x cashback on all orders before 31st Jan",
               "text_alignment": "center",
               "bg_color": "#000000",
               "font_color": "#ffffff",
@@ -169,6 +169,7 @@
           },
           "announcement_RXnatL": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "born in the peloton // 100% satisfaction // customer = king",
               "usd_text": "born in the peloton // 100% satisfaction // customer = king",
@@ -180,6 +181,7 @@
           },
           "announcement-bar-0": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "free shipping on orders > 75,-",
               "usd_text": "free shipping on orders > $100,-",
