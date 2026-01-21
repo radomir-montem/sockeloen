@@ -12,5 +12,21 @@
   "context": {
     "market": "nl"
   },
-  "sections": {}
+  "sections": {
+    "image_banner": {
+      "settings": {},
+      "blocks": {
+        "heading": {
+          "settings": {
+            "heading": "jouw order kan gratis zijn !  🤑"
+          }
+        },
+        "text": {
+          "settings": {
+            "text": "3 volledige Cashbacks op alle orders geplaatst voor het WK Cyclo Cross in Hulst. (31 Jan)"
+          }
+        }
+      }
+    }
+  }
 }
