@@ -159,8 +159,8 @@
           "announcement_3mDxXQ": {
             "type": "announcement",
             "settings": {
-              "text": "your order could be free ! 🤑 3 x cashback on all orders before 31st Jan",
-              "usd_text": "your order could be free! 3 x cashback on all orders before 31st Jan",
+              "text": "your order could be free ! 🤑 3 x cashback on all orders before 31st Jan, 3 pm",
+              "usd_text": "your order could be free! 3 x cashback on all orders before 31st Jan, 3 pm",
               "text_alignment": "center",
               "bg_color": "#000000",
               "font_color": "#ffffff",
