@@ -156,20 +156,8 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
-          "announcement_3mDxXQ": {
-            "type": "announcement",
-            "settings": {
-              "text": "your order could be free ! 🤑 3 x cashback on all orders before 31st Jan, 3 pm",
-              "usd_text": "your order could be free! 3 x cashback on all orders before 31st Jan, 3 pm",
-              "text_alignment": "center",
-              "bg_color": "#000000",
-              "font_color": "#ffffff",
-              "link": ""
-            }
-          },
           "announcement_RXnatL": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
               "text": "born in the peloton // 100% satisfaction // customer = king",
               "usd_text": "born in the peloton // 100% satisfaction // customer = king",
@@ -181,7 +169,6 @@
           },
           "announcement-bar-0": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
               "text": "free shipping on orders > 75,-",
               "usd_text": "free shipping on orders > $100,-",
@@ -193,7 +180,6 @@
           }
         },
         "block_order": [
-          "announcement_3mDxXQ",
           "announcement_RXnatL",
           "announcement-bar-0"
         ],
