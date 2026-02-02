@@ -11,6 +11,31 @@
   "sections": {
     "banner": {
       "type": "main-collection-banner",
+      "blocks": {
+        "text_baWdMQ": {
+          "type": "text",
+          "settings": {
+            "text": "end of winter sale",
+            "text_style": "body"
+          }
+        },
+        "buttons_y6LBLN": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "text_baWdMQ",
+        "buttons_y6LBLN"
+      ],
+      "custom_css": [],
       "settings": {
         "image_overlay_opacity": 0,
         "banner_image_height": 300,
