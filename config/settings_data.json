@@ -156,8 +156,20 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
+          "announcement_6R9may": {
+            "type": "announcement",
+            "settings": {
+              "text": "end of winter sale >",
+              "usd_text": "FREE SHIPPING > $150 // BORN IN THE PELOTON // 100% SATISFACTION // CUSTOMER IS KING //",
+              "text_alignment": "center",
+              "bg_color": "#000000",
+              "font_color": "#ffffff",
+              "link": "shopify://collections/all-weather-essentials"
+            }
+          },
           "announcement_RXnatL": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "born in the peloton // 100% satisfaction // customer = king",
               "usd_text": "born in the peloton // 100% satisfaction // customer = king",
@@ -180,6 +192,7 @@
           }
         },
         "block_order": [
+          "announcement_6R9may",
           "announcement_RXnatL",
           "announcement-bar-0"
         ],
