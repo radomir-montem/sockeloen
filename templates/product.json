@@ -90,6 +90,12 @@
             "show_dynamic_checkout": false
           }
         },
+        "essential_countdown_timer_app_block_dd64d9": {
+          "type": "shopify://apps/essential-countdown-timer/blocks/app-block/722378e8-5a70-4eae-aa89-9e44e8e9f6de",
+          "settings": {
+            "id": "cmm4s48mk0020atk7wf9iupx0"
+          }
+        },
         "d448a9b5-1ba8-45fe-a44b-8f604142911f": {
           "type": "usps",
           "settings": {
@@ -239,6 +245,7 @@
         "a82d9b45-1b3b-4c51-9913-271732bc495f",
         "9818c7f0-7715-4e56-af03-fb7a9cca40f4",
         "buy_buttons",
+        "essential_countdown_timer_app_block_dd64d9",
         "d448a9b5-1ba8-45fe-a44b-8f604142911f",
         "31d4cb82-9836-481d-b31f-0d99044260ea",
         "0c280d07-e2f9-4b4f-b7a3-02978b0ec8ee",
