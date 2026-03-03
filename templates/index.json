@@ -46,8 +46,8 @@
       ],
       "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/WEB_Home_banner_desktop_V2.jpg",
-        "image_mobile": "shopify://shop_images/AWE_Email_banner_750x1000_content_3.jpg",
+        "image": "shopify://shop_images/1200x600_RACE_essentials_webbanner2_jpg.jpg",
+        "image_mobile": "shopify://shop_images/aero-mobile-banner.png",
         "image_overlay_opacity": 30,
         "banner_image_height": 700,
         "image_height_mobile": 650,
