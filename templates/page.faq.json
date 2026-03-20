@@ -132,13 +132,21 @@
             "question": "What is the difference between aero socks and normal cycling socks?",
             "answer": "<p>Our normal cycling socks are designed for maximum comfort, moisture-wicking, and ventilation during long rides. Our aero socks are specifically developed for speed (marginal gains). The sleeve of the aero sock is made of a ribbed material that breaks the airflow around your lower leg. This reduces air resistance and provides a proven aerodynamic advantage. We test this ourselves in the wind tunnel.<br/></p>"
           }
+        },
+        "faq_LQw9aG": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the best way to wash my Sockeloen socks?",
+            "answer": "<p>What is the best way to wash my Sockeloen socks?<br/></p>"
+          }
         }
       },
       "block_order": [
         "heading_kDgG4m",
         "faq_yQVWqp",
         "faq_QrMfbF",
-        "faq_kck8LW"
+        "faq_kck8LW",
+        "faq_LQw9aG"
       ],
       "name": "FAQ",
       "settings": {
