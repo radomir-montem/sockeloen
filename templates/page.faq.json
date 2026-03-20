@@ -203,12 +203,20 @@
             "question": "Within how many days can I exchange or return my items?",
             "answer": "<p>You can return your order within 30 days. You can do this very easily via our returns procedure. Check it out <strong>here.</strong><br/></p>"
           }
+        },
+        "faq_CQphWd": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does it take for my return to be processed?",
+            "answer": "<p>We do our best to process your return as soon as possible after receiving it. We usually allow 48 hours for this.<br/><br/></p>"
+          }
         }
       },
       "block_order": [
         "heading_Byfe3D",
         "faq_EaVfLm",
-        "faq_kjhpXz"
+        "faq_kjhpXz",
+        "faq_CQphWd"
       ],
       "name": "FAQ",
       "settings": {
