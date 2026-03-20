@@ -125,12 +125,20 @@
             "question": "I am exactly between two sizes, which size should I choose?",
             "answer": "<ul><li><strong>Socks:</strong> Choose a size smaller. Our cycling socks have a nice stretch to them. By choosing a smaller size, the sock fits snugly around your foot and you prevent doubled-up fabric or creases inside your cycling shoe.</li><li><strong>Overshoes:</strong> Choose a size larger. Our overshoes have a tight fit over your shoes. A larger size makes putting them on a lot easier, without immediately compromising on aerodynamics and fit.</li></ul>"
           }
+        },
+        "faq_kck8LW": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the difference between aero socks and normal cycling socks?",
+            "answer": "<p>Our normal cycling socks are designed for maximum comfort, moisture-wicking, and ventilation during long rides. Our aero socks are specifically developed for speed (marginal gains). The sleeve of the aero sock is made of a ribbed material that breaks the airflow around your lower leg. This reduces air resistance and provides a proven aerodynamic advantage. We test this ourselves in the wind tunnel.<br/></p>"
+          }
         }
       },
       "block_order": [
         "heading_kDgG4m",
         "faq_yQVWqp",
-        "faq_QrMfbF"
+        "faq_QrMfbF",
+        "faq_kck8LW"
       ],
       "name": "FAQ",
       "settings": {
