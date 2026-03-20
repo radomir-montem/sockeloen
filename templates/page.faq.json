@@ -189,10 +189,18 @@
           "settings": {
             "heading": "Returns & Warranty"
           }
+        },
+        "faq_EaVfLm": {
+          "type": "faq",
+          "settings": {
+            "question": "How can I return (a part of) my order?",
+            "answer": "<p>You can easily send your order back via our returns procedure. Check it out <strong>here </strong><br/><br/></p>"
+          }
         }
       },
       "block_order": [
-        "heading_Byfe3D"
+        "heading_Byfe3D",
+        "faq_EaVfLm"
       ],
       "name": "FAQ",
       "settings": {
