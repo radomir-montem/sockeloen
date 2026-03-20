@@ -153,6 +153,13 @@
             "question": "Are aero socks really faster?Are aero socks really faster?",
             "answer": "<p>Yes, aero socks provide a major aerodynamic advantage. We also test this ourselves in the wind tunnel. You can see the test data <strong>here!</strong><br/><br/></p>"
           }
+        },
+        "faq_CLxY9H": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the difference between the overshoes?",
+            "answer": "<ul><li><strong>The 468 and Classic </strong>overshoes are made for pure aerodynamics. They use a fabric sleeve, which means they are not waterproof.</li><li><strong>The 612 overshoes</strong> are made for aerodynamic advantages at the highest speeds, such as during time trials. Furthermore, they are completely waterproof, so they always stay white. Even in muddy conditions.</li><li><strong>The Del Crosso</strong> overshoes are made for off-road use. It is a reinforced version of the 612 overshoe, featuring taped seams for extra waterproofing and a reinforced bottom.</li><li><strong>The Rain overshoes</strong> are made for rainy conditions, but because of the neoprene, they are certainly also suitable for winter rides when it's not too cold.</li><li><strong>The Winter overshoes</strong> are made for winter rides when it is genuinely cold. Because they use neoprene, you will never have cold feet. Tip: neoprene insulates very well, so it's important that your feet are already warm when you put them on.</li></ul>"
+          }
         }
       },
       "block_order": [
@@ -162,7 +169,8 @@
         "faq_kck8LW",
         "faq_LQw9aG",
         "faq_r7mMiV",
-        "faq_7BGPfh"
+        "faq_7BGPfh",
+        "faq_CLxY9H"
       ],
       "custom_css": [],
       "name": "FAQ",
