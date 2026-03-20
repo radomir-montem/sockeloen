@@ -38,12 +38,20 @@
             "question": "Can I still change or cancel my order?",
             "answer": "<p>Because we try to pack and dispatch our parcels as quickly as possible, you often cannot change or cancel your order once it is placed. Do you urgently need to change something? Send us a WhatsApp message or an email, and we will see what we can do for you. (+31 6 47812840 / info@sockeloen.nl)<br/></p>"
           }
+        },
+        "faq_eFb46r": {
+          "type": "faq",
+          "settings": {
+            "question": "Where is my Track & Trace code?",
+            "answer": "<ul><li>As soon as we have packed your parcel and handed it over to the delivery service, you will receive your track and trace code by email. Haven't received an email? Just send us a message and we'll look into it for you.</li></ul>"
+          }
         }
       },
       "block_order": [
         "heading_b9cQ3a",
         "faq_CddMQ8",
-        "faq_yNK4yW"
+        "faq_yNK4yW",
+        "faq_eFb46r"
       ],
       "custom_css": [],
       "name": "FAQ",
