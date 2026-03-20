@@ -77,10 +77,40 @@
         "padding_top_mob": 50,
         "padding_bottom_mob": 50
       }
+    },
+    "faq_ga6fPP": {
+      "type": "faq",
+      "blocks": {
+        "heading_kDgG4m": {
+          "type": "heading",
+          "settings": {
+            "heading": "Product Information & Fit"
+          }
+        },
+        "faq_yQVWqp": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you have size charts?",
+            "answer": "<p>Yes, you can find all our size charts here!<br/><br/></p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_kDgG4m",
+        "faq_yQVWqp"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "padding_top_mob": 50,
+        "padding_bottom_mob": 50
+      }
     }
   },
   "order": [
     "main",
-    "faq_HrDmnR"
+    "faq_HrDmnR",
+    "faq_ga6fPP"
   ]
 }
