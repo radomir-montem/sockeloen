@@ -18,6 +18,33 @@
     },
     "faq_HrDmnR": {
       "type": "faq",
+      "blocks": {
+        "heading_b9cQ3a": {
+          "type": "heading",
+          "settings": {
+            "heading": "Orders & Delivery"
+          }
+        },
+        "faq_CddMQ8": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the delivery time for my order? ",
+            "answer": "<p>For the Netherlands and Belgium, orders placed before 15:00 on working days will be delivered the next day. For European deliveries, this takes 3-10 working days, depending on the destination. You will always find the exact delivery time at checkout. This does not apply to custom socks; we print and design these individually, so they take up to 7 working days to process.<br/><br/></p>"
+          }
+        },
+        "faq_yNK4yW": {
+          "type": "faq",
+          "settings": {
+            "question": "",
+            "answer": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_b9cQ3a",
+        "faq_CddMQ8",
+        "faq_yNK4yW"
+      ],
       "custom_css": [],
       "name": "FAQ",
       "settings": {
