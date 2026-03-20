@@ -123,7 +123,7 @@
           "type": "faq",
           "settings": {
             "question": "I am exactly between two sizes, which size should I choose?",
-            "answer": "<ul><li>Socks: Choose a size smaller. Our cycling socks have a nice stretch to them. By choosing a smaller size, the sock fits snugly around your foot and you prevent doubled-up fabric or creases inside your cycling shoe.</li><li>Overshoes: Choose a size larger. Our overshoes have a tight fit over your shoes. A larger size makes putting them on a lot easier, without immediately compromising on aerodynamics and fit.</li></ul>"
+            "answer": "<ul><li><strong>Socks:</strong> Choose a size smaller. Our cycling socks have a nice stretch to them. By choosing a smaller size, the sock fits snugly around your foot and you prevent doubled-up fabric or creases inside your cycling shoe.</li><li><strong>Overshoes:</strong> Choose a size larger. Our overshoes have a tight fit over your shoes. A larger size makes putting them on a lot easier, without immediately compromising on aerodynamics and fit.</li></ul>"
           }
         }
       },
