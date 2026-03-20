@@ -116,7 +116,7 @@
           "type": "faq",
           "settings": {
             "question": "Do you have size charts?",
-            "answer": "<p>Yes, you can find all our size charts here!<br/><br/></p>"
+            "answer": "<p>Yes, you can find all our size charts here<br/><br/></p>"
           }
         }
       },
