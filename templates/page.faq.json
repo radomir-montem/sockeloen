@@ -45,13 +45,21 @@
             "question": "Where is my Track & Trace code?",
             "answer": "<ul><li>As soon as we have packed your parcel and handed it over to the delivery service, you will receive your track and trace code by email. Haven't received an email? Just send us a message and we'll look into it for you.</li></ul>"
           }
+        },
+        "faq_pkAAka": {
+          "type": "faq",
+          "settings": {
+            "question": "What are your delivery charges?",
+            "answer": "<ul><li>The delivery costs depend on the destination:</li></ul><p>Netherlands and Belgium: €6</p><p>European deliveries: €10</p>"
+          }
         }
       },
       "block_order": [
         "heading_b9cQ3a",
         "faq_CddMQ8",
         "faq_yNK4yW",
-        "faq_eFb46r"
+        "faq_eFb46r",
+        "faq_pkAAka"
       ],
       "custom_css": [],
       "name": "FAQ",
