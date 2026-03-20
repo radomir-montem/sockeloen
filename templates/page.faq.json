@@ -52,6 +52,13 @@
             "question": "What are your delivery charges?",
             "answer": "<ul><li>The delivery costs depend on the destination:</li></ul><p>Netherlands and Belgium: €6</p><p>European deliveries: €10</p>"
           }
+        },
+        "faq_UKBnWa": {
+          "type": "faq",
+          "settings": {
+            "question": "Free delivery offer but still paid delivery costs.",
+            "answer": "<p>How frustrating that this wasn't processed correctly automatically! Just get in touch with us and we will refund this to you.<br/><br/></p>"
+          }
         }
       },
       "block_order": [
@@ -59,7 +66,8 @@
         "faq_CddMQ8",
         "faq_yNK4yW",
         "faq_eFb46r",
-        "faq_pkAAka"
+        "faq_pkAAka",
+        "faq_UKBnWa"
       ],
       "custom_css": [],
       "name": "FAQ",
