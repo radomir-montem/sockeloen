@@ -143,8 +143,8 @@
         "faq_r7mMiV": {
           "type": "faq",
           "settings": {
-            "question": "",
-            "answer": ""
+            "question": "My aero socks keep slipping down.",
+            "answer": "<p>Try washing the socks first. Washing them activates the sticky edge (gripper) that holds your socks up.<br/><br/></p>"
           }
         }
       },
