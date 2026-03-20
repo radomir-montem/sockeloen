@@ -180,12 +180,34 @@
         "padding_top_mob": 50,
         "padding_bottom_mob": 50
       }
+    },
+    "faq_JaX8P3": {
+      "type": "faq",
+      "blocks": {
+        "heading_Byfe3D": {
+          "type": "heading",
+          "settings": {
+            "heading": "Returns & Warranty"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Byfe3D"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "padding_top_mob": 50,
+        "padding_bottom_mob": 50
+      }
     }
   },
   "order": [
     "main",
     "rich_text_AjGaBK",
     "faq_HrDmnR",
-    "faq_ga6fPP"
+    "faq_ga6fPP",
+    "faq_JaX8P3"
   ]
 }
