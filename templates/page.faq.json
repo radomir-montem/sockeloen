@@ -137,7 +137,14 @@
           "type": "faq",
           "settings": {
             "question": "What is the best way to wash my Sockeloen socks?",
-            "answer": "<p>What is the best way to wash my Sockeloen socks?<br/></p>"
+            "answer": "<p>What is the best way to wash my Sockeloen socks?</p><p>Wash at a maximum of 30 degrees.</p><p>Do not use fabric conditioner (this affects the elasticity and breathability).</p><p>Do not put them in the tumble dryer, but let them line dry.<br/></p>"
+          }
+        },
+        "faq_r7mMiV": {
+          "type": "faq",
+          "settings": {
+            "question": "",
+            "answer": ""
           }
         }
       },
@@ -146,7 +153,8 @@
         "faq_yQVWqp",
         "faq_QrMfbF",
         "faq_kck8LW",
-        "faq_LQw9aG"
+        "faq_LQw9aG",
+        "faq_r7mMiV"
       ],
       "name": "FAQ",
       "settings": {
