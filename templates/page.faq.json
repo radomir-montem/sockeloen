@@ -210,13 +210,21 @@
             "question": "How long does it take for my return to be processed?",
             "answer": "<p>We do our best to process your return as soon as possible after receiving it. We usually allow 48 hours for this.<br/><br/></p>"
           }
+        },
+        "faq_dJLzkK": {
+          "type": "faq",
+          "settings": {
+            "question": "What should I do if I accidentally received the wrong or a damaged item?",
+            "answer": "<p>How frustrating! You can easily send your order back via our returns procedure, and we will exchange it for you. Check it out <a href=\"/pages/return-policy\" title=\"Return Policy\"><strong>here.</strong></a><br/><br/></p>"
+          }
         }
       },
       "block_order": [
         "heading_Byfe3D",
         "faq_EaVfLm",
         "faq_kjhpXz",
-        "faq_CQphWd"
+        "faq_CQphWd",
+        "faq_dJLzkK"
       ],
       "name": "FAQ",
       "settings": {
