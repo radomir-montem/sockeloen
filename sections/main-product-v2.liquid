@@ -378,35 +378,70 @@
       >
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-        {%- comment -%} 1. Reviews bar — Trustpilot-style green block stars {%- endcomment -%}
-        {%- assign review_count = 5082 -%}
-        {%- assign full_stars = 4 -%}
-        {%- assign partial_star = full_stars | plus: 1 -%}
-        {%- assign star_fraction = 50 -%}
-        <div class="product-v2__reviews-bar">
-          <div class="product-v2__stars">
-            {%- for i in (1..5) -%}
-              {%- if i <= full_stars -%}
-                <span class="product-v2__star-block product-v2__star-block--full">
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/></svg>
-                </span>
-              {%- elsif i == partial_star -%}
-                <span class="product-v2__star-block product-v2__star-block--partial">
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <defs><linearGradient id="tp-grad-{{ section.id }}"><stop offset="{{ star_fraction }}%" stop-color="#00b67a"/><stop offset="{{ star_fraction }}%" stop-color="#dcdce6"/></linearGradient></defs>
-                    <rect width="24" height="24" fill="url(#tp-grad-{{ section.id }})"/>
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/>
-                  </svg>
-                </span>
-              {%- else -%}
-                <span class="product-v2__star-block product-v2__star-block--empty">
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/></svg>
-                </span>
-              {%- endif -%}
-            {%- endfor -%}
-            <span class="product-v2__rating-text"><strong>4.5 / 5</strong> based on <em>{{ review_count }} real reviews</em></span>
+        {%- comment -%} 1. Social proof bar — switchable between Trustpilot stars and athlete social proof {%- endcomment -%}
+        {%- if section.settings.social_proof_type == 'trustpilot' -%}
+          {%- assign review_count = 5082 -%}
+          {%- assign full_stars = 4 -%}
+          {%- assign partial_star = full_stars | plus: 1 -%}
+          {%- assign star_fraction = 50 -%}
+          <div class="product-v2__reviews-bar">
+            <div class="product-v2__stars">
+              {%- for i in (1..5) -%}
+                {%- if i <= full_stars -%}
+                  <span class="product-v2__star-block product-v2__star-block--full">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/></svg>
+                  </span>
+                {%- elsif i == partial_star -%}
+                  <span class="product-v2__star-block product-v2__star-block--partial">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <defs><linearGradient id="tp-grad-{{ section.id }}"><stop offset="{{ star_fraction }}%" stop-color="#00b67a"/><stop offset="{{ star_fraction }}%" stop-color="#dcdce6"/></linearGradient></defs>
+                      <rect width="24" height="24" fill="url(#tp-grad-{{ section.id }})"/>
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/>
+                    </svg>
+                  </span>
+                {%- else -%}
+                  <span class="product-v2__star-block product-v2__star-block--empty">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/></svg>
+                  </span>
+                {%- endif -%}
+              {%- endfor -%}
+              <span class="product-v2__rating-text"><strong>4.5 / 5</strong> based on <em>{{ review_count }} real reviews</em></span>
+            </div>
           </div>
-        </div>
+        {%- elsif section.settings.social_proof_type == 'athletes' -%}
+          <div class="product-v2__social-proof" style="background-color: {{ section.settings.sp_bg_color }};">
+            <div class="product-v2__social-proof-inner">
+              <div class="product-v2__sp-avatars">
+                {%- if section.settings.sp_avatar_1 != blank -%}
+                  <div class="product-v2__sp-avatar product-v2__sp-avatar--1">
+                    <img src="{{ section.settings.sp_avatar_1 | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy">
+                    {%- if section.settings.sp_verified_badge -%}
+                      <span class="product-v2__sp-verified" aria-label="Verified">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="12" fill="#1DA1F2"/>
+                          <path d="M9.5 12.5L11 14L15 10" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.sp_avatar_2 != blank -%}
+                  <div class="product-v2__sp-avatar product-v2__sp-avatar--2">
+                    <img src="{{ section.settings.sp_avatar_2 | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy">
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.sp_avatar_3 != blank -%}
+                  <div class="product-v2__sp-avatar product-v2__sp-avatar--3">
+                    <img src="{{ section.settings.sp_avatar_3 | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy">
+                  </div>
+                {%- endif -%}
+              </div>
+              <p class="product-v2__sp-text" style="color: {{ section.settings.sp_text_color }};">
+                <strong>{{ section.settings.sp_athlete_name }}</strong> and <strong>+{{ section.settings.sp_follower_count }}</strong> other athletes ride in {{ section.settings.sp_brand_name }}.
+              </p>
+            </div>
+          </div>
+        {%- endif -%}
 
         {%- comment -%} 2. Title {%- endcomment -%}
         <h1 class="product-v2__title">{{ product.title | escape }}</h1>
