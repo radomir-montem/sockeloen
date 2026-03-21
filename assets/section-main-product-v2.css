@@ -266,6 +266,46 @@
   margin-bottom: 12px;
 }
 
+/* Current price: black, consistent size */
+.product-v2__price .price__container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.product-v2__price .price .regular-text,
+.product-v2__price .price__sale .real-price {
+  font-size: 20px !important;
+  color: #000 !important;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* From/compare price: same size, grey, strikethrough */
+.product-v2__price .price__sale > span > .regular-text,
+.product-v2__price .price__sale > span > span:not(.visually-hidden) {
+  font-size: 20px !important;
+  color: #999 !important;
+  font-weight: 400;
+  text-decoration: line-through;
+  line-height: 1.3;
+}
+
+/* From text override */
+.product-v2__price .price__sale > span > span[class*="font-roboto"][class*="italic"] {
+  font-size: 20px !important;
+  color: #999 !important;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+/* Save badge: vertically centered */
+.product-v2__price .product-save-badge {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
 /* ---------- Benefits Checklist ---------- */
 .product-v2__benefits {
   list-style: none;
