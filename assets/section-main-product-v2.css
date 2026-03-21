@@ -485,7 +485,7 @@ sticky-atc-v2.hidden {
 }
 
 .product-v2-size-modal__backdrop {
-  display: block;
+  display: block !important;
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
