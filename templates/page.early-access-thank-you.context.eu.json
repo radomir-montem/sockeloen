@@ -1,7 +1,0 @@
-{
-  "parent": "page.early-access-thank-you.json",
-  "context": {
-    "market": "eu"
-  },
-  "sections": {}
-}
