@@ -30,22 +30,23 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  background: transparent;
-  color: #fff;
+  padding: 6px 0;
+  background: none;
+  color: #000;
   font-size: 12px;
   font-weight: 500;
-  text-transform: uppercase;
+  text-transform: none;
   text-decoration: none;
-  letter-spacing: 0.04em;
-  border-radius: 4px;
+  letter-spacing: 0.02em;
+  border-radius: 0;
   line-height: 1;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  text-shadow: none;
 }
 
 .breadcrumb-overlay:hover {
-  background: rgba(0, 0, 0, 0.2);
-  color: #fff;
+  background: none;
+  color: #000;
+  opacity: 0.7;
 }
 
 .breadcrumb-overlay svg {
@@ -168,7 +169,7 @@
   list-style: none;
   margin: 0;
   padding: 6px;
-  background: #f0f0f0;
+  background: #fff;
 }
 
 .product-v2 .thumbnail-list li {
