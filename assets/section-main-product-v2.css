@@ -94,6 +94,11 @@
   margin-bottom: 0;
 }
 
+/* Remove skip-to-content from layout flow */
+.product-v2 slider-component .skip-to-content-link {
+  position: absolute;
+}
+
 /* Square crop main image */
 .product-v2 .product__media-list .product__media-item .media {
   aspect-ratio: 1 / 1;
@@ -166,18 +171,18 @@
 .product-v2 .thumbnail-list .thumbnail {
   width: 60px;
   height: 60px;
-  border-radius: 6px;
+  border-radius: 0;
   overflow: hidden;
-  border: 2px solid transparent;
+  border: none;
   cursor: pointer;
   padding: 0;
-  background: #fff;
-  transition: border-color 0.2s;
+  background: transparent;
+  transition: opacity 0.2s;
 }
 
 .product-v2 .thumbnail-list .thumbnail.is-active,
 .product-v2 .thumbnail-list .thumbnail:hover {
-  border-color: #000;
+  opacity: 0.7;
 }
 
 .product-v2 .thumbnail-list .thumbnail img {
@@ -565,6 +570,7 @@ sticky-atc-v2.hidden {
   .product-v2 .thumbnail-list .thumbnail {
     width: 72px;
     height: 72px;
+    border-radius: 0;
   }
 
   /* Title */
