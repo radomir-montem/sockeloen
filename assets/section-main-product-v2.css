@@ -309,12 +309,23 @@
 }
 
 .product-v2__sp-verified {
-  position: absolute;
-  bottom: -1px;
-  right: -1px;
-  display: flex;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 2px;
   line-height: 0;
-  z-index: 1;
+}
+
+.product-v2__sp-name-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-v2__sp-name-link:hover {
+  text-decoration: underline;
+}
+
+a.product-v2__sp-avatar {
+  display: block;
 }
 
 .product-v2__sp-text {
