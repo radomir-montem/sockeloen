@@ -499,18 +499,29 @@
         </div>
 
         {%- comment -%} 5. Product benefits from metafields {%- endcomment -%}
-        {%- if product.metafields.custom.benefit_1 != blank -%}
+        {%- assign b1 = product.metafields.custom.benefit_1.value | default: product.metafields.custom.benefit_1 -%}
+        {%- assign b2 = product.metafields.custom.benefit_2.value | default: product.metafields.custom.benefit_2 -%}
+        {%- assign b3 = product.metafields.custom.benefit_3.value | default: product.metafields.custom.benefit_3 -%}
+        {%- if b1 != blank or b2 != blank or b3 != blank -%}
           <ul class="product-v2__benefits">
-            {%- for i in (1..3) -%}
-              {%- assign benefit_key = 'benefit_' | append: i -%}
-              {%- assign benefit_value = product.metafields.custom[benefit_key] -%}
-              {%- if benefit_value != blank -%}
-                <li class="product-v2__benefit">
-                  {% render 'icon-checkmark' %}
-                  <span>{{ benefit_value }}</span>
-                </li>
-              {%- endif -%}
-            {%- endfor -%}
+            {%- if b1 != blank -%}
+              <li class="product-v2__benefit">
+                {% render 'icon-checkmark' %}
+                <span>{{ b1 }}</span>
+              </li>
+            {%- endif -%}
+            {%- if b2 != blank -%}
+              <li class="product-v2__benefit">
+                {% render 'icon-checkmark' %}
+                <span>{{ b2 }}</span>
+              </li>
+            {%- endif -%}
+            {%- if b3 != blank -%}
+              <li class="product-v2__benefit">
+                {% render 'icon-checkmark' %}
+                <span>{{ b3 }}</span>
+              </li>
+            {%- endif -%}
           </ul>
         {%- endif -%}
 
