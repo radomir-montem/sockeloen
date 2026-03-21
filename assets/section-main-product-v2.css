@@ -135,12 +135,21 @@
   display: block;
 }
 
+/* Hide first-child when another item is active */
+.product-v2 .product__media-list:has(.is-active) .product__media-item:first-child:not(.is-active) {
+  display: none;
+}
+
 .product-v2 .product__media-item.product__media-item--variant {
   display: none;
 }
 
 .product-v2 .product__media-item--variant:first-child {
   display: block;
+}
+
+.product-v2 .product__media-list:has(.is-active) .product__media-item--variant:first-child:not(.is-active) {
+  display: none;
 }
 
 .product-v2 .slider-mobile-gutter {
