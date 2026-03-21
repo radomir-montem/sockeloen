@@ -260,6 +260,7 @@
                   class="thumbnail-list__item slider__slide{% if section.settings.hide_variants and variant_images contains featured_media.src %} thumbnail-list_item--variant{% endif %}"
                   data-target="{{ section.id }}-{{ featured_media.id }}"
                   data-media-position="{{ media_index }}"
+                  data-variant-alt="{{ featured_media.alt | escape }}"
                 >
                   <button
                     class="thumbnail global-media-settings global-media-settings--no-shadow {% if featured_media.preview_image.aspect_ratio > 1 %}thumbnail--wide{% else %}thumbnail--narrow{% endif %}"
