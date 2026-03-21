@@ -961,7 +961,11 @@
         if (!section || !section.querySelector('.product-v2')) return;
 
         section.querySelectorAll('.product__media-item[data-variant-alt]').forEach(function(item) {
-          item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
+          if (item.getAttribute('data-variant-alt') === selectedAlt || item.classList.contains('is-active')) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
         });
         section.querySelectorAll('.thumbnail-list__item[data-variant-alt]').forEach(function(item) {
           item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
