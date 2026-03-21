@@ -912,6 +912,17 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       function isVariantChange() {}
+      // Re-enable ATC button after variant-radios connectedCallback disables it
+      setTimeout(function() {
+        var form = document.getElementById('product-form-{{ section.id }}');
+        if (form) {
+          var btn = form.querySelector('[name="add"]');
+          var input = form.querySelector('input[name="id"]');
+          if (btn && input && !input.disabled && input.value) {
+            btn.removeAttribute('disabled');
+          }
+        }
+      }, 800);
     });
   </script>
 </section>
