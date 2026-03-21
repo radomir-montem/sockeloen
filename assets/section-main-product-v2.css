@@ -31,7 +31,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: rgba(0, 0, 0, 0.45);
+  background: transparent;
   color: #fff;
   font-size: 12px;
   font-weight: 500;
@@ -40,12 +40,11 @@
   letter-spacing: 0.04em;
   border-radius: 4px;
   line-height: 1;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .breadcrumb-overlay:hover {
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.2);
   color: #fff;
 }
 
