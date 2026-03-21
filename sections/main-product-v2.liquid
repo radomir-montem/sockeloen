@@ -378,27 +378,33 @@
       >
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-        {%- comment -%} 1. Reviews bar — custom green stars (CloudPillo style) {%- endcomment -%}
-        {%- assign review_rating = 4.51 -%}
+        {%- comment -%} 1. Reviews bar — Trustpilot-style green block stars {%- endcomment -%}
         {%- assign review_count = 5082 -%}
-        {%- assign full_stars = review_rating | floor -%}
+        {%- assign full_stars = 4 -%}
         {%- assign partial_star = full_stars | plus: 1 -%}
-        {%- assign star_fraction = review_rating | minus: full_stars | times: 100 | round -%}
+        {%- assign star_fraction = 50 -%}
         <div class="product-v2__reviews-bar">
           <div class="product-v2__stars">
             {%- for i in (1..5) -%}
               {%- if i <= full_stars -%}
-                <svg class="product-v2__star product-v2__star--full" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="product-v2__star-block product-v2__star-block--full">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/></svg>
+                </span>
               {%- elsif i == partial_star -%}
-                <svg class="product-v2__star product-v2__star--partial" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <defs><linearGradient id="star-grad-{{ section.id }}"><stop offset="{{ star_fraction }}%" stop-color="#00b67a"/><stop offset="{{ star_fraction }}%" stop-color="#d4d4d4"/></linearGradient></defs>
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#star-grad-{{ section.id }})"/>
-                </svg>
+                <span class="product-v2__star-block product-v2__star-block--partial">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <defs><linearGradient id="tp-grad-{{ section.id }}"><stop offset="{{ star_fraction }}%" stop-color="#00b67a"/><stop offset="{{ star_fraction }}%" stop-color="#dcdce6"/></linearGradient></defs>
+                    <rect width="24" height="24" fill="url(#tp-grad-{{ section.id }})"/>
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/>
+                  </svg>
+                </span>
               {%- else -%}
-                <svg class="product-v2__star product-v2__star--empty" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="product-v2__star-block product-v2__star-block--empty">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/></svg>
+                </span>
               {%- endif -%}
             {%- endfor -%}
-            <span class="product-v2__rating-text">{{ review_rating }} based on {{ review_count }} real reviews</span>
+            <span class="product-v2__rating-text"><strong>4.5 / 5</strong> based on <em>{{ review_count }} real reviews</em></span>
           </div>
         </div>
 
@@ -1036,9 +1042,7 @@
         type="button"
         class="product-v2-sticky-bar__atc-btn product-sticky-atc bg-black font-medium tracking-[0.02em] uppercase button button--primary"
       >
-        <span>
-          {% render 'icon-product-cart' %}{{ 'products.product.add_to_cart' | t }}
-        </span>
+        <span>{{ 'products.product.add_to_cart' | t }}</span>
       </button>
     </div>
 
