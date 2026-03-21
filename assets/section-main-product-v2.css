@@ -232,11 +232,11 @@
 }
 
 .product-v2__star--full {
-  fill: #2d8c3c;
+  fill: #00b67a;
 }
 
 .product-v2__star--empty {
-  fill: #d4d4d4;
+  fill: #dcdce6;
 }
 
 .product-v2__rating-text {
