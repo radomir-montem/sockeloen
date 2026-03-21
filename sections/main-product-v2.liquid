@@ -1280,6 +1280,76 @@
   ],
   "settings": [
     {
+      "type": "header",
+      "content": "Social proof bar"
+    },
+    {
+      "type": "select",
+      "id": "social_proof_type",
+      "label": "Social proof style",
+      "options": [
+        { "value": "trustpilot", "label": "Trustpilot stars" },
+        { "value": "athletes", "label": "Athlete social proof" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "athletes"
+    },
+    {
+      "type": "image_picker",
+      "id": "sp_avatar_1",
+      "label": "Avatar 1 (with verified badge)"
+    },
+    {
+      "type": "checkbox",
+      "id": "sp_verified_badge",
+      "default": true,
+      "label": "Show verified badge on avatar 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "sp_avatar_2",
+      "label": "Avatar 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "sp_avatar_3",
+      "label": "Avatar 3"
+    },
+    {
+      "type": "text",
+      "id": "sp_athlete_name",
+      "label": "Athlete name",
+      "default": "Mathieu van der Poel"
+    },
+    {
+      "type": "text",
+      "id": "sp_follower_count",
+      "label": "Follower count",
+      "default": "237.532"
+    },
+    {
+      "type": "text",
+      "id": "sp_brand_name",
+      "label": "Brand name in sentence",
+      "default": "Sockeloen"
+    },
+    {
+      "type": "color",
+      "id": "sp_bg_color",
+      "label": "Social proof background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "sp_text_color",
+      "label": "Social proof text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Sale banner"
+    },
+    {
       "type": "checkbox",
       "id": "show_sale_banner",
       "default": false,

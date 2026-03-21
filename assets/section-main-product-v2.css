@@ -287,9 +287,12 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  overflow: hidden;
   border: 2px solid #fff;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.product-v2__sp-avatar img {
+  border-radius: 50%;
 }
 
 .product-v2__sp-avatar--2 {
