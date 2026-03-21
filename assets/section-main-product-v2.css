@@ -284,15 +284,20 @@
 
 .product-v2__sp-avatar {
   position: relative;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  overflow: visible;
 }
 
 .product-v2__sp-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
   border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
 .product-v2__sp-avatar--2 {
@@ -303,19 +308,13 @@
   margin-left: -10px;
 }
 
-.product-v2__sp-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
 .product-v2__sp-verified {
   position: absolute;
-  bottom: -2px;
-  right: -2px;
+  bottom: -1px;
+  right: -1px;
   display: flex;
   line-height: 0;
+  z-index: 1;
 }
 
 .product-v2__sp-text {
