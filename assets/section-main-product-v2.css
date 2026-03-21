@@ -151,9 +151,9 @@
 .product-v2 .thumbnail-list .thumbnail {
   width: 60px;
   height: 60px;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
   cursor: pointer;
   padding: 0;
   background: #fff;
