@@ -29,6 +29,7 @@
   {%- endstyle -%}
 
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-v2.js' | asset_url }}" defer="defer"></script>
 
   {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
