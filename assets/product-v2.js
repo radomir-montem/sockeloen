@@ -97,7 +97,7 @@ if (!customElements.get('sticky-atc-v2')) {
 
       // Find selected size
       let selectedSize = '';
-      const sizeFieldsets = form.querySelectorAll('.product-form__input');
+      const sizeFieldsets = (this.productSection || document).querySelectorAll('.product-form__input');
       for (const fieldset of sizeFieldsets) {
         const legend = fieldset.querySelector('legend, label.form__label');
         if (!legend) continue;
