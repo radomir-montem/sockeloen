@@ -218,8 +218,31 @@
   margin-bottom: 8px;
 }
 
-.product-v2__reviews-bar .ruk_rating_snippet {
+.product-v2__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.product-v2__star {
+  width: 18px;
+  height: 18px;
+}
+
+.product-v2__star--full {
+  fill: #2d8c3c;
+}
+
+.product-v2__star--empty {
+  fill: #d4d4d4;
+}
+
+.product-v2__rating-text {
+  margin-left: 6px;
   font-size: 13px;
+  color: #555;
+  font-weight: 400;
+  line-height: 1;
 }
 
 /* ---------- Title ---------- */
