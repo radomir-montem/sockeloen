@@ -170,9 +170,10 @@
           },
           "announcement_RXnatL": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
-              "text": "born in the peloton // 100% satisfaction",
-              "usd_text": "born in the peloton // 100% satisfaction",
+              "text": "born in the peloton // 100% satisfaction // customer = king  // free shipping on orders > 75,-",
+              "usd_text": "born in the peloton // 100% satisfaction // customer = king",
               "text_alignment": "center",
               "bg_color": "#f76503",
               "font_color": "#ffffff",
