@@ -104,6 +104,13 @@
         "usps"
       ],
       "settings": {
+        "social_proof_type": "athletes",
+        "sp_verified_badge": true,
+        "sp_athlete_name": "Mathieu van der Poel",
+        "sp_follower_count": "237.532",
+        "sp_brand_name": "Sockeloen",
+        "sp_bg_color": "#ffffff",
+        "sp_text_color": "#000000",
         "show_sale_banner": false,
         "sale_banner_text": "",
         "sale_banner_bg_color": "#abcc15",
