@@ -32,17 +32,21 @@ if (!customElements.get('sticky-atc-v2')) {
       if (!observeTarget) return;
 
       // Show sticky bar only when real ATC button has scrolled ABOVE the viewport
-      new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-            this.classList.add('show');
-            this.classList.remove('hidden');
-          } else {
-            this.classList.remove('show');
-            this.classList.add('hidden');
-          }
-        });
-      }, { threshold: 0 }).observe(observeTarget);
+      // Use a sentinel element placed just after the ATC button area
+      this._observeTarget = observeTarget;
+      this._scrollHandler = () => {
+        const rect = this._observeTarget.getBoundingClientRect();
+        const isAbove = rect.bottom < 0;
+        if (isAbove) {
+          this.classList.add('show');
+          this.classList.remove('hidden');
+        } else {
+          this.classList.remove('show');
+          this.classList.add('hidden');
+        }
+      };
+      window.addEventListener('scroll', this._scrollHandler, { passive: true });
+      this._scrollHandler();
 
       // Click handler — different behavior based on size options
       this.atcButton.addEventListener('click', () => this._handleAtcClick());
