@@ -9,6 +9,7 @@ if (!customElements.get('sticky-atc-v2')) {
       this.changeBtn = null;
       this.backdrop = null;
       this.selectionDisplay = null;
+      this.hasSizeOption = false;
     }
 
     connectedCallback() {
@@ -22,13 +23,16 @@ if (!customElements.get('sticky-atc-v2')) {
 
       if (!this.atcButton) return;
 
+      // Detect if product has a size option (more than 1 value)
+      this.hasSizeOption = this._detectSizeOption();
+
       // Find the real ATC button in the product form
       const realAtcBtn = document.querySelector('.product-v2 product-form button[name="add"]');
       const observeTarget = realAtcBtn || this.productSection;
       if (!observeTarget) return;
 
       // Show sticky bar when real ATC button scrolls out of viewport
-      const handleIntersection = (entries) => {
+      new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
             this.classList.add('show');
@@ -38,105 +42,105 @@ if (!customElements.get('sticky-atc-v2')) {
             this.classList.add('hidden');
           }
         });
-      };
+      }, { threshold: 0 }).observe(observeTarget);
 
-      new IntersectionObserver(handleIntersection, {
-        threshold: 0
-      }).observe(observeTarget);
-
-      // Event listeners
-      this.atcButton.addEventListener('click', () => this.showSizeModal());
+      // Click handler — different behavior based on size options
+      this.atcButton.addEventListener('click', () => this._handleAtcClick());
 
       if (this.confirmBtn) {
-        this.confirmBtn.addEventListener('click', () => this.confirmAddToCart());
+        this.confirmBtn.addEventListener('click', () => this._confirmAndAdd());
       }
       if (this.changeBtn) {
-        this.changeBtn.addEventListener('click', () => this.scrollToVariants());
+        this.changeBtn.addEventListener('click', () => this._scrollToForm());
       }
       if (this.backdrop) {
-        this.backdrop.addEventListener('click', () => this.hideModal());
+        this.backdrop.addEventListener('click', () => this._hideModal());
       }
     }
 
-    showSizeModal() {
+    _detectSizeOption() {
+      // Check for a "Size" option with more than 1 value
+      const sizeFieldsets = document.querySelectorAll('.product-v2 .product-form__input');
+      for (const fieldset of sizeFieldsets) {
+        const legend = fieldset.querySelector('legend, label.form__label');
+        if (!legend) continue;
+        const label = legend.textContent.trim().toLowerCase().replace(/:$/, '');
+        if (label === 'size' || label === 'maat') {
+          const radios = fieldset.querySelectorAll('input[type="radio"]');
+          const options = fieldset.querySelectorAll('select option');
+          if (radios.length > 1 || options.length > 1) return true;
+        }
+      }
+      return false;
+    }
+
+    _getForm() {
+      return document.querySelector('product-form form[data-type="add-to-cart-form"]')
+        || document.querySelector('product-form form');
+    }
+
+    _handleAtcClick() {
+      const form = this._getForm();
+      if (!form) return;
+
+      if (!this.hasSizeOption) {
+        // No size options — add directly to cart
+        this._submitForm(form);
+      } else {
+        // Has size options — show confirmation modal
+        this._showSizeModal(form);
+      }
+    }
+
+    _showSizeModal(form) {
       if (!this.modal) return;
 
-      // Read currently selected variant options
-      const form = document.querySelector('product-form form[data-type="add-to-cart-form"]');
-      if (!form) {
-        // Fallback: try any product-form form
-        const fallbackForm = document.querySelector('product-form form');
-        if (fallbackForm) {
-          this._submitForm(fallbackForm);
+      // Find selected size
+      let selectedSize = '';
+      const sizeFieldsets = form.querySelectorAll('.product-form__input');
+      for (const fieldset of sizeFieldsets) {
+        const legend = fieldset.querySelector('legend, label.form__label');
+        if (!legend) continue;
+        const label = legend.textContent.trim().toLowerCase().replace(/:$/, '');
+        if (label === 'size' || label === 'maat') {
+          const checked = fieldset.querySelector('input[type="radio"]:checked');
+          const select = fieldset.querySelector('select');
+          if (checked) selectedSize = checked.value;
+          else if (select) selectedSize = select.value;
+          break;
         }
-        return;
-      }
-
-      const selectedOptions = [];
-
-      // Check radio buttons (pill-style variant picker)
-      form.querySelectorAll('.product-form__input--pill').forEach((group) => {
-        const legend = group.querySelector('legend, label.form__label');
-        const checked = group.querySelector('input[type="radio"]:checked');
-        if (legend && checked) {
-          const label = legend.textContent.trim().replace(/:$/, '');
-          selectedOptions.push(label + ': ' + checked.value);
-        }
-      });
-
-      // Check select dropdowns (dropdown variant picker)
-      if (selectedOptions.length === 0) {
-        form.querySelectorAll('.product-form__input select').forEach((select) => {
-          const label = select.closest('.product-form__input')?.querySelector('label');
-          if (label && select.value) {
-            selectedOptions.push(label.textContent.trim().replace(/:$/, '') + ': ' + select.value);
-          }
-        });
       }
 
       if (this.selectionDisplay) {
-        this.selectionDisplay.textContent = selectedOptions.length
-          ? selectedOptions.join('  |  ')
-          : '';
+        this.selectionDisplay.textContent = selectedSize || '';
       }
 
       this.modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
 
-    hideModal() {
+    _hideModal() {
       if (!this.modal) return;
       this.modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
 
-    confirmAddToCart() {
-      this.hideModal();
-
-      const form = document.querySelector('product-form form[data-type="add-to-cart-form"]')
-        || document.querySelector('product-form form');
-
-      if (form) {
-        this._submitForm(form);
-      }
+    _confirmAndAdd() {
+      this._hideModal();
+      const form = this._getForm();
+      if (form) this._submitForm(form);
     }
 
     _submitForm(form) {
-      // Trigger the submit event that product-form.js listens for
       const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
       form.dispatchEvent(submitEvent);
     }
 
-    scrollToVariants() {
-      this.hideModal();
-
-      const variantSelector = document.querySelector(
-        '.product-v2 .product-form__input--pill, .product-v2 .product-form__input select'
-      );
-
-      if (variantSelector) {
-        const target = variantSelector.closest('.product-form__input') || variantSelector;
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    _scrollToForm() {
+      this._hideModal();
+      const realBtn = document.querySelector('.product-v2 product-form button[name="add"]');
+      if (realBtn) {
+        realBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
   });
