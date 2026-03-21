@@ -170,12 +170,10 @@
             {%- for media in product.media -%}
               {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
                 <li
-                  {% assign alt_colors = media.alt | split: ' ' %}
-                  {% assign first_color = alt_colors[0] | strip %}
+                  data-variant-alt="{{ media.alt | escape }}"
                   {% assign variants_size = product.variants | size %}
-                  thumbnail-color="{{ first_color }}"
-                  {% if media_size >= 2 and variants_size > 1 %}
-                    {% unless product.selected_or_first_available_variant.featured_media.alt contains first_color -%}
+                  {% if variants_size > 1 and media.alt != blank %}
+                    {% unless media.alt == product.selected_or_first_available_variant.featured_media.alt -%}
                       style="display: none"
                     {%- endunless %}
                   {% endif %}
