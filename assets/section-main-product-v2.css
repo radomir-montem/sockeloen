@@ -61,6 +61,19 @@
   padding-left: 0;
 }
 
+/* Make gallery full-bleed on mobile despite page-width padding */
+@media screen and (max-width: 749px) {
+  .product-section.page-width {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .product-v2__info-wrapper {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
 /* ---------- Mobile Gallery ---------- */
 .product-v2 .product__media-list {
   display: flex;
