@@ -122,10 +122,11 @@
   display: flex;
   gap: 6px;
   overflow-x: auto;
-  padding: 6px 12px;
+  padding: 8px 12px;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  background: #fff;
+  background: #f0f0f0;
+  border-top: 2px solid #fff;
 }
 
 .product-v2 .thumbnail-slider::-webkit-scrollbar {
@@ -138,8 +139,9 @@
   gap: 6px;
   list-style: none;
   margin: 0;
-  padding: 6px 12px;
-  background: #fff;
+  padding: 8px 12px;
+  background: #f0f0f0;
+  border-top: 2px solid #fff;
 }
 
 .product-v2 .thumbnail-list li {
