@@ -950,34 +950,44 @@
   {%- comment -%} Override filterMedia to use data-variant-alt instead of thumbnail-color {%- endcomment -%}
   <script>
     (function() {
-      var sectionId = '{{ section.id }}';
-      var sectionSelector = '#MainProduct-' + sectionId;
+      var sectionSelector = '#MainProduct-{{ section.id }}';
 
-      function filterByAlt(variantEl) {
+      function filterByVariantAlt(variantEl) {
         if (!variantEl.currentVariant || !variantEl.currentVariant.featured_media) return;
         var selectedAlt = variantEl.currentVariant.featured_media.alt;
         if (!selectedAlt) return;
+        // Only apply to our v2 section
+        var section = variantEl.closest('[id^="MainProduct"]');
+        if (!section || !section.querySelector('.product-v2')) return;
 
-        document.querySelectorAll(sectionSelector + ' .product__media-item[data-variant-alt]').forEach(function(item) {
+        section.querySelectorAll('.product__media-item[data-variant-alt]').forEach(function(item) {
           item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
         });
-        document.querySelectorAll(sectionSelector + ' .thumbnail-list__item[data-variant-alt]').forEach(function(item) {
+        section.querySelectorAll('.thumbnail-list__item[data-variant-alt]').forEach(function(item) {
           item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
         });
       }
 
-      function patchElement(el) {
-        el.filterMedia = function() { filterByAlt(this); };
-      }
-
-      // Patch when custom element is defined (handles deferred global.js)
-      customElements.whenDefined('variant-radios').then(function() {
+      // Listen for variant changes directly on the variant-radios element
+      var observer = new MutationObserver(function() {
         var el = document.querySelector(sectionSelector + ' variant-radios');
-        if (el) patchElement(el);
+        if (!el) return;
+        observer.disconnect();
+        el.addEventListener('change', function() {
+          // Small delay to let onVariantChange update currentVariant first
+          setTimeout(function() { filterByVariantAlt(el); }, 50);
+        });
       });
-      customElements.whenDefined('variant-selects').then(function() {
-        var el = document.querySelector(sectionSelector + ' variant-selects');
-        if (el) patchElement(el);
+      observer.observe(document.querySelector(sectionSelector) || document.body, { childList: true, subtree: true });
+
+      // Also handle initial load for already-present elements
+      document.addEventListener('DOMContentLoaded', function() {
+        var el = document.querySelector(sectionSelector + ' variant-radios');
+        if (el) {
+          el.addEventListener('change', function() {
+            setTimeout(function() { filterByVariantAlt(el); }, 50);
+          });
+        }
       });
     })();
   </script>
