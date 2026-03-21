@@ -182,12 +182,14 @@
 }
 
 .product-v2 .thumbnail-list li {
-  flex: 0 0 60px;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .product-v2 .thumbnail-list .thumbnail {
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  aspect-ratio: 1;
+  height: auto;
   border-radius: 0;
   overflow: hidden;
   border: none;
@@ -644,12 +646,14 @@ sticky-atc-v2.hidden {
   }
 
   .product-v2 .thumbnail-list li {
-    flex: 0 0 72px;
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .product-v2 .thumbnail-list .thumbnail {
-    width: 72px;
-    height: 72px;
+    width: 100%;
+    aspect-ratio: 1;
+    height: auto;
     border-radius: 0;
   }
 
