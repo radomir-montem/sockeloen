@@ -159,9 +159,9 @@
 
 .product-v2 .thumbnail-slider {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   overflow-x: auto;
-  padding: 6px;
+  padding: 4px 0 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
   background: #fff;
@@ -174,10 +174,10 @@
 .product-v2 .thumbnail-list {
   display: flex;
   flex-wrap: nowrap;
-  gap: 6px;
+  gap: 4px;
   list-style: none;
   margin: 0;
-  padding: 6px;
+  padding: 4px 0 0;
   background: #fff;
 }
 
@@ -188,7 +188,7 @@
 
 .product-v2 .thumbnail-list .thumbnail {
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 3 / 4;
   height: auto;
   border-radius: 0;
   overflow: hidden;
@@ -212,7 +212,7 @@
 
 /* ---------- Product Info ---------- */
 .product-v2__info-wrapper {
-  padding: 16px;
+  padding: 10px 16px 16px;
   background: #fff;
 }
 
@@ -268,8 +268,8 @@
 
 /* ---------- Social Proof (Athletes) ---------- */
 .product-v2__social-proof {
-  padding: 8px 0;
-  margin-bottom: 4px;
+  padding: 10px 0;
+  margin-bottom: 0;
 }
 
 .product-v2__social-proof-inner {
@@ -341,7 +341,8 @@ a.product-v2__sp-avatar {
   text-transform: uppercase;
   font-weight: 700;
   line-height: 1.15;
-  margin: 0 0 4px;
+  margin: 0;
+  padding-bottom: 10px;
 }
 
 /* ---------- Subtitle ---------- */
@@ -737,7 +738,7 @@ sticky-atc-v2.hidden {
   /* Thumbnail grid on desktop */
   .product-v2 .thumbnail-list {
     flex-wrap: wrap;
-    padding: 6px 0;
+    padding: 4px 0 0;
   }
 
   .product-v2 .thumbnail-list li {
@@ -747,7 +748,7 @@ sticky-atc-v2.hidden {
 
   .product-v2 .thumbnail-list .thumbnail {
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 3 / 4;
     height: auto;
     border-radius: 0;
   }
