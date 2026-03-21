@@ -4,12 +4,21 @@
 
 /* ---------- Layout ---------- */
 .product-v2 {
+  display: flex;
+  flex-wrap: wrap;
   margin: 0;
   gap: 0;
 }
 
 .product-v2.grid {
+  display: flex;
+  flex-wrap: wrap;
   gap: 0;
+}
+
+.product-v2 > .grid__item {
+  width: 100%;
+  max-width: 100%;
 }
 
 /* ---------- Breadcrumb Overlay ---------- */
@@ -452,6 +461,15 @@ sticky-atc-v2.hidden {
     position: sticky;
     top: 3rem;
     z-index: 2;
+  }
+
+  /* On desktop, show only active media item (thumbnail layout) */
+  .product-v2 .product__media-item:not(.is-active) {
+    display: none;
+  }
+
+  .product-v2 .product__media-list {
+    display: block;
   }
 
   /* Thumbnail grid on desktop */
