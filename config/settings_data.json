@@ -170,12 +170,11 @@
           },
           "announcement_RXnatL": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
               "text": "born in the peloton // 100% satisfaction // customer = king",
               "usd_text": "born in the peloton // 100% satisfaction // customer = king",
               "text_alignment": "center",
-              "bg_color": "#000000",
+              "bg_color": "#a28044",
               "font_color": "#ffffff",
               "link": ""
             }
@@ -186,7 +185,7 @@
               "text": "free shipping on orders > 75,-",
               "usd_text": "free shipping on orders > $100,-",
               "text_alignment": "center",
-              "bg_color": "#000000",
+              "bg_color": "#a28044",
               "font_color": "#ffffff",
               "link": "shopify://policies/shipping-policy"
             }
