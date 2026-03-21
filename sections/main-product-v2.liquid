@@ -913,26 +913,38 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       function isVariantChange() {}
-      // Re-enable ATC button — variant-radios connectedCallback disables it,
-      // then renderProductInfo should re-enable it, but fetch interceptors from
-      // third-party apps can break this flow. Multiple retries as fallback.
-      function enableAtcIfAvailable() {
-        var form = document.getElementById('product-form-{{ section.id }}');
-        if (form) {
-          var btn = form.querySelector('[name="add"]');
-          var input = form.querySelector('input[name="id"]');
-          if (btn && btn.disabled && input && !input.disabled && input.value) {
+      // The variant-radios connectedCallback calls onVariantChange after 500ms,
+      // which disables the button, then renderProductInfo fetches section HTML
+      // and re-enables it. But third-party fetch interceptors can break this.
+      // Fix: observe the button and re-enable it whenever it gets disabled
+      // while the product is actually available.
+      var form = document.getElementById('product-form-{{ section.id }}');
+      if (form) {
+        var btn = form.querySelector('[name="add"]');
+        if (btn) {
+          var productAvailable = {{ product.selected_or_first_available_variant.available | json }};
+          var comingSoon = {{ product.metafields.custom.coming_soon | default: false | json }};
+          if (productAvailable && !comingSoon) {
+            // Immediately ensure button is enabled
             btn.removeAttribute('disabled');
-            var span = btn.querySelector('span');
-            if (span && window.variantStrings) {
-              span.innerHTML = window.variantStrings.cartIcon + window.variantStrings.addToCart;
-            }
+            // Watch for external scripts disabling it
+            var observer = new MutationObserver(function(mutations) {
+              mutations.forEach(function(m) {
+                if (m.attributeName === 'disabled' && btn.disabled) {
+                  // Only re-enable if variant input still has a value (variant is selected)
+                  var input = form.querySelector('input[name="id"]');
+                  if (input && input.value) {
+                    btn.removeAttribute('disabled');
+                  }
+                }
+              });
+            });
+            observer.observe(btn, { attributes: true, attributeFilter: ['disabled'] });
+            // Stop observing after 5 seconds (let normal variant switching work after that)
+            setTimeout(function() { observer.disconnect(); }, 5000);
           }
         }
       }
-      setTimeout(enableAtcIfAvailable, 1000);
-      setTimeout(enableAtcIfAvailable, 2000);
-      setTimeout(enableAtcIfAvailable, 3500);
     });
   </script>
 </section>
