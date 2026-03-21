@@ -104,12 +104,15 @@
         "usps"
       ],
       "settings": {
-        "social_proof_type": "trustpilot",
+        "social_proof_type": "athletes",
+        "sp_avatar_1": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.30.36.png",
         "sp_verified_badge": true,
-        "sp_athlete_name": "Mathieu van der Poel",
-        "sp_follower_count": "237.532",
-        "sp_brand_name": "Sockeloen",
-        "sp_bg_color": "#ffffff",
+        "sp_avatar_2": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.31.47.png",
+        "sp_avatar_3": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.31.03.png",
+        "sp_athlete_name": "Tibor del Grosso",
+        "sp_follower_count": "67.542",
+        "sp_brand_name": "Sockeloen socks",
+        "sp_bg_color": "#f3f3f3",
         "sp_text_color": "#000000",
         "show_sale_banner": false,
         "sale_banner_text": "",
@@ -126,6 +129,40 @@
     },
     "benefits": {
       "type": "product-benefits",
+      "blocks": {
+        "benefit_HDtRUe": {
+          "type": "benefit",
+          "settings": {
+            "image": "shopify://shop_images/1200x600_RACE_essentials_webbanner2_jpg.jpg",
+            "heading": "worn by",
+            "heading_italic": "World Champions",
+            "description": "<p>our socks are worn by the best in the world.</p>"
+          }
+        },
+        "benefit_mbDXXi": {
+          "type": "benefit",
+          "settings": {
+            "image": "shopify://shop_images/Tour_home_banner.png",
+            "heading": "windtunnel",
+            "heading_italic": "Proven",
+            "description": "<p>no marginal, but significant gains.</p>"
+          }
+        },
+        "benefit_3fPnKB": {
+          "type": "benefit",
+          "settings": {
+            "image": "shopify://shop_images/Test_banner_website_knwu.png",
+            "heading": "worn by",
+            "heading_italic": "World Champions",
+            "description": "<p>our socks are worn by the best in the world.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_HDtRUe",
+        "benefit_mbDXXi",
+        "benefit_3fPnKB"
+      ],
       "settings": {
         "background_color": "#ffffff",
         "text_color": "#000000",
