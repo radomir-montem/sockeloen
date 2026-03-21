@@ -956,10 +956,18 @@
         if (!variantEl.currentVariant || !variantEl.currentVariant.featured_media) return;
         var selectedAlt = variantEl.currentVariant.featured_media.alt;
         if (!selectedAlt) return;
-        // Only apply to our v2 section
+        var sectionId = variantEl.dataset.section;
         var section = variantEl.closest('[id^="MainProduct"]');
         if (!section || !section.querySelector('.product-v2')) return;
 
+        // Set active media (onVariantChange crashes before updateMedia runs)
+        var mediaGallery = section.querySelector('media-gallery');
+        if (mediaGallery) {
+          var mediaId = sectionId + '-' + variantEl.currentVariant.featured_media.id;
+          mediaGallery.setActiveMedia(mediaId, true);
+        }
+
+        // Filter media items by variant alt text, preserving is-active visibility
         section.querySelectorAll('.product__media-item[data-variant-alt]').forEach(function(item) {
           if (item.getAttribute('data-variant-alt') === selectedAlt || item.classList.contains('is-active')) {
             item.style.display = '';
