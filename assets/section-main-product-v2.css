@@ -546,7 +546,7 @@ sticky-atc-v2.hidden {
   /* Thumbnail grid on desktop */
   .product-v2 .thumbnail-list {
     flex-wrap: wrap;
-    padding: 8px 0;
+    padding: 6px 0;
   }
 
   .product-v2 .thumbnail-list li {
