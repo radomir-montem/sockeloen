@@ -309,6 +309,9 @@
                     data-target="{{ section.id }}-{{ media.id }}"
                     data-media-position="{{ media_index }}"
                     data-variant-alt="{{ media.alt | escape }}"
+                    {% if product.variants.size > 1 and media.alt != blank and media.alt != product.selected_or_first_available_variant.featured_media.alt %}
+                      style="display: none"
+                    {% endif %}
                   >
                     {%- if media.media_type == 'model' -%}
                       <span class="thumbnail__badge" aria-hidden="true">
