@@ -265,6 +265,62 @@
   line-height: 1;
 }
 
+/* ---------- Social Proof (Athletes) ---------- */
+.product-v2__social-proof {
+  padding: 8px 0;
+  margin-bottom: 4px;
+}
+
+.product-v2__social-proof-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-v2__sp-avatars {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.product-v2__sp-avatar {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.product-v2__sp-avatar--2 {
+  margin-left: -10px;
+}
+
+.product-v2__sp-avatar--3 {
+  margin-left: -10px;
+}
+
+.product-v2__sp-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-v2__sp-verified {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  display: flex;
+  line-height: 0;
+}
+
+.product-v2__sp-text {
+  font-size: 13px;
+  line-height: 1.35;
+  margin: 0;
+}
+
 /* ---------- Title ---------- */
 .product-v2__title {
   font-size: 25px;

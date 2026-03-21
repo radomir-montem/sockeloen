@@ -15,11 +15,11 @@ if (!customElements.get('sticky-atc-v2')) {
     connectedCallback() {
       this.productSection = document.querySelector('.product-v2');
       this.atcButton = this.querySelector('.product-v2-sticky-bar__atc-btn');
-      this.modal = this.querySelector('.product-v2-size-modal');
-      this.confirmBtn = this.querySelector('.product-v2-size-modal__confirm');
-      this.changeBtn = this.querySelector('.product-v2-size-modal__change');
-      this.backdrop = this.querySelector('.product-v2-size-modal__backdrop');
-      this.selectionDisplay = this.querySelector('.product-v2-size-modal__selection');
+      this.modal = document.querySelector('.product-v2-size-modal');
+      this.confirmBtn = document.querySelector('.product-v2-size-modal__confirm');
+      this.changeBtn = document.querySelector('.product-v2-size-modal__change');
+      this.backdrop = document.querySelector('.product-v2-size-modal__backdrop');
+      this.selectionDisplay = document.querySelector('.product-v2-size-modal__selection');
 
       if (!this.atcButton) return;
 
@@ -31,10 +31,10 @@ if (!customElements.get('sticky-atc-v2')) {
       const observeTarget = realAtcBtn || this.productSection;
       if (!observeTarget) return;
 
-      // Show sticky bar when real ATC button scrolls out of viewport
+      // Show sticky bar only when real ATC button has scrolled ABOVE the viewport
       new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
+          if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
             this.classList.add('show');
             this.classList.remove('hidden');
           } else {
