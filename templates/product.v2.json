@@ -105,14 +105,11 @@
       ],
       "settings": {
         "social_proof_type": "athletes",
-        "sp_avatar_1": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.31.03.png",
         "sp_verified_badge": true,
-        "sp_avatar_2": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.31.47.png",
-        "sp_avatar_3": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.30.36.png",
-        "sp_athlete_name": "Tibor del Grosso",
-        "sp_follower_count": "87.413",
+        "sp_athlete_name": "Mathieu van der Poel",
+        "sp_follower_count": "237.532",
         "sp_brand_name": "Sockeloen",
-        "sp_bg_color": "#f3f3f3",
+        "sp_bg_color": "#ffffff",
         "sp_text_color": "#000000",
         "show_sale_banner": false,
         "sale_banner_text": "",
@@ -136,6 +133,10 @@
         "padding_bottom": 36
       }
     },
+    "reviews": {
+      "type": "reviews-product",
+      "settings": {}
+    },
     "recommendations": {
       "type": "product-recommendations",
       "settings": {}
@@ -144,6 +145,7 @@
   "order": [
     "main",
     "benefits",
+    "reviews",
     "recommendations"
   ]
 }
