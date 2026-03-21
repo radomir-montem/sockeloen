@@ -480,15 +480,22 @@ sticky-atc-v2.hidden {
 @media screen and (min-width: 990px) {
 
   /* Two-column product layout */
+  .product-v2 > .grid__item {
+    width: auto;
+    max-width: none;
+  }
+
   .product-v2__media-wrapper {
     max-width: 55%;
-    width: calc(55% - var(--grid-desktop-horizontal-spacing, 20px) / 2);
+    width: 55%;
+    flex: 0 0 55%;
   }
 
   .product-v2__info-wrapper {
     padding: 24px 0 24px 4rem;
     max-width: 45%;
-    width: calc(45% - var(--grid-desktop-horizontal-spacing, 20px) / 2);
+    width: 45%;
+    flex: 0 0 45%;
   }
 
   .product-v2__info-container--sticky {
