@@ -3,6 +3,10 @@
    ========================================================================== */
 
 /* ---------- Layout ---------- */
+.product-section {
+  background: #fff;
+}
+
 .product-v2 {
   display: flex;
   flex-wrap: wrap;
