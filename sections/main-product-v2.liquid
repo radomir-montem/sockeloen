@@ -413,31 +413,36 @@
             <div class="product-v2__social-proof-inner">
               <div class="product-v2__sp-avatars">
                 {%- if section.settings.sp_avatar_1 != blank -%}
-                  <div class="product-v2__sp-avatar product-v2__sp-avatar--1">
+                  <{% if section.settings.sp_avatar_1_url != blank %}a href="{{ section.settings.sp_avatar_1_url }}" target="_blank" rel="noopener"{% else %}div{% endif %} class="product-v2__sp-avatar product-v2__sp-avatar--1">
                     <img src="{{ section.settings.sp_avatar_1 | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy">
-                    {%- if section.settings.sp_verified_badge -%}
-                      <span class="product-v2__sp-verified" aria-label="Verified">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="12" cy="12" r="12" fill="#1DA1F2"/>
-                          <path d="M9.5 12.5L11 14L15 10" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </span>
-                    {%- endif -%}
-                  </div>
+                  </{% if section.settings.sp_avatar_1_url != blank %}a{% else %}div{% endif %}>
                 {%- endif -%}
                 {%- if section.settings.sp_avatar_2 != blank -%}
-                  <div class="product-v2__sp-avatar product-v2__sp-avatar--2">
+                  <{% if section.settings.sp_avatar_2_url != blank %}a href="{{ section.settings.sp_avatar_2_url }}" target="_blank" rel="noopener"{% else %}div{% endif %} class="product-v2__sp-avatar product-v2__sp-avatar--2">
                     <img src="{{ section.settings.sp_avatar_2 | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy">
-                  </div>
+                  </{% if section.settings.sp_avatar_2_url != blank %}a{% else %}div{% endif %}>
                 {%- endif -%}
                 {%- if section.settings.sp_avatar_3 != blank -%}
-                  <div class="product-v2__sp-avatar product-v2__sp-avatar--3">
+                  <{% if section.settings.sp_avatar_3_url != blank %}a href="{{ section.settings.sp_avatar_3_url }}" target="_blank" rel="noopener"{% else %}div{% endif %} class="product-v2__sp-avatar product-v2__sp-avatar--3">
                     <img src="{{ section.settings.sp_avatar_3 | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy">
-                  </div>
+                  </{% if section.settings.sp_avatar_3_url != blank %}a{% else %}div{% endif %}>
                 {%- endif -%}
               </div>
               <p class="product-v2__sp-text" style="color: {{ section.settings.sp_text_color }};">
-                <strong>{{ section.settings.sp_athlete_name }}</strong> and <strong>+{{ section.settings.sp_follower_count }}</strong> other athletes ride in {{ section.settings.sp_brand_name }}.
+                {%- if section.settings.sp_athlete_url != blank -%}
+                  <a href="{{ section.settings.sp_athlete_url }}" target="_blank" rel="noopener" class="product-v2__sp-name-link"><strong>{{ section.settings.sp_athlete_name }}</strong></a>
+                {%- else -%}
+                  <strong>{{ section.settings.sp_athlete_name }}</strong>
+                {%- endif -%}
+                {%- if section.settings.sp_verified_badge -%}
+                  <span class="product-v2__sp-verified" aria-label="Verified">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="12" fill="#1DA1F2"/>
+                      <path d="M9.5 12.5L11 14L15 10" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                {%- endif -%}
+                 and <strong>+{{ section.settings.sp_follower_count }}</strong> other athletes ride in {{ section.settings.sp_brand_name }}.
               </p>
             </div>
           </div>
@@ -1297,13 +1302,12 @@
     {
       "type": "image_picker",
       "id": "sp_avatar_1",
-      "label": "Avatar 1 (with verified badge)"
+      "label": "Avatar 1"
     },
     {
-      "type": "checkbox",
-      "id": "sp_verified_badge",
-      "default": true,
-      "label": "Show verified badge on avatar 1"
+      "type": "url",
+      "id": "sp_avatar_1_url",
+      "label": "Avatar 1 link (e.g. Instagram profile)"
     },
     {
       "type": "image_picker",
@@ -1311,15 +1315,36 @@
       "label": "Avatar 2"
     },
     {
+      "type": "url",
+      "id": "sp_avatar_2_url",
+      "label": "Avatar 2 link"
+    },
+    {
       "type": "image_picker",
       "id": "sp_avatar_3",
       "label": "Avatar 3"
+    },
+    {
+      "type": "url",
+      "id": "sp_avatar_3_url",
+      "label": "Avatar 3 link"
     },
     {
       "type": "text",
       "id": "sp_athlete_name",
       "label": "Athlete name",
       "default": "Mathieu van der Poel"
+    },
+    {
+      "type": "url",
+      "id": "sp_athlete_url",
+      "label": "Athlete name link (e.g. Instagram profile)"
+    },
+    {
+      "type": "checkbox",
+      "id": "sp_verified_badge",
+      "default": true,
+      "label": "Show verified badge next to name"
     },
     {
       "type": "text",
