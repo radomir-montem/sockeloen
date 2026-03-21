@@ -950,32 +950,35 @@
   {%- comment -%} Override filterMedia to use data-variant-alt instead of thumbnail-color {%- endcomment -%}
   <script>
     (function() {
-      function initFilterOverride() {
-        var variantEl = document.querySelector('#MainProduct-{{ section.id }} variant-radios') ||
-                        document.querySelector('#MainProduct-{{ section.id }} variant-selects');
-        if (!variantEl || !variantEl.filterMedia) return;
+      var sectionId = '{{ section.id }}';
+      var sectionSelector = '#MainProduct-' + sectionId;
 
-        variantEl.filterMedia = function() {
-          if (!this.currentVariant || !this.currentVariant.featured_media) return;
-          var selectedAlt = this.currentVariant.featured_media.alt;
-          if (!selectedAlt) return;
+      function filterByAlt(variantEl) {
+        if (!variantEl.currentVariant || !variantEl.currentVariant.featured_media) return;
+        var selectedAlt = variantEl.currentVariant.featured_media.alt;
+        if (!selectedAlt) return;
 
-          var mediaItems = document.querySelectorAll('#MainProduct-{{ section.id }} .product__media-item[data-variant-alt]');
-          var thumbItems = document.querySelectorAll('#MainProduct-{{ section.id }} .thumbnail-list__item[data-variant-alt]');
-
-          mediaItems.forEach(function(item) {
-            item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
-          });
-          thumbItems.forEach(function(item) {
-            item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
-          });
-        };
+        document.querySelectorAll(sectionSelector + ' .product__media-item[data-variant-alt]').forEach(function(item) {
+          item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
+        });
+        document.querySelectorAll(sectionSelector + ' .thumbnail-list__item[data-variant-alt]').forEach(function(item) {
+          item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
+        });
       }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initFilterOverride);
-      } else {
-        initFilterOverride();
+
+      function patchElement(el) {
+        el.filterMedia = function() { filterByAlt(this); };
       }
+
+      // Patch when custom element is defined (handles deferred global.js)
+      customElements.whenDefined('variant-radios').then(function() {
+        var el = document.querySelector(sectionSelector + ' variant-radios');
+        if (el) patchElement(el);
+      });
+      customElements.whenDefined('variant-selects').then(function() {
+        var el = document.querySelector(sectionSelector + ' variant-selects');
+        if (el) patchElement(el);
+      });
     })();
   </script>
 </section>
