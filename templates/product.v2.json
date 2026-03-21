@@ -104,7 +104,7 @@
         "usps"
       ],
       "settings": {
-        "social_proof_type": "athletes",
+        "social_proof_type": "trustpilot",
         "sp_verified_badge": true,
         "sp_athlete_name": "Mathieu van der Poel",
         "sp_follower_count": "237.532",
