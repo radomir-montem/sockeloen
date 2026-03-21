@@ -1046,21 +1046,22 @@
       </button>
     </div>
 
-    {%- comment -%} Size confirmation modal {%- endcomment -%}
-    <div class="product-v2-size-modal" aria-hidden="true">
-      <div class="product-v2-size-modal__backdrop"></div>
-      <div class="product-v2-size-modal__content">
-        <p class="product-v2-size-modal__heading">Are you sure about your size?</p>
-        <div class="product-v2-size-modal__size-display">
-          <span class="product-v2-size-modal__selection"></span>
-        </div>
-        <div class="product-v2-size-modal__actions">
-          <button type="button" class="product-v2-size-modal__confirm">Yes, add to cart</button>
-          <button type="button" class="product-v2-size-modal__change">No, let me change</button>
-        </div>
+  </sticky-atc-v2>
+
+  {%- comment -%} Size confirmation modal (outside sticky-atc-v2 so transform doesn't break fixed positioning) {%- endcomment -%}
+  <div class="product-v2-size-modal" aria-hidden="true">
+    <div class="product-v2-size-modal__backdrop"></div>
+    <div class="product-v2-size-modal__content">
+      <p class="product-v2-size-modal__heading">Are you sure about your size?</p>
+      <div class="product-v2-size-modal__size-display">
+        <span class="product-v2-size-modal__selection"></span>
+      </div>
+      <div class="product-v2-size-modal__actions">
+        <button type="button" class="product-v2-size-modal__confirm">Yes, add to cart</button>
+        <button type="button" class="product-v2-size-modal__change">No, let me change</button>
       </div>
     </div>
-  </sticky-atc-v2>
+  </div>
 {% endunless %}
 
 {%- comment -%} Reviews.io rating snippet {%- endcomment -%}
