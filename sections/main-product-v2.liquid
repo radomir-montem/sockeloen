@@ -542,7 +542,7 @@
         {%- if ben1 != blank or ben2 != blank or ben3 != blank -%}
           <ul class="product-v2__benefits">
             {%- if ben1 != blank -%}
-              {%- assign ben1_cap = ben1 | capitalize -%}
+              {%- assign ben1_first = ben1 | slice: 0 | upcase -%}{%- assign ben1_rest = ben1 | slice: 1, 999 -%}{%- assign ben1_cap = ben1_first | append: ben1_rest -%}
               {%- unless ben1_cap contains '.' or ben1_cap contains '!' -%}{%- assign ben1_cap = ben1_cap | append: '.' -%}{%- endunless -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
@@ -550,7 +550,7 @@
               </li>
             {%- endif -%}
             {%- if ben2 != blank -%}
-              {%- assign ben2_cap = ben2 | capitalize -%}
+              {%- assign ben2_first = ben2 | slice: 0 | upcase -%}{%- assign ben2_rest = ben2 | slice: 1, 999 -%}{%- assign ben2_cap = ben2_first | append: ben2_rest -%}
               {%- unless ben2_cap contains '.' or ben2_cap contains '!' -%}{%- assign ben2_cap = ben2_cap | append: '.' -%}{%- endunless -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
@@ -558,7 +558,7 @@
               </li>
             {%- endif -%}
             {%- if ben3 != blank -%}
-              {%- assign ben3_cap = ben3 | capitalize -%}
+              {%- assign ben3_first = ben3 | slice: 0 | upcase -%}{%- assign ben3_rest = ben3 | slice: 1, 999 -%}{%- assign ben3_cap = ben3_first | append: ben3_rest -%}
               {%- unless ben3_cap contains '.' or ben3_cap contains '!' -%}{%- assign ben3_cap = ben3_cap | append: '.' -%}{%- endunless -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
