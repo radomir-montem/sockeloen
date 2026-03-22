@@ -756,7 +756,7 @@
                                   endif
                                 -%}
                                 {% if is_split %}
-                                  <span class="color-dot color-dot--split" style="background: linear-gradient(to right, {{ color_hex }} 50%, {{ color_hex_2 }} 50%);{% if is_light %} border: 1px solid #ddd;{% endif %}"></span>
+                                  <span class="color-dot color-dot--split" style="background: linear-gradient(to right, {{ color_hex }} 50%, {{ color_hex_2 }} 50%); border: 1px solid #ddd;"></span>
                                 {% else %}
                                   <span class="color-dot" style="background-color: {{ color_hex }};{% if is_light %} border: 1px solid #ddd;{% endif %}"></span>
                                 {% endif %}
@@ -1287,6 +1287,7 @@
   <script>
     (function() {
       var sectionSelector = '#MainProduct-{{ section.id }}';
+      var boundChange = false;
 
       function filterByVariantAlt(variantEl) {
         if (!variantEl.currentVariant || !variantEl.currentVariant.featured_media) return;
@@ -1296,47 +1297,58 @@
         var section = variantEl.closest('[id^="MainProduct"]');
         if (!section || !section.querySelector('.product-v2')) return;
 
-        // Set active media (onVariantChange crashes before updateMedia runs)
-        var mediaGallery = section.querySelector('media-gallery');
-        if (mediaGallery) {
-          var mediaId = sectionId + '-' + variantEl.currentVariant.featured_media.id;
-          mediaGallery.setActiveMedia(mediaId, true);
-        }
-
-        // Filter media items by variant alt text, preserving is-active visibility
+        // Filter main media items — only show images matching selected variant alt text
         section.querySelectorAll('.product__media-item[data-variant-alt]').forEach(function(item) {
-          if (item.getAttribute('data-variant-alt') === selectedAlt || item.classList.contains('is-active')) {
+          if (item.getAttribute('data-variant-alt') === selectedAlt) {
             item.style.display = '';
           } else {
             item.style.display = 'none';
           }
         });
+        // Also show items WITHOUT data-variant-alt (e.g. generic/shared images)
+        section.querySelectorAll('.product__media-item:not([data-variant-alt])').forEach(function(item) {
+          item.style.display = '';
+        });
+
+        // Filter thumbnails
         section.querySelectorAll('.thumbnail-list__item[data-variant-alt]').forEach(function(item) {
           item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
         });
+
+        // Set active media AFTER filtering so prepend works on visible items
+        var mediaGallery = section.querySelector('media-gallery');
+        if (mediaGallery) {
+          var mediaId = sectionId + '-' + variantEl.currentVariant.featured_media.id;
+          mediaGallery.setActiveMedia(mediaId, true);
+        }
       }
 
-      // Listen for variant changes directly on the variant-radios element
-      var observer = new MutationObserver(function() {
+      function bindAndRun() {
         var el = document.querySelector(sectionSelector + ' variant-radios');
-        if (!el) return;
-        observer.disconnect();
+        if (!el || boundChange) return;
+        boundChange = true;
+
         el.addEventListener('change', function() {
-          // Small delay to let onVariantChange update currentVariant first
           setTimeout(function() { filterByVariantAlt(el); }, 50);
         });
-      });
-      observer.observe(document.querySelector(sectionSelector) || document.body, { childList: true, subtree: true });
 
-      // Also handle initial load for already-present elements
-      document.addEventListener('DOMContentLoaded', function() {
-        var el = document.querySelector(sectionSelector + ' variant-radios');
-        if (el) {
-          el.addEventListener('change', function() {
-            setTimeout(function() { filterByVariantAlt(el); }, 50);
-          });
+        // Run initial filter on page load (after connectedCallback sets currentVariant)
+        setTimeout(function() { filterByVariantAlt(el); }, 600);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindAndRun);
+      } else {
+        bindAndRun();
+      }
+      // Fallback if variant-radios isn't in DOM yet
+      var obs = new MutationObserver(function() {
+        if (document.querySelector(sectionSelector + ' variant-radios')) {
+          obs.disconnect();
+          bindAndRun();
         }
       });
+      obs.observe(document.querySelector(sectionSelector) || document.body, { childList: true, subtree: true });
     })();
   </script>
 </section>
