@@ -23,6 +23,12 @@
   background: #fff;
 }
 
+@media screen and (min-width: 990px) {
+  .product-section {
+    background: #F4F4F1;
+  }
+}
+
 .product-v2 {
   display: flex;
   flex-wrap: wrap;
