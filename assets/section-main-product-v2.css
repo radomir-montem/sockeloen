@@ -506,11 +506,9 @@ a.product-v2__sp-avatar {
 
 /* Tier cards — horizontal single-row layout */
 /* Force Avada tier items to stack vertically */
-.product-v2 .Avada-Volume__Item:first-child {
-  /* Parent container override — Avada uses grid/flex for side-by-side */
-}
-
-.product-v2 [class*="Avada-Volume"]:has(.Avada-Volume__Item) {
+.product-v2 .Avada-Volume__Body,
+.product-v2 .Avada-Volume__Items,
+.product-v2 [class*="Avada-Volume"]:has(> .Avada-Volume__Item) {
   display: flex !important;
   flex-direction: column !important;
   gap: 8px !important;
@@ -724,8 +722,8 @@ a.product-v2__sp-avatar {
 }
 
 .product-v2 .avada-img-stack__img {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   border-radius: 50%;
   border: 2px solid #fff;
