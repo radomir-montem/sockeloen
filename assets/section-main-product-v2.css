@@ -788,35 +788,9 @@ a.product-v2__sp-avatar {
   color: #1a1a1a !important;
 }
 
-/* Radio dot — matches Avada tier radio dots */
-.product-v2 .size-radio-dot {
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 0.2s ease;
-}
-
-.product-v2 .size-radio-dot::after {
-  content: '';
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: #0395F6;
-  transition: width 0.2s ease, height 0.2s ease;
-}
-
-.product-v2 .product-form__input.size-input input[type='radio']:checked + label .size-radio-dot {
-  border-color: #0395F6;
-}
-
-.product-v2 .product-form__input.size-input input[type='radio']:checked + label .size-radio-dot::after {
-  width: 10px;
-  height: 10px;
+/* Hide base-theme radio dot pseudo-element */
+.product-v2 .product-form__input input[type='radio'] + label::before {
+  display: none !important;
 }
 
 /* Size label text */
