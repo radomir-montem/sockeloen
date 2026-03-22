@@ -28,6 +28,7 @@ x-data="{
               href="{{ link.url }}"
               {% if link.links.size > 0 or mega_menu_block != '' %} aria-controls="desktop-menu-{{ forloop.index }}" aria-expanded="false"{% endif %}>
               <span>{{ link.title }}</span>
+              <svg class="menu-arrow-down" xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5" fill="none"><path d="M1 1L4 4L7 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <ul 
               id="desktop-menu-{{ forloop.index }}" 

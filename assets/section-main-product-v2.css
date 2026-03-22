@@ -67,21 +67,18 @@
   gap: 2px;
 }
 
-/* Down arrow next to menu items with dropdowns on desktop */
+/* Down arrow SVG next to menu items with dropdowns */
+.menu-arrow-down {
+  display: none;
+}
+
 @media screen and (min-width: 990px) {
-  .template--v2 .header__inline-menu header-menu > li > a.child-menu::after,
-  .template--v2 .header__inline-menu details.mega-menu > summary::after {
-    content: '';
+  .template--v2 .menu-arrow-down {
     display: inline-block;
-    width: 0;
-    height: 0;
-    border-left: 3.5px solid transparent;
-    border-right: 3.5px solid transparent;
-    border-top: 3.5px solid currentColor;
-    margin-left: 5px;
-    vertical-align: middle;
-    position: relative;
-    top: 0px;
+    width: 8px;
+    height: 5px;
+    margin-left: 4px;
+    flex-shrink: 0;
   }
 }
 
