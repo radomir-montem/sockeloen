@@ -146,32 +146,83 @@ if (!customElements.get('sticky-atc-v2')) {
   });
 }
 
-/* Strip € symbol from Avada Volume Discount prices */
+/* Avada Volume Discount enhancements: strip € symbol + inject product image stack */
 (function() {
   function stripEuro(root) {
     (root || document).querySelectorAll(
       '.product-v2 .AOV-Offer__DiscountPrice, .product-v2 .AOV-Offer__BasePrice, .product-v2 .Avada-Offer__PriceDiscount, .product-v2 .Avada-Offer__PriceDefault'
     ).forEach(function(el) {
-      // Check direct text nodes
       el.childNodes.forEach(function(node) {
         if (node.nodeType === 3 && node.textContent.includes('€')) {
           node.textContent = node.textContent.replace(/€/g, '');
         }
       });
-      // Also check the element's own text if it's a leaf
       if (el.children.length === 0 && el.textContent.includes('€')) {
         el.textContent = el.textContent.replace(/€/g, '');
       }
     });
   }
-  // Run once DOM is ready, then watch for Avada's lazy rendering
-  function init() {
+
+  function injectImageStacks(root) {
+    var items = (root || document).querySelectorAll('.product-v2 .Avada-Volume__Item');
+    if (!items.length) return;
+
+    // Get first product image src (transparent bg)
+    var firstImg = document.querySelector('.product-v2 .product__media-item img');
+    if (!firstImg) return;
+    var imgSrc = firstImg.currentSrc || firstImg.src;
+    // Request a small version
+    if (imgSrc.indexOf('width=') !== -1) {
+      imgSrc = imgSrc.replace(/width=\d+/, 'width=80');
+    }
+
+    items.forEach(function(item) {
+      // Skip if already injected
+      if (item.querySelector('.avada-img-stack')) return;
+
+      // Determine how many images to show based on tier quantity
+      var qtyEl = item.querySelector('.Avada-Volume__Info--TriggerQty');
+      var qtyText = qtyEl ? qtyEl.textContent.trim() : '';
+      var count = 1;
+      var match = qtyText.match(/(\d+)/);
+      if (match) count = Math.min(parseInt(match[1], 10), 5);
+
+      // Create the image stack container
+      var stack = document.createElement('div');
+      stack.className = 'avada-img-stack';
+
+      for (var i = 0; i < count; i++) {
+        var img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.className = 'avada-img-stack__img';
+        if (i > 0) img.style.marginLeft = '-10px';
+        stack.appendChild(img);
+      }
+
+      // Insert after the info section, before the price
+      var content = item.querySelector('.Avada-Volume__Content');
+      var info = item.querySelector('.Avada-Volume__Info');
+      if (content && info) {
+        info.parentNode.insertBefore(stack, info.nextSibling);
+      }
+    });
+  }
+
+  function enhance() {
     stripEuro();
+    injectImageStacks();
+  }
+
+  function init() {
+    enhance();
     var container = document.querySelector('.product-v2');
     if (!container) return;
-    new MutationObserver(function() { stripEuro(container); })
+    new MutationObserver(function() { enhance(); })
       .observe(container, { childList: true, subtree: true, characterData: true });
   }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
