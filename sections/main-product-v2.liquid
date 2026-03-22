@@ -756,7 +756,7 @@
                                   endif
                                 -%}
                                 {% if is_split %}
-                                  <span class="color-dot color-dot--split" style="background: linear-gradient(to right, {{ color_hex }} 50%, {{ color_hex_2 }} 50%);{% if is_light %} border: 1px solid #ddd;{% endif %}"></span>
+                                  <span class="color-dot color-dot--split" style="background: linear-gradient(to right, {{ color_hex }} 50%, {{ color_hex_2 }} 50%); border: 1px solid #ddd;"></span>
                                 {% else %}
                                   <span class="color-dot" style="background-color: {{ color_hex }};{% if is_light %} border: 1px solid #ddd;{% endif %}"></span>
                                 {% endif %}
