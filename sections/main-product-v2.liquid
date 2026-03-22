@@ -1283,69 +1283,63 @@
     })();
   </script>
 
-  {%- comment -%} Override filterMedia to use data-variant-alt instead of thumbnail-color {%- endcomment -%}
+  {%- comment -%} Override filterMedia on variant-radios so alt-text filtering runs
+       synchronously inside onVariantChange(), BEFORE updateMedia/setActiveMedia {%- endcomment -%}
   <script>
     (function() {
       var sectionSelector = '#MainProduct-{{ section.id }}';
-      var boundChange = false;
+      var patched = false;
 
-      function filterByVariantAlt(variantEl) {
+      function doAltFilter(variantEl) {
         if (!variantEl.currentVariant || !variantEl.currentVariant.featured_media) return;
         var selectedAlt = variantEl.currentVariant.featured_media.alt;
         if (!selectedAlt) return;
-        var sectionId = variantEl.dataset.section;
         var section = variantEl.closest('[id^="MainProduct"]');
         if (!section || !section.querySelector('.product-v2')) return;
 
-        // Filter main media items — only show images matching selected variant alt text
+        /* ---- Main media items ---- */
         section.querySelectorAll('.product__media-item[data-variant-alt]').forEach(function(item) {
-          if (item.getAttribute('data-variant-alt') === selectedAlt) {
-            item.style.display = '';
-          } else {
-            item.style.display = 'none';
-          }
+          item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
         });
-        // Also show items WITHOUT data-variant-alt (e.g. generic/shared images)
+        /* Items without data-variant-alt are always visible */
         section.querySelectorAll('.product__media-item:not([data-variant-alt])').forEach(function(item) {
           item.style.display = '';
         });
 
-        // Filter thumbnails
+        /* ---- Thumbnails ---- */
         section.querySelectorAll('.thumbnail-list__item[data-variant-alt]').forEach(function(item) {
           item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
         });
-
-        // Set active media AFTER filtering so prepend works on visible items
-        var mediaGallery = section.querySelector('media-gallery');
-        if (mediaGallery) {
-          var mediaId = sectionId + '-' + variantEl.currentVariant.featured_media.id;
-          mediaGallery.setActiveMedia(mediaId, true);
-        }
       }
 
-      function bindAndRun() {
+      function patchElement() {
         var el = document.querySelector(sectionSelector + ' variant-radios');
-        if (!el || boundChange) return;
-        boundChange = true;
+        if (!el || patched) return;
+        patched = true;
 
-        el.addEventListener('change', function() {
-          setTimeout(function() { filterByVariantAlt(el); }, 50);
-        });
+        /*
+         * Override filterMedia() on this specific element instance.
+         * In onVariantChange(): filterMedia() runs → then updateMedia() → setActiveMedia().
+         * By filtering here, display styles are correct BEFORE setActiveMedia prepends + resetPages.
+         */
+        el.filterMedia = function() {
+          doAltFilter(el);
+        };
 
-        // Run initial filter on page load (after connectedCallback sets currentVariant)
-        setTimeout(function() { filterByVariantAlt(el); }, 600);
+        /* Initial filter: wait for connectedCallback (500ms) + onVariantChange to finish */
+        setTimeout(function() { doAltFilter(el); }, 600);
       }
 
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', bindAndRun);
+        document.addEventListener('DOMContentLoaded', patchElement);
       } else {
-        bindAndRun();
+        patchElement();
       }
-      // Fallback if variant-radios isn't in DOM yet
+      /* Fallback: watch for variant-radios if not yet in DOM */
       var obs = new MutationObserver(function() {
         if (document.querySelector(sectionSelector + ' variant-radios')) {
           obs.disconnect();
-          bindAndRun();
+          patchElement();
         }
       });
       obs.observe(document.querySelector(sectionSelector) || document.body, { childList: true, subtree: true });
