@@ -20,13 +20,7 @@
 
 /* ---------- Layout ---------- */
 .product-section {
-  background: #fff;
-}
-
-@media screen and (min-width: 990px) {
-  .product-section {
-    background: #F4F4F1;
-  }
+  background: #F4F4F1;
 }
 
 .product-v2 {
@@ -248,7 +242,7 @@
 /* ---------- Product Info ---------- */
 .product-v2__info-wrapper {
   padding: 16px 16px 16px;
-  background: transparent;
+  background: #F4F4F1;
 }
 
 /* ---------- Reviews Bar ---------- */
