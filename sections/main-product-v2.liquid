@@ -499,16 +499,21 @@
                 });
               });
             }
+            /* Strip immediately for elements already in DOM */
             stripEuro(document);
-            /* Re-run when price updates on variant change */
-            var priceWrap = document.getElementById('price-{{ section.id }}');
-            if(priceWrap){
-              new MutationObserver(function(){ stripEuro(priceWrap); }).observe(priceWrap, {childList:true, subtree:true, characterData:true});
-            }
-            var stickyPrice = document.querySelector('.product-v2-sticky-bar__price');
-            if(stickyPrice){
-              new MutationObserver(function(){ stripEuro(stickyPrice.parentElement); }).observe(stickyPrice, {childList:true, subtree:true, characterData:true});
-            }
+            /* Re-run after full DOM is ready (sticky bar renders later) */
+            document.addEventListener('DOMContentLoaded', function(){
+              stripEuro(document);
+              /* Observe price wrapper for variant changes */
+              var priceWrap = document.getElementById('price-{{ section.id }}');
+              if(priceWrap){
+                new MutationObserver(function(){ stripEuro(priceWrap); }).observe(priceWrap, {childList:true, subtree:true, characterData:true});
+              }
+              var stickyPrice = document.querySelector('.product-v2-sticky-bar__price');
+              if(stickyPrice){
+                new MutationObserver(function(){ stripEuro(stickyPrice.parentElement); }).observe(stickyPrice, {childList:true, subtree:true, characterData:true});
+              }
+            });
           })();
         </script>
         <div>
