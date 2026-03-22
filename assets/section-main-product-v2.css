@@ -1538,3 +1538,18 @@ sticky-atc-v2.hidden {
 .product-v2__usp-accordion {
   margin-bottom: 0;
 }
+
+.product-v2 .product__accordion .accordion__content {
+  padding: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #1a1a1a;
+  line-height: 1.5;
+}
+
+.product-v2 .product__accordion .accordion__content p {
+  font-size: 16px;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin: 0;
+}
