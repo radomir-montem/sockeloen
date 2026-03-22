@@ -2,6 +2,17 @@
    Product V2 — Mobile-first styles
    ========================================================================== */
 
+/* ---------- Announcement & Header overrides (scoped to v2 template) ---------- */
+.template--v2 .announcement-bar a {
+  padding: 14px 0;
+  font-weight: 500;
+}
+
+.template--v2 header.header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 /* ---------- Layout ---------- */
 .product-section {
   background: #fff;
@@ -422,7 +433,7 @@ a.product-v2__sp-avatar {
 
 .product-v2__benefit {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   font-size: 14px;
   line-height: 1.4;
@@ -432,7 +443,7 @@ a.product-v2__sp-avatar {
   flex-shrink: 0;
   width: 16px;
   height: 16px;
-  margin-top: 1px;
+  margin-top: 0;
   color: #abcc15;
   stroke-width: 3;
 }
