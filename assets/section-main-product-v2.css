@@ -41,14 +41,9 @@
   stroke-width: 0.5px;
 }
 
-/* Cart icon — match visual size with search/account icons + right spacing */
+/* Cart icon — keep original 4.4rem (compensates for 40x40 viewBox) + right spacing */
 .template--v2 .header__icon--cart {
   margin-right: 4px;
-}
-
-.template--v2 .header__icon--cart .icon {
-  width: 2rem;
-  height: 2rem;
 }
 
 /* Better spacing around header icons for good UX */
@@ -62,8 +57,9 @@
 
 /* Down arrow next to menu items with dropdowns on desktop — matches breadcrumb arrow style */
 @media screen and (min-width: 990px) {
-  .template--v2 .header__inline-menu header-menu > li > a.child-menu span::after,
-  .template--v2 .header__inline-menu details.mega-menu > summary > span::after {
+  /* Arrow on the <a> tag to avoid ::first-letter conflict on <span> */
+  .template--v2 .header__inline-menu header-menu > li > a.child-menu::after,
+  .template--v2 .header__inline-menu details.mega-menu > summary::after {
     content: '';
     display: inline-block;
     width: 7px;
