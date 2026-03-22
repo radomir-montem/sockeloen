@@ -1322,11 +1322,12 @@ sticky-atc-v2.hidden {
   }
 
   .product-v2 .product__media-item {
-    display: block;
+    display: block !important;
     width: 100% !important;
   }
 
-  /* Respect variant filtering: items hidden by JS inline style should stay hidden */
+  /* Respect variant filtering: items hidden by JS inline style should stay hidden.
+     Attribute selector adds specificity so this beats the rule above. */
   .product-v2 .product__media-item[style*="display: none"] {
     display: none !important;
   }
