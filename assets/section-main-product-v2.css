@@ -743,6 +743,16 @@ a.product-v2__sp-avatar {
 }
 
 /* ---------- Variant Pickers — Shared ---------- */
+/* Visually reorder: color first, size second (DOM order preserved for variant matching) */
+.product-v2 variant-radios {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-v2 .product-form__input.color-input {
+  order: -1;
+}
+
 .product-v2 .product-form__input--pill {
   margin-bottom: 16px;
   display: flex;
@@ -920,6 +930,7 @@ a.product-v2__sp-avatar {
   transition: color 0.2s ease;
   margin-top: -4px;
   margin-bottom: 12px;
+  order: 10;
 }
 
 .product-v2 .size-guide-link:hover {
