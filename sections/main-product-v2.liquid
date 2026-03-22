@@ -575,50 +575,60 @@
                   >
                     {%- for option in product.options_with_values -%}
                       {% assign option_name = option.name | handleize %}
-                      <fieldset class="js product-form__input product-form__input--pill {% if option_name contains 'color' or option_name contains 'kleur' or option_name contains 'couleur' %}color-input{% endif %}">
-                        <legend class="form__label">{{ option.name }}</legend>
-                        {%- for value in option.values -%}
-                          <input
-                            type="radio"
-                            id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                            name="{{ option.name }}"
-                            value="{{ value | escape }}"
-                            form="{{ product_form_id }}"
-                            {% if option.selected_value == value %}
-                              checked
-                            {% endif %}
-                          >
-                          <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-                            {% if option_name contains 'color' or option_name contains 'kleur' or option_name contains 'couleur' %}
-                              {% assign found = false %}
-                              {% for variant in product.variants %}
-                                {% for opt in variant.options %}
-                                  {% if opt == value %}
-                                    {% if found == false and variant.featured_image %}
-                                      {%- render 'c-image-element',
-                                        image: variant.featured_image,
-                                        lazy: true,
-                                        class: 'img-class'
-                                      -%}
-                                      {% assign found = true %}
-                                    {% else %}
-                                      {%- assign featured_media_fallback = product.featured_media -%}
-                                      {%- render 'c-image-element',
-                                        image: featured_media_fallback,
-                                        lazy: true,
-                                        class: 'img-class'
-                                      -%}
-                                      {% assign found = true %}
+                      {%- if option.values.size > 1 -%}
+                        <fieldset class="js product-form__input product-form__input--pill {% if option_name contains 'color' or option_name contains 'kleur' or option_name contains 'couleur' %}color-input{% endif %}">
+                          <legend class="form__label">{{ option.name }}</legend>
+                          {%- for value in option.values -%}
+                            <input
+                              type="radio"
+                              id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                              name="{{ option.name }}"
+                              value="{{ value | escape }}"
+                              form="{{ product_form_id }}"
+                              {% if option.selected_value == value %}
+                                checked
+                              {% endif %}
+                            >
+                            <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+                              {% if option_name contains 'color' or option_name contains 'kleur' or option_name contains 'couleur' %}
+                                {% assign found = false %}
+                                {% for variant in product.variants %}
+                                  {% for opt in variant.options %}
+                                    {% if opt == value %}
+                                      {% if found == false and variant.featured_image %}
+                                        {%- render 'c-image-element',
+                                          image: variant.featured_image,
+                                          lazy: true,
+                                          class: 'img-class'
+                                        -%}
+                                        {% assign found = true %}
+                                      {% else %}
+                                        {%- assign featured_media_fallback = product.featured_media -%}
+                                        {%- render 'c-image-element',
+                                          image: featured_media_fallback,
+                                          lazy: true,
+                                          class: 'img-class'
+                                        -%}
+                                        {% assign found = true %}
+                                      {% endif %}
                                     {% endif %}
-                                  {% endif %}
+                                  {% endfor %}
                                 {% endfor %}
-                              {% endfor %}
-                            {% else %}
-                              {{ value | escape }}
-                            {% endif %}
-                          </label>
-                        {%- endfor -%}
-                      </fieldset>
+                              {% else %}
+                                {{ value | escape }}
+                              {% endif %}
+                            </label>
+                          {%- endfor -%}
+                        </fieldset>
+                      {%- else -%}
+                        {%- comment -%} Single-value option: render as hidden input so variant selection still works {%- endcomment -%}
+                        <input
+                          type="hidden"
+                          name="{{ option.name }}"
+                          value="{{ option.values.first | escape }}"
+                          form="{{ product_form_id }}"
+                        >
+                      {%- endif -%}
                     {%- endfor -%}
                     <script type="application/json">
                       {{ product.variants | json }}
