@@ -864,7 +864,7 @@ a.product-v2__sp-avatar {
 
 .product-v2 .product-form__input.size-input input[type='radio']:checked + label {
   border-color: #0395F6 !important;
-  background: #f0f8ff !important;
+  background: #ffffff !important;
   color: #1a1a1a !important;
 }
 
