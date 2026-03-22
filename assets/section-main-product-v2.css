@@ -2,68 +2,68 @@
    Product V2 — Mobile-first styles
    ========================================================================== */
 
-/* ---------- Announcement & Header overrides (scoped to v2 template) ---------- */
-.template--v2 .announcement-bar a {
+/* ---------- Announcement & Header overrides (global) ---------- */
+.announcement-bar a {
   padding: 14px 0;
   font-weight: 500;
 }
 
-.template--v2 header.header {
+header.header {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
 /* Cart count bubble — match announcement bar orange */
-.template--v2 .cart-count-bubble {
+.cart-count-bubble {
   background-color: #F76503;
 }
 
-/* Hide language/currency switcher on v2 template */
-.template--v2 localization-selector {
+/* Hide language/currency switcher */
+localization-selector {
   display: none !important;
 }
 
 /* Title-case menu items (SHOP → Shop) + black text */
-.template--v2 .header__menu-item span,
-.template--v2 .header__menu-item.link-only span {
+.header__menu-item span,
+.header__menu-item.link-only span {
   display: inline-block;
   text-transform: lowercase;
   color: #000 !important;
 }
 
-.template--v2 .header__menu-item span::first-letter,
-.template--v2 .header__menu-item.link-only span::first-letter {
+.header__menu-item span::first-letter,
+.header__menu-item.link-only span::first-letter {
   text-transform: uppercase;
 }
 
 /* Thicker icon lines — add stroke on top of filled paths (account + cart) */
-.template--v2 .header__icon .icon path {
+.header__icon .icon path {
   stroke: currentColor;
   stroke-width: 0.6px;
 }
 
 /* Thicker search icon — symbol referenced via <use>, so target the symbol path directly */
-.template--v2 #icon-search path {
+#icon-search path {
   stroke: currentColor;
   stroke-width: 0.6px;
 }
 
 /* Cart icon — cropped viewBox now matches search/account, so use same 2rem + right spacing */
-.template--v2 .header__icon--cart .icon {
+.header__icon--cart .icon {
   width: 2rem;
   height: 2rem;
 }
 
-.template--v2 .header__icon--cart {
+.header__icon--cart {
   margin-right: 4px;
 }
 
 /* Better spacing around header icons for good UX */
-.template--v2 .header__icon {
+.header__icon {
   padding: 8px 10px;
 }
 
-.template--v2 .header__icons {
+.header__icons {
   gap: 2px;
 }
 
@@ -73,7 +73,7 @@
 }
 
 @media screen and (min-width: 990px) {
-  .template--v2 .menu-arrow-down {
+  .menu-arrow-down {
     display: inline-block;
     width: 8px;
     height: 5px;
