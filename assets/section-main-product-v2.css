@@ -645,12 +645,12 @@ a.product-v2__sp-avatar {
 /* Shipping date — bold black for date, orange for countdown */
 .product-v2 .shipping-text .ship-date {
   color: #1a1a1a !important;
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 .product-v2 .shipping-text .ship-countdown {
   color: #F76503 !important;
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 /* Per-pair label */
