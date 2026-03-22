@@ -46,13 +46,14 @@ header.header.absolute .menu-arrow-down {
   color: #fff;
 }
 
-/* Homepage: sticky navbar reverts to black */
-.sticky-navbar .header__menu-item span,
-.sticky-navbar .header__menu-item.link-only span {
+/* Homepage: sticky navbar reverts to black — must match or exceed
+   specificity of header.header.absolute rule above */
+header.header.sticky-navbar .header__menu-item span,
+header.header.sticky-navbar .header__menu-item.link-only span {
   color: #000 !important;
 }
 
-.sticky-navbar .menu-arrow-down {
+header.header.sticky-navbar .menu-arrow-down {
   color: #000;
 }
 
