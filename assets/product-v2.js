@@ -272,9 +272,6 @@ if (!customElements.get('sticky-atc-v2')) {
     if (!items.length) return;
 
     items.forEach(function(item) {
-      if (item.dataset.tierEnhanced) return;
-      item.dataset.tierEnhanced = '1';
-
       var qtyEl = item.querySelector('.Avada-Volume__Info--TriggerQty');
       var discountTextEl = item.querySelector('.Avada-Volume__DiscountText');
       var discountPrice = item.querySelector('.Avada-Offer__PriceDiscount');
@@ -288,21 +285,23 @@ if (!customElements.get('sticky-atc-v2')) {
 
       if (qty === 1) {
         // 1 Pair — Standard price
-        if (discountTextEl) {
+        if (discountTextEl && discountTextEl.textContent.trim() !== (isNl ? '— Standaardprijs' : '— Standard price')) {
           discountTextEl.textContent = isNl ? '— Standaardprijs' : '— Standard price';
           discountTextEl.style.color = '#888';
           discountTextEl.style.fontSize = '12px';
         }
       } else if (qty > 1 && discountPrice) {
-        // Multi-pair: add /pair label
-        var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
-        var perPairLabel = document.createElement('span');
-        perPairLabel.className = 'avada-per-pair';
-        perPairLabel.textContent = isNl ? ' /paar' : ' /pair';
-        discountPrice.appendChild(perPairLabel);
+        // Multi-pair: add /pair label via UnitPriceLabel span (survives Avada re-renders)
+        var unitLabel = discountPrice.querySelector('.AOV-Offer__UnitPriceLabel');
+        var pairText = isNl ? ' /paar' : ' /pair';
+        if (unitLabel && unitLabel.textContent !== pairText) {
+          unitLabel.textContent = pairText;
+          unitLabel.className += ' avada-per-pair';
+        }
 
-        // Calculate and show savings
-        if (originalPrice) {
+        // Calculate and show savings (only inject once)
+        if (originalPrice && !item.querySelector('.avada-savings-line')) {
+          var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
           var op = parseFloat(originalPrice.textContent.replace(',', '.'));
           var totalSaved = ((op - dp) * qty);
           if (totalSaved > 0) {
