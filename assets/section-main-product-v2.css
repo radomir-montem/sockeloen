@@ -190,7 +190,7 @@
   padding: 4px 0 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  background: #F4F4F1;
+  background: #fff;
 }
 
 .product-v2 .thumbnail-slider::-webkit-scrollbar {
