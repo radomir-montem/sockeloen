@@ -768,7 +768,7 @@ a.product-v2__sp-avatar {
 
 .product-v2 .product-form__submit:hover,
 .product-v2 button[name="add"]:hover {
-  background-color: #0280D4 !important;
+  background-color: #F76503 !important;
   background-image: none !important;
   box-shadow: none !important;
 }
@@ -1191,7 +1191,7 @@ sticky-atc-v2.hidden {
 }
 
 .product-v2-sticky-bar__atc-btn:hover {
-  background-color: #0280D4 !important;
+  background-color: #F76503 !important;
 }
 
 /* ---------- Size Confirmation Modal ---------- */
