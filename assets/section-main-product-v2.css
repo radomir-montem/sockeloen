@@ -750,12 +750,16 @@ a.product-v2__sp-avatar {
   gap: 10px;
 }
 
+/* Hide "Size" / "Color" legend labels for cleaner UX */
 .product-v2 .product-form__input--pill .form__label {
-  width: 100%;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 2px;
+  width: 0;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
 }
 
 /* ---------- Size Picker — Card Style (matching Avada tiers) ---------- */
@@ -824,32 +828,41 @@ a.product-v2__sp-avatar {
   color: #999;
 }
 
-/* ---------- Color Picker — Dot + Text Label ---------- */
+/* ---------- Color Picker — Dots left, name right (single card) ---------- */
 .product-v2 .product-form__input.color-input {
-  gap: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0;
+  border: 2px solid #e5e5e5;
+  border-radius: 10px;
+  background: #fff;
+  padding: 12px 16px;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
+/* Color dots row on the left */
 .product-v2 .product-form__input.color-input label {
   display: flex;
   align-items: center;
-  gap: 10px;
-  border: 2px solid #e5e5e5 !important;
-  border-radius: 10px !important;
-  padding: 12px 16px !important;
-  background-color: #fff !important;
+  justify-content: center;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: none !important;
   cursor: pointer;
-  transition: border-color 0.2s ease;
-  flex: 1 1 0;
+  margin-right: 6px;
+  flex: 0 0 auto;
   min-width: 0;
 }
 
 .product-v2 .product-form__input.color-input label:hover {
-  border-color: #bbb !important;
+  border: none !important;
 }
 
 .product-v2 .product-form__input.color-input input[type='radio']:checked + label {
-  border-color: #0395F6 !important;
-  background: #f0f8ff !important;
+  border: none !important;
+  background: none !important;
 }
 
 /* Hide any leftover image elements from color labels */
@@ -860,35 +873,53 @@ a.product-v2__sp-avatar {
 
 /* Color dot */
 .product-v2 .color-dot {
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
   border-radius: 50%;
   display: block;
   flex-shrink: 0;
+  transition: box-shadow 0.2s ease;
+  box-sizing: border-box;
 }
 
+.product-v2 .product-form__input.color-input label:hover .color-dot {
+  box-shadow: 0 0 0 2px #bbb;
+}
+
+.product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-dot {
+  box-shadow: 0 0 0 2px #1a1a1a;
+}
+
+/* Hide color name inside each label — we show it via JS in a shared element */
 .product-v2 .color-input__name {
+  display: none;
+}
+
+/* Selected color name — shown on the right side of the card */
+.product-v2 .color-input__selected-name {
+  margin-left: auto;
   font-size: 14px;
   font-weight: 600;
   color: #1a1a1a;
   letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding-left: 12px;
 }
 
-.product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-input__name {
-  color: #1a1a1a;
-}
-
-/* ---------- Size Guide Link ---------- */
+/* ---------- Size Guide Link (below size buttons) ---------- */
 .product-v2 .size-guide-link {
+  display: block;
+  width: 100%;
   font-size: 12px;
   font-weight: 400;
   color: #666;
   text-decoration: underline;
   text-underline-offset: 2px;
-  margin-left: 8px;
   cursor: pointer;
   transition: color 0.2s ease;
+  margin-top: -4px;
+  margin-bottom: 12px;
 }
 
 .product-v2 .size-guide-link:hover {
