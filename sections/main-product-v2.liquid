@@ -1204,18 +1204,18 @@
                   var el = document.getElementById('ship-date-text');
                   if (!el) return;
 
+                  var formatted = formatDate(ship.date);
                   if (ship.isToday) {
                     if (isNl) {
-                      el.innerHTML = 'Bestel nu, wordt <span>vandaag</span> verzonden';
+                      el.innerHTML = 'Voor 15:00 besteld, wordt <span>vandaag</span> verzonden';
                     } else {
-                      el.innerHTML = 'Order now, ships <span>today</span>';
+                      el.innerHTML = 'Ordered before 15:00, ships <span>today</span>';
                     }
                   } else {
-                    var formatted = formatDate(ship.date);
                     if (isNl) {
-                      el.innerHTML = 'Bestel nu, wordt verzonden op <span>' + formatted + '</span>';
+                      el.innerHTML = 'Voor 15:00 besteld, wordt verzonden op <span>' + formatted + '</span>';
                     } else {
-                      el.innerHTML = 'Order now, ships on <span>' + formatted + '</span>';
+                      el.innerHTML = 'Ordered before 15:00, ships on <span>' + formatted + '</span>';
                     }
                   }
                   el.style.display = '';
