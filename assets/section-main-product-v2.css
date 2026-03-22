@@ -445,19 +445,28 @@ a.product-v2__sp-avatar {
   height: 16px;
   margin-top: 0;
   color: #abcc15;
-  stroke-width: 3;
 }
 
 .product-v2__benefit svg path {
   fill: #abcc15;
-  stroke: #abcc15;
-  stroke-width: 1.5;
 }
 
 /* ---------- Add to Cart Button ---------- */
 .product-v2 .product-form__submit,
 .product-v2 button[name="add"] {
   text-transform: capitalize !important;
+  background-color: #0395F6 !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+  transition: background-color 0.2s ease;
+}
+
+.product-v2 .product-form__submit:hover,
+.product-v2 button[name="add"]:hover {
+  background-color: #0280d6 !important;
 }
 
 /* ---------- Sale Banner ---------- */
