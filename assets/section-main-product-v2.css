@@ -462,7 +462,7 @@ a.product-v2__sp-avatar {
 /* ---------- Avada Volume Discount Widget Overrides ---------- */
 .product-v2 .Avada-Bundle-Volume__Container {
   margin: 16px 0 20px !important;
-  gap: 8px !important;
+  gap: 12px !important;
 }
 
 /* Header */
@@ -477,14 +477,15 @@ a.product-v2__sp-avatar {
   color: #666 !important;
 }
 
-/* Tier cards */
+/* Tier cards — horizontal single-row layout */
 .product-v2 .Avada-Volume__Item {
   border: 2px solid #e5e5e5 !important;
   border-radius: 10px !important;
-  padding: 14px 16px !important;
+  padding: 12px 16px !important;
   cursor: pointer !important;
   transition: border-color 0.2s ease, background-color 0.2s ease !important;
   background: #fff !important;
+  position: relative !important;
 }
 
 .product-v2 .Avada-Volume__Item:hover {
@@ -501,6 +502,39 @@ a.product-v2__sp-avatar {
   border-color: #0395F6 !important;
 }
 
+/* Avada-ItemTier — make it a flex row */
+.product-v2 .Avada-ItemTier {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+/* Content wrapper — horizontal flex row */
+.product-v2 .Avada-Volume__Content,
+.product-v2 .Avada-Volume__Content--Horizontal {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+/* ItemWrapper — flex row */
+.product-v2 .Avada-Volume__ItemWrapper {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+/* Info section (qty label + discount text) — inline */
+.product-v2 .Avada-Volume__Info {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
 /* Tier quantity label (1 Pair, 3 Pairs) */
 .product-v2 .Avada-Volume__Info--TriggerQty {
   font-size: 14px !important;
@@ -508,13 +542,21 @@ a.product-v2__sp-avatar {
   color: #1a1a1a !important;
 }
 
-/* Discount text ("for") */
+/* Discount text ("for") — hide the dash, show "for" */
 .product-v2 .Avada-Volume__DiscountText {
   font-size: 12px !important;
   color: #666 !important;
 }
 
-/* Prices */
+/* Prices — push to the right */
+.product-v2 .Avada-Offer__Price {
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-shrink: 0 !important;
+}
+
 .product-v2 .Avada-Offer__PriceDiscount {
   font-size: 15px !important;
   font-weight: 700 !important;
@@ -527,8 +569,12 @@ a.product-v2__sp-avatar {
   text-decoration: line-through !important;
 }
 
-/* Badge ("MOST POPULAR") */
+/* Badge ("MOST POPULAR") — positioned crossing top border */
 .product-v2 .Avada-VolumeBoxBadge {
+  position: absolute !important;
+  top: -11px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
   background: #abcc15 !important;
   color: #000 !important;
   font-size: 10px !important;
@@ -538,9 +584,11 @@ a.product-v2__sp-avatar {
   padding: 3px 10px !important;
   border-radius: 6px !important;
   line-height: 1.4 !important;
+  z-index: 1 !important;
+  white-space: nowrap !important;
 }
 
-/* Hide variant selections within bundle tiers (use the normal picker instead) */
+/* Hide variant selections within bundle tiers */
 .product-v2 .Avada-VariantSelection,
 .product-v2 .Avada-Variant-Selections,
 .product-v2 .Avada-Selection__Section,
@@ -548,11 +596,44 @@ a.product-v2__sp-avatar {
   display: none !important;
 }
 
+/* ---------- Injected radio dot ---------- */
+.product-v2 .avada-radio-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease;
+  margin-right: 4px;
+}
+
+.product-v2 .avada-radio-dot::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: #0395F6;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.product-v2 .Avada-Volume__Item--Selected .avada-radio-dot {
+  border-color: #0395F6;
+}
+
+.product-v2 .Avada-Volume__Item--Selected .avada-radio-dot::after {
+  width: 10px;
+  height: 10px;
+}
+
 /* ---------- Avada Bundle Image Stack (overlapping product images) ---------- */
 .product-v2 .avada-img-stack {
   display: flex;
   align-items: center;
-  margin: 6px 0 2px;
+  margin: 0 !important;
+  flex-shrink: 0;
 }
 
 .product-v2 .avada-img-stack__img {
