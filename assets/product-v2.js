@@ -210,8 +210,27 @@ if (!customElements.get('sticky-atc-v2')) {
     });
   }
 
+  function injectRadioDots(root) {
+    var items = (root || document).querySelectorAll('.product-v2 .Avada-Volume__Item');
+    if (!items.length) return;
+
+    items.forEach(function(item) {
+      // Skip if already injected
+      if (item.querySelector('.avada-radio-dot')) return;
+
+      var content = item.querySelector('.Avada-Volume__Content, .Avada-Volume__Content--Horizontal');
+      if (!content) return;
+
+      var dot = document.createElement('div');
+      dot.className = 'avada-radio-dot';
+      // Insert as first child of content
+      content.insertBefore(dot, content.firstChild);
+    });
+  }
+
   function enhance() {
     stripEuro();
+    injectRadioDots();
     injectImageStacks();
   }
 
