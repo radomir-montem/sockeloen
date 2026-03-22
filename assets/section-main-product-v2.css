@@ -526,14 +526,19 @@ a.product-v2__sp-avatar {
   width: 100% !important;
 }
 
-/* Info section (qty label + discount text) — inline */
+/* Info section (qty label + discount text) — inline, ordered after images */
 .product-v2 .Avada-Volume__Info {
   display: flex !important;
   align-items: center !important;
   gap: 6px !important;
   flex-shrink: 0 !important;
   white-space: nowrap !important;
+  order: 2 !important;
 }
+
+/* Ordering: radio dot (0) → images (1) → info/qty (2) → price (3) */
+.product-v2 .avada-radio-dot { order: 0 !important; }
+.product-v2 .avada-img-stack { order: 1 !important; }
 
 /* Tier quantity label (1 Pair, 3 Pairs) */
 .product-v2 .Avada-Volume__Info--TriggerQty {
@@ -555,6 +560,7 @@ a.product-v2__sp-avatar {
   align-items: center !important;
   gap: 6px !important;
   flex-shrink: 0 !important;
+  order: 3 !important;
 }
 
 .product-v2 .Avada-Offer__PriceDiscount {
