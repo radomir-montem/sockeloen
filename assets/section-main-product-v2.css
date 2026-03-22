@@ -43,15 +43,14 @@
 
 /* ---------- Breadcrumb Overlay ---------- */
 .breadcrumb-overlay {
-  position: sticky;
-  top: 112px;
+  position: absolute;
+  top: 12px;
   left: 12px;
   z-index: 10;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 6px 0;
-  margin-bottom: -24px;
   background: none;
   color: #000;
   font-size: 12px;
