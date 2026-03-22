@@ -647,15 +647,13 @@ a.product-v2__sp-avatar {
   margin-left: 2px;
 }
 
-/* Savings line — below the tier card content, full width */
+/* Savings line — inside price column, no extra spacing */
 .product-v2 .avada-savings-line {
   font-size: 12px;
   color: #2e7d32;
-  margin-top: 6px;
+  margin-top: 0;
   text-align: right;
-  width: 100%;
-  order: 10 !important;
-  flex-basis: 100%;
+  line-height: 1.3;
 }
 
 /* Hide variant selections within bundle tiers */
