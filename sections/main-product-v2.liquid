@@ -492,11 +492,23 @@
         </div>
         <script>
           (function(){
-            document.querySelectorAll('#price-{{ section.id }} .regular-text, #price-{{ section.id }} .price-item').forEach(function(el){
-              el.childNodes.forEach(function(n){
-                if(n.nodeType===3) n.textContent = n.textContent.replace(/€\s*/g,'');
+            function stripEuro(root){
+              root.querySelectorAll('.regular-text, .price-item, .real-price, .product-v2-sticky-bar__price').forEach(function(el){
+                el.childNodes.forEach(function(n){
+                  if(n.nodeType===3) n.textContent = n.textContent.replace(/€\s*/g,'');
+                });
               });
-            });
+            }
+            stripEuro(document);
+            /* Re-run when price updates on variant change */
+            var priceWrap = document.getElementById('price-{{ section.id }}');
+            if(priceWrap){
+              new MutationObserver(function(){ stripEuro(priceWrap); }).observe(priceWrap, {childList:true, subtree:true, characterData:true});
+            }
+            var stickyPrice = document.querySelector('.product-v2-sticky-bar__price');
+            if(stickyPrice){
+              new MutationObserver(function(){ stripEuro(stickyPrice.parentElement); }).observe(stickyPrice, {childList:true, subtree:true, characterData:true});
+            }
           })();
         </script>
         <div>
