@@ -194,10 +194,10 @@
 .product-v2 .thumbnail-list {
   display: flex;
   flex-wrap: nowrap;
-  gap: 4px;
+  gap: 8px;
   list-style: none;
   margin: 0;
-  padding: 4px 4px 0 4px;
+  padding: 8px 8px 0 8px;
   background: #fff;
   overflow-x: auto;
   scrollbar-width: none;
