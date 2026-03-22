@@ -1136,89 +1136,86 @@
               <script>
                 (function() {
                   var isNl = window.location.pathname.indexOf('/nl') !== -1;
-                  var cutoffHour = 15; // 15:00 CET/CEST
+                  var cutoffHour = 15;
 
-                  // Get current time in Europe/Amsterdam (handles CET/CEST automatically)
-                  function getNLHour() {
-                    return parseInt(new Date().toLocaleString('en-GB', {
-                      timeZone: 'Europe/Amsterdam', hour: 'numeric', hour12: false
-                    }), 10);
+                  function getNLTime() {
+                    var opts = { timeZone: 'Europe/Amsterdam', hour: 'numeric', minute: 'numeric', hour12: false };
+                    var parts = new Date().toLocaleString('en-GB', opts).split(':');
+                    return { hour: parseInt(parts[0], 10), minute: parseInt(parts[1], 10) };
                   }
 
                   function getNLDay() {
-                    var dayStr = new Date().toLocaleString('en-GB', {
-                      timeZone: 'Europe/Amsterdam', weekday: 'short'
-                    });
+                    var dayStr = new Date().toLocaleString('en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'short' });
                     return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(dayStr);
                   }
 
                   function formatDate(date) {
-                    var daysEN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-                    var daysNL = ['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag'];
-                    var monthsEN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-                    var monthsNL = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
-
-                    var d = date.getDate();
-                    var suffix = 'th';
-                    if (d % 10 === 1 && d !== 11) suffix = 'st';
-                    else if (d % 10 === 2 && d !== 12) suffix = 'nd';
-                    else if (d % 10 === 3 && d !== 13) suffix = 'rd';
-
-                    if (isNl) {
-                      return daysNL[date.getDay()] + ', ' + d + ' ' + monthsNL[date.getMonth()];
-                    }
-                    return daysEN[date.getDay()] + ', ' + d + suffix + ' of ' + monthsEN[date.getMonth()];
+                    var dEN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+                    var dNL = ['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag'];
+                    var mEN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+                    var mNL = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
+                    var day = date.getDate();
+                    var s = 'th';
+                    if (day % 10 === 1 && day !== 11) s = 'st';
+                    else if (day % 10 === 2 && day !== 12) s = 'nd';
+                    else if (day % 10 === 3 && day !== 13) s = 'rd';
+                    if (isNl) return dNL[date.getDay()] + ', ' + day + ' ' + mNL[date.getMonth()];
+                    return dEN[date.getDay()] + ', ' + day + s + ' of ' + mEN[date.getMonth()];
                   }
 
-                  function getShipDate() {
-                    var now = new Date();
-                    var nlHour = getNLHour();
-                    var nlDay = getNLDay(); // 0=Sun, 6=Sat
+                  function getNextWorkday() {
+                    var d = new Date();
+                    d.setDate(d.getDate() + 1);
+                    while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1);
+                    return d;
+                  }
+
+                  function getShipInfo() {
+                    var t = getNLTime();
+                    var nlDay = getNLDay();
                     var isWorkday = nlDay >= 1 && nlDay <= 5;
-                    var beforeCutoff = nlHour < cutoffHour;
+                    var beforeCutoff = t.hour < cutoffHour;
 
                     if (isWorkday && beforeCutoff) {
-                      // Ships today
-                      return { date: now, isToday: true };
+                      var minsLeft = (cutoffHour - t.hour - 1) * 60 + (60 - t.minute);
+                      var h = Math.floor(minsLeft / 60);
+                      var m = minsLeft % 60;
+                      return { countdown: true, hours: h, minutes: m };
                     }
-
-                    // Find next working day
-                    var shipDate = new Date(now);
-                    if (isWorkday && !beforeCutoff) {
-                      shipDate.setDate(shipDate.getDate() + 1); // next day
-                    } else if (nlDay === 6) { // Saturday
-                      shipDate.setDate(shipDate.getDate() + 2); // Monday
-                    } else if (nlDay === 0) { // Sunday
-                      shipDate.setDate(shipDate.getDate() + 1); // Monday
-                    }
-
-                    // Skip to Monday if we landed on a weekend
-                    var shipDay = shipDate.getDay();
-                    if (shipDay === 0) shipDate.setDate(shipDate.getDate() + 1);
-                    else if (shipDay === 6) shipDate.setDate(shipDate.getDate() + 2);
-
-                    return { date: shipDate, isToday: false };
+                    return { countdown: false, date: getNextWorkday() };
                   }
 
-                  var ship = getShipDate();
-                  var el = document.getElementById('ship-date-text');
-                  if (!el) return;
+                  function render() {
+                    var el = document.getElementById('ship-date-text');
+                    if (!el) return;
+                    var info = getShipInfo();
 
-                  var formatted = formatDate(ship.date);
-                  if (ship.isToday) {
-                    if (isNl) {
-                      el.innerHTML = 'Voor 15:00 besteld, wordt <span>vandaag</span> verzonden';
+                    if (info.countdown) {
+                      var timeStr = info.hours > 0
+                        ? '<span class="ship-countdown">' + info.hours + 'h ' + info.minutes + 'm</span>'
+                        : '<span class="ship-countdown">' + info.minutes + 'm</span>';
+                      if (isNl) {
+                        el.innerHTML = 'Bestel binnen ' + timeStr + ', wordt <span class="ship-date">vandaag</span> verzonden';
+                      } else {
+                        el.innerHTML = 'Order within ' + timeStr + ', ships <span class="ship-date">today</span>';
+                      }
                     } else {
-                      el.innerHTML = 'Ordered before 15:00, ships <span>today</span>';
+                      var f = formatDate(info.date);
+                      if (isNl) {
+                        el.innerHTML = 'Voor 15:00 besteld, wordt verzonden op <span class="ship-date">' + f + '</span>';
+                      } else {
+                        el.innerHTML = 'Ordered before 15:00, ships on <span class="ship-date">' + f + '</span>';
+                      }
                     }
-                  } else {
-                    if (isNl) {
-                      el.innerHTML = 'Voor 15:00 besteld, wordt verzonden op <span>' + formatted + '</span>';
-                    } else {
-                      el.innerHTML = 'Ordered before 15:00, ships on <span>' + formatted + '</span>';
-                    }
+                    el.style.display = '';
                   }
-                  el.style.display = '';
+
+                  render();
+                  // Update countdown every 60s (only ticks when there's a countdown)
+                  setInterval(function() {
+                    var info = getShipInfo();
+                    if (info.countdown) render();
+                  }, 60000);
                 })();
               </script>
 
