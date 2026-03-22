@@ -43,15 +43,14 @@
 
 /* ---------- Breadcrumb Overlay ---------- */
 .breadcrumb-overlay {
-  position: sticky;
-  top: 112px;
+  position: absolute;
+  top: 12px;
   left: 12px;
   z-index: 10;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 6px 0;
-  margin-bottom: -24px;
   background: none;
   color: #000;
   font-size: 12px;
@@ -492,9 +491,19 @@ a.product-v2__sp-avatar {
 
 .product-v2 .product-form__submit:hover,
 .product-v2 button[name="add"]:hover {
-  background-color: #0395F6 !important;
-  opacity: 0.85;
+  background-color: #0280D4 !important;
+  background-image: none !important;
   box-shadow: none !important;
+}
+
+/* Keep ATC button styled when disabled during variant switch */
+.product-v2 .product-form__submit[disabled],
+.product-v2 button[name="add"][disabled] {
+  background-color: #0395F6 !important;
+  background-image: none !important;
+  color: #fff !important;
+  opacity: 1 !important;
+  filter: none !important;
 }
 
 /* ---------- Sale Banner ---------- */
@@ -612,12 +621,11 @@ sticky-atc-v2.hidden {
   border-radius: 6px !important;
   color: #fff !important;
   filter: none !important;
-  transition: opacity 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .product-v2-sticky-bar__atc-btn:hover {
-  background-color: #0395F6 !important;
-  opacity: 0.85;
+  background-color: #0280D4 !important;
 }
 
 /* ---------- Size Confirmation Modal ---------- */
@@ -701,11 +709,11 @@ sticky-atc-v2.hidden {
   background: #0395F6;
   color: #fff;
   border-radius: 6px;
-  transition: opacity 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .product-v2-size-modal__confirm:hover {
-  opacity: 0.85;
+  background: #0280D4;
 }
 
 .product-v2-size-modal__change {
@@ -833,11 +841,6 @@ sticky-atc-v2.hidden {
   .product-v2 .thumbnail-slider,
   .product-v2 .thumbnail-list {
     display: none !important;
-  }
-
-  /* Breadcrumb on desktop — sticky below header */
-  .breadcrumb-overlay {
-    top: 121px;
   }
 
   /* Title */
