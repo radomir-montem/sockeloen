@@ -754,7 +754,7 @@ a.product-v2__sp-avatar {
 }
 
 .product-v2 .product-form__input--pill {
-  margin-bottom: 10px;
+  margin-bottom: 4px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -1322,8 +1322,13 @@ sticky-atc-v2.hidden {
   }
 
   .product-v2 .product__media-item {
-    display: block !important;
+    display: block;
     width: 100% !important;
+  }
+
+  /* Respect variant filtering: items hidden by JS inline style should stay hidden */
+  .product-v2 .product__media-item[style*="display: none"] {
+    display: none !important;
   }
 
   /* On desktop, use original image ratio (from inline padding-top) instead of 1:1 square */
