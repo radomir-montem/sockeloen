@@ -796,7 +796,18 @@
                     </div>
                     <script>
                       (function(){
-                        /* Update selected color name + sync hidden variants in color dots */
+                        function syncHiddenVariants() {
+                          document.querySelectorAll('.product-v2 .product-form__input--pill').forEach(function(fieldset) {
+                            fieldset.querySelectorAll('label').forEach(function(label) {
+                              var radio = label.previousElementSibling;
+                              if (!radio || radio.type !== 'radio') return;
+                              if (label.classList.contains('hidden')) {
+                                label.style.display = 'none';
+                              }
+                            });
+                          });
+                        }
+
                         function initColorPicker() {
                           var fieldset = document.querySelector('.product-v2 .color-input');
                           if (!fieldset) return;
@@ -811,35 +822,26 @@
                               }
                             });
                           });
+                        }
 
-                          /* Watch for hidden class changes on labels (from checkAvaiable in global.js) */
-                          var observer = new MutationObserver(function() {
-                            fieldset.querySelectorAll('label').forEach(function(label) {
-                              var radio = label.previousElementSibling;
-                              if (radio && radio.type === 'radio') {
-                                if (label.classList.contains('hidden')) {
-                                  radio.style.display = 'none';
-                                  label.style.display = 'none';
-                                } else {
-                                  radio.style.display = '';
-                                  label.style.display = '';
-                                }
-                              }
-                            });
-                          });
-                          observer.observe(fieldset, { attributes: true, attributeFilter: ['class'], subtree: true });
+                        function init() {
+                          initColorPicker();
+                          syncHiddenVariants();
+                          /* Re-sync after global.js checkAvaiable runs (fires ~500ms after page load) */
+                          setTimeout(syncHiddenVariants, 600);
+                          setTimeout(syncHiddenVariants, 1200);
 
-                          /* Initial pass — hide already-hidden labels */
-                          fieldset.querySelectorAll('label.hidden').forEach(function(label) {
-                            var radio = label.previousElementSibling;
-                            if (radio) { radio.style.display = 'none'; label.style.display = 'none'; }
-                          });
+                          /* Also observe for dynamic class changes */
+                          var container = document.querySelector('.product-v2 variant-radios');
+                          if (container) {
+                            new MutationObserver(syncHiddenVariants).observe(container, { attributes: true, attributeFilter: ['class'], subtree: true });
+                          }
                         }
 
                         if (document.readyState === 'loading') {
-                          document.addEventListener('DOMContentLoaded', initColorPicker);
+                          document.addEventListener('DOMContentLoaded', init);
                         } else {
-                          initColorPicker();
+                          init();
                         }
                       })();
                     </script>
