@@ -499,7 +499,6 @@
         </div>
 
         {%- comment -%} 5. Product benefits from metafields {%- endcomment -%}
-        <!-- DEBUG: b1=[{{ product.metafields.custom.benefit_1 }}] b1v=[{{ product.metafields.custom.benefit_1.value }}] -->
         {%- if product.metafields.custom.benefit_1 != blank or product.metafields.custom.benefit_2 != blank or product.metafields.custom.benefit_3 != blank -%}
           <ul class="product-v2__benefits">
             {%- if product.metafields.custom.benefit_1 != blank -%}
