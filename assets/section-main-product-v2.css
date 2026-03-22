@@ -430,14 +430,23 @@ a.product-v2__sp-avatar {
 
 .product-v2__benefit svg {
   flex-shrink: 0;
-  width: 14px;
-  height: 14px;
-  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
   color: #abcc15;
+  stroke-width: 3;
 }
 
 .product-v2__benefit svg path {
   fill: #abcc15;
+  stroke: #abcc15;
+  stroke-width: 1.5;
+}
+
+/* ---------- Add to Cart Button ---------- */
+.product-v2 .product-form__submit,
+.product-v2 button[name="add"] {
+  text-transform: capitalize !important;
 }
 
 /* ---------- Sale Banner ---------- */
@@ -544,7 +553,7 @@ sticky-atc-v2.hidden {
   padding: 12px 24px;
   font-size: 14px;
   font-weight: 600;
-  text-transform: uppercase;
+  text-transform: capitalize;
   letter-spacing: 0.02em;
   cursor: pointer;
   white-space: nowrap;
@@ -749,6 +758,11 @@ sticky-atc-v2.hidden {
   .product-v2 .product__media-item {
     display: block !important;
     width: 100% !important;
+  }
+
+  /* On desktop, use natural image ratio (taller) instead of 1:1 square */
+  .product-v2 .product__media-list .product__media-item .media {
+    aspect-ratio: auto;
   }
 
   /* Hide thumbnails on desktop */
