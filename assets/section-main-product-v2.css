@@ -350,7 +350,7 @@ a.product-v2__sp-avatar {
 /* ---------- Title ---------- */
 .product-v2__title {
   font-size: 25px;
-  text-transform: lowercase;
+  text-transform: capitalize;
   font-weight: 700;
   line-height: 1.15;
   margin: 0;
