@@ -445,19 +445,28 @@ a.product-v2__sp-avatar {
   height: 16px;
   margin-top: 0;
   color: #abcc15;
-  stroke-width: 3;
 }
 
 .product-v2__benefit svg path {
   fill: #abcc15;
-  stroke: #abcc15;
-  stroke-width: 1.5;
 }
 
 /* ---------- Add to Cart Button ---------- */
 .product-v2 .product-form__submit,
 .product-v2 button[name="add"] {
   text-transform: capitalize !important;
+  background-color: #0395F6 !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+  transition: background-color 0.2s ease;
+}
+
+.product-v2 .product-form__submit:hover,
+.product-v2 button[name="add"]:hover {
+  background-color: #0280d6 !important;
 }
 
 /* ---------- Sale Banner ---------- */
@@ -563,11 +572,15 @@ sticky-atc-v2.hidden {
   flex-shrink: 0;
   padding: 12px 24px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: capitalize;
   letter-spacing: 0.02em;
   cursor: pointer;
   white-space: nowrap;
+  background-color: #0395F6 !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  color: #fff !important;
 }
 
 /* ---------- Size Confirmation Modal ---------- */
@@ -781,6 +794,16 @@ sticky-atc-v2.hidden {
   .product-v2 .thumbnail-slider,
   .product-v2 .thumbnail-list {
     display: none !important;
+  }
+
+  /* Breadcrumb sticky on desktop */
+  .breadcrumb-overlay {
+    position: sticky;
+    top: 0;
+    left: 12px;
+    z-index: 10;
+    background: #fff;
+    padding: 12px 0;
   }
 
   /* Title */
