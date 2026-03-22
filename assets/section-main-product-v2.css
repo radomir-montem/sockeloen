@@ -369,15 +369,6 @@ a.product-v2__sp-avatar {
   margin-bottom: 12px;
 }
 
-/* Hide currency symbol (€) in v2 price */
-.product-v2__price .price--no-currency .regular-text {
-  font-size: 0;
-}
-
-.product-v2__price .price--no-currency .regular-text::after {
-  content: attr(data-price);
-  font-size: 18px;
-}
 
 /* Current price: black, consistent size */
 .product-v2__price .price__container {
