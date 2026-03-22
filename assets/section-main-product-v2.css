@@ -1514,8 +1514,9 @@ sticky-atc-v2.hidden {
   gap: 10px;
 }
 
-.product-v2__trust-row + .product-v2__trust-row {
-  margin-top: 18px;
+.product-v2__secure-row {
+  margin-top: 12px !important;
+  margin-bottom: 20px;
 }
 
 .product-v2__trust-row svg {
@@ -1531,10 +1532,6 @@ sticky-atc-v2.hidden {
   color: #1a1a1a !important;
   padding: 0 !important;
   line-height: 1.4 !important;
-}
-
-.product-v2__secure-row {
-  margin-bottom: 20px;
 }
 
 /* USP accordions — same style as other accordions but closed by default */
