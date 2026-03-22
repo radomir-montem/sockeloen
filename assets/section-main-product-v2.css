@@ -79,7 +79,13 @@
 .product-v2__media-wrapper {
   position: relative;
   padding-left: 0;
-  background: transparent;
+  background: #fff;
+}
+
+@media screen and (min-width: 990px) {
+  .product-v2__media-wrapper {
+    background: transparent;
+  }
 }
 
 /* Make gallery full-bleed on mobile despite page-width padding */
@@ -299,13 +305,7 @@
 .product-v2__social-proof {
   padding: 6px 0 12px;
   margin-bottom: 12px;
-  background-color: #fff !important;
-}
-
-@media screen and (min-width: 990px) {
-  .product-v2__social-proof {
-    background-color: #F4F4F1 !important;
-  }
+  background-color: #F4F4F1 !important;
 }
 
 .product-v2__social-proof-inner {
