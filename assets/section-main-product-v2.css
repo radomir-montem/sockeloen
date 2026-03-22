@@ -953,6 +953,21 @@ a.product-v2__sp-avatar {
   box-shadow: 0 0 0 2px #0395F6;
 }
 
+/* Image-based color swatches */
+.product-v2 .color-dot--image {
+  overflow: hidden;
+  padding: 0;
+  background: #f5f5f5;
+}
+
+.product-v2 .color-dot--image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
 /* Hide color name inside each label — we show it via JS in a shared element */
 .product-v2 .color-input__name {
   display: none;
