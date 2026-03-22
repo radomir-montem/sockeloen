@@ -819,10 +819,10 @@ sticky-atc-v2.hidden {
     display: none !important;
   }
 
-  /* Breadcrumb sticky on desktop */
+  /* Breadcrumb sticky on desktop — below sticky header (announcement 46px + header 75px) */
   .breadcrumb-overlay {
     position: sticky;
-    top: 0;
+    top: 121px;
     left: 12px;
     z-index: 10;
     background: #fff;
