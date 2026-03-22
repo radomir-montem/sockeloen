@@ -754,18 +754,51 @@
                     </div>
                     <script>
                       (function(){
-                        var colorInputs = document.querySelectorAll('.product-v2 .color-input input[type="radio"]');
-                        colorInputs.forEach(function(radio) {
-                          radio.addEventListener('change', function() {
-                            var fieldset = this.closest('.color-input');
-                            var nameEl = fieldset.querySelector('.color-input__selected-name');
-                            if (nameEl) {
-                              var label = this.nextElementSibling;
-                              var nameSpan = label.querySelector('.color-input__name');
-                              if (nameSpan) nameEl.textContent = nameSpan.textContent;
-                            }
+                        /* Update selected color name + sync hidden variants in color dots */
+                        function initColorPicker() {
+                          var fieldset = document.querySelector('.product-v2 .color-input');
+                          if (!fieldset) return;
+                          var nameEl = fieldset.querySelector('.color-input__selected-name');
+
+                          fieldset.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+                            radio.addEventListener('change', function() {
+                              if (nameEl) {
+                                var label = this.nextElementSibling;
+                                var nameSpan = label ? label.querySelector('.color-input__name') : null;
+                                if (nameSpan) nameEl.textContent = nameSpan.textContent;
+                              }
+                            });
                           });
-                        });
+
+                          /* Watch for hidden class changes on labels (from checkAvaiable in global.js) */
+                          var observer = new MutationObserver(function() {
+                            fieldset.querySelectorAll('label').forEach(function(label) {
+                              var radio = label.previousElementSibling;
+                              if (radio && radio.type === 'radio') {
+                                if (label.classList.contains('hidden')) {
+                                  radio.style.display = 'none';
+                                  label.style.display = 'none';
+                                } else {
+                                  radio.style.display = '';
+                                  label.style.display = '';
+                                }
+                              }
+                            });
+                          });
+                          observer.observe(fieldset, { attributes: true, attributeFilter: ['class'], subtree: true });
+
+                          /* Initial pass — hide already-hidden labels */
+                          fieldset.querySelectorAll('label.hidden').forEach(function(label) {
+                            var radio = label.previousElementSibling;
+                            if (radio) { radio.style.display = 'none'; label.style.display = 'none'; }
+                          });
+                        }
+
+                        if (document.readyState === 'loading') {
+                          document.addEventListener('DOMContentLoaded', initColorPicker);
+                        } else {
+                          initColorPicker();
+                        }
                       })();
                     </script>
                   </variant-radios>

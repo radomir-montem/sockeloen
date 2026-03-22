@@ -888,7 +888,7 @@ a.product-v2__sp-avatar {
 }
 
 .product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-dot {
-  box-shadow: 0 0 0 2px #1a1a1a;
+  box-shadow: 0 0 0 2px #0395F6;
 }
 
 /* Hide color name inside each label — we show it via JS in a shared element */
