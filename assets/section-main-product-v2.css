@@ -43,14 +43,15 @@
 
 /* ---------- Breadcrumb Overlay ---------- */
 .breadcrumb-overlay {
-  position: absolute;
-  top: 12px;
+  position: sticky;
+  top: 112px;
   left: 12px;
-  z-index: 2;
+  z-index: 10;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 6px 0;
+  margin-bottom: -24px;
   background: none;
   color: #000;
   font-size: 12px;
@@ -821,14 +822,9 @@ sticky-atc-v2.hidden {
     display: none !important;
   }
 
-  /* Breadcrumb on desktop — overlay on first image, same as mobile */
+  /* Breadcrumb on desktop — sticky below header */
   .breadcrumb-overlay {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 10;
-    background: none;
-    padding: 6px 0;
+    top: 121px;
   }
 
   /* Title */
