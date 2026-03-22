@@ -470,6 +470,7 @@ a.product-v2__sp-avatar {
 .product-v2 button[name="add"] {
   text-transform: capitalize !important;
   background-color: #0395F6 !important;
+  background-image: none !important;
   border: none !important;
   border-radius: 6px !important;
   color: #fff !important;
