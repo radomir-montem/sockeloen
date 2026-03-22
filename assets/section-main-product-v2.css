@@ -35,6 +35,12 @@
   text-transform: uppercase;
 }
 
+/* Thicker icon lines — add stroke on top of filled paths */
+.template--v2 .header__icon .icon path {
+  stroke: currentColor;
+  stroke-width: 0.6px;
+}
+
 /* Cart icon — cropped viewBox now matches search/account, so use same 2rem + right spacing */
 .template--v2 .header__icon--cart .icon {
   width: 2rem;
