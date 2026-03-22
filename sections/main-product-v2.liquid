@@ -716,6 +716,172 @@
                 {% endfor %}
               </div>
 
+            {%- when 'bundle_picker' -%}
+              {%- assign base_price = product.selected_or_first_available_variant.price -%}
+              {%- assign base_price_cents = base_price -%}
+              <div
+                class="product-v2__bundle-picker"
+                data-section-id="{{ section.id }}"
+                data-base-price="{{ base_price_cents }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- comment -%} Tier 1 {%- endcomment -%}
+                {%- assign t1_qty = block.settings.tier_1_qty | default: 1 -%}
+                {%- assign t1_label = block.settings.tier_1_label | default: 'Try it' -%}
+                {%- assign t1_per_pair = block.settings.tier_1_per_pair_price -%}
+                {%- if t1_per_pair == blank -%}
+                  {%- assign t1_per_pair_cents = base_price_cents -%}
+                {%- else -%}
+                  {%- assign t1_per_pair_cents = t1_per_pair | times: 100 | round -%}
+                {%- endif -%}
+                {%- assign t1_total_cents = t1_per_pair_cents | times: t1_qty -%}
+
+                {%- comment -%} Tier 2 {%- endcomment -%}
+                {%- assign t2_qty = block.settings.tier_2_qty | default: 3 -%}
+                {%- assign t2_label = block.settings.tier_2_label | default: 'Most popular' -%}
+                {%- assign t2_badge = block.settings.tier_2_badge | default: 'Populairst' -%}
+                {%- assign t2_per_pair = block.settings.tier_2_per_pair_price -%}
+                {%- if t2_per_pair == blank -%}
+                  {%- assign t2_per_pair_cents = base_price_cents -%}
+                {%- else -%}
+                  {%- assign t2_per_pair_cents = t2_per_pair | times: 100 | round -%}
+                {%- endif -%}
+                {%- assign t2_total_cents = t2_per_pair_cents | times: t2_qty -%}
+                {%- assign t2_original_total = base_price_cents | times: t2_qty -%}
+                {%- assign t2_save_cents = t2_original_total | minus: t2_total_cents -%}
+
+                {%- comment -%} Tier 3 {%- endcomment -%}
+                {%- assign t3_qty = block.settings.tier_3_qty | default: 5 -%}
+                {%- assign t3_label = block.settings.tier_3_label | default: 'Best value' -%}
+                {%- assign t3_per_pair = block.settings.tier_3_per_pair_price -%}
+                {%- if t3_per_pair == blank -%}
+                  {%- assign t3_per_pair_cents = base_price_cents -%}
+                {%- else -%}
+                  {%- assign t3_per_pair_cents = t3_per_pair | times: 100 | round -%}
+                {%- endif -%}
+                {%- assign t3_total_cents = t3_per_pair_cents | times: t3_qty -%}
+                {%- assign t3_original_total = base_price_cents | times: t3_qty -%}
+                {%- assign t3_save_cents = t3_original_total | minus: t3_total_cents -%}
+
+                {%- assign default_tier = block.settings.default_tier | default: '2' -%}
+
+                <div class="bundle-tier{% if default_tier == '1' %} bundle-tier--active{% endif %}" data-tier="1" data-qty="{{ t1_qty }}" data-total="{{ t1_total_cents }}">
+                  <div class="bundle-tier__radio">
+                    <span class="bundle-tier__radio-dot"></span>
+                  </div>
+                  <div class="bundle-tier__content">
+                    <span class="bundle-tier__label">{{ t1_label }}</span>
+                    <span class="bundle-tier__qty">{{ t1_qty }} {% if t1_qty == 1 %}pair{% else %}pairs{% endif %}</span>
+                  </div>
+                  <div class="bundle-tier__pricing">
+                    <span class="bundle-tier__price">{{ t1_total_cents | money }}</span>
+                    <span class="bundle-tier__per-pair">{{ t1_per_pair_cents | money }} / pair</span>
+                  </div>
+                </div>
+
+                <div class="bundle-tier{% if default_tier == '2' %} bundle-tier--active{% endif %}" data-tier="2" data-qty="{{ t2_qty }}" data-total="{{ t2_total_cents }}">
+                  {%- if t2_badge != blank -%}
+                    <span class="bundle-tier__badge">{{ t2_badge }}</span>
+                  {%- endif -%}
+                  <div class="bundle-tier__radio">
+                    <span class="bundle-tier__radio-dot"></span>
+                  </div>
+                  <div class="bundle-tier__content">
+                    <span class="bundle-tier__label">{{ t2_label }}</span>
+                    <span class="bundle-tier__qty">{{ t2_qty }} pairs</span>
+                  </div>
+                  <div class="bundle-tier__pricing">
+                    <span class="bundle-tier__price">{{ t2_total_cents | money }}</span>
+                    {%- if t2_save_cents > 0 -%}
+                      <span class="bundle-tier__per-pair"><s>{{ base_price_cents | money }}</s> {{ t2_per_pair_cents | money }} / pair</span>
+                      <span class="bundle-tier__save">Save {{ t2_save_cents | money }}</span>
+                    {%- else -%}
+                      <span class="bundle-tier__per-pair">{{ t2_per_pair_cents | money }} / pair</span>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                <div class="bundle-tier{% if default_tier == '3' %} bundle-tier--active{% endif %}" data-tier="3" data-qty="{{ t3_qty }}" data-total="{{ t3_total_cents }}">
+                  <div class="bundle-tier__radio">
+                    <span class="bundle-tier__radio-dot"></span>
+                  </div>
+                  <div class="bundle-tier__content">
+                    <span class="bundle-tier__label">{{ t3_label }}</span>
+                    <span class="bundle-tier__qty">{{ t3_qty }} pairs</span>
+                  </div>
+                  <div class="bundle-tier__pricing">
+                    <span class="bundle-tier__price">{{ t3_total_cents | money }}</span>
+                    {%- if t3_save_cents > 0 -%}
+                      <span class="bundle-tier__per-pair"><s>{{ base_price_cents | money }}</s> {{ t3_per_pair_cents | money }} / pair</span>
+                      <span class="bundle-tier__save">Save {{ t3_save_cents | money }}</span>
+                    {%- else -%}
+                      <span class="bundle-tier__per-pair">{{ t3_per_pair_cents | money }} / pair</span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+
+              <script>
+                (function() {
+                  var picker = document.querySelector('.product-v2__bundle-picker[data-section-id="{{ section.id }}"]');
+                  if (!picker) return;
+
+                  var tiers = picker.querySelectorAll('.bundle-tier');
+                  var quantityInput = document.getElementById('Quantity-{{ section.id }}');
+                  var atcBtn = document.querySelector('#product-form-{{ section.id }} button[name="add"] span');
+                  var stickyPrice = document.querySelector('.product-v2-sticky-bar__price');
+
+                  function selectTier(tier) {
+                    tiers.forEach(function(t) { t.classList.remove('bundle-tier--active'); });
+                    tier.classList.add('bundle-tier--active');
+
+                    var qty = parseInt(tier.getAttribute('data-qty'), 10);
+                    if (quantityInput) {
+                      quantityInput.value = qty;
+                      quantityInput.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+
+                    // Update ATC button text
+                    var totalCents = parseInt(tier.getAttribute('data-total'), 10);
+                    if (atcBtn && qty > 1) {
+                      var formatted = (totalCents / 100).toFixed(2).replace('.', ',');
+                      atcBtn.textContent = 'Add ' + qty + ' pairs — €' + formatted;
+                    } else if (atcBtn) {
+                      atcBtn.textContent = '{{ "products.product.add_to_cart" | t }}';
+                    }
+
+                    // Update sticky bar price
+                    if (stickyPrice) {
+                      var formatted = (totalCents / 100).toFixed(2).replace('.', ',');
+                      stickyPrice.textContent = '€' + formatted;
+                    }
+                  }
+
+                  tiers.forEach(function(tier) {
+                    tier.addEventListener('click', function() {
+                      selectTier(tier);
+                    });
+                  });
+
+                  // Set initial quantity for pre-selected tier
+                  var activeTier = picker.querySelector('.bundle-tier--active');
+                  if (activeTier) {
+                    selectTier(activeTier);
+                  }
+
+                  // Re-apply bundle selection when variant changes (price may update)
+                  var variantEl = document.querySelector('#MainProduct-{{ section.id }} variant-radios, #MainProduct-{{ section.id }} variant-selects');
+                  if (variantEl) {
+                    variantEl.addEventListener('change', function() {
+                      setTimeout(function() {
+                        var active = picker.querySelector('.bundle-tier--active');
+                        if (active) selectTier(active);
+                      }, 100);
+                    });
+                  }
+                })();
+              </script>
+
             {%- when 'quantity_selector' -%}
               <div class="product-form-wrapper">
                 <div class="flex {% if product.metafields.custom.hide_quantity_selector %} flex-wrap {% endif %} items-end gap-2 !mb-0">
