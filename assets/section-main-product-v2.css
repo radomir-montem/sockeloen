@@ -135,9 +135,9 @@
   position: absolute;
 }
 
-/* Square crop main image */
+/* Slightly shorter than square on mobile so thumbnails + social proof peek above the fold */
 .product-v2 .product__media-list .product__media-item .media {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 4.5;
   overflow: hidden;
   padding-top: 0 !important;
   position: relative;
