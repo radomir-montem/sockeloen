@@ -491,8 +491,8 @@ a.product-v2__sp-avatar {
 
 .product-v2 .product-form__submit:hover,
 .product-v2 button[name="add"]:hover {
-  background-color: #0395F6 !important;
-  opacity: 0.85;
+  background-color: #0280D4 !important;
+  background-image: none !important;
   box-shadow: none !important;
 }
 
@@ -832,11 +832,6 @@ sticky-atc-v2.hidden {
   .product-v2 .thumbnail-slider,
   .product-v2 .thumbnail-list {
     display: none !important;
-  }
-
-  /* Breadcrumb on desktop — sticky below header */
-  .breadcrumb-overlay {
-    top: 121px;
   }
 
   /* Title */
