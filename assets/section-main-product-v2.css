@@ -496,6 +496,16 @@ a.product-v2__sp-avatar {
   box-shadow: none !important;
 }
 
+/* Keep ATC button styled when disabled during variant switch */
+.product-v2 .product-form__submit[disabled],
+.product-v2 button[name="add"][disabled] {
+  background-color: #0395F6 !important;
+  background-image: none !important;
+  color: #fff !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
 /* ---------- Sale Banner ---------- */
 .product-v2__sale-banner {
   padding: 10px 16px;
