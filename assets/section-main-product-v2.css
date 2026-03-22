@@ -788,7 +788,17 @@ a.product-v2__sp-avatar {
   color: #1a1a1a !important;
 }
 
-/* Hide base-theme radio dot pseudo-element */
+/* Hide native radio button and base-theme radio dot pseudo-element */
+.product-v2 .product-form__input input[type='radio'] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .product-v2 .product-form__input input[type='radio'] + label::before {
   display: none !important;
 }
