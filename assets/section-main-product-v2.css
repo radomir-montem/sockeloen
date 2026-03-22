@@ -1502,47 +1502,36 @@ sticky-atc-v2.hidden {
   color: #c2410c;
 }
 
-/* Trust signals row */
-.product-v2__trust-signals {
-  display: flex;
+/* Shipping row with truck icon */
+.product-v2__shipping-row {
+  display: flex !important;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 0;
-  margin: 0 0 20px 0;
-  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.product-v2__trust-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.product-v2__trust-item svg {
+.product-v2__shipping-icon {
   flex-shrink: 0;
 }
 
-.product-v2__trust-item span {
-  font-size: 13px;
+/* Secure checkout row */
+.product-v2__secure-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.product-v2__secure-row svg {
+  flex-shrink: 0;
+}
+
+.product-v2__secure-row span {
+  font-size: 14px;
   font-weight: 400;
-  color: #888;
-  white-space: nowrap;
+  color: #1a1a1a;
 }
 
-.product-v2__trust-dot {
-  width: 3px;
-  height: 3px;
-  background: #ccc;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-@media screen and (max-width: 749px) {
-  .product-v2__trust-signals {
-    gap: 8px;
-  }
-  .product-v2__trust-item span {
-    font-size: 12px;
-  }
+/* USP accordions — same style as other accordions but closed by default */
+.product-v2__usp-accordion {
+  margin-bottom: 0;
 }
