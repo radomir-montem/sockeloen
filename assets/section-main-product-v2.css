@@ -391,12 +391,12 @@ a.product-v2__sp-avatar {
 .product-v2__subtitle {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 /* ---------- Price ---------- */
 .product-v2__price {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 
@@ -443,7 +443,7 @@ a.product-v2__sp-avatar {
 /* ---------- Benefits Checklist ---------- */
 .product-v2__benefits {
   list-style: none;
-  margin: 8px 0 12px;
+  margin: 0 0 16px;
   padding: 0;
   display: flex;
   flex-direction: column;
