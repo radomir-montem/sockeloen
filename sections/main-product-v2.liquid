@@ -635,10 +635,29 @@
                                 {%- liquid
                                   assign color_lower = value | downcase | strip
                                   assign color_hex = '#ccc'
-                                  if color_lower == 'white' or color_lower == 'wit'
+                                  assign color_hex_2 = ''
+                                  assign is_split = false
+                                  assign is_light = false
+
+                                  comment
+                                    Split-dot logic: "X Logo" = base color + contrasting half
+                                    "All X" or plain "X" = solid color
+                                  endcomment
+
+                                  if color_lower == 'white' or color_lower == 'wit' or color_lower == 'all white'
                                     assign color_hex = '#ffffff'
-                                  elsif color_lower == 'black' or color_lower == 'zwart'
+                                    assign is_light = true
+                                  elsif color_lower == 'white logo'
+                                    assign color_hex = '#ffffff'
+                                    assign color_hex_2 = '#1a1a1a'
+                                    assign is_split = true
+                                    assign is_light = true
+                                  elsif color_lower == 'black' or color_lower == 'zwart' or color_lower == 'all black'
                                     assign color_hex = '#1a1a1a'
+                                  elsif color_lower == 'black logo'
+                                    assign color_hex = '#1a1a1a'
+                                    assign color_hex_2 = '#ffffff'
+                                    assign is_split = true
                                   elsif color_lower == 'red' or color_lower == 'rood'
                                     assign color_hex = '#c0392b'
                                   elsif color_lower == 'blue' or color_lower == 'blauw' or color_lower == 'bonnie blue'
@@ -663,9 +682,10 @@
                                     assign color_hex = '#d4c5a9'
                                   elsif color_lower == 'snow'
                                     assign color_hex = '#f5f5f0'
+                                    assign is_light = true
                                   elsif color_lower == 'pine'
                                     assign color_hex = '#2d5a3d'
-                                  elsif color_lower == 'mintgreen'
+                                  elsif color_lower == 'mintgreen' or color_lower == 'mint green'
                                     assign color_hex = '#98d9c2'
                                   elsif color_lower == 'calunna red'
                                     assign color_hex = '#a03040'
@@ -677,9 +697,27 @@
                                     assign color_hex = '#c9a84c'
                                   elsif color_lower contains 'silver'
                                     assign color_hex = '#b0b0b0'
+                                  elsif color_lower contains 'white' and color_lower contains 'black'
+                                    assign color_hex = '#ffffff'
+                                    assign color_hex_2 = '#1a1a1a'
+                                    assign is_split = true
+                                    assign is_light = true
+                                  elsif color_lower contains 'black' and color_lower contains 'white'
+                                    assign color_hex = '#1a1a1a'
+                                    assign color_hex_2 = '#ffffff'
+                                    assign is_split = true
+                                  elsif color_lower contains 'white'
+                                    assign color_hex = '#ffffff'
+                                    assign is_light = true
+                                  elsif color_lower contains 'black'
+                                    assign color_hex = '#1a1a1a'
                                   endif
                                 -%}
-                                <span class="color-dot" style="background-color: {{ color_hex }};{% if color_lower == 'white' or color_lower == 'wit' or color_lower == 'snow' %} border: 1px solid #ddd;{% endif %}"></span>
+                                {% if is_split %}
+                                  <span class="color-dot color-dot--split" style="background: linear-gradient(to right, {{ color_hex }} 50%, {{ color_hex_2 }} 50%);{% if is_light %} border: 1px solid #ddd;{% endif %}"></span>
+                                {% else %}
+                                  <span class="color-dot" style="background-color: {{ color_hex }};{% if is_light %} border: 1px solid #ddd;{% endif %}"></span>
+                                {% endif %}
                                 <span class="color-input__name">{{ value | escape }}</span>
                               {% else %}
                                 <span class="size-label-text">{{ value | escape }}</span>
@@ -716,18 +754,51 @@
                     </div>
                     <script>
                       (function(){
-                        var colorInputs = document.querySelectorAll('.product-v2 .color-input input[type="radio"]');
-                        colorInputs.forEach(function(radio) {
-                          radio.addEventListener('change', function() {
-                            var fieldset = this.closest('.color-input');
-                            var nameEl = fieldset.querySelector('.color-input__selected-name');
-                            if (nameEl) {
-                              var label = this.nextElementSibling;
-                              var nameSpan = label.querySelector('.color-input__name');
-                              if (nameSpan) nameEl.textContent = nameSpan.textContent;
-                            }
+                        /* Update selected color name + sync hidden variants in color dots */
+                        function initColorPicker() {
+                          var fieldset = document.querySelector('.product-v2 .color-input');
+                          if (!fieldset) return;
+                          var nameEl = fieldset.querySelector('.color-input__selected-name');
+
+                          fieldset.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+                            radio.addEventListener('change', function() {
+                              if (nameEl) {
+                                var label = this.nextElementSibling;
+                                var nameSpan = label ? label.querySelector('.color-input__name') : null;
+                                if (nameSpan) nameEl.textContent = nameSpan.textContent;
+                              }
+                            });
                           });
-                        });
+
+                          /* Watch for hidden class changes on labels (from checkAvaiable in global.js) */
+                          var observer = new MutationObserver(function() {
+                            fieldset.querySelectorAll('label').forEach(function(label) {
+                              var radio = label.previousElementSibling;
+                              if (radio && radio.type === 'radio') {
+                                if (label.classList.contains('hidden')) {
+                                  radio.style.display = 'none';
+                                  label.style.display = 'none';
+                                } else {
+                                  radio.style.display = '';
+                                  label.style.display = '';
+                                }
+                              }
+                            });
+                          });
+                          observer.observe(fieldset, { attributes: true, attributeFilter: ['class'], subtree: true });
+
+                          /* Initial pass — hide already-hidden labels */
+                          fieldset.querySelectorAll('label.hidden').forEach(function(label) {
+                            var radio = label.previousElementSibling;
+                            if (radio) { radio.style.display = 'none'; label.style.display = 'none'; }
+                          });
+                        }
+
+                        if (document.readyState === 'loading') {
+                          document.addEventListener('DOMContentLoaded', initColorPicker);
+                        } else {
+                          initColorPicker();
+                        }
                       })();
                     </script>
                   </variant-radios>
