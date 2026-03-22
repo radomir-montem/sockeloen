@@ -443,6 +443,12 @@ a.product-v2__sp-avatar {
   stroke-width: 1.5;
 }
 
+/* ---------- Add to Cart Button ---------- */
+.product-v2 .product-form__submit,
+.product-v2 button[name="add"] {
+  text-transform: capitalize !important;
+}
+
 /* ---------- Sale Banner ---------- */
 .product-v2__sale-banner {
   padding: 10px 16px;
