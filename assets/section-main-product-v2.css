@@ -281,7 +281,7 @@
 /* ---------- Social Proof (Athletes) ---------- */
 .product-v2__social-proof {
   padding: 6px 0 12px;
-  margin-bottom: 0;
+  margin-bottom: 8px;
 }
 
 .product-v2__social-proof-inner {
@@ -354,7 +354,7 @@ a.product-v2__sp-avatar {
   font-weight: 700;
   line-height: 1.15;
   margin: 0;
-  padding-bottom: 6px;
+  padding-bottom: 10px;
 }
 
 /* ---------- Subtitle ---------- */
@@ -382,7 +382,7 @@ a.product-v2__sp-avatar {
 .product-v2__price .price__sale .real-price {
   font-size: 20px !important;
   color: #000 !important;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.3;
 }
 
