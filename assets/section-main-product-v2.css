@@ -504,6 +504,20 @@ a.product-v2__sp-avatar {
   margin-top: 2px !important;
 }
 
+/* Reserve space and fade in Avada tiles to reduce layout shift */
+.product-v2 .Avada-Volume__Body {
+  min-height: 140px;
+}
+
+.product-v2 .Avada-Volume__Item {
+  animation: avadaFadeIn 0.3s ease both;
+}
+
+@keyframes avadaFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Tier cards — horizontal single-row layout */
 /* Force Avada tier items to stack vertically */
 .product-v2 .Avada-Volume__Body,
@@ -533,7 +547,7 @@ a.product-v2__sp-avatar {
 /* Selected tier */
 .product-v2 .Avada-Volume__Item--Selected {
   border-color: #0395F6 !important;
-  background: #f0f8ff !important;
+  background: #ffffff !important;
 }
 
 .product-v2 .Avada-Volume__Item--Selected:hover {
