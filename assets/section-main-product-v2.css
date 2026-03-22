@@ -18,6 +18,57 @@
   background-color: #F76503;
 }
 
+/* Hide language/currency switcher on v2 template */
+.template--v2 localization-selector {
+  display: none !important;
+}
+
+/* Capitalize menu items (Shop etc.) */
+.template--v2 .header__menu-item span,
+.template--v2 .header__menu-item.link-only span {
+  text-transform: capitalize;
+}
+
+/* Stronger header icons — thicker lines + slightly bigger */
+.template--v2 .header__icon .icon {
+  width: 22px;
+  height: 22px;
+  stroke-width: 0.5px;
+  paint-order: stroke;
+  stroke: currentColor;
+}
+
+.template--v2 .header__icon svg path {
+  stroke: currentColor;
+  stroke-width: 0.4px;
+}
+
+/* Better spacing around header icons for good UX */
+.template--v2 .header__icon {
+  padding: 8px 10px;
+}
+
+.template--v2 .header__icons {
+  gap: 2px;
+}
+
+/* Down arrow next to menu items with dropdowns on desktop */
+@media screen and (min-width: 990px) {
+  .template--v2 .header__inline-menu header-menu > li > a.child-menu span::after,
+  .template--v2 .header__inline-menu details.mega-menu > summary > span::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    margin-left: 5px;
+    position: relative;
+    top: -2px;
+  }
+}
+
 /* ---------- Layout ---------- */
 .product-section {
   background: #F4F4F1;
@@ -249,7 +300,7 @@
 
 /* ---------- Product Info ---------- */
 .product-v2__info-wrapper {
-  padding: 16px 16px 16px;
+  padding: 8px 16px 16px;
   background: #F4F4F1;
 }
 
