@@ -129,6 +129,40 @@
     },
     "benefits": {
       "type": "product-benefits",
+      "blocks": {
+        "benefit_pAdyhM": {
+          "type": "benefit",
+          "settings": {
+            "image": "shopify://shop_images/Test_banner_website_knwu.png",
+            "heading": "Worn by",
+            "heading_italic": "World Champions",
+            "description": "<p>Worn by world champions. Our socks are trusted by professional cyclists who demand the highest performance and comfort on every ride.</p>"
+          }
+        },
+        "benefit_iqDerf": {
+          "type": "benefit",
+          "settings": {
+            "image": "shopify://shop_images/Tour_home_banner.png",
+            "heading": "Ride comfortable",
+            "heading_italic": "from now on",
+            "description": "<p>Engineered for endurance and comfort during long rides. Premium materials keep your feet cool and supported, mile after mile.</p>"
+          }
+        },
+        "benefit_9egM4N": {
+          "type": "benefit",
+          "settings": {
+            "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1.png",
+            "heading": "Socks that stay high.",
+            "heading_italic": "Promised.",
+            "description": "<p>Our perfect fitt and stretch keeps your socks exactly where they belong, no slipping, no adjusting, no distractions. Just the perfect fit, all day long.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_pAdyhM",
+        "benefit_iqDerf",
+        "benefit_9egM4N"
+      ],
       "settings": {
         "background_color": "#ffffff",
         "text_color": "#000000",
@@ -143,12 +177,59 @@
     "recommendations": {
       "type": "product-recommendations",
       "settings": {}
+    },
+    "faq_K3VkgY": {
+      "type": "faq",
+      "blocks": {
+        "faq_qhqdG9": {
+          "type": "faq",
+          "settings": {
+            "question": "test",
+            "answer": "<p>test</p>"
+          }
+        },
+        "faq_tmwcec": {
+          "type": "faq",
+          "settings": {
+            "question": "",
+            "answer": ""
+          }
+        },
+        "faq_ekWXw9": {
+          "type": "faq",
+          "settings": {
+            "question": "",
+            "answer": ""
+          }
+        },
+        "faq_4WpJLE": {
+          "type": "faq",
+          "settings": {
+            "question": "",
+            "answer": ""
+          }
+        }
+      },
+      "block_order": [
+        "faq_qhqdG9",
+        "faq_tmwcec",
+        "faq_ekWXw9",
+        "faq_4WpJLE"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "padding_top_mob": 50,
+        "padding_bottom_mob": 50
+      }
     }
   },
   "order": [
     "main",
     "benefits",
     "reviews",
-    "recommendations"
+    "recommendations",
+    "faq_K3VkgY"
   ]
 }

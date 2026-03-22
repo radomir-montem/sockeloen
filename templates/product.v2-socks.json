@@ -92,6 +92,20 @@
       ],
       "settings": {
         "social_proof_type": "athletes",
+        "sp_athlete_1_name": "Tibor del Grosso",
+        "sp_athlete_1_link": "",
+        "sp_athlete_2_name": "Riejanne Markus",
+        "sp_athlete_2_link": "",
+        "sp_athlete_3_name": "Demi Vollering",
+        "sp_athlete_3_link": "",
+        "sp_verified_badge": true,
+        "sp_follower_count": "237.532",
+        "sp_brand_name": "Sockeloen",
+        "sp_bg_color": "#ffffff",
+        "sp_text_color": "#000000",
+        "default_benefit_1": "No more soaked, sweaty socks during riding.",
+        "default_benefit_2": "No burning feet or pressure points, thanks to the uniquely thin footbed.",
+        "default_benefit_3": "Stay up. Sit at the perfect height. All ride long.",
         "show_sale_banner": false,
         "sale_banner_text": "",
         "sale_banner_bg_color": "#abcc15",
@@ -100,6 +114,7 @@
         "hide_variants": true,
         "enable_video_looping": false,
         "show_dynamic_checkout": false,
+        "notifyme_button": "Notify me when available",
         "padding_top": 0,
         "padding_bottom": 0
       }
