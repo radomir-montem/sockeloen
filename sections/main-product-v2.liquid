@@ -1023,6 +1023,48 @@
                           value="{{ product.selected_or_first_available_variant.id }}"
                           disabled
                         >
+                        {%- comment -%} Low stock warning — shows when inventory <= threshold {%- endcomment -%}
+                        <div class="product-v2__low-stock" style="display:none;" id="low-stock-{{ section.id }}">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="8" cy="8" r="7" stroke="#F76503" stroke-width="1.5"/>
+                            <path d="M8 4.5V9" stroke="#F76503" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="8" cy="11.5" r="0.75" fill="#F76503"/>
+                          </svg>
+                          <span id="low-stock-text-{{ section.id }}"></span>
+                        </div>
+                        <script>
+                          (function() {
+                            var stockData = {};
+                            {%- for variant in product.variants -%}
+                              {%- if variant.inventory_management == 'shopify' and variant.inventory_quantity > 0 and variant.inventory_quantity <= 10 -%}
+                                stockData['{{ variant.id }}'] = {{ variant.inventory_quantity }};
+                              {%- endif -%}
+                            {%- endfor -%}
+                            var el = document.getElementById('low-stock-{{ section.id }}');
+                            var txt = document.getElementById('low-stock-text-{{ section.id }}');
+                            function updateStock() {
+                              var radios = document.querySelectorAll('variant-radios input[type="radio"]:checked');
+                              var opts = [];
+                              radios.forEach(function(r) { opts.push(r.value); });
+                              var variants = {{ product.variants | json }};
+                              var match = variants.find(function(v) {
+                                return v.options.every(function(o, i) { return o === opts[i]; });
+                              });
+                              if (match && stockData[match.id]) {
+                                var qty = stockData[match.id];
+                                txt.textContent = qty === 1 ? 'Low stock — only 1 item left' : 'Low stock — only ' + qty + ' items left';
+                                el.style.display = 'flex';
+                              } else {
+                                el.style.display = 'none';
+                              }
+                            }
+                            updateStock();
+                            document.addEventListener('change', function(e) {
+                              if (e.target.closest('variant-radios')) updateStock();
+                            });
+                          })();
+                        </script>
+
                         <div class="product-form__buttons">
                           {% render 'outlink-custom',
                             product: product,
@@ -1241,6 +1283,37 @@
                   }, 60000);
                 })();
               </script>
+
+              {%- comment -%} Trust signals row {%- endcomment -%}
+              <div class="product-v2__trust-signals">
+                <div class="product-v2__trust-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M16.5 7.11819H3.5L3.5 18.9997L16.5 18.9997V7.11819ZM3.5 6.11786C2.94772 6.11786 2.5 6.56573 2.5 7.11819V18.9997C2.5 19.5521 2.94772 20 3.5 20H16.5C17.0523 20 17.5 19.5521 17.5 18.9997V7.11819C17.5 6.56572 17.0523 6.11786 16.5 6.11786H3.5Z" fill="#888" fill-rule="evenodd"/>
+                    <path d="M11.443 11.9199C11.443 12.7406 10.797 13.406 10.0001 13.406C9.20314 13.406 8.55712 12.7406 8.55712 11.9199C8.55712 11.0992 9.20314 10.4338 10.0001 10.4338C10.797 10.4338 11.443 11.0992 11.443 11.9199Z" fill="#888"/>
+                    <path d="M10.0187 11.9202C10.3639 11.9202 10.6437 12.2001 10.6437 12.5454V15.6971C10.6437 16.0424 10.3639 16.3223 10.0187 16.3223C9.67354 16.3223 9.39372 16.0424 9.39372 15.6971V12.5454C9.39372 12.2001 9.67354 11.9202 10.0187 11.9202Z" fill="#888"/>
+                    <path d="M6.2417 3.75956C6.2417 1.68321 7.92435 0 10 0C12.0757 0 13.7583 1.68321 13.7583 3.75956V6.12135H12.7583V3.75956C12.7583 2.23568 11.5234 1.00033 10 1.00033C8.47663 1.00033 7.2417 2.23568 7.2417 3.75956V6.12135H6.2417V3.75956Z" fill="#888"/>
+                  </svg>
+                  <span>Secure checkout</span>
+                </div>
+                <span class="product-v2__trust-dot"></span>
+                <div class="product-v2__trust-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M0 3.75156C0 3.47454 0.224196 3.24997 0.500755 3.24997H10.647C10.9235 3.24997 11.1477 3.47454 11.1477 3.75156V5.07505V5.63362V6.10938V13.6616C10.9427 14.0067 10.8813 14.1101 10.5516 14.6648L7.22339 14.6646V13.6614H10.1462V4.25316H1.00151V13.6614H2.6842V14.6646H0.500755C0.224196 14.6646 0 14.44 0 14.163V3.75156Z" fill="#888"/>
+                    <path d="M18.9985 8.08376L11.1477 6.10938V5.07505L19.6212 7.20603C19.8439 7.26203 20 7.46255 20 7.69253V14.1631C20 14.4401 19.7758 14.6647 19.4992 14.6647H17.3071V13.6615H18.9985V8.08376ZM11.1477 13.6616L13.3442 13.6615L13.3443 14.6647L10.5516 14.6648L11.1477 13.6616Z" fill="#888"/>
+                    <path d="M7.71269 14.1854C7.71269 15.6018 6.56643 16.75 5.15245 16.75C3.73847 16.75 2.59221 15.6018 2.59221 14.1854C2.59221 12.7691 3.73847 11.6209 5.15245 11.6209C6.56643 11.6209 7.71269 12.7691 7.71269 14.1854ZM5.15245 15.7468C6.01331 15.7468 6.71118 15.0478 6.71118 14.1854C6.71118 13.3231 6.01331 12.6241 5.15245 12.6241C4.29159 12.6241 3.59372 13.3231 3.59372 14.1854C3.59372 15.0478 4.29159 15.7468 5.15245 15.7468Z" fill="#888"/>
+                    <path d="M17.5196 14.1854C17.5196 15.6018 16.3733 16.75 14.9593 16.75C13.5454 16.75 12.3991 15.6018 12.3991 14.1854C12.3991 12.7691 13.5454 11.6209 14.9593 11.6209C16.3733 11.6209 17.5196 12.7691 17.5196 14.1854ZM14.9593 15.7468C15.8202 15.7468 16.5181 15.0478 16.5181 14.1854C16.5181 13.3231 15.8202 12.6241 14.9593 12.6241C14.0985 12.6241 13.4006 13.3231 13.4006 14.1854C13.4006 15.0478 14.0985 15.7468 14.9593 15.7468Z" fill="#888"/>
+                  </svg>
+                  <span>Free shipping 75+</span>
+                </div>
+                <span class="product-v2__trust-dot"></span>
+                <div class="product-v2__trust-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M11.571 1.05882C11.571 0.750194 11.8198 0.5 12.1266 0.5H13.4572C17.0692 0.5 20 3.45304 20 7.08924C20 10.7255 17.0692 13.6785 13.4572 13.6785L1.89992 13.7105L1.30855 13.1197L1.89992 12.5484L13.4572 12.5608C16.4541 12.5608 18.8889 10.1096 18.8889 7.08924C18.8889 4.06891 16.4541 1.61765 13.4572 1.61765H12.1266C11.8198 1.61765 11.571 1.36745 11.571 1.05882Z" fill="#888"/>
+                    <path d="M6.00311 7.00677C6.22317 6.7917 6.57489 6.79679 6.78871 7.01815C7.00252 7.2395 6.99746 7.59329 6.7774 7.80836L6.00311 7.00677ZM1.30855 13.1197L6.73968 18.5463C6.9565 18.7647 6.95627 19.1185 6.73917 19.3366C6.52207 19.5547 6.17031 19.5544 5.9535 19.3361L0.162462 13.5034C0.0572388 13.3974 -0.00128425 13.2533 2.13868e-05 13.1036C0.00132703 12.9538 0.0623521 12.8108 0.169407 12.7067C0.3269 12.5535 1.78474 11.1291 3.20439 9.74186L6.00311 7.00677L6.7774 7.80836L3.97862 10.5435C2.95441 11.5444 1.8705 12.5709 1.30855 13.1197Z" fill="#888"/>
+                  </svg>
+                  <span>Free returns</span>
+                </div>
+              </div>
 
             {%- when 'collapsible_tab' -%}
               {% if block.settings.heading == 'Description'

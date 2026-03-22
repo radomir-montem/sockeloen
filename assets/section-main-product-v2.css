@@ -1483,3 +1483,66 @@ sticky-atc-v2.hidden {
     padding: 24px 0 24px 3rem;
   }
 }
+
+/* Low stock warning */
+.product-v2__low-stock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-v2__low-stock span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #c2410c;
+}
+
+/* Trust signals row */
+.product-v2__trust-signals {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0;
+  margin: 0 0 20px 0;
+  flex-wrap: wrap;
+}
+
+.product-v2__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.product-v2__trust-item svg {
+  flex-shrink: 0;
+}
+
+.product-v2__trust-item span {
+  font-size: 13px;
+  font-weight: 400;
+  color: #888;
+  white-space: nowrap;
+}
+
+.product-v2__trust-dot {
+  width: 3px;
+  height: 3px;
+  background: #ccc;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media screen and (max-width: 749px) {
+  .product-v2__trust-signals {
+    gap: 8px;
+  }
+  .product-v2__trust-item span {
+    font-size: 12px;
+  }
+}
