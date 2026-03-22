@@ -771,9 +771,10 @@ sticky-atc-v2.hidden {
     width: 100% !important;
   }
 
-  /* On desktop, use natural image ratio (taller) instead of 1:1 square */
+  /* On desktop, use original image ratio (from inline padding-top) instead of 1:1 square */
   .product-v2 .product__media-list .product__media-item .media {
     aspect-ratio: auto;
+    padding-top: 125% !important;
   }
 
   /* Hide thumbnails on desktop */
