@@ -960,7 +960,9 @@ class VariantSelects extends HTMLElement {
   }
 
   changeNote() {
-    const notes = document.querySelector('.variant-notes').querySelectorAll('[data-id]');
+    const notesContainer = document.querySelector('.variant-notes');
+    if (!notesContainer) return;
+    const notes = notesContainer.querySelectorAll('[data-id]');
     notes.forEach(note => {
       note.classList.toggle('hidden', note.dataset.id != this.currentVariant.id);
     })
@@ -972,10 +974,10 @@ class VariantSelects extends HTMLElement {
       const _this = this;
       const fieldsets = this.querySelectorAll('.product-form__input');
 
-      // Unhide all inputs
+      // Unhide all inputs (null-check for hidden fieldsets with no label)
       fieldsets.forEach(fieldset => {
         fieldset.querySelectorAll('input').forEach(input => {
-          input.nextElementSibling.classList.remove('hidden');
+          if (input.nextElementSibling) input.nextElementSibling.classList.remove('hidden');
         });
       });
 
@@ -992,7 +994,7 @@ class VariantSelects extends HTMLElement {
             );
             if(isMatchingVariant) {
               const disabled = _this.querySelector('.product-metafields').querySelector(`[data-variant-id="${variant.id}"]`).dataset.disabled.trim() === "true";
-              if(disabled)input.nextElementSibling.classList.add('hidden');
+              if(disabled && input.nextElementSibling) input.nextElementSibling.classList.add('hidden');
             }
           });
         });
@@ -1065,16 +1067,16 @@ class VariantSelects extends HTMLElement {
 
   displayOutOfStockNotification() {
     var outOfStockNotificationElement = document.getElementById('out-of-stock')
-    var shipmentMessage = document.getElementById('shipment-message')
+    var shipmentMessage = document.getElementById('shipment-message') || document.getElementById('shipment-message-v2')
     let backInStockText = document.getElementById('restock_date')
     var variant_available = this.currentVariant?.available
     if(comingSoon) variant_available = false;
     if (variant_available) {
-      outOfStockNotificationElement.style.display = 'none'
+      if (outOfStockNotificationElement) outOfStockNotificationElement.style.display = 'none'
       if (shipmentMessage) shipmentMessage.style.display = 'block'
       if (backInStockText) backInStockText.style.display = 'none'
     } else {
-      outOfStockNotificationElement.style.display = 'flex'
+      if (outOfStockNotificationElement) outOfStockNotificationElement.style.display = 'flex'
       if (shipmentMessage) shipmentMessage.style.display = 'none'
       if (backInStockText) backInStockText.style.display = 'block'
     }
@@ -1295,10 +1297,10 @@ class VariantSelects extends HTMLElement {
 
     if (disable) {
       addButton.setAttribute('disabled', 'disabled')
-      if (text) addButtonText.textContent = text
+      if (text && addButtonText) addButtonText.textContent = text
     } else {
       addButton.removeAttribute('disabled')
-      addButtonText.innerHTML = window.variantStrings.cartIcon + window.variantStrings.addToCart
+      if (addButtonText) addButtonText.innerHTML = window.variantStrings.cartIcon + window.variantStrings.addToCart
     }
 
     if (!modifyClass) return
@@ -1308,16 +1310,19 @@ class VariantSelects extends HTMLElement {
     const button = document.getElementById(
       `product-form-${this.dataset.section}`
     )
+    if (!button) return
     const addButton = button.querySelector('[name="add"]')
     const addButtonText = button.querySelector('[name="add"] > span')
     const price = document.getElementById(`price-${this.dataset.section}`)
     if (!addButton) return
-    addButtonText.textContent = window.variantStrings.unavailable
+    if (addButtonText) addButtonText.textContent = window.variantStrings.unavailable
     if (price) price.classList.add('visibility-hidden')
   }
 
   setAvailableVariant() {
-    const fieldset = this.querySelector('.product-form__input').nextElementSibling;
+    const firstFieldset = this.querySelector('.product-form__input');
+    if (!firstFieldset) return;
+    const fieldset = firstFieldset.nextElementSibling;
     if(fieldset) {
       fieldset.querySelector('input:not(:disabled)')?.nextElementSibling?.click();
     }

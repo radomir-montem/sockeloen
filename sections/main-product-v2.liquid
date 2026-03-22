@@ -793,7 +793,7 @@
                         {%- comment -%} Size guide link moved below ATC button {%- endcomment -%}
                       {%- else -%}
                         {%- comment -%} Single-value option: render as hidden fieldset so updateOptions() still finds it {%- endcomment -%}
-                        <fieldset class="js product-form__input" style="display:none !important;">
+                        <fieldset class="js product-form__input{% if is_color %} color-input{% endif %}" style="display:none !important;">
                           <input
                             type="radio"
                             name="{{ option.name }}"
