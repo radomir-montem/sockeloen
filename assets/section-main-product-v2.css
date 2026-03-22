@@ -461,6 +461,7 @@ a.product-v2__sp-avatar {
   color: #fff !important;
   font-weight: 500 !important;
   letter-spacing: 0.01em;
+  filter: none !important;
   transition: background-color 0.2s ease;
 }
 
