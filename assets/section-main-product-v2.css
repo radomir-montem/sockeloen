@@ -518,7 +518,7 @@ a.product-v2__sp-avatar {
   border: 2px solid #e5e5e5 !important;
   border-radius: 10px !important;
   padding: 12px 16px !important;
-  overflow: hidden !important;
+  overflow: visible !important;
   width: 100% !important;
   cursor: pointer !important;
   transition: border-color 0.2s ease, background-color 0.2s ease !important;
