@@ -593,23 +593,8 @@
                     data-url="{{ product.url }}"
                     {{ block.shopify_attributes }}
                   >
-                    {%- comment -%} UX best practice: render color options first, then size/other options {%- endcomment -%}
-                    {%- assign color_options = '' -%}
-                    {%- assign other_options = '' -%}
+                    {%- comment -%} Render options in Shopify order (required for variant matching), use CSS order to show color first {%- endcomment -%}
                     {%- for option in product.options_with_values -%}
-                      {%- assign option_name = option.name | handleize -%}
-                      {%- if option_name contains 'color' or option_name contains 'kleur' or option_name contains 'couleur' -%}
-                        {%- assign color_options = color_options | append: forloop.index0 | append: ',' -%}
-                      {%- else -%}
-                        {%- assign other_options = other_options | append: forloop.index0 | append: ',' -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-                    {%- assign sorted_indices = color_options | append: other_options | split: ',' -%}
-
-                    {%- for idx in sorted_indices -%}
-                      {%- if idx == blank -%}{%- continue -%}{%- endif -%}
-                      {%- assign idx_num = idx | plus: 0 -%}
-                      {%- assign option = product.options_with_values[idx_num] -%}
                       {% assign option_name = option.name | handleize %}
                       {%- assign is_color = false -%}
                       {%- if option_name contains 'color' or option_name contains 'kleur' or option_name contains 'couleur' -%}
@@ -693,19 +678,63 @@
                                     assign color_hex = '#1a1a1a'
                                   elsif color_lower == 'commute'
                                     assign color_hex = '#555555'
-                                  elsif color_lower contains 'gold'
-                                    assign color_hex = '#c9a84c'
-                                  elsif color_lower contains 'silver'
-                                    assign color_hex = '#b0b0b0'
-                                  elsif color_lower contains 'white' and color_lower contains 'black'
+                                  elsif color_lower == 'black/gold' or color_lower == 'black / gold'
+                                    assign color_hex = '#1a1a1a'
+                                    assign color_hex_2 = '#c9a84c'
+                                    assign is_split = true
+                                  elsif color_lower == 'white/silver' or color_lower == 'white / silver'
+                                    assign color_hex = '#ffffff'
+                                    assign color_hex_2 = '#b0b0b0'
+                                    assign is_split = true
+                                    assign is_light = true
+                                  elsif color_lower == 'black / grey' or color_lower == 'black/grey'
+                                    assign color_hex = '#1a1a1a'
+                                    assign color_hex_2 = '#888888'
+                                    assign is_split = true
+                                  elsif color_lower == 'white/black' or color_lower == 'white / black'
                                     assign color_hex = '#ffffff'
                                     assign color_hex_2 = '#1a1a1a'
                                     assign is_split = true
                                     assign is_light = true
-                                  elsif color_lower contains 'black' and color_lower contains 'white'
-                                    assign color_hex = '#1a1a1a'
-                                    assign color_hex_2 = '#ffffff'
+                                  elsif color_lower contains 'gold'
+                                    assign color_hex = '#c9a84c'
+                                  elsif color_lower contains 'silver'
+                                    assign color_hex = '#b0b0b0'
+                                  elsif color_lower contains '/'
+                                    comment
+                                      Generic slash handler: split into two colors
+                                    endcomment
+                                    assign slash_parts = color_lower | split: '/'
+                                    assign part1 = slash_parts[0] | strip
+                                    assign part2 = slash_parts[1] | strip
                                     assign is_split = true
+                                    if part1 == 'white' or part1 == 'wit'
+                                      assign color_hex = '#ffffff'
+                                      assign is_light = true
+                                    elsif part1 == 'black' or part1 == 'zwart'
+                                      assign color_hex = '#1a1a1a'
+                                    else
+                                      assign color_hex = '#ccc'
+                                    endif
+                                    if part2 == 'white' or part2 == 'wit'
+                                      assign color_hex_2 = '#ffffff'
+                                    elsif part2 == 'black' or part2 == 'zwart'
+                                      assign color_hex_2 = '#1a1a1a'
+                                    elsif part2 == 'gold'
+                                      assign color_hex_2 = '#c9a84c'
+                                    elsif part2 == 'silver'
+                                      assign color_hex_2 = '#b0b0b0'
+                                    elsif part2 == 'grey' or part2 == 'gray'
+                                      assign color_hex_2 = '#888888'
+                                    elsif part2 == 'red'
+                                      assign color_hex_2 = '#c0392b'
+                                    elsif part2 == 'blue'
+                                      assign color_hex_2 = '#2980b9'
+                                    elsif part2 == 'green'
+                                      assign color_hex_2 = '#5a7a2e'
+                                    else
+                                      assign color_hex_2 = '#ccc'
+                                    endif
                                   elsif color_lower contains 'white'
                                     assign color_hex = '#ffffff'
                                     assign is_light = true
