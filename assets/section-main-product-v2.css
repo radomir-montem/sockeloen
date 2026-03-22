@@ -477,13 +477,23 @@ a.product-v2__sp-avatar {
   letter-spacing: 0.01em;
   filter: none !important;
   width: 100% !important;
-  transition: opacity 0.2s ease, background-color 0.2s ease;
+  transition: opacity 0.2s ease;
+}
+
+/* Remove hover arrow */
+.product-v2 .product-form__submit::after,
+.product-v2 button[name="add"]::after,
+.product-v2 .product-form__submit::before,
+.product-v2 button[name="add"]::before {
+  display: none !important;
+  content: none !important;
 }
 
 .product-v2 .product-form__submit:hover,
 .product-v2 button[name="add"]:hover {
   background-color: #0395F6 !important;
   opacity: 0.85;
+  box-shadow: none !important;
 }
 
 /* ---------- Sale Banner ---------- */
@@ -682,14 +692,15 @@ sticky-atc-v2.hidden {
   width: 100%;
   padding: 15px 20px;
   font-size: 15px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0.01em;
   cursor: pointer;
   border: none;
-  background: #000;
+  background: #0395F6;
   color: #fff;
   border-radius: 6px;
+  transition: opacity 0.2s ease;
 }
 
 .product-v2-size-modal__confirm:hover {
