@@ -150,13 +150,18 @@ if (!customElements.get('sticky-atc-v2')) {
 (function() {
   function stripEuro(root) {
     (root || document).querySelectorAll(
-      '.product-v2 .Avada-Offer__PriceDiscount, .product-v2 .Avada-Offer__PriceDefault, .product-v2 .Avada-Volume__Info--TriggerQty'
+      '.product-v2 .AOV-Offer__DiscountPrice, .product-v2 .AOV-Offer__BasePrice, .product-v2 .Avada-Offer__PriceDiscount, .product-v2 .Avada-Offer__PriceDefault'
     ).forEach(function(el) {
+      // Check direct text nodes
       el.childNodes.forEach(function(node) {
         if (node.nodeType === 3 && node.textContent.includes('€')) {
           node.textContent = node.textContent.replace(/€/g, '');
         }
       });
+      // Also check the element's own text if it's a leaf
+      if (el.children.length === 0 && el.textContent.includes('€')) {
+        el.textContent = el.textContent.replace(/€/g, '');
+      }
     });
   }
   // Run once DOM is ready, then watch for Avada's lazy rendering
