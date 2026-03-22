@@ -521,11 +521,12 @@ a.product-v2__sp-avatar {
   width: 100% !important;
 }
 
-/* Content wrapper — horizontal flex row */
+/* Content wrapper — horizontal flex row, wraps for savings line */
 .product-v2 .Avada-Volume__Content,
 .product-v2 .Avada-Volume__Content--Horizontal {
   display: flex !important;
   flex-direction: row !important;
+  flex-wrap: wrap !important;
   align-items: center !important;
   gap: 12px !important;
   width: 100% !important;
@@ -623,19 +624,21 @@ a.product-v2__sp-avatar {
 
 /* Per-pair label */
 .product-v2 .avada-per-pair {
-  font-size: 11px;
-  font-weight: 400;
-  color: #888;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  color: #888 !important;
   margin-left: 2px;
 }
 
-/* Savings line */
+/* Savings line — below the tier card content, full width */
 .product-v2 .avada-savings-line {
   font-size: 12px;
   color: #2e7d32;
-  margin-top: 4px;
+  margin-top: 6px;
   text-align: right;
   width: 100%;
+  order: 10 !important;
+  flex-basis: 100%;
 }
 
 /* Hide variant selections within bundle tiers */
