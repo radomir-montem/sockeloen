@@ -163,18 +163,25 @@ if (!customElements.get('sticky-atc-v2')) {
     });
   }
 
+  function getActiveImageSrc() {
+    // Get the currently active (visible) product image for the selected variant
+    var activeItem = document.querySelector('.product-v2 .product__media-item.is-active img');
+    if (!activeItem) activeItem = document.querySelector('.product-v2 .product__media-item:not([style*="display: none"]) img');
+    if (!activeItem) activeItem = document.querySelector('.product-v2 .product__media-item img');
+    if (!activeItem) return null;
+    var src = activeItem.currentSrc || activeItem.src;
+    if (src.indexOf('width=') !== -1) {
+      src = src.replace(/width=\d+/, 'width=80');
+    }
+    return src;
+  }
+
   function injectImageStacks(root) {
     var items = (root || document).querySelectorAll('.product-v2 .Avada-Volume__Item');
     if (!items.length) return;
 
-    // Get first product image src (transparent bg)
-    var firstImg = document.querySelector('.product-v2 .product__media-item img');
-    if (!firstImg) return;
-    var imgSrc = firstImg.currentSrc || firstImg.src;
-    // Request a small version
-    if (imgSrc.indexOf('width=') !== -1) {
-      imgSrc = imgSrc.replace(/width=\d+/, 'width=80');
-    }
+    var imgSrc = getActiveImageSrc();
+    if (!imgSrc) return;
 
     items.forEach(function(item) {
       // Skip if already injected
@@ -210,6 +217,14 @@ if (!customElements.get('sticky-atc-v2')) {
     });
   }
 
+  function updateImageStacks() {
+    var imgSrc = getActiveImageSrc();
+    if (!imgSrc) return;
+    document.querySelectorAll('.product-v2 .avada-img-stack__img').forEach(function(img) {
+      img.src = imgSrc;
+    });
+  }
+
   function injectRadioDots(root) {
     var items = (root || document).querySelectorAll('.product-v2 .Avada-Volume__Item');
     if (!items.length) return;
@@ -228,10 +243,20 @@ if (!customElements.get('sticky-atc-v2')) {
     });
   }
 
+  function fixBadgeText() {
+    document.querySelectorAll('.product-v2 .Avada-VolumeBoxBadge').forEach(function(badge) {
+      if (badge.textContent.trim() === badge.textContent.trim().toUpperCase()) {
+        var text = badge.textContent.trim().toLowerCase().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        badge.textContent = text;
+      }
+    });
+  }
+
   function enhance() {
     stripEuro();
     injectRadioDots();
     injectImageStacks();
+    fixBadgeText();
   }
 
   function init() {
@@ -240,6 +265,14 @@ if (!customElements.get('sticky-atc-v2')) {
     if (!container) return;
     new MutationObserver(function() { enhance(); })
       .observe(container, { childList: true, subtree: true, characterData: true });
+
+    /* Update upsell thumbnails when variant changes */
+    var variantRadios = container.querySelector('variant-radios');
+    if (variantRadios) {
+      variantRadios.addEventListener('change', function() {
+        setTimeout(function() { updateImageStacks(); }, 10);
+      });
+    }
   }
 
   if (document.readyState === 'loading') {
