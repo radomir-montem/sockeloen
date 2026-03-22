@@ -165,7 +165,7 @@
   display: flex;
   gap: 4px;
   overflow-x: auto;
-  padding: 4px 0 0 4px;
+  padding: 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
   background: #fff;
