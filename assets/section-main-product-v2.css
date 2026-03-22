@@ -280,7 +280,7 @@
 
 /* ---------- Social Proof (Athletes) ---------- */
 .product-v2__social-proof {
-  padding: 10px 0;
+  padding: 6px 0 12px;
   margin-bottom: 0;
 }
 
@@ -350,11 +350,11 @@ a.product-v2__sp-avatar {
 /* ---------- Title ---------- */
 .product-v2__title {
   font-size: 25px;
-  text-transform: uppercase;
+  text-transform: lowercase;
   font-weight: 700;
   line-height: 1.15;
   margin: 0;
-  padding-bottom: 10px;
+  padding-bottom: 6px;
 }
 
 /* ---------- Subtitle ---------- */
