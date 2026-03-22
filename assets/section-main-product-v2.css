@@ -20,7 +20,13 @@
 
 /* ---------- Layout ---------- */
 .product-section {
-  background: #F4F4F1;
+  background: #fff;
+}
+
+@media screen and (min-width: 990px) {
+  .product-section {
+    background: #F4F4F1;
+  }
 }
 
 .product-v2 {
@@ -184,7 +190,7 @@
   padding: 4px 0 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  background: #F4F4F1;
+  background: #fff;
 }
 
 .product-v2 .thumbnail-slider::-webkit-scrollbar {
@@ -241,13 +247,13 @@
 
 /* ---------- Product Info ---------- */
 .product-v2__info-wrapper {
-  padding: 10px 16px 16px;
-  background: #fff;
+  padding: 16px 16px 16px;
+  background: transparent;
 }
 
 /* ---------- Reviews Bar ---------- */
 .product-v2__reviews-bar {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .product-v2__stars {
@@ -298,8 +304,14 @@
 /* ---------- Social Proof (Athletes) ---------- */
 .product-v2__social-proof {
   padding: 6px 0 12px;
-  margin-bottom: 8px;
-  background-color: #F4F4F1 !important;
+  margin-bottom: 12px;
+  background-color: #fff !important;
+}
+
+@media screen and (min-width: 990px) {
+  .product-v2__social-proof {
+    background-color: #F4F4F1 !important;
+  }
 }
 
 .product-v2__social-proof-inner {
@@ -379,12 +391,12 @@ a.product-v2__sp-avatar {
 .product-v2__subtitle {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 /* ---------- Price ---------- */
 .product-v2__price {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 
@@ -431,7 +443,7 @@ a.product-v2__sp-avatar {
 /* ---------- Benefits Checklist ---------- */
 .product-v2__benefits {
   list-style: none;
-  margin: 8px 0 12px;
+  margin: 0 0 16px;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -461,20 +473,30 @@ a.product-v2__sp-avatar {
 
 /* ---------- Avada Volume Discount Widget Overrides ---------- */
 .product-v2 .Avada-Bundle-Volume__Container {
-  margin: 16px 0 20px !important;
+  margin: 24px 0 24px !important;
   gap: 12px !important;
 }
 
-/* Header */
+/* Header — Cloudpillo-style sales banner */
+.product-v2 .Avada-Volume__Header {
+  background-color: #e8f0c4 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 14px 20px !important;
+  text-align: center !important;
+  margin-bottom: 12px !important;
+}
+
 .product-v2 .Avada-Volume__HeaderTitle-Text {
-  font-size: 16px !important;
-  font-weight: 600 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
   color: #1a1a1a !important;
 }
 
 .product-v2 .Avada-Volume__HeaderDescription {
   font-size: 13px !important;
-  color: #666 !important;
+  color: #444 !important;
+  margin-top: 2px !important;
 }
 
 /* Tier cards — horizontal single-row layout */
@@ -726,8 +748,8 @@ a.product-v2__sp-avatar {
   text-transform: uppercase;
   font-size: 13px;
   letter-spacing: 0.03em;
-  border-radius: 4px;
-  margin-bottom: 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 /* ---------- Color Swatch Images ---------- */
