@@ -605,6 +605,18 @@
                         <fieldset class="js product-form__input product-form__input--pill {% if is_color %}color-input{% else %}size-input{% endif %}">
                           <legend class="form__label">{{ option.name }}</legend>
                           {%- for value in option.values -%}
+                            {%- liquid
+                              assign variant_hidden = true
+                              for variant in product.variants
+                                for opt in variant.options
+                                  if opt == value
+                                    unless variant.metafields.custom.disable == true
+                                      assign variant_hidden = false
+                                    endunless
+                                  endif
+                                endfor
+                              endfor
+                            -%}
                             <input
                               type="radio"
                               id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
@@ -614,8 +626,9 @@
                               {% if option.selected_value == value %}
                                 checked
                               {% endif %}
+                              {% if variant_hidden %}class="disabled"{% endif %}
                             >
-                            <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+                            <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" {% if variant_hidden %}class="hidden" style="display:none;"{% endif %}>
                               {% if is_color %}
                                 {%- liquid
                                   assign color_lower = value | downcase | strip
