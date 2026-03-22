@@ -587,12 +587,16 @@ a.product-v2__sp-avatar {
   text-decoration: line-through !important;
 }
 
-/* Badge ("Most Popular") — positioned crossing top border */
+/* Badge ("Most Popular") — positioned crossing top border, centered on card */
 .product-v2 .Avada-VolumeBoxBadge {
   position: absolute !important;
   top: -11px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto !important;
+  width: fit-content !important;
+  transform: none !important;
+  text-align: center !important;
   background: #abcc15 !important;
   color: #000 !important;
   font-size: 10px !important;
@@ -604,6 +608,12 @@ a.product-v2__sp-avatar {
   line-height: 1.4 !important;
   z-index: 1 !important;
   white-space: nowrap !important;
+}
+
+/* Arrival date — match badge green (#abcc15) */
+.product-v2 .shipping-text span {
+  color: #abcc15 !important;
+  font-weight: 600;
 }
 
 /* Hide variant selections within bundle tiers */
