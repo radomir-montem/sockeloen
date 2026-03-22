@@ -20,13 +20,7 @@
 
 /* ---------- Layout ---------- */
 .product-section {
-  background: #fff;
-}
-
-@media screen and (min-width: 990px) {
-  .product-section {
-    background: #F4F4F1;
-  }
+  background: #F4F4F1;
 }
 
 .product-v2 {
@@ -85,7 +79,13 @@
 .product-v2__media-wrapper {
   position: relative;
   padding-left: 0;
-  background: transparent;
+  background: #fff;
+}
+
+@media screen and (min-width: 990px) {
+  .product-v2__media-wrapper {
+    background: transparent;
+  }
 }
 
 /* Make gallery full-bleed on mobile despite page-width padding */
@@ -248,7 +248,7 @@
 /* ---------- Product Info ---------- */
 .product-v2__info-wrapper {
   padding: 16px 16px 16px;
-  background: transparent;
+  background: #F4F4F1;
 }
 
 /* ---------- Reviews Bar ---------- */
@@ -305,13 +305,7 @@
 .product-v2__social-proof {
   padding: 6px 0 12px;
   margin-bottom: 12px;
-  background-color: #fff !important;
-}
-
-@media screen and (min-width: 990px) {
-  .product-v2__social-proof {
-    background-color: #F4F4F1 !important;
-  }
+  background-color: #F4F4F1 !important;
 }
 
 .product-v2__social-proof-inner {
@@ -758,6 +752,7 @@ a.product-v2__sp-avatar {
   height: 70px;
   padding: 0 !important;
   margin-bottom: -8px;
+  background-color: #fff !important;
 }
 
 .product-v2__info-wrapper .product-form__input.color-input label img {
@@ -777,6 +772,11 @@ a.product-v2__sp-avatar {
 /* ---------- Product Form ---------- */
 .product-v2 .product-form__input--pill {
   margin-bottom: 12px;
+}
+
+/* Variant pill labels — white bg for contrast against grey page bg */
+.product-v2 .product-form__input--pill label {
+  background-color: #fff !important;
 }
 
 .product-v2 .product-form-wrapper {
