@@ -536,12 +536,11 @@ a.product-v2__sp-avatar {
   width: 100% !important;
 }
 
-/* Content wrapper — horizontal flex row, wraps for savings line */
+/* Content wrapper — horizontal flex row */
 .product-v2 .Avada-Volume__Content,
 .product-v2 .Avada-Volume__Content--Horizontal {
   display: flex !important;
   flex-direction: row !important;
-  flex-wrap: wrap !important;
   align-items: center !important;
   gap: 12px !important;
   width: 100% !important;
