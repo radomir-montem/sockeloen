@@ -184,7 +184,7 @@
   padding: 4px 0 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  background: #fff;
+  background: #F4F4F1;
 }
 
 .product-v2 .thumbnail-slider::-webkit-scrollbar {
@@ -935,7 +935,6 @@ sticky-atc-v2.hidden {
     max-width: 45%;
     width: 45%;
     flex: 0 0 45%;
-    background: #F4F4F1;
   }
 
   .product-v2__info-container--sticky {
