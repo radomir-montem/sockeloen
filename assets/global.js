@@ -1055,6 +1055,7 @@ class VariantSelects extends HTMLElement {
     const dynamicCheckout = document.querySelector(
       '.dynamic-checkout__container'
     )
+    if (!dynamicCheckout) return;
     if (!variant_available) dynamicCheckout.style.display = 'none'
     else dynamicCheckout.style.display = 'block'
   }
