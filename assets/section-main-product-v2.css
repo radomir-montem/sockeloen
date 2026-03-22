@@ -546,16 +546,25 @@ a.product-v2__sp-avatar {
   display: none !important;
 }
 
-/* Number indicator */
+/* Hide #1 / #2 / #3 product numbers and product rows in bundle tiers */
+.product-v2 .Avada-Volume__Product {
+  display: none !important;
+}
+
 .product-v2 .Avada-Volume__Number {
-  font-size: 12px !important;
-  color: #888 !important;
+  display: none !important;
 }
 
 /* ---------- Hide quantity selector ---------- */
 .product-v2 quantity-input,
 .product-v2 .product-form__quantity,
 .product-v2 .quantity-wrapper {
+  display: none !important;
+}
+
+/* ---------- Hide "Notify me when available" button ---------- */
+.product-v2 .klaviyo-bis-trigger,
+.product-v2 #out-of-stock {
   display: none !important;
 }
 
