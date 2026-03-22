@@ -467,6 +467,13 @@ a.product-v2__sp-avatar {
   gap: 12px !important;
 }
 
+/* Desktop: reduce spacing before/after the "Fresh socks" header */
+@media screen and (min-width: 990px) {
+  .product-v2 .Avada-Bundle-Volume__Container {
+    margin: 12px 0 12px !important;
+  }
+}
+
 /* Header — Cloudpillo-style sales banner */
 .product-v2 .Avada-Volume__Header {
   background-color: #e8f0c4 !important;
@@ -475,6 +482,14 @@ a.product-v2__sp-avatar {
   padding: 14px 20px !important;
   text-align: left !important;
   margin-bottom: 12px !important;
+}
+
+/* Desktop: tighter header margin */
+@media screen and (min-width: 990px) {
+  .product-v2 .Avada-Volume__Header {
+    margin-bottom: 8px !important;
+    padding: 10px 20px !important;
+  }
 }
 
 .product-v2 .Avada-Volume__HeaderTitle-Text {
@@ -566,12 +581,13 @@ a.product-v2__sp-avatar {
   color: #666 !important;
 }
 
-/* Prices — push to the right */
+/* Prices — push to the right, stack vertically */
 .product-v2 .Avada-Offer__Price {
   margin-left: auto !important;
   display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 0 !important;
   flex-shrink: 0 !important;
   order: 3 !important;
 }
@@ -586,6 +602,7 @@ a.product-v2__sp-avatar {
   font-size: 12px !important;
   color: #bbb !important;
   text-decoration: line-through !important;
+  line-height: 1.2 !important;
 }
 
 /* Badge ("Most Popular") — positioned crossing top border, centered on card */
