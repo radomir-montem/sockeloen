@@ -111,7 +111,11 @@
         id="Badge-{{ section_id }}-{{ card_product.id }}"
         class="product-save-badge"
       >
-        SAVE {{ product.compare_at_price | minus: product.price | money }}
+        {% if compact %}
+          SAVE {{ product.compare_at_price | minus: product.price | money | remove: '€' | remove: '&euro;' | strip | split: ',' | first }}
+        {% else %}
+          SAVE {{ product.compare_at_price | minus: product.price | money }}
+        {% endif %}
       </span>
     {% endif %}
   </div>
