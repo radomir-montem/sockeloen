@@ -247,13 +247,13 @@
 
 /* ---------- Product Info ---------- */
 .product-v2__info-wrapper {
-  padding: 10px 16px 16px;
-  background: #fff;
+  padding: 16px 16px 16px;
+  background: transparent;
 }
 
 /* ---------- Reviews Bar ---------- */
 .product-v2__reviews-bar {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .product-v2__stars {
@@ -304,7 +304,7 @@
 /* ---------- Social Proof (Athletes) ---------- */
 .product-v2__social-proof {
   padding: 6px 0 12px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   background-color: #fff !important;
 }
 
