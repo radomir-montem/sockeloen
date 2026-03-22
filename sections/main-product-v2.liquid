@@ -1195,7 +1195,7 @@
                 - After 15:00 or on a weekend → shipped next working day
                 - Automatically handles CET ↔ CEST via Intl timezone
               {%- endcomment -%}
-              <div id="shipment-message-v2" class="shipment-container !m-0 !mb-6 product-v2__shipping-row" {{ block.shopify_attributes }}>
+              <div id="shipment-message-v2" class="shipment-container !m-0 product-v2__shipping-row" {{ block.shopify_attributes }}>
                 <svg class="product-v2__shipping-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <circle cx="10" cy="10" r="8.5" stroke="#1a1a1a" stroke-width="1.5"/>
                   <path d="M10 5V10.5L13.5 13" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1363,12 +1363,11 @@
                 or block.settings.heading == 'Beschrijving'
                 or block.settings.heading == 'Beschreibung'
               %}
-                <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-                  <details id="Details-{{ block.id }}-{{ section.id }}" open>
+                <div class="product__accordion accordion quick-add-hidden product-v2__usp-accordion" {{ block.shopify_attributes }}>
+                  <details id="Details-{{ block.id }}-{{ section.id }}">
                     <summary>
                       <div class="summary__title">
-                        {% render 'icon-accordion', icon: block.settings.icon %}
-                        <h2 class="h4 accordion__title font-medium !text-[16px] uppercase tracking-[0.02em]">
+                        <h2 class="h4 accordion__title font-medium !text-[16px] tracking-[0.02em]">
                           {{ block.settings.heading | default: block.settings.page.title }}
                         </h2>
                       </div>

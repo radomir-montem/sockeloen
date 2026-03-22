@@ -1502,11 +1502,20 @@ sticky-atc-v2.hidden {
   color: #c2410c;
 }
 
-/* Shipping row with truck icon */
+/* Shipping row with clock icon */
 .product-v2__shipping-row {
   display: flex !important;
   align-items: center;
   gap: 8px;
+  margin-bottom: 6px;
+}
+
+.product-v2__shipping-row .shipping-text {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #1a1a1a !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
 }
 
 .product-v2__shipping-icon {
@@ -1517,7 +1526,7 @@ sticky-atc-v2.hidden {
 .product-v2__secure-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   margin-bottom: 20px;
 }
 
@@ -1529,6 +1538,7 @@ sticky-atc-v2.hidden {
   font-size: 14px;
   font-weight: 400;
   color: #1a1a1a;
+  line-height: 1.4;
 }
 
 /* USP accordions — same style as other accordions but closed by default */
