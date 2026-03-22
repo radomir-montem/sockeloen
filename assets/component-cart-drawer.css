@@ -415,3 +415,36 @@ cart-drawer .add-to-cart.submit_button {
 cart-drawer .add-to-cart.submit_button:hover {
   background-color: #F76503 !important;
 }
+
+/* ---------- Cart Page Checkout Button Overrides ---------- */
+
+/* Cart page checkout buttons — blue with orange hover (overrides custom.css green/invert) */
+.cart__checkout-button,
+.cart__checkout-animation {
+  background: #0395F6 !important;
+  background-image: none !important;
+  border: none !important;
+  border-radius: 6px !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+  text-transform: capitalize !important;
+  letter-spacing: 0.01em;
+  filter: none !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.cart__checkout-button:hover,
+.cart__checkout-animation:hover {
+  background: #F76503 !important;
+  background-image: none !important;
+  background-position: center !important;
+  padding-right: initial !important;
+}
+
+.cart__checkout-animation span svg {
+  stroke: #fff !important;
+}
+
+.cart__checkout-animation span svg path {
+  fill: #fff !important;
+}
