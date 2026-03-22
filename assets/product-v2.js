@@ -299,8 +299,8 @@ if (!customElements.get('sticky-atc-v2')) {
           unitLabel.className += ' avada-per-pair';
         }
 
-        // Calculate and show savings (only inject once)
-        if (originalPrice && !item.querySelector('.avada-savings-line')) {
+        // Calculate and show savings inside the price column (only inject once)
+        if (originalPrice && !priceArea.querySelector('.avada-savings-line')) {
           var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
           var op = parseFloat(originalPrice.textContent.replace(',', '.'));
           var totalSaved = ((op - dp) * qty);
@@ -311,10 +311,7 @@ if (!customElements.get('sticky-atc-v2')) {
             savingsEl.innerHTML = isNl
               ? 'Je bespaart <strong>€' + savingsFormatted + '</strong>'
               : 'You save <strong>€' + savingsFormatted + '</strong>';
-            // Insert savings after the price area
-            if (priceArea && priceArea.parentNode) {
-              priceArea.parentNode.insertBefore(savingsEl, priceArea.nextSibling);
-            }
+            priceArea.appendChild(savingsEl);
           }
         }
       }
