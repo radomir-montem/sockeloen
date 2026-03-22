@@ -939,6 +939,7 @@ sticky-atc-v2.hidden {
     max-width: 45%;
     width: 45%;
     flex: 0 0 45%;
+    background: #F4F4F1;
   }
 
   .product-v2__info-container--sticky {
