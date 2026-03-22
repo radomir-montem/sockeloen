@@ -621,12 +621,11 @@ sticky-atc-v2.hidden {
   border-radius: 6px !important;
   color: #fff !important;
   filter: none !important;
-  transition: opacity 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .product-v2-sticky-bar__atc-btn:hover {
-  background-color: #0395F6 !important;
-  opacity: 0.85;
+  background-color: #0280D4 !important;
 }
 
 /* ---------- Size Confirmation Modal ---------- */
@@ -710,11 +709,11 @@ sticky-atc-v2.hidden {
   background: #0395F6;
   color: #fff;
   border-radius: 6px;
-  transition: opacity 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .product-v2-size-modal__confirm:hover {
-  opacity: 0.85;
+  background: #0280D4;
 }
 
 .product-v2-size-modal__change {
