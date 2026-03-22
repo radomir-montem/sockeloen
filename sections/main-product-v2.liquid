@@ -1285,17 +1285,15 @@
 
   {%- comment -%}
     Variant image filtering for product-v2.
-    addEventListener('change', fn) in the VariantSelects constructor captures a direct
-    function reference — instance/prototype overrides of filterMedia/onVariantChange
-    have NO effect on the already-registered listener. Instead, we add our OWN change
-    listener. By the time it fires, the original onVariantChange has already run and
-    set currentVariant, so we can read the correct featured_media.alt and filter.
-    We then re-call setActiveMedia so the slider resets with correct display states.
+    This script runs during HTML parsing (before global.js defines the custom element).
+    Our change listener is therefore registered BEFORE the constructor's onVariantChange
+    listener. When a change event fires, our listener would run first — before
+    currentVariant is updated. We use setTimeout(fn, 0) to defer our filter to run
+    after all synchronous change handlers (including onVariantChange) have completed.
   {%- endcomment -%}
   <script>
     (function() {
       var sectionSelector = '#MainProduct-{{ section.id }}';
-      var bound = false;
 
       function filterVariantMedia(el) {
         if (!el.currentVariant || !el.currentVariant.featured_media) return;
@@ -1325,30 +1323,35 @@
         }
       }
 
-      function init() {
-        var el = document.querySelector(sectionSelector + ' variant-radios');
-        if (!el || bound) return;
-        bound = true;
-
-        /* On variant change — fires AFTER the original onVariantChange (same event) */
+      function bindFilter(el) {
+        /*
+         * Use setTimeout(fn, 0) so our filter runs AFTER all synchronous change
+         * handlers have completed (including onVariantChange which updates currentVariant).
+         * This works regardless of listener registration order.
+         */
         el.addEventListener('change', function() {
-          filterVariantMedia(el);
+          setTimeout(function() { filterVariantMedia(el); }, 0);
         });
 
-        /* Initial page load: wait for connectedCallback's 500ms onVariantChange */
+        /* Initial page load: connectedCallback fires onVariantChange after 500ms */
         setTimeout(function() { filterVariantMedia(el); }, 600);
       }
 
-      /* Run immediately — this script is after variant-radios in the DOM */
-      init();
+      /* Attach as soon as variant-radios appears in the DOM */
+      function tryBind() {
+        var el = document.querySelector(sectionSelector + ' variant-radios');
+        if (el) {
+          bindFilter(el);
+          return true;
+        }
+        return false;
+      }
 
-      /* Fallback if element isn't in DOM yet */
-      if (!bound) {
+      /* Run immediately — this script is after variant-radios in the DOM */
+      if (!tryBind()) {
+        /* Fallback: watch for element */
         var obs = new MutationObserver(function() {
-          if (document.querySelector(sectionSelector + ' variant-radios')) {
-            obs.disconnect();
-            init();
-          }
+          if (tryBind()) obs.disconnect();
         });
         obs.observe(document.querySelector(sectionSelector) || document.body, { childList: true, subtree: true });
       }
