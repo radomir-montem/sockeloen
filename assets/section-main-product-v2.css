@@ -349,9 +349,12 @@
 
 .product-v2__sp-verified {
   display: inline-flex;
-  vertical-align: middle;
-  margin-left: 2px;
+  align-items: center;
+  vertical-align: text-bottom;
+  margin-left: 4px;
   line-height: 0;
+  position: relative;
+  top: -1px;
 }
 
 .product-v2__sp-name-link {
