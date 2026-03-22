@@ -1283,73 +1283,71 @@
     })();
   </script>
 
-  {%- comment -%} Override filterMedia on variant-radios so alt-text filtering runs
-       synchronously inside onVariantChange(), BEFORE updateMedia/setActiveMedia {%- endcomment -%}
+  {%- comment -%}
+    Variant image filtering for product-v2.
+    addEventListener('change', fn) in the VariantSelects constructor captures a direct
+    function reference — instance/prototype overrides of filterMedia/onVariantChange
+    have NO effect on the already-registered listener. Instead, we add our OWN change
+    listener. By the time it fires, the original onVariantChange has already run and
+    set currentVariant, so we can read the correct featured_media.alt and filter.
+    We then re-call setActiveMedia so the slider resets with correct display states.
+  {%- endcomment -%}
   <script>
     (function() {
       var sectionSelector = '#MainProduct-{{ section.id }}';
-      var patched = false;
+      var bound = false;
 
-      function doAltFilter(variantEl) {
-        if (!variantEl.currentVariant || !variantEl.currentVariant.featured_media) return;
-        var selectedAlt = variantEl.currentVariant.featured_media.alt;
+      function filterVariantMedia(el) {
+        if (!el.currentVariant || !el.currentVariant.featured_media) return;
+        var selectedAlt = el.currentVariant.featured_media.alt;
         if (!selectedAlt) return;
-        var section = variantEl.closest('[id^="MainProduct"]');
+        var section = el.closest('[id^="MainProduct"]');
         if (!section || !section.querySelector('.product-v2')) return;
 
-        /* ---- Main media items ---- */
+        /* Filter main media items by alt text */
         section.querySelectorAll('.product__media-item[data-variant-alt]').forEach(function(item) {
           item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
         });
-        /* Items without data-variant-alt are always visible */
         section.querySelectorAll('.product__media-item:not([data-variant-alt])').forEach(function(item) {
           item.style.display = '';
         });
 
-        /* ---- Thumbnails ---- */
+        /* Filter thumbnails */
         section.querySelectorAll('.thumbnail-list__item[data-variant-alt]').forEach(function(item) {
           item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
         });
+
+        /* Re-call setActiveMedia so slider resets pages with correct visible items */
+        var mediaGallery = section.querySelector('media-gallery');
+        if (mediaGallery) {
+          var mediaId = el.dataset.section + '-' + el.currentVariant.featured_media.id;
+          mediaGallery.setActiveMedia(mediaId, true);
+        }
       }
 
-      function patchElement() {
+      function init() {
         var el = document.querySelector(sectionSelector + ' variant-radios');
-        if (!el || patched) return;
-        patched = true;
+        if (!el || bound) return;
+        bound = true;
 
-        /*
-         * Override filterMedia() on this specific element instance.
-         * In onVariantChange(): filterMedia() runs → then updateMedia() → setActiveMedia().
-         * By filtering here, display styles are correct BEFORE setActiveMedia prepends + resetPages.
-         */
-        el.filterMedia = function() {
-          doAltFilter(el);
-        };
+        /* On variant change — fires AFTER the original onVariantChange (same event) */
+        el.addEventListener('change', function() {
+          filterVariantMedia(el);
+        });
 
-        /* Also override updateMedia to run filter first, in case filterMedia is skipped */
-        var origUpdateMedia = el.updateMedia.bind(el);
-        el.updateMedia = function() {
-          doAltFilter(el);
-          origUpdateMedia();
-        };
+        /* Initial page load: wait for connectedCallback's 500ms onVariantChange */
+        setTimeout(function() { filterVariantMedia(el); }, 600);
       }
 
-      /*
-       * MUST run immediately — not deferred to DOMContentLoaded.
-       * This <script> is placed after <variant-radios> in the DOM,
-       * so the element already exists. connectedCallback starts a 500ms
-       * timer for onVariantChange(); if we wait for DOMContentLoaded
-       * (which fires after 500ms on large pages), the first onVariantChange
-       * runs with the ORIGINAL unpatched filterMedia (which does nothing for v2).
-       */
-      patchElement();
+      /* Run immediately — this script is after variant-radios in the DOM */
+      init();
 
-      /* Safety fallback if element isn't in DOM yet (edge case) */
-      if (!patched) {
+      /* Fallback if element isn't in DOM yet */
+      if (!bound) {
         var obs = new MutationObserver(function() {
           if (document.querySelector(sectionSelector + ' variant-radios')) {
             obs.disconnect();
-            patchElement();
+            init();
           }
         });
         obs.observe(document.querySelector(sectionSelector) || document.body, { childList: true, subtree: true });
