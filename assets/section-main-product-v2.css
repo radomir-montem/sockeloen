@@ -181,7 +181,7 @@
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding: 8px 0 0;
+  padding: 4px 0 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
   background: #fff;
@@ -197,7 +197,7 @@
   gap: 8px;
   list-style: none;
   margin: 0;
-  padding: 8px 8px 0 8px;
+  padding: 4px 8px 0 8px;
   background: #fff;
   overflow-x: auto;
   scrollbar-width: none;
@@ -538,10 +538,12 @@ a.product-v2__sp-avatar {
   line-height: 1.4 !important;
 }
 
-/* Variant selections within tiers */
-.product-v2 .Avada-VariantSelection {
-  font-size: 12px !important;
-  color: #888 !important;
+/* Hide variant selections within bundle tiers (use the normal picker instead) */
+.product-v2 .Avada-VariantSelection,
+.product-v2 .Avada-Variant-Selections,
+.product-v2 .Avada-Selection__Section,
+.product-v2 .Avada-Offer__VariantSection {
+  display: none !important;
 }
 
 /* Number indicator */
