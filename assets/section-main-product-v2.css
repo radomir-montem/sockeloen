@@ -712,13 +712,14 @@ sticky-atc-v2.hidden {
   padding: 15px 20px;
   font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   cursor: pointer;
   background: transparent;
   border: 1px solid #ccc;
   color: #000;
   border-radius: 6px;
-  text-transform: none;
+  text-transform: capitalize;
+  transition: border-color 0.2s ease;
 }
 
 .product-v2-size-modal__change:hover {
