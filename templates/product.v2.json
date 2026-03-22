@@ -12,15 +12,15 @@
     "main": {
       "type": "main-product-v2",
       "blocks": {
-        "aov_ai_bundle_offer_volume_RqqnNt": {
-          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
-          "settings": {}
-        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
             "picker_type": "button"
           }
+        },
+        "aov_ai_bundle_offer_volume_RqqnNt": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
         },
         "quantity_selector": {
           "type": "quantity_selector",
@@ -84,8 +84,8 @@
         }
       },
       "block_order": [
-        "aov_ai_bundle_offer_volume_RqqnNt",
         "variant_picker",
+        "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
         "shipping_info",
         "description",
