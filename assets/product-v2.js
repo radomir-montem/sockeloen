@@ -245,9 +245,79 @@ if (!customElements.get('sticky-atc-v2')) {
 
   function fixBadgeText() {
     document.querySelectorAll('.product-v2 .Avada-VolumeBoxBadge').forEach(function(badge) {
-      if (badge.textContent.trim() === badge.textContent.trim().toUpperCase()) {
-        var text = badge.textContent.trim().toLowerCase().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-        badge.textContent = text;
+      if (badge.dataset.enhanced) return;
+      badge.dataset.enhanced = '1';
+      // Find the tier's quantity to calculate discount %
+      var item = badge.closest('.Avada-Volume__Item');
+      if (!item) return;
+      var discountPrice = item.querySelector('.Avada-Offer__PriceDiscount');
+      var originalPrice = item.querySelector('.Avada-Offer__PriceDefault');
+      var pct = '';
+      if (discountPrice && originalPrice) {
+        var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
+        var op = parseFloat(originalPrice.textContent.replace(',', '.'));
+        if (op > 0 && dp < op) {
+          pct = Math.round((1 - dp / op) * 100);
+        }
+      }
+      var text = 'Most Popular';
+      if (pct) text += ' — Save ' + pct + '%';
+      badge.textContent = text;
+    });
+  }
+
+  function enhanceTierLabels() {
+    var isNl = window.location.pathname.indexOf('/nl') !== -1;
+    var items = document.querySelectorAll('.product-v2 .Avada-Volume__Item');
+    if (!items.length) return;
+
+    items.forEach(function(item) {
+      if (item.dataset.tierEnhanced) return;
+      item.dataset.tierEnhanced = '1';
+
+      var qtyEl = item.querySelector('.Avada-Volume__Info--TriggerQty');
+      var discountTextEl = item.querySelector('.Avada-Volume__DiscountText');
+      var discountPrice = item.querySelector('.Avada-Offer__PriceDiscount');
+      var originalPrice = item.querySelector('.Avada-Offer__PriceDefault');
+      var priceArea = item.querySelector('.Avada-Offer__Price');
+
+      if (!qtyEl) return;
+      var qtyText = qtyEl.textContent.trim();
+      var qtyMatch = qtyText.match(/(\d+)/);
+      var qty = qtyMatch ? parseInt(qtyMatch[1], 10) : 1;
+
+      if (qty === 1) {
+        // 1 Pair — Standard price
+        if (discountTextEl) {
+          discountTextEl.textContent = isNl ? '— Standaardprijs' : '— Standard price';
+          discountTextEl.style.color = '#888';
+          discountTextEl.style.fontSize = '12px';
+        }
+      } else if (qty > 1 && discountPrice) {
+        // Multi-pair: add /pair label
+        var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
+        var perPairLabel = document.createElement('span');
+        perPairLabel.className = 'avada-per-pair';
+        perPairLabel.textContent = isNl ? ' /paar' : ' /pair';
+        discountPrice.appendChild(perPairLabel);
+
+        // Calculate and show savings
+        if (originalPrice) {
+          var op = parseFloat(originalPrice.textContent.replace(',', '.'));
+          var totalSaved = ((op - dp) * qty);
+          if (totalSaved > 0) {
+            var savingsEl = document.createElement('div');
+            savingsEl.className = 'avada-savings-line';
+            var savingsFormatted = totalSaved.toFixed(2).replace('.', ',');
+            savingsEl.innerHTML = isNl
+              ? 'Je bespaart <strong>€' + savingsFormatted + '</strong>'
+              : 'You save <strong>€' + savingsFormatted + '</strong>';
+            // Insert savings after the price area
+            if (priceArea && priceArea.parentNode) {
+              priceArea.parentNode.insertBefore(savingsEl, priceArea.nextSibling);
+            }
+          }
+        }
       }
     });
   }
@@ -257,6 +327,7 @@ if (!customElements.get('sticky-atc-v2')) {
     injectRadioDots();
     injectImageStacks();
     fixBadgeText();
+    enhanceTierLabels();
   }
 
   function init() {

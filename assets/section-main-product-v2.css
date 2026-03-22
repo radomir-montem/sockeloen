@@ -621,6 +621,23 @@ a.product-v2__sp-avatar {
   font-weight: 700;
 }
 
+/* Per-pair label */
+.product-v2 .avada-per-pair {
+  font-size: 11px;
+  font-weight: 400;
+  color: #888;
+  margin-left: 2px;
+}
+
+/* Savings line */
+.product-v2 .avada-savings-line {
+  font-size: 12px;
+  color: #2e7d32;
+  margin-top: 4px;
+  text-align: right;
+  width: 100%;
+}
+
 /* Hide variant selections within bundle tiers */
 .product-v2 .Avada-VariantSelection,
 .product-v2 .Avada-Variant-Selections,
