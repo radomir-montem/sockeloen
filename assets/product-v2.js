@@ -145,3 +145,31 @@ if (!customElements.get('sticky-atc-v2')) {
     }
   });
 }
+
+/* Strip € symbol from Avada Volume Discount prices */
+(function() {
+  function stripEuro(root) {
+    (root || document).querySelectorAll(
+      '.product-v2 .Avada-Offer__PriceDiscount, .product-v2 .Avada-Offer__PriceDefault, .product-v2 .Avada-Volume__Info--TriggerQty'
+    ).forEach(function(el) {
+      el.childNodes.forEach(function(node) {
+        if (node.nodeType === 3 && node.textContent.includes('€')) {
+          node.textContent = node.textContent.replace(/€/g, '');
+        }
+      });
+    });
+  }
+  // Run once DOM is ready, then watch for Avada's lazy rendering
+  function init() {
+    stripEuro();
+    var container = document.querySelector('.product-v2');
+    if (!container) return;
+    new MutationObserver(function() { stripEuro(container); })
+      .observe(container, { childList: true, subtree: true, characterData: true });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
