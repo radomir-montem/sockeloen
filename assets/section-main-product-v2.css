@@ -80,11 +80,13 @@
   position: relative;
   padding-left: 0;
   background: #fff;
+  padding-bottom: 4px;
 }
 
 @media screen and (min-width: 990px) {
   .product-v2__media-wrapper {
     background: transparent;
+    padding-bottom: 0;
   }
 }
 
