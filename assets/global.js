@@ -1018,7 +1018,10 @@ class VariantSelects extends HTMLElement {
         }
       }      
     }
-    if(comingSoon) document.querySelector('.product-block--sales-point').classList.add('hidden');
+    if(comingSoon) {
+      const salesPointBlock = document.querySelector('.product-block--sales-point');
+      if (salesPointBlock) salesPointBlock.classList.add('hidden');
+    }
   }
 
   updateSizeOptions(variantsData) {
@@ -1055,6 +1058,7 @@ class VariantSelects extends HTMLElement {
     const dynamicCheckout = document.querySelector(
       '.dynamic-checkout__container'
     )
+    if (!dynamicCheckout) return;
     if (!variant_available) dynamicCheckout.style.display = 'none'
     else dynamicCheckout.style.display = 'block'
   }
