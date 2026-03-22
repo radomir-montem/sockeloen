@@ -189,9 +189,14 @@
   position: absolute;
 }
 
-/* Slightly shorter than square on mobile so thumbnails + social proof peek above the fold */
+/* Dynamic image height: sized to viewport so sticky ATC cuts through middle of social proof */
 .product-v2 .product__media-list .product__media-item .media {
-  aspect-ratio: 4 / 4.5;
+  /* 300px ≈ announcement(44) + header(50) + thumbnails(~110) + half social-proof(30) + sticky ATC(66) */
+  aspect-ratio: unset;
+  height: calc(100vh - 300px);
+  height: calc(100svh - 300px);
+  min-height: 280px;
+  max-height: 520px;
   overflow: hidden;
   padding-top: 0 !important;
   position: relative;
