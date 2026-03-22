@@ -35,13 +35,12 @@
   text-transform: uppercase;
 }
 
-/* Stronger header icons — thicker lines */
-.template--v2 .header__icon .icon path {
-  stroke: currentColor;
-  stroke-width: 0.5px;
+/* Cart icon — cropped viewBox now matches search/account, so use same 2rem + right spacing */
+.template--v2 .header__icon--cart .icon {
+  width: 2rem;
+  height: 2rem;
 }
 
-/* Cart icon — keep original 4.4rem (compensates for 40x40 viewBox) + right spacing */
 .template--v2 .header__icon--cart {
   margin-right: 4px;
 }
