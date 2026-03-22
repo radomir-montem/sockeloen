@@ -123,9 +123,9 @@
 
 /* Dynamic image height: sized to viewport so sticky ATC cuts through middle of social proof */
 .product-v2 .product__media-list .product__media-item .media {
-  /* 300px ≈ announcement(44) + header(50) + thumbnails(~110) + half social-proof(30) + sticky ATC(66) */
+  /* 320px ≈ announcement(44) + header(50) + thumbnails(~110) + half social-proof(50) + sticky ATC(66) */
   aspect-ratio: unset;
-  height: calc(100vh - 300px);
+  height: calc(100vh - 320px);
   height: calc(100svh - 300px);
   min-height: 280px;
   max-height: 520px;
