@@ -594,6 +594,7 @@
                     {{ block.shopify_attributes }}
                   >
                     {%- comment -%} Render options in Shopify order (required for variant matching), use CSS order to show color first {%- endcomment -%}
+                    {%- assign swatch_style = block.settings.color_swatch_style | default: 'colors' -%}
                     {%- for option in product.options_with_values -%}
                       {% assign option_name = option.name | handleize %}
                       {%- assign is_color = false -%}
