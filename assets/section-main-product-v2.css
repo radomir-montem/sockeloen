@@ -168,7 +168,7 @@
   padding: 4px 0 0 4px;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  background: #f0f0f0;
+  background: #fff;
 }
 
 .product-v2 .thumbnail-slider::-webkit-scrollbar {
@@ -182,7 +182,7 @@
   list-style: none;
   margin: 0;
   padding: 4px 0 0 4px;
-  background: #f0f0f0;
+  background: #fff;
 }
 
 .product-v2 .thumbnail-list li {
