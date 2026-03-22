@@ -618,7 +618,12 @@
 
                       {%- if option.values.size > 1 -%}
                         <fieldset class="js product-form__input product-form__input--pill {% if is_color %}color-input{% else %}size-input{% endif %}">
-                          <legend class="form__label">{{ option.name }}</legend>
+                          <legend class="form__label">
+                            {{ option.name }}
+                            {%- unless is_color -%}
+                              <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">Size guide</a>
+                            {%- endunless -%}
+                          </legend>
                           {%- for value in option.values -%}
                             <input
                               type="radio"
@@ -632,29 +637,54 @@
                             >
                             <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
                               {% if is_color %}
-                                {% assign found = false %}
-                                {% for variant in product.variants %}
-                                  {% for opt in variant.options %}
-                                    {% if opt == value %}
-                                      {% if found == false and variant.featured_image %}
-                                        {%- render 'c-image-element',
-                                          image: variant.featured_image,
-                                          lazy: true,
-                                          class: 'img-class'
-                                        -%}
-                                        {% assign found = true %}
-                                      {% else %}
-                                        {%- assign featured_media_fallback = product.featured_media -%}
-                                        {%- render 'c-image-element',
-                                          image: featured_media_fallback,
-                                          lazy: true,
-                                          class: 'img-class'
-                                        -%}
-                                        {% assign found = true %}
-                                      {% endif %}
-                                    {% endif %}
-                                  {% endfor %}
-                                {% endfor %}
+                                {%- liquid
+                                  assign color_lower = value | downcase | strip
+                                  assign color_hex = '#ccc'
+                                  if color_lower == 'white' or color_lower == 'wit'
+                                    assign color_hex = '#ffffff'
+                                  elsif color_lower == 'black' or color_lower == 'zwart'
+                                    assign color_hex = '#1a1a1a'
+                                  elsif color_lower == 'red' or color_lower == 'rood'
+                                    assign color_hex = '#c0392b'
+                                  elsif color_lower == 'blue' or color_lower == 'blauw' or color_lower == 'bonnie blue'
+                                    assign color_hex = '#2980b9'
+                                  elsif color_lower == 'green' or color_lower == 'groen' or color_lower == 'moss green'
+                                    assign color_hex = '#5a7a2e'
+                                  elsif color_lower == 'yellow' or color_lower == 'geel'
+                                    assign color_hex = '#f1c40f'
+                                  elsif color_lower == 'orange' or color_lower == 'oranje'
+                                    assign color_hex = '#e67e22'
+                                  elsif color_lower == 'purple' or color_lower == 'paars' or color_lower == 'viola'
+                                    assign color_hex = '#8e44ad'
+                                  elsif color_lower == 'pink' or color_lower == 'roze' or color_lower == 'rose'
+                                    assign color_hex = '#e87ea1'
+                                  elsif color_lower == 'grey' or color_lower == 'gray' or color_lower == 'grijs'
+                                    assign color_hex = '#888888'
+                                  elsif color_lower == 'brown' or color_lower == 'bruin' or color_lower == 'mud'
+                                    assign color_hex = '#7b5e3c'
+                                  elsif color_lower == 'burgundy'
+                                    assign color_hex = '#722f37'
+                                  elsif color_lower == 'beige'
+                                    assign color_hex = '#d4c5a9'
+                                  elsif color_lower == 'snow'
+                                    assign color_hex = '#f5f5f0'
+                                  elsif color_lower == 'pine'
+                                    assign color_hex = '#2d5a3d'
+                                  elsif color_lower == 'mintgreen'
+                                    assign color_hex = '#98d9c2'
+                                  elsif color_lower == 'calunna red'
+                                    assign color_hex = '#a03040'
+                                  elsif color_lower == 'glossy'
+                                    assign color_hex = '#1a1a1a'
+                                  elsif color_lower == 'commute'
+                                    assign color_hex = '#555555'
+                                  elsif color_lower contains 'gold'
+                                    assign color_hex = '#c9a84c'
+                                  elsif color_lower contains 'silver'
+                                    assign color_hex = '#b0b0b0'
+                                  endif
+                                -%}
+                                <span class="color-dot" style="background-color: {{ color_hex }};{% if color_lower == 'white' or color_lower == 'wit' or color_lower == 'snow' %} border: 1px solid #ddd;{% endif %}"></span>
                                 <span class="color-input__name">{{ value | escape }}</span>
                               {% else %}
                                 <span class="size-label-text">{{ value | escape }}</span>
