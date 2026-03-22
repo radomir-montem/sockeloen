@@ -1018,7 +1018,10 @@ class VariantSelects extends HTMLElement {
         }
       }      
     }
-    if(comingSoon) document.querySelector('.product-block--sales-point').classList.add('hidden');
+    if(comingSoon) {
+      const salesPointBlock = document.querySelector('.product-block--sales-point');
+      if (salesPointBlock) salesPointBlock.classList.add('hidden');
+    }
   }
 
   updateSizeOptions(variantsData) {
