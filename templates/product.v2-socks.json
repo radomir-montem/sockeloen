@@ -1,0 +1,131 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product-v2",
+      "blocks": {
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "color_swatch_style": "images"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "shipping_info": {
+          "type": "shipping_info",
+          "settings": {
+            "no_shipment_text": "There is no shipment for your country"
+          }
+        },
+        "description": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Description",
+            "icon": "chat_bubble",
+            "content": "",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "materials": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Materials",
+            "icon": "lightning_bolt",
+            "content": "{{ product.metafields.custom.materials | metafield_tag }}",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "height": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Height",
+            "icon": "ruler",
+            "content": "<p>{{ product.metafields.custom.height.value }}</p>",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "knit_structure": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Knit Structure",
+            "icon": "carrot",
+            "content": "<p>{{ product.metafields.custom.knit_structure.value }}</p>",
+            "page": "",
+            "logos_size": 26
+          }
+        },
+        "type_of_sock": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Type of Sock",
+            "icon": "shoe",
+            "content": "<p>{{ product.metafields.custom.type_of_sock.value }}</p>",
+            "page": "",
+            "logos_size": 26
+          }
+        }
+      },
+      "block_order": [
+        "variant_picker",
+        "quantity_selector",
+        "shipping_info",
+        "description",
+        "materials",
+        "height",
+        "knit_structure",
+        "type_of_sock"
+      ],
+      "settings": {
+        "social_proof_type": "athletes",
+        "show_sale_banner": false,
+        "sale_banner_text": "",
+        "sale_banner_bg_color": "#abcc15",
+        "sale_banner_text_color": "#000000",
+        "enable_sticky_info": true,
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "show_dynamic_checkout": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "benefits": {
+      "type": "product-benefits",
+      "settings": {
+        "background_color": "#ffffff",
+        "text_color": "#000000",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "reviews": {
+      "type": "reviews-product",
+      "settings": {}
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "benefits",
+    "reviews",
+    "recommendations"
+  ]
+}
