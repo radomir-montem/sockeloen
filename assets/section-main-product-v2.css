@@ -511,7 +511,7 @@ a.product-v2__sp-avatar {
 .product-v2 [class*="Avada-Volume"]:has(> .Avada-Volume__Item) {
   display: flex !important;
   flex-direction: column !important;
-  gap: 8px !important;
+  gap: 16px !important;
 }
 
 .product-v2 .Avada-Volume__Item {
