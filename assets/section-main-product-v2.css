@@ -181,12 +181,20 @@
   gap: 4px;
   list-style: none;
   margin: 0;
-  padding: 4px 0 0 4px;
+  padding: 4px 4px 0 4px;
   background: #fff;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.product-v2 .thumbnail-list::-webkit-scrollbar {
+  display: none;
 }
 
 .product-v2 .thumbnail-list li {
-  flex: 1 1 0;
+  flex: 0 0 22%;
   min-width: 0;
 }
 
