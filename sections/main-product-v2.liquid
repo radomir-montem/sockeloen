@@ -631,6 +631,24 @@
                             >
                             <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" {% if variant_hidden %}class="hidden" style="display:none;"{% endif %}>
                               {% if is_color %}
+                                {%- if swatch_style == 'images' -%}
+                                  {%- comment -%} Image-based swatch: find first variant with this color and use its featured image {%- endcomment -%}
+                                  {%- assign swatch_img = nil -%}
+                                  {%- for variant in product.variants -%}
+                                    {%- if variant.options contains value and variant.featured_image -%}
+                                      {%- assign swatch_img = variant.featured_image -%}
+                                      {%- break -%}
+                                    {%- endif -%}
+                                  {%- endfor -%}
+                                  {%- if swatch_img -%}
+                                    <span class="color-dot color-dot--image">
+                                      <img src="{{ swatch_img | image_url: width: 80 }}" alt="{{ value | escape }}" loading="lazy" width="40" height="40">
+                                    </span>
+                                  {%- else -%}
+                                    <span class="color-dot" style="background-color: #ccc;"></span>
+                                  {%- endif -%}
+                                  <span class="color-input__name">{{ value | escape }}</span>
+                                {%- else -%}
                                 {%- liquid
                                   assign color_lower = value | downcase | strip
                                   assign color_hex = '#ccc'
@@ -762,6 +780,7 @@
                                   <span class="color-dot" style="background-color: {{ color_hex }};{% if is_light %} border: 1px solid #ddd;{% endif %}"></span>
                                 {% endif %}
                                 <span class="color-input__name">{{ value | escape }}</span>
+                                {%- endif -%}
                               {% else %}
                                 <span class="size-label-text">{{ value | escape }}</span>
                               {% endif %}
@@ -1520,6 +1539,22 @@
           ],
           "default": "button",
           "label": "Picker type"
+        },
+        {
+          "type": "select",
+          "id": "color_swatch_style",
+          "options": [
+            {
+              "value": "colors",
+              "label": "Color dots"
+            },
+            {
+              "value": "images",
+              "label": "Product images"
+            }
+          ],
+          "default": "images",
+          "label": "Color swatch style"
         }
       ]
     },
