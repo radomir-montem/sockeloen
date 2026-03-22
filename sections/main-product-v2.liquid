@@ -618,12 +618,7 @@
 
                       {%- if option.values.size > 1 -%}
                         <fieldset class="js product-form__input product-form__input--pill {% if is_color %}color-input{% else %}size-input{% endif %}">
-                          <legend class="form__label">
-                            {{ option.name }}
-                            {%- unless is_color -%}
-                              <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">Size guide</a>
-                            {%- endunless -%}
-                          </legend>
+                          <legend class="form__label">{{ option.name }}</legend>
                           {%- for value in option.values -%}
                             <input
                               type="radio"
@@ -691,7 +686,13 @@
                               {% endif %}
                             </label>
                           {%- endfor -%}
+                          {%- if is_color -%}
+                            <span class="color-input__selected-name">{{ option.selected_value | escape }}</span>
+                          {%- endif -%}
                         </fieldset>
+                        {%- unless is_color -%}
+                          <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">Size guide</a>
+                        {%- endunless -%}
                       {%- else -%}
                         {%- comment -%} Single-value option: render as hidden input so variant selection still works {%- endcomment -%}
                         <input
