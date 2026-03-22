@@ -1,0 +1,160 @@
+{% comment %}
+  Size guide modal — renders contextual size chart based on product type.
+  Detects: socks (default), base layer, gloves, overshoes.
+
+  Usage: {% render 'size-guide-modal', product: product %}
+{% endcomment %}
+
+{%- liquid
+  assign p_type = product.type | downcase
+  assign p_tags = product.tags | join: ',' | downcase
+  assign p_title = product.title | downcase
+
+  assign guide_type = 'socks'
+  if p_type contains 'base' or p_type contains 'accessoires' and p_title contains 'base layer'
+    assign guide_type = 'baselayer'
+  elsif p_title contains 'glove'
+    assign guide_type = 'gloves'
+  elsif p_type contains 'shoe cover' or p_title contains 'overshoe'
+    assign guide_type = 'overshoes'
+  endif
+-%}
+
+<div class="size-guide-overlay" id="size-guide-overlay" style="display:none;">
+  <div class="size-guide-modal">
+    <div class="size-guide-modal__header">
+      <h3 class="size-guide-modal__title">Size guide</h3>
+      <button class="size-guide-modal__close" aria-label="Close size guide" onclick="document.getElementById('size-guide-overlay').style.display='none'; document.body.classList.remove('noscroll');">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="size-guide-modal__body">
+      {% case guide_type %}
+
+        {% when 'socks' %}
+          <p class="size-guide-modal__intro">Find your sock size based on your shoe size.</p>
+          <table class="size-guide-table">
+            <thead>
+              <tr>
+                <th>Sock size</th>
+                <th>EU</th>
+                <th>US Men</th>
+                <th>US Women</th>
+                <th>UK</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>One Size</strong></td>
+                <td>39-46</td>
+                <td>8-13.5</td>
+                <td>9.5-15</td>
+                <td>6.5-12</td>
+              </tr>
+              <tr>
+                <td><strong>XS</strong></td>
+                <td>35-40</td>
+                <td>4.5-8.5</td>
+                <td>6-10</td>
+                <td>3-7</td>
+              </tr>
+              <tr>
+                <td><strong>S</strong></td>
+                <td>36-42</td>
+                <td>5.5-10</td>
+                <td>7-11.5</td>
+                <td>4-8.5</td>
+              </tr>
+              <tr>
+                <td><strong>M</strong></td>
+                <td>40-45</td>
+                <td>8.5-12.5</td>
+                <td>10-14</td>
+                <td>7-11</td>
+              </tr>
+              <tr>
+                <td><strong>L</strong></td>
+                <td>43-48</td>
+                <td>10.5-15</td>
+                <td>12-16.5</td>
+                <td>9-13.5</td>
+              </tr>
+              <tr>
+                <td><strong>XL</strong></td>
+                <td>45-50</td>
+                <td>12.5-16.5</td>
+                <td>14-18</td>
+                <td>11-15</td>
+              </tr>
+            </tbody>
+          </table>
+
+        {% when 'gloves' %}
+          <p class="size-guide-modal__intro">Measure the width of your index finger to find your glove size.</p>
+          <table class="size-guide-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Index finger (cm)</th>
+                <th>Index finger (inch)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>S</strong></td><td>7.5</td><td>2.95</td></tr>
+              <tr><td><strong>M</strong></td><td>8</td><td>3.15</td></tr>
+              <tr><td><strong>L</strong></td><td>8.5</td><td>3.35</td></tr>
+              <tr><td><strong>XL</strong></td><td>9</td><td>3.55</td></tr>
+            </tbody>
+          </table>
+
+        {% when 'baselayer' %}
+          <p class="size-guide-modal__intro">All measurements in centimetres (cm).</p>
+          <div class="size-guide-table-scroll">
+            <table class="size-guide-table">
+              <thead>
+                <tr>
+                  <th>Measurement</th>
+                  <th>XS</th>
+                  <th>S</th>
+                  <th>M</th>
+                  <th>L</th>
+                  <th>XL</th>
+                  <th>XXL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Front length</strong></td><td>47</td><td>49</td><td>51</td><td>53</td><td>55</td><td>57</td></tr>
+                <tr><td><strong>Back length</strong></td><td>57.5</td><td>59.5</td><td>61.5</td><td>63.5</td><td>65.5</td><td>67.5</td></tr>
+                <tr><td><strong>Chest (1/2)</strong></td><td>33.5</td><td>36</td><td>38.5</td><td>41</td><td>43.5</td><td>46</td></tr>
+                <tr><td><strong>Hem (1/2)</strong></td><td>30</td><td>32.5</td><td>35</td><td>37.5</td><td>40</td><td>42.5</td></tr>
+                <tr><td><strong>Sleeve length</strong></td><td>13.5</td><td>14</td><td>14.5</td><td>15.1</td><td>15.7</td><td>16.3</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+        {% when 'overshoes' %}
+          <p class="size-guide-modal__intro">Choose your overshoe size based on your shoe size (EU).</p>
+          <table class="size-guide-table">
+            <thead>
+              <tr>
+                <th>Overshoe size</th>
+                <th>EU shoe size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>39-41</strong></td><td>39 - 41</td></tr>
+              <tr><td><strong>42-44</strong></td><td>42 - 44</td></tr>
+              <tr><td><strong>45-47</strong></td><td>45 - 47</td></tr>
+              <tr><td><strong>48-49</strong></td><td>48 - 49</td></tr>
+            </tbody>
+          </table>
+
+      {% endcase %}
+    </div>
+
+    <a href="/pages/size-guide" class="size-guide-modal__link">View full size guide</a>
+  </div>
+</div>
