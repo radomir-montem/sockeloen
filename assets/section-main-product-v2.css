@@ -23,21 +23,19 @@
   display: none !important;
 }
 
-/* Capitalize menu items (Shop etc.) */
+/* Title-case menu items (SHOP → Shop) */
 .template--v2 .header__menu-item span,
 .template--v2 .header__menu-item.link-only span {
-  text-transform: capitalize;
+  display: inline-block;
+  text-transform: lowercase;
 }
 
-/* Stronger header icons — thicker lines + slightly bigger */
-.template--v2 .header__icon .icon {
-  width: 22px;
-  height: 22px;
-  stroke-width: 0.5px;
-  paint-order: stroke;
-  stroke: currentColor;
+.template--v2 .header__menu-item span::first-letter,
+.template--v2 .header__menu-item.link-only span::first-letter {
+  text-transform: uppercase;
 }
 
+/* Stronger header icons — thicker lines, same size */
 .template--v2 .header__icon svg path {
   stroke: currentColor;
   stroke-width: 0.4px;
