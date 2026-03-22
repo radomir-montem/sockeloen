@@ -752,6 +752,7 @@ a.product-v2__sp-avatar {
   height: 70px;
   padding: 0 !important;
   margin-bottom: -8px;
+  background-color: #fff !important;
 }
 
 .product-v2__info-wrapper .product-form__input.color-input label img {
@@ -771,6 +772,11 @@ a.product-v2__sp-avatar {
 /* ---------- Product Form ---------- */
 .product-v2 .product-form__input--pill {
   margin-bottom: 12px;
+}
+
+/* Variant pill labels — white bg for contrast against grey page bg */
+.product-v2 .product-form__input--pill label {
+  background-color: #fff !important;
 }
 
 .product-v2 .product-form-wrapper {
