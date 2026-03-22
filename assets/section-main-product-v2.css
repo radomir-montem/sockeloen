@@ -508,7 +508,8 @@ a.product-v2__sp-avatar {
 .product-v2 .Avada-Volume__Item {
   border: 2px solid #e5e5e5 !important;
   border-radius: 10px !important;
-  padding: 12px 16px !important;
+  padding: 12px 12px !important;
+  overflow: hidden !important;
   cursor: pointer !important;
   transition: border-color 0.2s ease, background-color 0.2s ease !important;
   background: #fff !important;
@@ -542,8 +543,9 @@ a.product-v2__sp-avatar {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: 8px !important;
   width: 100% !important;
+  overflow: hidden !important;
 }
 
 /* ItemWrapper — flex row */
@@ -557,10 +559,11 @@ a.product-v2__sp-avatar {
 .product-v2 .Avada-Volume__Info {
   display: flex !important;
   align-items: center !important;
-  gap: 6px !important;
-  flex-shrink: 0 !important;
+  gap: 4px !important;
+  flex-shrink: 1 !important;
   white-space: nowrap !important;
   order: 2 !important;
+  min-width: 0 !important;
 }
 
 /* Ordering: radio dot (0) → images (1) → info/qty (2) → price (3) */
@@ -704,12 +707,13 @@ a.product-v2__sp-avatar {
   display: flex;
   align-items: center;
   margin: 0 !important;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .product-v2 .avada-img-stack__img {
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
   border-radius: 50%;
   border: 2px solid #fff;
