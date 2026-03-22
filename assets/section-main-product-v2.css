@@ -604,6 +604,7 @@ a.product-v2__sp-avatar {
   text-decoration: line-through !important;
   line-height: 1.2 !important;
   order: 2 !important;
+  display: none !important;
 }
 
 /* Badge ("Most Popular") — positioned crossing top border, centered on card */
