@@ -511,7 +511,7 @@ a.product-v2__sp-avatar {
 .product-v2 [class*="Avada-Volume"]:has(> .Avada-Volume__Item) {
   display: flex !important;
   flex-direction: column !important;
-  gap: 16px !important;
+  gap: 20px !important;
 }
 
 .product-v2 .Avada-Volume__Item {
@@ -581,14 +581,15 @@ a.product-v2__sp-avatar {
 /* Tier quantity label (1 Pair, 3 Pairs) */
 .product-v2 .Avada-Volume__Info--TriggerQty {
   font-size: 14px !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   color: #1a1a1a !important;
 }
 
-/* Discount text ("for") — hide the dash, show "for" */
+/* Discount text ("for", "Standard price") — match customer benefits style */
 .product-v2 .Avada-Volume__DiscountText {
-  font-size: 12px !important;
-  color: #666 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #1a1a1a !important;
 }
 
 /* Prices — push to the right, stack vertically */
@@ -603,8 +604,8 @@ a.product-v2__sp-avatar {
 }
 
 .product-v2 .Avada-Offer__PriceDiscount {
-  font-size: 15px !important;
-  font-weight: 700 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
   color: #1a1a1a !important;
   order: 1 !important;
 }

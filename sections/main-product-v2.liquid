@@ -1513,6 +1513,26 @@
   });
 </script>
 
+<script>
+  /* Fix Avada Volume Discount: replace decimal period with comma (EU format) */
+  (function() {
+    function fixAvadaDecimals() {
+      document.querySelectorAll('.AOV-Offer__DiscountPrice, .Avada-Offer__PriceDiscount, .Avada-Offer__PriceDefault, .avada-savings-line').forEach(function(el) {
+        if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
+          var text = el.textContent;
+          if (/\d+\.\d{2}/.test(text)) {
+            el.textContent = text.replace(/(\d+)\.(\d{2})/g, '$1,$2');
+          }
+        }
+      });
+    }
+    fixAvadaDecimals();
+    var observer = new MutationObserver(function() { fixAvadaDecimals(); });
+    var target = document.querySelector('.product-v2') || document.body;
+    observer.observe(target, { childList: true, subtree: true, characterData: true });
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Product Hero V2",
