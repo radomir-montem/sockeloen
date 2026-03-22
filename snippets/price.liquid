@@ -25,6 +25,12 @@
     assign money_price = price | money_with_currency
   endif
 
+  if compact
+    assign money_price = money_price | remove: '€' | remove: '&euro;' | strip
+    assign money_price = money_price | split: ',' | first
+    assign compare_at_money = compare_at_price | money | remove: '€' | remove: '&euro;' | strip | split: ',' | first
+  endif
+
   if target == product and product.price_varies
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
   endif
@@ -59,17 +65,14 @@
         <span>
           {% assign show_from_text = product.metafields.custom.show_from_text %}
           {% if show_from_text == true %}
-            <span {{ show_from_text }} class="font-roboto font-light text-[18px] text-[#767677] leading-[20px] tracking-[0.02em] italic">
-              {% comment %} {% if settings.currency_code_enabled %}
-                {{ compare_at_price | money_with_currency }}
-              {% else %}
-                {{ compare_at_price | money }}
-              {% endif %} {% endcomment %}
+            <span {{ show_from_text }} class="font-roboto font-light {% if compact %}text-[10px]{% else %}text-[18px]{% endif %} text-[#767677] leading-[20px] tracking-[0.02em] italic">
               From
             </span>
           {% else %}
             <span class="regular-text">
-              {% if settings.currency_code_enabled %}
+              {% if compact %}
+                {{ compare_at_money }}
+              {% elsif settings.currency_code_enabled %}
                 {{ compare_at_price | money_with_currency }}
               {% else %}
                 {{ compare_at_price | money }}
@@ -108,7 +111,11 @@
         id="Badge-{{ section_id }}-{{ card_product.id }}"
         class="product-save-badge"
       >
-        SAVE {{ product.compare_at_price | minus: product.price | money }}
+        {% if compact %}
+          SAVE {{ product.compare_at_price | minus: product.price | money | remove: '€' | remove: '&euro;' | strip | split: ',' | first }}
+        {% else %}
+          SAVE {{ product.compare_at_price | minus: product.price | money }}
+        {% endif %}
       </span>
     {% endif %}
   </div>

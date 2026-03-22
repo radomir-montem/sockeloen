@@ -146,7 +146,7 @@
             <span class="caption-large light">{{ block.settings.description | escape }}</span>
 
             {% unless hideProductPrice %}
-              {% render 'price', product: card_product, price_class: '' %}
+              {% render 'price', product: card_product, price_class: '', compact: true %}
             {% endunless %}
           </div>
         </div>
@@ -357,7 +357,7 @@
               <div class="caption-with-letter-spacing light">{{ 'products.product.vendor' | t }}</div>
             {%- endif -%}
             {% unless hideProductPrice %}
-              {% render 'price' %}
+              {% render 'price', compact: true %}
             {% endunless %}
           </div>
         </div>
