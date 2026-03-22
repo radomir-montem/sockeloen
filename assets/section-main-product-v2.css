@@ -23,11 +23,12 @@
   display: none !important;
 }
 
-/* Title-case menu items (SHOP → Shop) */
+/* Title-case menu items (SHOP → Shop) + black text */
 .template--v2 .header__menu-item span,
 .template--v2 .header__menu-item.link-only span {
   display: inline-block;
   text-transform: lowercase;
+  color: #000 !important;
 }
 
 .template--v2 .header__menu-item span::first-letter,
@@ -35,8 +36,14 @@
   text-transform: uppercase;
 }
 
-/* Thicker icon lines — add stroke on top of filled paths */
+/* Thicker icon lines — add stroke on top of filled paths (account + cart) */
 .template--v2 .header__icon .icon path {
+  stroke: currentColor;
+  stroke-width: 0.6px;
+}
+
+/* Thicker search icon — symbol referenced via <use>, so target the symbol path directly */
+.template--v2 #icon-search path {
   stroke: currentColor;
   stroke-width: 0.6px;
 }
@@ -60,20 +67,21 @@
   gap: 2px;
 }
 
-/* Down arrow next to menu items with dropdowns on desktop — matches breadcrumb arrow style */
+/* Down arrow next to menu items with dropdowns on desktop */
 @media screen and (min-width: 990px) {
-  /* Arrow on the <a> tag to avoid ::first-letter conflict on <span> */
   .template--v2 .header__inline-menu header-menu > li > a.child-menu::after,
   .template--v2 .header__inline-menu details.mega-menu > summary::after {
     content: '';
     display: inline-block;
-    width: 7px;
-    height: 4px;
-    margin-left: 4px;
+    width: 0;
+    height: 0;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-top: 3.5px solid currentColor;
+    margin-left: 5px;
     vertical-align: middle;
-    background: currentColor;
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 1.13L1.13 0L6.97 5.83L12.8 0L13.93 1.13L6.97 8.1L0 1.13Z' fill='currentColor'/%3E%3C/svg%3E") no-repeat center / contain;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 1.13L1.13 0L6.97 5.83L12.8 0L13.93 1.13L6.97 8.1L0 1.13Z' fill='currentColor'/%3E%3C/svg%3E") no-repeat center / contain;
+    position: relative;
+    top: 0px;
   }
 }
 
