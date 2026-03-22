@@ -357,7 +357,7 @@
               <div class="caption-with-letter-spacing light">{{ 'products.product.vendor' | t }}</div>
             {%- endif -%}
             {% unless hideProductPrice %}
-              {% render 'price' %}
+              {% render 'price', compact: true %}
             {% endunless %}
           </div>
         </div>
