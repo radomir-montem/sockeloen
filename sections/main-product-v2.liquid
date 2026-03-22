@@ -1195,7 +1195,7 @@
                 - After 15:00 or on a weekend → shipped next working day
                 - Automatically handles CET ↔ CEST via Intl timezone
               {%- endcomment -%}
-              <div id="shipment-message-v2" class="shipment-container !m-0 product-v2__shipping-row" {{ block.shopify_attributes }}>
+              <div id="shipment-message-v2" class="shipment-container !m-0 product-v2__trust-row product-v2__shipping-row" {{ block.shopify_attributes }}>
                 <svg class="product-v2__shipping-icon" width="40" height="24" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect width="40" height="24" rx="4" fill="#ECEBE4"/>
                   <g clip-path="url(#clip_ship_{{ section.id }})">
@@ -1302,7 +1302,7 @@
               </script>
 
               {%- comment -%} Secure checkout line {%- endcomment -%}
-              <div class="product-v2__secure-row">
+              <div class="product-v2__trust-row product-v2__secure-row">
                 <svg width="39" height="24" viewBox="0 0 39 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip_ideal_{{ section.id }})">
                     <path opacity="0.07" d="M35.5 0H3.5C1.8 0 0.5 1.3 0.5 3V21C0.5 22.7 1.9 24 3.5 24H35.5C37.2 24 38.5 22.7 38.5 21V3C38.5 1.3 37.1 0 35.5 0Z" fill="#4BBEF5"/>

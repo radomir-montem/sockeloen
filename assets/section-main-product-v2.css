@@ -1507,15 +1507,25 @@ sticky-atc-v2.hidden {
   color: #c2410c;
 }
 
-/* Shipping row with clock icon */
-.product-v2__shipping-row {
+/* Shipping & secure checkout rows — shared icon + text style */
+.product-v2__trust-row {
   display: flex !important;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
+  gap: 10px;
 }
 
-.product-v2__shipping-row .shipping-text {
+.product-v2__trust-row + .product-v2__trust-row {
+  margin-top: 8px;
+}
+
+.product-v2__trust-row svg {
+  flex-shrink: 0;
+  width: 40px;
+  height: 24px;
+}
+
+.product-v2__trust-row .shipping-text,
+.product-v2__trust-row span {
   font-size: 14px !important;
   font-weight: 400 !important;
   color: #1a1a1a !important;
@@ -1523,27 +1533,8 @@ sticky-atc-v2.hidden {
   line-height: 1.4 !important;
 }
 
-.product-v2__shipping-icon {
-  flex-shrink: 0;
-}
-
-/* Secure checkout row */
 .product-v2__secure-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   margin-bottom: 20px;
-}
-
-.product-v2__secure-row svg {
-  flex-shrink: 0;
-}
-
-.product-v2__secure-row span {
-  font-size: 14px;
-  font-weight: 400;
-  color: #1a1a1a;
-  line-height: 1.4;
 }
 
 /* USP accordions — same style as other accordions but closed by default */
