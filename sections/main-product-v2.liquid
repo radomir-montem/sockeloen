@@ -788,6 +788,8 @@
                 </div>
               </noscript>
 
+              {%- render 'size-guide-modal', product: product -%}
+
               <div class="variant-notes">
                 {% for variant in product.variants %}
                   {% if variant.metafields.custom.note != blank %}
