@@ -1326,23 +1326,34 @@
           doAltFilter(el);
         };
 
-        /* Initial filter: wait for connectedCallback (500ms) + onVariantChange to finish */
-        setTimeout(function() { doAltFilter(el); }, 600);
+        /* Also override updateMedia to run filter first, in case filterMedia is skipped */
+        var origUpdateMedia = el.updateMedia.bind(el);
+        el.updateMedia = function() {
+          doAltFilter(el);
+          origUpdateMedia();
+        };
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', patchElement);
-      } else {
-        patchElement();
+      /*
+       * MUST run immediately — not deferred to DOMContentLoaded.
+       * This <script> is placed after <variant-radios> in the DOM,
+       * so the element already exists. connectedCallback starts a 500ms
+       * timer for onVariantChange(); if we wait for DOMContentLoaded
+       * (which fires after 500ms on large pages), the first onVariantChange
+       * runs with the ORIGINAL unpatched filterMedia (which does nothing for v2).
+       */
+      patchElement();
+
+      /* Safety fallback if element isn't in DOM yet (edge case) */
+      if (!patched) {
+        var obs = new MutationObserver(function() {
+          if (document.querySelector(sectionSelector + ' variant-radios')) {
+            obs.disconnect();
+            patchElement();
+          }
+        });
+        obs.observe(document.querySelector(sectionSelector) || document.body, { childList: true, subtree: true });
       }
-      /* Fallback: watch for variant-radios if not yet in DOM */
-      var obs = new MutationObserver(function() {
-        if (document.querySelector(sectionSelector + ' variant-radios')) {
-          obs.disconnect();
-          patchElement();
-        }
-      });
-      obs.observe(document.querySelector(sectionSelector) || document.body, { childList: true, subtree: true });
     })();
   </script>
 </section>
