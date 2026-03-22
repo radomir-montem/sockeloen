@@ -12,6 +12,10 @@
     "main": {
       "type": "main-product-v2",
       "blocks": {
+        "aov_ai_bundle_offer_volume_RqqnNt": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -80,6 +84,7 @@
         }
       },
       "block_order": [
+        "aov_ai_bundle_offer_volume_RqqnNt",
         "variant_picker",
         "quantity_selector",
         "shipping_info",
@@ -93,10 +98,13 @@
         "social_proof_type": "athletes",
         "sp_athlete_1_name": "Tibor del Grosso",
         "sp_avatar_1": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.30.36.png",
+        "sp_athlete_1_link": "",
         "sp_athlete_2_name": "Riejanne Markus",
         "sp_avatar_2": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.31.03.png",
+        "sp_athlete_2_link": "",
         "sp_athlete_3_name": "Demi Vollering",
         "sp_avatar_3": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.31.47.png",
+        "sp_athlete_3_link": "",
         "sp_verified_badge": true,
         "sp_follower_count": "78.342",
         "sp_brand_name": "Sockeloen",
