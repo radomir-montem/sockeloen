@@ -20,7 +20,13 @@
 
 /* ---------- Layout ---------- */
 .product-section {
-  background: #F4F4F1;
+  background: #fff;
+}
+
+@media screen and (min-width: 990px) {
+  .product-section {
+    background: #F4F4F1;
+  }
 }
 
 .product-v2 {
@@ -299,7 +305,13 @@
 .product-v2__social-proof {
   padding: 6px 0 12px;
   margin-bottom: 8px;
-  background-color: #F4F4F1 !important;
+  background-color: #fff !important;
+}
+
+@media screen and (min-width: 990px) {
+  .product-v2__social-proof {
+    background-color: #F4F4F1 !important;
+  }
 }
 
 .product-v2__social-proof-inner {
