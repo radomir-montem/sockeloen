@@ -593,23 +593,8 @@
                     data-url="{{ product.url }}"
                     {{ block.shopify_attributes }}
                   >
-                    {%- comment -%} UX best practice: render color options first, then size/other options {%- endcomment -%}
-                    {%- assign color_options = '' -%}
-                    {%- assign other_options = '' -%}
+                    {%- comment -%} Render options in Shopify order (required for variant matching), use CSS order to show color first {%- endcomment -%}
                     {%- for option in product.options_with_values -%}
-                      {%- assign option_name = option.name | handleize -%}
-                      {%- if option_name contains 'color' or option_name contains 'kleur' or option_name contains 'couleur' -%}
-                        {%- assign color_options = color_options | append: forloop.index0 | append: ',' -%}
-                      {%- else -%}
-                        {%- assign other_options = other_options | append: forloop.index0 | append: ',' -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-                    {%- assign sorted_indices = color_options | append: other_options | split: ',' -%}
-
-                    {%- for idx in sorted_indices -%}
-                      {%- if idx == blank -%}{%- continue -%}{%- endif -%}
-                      {%- assign idx_num = idx | plus: 0 -%}
-                      {%- assign option = product.options_with_values[idx_num] -%}
                       {% assign option_name = option.name | handleize %}
                       {%- assign is_color = false -%}
                       {%- if option_name contains 'color' or option_name contains 'kleur' or option_name contains 'couleur' -%}
