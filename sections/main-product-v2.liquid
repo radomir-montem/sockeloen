@@ -499,24 +499,24 @@
         </div>
 
         {%- comment -%} 5. Product benefits from metafields {%- endcomment -%}
-        {%- if product.metafields.custom.benefit_1 != blank or product.metafields.custom.benefit_2 != blank or product.metafields.custom.benefit_3 != blank -%}
+        {%- if product.metafields.custom.custom_benefit_1 != blank or product.metafields.custom.custom_benefit_2 != blank or product.metafields.custom.custom_benefit_3 != blank -%}
           <ul class="product-v2__benefits">
-            {%- if product.metafields.custom.benefit_1 != blank -%}
+            {%- if product.metafields.custom.custom_benefit_1 != blank -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
-                <span>{{ product.metafields.custom.benefit_1.value | default: product.metafields.custom.benefit_1 }}</span>
+                <span>{{ product.metafields.custom.custom_benefit_1.value | default: product.metafields.custom.custom_benefit_1 }}</span>
               </li>
             {%- endif -%}
-            {%- if product.metafields.custom.benefit_2 != blank -%}
+            {%- if product.metafields.custom.custom_benefit_2 != blank -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
-                <span>{{ product.metafields.custom.benefit_2.value | default: product.metafields.custom.benefit_2 }}</span>
+                <span>{{ product.metafields.custom.custom_benefit_2.value | default: product.metafields.custom.custom_benefit_2 }}</span>
               </li>
             {%- endif -%}
-            {%- if product.metafields.custom.benefit_3 != blank -%}
+            {%- if product.metafields.custom.custom_benefit_3 != blank -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
-                <span>{{ product.metafields.custom.benefit_3.value | default: product.metafields.custom.benefit_3 }}</span>
+                <span>{{ product.metafields.custom.custom_benefit_3.value | default: product.metafields.custom.custom_benefit_3 }}</span>
               </li>
             {%- endif -%}
           </ul>
