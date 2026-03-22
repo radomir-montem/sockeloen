@@ -243,10 +243,20 @@ if (!customElements.get('sticky-atc-v2')) {
     });
   }
 
+  function fixBadgeText() {
+    document.querySelectorAll('.product-v2 .Avada-VolumeBoxBadge').forEach(function(badge) {
+      if (badge.textContent.trim() === badge.textContent.trim().toUpperCase()) {
+        var text = badge.textContent.trim().toLowerCase().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        badge.textContent = text;
+      }
+    });
+  }
+
   function enhance() {
     stripEuro();
     injectRadioDots();
     injectImageStacks();
+    fixBadgeText();
   }
 
   function init() {
@@ -255,6 +265,14 @@ if (!customElements.get('sticky-atc-v2')) {
     if (!container) return;
     new MutationObserver(function() { enhance(); })
       .observe(container, { childList: true, subtree: true, characterData: true });
+
+    /* Update upsell thumbnails when variant changes */
+    var variantRadios = container.querySelector('variant-radios');
+    if (variantRadios) {
+      variantRadios.addEventListener('change', function() {
+        setTimeout(function() { updateImageStacks(); }, 10);
+      });
+    }
   }
 
   if (document.readyState === 'loading') {
