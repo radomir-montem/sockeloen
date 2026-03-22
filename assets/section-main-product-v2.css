@@ -442,6 +442,7 @@ a.product-v2__sp-avatar {
   gap: 8px;
   font-size: 14px;
   line-height: 1.4;
+  color: #1a1a1a;
 }
 
 .product-v2__benefit svg {
@@ -449,11 +450,11 @@ a.product-v2__sp-avatar {
   width: 16px;
   height: 16px;
   margin-top: 0;
-  color: #abcc15;
+  color: #5a9a00;
 }
 
 .product-v2__benefit svg path {
-  fill: #abcc15;
+  fill: #5a9a00;
 }
 
 /* ---------- Hide quantity selector ---------- */
