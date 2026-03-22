@@ -123,11 +123,11 @@
 
 /* Dynamic image height: sized to viewport so sticky ATC cuts through middle of social proof */
 .product-v2 .product__media-list .product__media-item .media {
-  /* 320px ≈ announcement(44) + header(50) + thumbnails(~110) + half social-proof(50) + sticky ATC(66) */
+  /* 350px ≈ announcement(44) + header(50) + thumbnails(~90) + social-proof peek(~50) + sticky ATC(66) + breathing room */
   aspect-ratio: unset;
-  height: calc(100vh - 320px);
-  height: calc(100svh - 300px);
-  min-height: 280px;
+  height: calc(100vh - 350px);
+  height: calc(100svh - 350px);
+  min-height: 250px;
   max-height: 520px;
   overflow: hidden;
   padding-top: 0 !important;
@@ -209,13 +209,13 @@
 }
 
 .product-v2 .thumbnail-list li {
-  flex: 0 0 22%;
+  flex: 0 0 20%;
   min-width: 0;
 }
 
 .product-v2 .thumbnail-list .thumbnail {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   height: auto;
   background: #fff;
   border-radius: 0;
