@@ -1515,7 +1515,7 @@ sticky-atc-v2.hidden {
 }
 
 .product-v2__trust-row + .product-v2__trust-row {
-  margin-top: 8px;
+  margin-top: 14px;
 }
 
 .product-v2__trust-row svg {
