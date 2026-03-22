@@ -183,8 +183,8 @@
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
-              "text": "free shipping on all orders > 75,-",
-              "usd_text": "free shipping on all orders > $100,-",
+              "text": "free shipping on all orders above 75",
+              "usd_text": "free shipping on all orders above 100",
               "text_alignment": "center",
               "bg_color": "#f76503",
               "font_color": "#ffffff",
