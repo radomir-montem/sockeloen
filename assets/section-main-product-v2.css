@@ -473,20 +473,30 @@ a.product-v2__sp-avatar {
 
 /* ---------- Avada Volume Discount Widget Overrides ---------- */
 .product-v2 .Avada-Bundle-Volume__Container {
-  margin: 16px 0 20px !important;
+  margin: 24px 0 24px !important;
   gap: 12px !important;
 }
 
-/* Header */
+/* Header — Cloudpillo-style sales banner */
+.product-v2 .Avada-Volume__Header {
+  background-color: #e8f0c4 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 14px 20px !important;
+  text-align: center !important;
+  margin-bottom: 12px !important;
+}
+
 .product-v2 .Avada-Volume__HeaderTitle-Text {
-  font-size: 16px !important;
-  font-weight: 600 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
   color: #1a1a1a !important;
 }
 
 .product-v2 .Avada-Volume__HeaderDescription {
   font-size: 13px !important;
-  color: #666 !important;
+  color: #444 !important;
+  margin-top: 2px !important;
 }
 
 /* Tier cards — horizontal single-row layout */
