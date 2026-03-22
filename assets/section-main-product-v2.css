@@ -23,21 +23,19 @@
   display: none !important;
 }
 
-/* Capitalize menu items (Shop etc.) */
+/* Title-case menu items (SHOP → Shop) */
 .template--v2 .header__menu-item span,
 .template--v2 .header__menu-item.link-only span {
-  text-transform: capitalize;
+  display: inline-block;
+  text-transform: lowercase;
 }
 
-/* Stronger header icons — thicker lines + slightly bigger */
-.template--v2 .header__icon .icon {
-  width: 22px;
-  height: 22px;
-  stroke-width: 0.5px;
-  paint-order: stroke;
-  stroke: currentColor;
+.template--v2 .header__menu-item span::first-letter,
+.template--v2 .header__menu-item.link-only span::first-letter {
+  text-transform: uppercase;
 }
 
+/* Stronger header icons — thicker lines, same size */
 .template--v2 .header__icon svg path {
   stroke: currentColor;
   stroke-width: 0.4px;
@@ -52,20 +50,25 @@
   gap: 2px;
 }
 
-/* Down arrow next to menu items with dropdowns on desktop */
+/* Down arrow next to menu items with dropdowns on desktop — matches breadcrumb arrow style */
 @media screen and (min-width: 990px) {
+  .template--v2 .header__inline-menu header-menu > li > a.child-menu span,
+  .template--v2 .header__inline-menu details.mega-menu > summary > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
   .template--v2 .header__inline-menu header-menu > li > a.child-menu span::after,
   .template--v2 .header__inline-menu details.mega-menu > summary > span::after {
     content: '';
     display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-right: 1.5px solid currentColor;
-    border-bottom: 1.5px solid currentColor;
-    transform: rotate(45deg);
-    margin-left: 5px;
-    position: relative;
-    top: -2px;
+    width: 8px;
+    height: 5px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 14 9' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 1.13L1.13 0L6.97 5.83L12.8 0L13.93 1.13L6.97 8.1L0 1.13Z' fill='currentColor'/%3E%3C/svg%3E") no-repeat center / contain;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 14 9' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 1.13L1.13 0L6.97 5.83L12.8 0L13.93 1.13L6.97 8.1L0 1.13Z' fill='currentColor'/%3E%3C/svg%3E") no-repeat center / contain;
+    flex-shrink: 0;
   }
 }
 
