@@ -13,6 +13,11 @@
   padding-bottom: 10px;
 }
 
+/* Cart count bubble — match announcement bar orange */
+.template--v2 .cart-count-bubble {
+  background-color: #F76503;
+}
+
 /* ---------- Layout ---------- */
 .product-section {
   background: #fff;
