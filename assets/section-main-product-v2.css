@@ -928,10 +928,13 @@ a.product-v2__sp-avatar {
   background: none !important;
 }
 
-/* Hide any leftover image elements from color labels */
+/* Hide any leftover image elements from color labels (except image swatches) */
 .product-v2 .product-form__input.color-input label img,
 .product-v2 .product-form__input.color-input label picture {
   display: none !important;
+}
+.product-v2 .product-form__input.color-input label .color-dot--image img {
+  display: block !important;
 }
 
 /* Color dot */
