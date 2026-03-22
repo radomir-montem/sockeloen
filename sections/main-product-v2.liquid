@@ -542,21 +542,27 @@
         {%- if ben1 != blank or ben2 != blank or ben3 != blank -%}
           <ul class="product-v2__benefits">
             {%- if ben1 != blank -%}
+              {%- assign ben1_cap = ben1 | capitalize -%}
+              {%- unless ben1_cap contains '.' or ben1_cap contains '!' -%}{%- assign ben1_cap = ben1_cap | append: '.' -%}{%- endunless -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
-                <span>{{ ben1 }}</span>
+                <span>{{ ben1_cap }}</span>
               </li>
             {%- endif -%}
             {%- if ben2 != blank -%}
+              {%- assign ben2_cap = ben2 | capitalize -%}
+              {%- unless ben2_cap contains '.' or ben2_cap contains '!' -%}{%- assign ben2_cap = ben2_cap | append: '.' -%}{%- endunless -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
-                <span>{{ ben2 }}</span>
+                <span>{{ ben2_cap }}</span>
               </li>
             {%- endif -%}
             {%- if ben3 != blank -%}
+              {%- assign ben3_cap = ben3 | capitalize -%}
+              {%- unless ben3_cap contains '.' or ben3_cap contains '!' -%}{%- assign ben3_cap = ben3_cap | append: '.' -%}{%- endunless -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
-                <span>{{ ben3 }}</span>
+                <span>{{ ben3_cap }}</span>
               </li>
             {%- endif -%}
           </ul>
