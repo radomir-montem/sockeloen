@@ -387,7 +387,7 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
 
 /* ---------- Cart Drawer Button Overrides ---------- */
 
-/* Checkout button — blue with orange hover */
+/* Checkout button — blue, orange hover on desktop only */
 cart-drawer a[href="/checkout/"] {
   background-color: #0395F6 !important;
   color: #fff !important;
@@ -398,8 +398,10 @@ cart-drawer a[href="/checkout/"] {
   transition: background-color 0.2s ease;
 }
 
-cart-drawer a[href="/checkout/"]:hover {
-  background-color: #F76503 !important;
+@media (hover: hover) and (pointer: fine) {
+  cart-drawer a[href="/checkout/"]:hover {
+    background-color: #F76503 !important;
+  }
 }
 
 /* Cross-sell "Add to bag" button — blue with orange hover */

@@ -798,6 +798,8 @@ a.product-v2__sp-avatar {
   background-color: #F76503 !important;
   background-image: none !important;
   box-shadow: none !important;
+  padding-right: 0 !important;
+  background-position: center !important;
 }
 
 /* Keep ATC button styled when disabled during variant switch */
