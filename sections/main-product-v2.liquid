@@ -1197,10 +1197,8 @@
               {%- endcomment -%}
               <div id="shipment-message-v2" class="shipment-container !m-0 !mb-6 product-v2__shipping-row" {{ block.shopify_attributes }}>
                 <svg class="product-v2__shipping-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M0 3.75156C0 3.47454 0.224196 3.24997 0.500755 3.24997H10.647C10.9235 3.24997 11.1477 3.47454 11.1477 3.75156V5.07505V5.63362V6.10938V13.6616C10.9427 14.0067 10.8813 14.1101 10.5516 14.6648L7.22339 14.6646V13.6614H10.1462V4.25316H1.00151V13.6614H2.6842V14.6646H0.500755C0.224196 14.6646 0 14.44 0 14.163V3.75156Z" fill="#1a1a1a"/>
-                  <path d="M18.9985 8.08376L11.1477 6.10938V5.07505L19.6212 7.20603C19.8439 7.26203 20 7.46255 20 7.69253V14.1631C20 14.4401 19.7758 14.6647 19.4992 14.6647H17.3071V13.6615H18.9985V8.08376ZM11.1477 13.6616L13.3442 13.6615L13.3443 14.6647L10.5516 14.6648L11.1477 13.6616Z" fill="#1a1a1a"/>
-                  <path d="M7.71269 14.1854C7.71269 15.6018 6.56643 16.75 5.15245 16.75C3.73847 16.75 2.59221 15.6018 2.59221 14.1854C2.59221 12.7691 3.73847 11.6209 5.15245 11.6209C6.56643 11.6209 7.71269 12.7691 7.71269 14.1854ZM5.15245 15.7468C6.01331 15.7468 6.71118 15.0478 6.71118 14.1854C6.71118 13.3231 6.01331 12.6241 5.15245 12.6241C4.29159 12.6241 3.59372 13.3231 3.59372 14.1854C3.59372 15.0478 4.29159 15.7468 5.15245 15.7468Z" fill="#1a1a1a"/>
-                  <path d="M17.5196 14.1854C17.5196 15.6018 16.3733 16.75 14.9593 16.75C13.5454 16.75 12.3991 15.6018 12.3991 14.1854C12.3991 12.7691 13.5454 11.6209 14.9593 11.6209C16.3733 11.6209 17.5196 12.7691 17.5196 14.1854ZM14.9593 15.7468C15.8202 15.7468 16.5181 15.0478 16.5181 14.1854C16.5181 13.3231 15.8202 12.6241 14.9593 12.6241C14.0985 12.6241 13.4006 13.3231 13.4006 14.1854C13.4006 15.0478 14.0985 15.7468 14.9593 15.7468Z" fill="#1a1a1a"/>
+                  <circle cx="10" cy="10" r="8.5" stroke="#1a1a1a" stroke-width="1.5"/>
+                  <path d="M10 5V10.5L13.5 13" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <p class="shipping-text" id="ship-date-text" style="display:none;"></p>
               </div>
@@ -1292,12 +1290,7 @@
 
               {%- comment -%} Secure checkout line {%- endcomment -%}
               <div class="product-v2__secure-row">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none">
-                  <path d="M16.5 7.11819H3.5L3.5 18.9997L16.5 18.9997V7.11819ZM3.5 6.11786C2.94772 6.11786 2.5 6.56573 2.5 7.11819V18.9997C2.5 19.5521 2.94772 20 3.5 20H16.5C17.0523 20 17.5 19.5521 17.5 18.9997V7.11819C17.5 6.56572 17.0523 6.11786 16.5 6.11786H3.5Z" fill="#1a1a1a" fill-rule="evenodd"/>
-                  <path d="M11.443 11.9199C11.443 12.7406 10.797 13.406 10.0001 13.406C9.20314 13.406 8.55712 12.7406 8.55712 11.9199C8.55712 11.0992 9.20314 10.4338 10.0001 10.4338C10.797 10.4338 11.443 11.0992 11.443 11.9199Z" fill="#1a1a1a"/>
-                  <path d="M10.0187 11.9202C10.3639 11.9202 10.6437 12.2001 10.6437 12.5454V15.6971C10.6437 16.0424 10.3639 16.3223 10.0187 16.3223C9.67354 16.3223 9.39372 16.0424 9.39372 15.6971V12.5454C9.39372 12.2001 9.67354 11.9202 10.0187 11.9202Z" fill="#1a1a1a"/>
-                  <path d="M6.2417 3.75956C6.2417 1.68321 7.92435 0 10 0C12.0757 0 13.7583 1.68321 13.7583 3.75956V6.12135H12.7583V3.75956C12.7583 2.23568 11.5234 1.00033 10 1.00033C8.47663 1.00033 7.2417 2.23568 7.2417 3.75956V6.12135H6.2417V3.75956Z" fill="#1a1a1a"/>
-                </svg>
+                <img src="https://cdn.shopify.com/shopifycloud/checkout-web/assets/0169695890db3db16bfe.svg" alt="iDEAL" width="30" height="20" style="border-radius: 3px;">
                 <span>Secure Checkout</span>
               </div>
 
@@ -1306,8 +1299,7 @@
                 <details>
                   <summary>
                     <div class="summary__title">
-                      {% render 'icon-accordion', icon: 'truck' %}
-                      <h2 class="h4 accordion__title font-medium !text-[16px] uppercase tracking-[0.02em]">Free Shipping</h2>
+                      <h2 class="h4 accordion__title font-medium !text-[16px] tracking-[0.02em]">Free shipping</h2>
                     </div>
                     {% render 'icon-caret' %}
                   </summary>
@@ -1321,8 +1313,7 @@
                 <details>
                   <summary>
                     <div class="summary__title">
-                      {% render 'icon-accordion', icon: 'star' %}
-                      <h2 class="h4 accordion__title font-medium !text-[16px] uppercase tracking-[0.02em]">100% Satisfaction Guarantee</h2>
+                      <h2 class="h4 accordion__title font-medium !text-[16px] tracking-[0.02em]">100% Satisfaction guarantee</h2>
                     </div>
                     {% render 'icon-caret' %}
                   </summary>
@@ -1336,8 +1327,7 @@
                 <details>
                   <summary>
                     <div class="summary__title">
-                      {% render 'icon-accordion', icon: 'fire' %}
-                      <h2 class="h4 accordion__title font-medium !text-[16px] uppercase tracking-[0.02em]">Born in the Peloton</h2>
+                      <h2 class="h4 accordion__title font-medium !text-[16px] tracking-[0.02em]">Born in the peloton</h2>
                     </div>
                     {% render 'icon-caret' %}
                   </summary>
@@ -1351,8 +1341,7 @@
                 <details>
                   <summary>
                     <div class="summary__title">
-                      {% render 'icon-accordion', icon: 'heart' %}
-                      <h2 class="h4 accordion__title font-medium !text-[16px] uppercase tracking-[0.02em]">Customer is King</h2>
+                      <h2 class="h4 accordion__title font-medium !text-[16px] tracking-[0.02em]">Customer is king</h2>
                     </div>
                     {% render 'icon-caret' %}
                   </summary>
