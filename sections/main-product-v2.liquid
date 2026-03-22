@@ -1202,9 +1202,9 @@
                     } else {
                       var f = formatDate(info.date);
                       if (isNl) {
-                        el.innerHTML = 'Voor 15:00 besteld, wordt verzonden op <span class="ship-date">' + f + '</span>';
+                        el.innerHTML = 'Voor <strong>15hr00</strong> besteld, wordt verzonden op <span class="ship-date">' + f + '</span>';
                       } else {
-                        el.innerHTML = 'Ordered before 15:00, ships on <span class="ship-date">' + f + '</span>';
+                        el.innerHTML = 'Ordered before <strong>15hr00</strong>, ships on <span class="ship-date">' + f + '</span>';
                       }
                     }
                     el.style.display = '';
