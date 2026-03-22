@@ -576,11 +576,13 @@ sticky-atc-v2.hidden {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #000;
 }
 
 .product-v2-sticky-bar__price {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
+  color: #000;
 }
 
 .product-v2-sticky-bar__atc-btn {
@@ -594,8 +596,13 @@ sticky-atc-v2.hidden {
   white-space: nowrap;
   background-color: #0395F6 !important;
   border: none !important;
-  border-radius: 9999px !important;
+  border-radius: 6px !important;
   color: #fff !important;
+  transition: opacity 0.2s ease;
+}
+
+.product-v2-sticky-bar__atc-btn:hover {
+  opacity: 0.85;
 }
 
 /* ---------- Size Confirmation Modal ---------- */
