@@ -714,6 +714,22 @@
                         <span data-variant-id="{{ variant.id }}" data-disabled="{{ variant.metafields.custom.disable }}"></span>
                       {% endfor %}
                     </div>
+                    <script>
+                      (function(){
+                        var colorInputs = document.querySelectorAll('.product-v2 .color-input input[type="radio"]');
+                        colorInputs.forEach(function(radio) {
+                          radio.addEventListener('change', function() {
+                            var fieldset = this.closest('.color-input');
+                            var nameEl = fieldset.querySelector('.color-input__selected-name');
+                            if (nameEl) {
+                              var label = this.nextElementSibling;
+                              var nameSpan = label.querySelector('.color-input__name');
+                              if (nameSpan) nameEl.textContent = nameSpan.textContent;
+                            }
+                          });
+                        });
+                      })();
+                    </script>
                   </variant-radios>
                 {%- else -%}
                   <variant-selects

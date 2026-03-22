@@ -752,23 +752,14 @@ a.product-v2__sp-avatar {
 
 /* Hide "Size" / "Color" legend labels for cleaner UX */
 .product-v2 .product-form__input--pill .form__label {
-  width: 100%;
+  width: 0;
+  height: 0;
   font-size: 0;
   line-height: 0;
   margin: 0;
   padding: 0;
-  height: 0;
-  overflow: visible;
-  position: relative;
-}
-
-/* Keep size guide link visible even though legend text is hidden */
-.product-v2 .product-form__input--pill .form__label .size-guide-link {
-  font-size: 12px;
-  line-height: 1;
+  overflow: hidden;
   position: absolute;
-  right: 0;
-  top: -20px;
 }
 
 /* ---------- Size Picker — Card Style (matching Avada tiers) ---------- */
