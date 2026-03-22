@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Global Header Overrides
+   ========================================================================== */
+
+/* Announcement bar */
+.announcement-bar a {
+  padding: 14px 0;
+  font-weight: 500;
+}
+
+header.header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Cart count bubble — orange */
+.cart-count-bubble {
+  background-color: #F76503;
+}
+
+/* Hide language/currency switcher */
+localization-selector {
+  display: none !important;
+}
+
+/* Title-case menu items (SHOP → Shop) + black text */
+.header__menu-item span,
+.header__menu-item.link-only span {
+  display: inline-block;
+  text-transform: lowercase;
+  color: #000 !important;
+}
+
+.header__menu-item span::first-letter,
+.header__menu-item.link-only span::first-letter {
+  text-transform: uppercase;
+}
+
+/* Homepage: transparent header with white text — override black */
+header.header.absolute .header__menu-item span,
+header.header.absolute .header__menu-item.link-only span {
+  color: #fff !important;
+}
+
+header.header.absolute .menu-arrow-down {
+  color: #fff;
+}
+
+/* Homepage: sticky navbar reverts to black — must match or exceed
+   specificity of header.header.absolute rule above */
+header.header.sticky-navbar .header__menu-item span,
+header.header.sticky-navbar .header__menu-item.link-only span {
+  color: #000 !important;
+}
+
+header.header.sticky-navbar .menu-arrow-down {
+  color: #000;
+}
+
+/* Thicker icon lines — add stroke on top of filled paths (account + cart) */
+.header__icon .icon path {
+  stroke: currentColor;
+  stroke-width: 0.6px;
+}
+
+/* Thicker search icon — symbol referenced via <use>, target symbol path */
+#icon-search path {
+  stroke: currentColor;
+  stroke-width: 0.6px;
+}
+
+/* Cart icon — cropped viewBox matches search/account, use same 2rem */
+.header__icon--cart .icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.header__icon--cart {
+  margin-right: 4px;
+}
+
+/* Better spacing around header icons for good UX */
+.header__icon {
+  padding: 8px 10px;
+}
+
+.header__icons {
+  gap: 2px;
+}
+
+/* Down arrow SVG next to menu items with dropdowns */
+.menu-arrow-down {
+  display: none;
+}
+
+@media screen and (min-width: 990px) {
+  .menu-arrow-down {
+    display: inline-block;
+    width: 8px;
+    height: 5px;
+    margin-left: 4px;
+    flex-shrink: 0;
+  }
+}

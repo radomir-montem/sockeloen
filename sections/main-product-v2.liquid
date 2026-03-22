@@ -770,9 +770,7 @@
                             <span class="color-input__selected-name">{{ option.selected_value | escape }}</span>
                           {%- endif -%}
                         </fieldset>
-                        {%- unless is_color -%}
-                          <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">Size guide</a>
-                        {%- endunless -%}
+                        {%- comment -%} Size guide link moved below ATC button {%- endcomment -%}
                       {%- else -%}
                         {%- comment -%} Single-value option: render as hidden input so variant selection still works {%- endcomment -%}
                         <input
@@ -1118,6 +1116,11 @@
                 >
                   {{ section.settings.notifyme_button | default: 'Notify me when available' }}
                 </a>
+
+                {%- comment -%} Size guide link — below ATC for less friction {%- endcomment -%}
+                {%- unless product.has_only_default_variant -%}
+                  <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">Not sure about your size?</a>
+                {%- endunless -%}
               </div>
 
             {%- when 'shipping_info' -%}
