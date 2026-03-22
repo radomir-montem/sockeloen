@@ -50,20 +50,25 @@
   gap: 2px;
 }
 
-/* Down arrow next to menu items with dropdowns on desktop */
+/* Down arrow next to menu items with dropdowns on desktop — matches breadcrumb arrow style */
 @media screen and (min-width: 990px) {
+  .template--v2 .header__inline-menu header-menu > li > a.child-menu span,
+  .template--v2 .header__inline-menu details.mega-menu > summary > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
   .template--v2 .header__inline-menu header-menu > li > a.child-menu span::after,
   .template--v2 .header__inline-menu details.mega-menu > summary > span::after {
     content: '';
     display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-right: 1.5px solid currentColor;
-    border-bottom: 1.5px solid currentColor;
-    transform: rotate(45deg);
-    margin-left: 5px;
-    position: relative;
-    top: -2px;
+    width: 8px;
+    height: 5px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 14 9' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 1.13L1.13 0L6.97 5.83L12.8 0L13.93 1.13L6.97 8.1L0 1.13Z' fill='currentColor'/%3E%3C/svg%3E") no-repeat center / contain;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 14 9' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 1.13L1.13 0L6.97 5.83L12.8 0L13.93 1.13L6.97 8.1L0 1.13Z' fill='currentColor'/%3E%3C/svg%3E") no-repeat center / contain;
+    flex-shrink: 0;
   }
 }
 
@@ -184,9 +189,14 @@
   position: absolute;
 }
 
-/* Slightly shorter than square on mobile so thumbnails + social proof peek above the fold */
+/* Dynamic image height: sized to viewport so sticky ATC cuts through middle of social proof */
 .product-v2 .product__media-list .product__media-item .media {
-  aspect-ratio: 4 / 4.5;
+  /* 300px ≈ announcement(44) + header(50) + thumbnails(~110) + half social-proof(30) + sticky ATC(66) */
+  aspect-ratio: unset;
+  height: calc(100vh - 300px);
+  height: calc(100svh - 300px);
+  min-height: 280px;
+  max-height: 520px;
   overflow: hidden;
   padding-top: 0 !important;
   position: relative;
