@@ -792,13 +792,16 @@
                         </fieldset>
                         {%- comment -%} Size guide link moved below ATC button {%- endcomment -%}
                       {%- else -%}
-                        {%- comment -%} Single-value option: render as hidden input so variant selection still works {%- endcomment -%}
-                        <input
-                          type="hidden"
-                          name="{{ option.name }}"
-                          value="{{ option.values.first | escape }}"
-                          form="{{ product_form_id }}"
-                        >
+                        {%- comment -%} Single-value option: render as hidden fieldset so updateOptions() still finds it {%- endcomment -%}
+                        <fieldset class="js product-form__input" style="display:none !important;">
+                          <input
+                            type="radio"
+                            name="{{ option.name }}"
+                            value="{{ option.values.first | escape }}"
+                            form="{{ product_form_id }}"
+                            checked
+                          >
+                        </fieldset>
                       {%- endif -%}
                     {%- endfor -%}
                     <script type="application/json">
