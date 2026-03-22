@@ -553,9 +553,8 @@ a.product-v2__sp-avatar {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 10px !important;
   width: 100% !important;
-  overflow: hidden !important;
 }
 
 /* ItemWrapper — flex row */
@@ -569,11 +568,10 @@ a.product-v2__sp-avatar {
 .product-v2 .Avada-Volume__Info {
   display: flex !important;
   align-items: center !important;
-  gap: 4px !important;
-  flex-shrink: 1 !important;
+  gap: 6px !important;
+  flex-shrink: 0 !important;
   white-space: nowrap !important;
   order: 2 !important;
-  min-width: 0 !important;
 }
 
 /* Ordering: radio dot (0) → images (1) → info/qty (2) → price (3) */
