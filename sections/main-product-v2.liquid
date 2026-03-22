@@ -524,25 +524,39 @@
           {%- endform -%}
         </div>
 
-        {%- comment -%} 5. Product benefits from metafields {%- endcomment -%}
-        {%- if product.metafields.custom.custom_benefit_1 != blank or product.metafields.custom.custom_benefit_2 != blank or product.metafields.custom.custom_benefit_3 != blank -%}
+        {%- comment -%} 5. Product benefits — metafields with theme editor fallback {%- endcomment -%}
+        {%- liquid
+          assign ben1 = product.metafields.custom.custom_benefit_1.value | default: product.metafields.custom.custom_benefit_1
+          assign ben2 = product.metafields.custom.custom_benefit_2.value | default: product.metafields.custom.custom_benefit_2
+          assign ben3 = product.metafields.custom.custom_benefit_3.value | default: product.metafields.custom.custom_benefit_3
+          if ben1 == blank
+            assign ben1 = section.settings.default_benefit_1
+          endif
+          if ben2 == blank
+            assign ben2 = section.settings.default_benefit_2
+          endif
+          if ben3 == blank
+            assign ben3 = section.settings.default_benefit_3
+          endif
+        -%}
+        {%- if ben1 != blank or ben2 != blank or ben3 != blank -%}
           <ul class="product-v2__benefits">
-            {%- if product.metafields.custom.custom_benefit_1 != blank -%}
+            {%- if ben1 != blank -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
-                <span>{{ product.metafields.custom.custom_benefit_1.value | default: product.metafields.custom.custom_benefit_1 }}</span>
+                <span>{{ ben1 }}</span>
               </li>
             {%- endif -%}
-            {%- if product.metafields.custom.custom_benefit_2 != blank -%}
+            {%- if ben2 != blank -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
-                <span>{{ product.metafields.custom.custom_benefit_2.value | default: product.metafields.custom.custom_benefit_2 }}</span>
+                <span>{{ ben2 }}</span>
               </li>
             {%- endif -%}
-            {%- if product.metafields.custom.custom_benefit_3 != blank -%}
+            {%- if ben3 != blank -%}
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
-                <span>{{ product.metafields.custom.custom_benefit_3.value | default: product.metafields.custom.custom_benefit_3 }}</span>
+                <span>{{ ben3 }}</span>
               </li>
             {%- endif -%}
           </ul>
