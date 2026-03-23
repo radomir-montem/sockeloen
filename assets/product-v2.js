@@ -326,12 +326,31 @@ if (!customElements.get('sticky-atc-v2')) {
     enhanceTierLabels();
   }
 
+  function needsEnhancement() {
+    var items = document.querySelectorAll('.product-v2 .Avada-Volume__Item');
+    if (!items.length) return false;
+    // Check if any item is missing our injections
+    for (var i = 0; i < items.length; i++) {
+      if (!items[i].querySelector('.avada-radio-dot')) return true;
+    }
+    return false;
+  }
+
   function init() {
     enhance();
     var container = document.querySelector('.product-v2');
     if (!container) return;
-    new MutationObserver(function() { enhance(); })
-      .observe(container, { childList: true, subtree: true, characterData: true });
+
+    /*
+     * Poll instead of MutationObserver to avoid infinite loop.
+     * Avada's own MutationObserver re-renders its tiles when we inject
+     * elements, which would trigger our observer → enhance() → Avada
+     * re-renders → observer → enhance() → infinite loop.
+     * Polling every 800ms is safe and still feels responsive.
+     */
+    setInterval(function() {
+      if (needsEnhancement()) enhance();
+    }, 800);
 
     /* Update upsell thumbnails when variant changes */
     var variantRadios = container.querySelector('variant-radios');
