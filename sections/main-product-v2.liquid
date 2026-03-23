@@ -492,26 +492,37 @@
         </div>
         <script>
           (function(){
+            var _stripping = false;
             function stripEuro(root){
+              if (_stripping) return;
+              _stripping = true;
               root.querySelectorAll('.regular-text, .price-item, .real-price, .product-v2-sticky-bar__price').forEach(function(el){
                 el.childNodes.forEach(function(n){
                   if(n.nodeType===3) n.textContent = n.textContent.replace(/€\s*/g,'');
                 });
               });
+              _stripping = false;
             }
             /* Strip immediately for elements already in DOM */
             stripEuro(document);
             /* Re-run after full DOM is ready (sticky bar renders later) */
             document.addEventListener('DOMContentLoaded', function(){
               stripEuro(document);
-              /* Observe price wrapper for variant changes */
+              /* Observe price wrapper for variant changes — debounced to avoid loops */
+              var _priceTimer = null;
               var priceWrap = document.getElementById('price-{{ section.id }}');
               if(priceWrap){
-                new MutationObserver(function(){ stripEuro(priceWrap); }).observe(priceWrap, {childList:true, subtree:true, characterData:true});
+                new MutationObserver(function(){
+                  clearTimeout(_priceTimer);
+                  _priceTimer = setTimeout(function(){ stripEuro(priceWrap); }, 50);
+                }).observe(priceWrap, {childList:true, subtree:true});
               }
               var stickyPrice = document.querySelector('.product-v2-sticky-bar__price');
               if(stickyPrice){
-                new MutationObserver(function(){ stripEuro(stickyPrice.parentElement); }).observe(stickyPrice, {childList:true, subtree:true, characterData:true});
+                new MutationObserver(function(){
+                  clearTimeout(_priceTimer);
+                  _priceTimer = setTimeout(function(){ stripEuro(stickyPrice.parentElement); }, 50);
+                }).observe(stickyPrice, {childList:true, subtree:true});
               }
             });
           })();
@@ -1629,10 +1640,9 @@
         }
       });
     }
+    /* Poll instead of MutationObserver to avoid infinite loop with Avada's own observer */
     fixAvadaDecimals();
-    var observer = new MutationObserver(function() { fixAvadaDecimals(); });
-    var target = document.querySelector('.product-v2') || document.body;
-    observer.observe(target, { childList: true, subtree: true, characterData: true });
+    setInterval(fixAvadaDecimals, 800);
   })();
 </script>
 
