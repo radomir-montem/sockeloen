@@ -1031,8 +1031,6 @@
                 </div>
               </noscript>
 
-              {%- render 'size-guide-modal', product: product, guide_type_override: section.settings.size_guide_type -%}
-
               <div class="variant-notes">
                 {% for variant in product.variants %}
                   {% if variant.metafields.custom.note != blank %}
@@ -1272,10 +1270,19 @@
                   {{ section.settings.notifyme_button | default: 'Notify me when available' }}
                 </a>
 
-                {%- comment -%} Size guide link — below ATC for less friction {%- endcomment -%}
-                {%- unless product.has_only_default_variant -%}
-                  <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">Not sure about your size?</a>
-                {%- endunless -%}
+              </div>
+
+            {%- when 'size_guide' -%}
+              {%- unless product.has_only_default_variant -%}
+                <div {{ block.shopify_attributes }}>
+                  <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">{{ block.settings.link_text | default: 'Not sure about your size?' }}</a>
+                  {%- render 'size-guide-modal', product: product, guide_type_override: block.settings.guide_type -%}
+                </div>
+              {%- endunless -%}
+
+            {%- when 'secure_checkout' -%}
+              <div {{ block.shopify_attributes }}>
+                {%- render 'secure-checkout', section_id: section.id, trust_text: block.settings.text -%}
               </div>
 
             {%- when 'shipping_info' -%}
@@ -1390,9 +1397,6 @@
                   }, 60000);
                 })();
               </script>
-
-              {%- comment -%} Secure checkout line {%- endcomment -%}
-              {%- render 'secure-checkout', section_id: section.id -%}
 
               {%- comment -%} USP accordions — hardcoded, closed by default {%- endcomment -%}
               <div class="product__accordion accordion product-v2__usp-accordion" >
@@ -1746,6 +1750,46 @@
       "limit": 1
     },
     {
+      "type": "size_guide",
+      "name": "Size guide",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "guide_type",
+          "label": "Size guide type",
+          "options": [
+            { "value": "auto", "label": "Auto-detect from product" },
+            { "value": "socks", "label": "Socks" },
+            { "value": "baselayer", "label": "Base layers" },
+            { "value": "gloves", "label": "Gloves" },
+            { "value": "overshoes", "label": "Overshoes" }
+          ],
+          "default": "auto",
+          "info": "Choose which size chart to show in the pop-up. 'Auto-detect' picks based on product type and title."
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Not sure about your size?"
+        }
+      ]
+    },
+    {
+      "type": "secure_checkout",
+      "name": "Secure checkout",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Trust text",
+          "default": "Safe & secure checkout — pay with iDEAL, creditcard or PayPal"
+        }
+      ]
+    },
+    {
       "type": "shipping_info",
       "name": "Shipping info",
       "limit": 1,
@@ -1871,24 +1915,6 @@
     }
   ],
   "settings": [
-    {
-      "type": "header",
-      "content": "Size guide"
-    },
-    {
-      "type": "select",
-      "id": "size_guide_type",
-      "label": "Size guide type",
-      "options": [
-        { "value": "auto", "label": "Auto-detect from product" },
-        { "value": "socks", "label": "Socks" },
-        { "value": "baselayer", "label": "Base layers" },
-        { "value": "gloves", "label": "Gloves" },
-        { "value": "overshoes", "label": "Overshoes" }
-      ],
-      "default": "auto",
-      "info": "Choose which size chart to show in the pop-up. 'Auto-detect' picks based on product type and title."
-    },
     {
       "type": "header",
       "content": "Social proof bar"

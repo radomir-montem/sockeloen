@@ -1,7 +1,9 @@
 {% comment %}
   Secure checkout trust badge with iDEAL icon.
-  Usage: {% render 'secure-checkout', section_id: section.id %}
+  Usage: {% render 'secure-checkout', section_id: section.id, trust_text: block.settings.text %}
 {% endcomment %}
+
+{%- assign checkout_text = trust_text | default: 'Safe & secure checkout — pay with iDEAL, creditcard or PayPal' -%}
 
 <div class="product-v2__trust-row product-v2__secure-row">
   <svg width="39" height="24" viewBox="0 0 39 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,5 +20,5 @@
       </clipPath>
     </defs>
   </svg>
-  <span>Safe & secure checkout — pay with iDEAL, creditcard or PayPal</span>
+  <span>{{ checkout_text }}</span>
 </div>
