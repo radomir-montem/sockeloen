@@ -27,6 +27,19 @@
           "type": "quantity_selector",
           "settings": {}
         },
+        "size_guide_EgJ68Q": {
+          "type": "size_guide",
+          "settings": {
+            "guide_type": "socks",
+            "link_text": "Not sure about your size?"
+          }
+        },
+        "secure_checkout_WRKfCy": {
+          "type": "secure_checkout",
+          "settings": {
+            "text": "Safe & secure checkout — pay with iDEAL, creditcard or PayPal"
+          }
+        },
         "shipping_info": {
           "type": "shipping_info",
           "settings": {
@@ -88,6 +101,8 @@
         "variant_picker",
         "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
+        "size_guide_EgJ68Q",
+        "secure_checkout_WRKfCy",
         "shipping_info",
         "description",
         "materials",
