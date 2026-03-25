@@ -1661,6 +1661,11 @@
           {{ product.selected_or_first_available_variant.price | money }}
         </span>
       </div>
+      <ul class="product-v2-sticky-bar__usps">
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>Free shipping</span></li>
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>100% satisfaction guarantee</span></li>
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>Born in the peloton</span></li>
+      </ul>
       <button
         type="button"
         class="product-v2-sticky-bar__atc-btn product-sticky-atc bg-black font-medium tracking-[0.02em] uppercase button button--primary"

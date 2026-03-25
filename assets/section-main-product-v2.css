@@ -1225,6 +1225,43 @@ sticky-atc-v2.hidden {
   color: #000;
 }
 
+/* Sticky bar USPs */
+.product-v2-sticky-bar__usps {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 16px;
+  align-items: center;
+}
+
+@media screen and (min-width: 990px) {
+  .product-v2-sticky-bar__usps {
+    display: flex;
+  }
+}
+
+.product-v2-sticky-bar__usp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.product-v2-sticky-bar__usp svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  color: #5a9a00;
+}
+
+.product-v2-sticky-bar__usp svg path {
+  fill: #5a9a00;
+}
+
 .product-v2-sticky-bar__atc-btn {
   flex-shrink: 0;
   padding: 12px 24px;

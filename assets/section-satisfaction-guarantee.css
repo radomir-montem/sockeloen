@@ -1,0 +1,116 @@
+.satisfaction-guarantee {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.satisfaction-guarantee__container {
+  background-color: var(--satisfaction-bg);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.satisfaction-guarantee__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 40px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Heading */
+.satisfaction-guarantee__heading {
+  font-size: 64px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--satisfaction-text);
+  margin: 0 0 24px;
+}
+
+.satisfaction-guarantee__heading em {
+  font-style: italic;
+  color: var(--satisfaction-accent);
+}
+
+/* Body */
+.satisfaction-guarantee__body {
+  max-width: 640px;
+  margin: 0 auto 40px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.satisfaction-guarantee__body p {
+  margin: 0;
+}
+
+/* Button */
+.satisfaction-guarantee__button {
+  display: inline-block;
+  background-color: var(--satisfaction-accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 16px 40px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.satisfaction-guarantee__button:hover {
+  background-color: color-mix(in srgb, var(--satisfaction-accent) 80%, #000);
+  transform: translateY(-1px);
+}
+
+.satisfaction-guarantee__button:active {
+  transform: translateY(0);
+}
+
+/* Decorative element — disabled */
+
+/* Scroll reveal */
+.satisfaction-guarantee__reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.satisfaction-guarantee__reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .satisfaction-guarantee__reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 749px) {
+  .satisfaction-guarantee {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .satisfaction-guarantee__inner {
+    padding: 48px 24px;
+  }
+
+  .satisfaction-guarantee__heading {
+    font-size: 48px;
+  }
+
+  .satisfaction-guarantee__body {
+    font-size: 15px;
+  }
+
+}
