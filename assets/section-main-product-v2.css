@@ -1047,7 +1047,7 @@ a.product-v2__sp-avatar {
   cursor: pointer;
   transition: color 0.2s ease;
   margin-top: 10px;
-  margin-bottom: 0;
+  margin-bottom: 16px;
   text-align: center;
 }
 
