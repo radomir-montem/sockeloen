@@ -1371,13 +1371,16 @@ sticky-atc-v2.hidden {
   margin-top: 0;
 }
 
-.product-benefit__image {
+.product-benefit__image,
+.product-benefit__media {
   width: 100%;
   overflow: hidden;
   padding: 16px;
 }
 
-.product-benefit__image img {
+.product-benefit__image img,
+.product-benefit__media img,
+.product-benefit__media video {
   width: 100%;
   height: auto;
   display: block;
@@ -1387,7 +1390,9 @@ sticky-atc-v2.hidden {
 }
 
 /* Hover zoom on images */
-.product-benefit__image:hover img {
+.product-benefit__image:hover img,
+.product-benefit__media:hover img,
+.product-benefit__media:hover video {
   transform: scale(1.03);
 }
 
@@ -1420,22 +1425,25 @@ sticky-atc-v2.hidden {
 
 /* --- Scroll-triggered animations --- */
 .product-benefit__image,
+.product-benefit__media,
 .product-benefit__content {
   opacity: 0;
   transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Image slides in from left (odd rows) */
-.product-benefit:nth-child(odd) .product-benefit__image {
+/* Image/video slides in from left (odd rows) */
+.product-benefit:nth-child(odd) .product-benefit__image,
+.product-benefit:nth-child(odd) .product-benefit__media {
   transform: translateX(-40px);
 }
 .product-benefit:nth-child(odd) .product-benefit__content {
   transform: translateX(40px);
 }
 
-/* Image slides in from right (even rows) */
-.product-benefit:nth-child(even) .product-benefit__image {
+/* Image/video slides in from right (even rows) */
+.product-benefit:nth-child(even) .product-benefit__image,
+.product-benefit:nth-child(even) .product-benefit__media {
   transform: translateX(40px);
 }
 .product-benefit:nth-child(even) .product-benefit__content {
@@ -1444,6 +1452,7 @@ sticky-atc-v2.hidden {
 
 /* Visible state — applied by IntersectionObserver */
 .product-benefit.is-visible .product-benefit__image,
+.product-benefit.is-visible .product-benefit__media,
 .product-benefit.is-visible .product-benefit__content {
   opacity: 1;
   transform: translateX(0);
@@ -1457,15 +1466,18 @@ sticky-atc-v2.hidden {
 /* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   .product-benefit__image,
+  .product-benefit__media,
   .product-benefit__content {
     opacity: 1;
     transform: none;
     transition: none;
   }
-  .product-benefit__image img {
+  .product-benefit__media img,
+  .product-benefit__media video {
     transition: none;
   }
-  .product-benefit__image:hover img {
+  .product-benefit__media:hover img,
+  .product-benefit__media:hover video {
     transform: none;
   }
 }
@@ -1558,13 +1570,16 @@ sticky-atc-v2.hidden {
     flex-direction: row-reverse;
   }
 
-  .product-benefit__image {
+  .product-benefit__image,
+.product-benefit__media {
     width: 50%;
     flex-shrink: 0;
     padding: 32px;
   }
 
-  .product-benefit__image img {
+  .product-benefit__image img,
+.product-benefit__media img,
+.product-benefit__media video {
     aspect-ratio: 4/3;
     border-radius: 20px;
   }

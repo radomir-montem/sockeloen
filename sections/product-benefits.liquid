@@ -20,8 +20,40 @@
 >
   {%- for block in section.blocks -%}
     <div class="product-benefit" {{ block.shopify_attributes }}>
-      {%- if block.settings.image != blank -%}
-        <div class="product-benefit__image">
+      {%- if block.settings.video != blank -%}
+        {%- comment -%} Video takes priority over image {%- endcomment -%}
+        <div class="product-benefit__media">
+          <video
+            class="product-benefit__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 750 }}{%- endif -%}"
+          >
+            {%- for source in block.settings.video.sources -%}
+              <source src="{{ source.url }}" type="{{ source.mime_type }}">
+            {%- endfor -%}
+          </video>
+        </div>
+      {%- elsif block.settings.video_url != blank -%}
+        {%- comment -%} External MP4 URL fallback {%- endcomment -%}
+        <div class="product-benefit__media">
+          <video
+            class="product-benefit__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 750 }}{%- endif -%}"
+          >
+            <source src="{{ block.settings.video_url }}" type="video/mp4">
+          </video>
+        </div>
+      {%- elsif block.settings.image != blank -%}
+        <div class="product-benefit__media">
           <img
             srcset="
               {% if block.settings.image.width >= 375 %}{{ block.settings.image | image_url: width: 375 }} 375w,{% endif %}
@@ -63,6 +95,7 @@
 
 <script>
   (function() {
+    /* Scroll-triggered reveal */
     var benefits = document.querySelectorAll('.product-benefit');
     if (!benefits.length || !('IntersectionObserver' in window)) {
       benefits.forEach(function(b) { b.classList.add('is-visible'); });
@@ -73,6 +106,12 @@
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
+
+          /* Start video playback when visible */
+          var video = entry.target.querySelector('video');
+          if (video) {
+            video.play().catch(function() {});
+          }
         }
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
@@ -92,9 +131,30 @@
       "name": "Benefit",
       "settings": [
         {
+          "type": "header",
+          "content": "Media"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Upload a video via Shopify Files. Autoplays muted and loops. Takes priority over image."
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "External video URL (MP4)",
+          "info": "Direct link to an MP4 file. Only used if no Shopify video is selected above."
+        },
+        {
           "type": "image_picker",
           "id": "image",
-          "label": "Image"
+          "label": "Image / Video poster",
+          "info": "Shown as fallback when no video is set, or as poster frame while video loads."
+        },
+        {
+          "type": "header",
+          "content": "Text"
         },
         {
           "type": "text",
