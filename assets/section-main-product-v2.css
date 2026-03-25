@@ -1368,14 +1368,14 @@ sticky-atc-v2.hidden {
 }
 
 .product-benefit + .product-benefit {
-  margin-top: 0;
+  margin-top: 16px;
 }
 
 .product-benefit__image,
 .product-benefit__media {
   width: 100%;
   overflow: hidden;
-  padding: 16px;
+  padding: 20px;
 }
 
 .product-benefit__image img,
@@ -1573,17 +1573,17 @@ sticky-atc-v2.hidden {
   }
 
   .product-benefit__image,
-.product-benefit__media {
+  .product-benefit__media {
     width: 50%;
     flex-shrink: 0;
-    padding: 32px;
+    padding: 40px;
   }
 
   .product-benefit__image img,
-.product-benefit__media img,
-.product-benefit__media video {
+  .product-benefit__media img,
+  .product-benefit__media video {
     aspect-ratio: 1/1;
-    border-radius: 20px;
+    border-radius: 12px;
   }
 
   .product-benefit__content {

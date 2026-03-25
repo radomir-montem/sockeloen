@@ -71,7 +71,7 @@
             aria-label="{{ block.settings.heading | escape | default: 'Hotspot' }}"
             aria-pressed="false"
             {{ block.shopify_attributes }}
-          >+</button>
+          >{{ forloop.index | prepend: '00' | slice: -2, 2 }}</button>
         {%- endfor -%}
       </div>
     </div>
