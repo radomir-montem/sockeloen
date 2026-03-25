@@ -1281,9 +1281,7 @@
               {%- endunless -%}
 
             {%- when 'secure_checkout' -%}
-              <div {{ block.shopify_attributes }}>
-                {%- render 'secure-checkout', section_id: section.id, trust_text: block.settings.text -%}
-              </div>
+              {%- comment -%} Rendered inside shipping_info block instead — this is a no-op here {%- endcomment -%}
 
             {%- when 'shipping_info' -%}
               {%- comment -%}
@@ -1291,6 +1289,9 @@
                 - Before 15:00 CET/CEST on a working day → shipped today
                 - After 15:00 or on a weekend → shipped next working day
                 - Automatically handles CET ↔ CEST via Intl timezone
+
+                The secure_checkout block is also rendered here (after ship date, before USP accordions)
+                so it always appears in the right visual position regardless of block order.
               {%- endcomment -%}
               <div id="shipment-message-v2" class="shipment-container !m-0 product-v2__trust-row product-v2__shipping-row" {{ block.shopify_attributes }}>
                 <svg class="product-v2__shipping-icon" width="39" height="24" viewBox="0 0 39 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1397,6 +1398,15 @@
                   }, 60000);
                 })();
               </script>
+
+              {%- comment -%} Render secure_checkout block here (between shipping & USP accordions) {%- endcomment -%}
+              {%- for inner_block in section.blocks -%}
+                {%- if inner_block.type == 'secure_checkout' -%}
+                  <div {{ inner_block.shopify_attributes }}>
+                    {%- render 'secure-checkout', section_id: section.id, trust_text: inner_block.settings.text -%}
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
 
               {%- comment -%} USP accordions — hardcoded, closed by default {%- endcomment -%}
               <div class="product__accordion accordion product-v2__usp-accordion" >
