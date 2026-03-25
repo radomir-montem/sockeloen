@@ -1377,6 +1377,12 @@ sticky-atc-v2.hidden {
   height: auto;
   display: block;
   object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Hover zoom on images */
+.product-benefit__image:hover img {
+  transform: scale(1.04);
 }
 
 .product-benefit__content {
@@ -1384,25 +1390,80 @@ sticky-atc-v2.hidden {
 }
 
 .product-benefit__heading {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
 .product-benefit__heading em {
   font-style: italic;
+  color: #F76503;
 }
 
 .product-benefit__description {
   font-size: 15px;
   line-height: 1.6;
-  color: rgba(0, 0, 0, 0.75);
+  color: rgba(0, 0, 0, 0.65);
   margin: 0;
 }
 
 .product-benefit__description p {
   margin: 0;
+}
+
+/* --- Scroll-triggered animations --- */
+.product-benefit__image,
+.product-benefit__content {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Image slides in from left (odd rows) */
+.product-benefit:nth-child(odd) .product-benefit__image {
+  transform: translateX(-40px);
+}
+.product-benefit:nth-child(odd) .product-benefit__content {
+  transform: translateX(40px);
+}
+
+/* Image slides in from right (even rows) */
+.product-benefit:nth-child(even) .product-benefit__image {
+  transform: translateX(40px);
+}
+.product-benefit:nth-child(even) .product-benefit__content {
+  transform: translateX(-40px);
+}
+
+/* Visible state — applied by IntersectionObserver */
+.product-benefit.is-visible .product-benefit__image,
+.product-benefit.is-visible .product-benefit__content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger: content animates slightly after image */
+.product-benefit.is-visible .product-benefit__content {
+  transition-delay: 0.15s;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .product-benefit__image,
+  .product-benefit__content {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .product-benefit__image img {
+    transition: none;
+  }
+  .product-benefit__image:hover img {
+    transform: none;
+  }
 }
 
 /* ==========================================================================
@@ -1498,11 +1559,17 @@ sticky-atc-v2.hidden {
 
   .product-benefit__content {
     width: 50%;
-    padding: 40px 60px;
+    padding: 48px 72px;
   }
 
   .product-benefit__heading {
-    font-size: 30px;
+    font-size: 38px;
+    margin-bottom: 18px;
+  }
+
+  .product-benefit__description {
+    font-size: 16px;
+    line-height: 1.7;
   }
 
   /* Modal centered on desktop */
