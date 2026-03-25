@@ -317,15 +317,113 @@
         "heading_italic": "riders say?",
         "subtitle": "Real feedback from cyclists who ride in Sockeloen socks every day.",
         "review_count": "4.8/5 based on 500+ reviews",
+        "min_rating": 4,
         "background_color": "#f3f3f3",
         "accent_color": "#aeaaa8",
         "padding_top": 60,
         "padding_bottom": 60
       }
     },
+    "satisfaction_guarantee_E8eUtd": {
+      "type": "satisfaction-guarantee",
+      "name": "Satisfaction Guarantee",
+      "settings": {
+        "heading": "Not 100% satisfied?",
+        "heading_italic": "No problem!",
+        "body": "<p>At Sockeloen, the customer is king. We stand behind every pair of socks we make with our 100% satisfaction guarantee. Not happy with your order? Simply reach out within 30 days and we'll make it right — whether that's an exchange, store credit, or a full refund. No hassle, no fine print.</p>",
+        "button_text": "Shop now",
+        "button_url": "shopify://collections/all",
+        "background_color": "#f3f3f3",
+        "text_color": "#000000",
+        "accent_color": "#F76503",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "recommendations": {
       "type": "product-recommendations",
       "settings": {}
+    },
+    "product_faq_zwctfc": {
+      "type": "product-faq",
+      "blocks": {
+        "faq_k7W9mV": {
+          "type": "faq",
+          "settings": {
+            "question": "What size cycling socks should I choose?",
+            "answer": "<p>Our socks come in S/M (36-41) and L/XL (42-47). If you're between sizes, we recommend sizing up for a more comfortable fit. Check our size guide on each product page for detailed measurements.</p>"
+          }
+        },
+        "faq_CedqnJ": {
+          "type": "faq",
+          "settings": {
+            "question": "What material are Sockeloen socks made of?",
+            "answer": "<p>Our cycling socks are made from a premium blend of recycled polyamide, polypropylene, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>"
+          }
+        },
+        "faq_c3iNnN": {
+          "type": "faq",
+          "settings": {
+            "question": "How should I wash my cycling socks?",
+            "answer": "<p>Machine wash at 30°C inside out. Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry — air dry for best results. This keeps the fibers intact and your socks performing at their best.</p>"
+          }
+        },
+        "faq_r4cP6H": {
+          "type": "faq",
+          "settings": {
+            "question": "How long do Sockeloen socks last?",
+            "answer": "<p>With proper care, our socks typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>"
+          }
+        },
+        "faq_rVwptf": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes! We offer free shipping on all orders over €50 within Europe. Orders are typically dispatched within 1-2 business days and delivered within 2-5 working days depending on your location.</p>"
+          }
+        },
+        "faq_66kaKG": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We offer a 30-day return policy on unworn items in original packaging. If you're not satisfied, simply reach out to us and we'll arrange a hassle-free return. Your satisfaction is our priority.</p>"
+          }
+        },
+        "faq_CFG8L6": {
+          "type": "faq",
+          "settings": {
+            "question": "Why are cycling socks longer than regular socks?",
+            "answer": "<p>The taller cuff provides aerodynamic benefits by creating a smoother airflow over the leg. It also offers sun protection and prevents chafing from shoe edges. Most pro cyclists prefer a cuff height of 15-20cm.</p>"
+          }
+        },
+        "faq_PE7adc": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use these socks for other sports?",
+            "answer": "<p>Absolutely! While designed for cycling, our socks perform great for running, hiking, and everyday wear. The moisture-wicking properties and comfortable fit make them versatile for any activity.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_k7W9mV",
+        "faq_CedqnJ",
+        "faq_c3iNnN",
+        "faq_r4cP6H",
+        "faq_rVwptf",
+        "faq_66kaKG",
+        "faq_CFG8L6",
+        "faq_PE7adc"
+      ],
+      "name": "Product FAQ",
+      "settings": {
+        "heading": "Frequently asked",
+        "heading_italic": "questions",
+        "background_color": "#ffffff",
+        "text_color": "#000000",
+        "accent_color": "#F76503",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
@@ -334,6 +432,8 @@
     "product_exploder_6g3RXA",
     "reviews",
     "reviews_masonry_t9G7yD",
-    "recommendations"
+    "satisfaction_guarantee_E8eUtd",
+    "recommendations",
+    "product_faq_zwctfc"
   ]
 }
