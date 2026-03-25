@@ -986,8 +986,11 @@ a.product-v2__sp-avatar {
   box-shadow: 0 0 0 2px #0395F6;
 }
 
-/* Image-based color swatches */
+/* Image-based color swatches — larger thumbnails */
 .product-v2 .color-dot--image {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   overflow: hidden;
   padding: 0;
   background: #f5f5f5;

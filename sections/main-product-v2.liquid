@@ -852,8 +852,72 @@
                                 var nameSpan = label ? label.querySelector('.color-input__name') : null;
                                 if (nameSpan) nameEl.textContent = nameSpan.textContent;
                               }
+                              filterSizesByColor();
                             });
                           });
+
+                          /* Initial filter on load */
+                          filterSizesByColor();
+                        }
+
+                        function filterSizesByColor() {
+                          var variants = {{ product.variants | json }};
+                          var options = {{ product.options_with_values | json }};
+
+                          /* Find the color option position (1-indexed) */
+                          var colorPos = -1;
+                          var sizePos = -1;
+                          for (var i = 0; i < options.length; i++) {
+                            var name = options[i].name.toLowerCase().replace(/:$/, '');
+                            if (name === 'color' || name === 'kleur' || name === 'couleur') {
+                              colorPos = i;
+                            } else if (name === 'size' || name === 'maat') {
+                              sizePos = i;
+                            }
+                          }
+                          if (colorPos === -1 || sizePos === -1) return;
+
+                          /* Get selected color */
+                          var colorFieldset = document.querySelector('.product-v2 .color-input');
+                          if (!colorFieldset) return;
+                          var checkedColor = colorFieldset.querySelector('input[type="radio"]:checked');
+                          if (!checkedColor) return;
+                          var selectedColor = checkedColor.value;
+
+                          /* Find sizes available for this color */
+                          var availableSizes = {};
+                          for (var v = 0; v < variants.length; v++) {
+                            var variant = variants[v];
+                            if (variant.options[colorPos] === selectedColor) {
+                              availableSizes[variant.options[sizePos]] = true;
+                            }
+                          }
+
+                          /* Show/hide size radios */
+                          var sizeFieldset = document.querySelector('.product-v2 .size-input');
+                          if (!sizeFieldset) return;
+                          var needsReselect = false;
+                          sizeFieldset.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+                            var label = radio.nextElementSibling;
+                            if (!label) return;
+                            if (availableSizes[radio.value]) {
+                              radio.style.display = '';
+                              label.style.display = '';
+                            } else {
+                              radio.style.display = 'none';
+                              label.style.display = 'none';
+                              if (radio.checked) needsReselect = true;
+                            }
+                          });
+
+                          /* If the currently selected size is no longer visible, select the first available */
+                          if (needsReselect) {
+                            var firstVisible = sizeFieldset.querySelector('input[type="radio"]:not([style*="display: none"])');
+                            if (firstVisible) {
+                              firstVisible.checked = true;
+                              firstVisible.dispatchEvent(new Event('change', { bubbles: true }));
+                            }
+                          }
                         }
 
                         function init() {
