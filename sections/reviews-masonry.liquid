@@ -16,30 +16,6 @@
   }
 {%- endstyle -%}
 
-{%- capture star_filled -%}
-<span class="reviews-masonry__star" style="background:#00b67a;" aria-hidden="true">
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2.5l2.9 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 2.8 1.1-6.4L2.7 9.2l6.4-.9L12 2.5z" fill="#fff"/>
-  </svg>
-</span>
-{%- endcapture -%}
-
-{%- capture star_empty -%}
-<span class="reviews-masonry__star" style="background:#dcdce6;" aria-hidden="true">
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2.5l2.9 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 2.8 1.1-6.4L2.7 9.2l6.4-.9L12 2.5z" fill="#fff"/>
-  </svg>
-</span>
-{%- endcapture -%}
-
-{%- capture badge_star_filled -%}
-<span class="reviews-masonry__badge-star" style="background:#00b67a;" aria-hidden="true">
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2.5l2.9 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 2.8 1.1-6.4L2.7 9.2l6.4-.9L12 2.5z" fill="#fff"/>
-  </svg>
-</span>
-{%- endcapture -%}
-
 <section
   class="reviews-masonry"
   id="reviews-masonry-{{ section.id }}"
@@ -50,14 +26,9 @@
 
       {%- comment -%} Left sidebar {%- endcomment -%}
       <div class="reviews-masonry__sidebar" data-reviews-sidebar>
+        {%- comment -%} Reviews.io badge — updated live by JS {%- endcomment -%}
         <div class="reviews-masonry__badge" aria-label="Review rating">
-          <div class="reviews-masonry__badge-stars" role="img" aria-label="5 out of 5 stars">
-            {{ badge_star_filled }}
-            {{ badge_star_filled }}
-            {{ badge_star_filled }}
-            {{ badge_star_filled }}
-            {{ badge_star_filled }}
-          </div>
+          <div class="reviews-masonry__badge-stars" role="img" aria-label="4.5 out of 5 stars" data-reviews-badge-stars></div>
           <span class="reviews-masonry__badge-count" data-reviews-badge-count>{{ section.settings.review_count }}</span>
         </div>
 
@@ -71,6 +42,11 @@
         {%- if section.settings.subtitle != blank -%}
           <p class="reviews-masonry__subtitle">{{ section.settings.subtitle }}</p>
         {%- endif -%}
+
+        <a class="reviews-masonry__powered" href="https://www.reviews.io/company-reviews/store/sockeloen-nl" target="_blank" rel="noopener noreferrer">
+          <span>Verified by</span>
+          <img src="https://assets.reviews.io/img/all-global-assets/logo/reviewsio-logo.svg" alt="REVIEWS.io" class="reviews-masonry__reviewsio-logo" width="90" height="20" loading="lazy">
+        </a>
       </div>
 
       {%- comment -%} Right cards area — populated by JS from Reviews.io API {%- endcomment -%}
@@ -90,11 +66,11 @@
               {%- assign rating = block.settings.rating | default: 5 -%}
               <div class="reviews-masonry__stars" role="img" aria-label="{{ rating }} out of 5 stars">
                 {%- for i in (1..5) -%}
-                  {%- if i <= rating -%}
-                    {{ star_filled }}
-                  {%- else -%}
-                    {{ star_empty }}
-                  {%- endif -%}
+                  <span class="reviews-masonry__star" style="background:{% if i <= rating %}#00b67a{% else %}#dcdce6{% endif %};" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2.5l2.9 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 2.8 1.1-6.4L2.7 9.2l6.4-.9L12 2.5z" fill="#fff"/>
+                    </svg>
+                  </span>
                 {%- endfor -%}
               </div>
 
@@ -126,15 +102,17 @@
 <script>
   (function () {
     var STORE_ID = 'sockeloen-nl';
-    var MAX_REVIEWS = {{ section.settings.max_reviews | default: 20 }};
+    var REVIEWS_URL = 'https://www.reviews.io/company-reviews/store/' + STORE_ID;
+    var MAX_REVIEWS = 6;
     var MIN_RATING = {{ section.settings.min_rating | default: 4 }};
     var section = document.getElementById('reviews-masonry-{{ section.id }}');
     if (!section) return;
 
     var cardsContainer = section.querySelector('[data-reviews-cards]');
     var badgeCount = section.querySelector('[data-reviews-badge-count]');
+    var badgeStars = section.querySelector('[data-reviews-badge-stars]');
 
-    /* Build star SVGs */
+    /* Build star SVGs — matching Reviews.io green badge style */
     function starSVG(filled) {
       var bg = filled ? '#00b67a' : '#dcdce6';
       return '<span class="reviews-masonry__star" style="background:' + bg + ';" aria-hidden="true">'
@@ -143,10 +121,27 @@
         + '</svg></span>';
     }
 
+    function badgeStarSVG(filled) {
+      var bg = filled ? '#00b67a' : '#dcdce6';
+      return '<span class="reviews-masonry__badge-star" style="background:' + bg + ';" aria-hidden="true">'
+        + '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        + '<path d="M12 2.5l2.9 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 2.8 1.1-6.4L2.7 9.2l6.4-.9L12 2.5z" fill="#fff"/>'
+        + '</svg></span>';
+    }
+
     function renderStars(rating) {
       var html = '';
       for (var i = 1; i <= 5; i++) {
-        html += starSVG(i <= rating);
+        html += starSVG(i <= Math.round(rating));
+      }
+      return html;
+    }
+
+    function renderBadgeStars(rating) {
+      var html = '';
+      var rounded = Math.round(rating);
+      for (var i = 1; i <= 5; i++) {
+        html += badgeStarSVG(i <= rounded);
       }
       return html;
     }
@@ -169,37 +164,38 @@
       return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     }
 
-    function buildCard(review) {
-      var rating = review.rating || 5;
-      var title = review.title || '';
-      var body = review.comments || review.review || '';
-      var author = review.reviewer ? review.reviewer.first_name || '' : '';
-      if (review.reviewer && review.reviewer.last_name) {
-        author += ' ' + review.reviewer.last_name.charAt(0) + '.';
-      }
-      var date = review.date_created || review.timeago || '';
-
-      var html = '<article class="reviews-masonry__card" role="listitem" data-reviews-card>';
-      html += '<span class="reviews-masonry__quote" aria-hidden="true">&ldquo;</span>';
-      html += '<div class="reviews-masonry__stars" role="img" aria-label="' + rating + ' out of 5 stars">';
-      html += renderStars(Math.round(rating));
-      html += '</div>';
-      if (title) html += '<h3 class="reviews-masonry__card-title">' + escapeHtml(title) + '</h3>';
-      if (body) html += '<p class="reviews-masonry__card-body">' + escapeHtml(body) + '</p>';
-      html += '<div class="reviews-masonry__card-footer">';
-      if (author) html += '<span class="reviews-masonry__card-author">' + escapeHtml(author) + '</span>';
-      if (date) html += '<span class="reviews-masonry__card-date">' + timeAgo(date) + '</span>';
-      html += '</div></article>';
-      return html;
-    }
-
     function escapeHtml(str) {
       var div = document.createElement('div');
       div.appendChild(document.createTextNode(str));
       return div.innerHTML;
     }
 
-    /* Fetch from Reviews.io API */
+    function buildCard(review) {
+      var rating = review.rating || 5;
+      var title = review.title || '';
+      var body = review.comments || review.review || '';
+      var author = review.reviewer ? review.reviewer.first_name || '' : '';
+      if (review.reviewer && review.reviewer.last_name && review.reviewer.last_name.trim()) {
+        author += ' ' + review.reviewer.last_name.charAt(0) + '.';
+      }
+      var date = review.date_created || review.timeago || '';
+      var reviewId = review.store_review_id || '';
+
+      var html = '<a href="' + REVIEWS_URL + '" target="_blank" rel="noopener noreferrer" class="reviews-masonry__card reviews-masonry__card--link" role="listitem" data-reviews-card>';
+      html += '<span class="reviews-masonry__quote" aria-hidden="true">&ldquo;</span>';
+      html += '<div class="reviews-masonry__stars" role="img" aria-label="' + rating + ' out of 5 stars">';
+      html += renderStars(rating);
+      html += '</div>';
+      if (title) html += '<h3 class="reviews-masonry__card-title">' + escapeHtml(title) + '</h3>';
+      if (body) html += '<p class="reviews-masonry__card-body">' + escapeHtml(body) + '</p>';
+      html += '<div class="reviews-masonry__card-footer">';
+      if (author) html += '<span class="reviews-masonry__card-author">' + escapeHtml(author) + '</span>';
+      if (date) html += '<span class="reviews-masonry__card-date">' + timeAgo(date) + '</span>';
+      html += '</div></a>';
+      return html;
+    }
+
+    /* Fetch from Reviews.io API — limited to 6 reviews */
     var url = 'https://api.reviews.io/merchant/reviews?store=' + STORE_ID
       + '&per_page=' + MAX_REVIEWS
       + '&min_rating=' + MIN_RATING
@@ -210,26 +206,36 @@
       .then(function (data) {
         if (!data || !data.reviews || !data.reviews.length) return;
 
-        /* Update badge with real stats */
-        if (badgeCount && data.stats) {
-          var avg = parseFloat(data.stats.average_rating).toFixed(1);
+        /* Update badge with exact real stats */
+        if (data.stats) {
+          var avg = parseFloat(data.stats.average_rating);
           var total = parseInt(data.stats.total_reviews, 10);
-          var display = total >= 1000 ? Math.floor(total / 100) * 100 + '+' : total + '';
-          badgeCount.textContent = avg + '/5 based on ' + display + ' reviews';
+
+          if (badgeStars) {
+            badgeStars.innerHTML = renderBadgeStars(avg);
+            badgeStars.setAttribute('aria-label', avg.toFixed(2) + ' out of 5 stars');
+          }
+
+          if (badgeCount) {
+            badgeCount.textContent = avg.toFixed(2) + '/5 based on ' + total.toLocaleString() + ' reviews';
+          }
         }
 
         /* Remove fallback blocks */
         var fallbacks = cardsContainer.querySelectorAll('[data-fallback]');
         fallbacks.forEach(function (el) { el.remove(); });
 
-        /* Render real reviews */
+        /* Render real reviews — only ones with text, limit to 6 */
         var html = '';
-        data.reviews.forEach(function (review) {
-          /* Skip reviews with no text */
+        var count = 0;
+        for (var r = 0; r < data.reviews.length; r++) {
+          if (count >= MAX_REVIEWS) break;
+          var review = data.reviews[r];
           var body = review.comments || review.review || '';
-          if (!body.trim()) return;
+          if (!body.trim()) continue;
           html += buildCard(review);
-        });
+          count++;
+        }
         cardsContainer.insertAdjacentHTML('beforeend', html);
 
         /* Re-run animations on new cards */
@@ -273,7 +279,7 @@
             if (entry.isIntersecting) {
               var card = entry.target;
               var index = parseInt(card.getAttribute('data-card-index'), 10) || 0;
-              card.style.transitionDelay = (index % 4) * 100 + 'ms';
+              card.style.transitionDelay = (index % 3) * 100 + 'ms';
               card.classList.add('is-visible');
               cardObserver.unobserve(card);
             }
@@ -325,21 +331,12 @@
       "type": "text",
       "id": "review_count",
       "label": "Badge text (fallback)",
-      "default": "4.5/5 based on 2300+ reviews",
+      "default": "4.51/5 based on 2,376 reviews",
       "info": "Shown until live data loads from Reviews.io"
     },
     {
       "type": "header",
       "content": "Reviews.io Settings"
-    },
-    {
-      "type": "range",
-      "id": "max_reviews",
-      "label": "Number of reviews to load",
-      "min": 6,
-      "max": 30,
-      "step": 2,
-      "default": 20
     },
     {
       "type": "range",
@@ -395,7 +392,7 @@
     {
       "type": "review",
       "name": "Review (fallback)",
-      "limit": 12,
+      "limit": 6,
       "settings": [
         {
           "type": "text",
@@ -437,7 +434,7 @@
     {
       "name": "Reviews Masonry",
       "settings": {
-        "review_count": "4.5/5 based on 2300+ reviews"
+        "review_count": "4.51/5 based on 2,376 reviews"
       }
     }
   ]
