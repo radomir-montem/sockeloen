@@ -1356,11 +1356,15 @@ sticky-atc-v2.hidden {
 /* ---------- Product Benefits Section ---------- */
 .product-benefits-section {
   overflow: hidden;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .product-benefit {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .product-benefit + .product-benefit {
@@ -1370,6 +1374,7 @@ sticky-atc-v2.hidden {
 .product-benefit__image {
   width: 100%;
   overflow: hidden;
+  padding: 16px;
 }
 
 .product-benefit__image img {
@@ -1377,36 +1382,35 @@ sticky-atc-v2.hidden {
   height: auto;
   display: block;
   object-fit: cover;
+  border-radius: 16px;
   transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Hover zoom on images */
 .product-benefit__image:hover img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
 .product-benefit__content {
-  padding: 24px 16px 32px;
+  padding: 28px 20px 36px;
 }
 
 .product-benefit__heading {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 800;
-  line-height: 1.15;
-  margin: 0 0 14px;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
 }
 
 .product-benefit__heading em {
   font-style: italic;
-  color: #F76503;
 }
 
 .product-benefit__description {
   font-size: 15px;
-  line-height: 1.6;
-  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.7;
+  color: rgba(0, 0, 0, 0.6);
   margin: 0;
 }
 
@@ -1539,9 +1543,15 @@ sticky-atc-v2.hidden {
   }
 
   /* Benefits section - side by side */
+  .product-benefits-section {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
   .product-benefit {
     flex-direction: row;
     align-items: center;
+    gap: 0;
   }
 
   .product-benefit:nth-child(even) {
@@ -1551,25 +1561,28 @@ sticky-atc-v2.hidden {
   .product-benefit__image {
     width: 50%;
     flex-shrink: 0;
+    padding: 32px;
   }
 
   .product-benefit__image img {
     aspect-ratio: 4/3;
+    border-radius: 20px;
   }
 
   .product-benefit__content {
     width: 50%;
-    padding: 48px 72px;
+    padding: 40px 80px;
   }
 
   .product-benefit__heading {
-    font-size: 38px;
-    margin-bottom: 18px;
+    font-size: 42px;
+    line-height: 1.05;
+    margin-bottom: 24px;
   }
 
   .product-benefit__description {
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 17px;
+    line-height: 1.75;
   }
 
   /* Modal centered on desktop */
