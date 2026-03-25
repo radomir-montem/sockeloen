@@ -150,6 +150,7 @@
           "settings": {
             "video": "shopify://files/videos/copy_39DFD027-54C6-4F91-9722-0D1FB128AA56.MOV",
             "video_url": "",
+            "image": "shopify://shop_images/Sockeloen_-04_octobre_2025-61_1.jpg",
             "heading": "Worn by",
             "heading_italic": "World Champions",
             "description": "<p>Worn by world champions. Our socks are trusted by professional cyclists who demand the highest performance and comfort on every ride.</p>"
@@ -182,7 +183,7 @@
         "benefit_9egM4N"
       ],
       "settings": {
-        "background_color": "#ffffff",
+        "background_color": "#f3f3f3",
         "text_color": "#000000",
         "padding_top": 36,
         "padding_bottom": 36
