@@ -195,29 +195,42 @@
       return html;
     }
 
-    /* Fetch from Reviews.io API — limited to 6 reviews */
-    var url = 'https://api.reviews.io/merchant/reviews?store=' + STORE_ID
+    /* Fetch merchant reviews + product rating stats in parallel */
+    var merchantUrl = 'https://api.reviews.io/merchant/reviews?store=' + STORE_ID
       + '&per_page=' + MAX_REVIEWS
       + '&min_rating=' + MIN_RATING
       + '&order=newest';
+    var productRatingUrl = 'https://api.reviews.io/product/rating?store=' + STORE_ID;
 
-    fetch(url)
-      .then(function (res) { return res.json(); })
-      .then(function (data) {
+    Promise.all([
+      fetch(merchantUrl).then(function (r) { return r.json(); }),
+      fetch(productRatingUrl).then(function (r) { return r.json(); }).catch(function () { return null; })
+    ])
+      .then(function (results) {
+        var data = results[0];
+        var productData = results[1];
+
         if (!data || !data.reviews || !data.reviews.length) return;
 
-        /* Update badge with exact real stats */
+        /* Combine company + product review counts and compute weighted average */
         if (data.stats) {
-          var avg = parseFloat(data.stats.average_rating);
-          var total = parseInt(data.stats.total_reviews, 10);
+          var companyCount = parseInt(data.stats.total_reviews, 10) || 0;
+          var companyAvg = parseFloat(data.stats.average_rating) || 0;
+          var productCount = (productData && productData.count) ? parseInt(productData.count, 10) : 0;
+          var productAvg = (productData && productData.rating) ? parseFloat(productData.rating) : 0;
+
+          var totalReviews = companyCount + productCount;
+          var combinedAvg = totalReviews > 0
+            ? ((companyAvg * companyCount) + (productAvg * productCount)) / totalReviews
+            : companyAvg;
 
           if (badgeStars) {
-            badgeStars.innerHTML = renderBadgeStars(avg);
-            badgeStars.setAttribute('aria-label', avg.toFixed(2) + ' out of 5 stars');
+            badgeStars.innerHTML = renderBadgeStars(combinedAvg);
+            badgeStars.setAttribute('aria-label', combinedAvg.toFixed(2) + ' out of 5 stars');
           }
 
           if (badgeCount) {
-            badgeCount.textContent = avg.toFixed(2) + '/5 based on ' + total.toLocaleString() + ' reviews';
+            badgeCount.textContent = combinedAvg.toFixed(2) + '/5 based on ' + totalReviews.toLocaleString() + ' reviews';
           }
         }
 
@@ -331,7 +344,7 @@
       "type": "text",
       "id": "review_count",
       "label": "Badge text (fallback)",
-      "default": "4.51/5 based on 2,376 reviews",
+      "default": "4.53/5 based on 5,065 reviews",
       "info": "Shown until live data loads from Reviews.io"
     },
     {
