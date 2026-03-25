@@ -158,8 +158,8 @@
           "type": "benefit",
           "settings": {
             "image": "shopify://shop_images/Tour_home_banner.png",
-            "heading": "Ride comfortable",
-            "heading_italic": "from now on",
+            "heading": "No sweaty, stinky feet.",
+            "heading_italic": "Never again.",
             "description": "<p>Engineered for endurance and comfort during long rides. Premium materials keep your feet cool and supported, mile after mile.</p>"
           }
         },
