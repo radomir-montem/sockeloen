@@ -45,41 +45,69 @@
   transform: translateX(0);
 }
 
-/* Badge row */
+/* Reviews.io badge ribbon */
 
-.reviews-masonry__badge {
+.reviews-masonry__ribbon {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  padding: 14px 18px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease;
+}
+
+.reviews-masonry__ribbon:hover {
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-masonry__ribbon-logo {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
 }
 
-.reviews-masonry__badge-stars {
-  display: flex;
-  gap: 3px;
-}
-
-.reviews-masonry__badge-star {
-  width: 22px;
-  height: 22px;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.reviews-masonry__ribbon-logo svg {
   flex-shrink: 0;
 }
 
-.reviews-masonry__badge-star svg {
-  width: 14px;
-  height: 14px;
-  display: block;
+.reviews-masonry__ribbon-brand {
+  font-size: 14px;
+  font-weight: 800;
+  color: #000;
+  letter-spacing: 0.02em;
 }
 
-.reviews-masonry__badge-count {
-  font-size: 14px;
-  font-weight: 500;
+.reviews-masonry__ribbon-rating {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reviews-masonry__ribbon-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.reviews-masonry__ribbon-star {
+  width: 22px;
+  height: 22px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.reviews-masonry__ribbon-text {
+  font-size: 13px;
   color: rgba(0, 0, 0, 0.55);
   letter-spacing: 0.01em;
+}
+
+.reviews-masonry__ribbon-text strong {
+  font-weight: 700;
+  color: #000;
 }
 
 /* Heading */
