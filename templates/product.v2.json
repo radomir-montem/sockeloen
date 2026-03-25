@@ -192,59 +192,12 @@
     "recommendations": {
       "type": "product-recommendations",
       "settings": {}
-    },
-    "faq_K3VkgY": {
-      "type": "faq",
-      "blocks": {
-        "faq_qhqdG9": {
-          "type": "faq",
-          "settings": {
-            "question": "test",
-            "answer": "<p>test</p>"
-          }
-        },
-        "faq_tmwcec": {
-          "type": "faq",
-          "settings": {
-            "question": "",
-            "answer": ""
-          }
-        },
-        "faq_ekWXw9": {
-          "type": "faq",
-          "settings": {
-            "question": "",
-            "answer": ""
-          }
-        },
-        "faq_4WpJLE": {
-          "type": "faq",
-          "settings": {
-            "question": "",
-            "answer": ""
-          }
-        }
-      },
-      "block_order": [
-        "faq_qhqdG9",
-        "faq_tmwcec",
-        "faq_ekWXw9",
-        "faq_4WpJLE"
-      ],
-      "name": "FAQ",
-      "settings": {
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "padding_top_mob": 50,
-        "padding_bottom_mob": 50
-      }
     }
   },
   "order": [
     "main",
     "benefits",
     "reviews",
-    "recommendations",
-    "faq_K3VkgY"
+    "recommendations"
   ]
 }
