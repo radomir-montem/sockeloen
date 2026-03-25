@@ -251,14 +251,77 @@
         "subtitle": "<p>Discover what makes our socks truly special. From the premium materials we select to the meticulous craftsmanship in every pair, we've engineered comfort that lasts.</p>",
         "background_color": "#ffffff",
         "text_color": "#000000",
-        "accent_color": "#F76503",
+        "accent_color": "#f76503",
         "padding_top": 60,
         "padding_bottom": 60
       }
     },
     "reviews": {
       "type": "reviews-product",
+      "disabled": true,
       "settings": {}
+    },
+    "reviews_masonry_t9G7yD": {
+      "type": "reviews-masonry",
+      "blocks": {
+        "review_EjNjKj": {
+          "type": "review",
+          "settings": {
+            "title": "Best cycling socks I've owned",
+            "body": "I've tried every brand out there and nothing compares. The compression is just right, the material wicks sweat like a dream, and they look absolutely stunning on the bike. Already ordered three more pairs.",
+            "author": "James R.",
+            "date": "3 days ago",
+            "rating": 5
+          }
+        },
+        "review_qzx7eg": {
+          "type": "review",
+          "settings": {
+            "title": "Perfect fit, no bunching",
+            "body": "Finally socks that stay put during a 100km ride. No slipping, no bunching. The reinforced heel is a nice touch.",
+            "author": "Sophie L.",
+            "date": "1 week ago",
+            "rating": 5
+          }
+        },
+        "review_jHXf6H": {
+          "type": "review",
+          "settings": {
+            "title": "Compliments every ride",
+            "body": "My cycling club keeps asking where I got these. The designs are unique and the quality backs it up. Feels premium from the moment you put them on. The colors stay vibrant wash after wash too.",
+            "author": "David K.",
+            "date": "5 days ago",
+            "rating": 5
+          }
+        },
+        "review_GqNYcD": {
+          "type": "review",
+          "settings": {
+            "title": "Summer essential",
+            "body": "Breathable, lightweight, and they dry incredibly fast. Perfect for hot weather rides. Will be stocking up before next season.",
+            "author": "Emma W.",
+            "date": "2 weeks ago",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "review_EjNjKj",
+        "review_qzx7eg",
+        "review_jHXf6H",
+        "review_GqNYcD"
+      ],
+      "name": "Reviews Masonry",
+      "settings": {
+        "heading": "What our",
+        "heading_italic": "riders say?",
+        "subtitle": "Real feedback from cyclists who ride in Sockeloen socks every day.",
+        "review_count": "4.8/5 based on 500+ reviews",
+        "background_color": "#f3f3f3",
+        "accent_color": "#aeaaa8",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     },
     "recommendations": {
       "type": "product-recommendations",
@@ -270,6 +333,7 @@
     "benefits",
     "product_exploder_6g3RXA",
     "reviews",
+    "reviews_masonry_t9G7yD",
     "recommendations"
   ]
 }
