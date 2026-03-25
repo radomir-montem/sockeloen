@@ -1691,24 +1691,7 @@
   });
 </script>
 
-<script>
-  /* Fix Avada Volume Discount: replace decimal period with comma (EU format) */
-  (function() {
-    function fixAvadaDecimals() {
-      document.querySelectorAll('.AOV-Offer__DiscountPrice, .Avada-Offer__PriceDiscount, .Avada-Offer__PriceDefault, .avada-savings-line').forEach(function(el) {
-        if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
-          var text = el.textContent;
-          if (/\d+\.\d{2}/.test(text)) {
-            el.textContent = text.replace(/(\d+)\.(\d{2})/g, '$1,$2');
-          }
-        }
-      });
-    }
-    /* Poll instead of MutationObserver to avoid infinite loop with Avada's own observer */
-    fixAvadaDecimals();
-    setInterval(fixAvadaDecimals, 800);
-  })();
-</script>
+{%- comment -%} Avada price fixes (€ removal + decimal comma) now handled in product-v2.js {%- endcomment -%}
 
 {% schema %}
 {

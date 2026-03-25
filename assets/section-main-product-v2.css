@@ -509,6 +509,21 @@ a.product-v2__sp-avatar {
   min-height: 140px;
 }
 
+/* Hide Avada price text until JS fixes € and decimal format, then fade in */
+.product-v2 .Avada-Volume__Body .Avada-Offer__PriceDiscount,
+.product-v2 .Avada-Volume__Body .Avada-Offer__PriceDefault,
+.product-v2 .AOV-Offer__Body .AOV-Offer__DiscountPrice,
+.product-v2 .AOV-Offer__Body .AOV-Offer__BasePrice {
+  opacity: 0 !important;
+  transition: opacity 0.15s ease !important;
+}
+.product-v2 .avada-prices-ready .Avada-Offer__PriceDiscount,
+.product-v2 .avada-prices-ready .Avada-Offer__PriceDefault,
+.product-v2 .avada-prices-ready .AOV-Offer__DiscountPrice,
+.product-v2 .avada-prices-ready .AOV-Offer__BasePrice {
+  opacity: 1 !important;
+}
+
 .product-v2 .Avada-Volume__Item {
   animation: avadaFadeIn 0.3s ease both;
 }

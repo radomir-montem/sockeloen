@@ -146,19 +146,29 @@ if (!customElements.get('sticky-atc-v2')) {
   });
 }
 
-/* Avada Volume Discount enhancements: strip € symbol + inject product image stack */
+/* Avada Volume Discount enhancements: fix prices + inject product image stack */
 (function() {
-  function stripEuro(root) {
-    (root || document).querySelectorAll(
-      '.product-v2 .AOV-Offer__DiscountPrice, .product-v2 .AOV-Offer__BasePrice, .product-v2 .Avada-Offer__PriceDiscount, .product-v2 .Avada-Offer__PriceDefault'
+  /**
+   * Single function to fix all Avada price formatting:
+   * 1. Strip € symbol
+   * 2. Replace decimal period with comma (EU format: 12,34 instead of 12.34)
+   * Runs on all Avada price elements + our injected savings lines.
+   */
+  function fixAvadaPrices() {
+    document.querySelectorAll(
+      '.product-v2 .AOV-Offer__DiscountPrice, .product-v2 .AOV-Offer__BasePrice, .product-v2 .Avada-Offer__PriceDiscount, .product-v2 .Avada-Offer__PriceDefault, .product-v2 .avada-savings-line strong'
     ).forEach(function(el) {
       el.childNodes.forEach(function(node) {
-        if (node.nodeType === 3 && node.textContent.includes('€')) {
-          node.textContent = node.textContent.replace(/€/g, '');
+        if (node.nodeType === 3) {
+          var t = node.textContent;
+          var fixed = t.replace(/€\s*/g, '').replace(/(\d+)\.(\d{2})/g, '$1,$2');
+          if (fixed !== t) node.textContent = fixed;
         }
       });
-      if (el.children.length === 0 && el.textContent.includes('€')) {
-        el.textContent = el.textContent.replace(/€/g, '');
+      /* Mark as fixed so CSS can reveal it */
+      if (!el.closest('.avada-prices-ready')) {
+        var body = el.closest('.Avada-Volume__Body, .AOV-Offer__Body');
+        if (body) body.classList.add('avada-prices-ready');
       }
     });
   }
@@ -319,7 +329,7 @@ if (!customElements.get('sticky-atc-v2')) {
   }
 
   function enhance() {
-    stripEuro();
+    fixAvadaPrices();
     injectRadioDots();
     injectImageStacks();
     fixBadgeText();
@@ -352,11 +362,15 @@ if (!customElements.get('sticky-atc-v2')) {
       if (needsEnhancement()) enhance();
     }, 800);
 
-    /* Update upsell thumbnails when variant changes */
+    /* On variant change: fix Avada prices immediately + staggered delays to catch re-renders */
     var variantRadios = container.querySelector('variant-radios');
     if (variantRadios) {
       variantRadios.addEventListener('change', function() {
-        setTimeout(function() { updateImageStacks(); }, 10);
+        fixAvadaPrices();
+        setTimeout(function() { fixAvadaPrices(); updateImageStacks(); }, 50);
+        setTimeout(fixAvadaPrices, 150);
+        setTimeout(fixAvadaPrices, 300);
+        setTimeout(fixAvadaPrices, 600);
       });
     }
   }
