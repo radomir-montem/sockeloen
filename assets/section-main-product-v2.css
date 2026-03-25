@@ -1574,31 +1574,40 @@ sticky-atc-v2.hidden {
 
   .product-benefit__image,
   .product-benefit__media {
-    width: 50%;
+    width: 40%;
     flex-shrink: 0;
-    padding: 40px;
+    padding: 40px 40px 40px 60px;
+  }
+
+  .product-benefit:nth-child(even) .product-benefit__image,
+  .product-benefit:nth-child(even) .product-benefit__media {
+    padding: 40px 60px 40px 40px;
   }
 
   .product-benefit__image img,
   .product-benefit__media img,
   .product-benefit__media video {
     aspect-ratio: 1/1;
-    border-radius: 12px;
+    border-radius: 10px;
   }
 
   .product-benefit__content {
-    width: 50%;
-    padding: 40px 80px;
+    width: 60%;
+    padding: 40px 60px 40px 40px;
+  }
+
+  .product-benefit:nth-child(even) .product-benefit__content {
+    padding: 40px 40px 40px 60px;
   }
 
   .product-benefit__heading {
-    font-size: 42px;
+    font-size: 38px;
     line-height: 1.05;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
   .product-benefit__description {
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.75;
   }
 

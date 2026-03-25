@@ -1,0 +1,351 @@
+{{ 'section-reviews-masonry.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .reviews-masonry {
+    --reviews-accent: {{ section.settings.accent_color }};
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .reviews-masonry {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- capture star_filled -%}
+<span class="reviews-masonry__star" style="background:#00b67a;" aria-hidden="true">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2.5l2.9 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 2.8 1.1-6.4L2.7 9.2l6.4-.9L12 2.5z" fill="#fff"/>
+  </svg>
+</span>
+{%- endcapture -%}
+
+{%- capture star_empty -%}
+<span class="reviews-masonry__star" style="background:#dcdce6;" aria-hidden="true">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2.5l2.9 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 2.8 1.1-6.4L2.7 9.2l6.4-.9L12 2.5z" fill="#fff"/>
+  </svg>
+</span>
+{%- endcapture -%}
+
+{%- capture badge_star_filled -%}
+<span class="reviews-masonry__badge-star" style="background:#00b67a;" aria-hidden="true">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2.5l2.9 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 2.8 1.1-6.4L2.7 9.2l6.4-.9L12 2.5z" fill="#fff"/>
+  </svg>
+</span>
+{%- endcapture -%}
+
+<section
+  class="reviews-masonry"
+  id="reviews-masonry-{{ section.id }}"
+  aria-label="Customer reviews"
+>
+  <div class="reviews-masonry__inner">
+    <div class="reviews-masonry__grid">
+
+      {%- comment -%} Left sidebar {%- endcomment -%}
+      <div class="reviews-masonry__sidebar" data-reviews-sidebar>
+        <div class="reviews-masonry__badge" aria-label="Review rating">
+          <div class="reviews-masonry__badge-stars" role="img" aria-label="5 out of 5 stars">
+            {{ badge_star_filled }}
+            {{ badge_star_filled }}
+            {{ badge_star_filled }}
+            {{ badge_star_filled }}
+            {{ badge_star_filled }}
+          </div>
+          <span class="reviews-masonry__badge-count">{{ section.settings.review_count }}</span>
+        </div>
+
+        <h2 class="reviews-masonry__heading">
+          {{ section.settings.heading }}
+          {%- if section.settings.heading_italic != blank -%}
+            <br><em>{{ section.settings.heading_italic }}</em>
+          {%- endif -%}
+        </h2>
+
+        {%- if section.settings.subtitle != blank -%}
+          <p class="reviews-masonry__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Right cards area {%- endcomment -%}
+      <div class="reviews-masonry__cards" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'review' -%}
+            <article
+              class="reviews-masonry__card"
+              role="listitem"
+              data-reviews-card
+              {{ block.shopify_attributes }}
+            >
+              <span class="reviews-masonry__quote" aria-hidden="true">&ldquo;</span>
+
+              {%- assign rating = block.settings.rating | default: 5 -%}
+              <div class="reviews-masonry__stars" role="img" aria-label="{{ rating }} out of 5 stars">
+                {%- for i in (1..5) -%}
+                  {%- if i <= rating -%}
+                    {{ star_filled }}
+                  {%- else -%}
+                    {{ star_empty }}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+              {%- if block.settings.title != blank -%}
+                <h3 class="reviews-masonry__card-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+
+              {%- if block.settings.body != blank -%}
+                <p class="reviews-masonry__card-body">{{ block.settings.body }}</p>
+              {%- endif -%}
+
+              <div class="reviews-masonry__card-footer">
+                {%- if block.settings.author != blank -%}
+                  <span class="reviews-masonry__card-author">{{ block.settings.author }}</span>
+                {%- endif -%}
+                {%- if block.settings.date != blank -%}
+                  <span class="reviews-masonry__card-date">{{ block.settings.date }}</span>
+                {%- endif -%}
+              </div>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var section = document.getElementById('reviews-masonry-{{ section.id }}');
+    if (!section) return;
+
+    var sidebar = section.querySelector('[data-reviews-sidebar]');
+    var cards = section.querySelectorAll('[data-reviews-card]');
+
+    if (!('IntersectionObserver' in window)) {
+      if (sidebar) sidebar.classList.add('is-visible');
+      cards.forEach(function (card) { card.classList.add('is-visible'); });
+      return;
+    }
+
+    /* Sidebar slide-in */
+    if (sidebar) {
+      var sidebarObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              sidebarObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      sidebarObserver.observe(sidebar);
+    }
+
+    /* Cards staggered fade-up */
+    var cardObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var card = entry.target;
+            var index = parseInt(card.getAttribute('data-card-index'), 10) || 0;
+            card.style.transitionDelay = (index % 4) * 100 + 'ms';
+            card.classList.add('is-visible');
+            cardObserver.unobserve(card);
+          }
+        });
+      },
+      { threshold: 0.08 }
+    );
+
+    cards.forEach(function (card, i) {
+      card.setAttribute('data-card-index', i);
+      cardObserver.observe(card);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Reviews Masonry",
+  "tag": "section",
+  "class": "section-reviews-masonry",
+  "templates": ["product"],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What our"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading (italic accent)",
+      "default": "riders say?"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Real feedback from cyclists who ride in Sockeloen socks every day."
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count text",
+      "default": "4.8/5 based on 500+ reviews"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f5f1eb"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#F76503"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review title",
+          "default": "Amazing quality"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review body",
+          "default": "These socks are incredible. Perfect cushioning and they stay up the entire ride."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author name",
+          "default": "Mark T."
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "2 days ago"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews Masonry",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "title": "Best cycling socks I've owned",
+            "body": "I've tried every brand out there and nothing compares. The compression is just right, the material wicks sweat like a dream, and they look absolutely stunning on the bike. Already ordered three more pairs.",
+            "author": "James R.",
+            "date": "3 days ago",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Perfect fit, no bunching",
+            "body": "Finally socks that stay put during a 100km ride. No slipping, no bunching. The reinforced heel is a nice touch.",
+            "author": "Sophie L.",
+            "date": "1 week ago",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Compliments every ride",
+            "body": "My cycling club keeps asking where I got these. The designs are unique and the quality backs it up. Feels premium from the moment you put them on. The colors stay vibrant wash after wash too.",
+            "author": "David K.",
+            "date": "5 days ago",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Summer essential",
+            "body": "Breathable, lightweight, and they dry incredibly fast. Perfect for hot weather rides. Will be stocking up before next season.",
+            "author": "Emma W.",
+            "date": "2 weeks ago",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Worth every penny",
+            "body": "I was skeptical about paying more for cycling socks but these changed my mind completely. The arch support is fantastic and they feel like a second skin. Six months in and they still look brand new after dozens of washes.",
+            "author": "Thomas M.",
+            "date": "4 days ago",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Great sock height",
+            "body": "The tall sock look is exactly what I wanted. Sits perfectly at mid-calf and the elastic keeps them there. Clean look with any kit.",
+            "author": "Lisa P.",
+            "date": "1 week ago",
+            "rating": 4
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
