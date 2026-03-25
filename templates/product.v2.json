@@ -326,6 +326,14 @@
     "recommendations": {
       "type": "product-recommendations",
       "settings": {}
+    },
+    "reviews_carousel_nRpL4L": {
+      "type": "reviews-carousel",
+      "name": "Reviews Carousel",
+      "settings": {
+        "title": "what others say",
+        "vertical_padding": 140
+      }
     }
   },
   "order": [
@@ -334,6 +342,7 @@
     "product_exploder_6g3RXA",
     "reviews",
     "reviews_masonry_t9G7yD",
-    "recommendations"
+    "recommendations",
+    "reviews_carousel_nRpL4L"
   ]
 }

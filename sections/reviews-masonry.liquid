@@ -58,7 +58,7 @@
             {{ badge_star_filled }}
             {{ badge_star_filled }}
           </div>
-          <span class="reviews-masonry__badge-count">{{ section.settings.review_count }}</span>
+          <span class="reviews-masonry__badge-count" data-reviews-badge-count>{{ section.settings.review_count }}</span>
         </div>
 
         <h2 class="reviews-masonry__heading">
@@ -73,14 +73,16 @@
         {%- endif -%}
       </div>
 
-      {%- comment -%} Right cards area {%- endcomment -%}
-      <div class="reviews-masonry__cards" role="list">
+      {%- comment -%} Right cards area — populated by JS from Reviews.io API {%- endcomment -%}
+      <div class="reviews-masonry__cards" role="list" data-reviews-cards>
+        {%- comment -%} Fallback: theme editor blocks shown until JS loads {%- endcomment -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'review' -%}
             <article
               class="reviews-masonry__card"
               role="listitem"
               data-reviews-card
+              data-fallback
               {{ block.shopify_attributes }}
             >
               <span class="reviews-masonry__quote" aria-hidden="true">&ldquo;</span>
@@ -123,54 +125,171 @@
 
 <script>
   (function () {
+    var STORE_ID = 'sockeloen-nl';
+    var MAX_REVIEWS = {{ section.settings.max_reviews | default: 20 }};
+    var MIN_RATING = {{ section.settings.min_rating | default: 4 }};
     var section = document.getElementById('reviews-masonry-{{ section.id }}');
     if (!section) return;
 
-    var sidebar = section.querySelector('[data-reviews-sidebar]');
-    var cards = section.querySelectorAll('[data-reviews-card]');
+    var cardsContainer = section.querySelector('[data-reviews-cards]');
+    var badgeCount = section.querySelector('[data-reviews-badge-count]');
 
-    if (!('IntersectionObserver' in window)) {
-      if (sidebar) sidebar.classList.add('is-visible');
-      cards.forEach(function (card) { card.classList.add('is-visible'); });
-      return;
+    /* Build star SVGs */
+    function starSVG(filled) {
+      var bg = filled ? '#00b67a' : '#dcdce6';
+      return '<span class="reviews-masonry__star" style="background:' + bg + ';" aria-hidden="true">'
+        + '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        + '<path d="M12 2.5l2.9 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 2.8 1.1-6.4L2.7 9.2l6.4-.9L12 2.5z" fill="#fff"/>'
+        + '</svg></span>';
     }
 
-    /* Sidebar slide-in */
-    if (sidebar) {
-      var sidebarObserver = new IntersectionObserver(
+    function renderStars(rating) {
+      var html = '';
+      for (var i = 1; i <= 5; i++) {
+        html += starSVG(i <= rating);
+      }
+      return html;
+    }
+
+    function timeAgo(dateStr) {
+      var d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      var now = new Date();
+      var diff = Math.floor((now - d) / 1000);
+      if (diff < 86400) return 'Today';
+      var days = Math.floor(diff / 86400);
+      if (days === 1) return '1 day ago';
+      if (days < 7) return days + ' days ago';
+      var weeks = Math.floor(days / 7);
+      if (weeks === 1) return '1 week ago';
+      if (weeks < 5) return weeks + ' weeks ago';
+      var months = Math.floor(days / 30);
+      if (months === 1) return '1 month ago';
+      if (months < 12) return months + ' months ago';
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function buildCard(review) {
+      var rating = review.rating || 5;
+      var title = review.title || '';
+      var body = review.comments || review.review || '';
+      var author = review.reviewer ? review.reviewer.first_name || '' : '';
+      if (review.reviewer && review.reviewer.last_name) {
+        author += ' ' + review.reviewer.last_name.charAt(0) + '.';
+      }
+      var date = review.date_created || review.timeago || '';
+
+      var html = '<article class="reviews-masonry__card" role="listitem" data-reviews-card>';
+      html += '<span class="reviews-masonry__quote" aria-hidden="true">&ldquo;</span>';
+      html += '<div class="reviews-masonry__stars" role="img" aria-label="' + rating + ' out of 5 stars">';
+      html += renderStars(Math.round(rating));
+      html += '</div>';
+      if (title) html += '<h3 class="reviews-masonry__card-title">' + escapeHtml(title) + '</h3>';
+      if (body) html += '<p class="reviews-masonry__card-body">' + escapeHtml(body) + '</p>';
+      html += '<div class="reviews-masonry__card-footer">';
+      if (author) html += '<span class="reviews-masonry__card-author">' + escapeHtml(author) + '</span>';
+      if (date) html += '<span class="reviews-masonry__card-date">' + timeAgo(date) + '</span>';
+      html += '</div></article>';
+      return html;
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.appendChild(document.createTextNode(str));
+      return div.innerHTML;
+    }
+
+    /* Fetch from Reviews.io API */
+    var url = 'https://api.reviews.io/merchant/reviews?store=' + STORE_ID
+      + '&per_page=' + MAX_REVIEWS
+      + '&min_rating=' + MIN_RATING
+      + '&order=newest';
+
+    fetch(url)
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (!data || !data.reviews || !data.reviews.length) return;
+
+        /* Update badge with real stats */
+        if (badgeCount && data.stats) {
+          var avg = parseFloat(data.stats.average_rating).toFixed(1);
+          var total = parseInt(data.stats.total_reviews, 10);
+          var display = total >= 1000 ? Math.floor(total / 100) * 100 + '+' : total + '';
+          badgeCount.textContent = avg + '/5 based on ' + display + ' reviews';
+        }
+
+        /* Remove fallback blocks */
+        var fallbacks = cardsContainer.querySelectorAll('[data-fallback]');
+        fallbacks.forEach(function (el) { el.remove(); });
+
+        /* Render real reviews */
+        var html = '';
+        data.reviews.forEach(function (review) {
+          /* Skip reviews with no text */
+          var body = review.comments || review.review || '';
+          if (!body.trim()) return;
+          html += buildCard(review);
+        });
+        cardsContainer.insertAdjacentHTML('beforeend', html);
+
+        /* Re-run animations on new cards */
+        initAnimations();
+      })
+      .catch(function (err) {
+        console.warn('Reviews.io fetch failed, showing fallback blocks', err);
+        initAnimations();
+      });
+
+    function initAnimations() {
+      var sidebar = section.querySelector('[data-reviews-sidebar]');
+      var cards = section.querySelectorAll('[data-reviews-card]');
+
+      if (!('IntersectionObserver' in window)) {
+        if (sidebar) sidebar.classList.add('is-visible');
+        cards.forEach(function (card) { card.classList.add('is-visible'); });
+        return;
+      }
+
+      /* Sidebar slide-in */
+      if (sidebar && !sidebar.classList.contains('is-visible')) {
+        var sidebarObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                sidebarObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15 }
+        );
+        sidebarObserver.observe(sidebar);
+      }
+
+      /* Cards staggered fade-up */
+      var cardObserver = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              sidebarObserver.unobserve(entry.target);
+              var card = entry.target;
+              var index = parseInt(card.getAttribute('data-card-index'), 10) || 0;
+              card.style.transitionDelay = (index % 4) * 100 + 'ms';
+              card.classList.add('is-visible');
+              cardObserver.unobserve(card);
             }
           });
         },
-        { threshold: 0.15 }
+        { threshold: 0.08 }
       );
-      sidebarObserver.observe(sidebar);
+
+      cards.forEach(function (card, i) {
+        card.setAttribute('data-card-index', i);
+        cardObserver.observe(card);
+      });
     }
 
-    /* Cards staggered fade-up */
-    var cardObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            var card = entry.target;
-            var index = parseInt(card.getAttribute('data-card-index'), 10) || 0;
-            card.style.transitionDelay = (index % 4) * 100 + 'ms';
-            card.classList.add('is-visible');
-            cardObserver.unobserve(card);
-          }
-        });
-      },
-      { threshold: 0.08 }
-    );
-
-    cards.forEach(function (card, i) {
-      card.setAttribute('data-card-index', i);
-      cardObserver.observe(card);
-    });
+    /* Init animations for fallback blocks immediately (in case API is slow) */
+    initAnimations();
   })();
 </script>
 
@@ -179,8 +298,11 @@
   "name": "Reviews Masonry",
   "tag": "section",
   "class": "section-reviews-masonry",
-  "templates": ["product"],
   "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -202,8 +324,35 @@
     {
       "type": "text",
       "id": "review_count",
-      "label": "Review count text",
-      "default": "4.8/5 based on 500+ reviews"
+      "label": "Badge text (fallback)",
+      "default": "4.5/5 based on 2300+ reviews",
+      "info": "Shown until live data loads from Reviews.io"
+    },
+    {
+      "type": "header",
+      "content": "Reviews.io Settings"
+    },
+    {
+      "type": "range",
+      "id": "max_reviews",
+      "label": "Number of reviews to load",
+      "min": 6,
+      "max": 30,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "min_rating",
+      "label": "Minimum star rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Colors"
     },
     {
       "type": "color",
@@ -216,6 +365,10 @@
       "id": "accent_color",
       "label": "Accent color",
       "default": "#F76503"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",
@@ -241,7 +394,7 @@
   "blocks": [
     {
       "type": "review",
-      "name": "Review",
+      "name": "Review (fallback)",
       "limit": 12,
       "settings": [
         {
@@ -283,68 +436,9 @@
   "presets": [
     {
       "name": "Reviews Masonry",
-      "blocks": [
-        {
-          "type": "review",
-          "settings": {
-            "title": "Best cycling socks I've owned",
-            "body": "I've tried every brand out there and nothing compares. The compression is just right, the material wicks sweat like a dream, and they look absolutely stunning on the bike. Already ordered three more pairs.",
-            "author": "James R.",
-            "date": "3 days ago",
-            "rating": 5
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "title": "Perfect fit, no bunching",
-            "body": "Finally socks that stay put during a 100km ride. No slipping, no bunching. The reinforced heel is a nice touch.",
-            "author": "Sophie L.",
-            "date": "1 week ago",
-            "rating": 5
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "title": "Compliments every ride",
-            "body": "My cycling club keeps asking where I got these. The designs are unique and the quality backs it up. Feels premium from the moment you put them on. The colors stay vibrant wash after wash too.",
-            "author": "David K.",
-            "date": "5 days ago",
-            "rating": 5
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "title": "Summer essential",
-            "body": "Breathable, lightweight, and they dry incredibly fast. Perfect for hot weather rides. Will be stocking up before next season.",
-            "author": "Emma W.",
-            "date": "2 weeks ago",
-            "rating": 5
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "title": "Worth every penny",
-            "body": "I was skeptical about paying more for cycling socks but these changed my mind completely. The arch support is fantastic and they feel like a second skin. Six months in and they still look brand new after dozens of washes.",
-            "author": "Thomas M.",
-            "date": "4 days ago",
-            "rating": 5
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "title": "Great sock height",
-            "body": "The tall sock look is exactly what I wanted. Sits perfectly at mid-calf and the elastic keeps them there. Clean look with any kit.",
-            "author": "Lisa P.",
-            "date": "1 week ago",
-            "rating": 4
-          }
-        }
-      ]
+      "settings": {
+        "review_count": "4.5/5 based on 2300+ reviews"
+      }
     }
   ]
 }
