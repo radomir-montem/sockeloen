@@ -1389,7 +1389,7 @@ sticky-atc-v2.hidden {
   display: block;
   object-fit: cover;
   aspect-ratio: 1 / 1;
-  border-radius: 0;
+  border-radius: 10px;
   transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -1554,9 +1554,9 @@ sticky-atc-v2.hidden {
     font-size: 28px;
   }
 
-  /* Hide sticky ATC on desktop */
+  /* Sticky ATC on desktop — show it */
   sticky-atc-v2 {
-    display: none;
+    display: block;
   }
 
   /* Benefits section - side by side */
@@ -1591,7 +1591,7 @@ sticky-atc-v2.hidden {
   .product-benefit__media img,
   .product-benefit__media video {
     aspect-ratio: 1/1;
-    border-radius: 0;
+    border-radius: 10px;
   }
 
   .product-benefit__content {
