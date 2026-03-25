@@ -1385,7 +1385,7 @@ sticky-atc-v2.hidden {
   height: auto;
   display: block;
   object-fit: cover;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   border-radius: 16px;
   transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -1411,6 +1411,7 @@ sticky-atc-v2.hidden {
 
 .product-benefit__heading em {
   font-style: italic;
+  color: #F76503;
 }
 
 .product-benefit__description {
@@ -1581,7 +1582,7 @@ sticky-atc-v2.hidden {
   .product-benefit__image img,
 .product-benefit__media img,
 .product-benefit__media video {
-    aspect-ratio: 3/4;
+    aspect-ratio: 1/1;
     border-radius: 20px;
   }
 

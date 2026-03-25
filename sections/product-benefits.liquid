@@ -16,7 +16,7 @@
 
 <div
   class="product-benefits-section section-{{ section.id }}-padding"
-  style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }};"
+  style="{% if section.settings.background_color != blank and section.settings.background_color != 'rgba(0,0,0,0)' %}background-color: {{ section.settings.background_color }};{% endif %} color: {{ section.settings.text_color }};"
 >
   {%- for block in section.blocks -%}
     <div class="product-benefit" {{ block.shopify_attributes }}>
@@ -180,8 +180,8 @@
     {
       "type": "color",
       "id": "background_color",
-      "label": "Background color",
-      "default": "#ffffff"
+      "label": "Background color (leave empty to match page)",
+      "default": "#f5f1eb"
     },
     {
       "type": "color",
