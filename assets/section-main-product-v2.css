@@ -1740,17 +1740,16 @@ sticky-atc-v2.hidden {
 /* Scoped to v2 templates only — does not affect other product templates */
 
 /* Collapse all empty carousel h4 headers */
-body[class*="template--v2"] .bot-swiper ~ h4,
-body[class*="template--v2"] h4 + .bot-swiper,
 body[class*="template--v2"] .bg-white > h4,
 body[class*="template--v2"] .bg-white.no-js-hidden h4,
 body[class*="template--v2"] product-recommendations h4 {
   display: none !important;
 }
 
-/* Collapse the 60px header spacer in recently-viewed */
-body[class*="template--v2"] .rvi-swiper {
-  /* parent flex container with h-[60px] will be hidden by the above rule */
+/* Collapse the 60px header spacer wrapper in recently-viewed */
+body[class*="template--v2"] .rvi-swiper ~ .flex,
+body[class*="template--v2"] .bg-white > .flex:has(> h4) {
+  display: none !important;
 }
 
 /* Add v2-styled labels via ::before on the carousel containers */
