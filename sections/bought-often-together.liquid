@@ -42,7 +42,7 @@
     <div class="swiper-wrapper">
       {% for productItem in products %}
         <div class="swiper-slide">
-          {% render 'card-product', card_product: productItem, media_aspect_ratio: 'adapt', section_id: section.id, show_secondary_image: true %}
+          {% render 'card-product', card_product: productItem, media_aspect_ratio: 'square', section_id: section.id, show_secondary_image: true %}
         </div>
       {% endfor %}
     </div>
