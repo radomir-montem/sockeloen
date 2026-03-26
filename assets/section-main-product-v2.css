@@ -1412,6 +1412,32 @@ sticky-atc-v2.hidden {
   border-color: #000;
 }
 
+/* ---------- Reviews Section — prevent vertical scroll on mobile ---------- */
+.reviews-product {
+  overflow: visible !important;
+}
+
+.reviews-product *:not(.reviewsio-image-gallery):not(.reviewsio-image-gallery *) {
+  overflow-y: visible !important;
+  max-height: none !important;
+}
+
+/* Keep horizontal carousel behavior but kill vertical scroll traps */
+@media screen and (max-width: 749px) {
+  .reviews-product .ElementsWidget-prefix,
+  .reviews-product #ReviewsWidget {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+
+  .reviews-product .ElementsWidget-prefix .R-ReviewsList {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+}
+
 /* ---------- Product Benefits Section ---------- */
 .product-benefits-section {
   overflow: hidden;
