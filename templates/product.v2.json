@@ -245,7 +245,7 @@
           "type": "hotspot",
           "settings": {
             "hotspot_x": 49,
-            "hotspot_y": 76,
+            "hotspot_y": 66,
             "heading": "Sockeloen Yarns",
             "description": "<p>Through the whole sock we used anti-bacterial Q-skin yarns, blended with polyamide and elastane to create the perfect yarn blend.</p>"
           }
@@ -253,8 +253,8 @@
         "hotspot_CDyQBP": {
           "type": "hotspot",
           "settings": {
-            "hotspot_x": 26,
-            "hotspot_y": 80,
+            "hotspot_x": 30,
+            "hotspot_y": 74,
             "heading": "Sockeloen Seemless Toe",
             "description": "<p>To avoid irritating, or high pressure points inside your cycling shoe we work with a seemless toe without any area's that could irritate your toes while riding.</p>"
           }
