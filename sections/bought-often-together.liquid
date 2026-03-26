@@ -85,6 +85,19 @@
   .{{ swiper_id }} .swiper-wrapper {
     flex-wrap: nowrap !important;
   }
+  /* Hover: crossfade to second image */
+  .bot-section-{{ section.id }} .media.media--hover-effect > img {
+    transition: opacity 0.35s ease;
+  }
+  .bot-section-{{ section.id }} .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) {
+    opacity: 0;
+  }
+  .bot-section-{{ section.id }} .card-wrapper:hover .media.media--hover-effect > img + img {
+    opacity: 1;
+  }
+  .bot-section-{{ section.id }} .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child {
+    display: block !important;
+  }
 {%- endstyle -%}
 
 {%- if is_recently_viewed or source_products != blank and source_products.size > 0 -%}
