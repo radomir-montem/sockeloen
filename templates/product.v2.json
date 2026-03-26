@@ -178,16 +178,6 @@
             "description": "<p>Some of the best male and female riders in the world choose Sockeloen, because of the materials, because of the wind tunnel test results, but often simply because they think they look great.</p>"
           }
         },
-        "benefit_iqDerf": {
-          "type": "benefit",
-          "settings": {
-            "video_url": "",
-            "image": "shopify://shop_images/Tour_home_banner.png",
-            "heading": "No sweaty, stinky feet.",
-            "heading_italic": "Never again.",
-            "description": "<p>Engineered for endurance and comfort during long rides. Premium materials keep your feet cool and supported, mile after mile.</p>"
-          }
-        },
         "benefit_9egM4N": {
           "type": "benefit",
           "settings": {
@@ -197,12 +187,22 @@
             "heading_italic": "Promised.",
             "description": "<p>Our perfect fitt and stretch keeps your socks exactly where they belong, no slipping, no adjusting, no distractions. Just the perfect fit, all day long.</p>"
           }
+        },
+        "benefit_iqDerf": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "image": "shopify://shop_images/Tour_home_banner.png",
+            "heading": "No sweaty, stinky feet.",
+            "heading_italic": "Never again.",
+            "description": "<p>Sockeloen is more than just socks for the Mathieu van der Poels and Demi Vollerings of this planet. Our range includes countless socks for town-sign-sprinters, good-weather cyclists, the adventurers and even for the couch potatoes among us. <br/><br/>When you want to ride comfortable, without pressure points, sweety or painfull feet: Sockeloen cycling socks are what you need.</p>"
+          }
         }
       },
       "block_order": [
         "benefit_pAdyhM",
-        "benefit_iqDerf",
-        "benefit_9egM4N"
+        "benefit_9egM4N",
+        "benefit_iqDerf"
       ],
       "settings": {
         "background_color": "#f3f3f3",
