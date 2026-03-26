@@ -1606,11 +1606,16 @@
           item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
         });
 
-        /* Re-call setActiveMedia so slider resets pages with correct visible items */
+        /* Re-call setActiveMedia so slider resets pages with correct visible items.
+         * Preserve scroll position: the prepend inside setActiveMedia reorders DOM,
+         * which triggers browser scroll-anchoring on mobile stacked layouts and
+         * causes an unwanted jump (typically to the benefits section). */
         var mediaGallery = section.querySelector('media-gallery');
         if (mediaGallery) {
           var mediaId = el.dataset.section + '-' + el.currentVariant.featured_media.id;
+          var scrollY = window.scrollY;
           mediaGallery.setActiveMedia(mediaId, true);
+          window.scrollTo(0, scrollY);
         }
       }
 
@@ -1624,8 +1629,14 @@
           setTimeout(function() { filterVariantMedia(el); }, 0);
         });
 
-        /* Initial page load: connectedCallback fires onVariantChange after 500ms */
-        setTimeout(function() { filterVariantMedia(el); }, 600);
+        /* Initial page load: connectedCallback fires onVariantChange after 500ms.
+         * Double-restore scroll to catch async repaints from DOM reorder. */
+        setTimeout(function() {
+          var scrollY = window.scrollY;
+          filterVariantMedia(el);
+          window.scrollTo(0, scrollY);
+          requestAnimationFrame(function() { window.scrollTo(0, scrollY); });
+        }, 600);
       }
 
       /* Attach as soon as variant-radios appears in the DOM */
