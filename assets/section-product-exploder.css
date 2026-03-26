@@ -117,16 +117,15 @@
 
 .product-exploder__image {
   display: block;
-  width: 140%;
+  width: 100%;
   height: auto;
-  margin: -20% -20%;
   border-radius: inherit;
+  transform: scale(1.25);
 }
 
 @media screen and (min-width: 750px) {
   .product-exploder__image {
-    width: 100%;
-    margin: 0;
+    transform: none;
   }
 }
 
