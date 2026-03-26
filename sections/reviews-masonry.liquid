@@ -263,16 +263,74 @@
         var fallbacks = trackContainer.querySelectorAll('[data-fallback]');
         fallbacks.forEach(function (el) { el.remove(); });
 
-        /* Render real reviews — only ones with text, limit to MAX_REVIEWS */
-        var html = '';
-        var count = 0;
+        /* Render real reviews — prioritise reviews with images (at least 3) */
+        var MIN_WITH_IMAGES = 3;
+        var withImages = [];
+        var withoutImages = [];
         for (var r = 0; r < data.reviews.length; r++) {
-          if (count >= MAX_REVIEWS) break;
           var review = data.reviews[r];
           var body = review.comments || review.review || '';
           if (!body.trim()) continue;
-          html += buildCard(review);
-          count++;
+          var hasActiveImage = false;
+          if (review.images && review.images.length > 0) {
+            for (var im = 0; im < review.images.length; im++) {
+              if (review.images[im].image && review.images[im].status === 'active') {
+                hasActiveImage = true;
+                break;
+              }
+            }
+          }
+          if (hasActiveImage) {
+            withImages.push(review);
+          } else {
+            withoutImages.push(review);
+          }
+        }
+        /* Build final list: take up to MIN_WITH_IMAGES from image reviews first,
+           then fill remaining slots, then top up with more image reviews if available */
+        var selected = [];
+        var imgCount = Math.min(withImages.length, MIN_WITH_IMAGES);
+        for (var i = 0; i < imgCount; i++) selected.push(withImages[i]);
+        var remaining = MAX_REVIEWS - selected.length;
+        var noImgCount = Math.min(withoutImages.length, remaining);
+        for (var j = 0; j < noImgCount; j++) selected.push(withoutImages[j]);
+        remaining = MAX_REVIEWS - selected.length;
+        for (var k = imgCount; k < withImages.length && remaining > 0; k++) {
+          selected.push(withImages[k]);
+          remaining--;
+        }
+
+        /* Interleave: spread image reviews evenly across positions */
+        var finalWithImg = [];
+        var finalWithoutImg = [];
+        for (var s = 0; s < selected.length; s++) {
+          var hasImg = false;
+          if (selected[s].images && selected[s].images.length > 0) {
+            for (var chk = 0; chk < selected[s].images.length; chk++) {
+              if (selected[s].images[chk].image && selected[s].images[chk].status === 'active') { hasImg = true; break; }
+            }
+          }
+          if (hasImg) finalWithImg.push(selected[s]);
+          else finalWithoutImg.push(selected[s]);
+        }
+        var interleaved = [];
+        var imgIdx = 0, noImgIdx = 0;
+        for (var slot = 0; slot < selected.length; slot++) {
+          /* Place image reviews at positions 0, 2, 4 (every other) */
+          if (slot % 2 === 0 && imgIdx < finalWithImg.length) {
+            interleaved.push(finalWithImg[imgIdx++]);
+          } else if (noImgIdx < finalWithoutImg.length) {
+            interleaved.push(finalWithoutImg[noImgIdx++]);
+          } else if (imgIdx < finalWithImg.length) {
+            interleaved.push(finalWithImg[imgIdx++]);
+          } else if (noImgIdx < finalWithoutImg.length) {
+            interleaved.push(finalWithoutImg[noImgIdx++]);
+          }
+        }
+
+        var html = '';
+        for (var c = 0; c < interleaved.length; c++) {
+          html += buildCard(interleaved[c]);
         }
         trackContainer.insertAdjacentHTML('beforeend', html);
 
