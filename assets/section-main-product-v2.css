@@ -1413,28 +1413,49 @@ sticky-atc-v2.hidden {
 }
 
 /* ---------- Reviews Section — prevent vertical scroll on mobile ---------- */
-.reviews-product {
-  overflow: visible !important;
-}
-
-.reviews-product *:not(.reviewsio-image-gallery):not(.reviewsio-image-gallery *) {
-  overflow-y: visible !important;
-  max-height: none !important;
-}
-
-/* Keep horizontal carousel behavior but kill vertical scroll traps */
 @media screen and (max-width: 749px) {
-  .reviews-product .ElementsWidget-prefix,
-  .reviews-product #ReviewsWidget {
+  .reviews-product,
+  .reviews-product > div {
     overflow: visible !important;
     max-height: none !important;
     height: auto !important;
   }
 
-  .reviews-product .ElementsWidget-prefix .R-ReviewsList {
+  .reviews-product #ReviewsWidget,
+  .reviews-product .ElementsWidget-prefix,
+  .reviews-product .ElementsWidget,
+  .reviews-product .ElementsWidget__inner,
+  .reviews-product .ElementsWidget__list,
+  .reviews-product .R-ContentList-container,
+  .reviews-product .R-ContentList {
     overflow: visible !important;
+    overflow-y: visible !important;
     max-height: none !important;
     height: auto !important;
+    -webkit-overflow-scrolling: auto !important;
+  }
+
+  /* Prevent touch scroll capture inside review items */
+  .reviews-product .R-ContentList__item {
+    overflow: visible !important;
+  }
+}
+
+/* ---------- Product Carousel — prevent vertical scroll on mobile ---------- */
+@media screen and (max-width: 749px) {
+  [class*="bot-section-"] .bot-swiper {
+    overflow: hidden !important;
+    -webkit-overflow-scrolling: auto !important;
+    touch-action: pan-x !important;
+  }
+
+  [class*="bot-section-"] .swiper-wrapper {
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+  }
+
+  [class*="bot-section-"] .swiper-slide {
+    flex-shrink: 0 !important;
   }
 }
 
