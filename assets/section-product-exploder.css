@@ -22,12 +22,12 @@
 .product-exploder__header {
   text-align: center;
   max-width: 700px;
-  margin: 0 auto 28px;
+  margin: 0 auto 20px;
 }
 
 @media screen and (min-width: 750px) {
   .product-exploder__header {
-    margin-bottom: 36px;
+    margin-bottom: 24px;
   }
 }
 
@@ -68,14 +68,14 @@
 .product-exploder__grid {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 16px;
   align-items: center;
 }
 
 @media screen and (min-width: 750px) {
   .product-exploder__grid {
     flex-direction: row;
-    gap: 36px;
+    gap: 20px;
     align-items: center;
   }
 }
@@ -280,22 +280,17 @@
 
 .product-exploder__image-col {
   opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .product-exploder__accordion-col {
   opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s,
-              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s;
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s;
 }
 
 .product-exploder__image-col.is-visible,
 .product-exploder__accordion-col.is-visible {
   opacity: 1;
-  transform: translateX(0);
 }
 
 /* ---- Reduced Motion ---- */
@@ -320,7 +315,6 @@
   .product-exploder__image-col,
   .product-exploder__accordion-col {
     opacity: 1;
-    transform: none;
     transition: none;
   }
 }

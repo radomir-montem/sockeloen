@@ -1437,7 +1437,7 @@ sticky-atc-v2.hidden {
 .product-benefit__media {
   width: 100%;
   overflow: hidden;
-  padding: 12px 20px 0;
+  padding: 20px;
 }
 
 .product-benefit__image img,
@@ -1460,7 +1460,7 @@ sticky-atc-v2.hidden {
 }
 
 .product-benefit__content {
-  padding: 12px 20px 24px;
+  padding: 28px 20px 36px;
 }
 
 .product-benefit__heading {
@@ -1620,12 +1620,12 @@ sticky-atc-v2.hidden {
   .product-benefit__media {
     width: 40%;
     flex-shrink: 0;
-    padding: 20px 20px 20px 40px;
+    padding: 40px 40px 40px 60px;
   }
 
   .product-benefit:nth-child(even) .product-benefit__image,
   .product-benefit:nth-child(even) .product-benefit__media {
-    padding: 20px 40px 20px 20px;
+    padding: 40px 60px 40px 40px;
   }
 
   .product-benefit__image img,
@@ -1637,11 +1637,11 @@ sticky-atc-v2.hidden {
 
   .product-benefit__content {
     width: 60%;
-    padding: 20px 40px 20px 24px;
+    padding: 40px 60px 40px 40px;
   }
 
   .product-benefit:nth-child(even) .product-benefit__content {
-    padding: 20px 24px 20px 40px;
+    padding: 40px 40px 40px 60px;
   }
 
   .product-benefit__heading {
