@@ -104,7 +104,6 @@
 /* ---- Image ---- */
 
 .product-exploder__image-wrap {
-  position: relative;
   overflow: hidden;
   border-radius: 16px;
 }
@@ -115,18 +114,22 @@
   }
 }
 
+.product-exploder__image-inner {
+  position: relative;
+  transform: scale(1.25);
+}
+
+@media screen and (min-width: 750px) {
+  .product-exploder__image-inner {
+    transform: none;
+  }
+}
+
 .product-exploder__image {
   display: block;
   width: 100%;
   height: auto;
   border-radius: inherit;
-  transform: scale(1.25);
-}
-
-@media screen and (min-width: 750px) {
-  .product-exploder__image {
-    transform: none;
-  }
 }
 
 /* ---- Hotspots ---- */

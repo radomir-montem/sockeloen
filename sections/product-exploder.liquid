@@ -42,37 +42,39 @@
   <div class="product-exploder__grid">
     <div class="product-exploder__image-col">
       <div class="product-exploder__image-wrap">
-        {%- if exploder_img != blank -%}
-          <img
-            class="product-exploder__image"
-            src="{{ exploder_img | image_url: width: 1200 }}"
-            srcset="
-              {{ exploder_img | image_url: width: 500 }} 500w,
-              {{ exploder_img | image_url: width: 750 }} 750w,
-              {{ exploder_img | image_url: width: 1000 }} 1000w,
-              {{ exploder_img | image_url: width: 1200 }} 1200w
-            "
-            sizes="(min-width: 750px) 55vw, 100vw"
-            alt="{{ exploder_img.alt | escape }}"
-            width="{{ exploder_img.width }}"
-            height="{{ exploder_img.height }}"
-            loading="lazy"
-          >
-        {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: 'product-exploder__image' }}
-        {%- endif -%}
+        <div class="product-exploder__image-inner">
+          {%- if exploder_img != blank -%}
+            <img
+              class="product-exploder__image"
+              src="{{ exploder_img | image_url: width: 1200 }}"
+              srcset="
+                {{ exploder_img | image_url: width: 500 }} 500w,
+                {{ exploder_img | image_url: width: 750 }} 750w,
+                {{ exploder_img | image_url: width: 1000 }} 1000w,
+                {{ exploder_img | image_url: width: 1200 }} 1200w
+              "
+              sizes="(min-width: 750px) 55vw, 100vw"
+              alt="{{ exploder_img.alt | escape }}"
+              width="{{ exploder_img.width }}"
+              height="{{ exploder_img.height }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'product-exploder__image' }}
+          {%- endif -%}
 
-        {%- for block in section.blocks -%}
-          <button
-            type="button"
-            class="product-exploder__hotspot"
-            data-index="{{ forloop.index0 }}"
-            style="left: {{ block.settings.hotspot_x }}%; top: {{ block.settings.hotspot_y }}%;"
-            aria-label="{{ block.settings.heading | escape | default: 'Hotspot' }}"
-            aria-pressed="false"
-            {{ block.shopify_attributes }}
-          >{{ forloop.index | prepend: '00' | slice: -2, 2 }}</button>
-        {%- endfor -%}
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="product-exploder__hotspot"
+              data-index="{{ forloop.index0 }}"
+              style="left: {{ block.settings.hotspot_x }}%; top: {{ block.settings.hotspot_y }}%;"
+              aria-label="{{ block.settings.heading | escape | default: 'Hotspot' }}"
+              aria-pressed="false"
+              {{ block.shopify_attributes }}
+            >{{ forloop.index | prepend: '00' | slice: -2, 2 }}</button>
+          {%- endfor -%}
+        </div>
       </div>
     </div>
 
