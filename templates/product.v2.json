@@ -319,7 +319,7 @@
         "review_count": "4.8/5 based on 500+ reviews",
         "min_rating": 4,
         "background_color": "#f3f3f3",
-        "accent_color": "#aeaaa8",
+        "accent_color": "#f76503",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -335,7 +335,7 @@
         "button_url": "shopify://collections/all",
         "background_color": "#f3f3f3",
         "text_color": "#000000",
-        "accent_color": "#F76503",
+        "accent_color": "#f76503",
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -420,7 +420,7 @@
         "heading_italic": "questions",
         "background_color": "#ffffff",
         "text_color": "#000000",
-        "accent_color": "#F76503",
+        "accent_color": "#f76503",
         "padding_top": 60,
         "padding_bottom": 60
       }
