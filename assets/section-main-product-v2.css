@@ -95,6 +95,7 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
+  overflow-anchor: none;
   font-size: 0;
   line-height: 0;
 }
@@ -455,6 +456,16 @@ a.product-v2__sp-avatar {
   height: 16px;
   margin-top: 0;
   color: #5a9a00;
+  animation: benefitIconIn 0.4s ease both;
+}
+
+.product-v2__benefit:nth-child(1) svg { animation-delay: 0.1s; }
+.product-v2__benefit:nth-child(2) svg { animation-delay: 0.25s; }
+.product-v2__benefit:nth-child(3) svg { animation-delay: 0.4s; }
+
+@keyframes benefitIconIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .product-v2__benefit svg path {

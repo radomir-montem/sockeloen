@@ -1179,6 +1179,11 @@ class VariantSelects extends HTMLElement {
     if (!this.currentVariant) return
     if (!this.currentVariant.featured_media) return
 
+    /* Preserve scroll position: setActiveMedia with prepend=true reorders
+     * DOM elements in the media gallery. On mobile stacked layouts this
+     * triggers browser scroll-anchoring and causes an unwanted page jump. */
+    const scrollY = window.scrollY
+
     const mediaGalleries = document.querySelectorAll(
       `[id^="MediaGallery-${this.dataset.section}"]`
     )
@@ -1192,11 +1197,15 @@ class VariantSelects extends HTMLElement {
     const modalContent = document.querySelector(
       `#ProductModal-${this.dataset.section} .product-media-modal__content`
     )
-    if (!modalContent) return
-    const newMediaModal = modalContent.querySelector(
-      `[data-media-id="${this.currentVariant.featured_media.id}"]`
-    )
-    modalContent.prepend(newMediaModal)
+    if (modalContent) {
+      const newMediaModal = modalContent.querySelector(
+        `[data-media-id="${this.currentVariant.featured_media.id}"]`
+      )
+      if (newMediaModal) modalContent.prepend(newMediaModal)
+    }
+
+    window.scrollTo(0, scrollY)
+    requestAnimationFrame(() => window.scrollTo(0, scrollY))
   }
 
   updateURL() {
