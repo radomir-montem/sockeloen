@@ -146,9 +146,9 @@
       "type": "bought-often-together",
       "name": "Product Carousel",
       "settings": {
+        "product_source": "custom.related_products",
         "product_list": [],
-        "collection": "best-sellers-1",
-        "metafield_key": "",
+        "collection": "",
         "max_products": 8,
         "heading": "Complete",
         "heading_italic": "your order",
@@ -362,9 +362,9 @@
       "type": "bought-often-together",
       "name": "Product Carousel",
       "settings": {
+        "product_source": "none",
         "product_list": [],
         "collection": "sale",
-        "metafield_key": "",
         "max_products": 8,
         "heading": "currently",
         "heading_italic": "on Sale",
@@ -467,11 +467,27 @@
         "padding_bottom": 60
       }
     },
-    "recently_viewed_UYmFVR": {
-      "type": "recently-viewed",
-      "name": "Recent Products",
+    "bought_often_together_ctb8kf": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
       "settings": {
-        "heading": "Recently Viewed"
+        "product_source": "recently_viewed",
+        "product_list": [],
+        "collection": "best-sellers-1",
+        "max_products": 8,
+        "heading": "Recently",
+        "heading_italic": "viewed",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     }
   },
@@ -485,6 +501,6 @@
     "bought_often_together_dyjYrC",
     "recommendations",
     "product_faq_zwctfc",
-    "recently_viewed_UYmFVR"
+    "bought_often_together_ctb8kf"
   ]
 }
