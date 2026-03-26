@@ -926,8 +926,10 @@ class VariantSelects extends HTMLElement {
   }
 
   connectedCallback() {
+    this._isInitialLoad = true;
     setTimeout(() => {
       this.onVariantChange();
+      this._isInitialLoad = false;
     }, 500);
   }
 
@@ -1179,9 +1181,10 @@ class VariantSelects extends HTMLElement {
     if (!this.currentVariant) return
     if (!this.currentVariant.featured_media) return
 
-    /* Preserve scroll position: setActiveMedia with prepend=true reorders
-     * DOM elements in the media gallery. On mobile stacked layouts this
-     * triggers browser scroll-anchoring and causes an unwanted page jump. */
+    /* On initial page load the images are already in the correct order,
+     * so skip the DOM-reordering prepend to avoid scroll-anchoring jumps
+     * on mobile stacked layouts. Only prepend on user-initiated changes. */
+    const shouldPrepend = !this._isInitialLoad
     const scrollY = window.scrollY
 
     const mediaGalleries = document.querySelectorAll(
@@ -1190,18 +1193,20 @@ class VariantSelects extends HTMLElement {
     mediaGalleries.forEach((mediaGallery) =>
       mediaGallery.setActiveMedia(
         `${this.dataset.section}-${this.currentVariant.featured_media.id}`,
-        true
+        shouldPrepend
       )
     )
 
-    const modalContent = document.querySelector(
-      `#ProductModal-${this.dataset.section} .product-media-modal__content`
-    )
-    if (modalContent) {
-      const newMediaModal = modalContent.querySelector(
-        `[data-media-id="${this.currentVariant.featured_media.id}"]`
+    if (shouldPrepend) {
+      const modalContent = document.querySelector(
+        `#ProductModal-${this.dataset.section} .product-media-modal__content`
       )
-      if (newMediaModal) modalContent.prepend(newMediaModal)
+      if (modalContent) {
+        const newMediaModal = modalContent.querySelector(
+          `[data-media-id="${this.currentVariant.featured_media.id}"]`
+        )
+        if (newMediaModal) modalContent.prepend(newMediaModal)
+      }
     }
 
     window.scrollTo(0, scrollY)

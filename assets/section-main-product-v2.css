@@ -4,6 +4,14 @@
 
 /* Header styles now in global header-overrides.css */
 
+/* ---------- Disable scroll-anchoring on v2 pages ----------
+ * DOM reordering in the media gallery (prepend) triggers browser
+ * scroll-anchoring, causing an unwanted jump on mobile.  Disabling
+ * it on the html element prevents ALL anchor-based adjustments. */
+html:has(body[class*="template--v2"]) {
+  overflow-anchor: none;
+}
+
 /* ---------- Layout ---------- */
 .product-section {
   background: #F4F4F1;

@@ -1586,7 +1586,7 @@
     (function() {
       var sectionSelector = '#MainProduct-{{ section.id }}';
 
-      function filterVariantMedia(el) {
+      function filterVariantMedia(el, skipPrepend) {
         if (!el.currentVariant || !el.currentVariant.featured_media) return;
         var selectedAlt = el.currentVariant.featured_media.alt;
         if (!selectedAlt) return;
@@ -1607,14 +1607,14 @@
         });
 
         /* Re-call setActiveMedia so slider resets pages with correct visible items.
-         * Preserve scroll position: the prepend inside setActiveMedia reorders DOM,
-         * which triggers browser scroll-anchoring on mobile stacked layouts and
-         * causes an unwanted jump (typically to the benefits section). */
+         * On initial page load, skip prepend (DOM reorder) to prevent
+         * scroll-anchoring jumps on mobile stacked layouts. */
+        var shouldPrepend = !skipPrepend;
         var mediaGallery = section.querySelector('media-gallery');
         if (mediaGallery) {
           var mediaId = el.dataset.section + '-' + el.currentVariant.featured_media.id;
           var scrollY = window.scrollY;
-          mediaGallery.setActiveMedia(mediaId, true);
+          mediaGallery.setActiveMedia(mediaId, shouldPrepend);
           window.scrollTo(0, scrollY);
         }
       }
@@ -1626,16 +1626,13 @@
          * This works regardless of listener registration order.
          */
         el.addEventListener('change', function() {
-          setTimeout(function() { filterVariantMedia(el); }, 0);
+          setTimeout(function() { filterVariantMedia(el, false); }, 0);
         });
 
         /* Initial page load: connectedCallback fires onVariantChange after 500ms.
-         * Double-restore scroll to catch async repaints from DOM reorder. */
+         * Pass skipPrepend=true to avoid DOM reorder that causes scroll jumps. */
         setTimeout(function() {
-          var scrollY = window.scrollY;
-          filterVariantMedia(el);
-          window.scrollTo(0, scrollY);
-          requestAnimationFrame(function() { window.scrollTo(0, scrollY); });
+          filterVariantMedia(el, true);
         }, 600);
       }
 
