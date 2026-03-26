@@ -435,6 +435,13 @@
         "padding_top": 60,
         "padding_bottom": 60
       }
+    },
+    "recently_viewed_UYmFVR": {
+      "type": "recently-viewed",
+      "name": "Recent Products",
+      "settings": {
+        "heading": "Recently Viewed"
+      }
     }
   },
   "order": [
@@ -445,6 +452,7 @@
     "reviews_masonry_t9G7yD",
     "satisfaction_guarantee_E8eUtd",
     "recommendations",
-    "product_faq_zwctfc"
+    "product_faq_zwctfc",
+    "recently_viewed_UYmFVR"
   ]
 }
