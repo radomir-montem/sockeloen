@@ -142,20 +142,27 @@
         "padding_bottom": 0
       }
     },
-    "featured_collection_bg_JnMVFE": {
-      "type": "Featured-Collection-BG",
-      "name": "t:sections.featured-collection.presets.name",
+    "bought_often_together_pdRy9T": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
       "settings": {
-        "title": "Often bought together",
+        "product_list": [],
         "collection": "best-sellers-1",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "image_ratio": "adapt",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "enable_quick_add": false,
-        "columns_mobile": "1"
+        "metafield_key": "",
+        "max_products": 8,
+        "heading": "Complete",
+        "heading_italic": "your order",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
     "benefits": {
@@ -446,7 +453,7 @@
   },
   "order": [
     "main",
-    "featured_collection_bg_JnMVFE",
+    "bought_often_together_pdRy9T",
     "benefits",
     "product_exploder_6g3RXA",
     "reviews_masonry_t9G7yD",
