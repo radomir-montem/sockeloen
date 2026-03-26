@@ -358,8 +358,32 @@
         "padding_bottom": 80
       }
     },
+    "bought_often_together_dyjYrC": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
+      "settings": {
+        "product_list": [],
+        "collection": "sale",
+        "metafield_key": "",
+        "max_products": 8,
+        "heading": "currently",
+        "heading_italic": "on Sale",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
     "recommendations": {
       "type": "product-recommendations",
+      "disabled": true,
       "settings": {}
     },
     "product_faq_zwctfc": {
@@ -458,6 +482,7 @@
     "product_exploder_6g3RXA",
     "reviews_masonry_t9G7yD",
     "satisfaction_guarantee_E8eUtd",
+    "bought_often_together_dyjYrC",
     "recommendations",
     "product_faq_zwctfc",
     "recently_viewed_UYmFVR"
