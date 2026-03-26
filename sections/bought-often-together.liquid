@@ -1,39 +1,55 @@
 {%- comment -%}
   Product source priority:
-  1. Manual product list (section setting)
-  2. Collection (section setting)
-  3. Product metafield (configurable key)
-  4. Global upsells fallback
+  1. "Recently viewed" (client-side, from localStorage)
+  2. Manual product list (section setting)
+  3. Collection (section setting)
+  4. Product metafield (dropdown selection)
+  5. Global upsells fallback
 {%- endcomment -%}
 
 {%- liquid
   assign source_products = nil
+  assign is_recently_viewed = false
+  assign swiper_id = 'bot-swiper-' | append: section.id
 
-  if section.settings.product_list != blank and section.settings.product_list.size > 0
+  if section.settings.product_source == 'recently_viewed'
+    assign is_recently_viewed = true
+  elsif section.settings.product_list != blank and section.settings.product_list.size > 0
     assign source_products = section.settings.product_list
   elsif section.settings.collection != blank and section.settings.collection.products.size > 0
     assign source_products = section.settings.collection.products
-  elsif section.settings.metafield_key != blank
-    assign meta_parts = section.settings.metafield_key | split: '.'
-    if meta_parts.size == 2
-      assign meta_ns = meta_parts[0]
-      assign meta_key = meta_parts[1]
-      assign meta_value = product.metafields[meta_ns][meta_key].value
-      if meta_value != blank
-        assign source_products = meta_value
+  elsif section.settings.product_source != 'none' and section.settings.product_source != 'recently_viewed'
+    assign meta_key = section.settings.product_source
+    if meta_key == 'my_fields.product_upsells'
+      assign meta_value = product.metafields.my_fields.product_upsells.value
+    elsif meta_key == 'my_fields.collection_upsell'
+      assign meta_value = product.metafields.my_fields.collection_upsell.value.products
+    elsif meta_key == 'custom.related_products'
+      assign meta_value = product.metafields.custom.related_products.value
+    elsif meta_key == 'custom.cross_sell'
+      assign meta_value = product.metafields.custom.cross_sell.value
+    elsif meta_key != blank
+      assign meta_parts = meta_key | split: '.'
+      if meta_parts.size == 2
+        assign meta_ns = meta_parts[0]
+        assign meta_k = meta_parts[1]
+        assign meta_value = product.metafields[meta_ns][meta_k].value
       endif
     endif
-  endif
-
-  if source_products == nil or source_products == blank
-    if product.metafields.my_fields.product_upsells.value != blank
-      assign source_products = product.metafields.my_fields.product_upsells.value
-    else
-      assign source_products = settings.global_upsells.products
+    if meta_value != blank
+      assign source_products = meta_value
     endif
   endif
 
-  assign swiper_id = 'bot-swiper-' | append: section.id
+  unless is_recently_viewed
+    if source_products == nil or source_products == blank
+      if product.metafields.my_fields.product_upsells.value != blank
+        assign source_products = product.metafields.my_fields.product_upsells.value
+      else
+        assign source_products = settings.global_upsells.products
+      endif
+    endif
+  endunless
 -%}
 
 {%- style -%}
@@ -71,13 +87,12 @@
   }
 {%- endstyle -%}
 
-{%- if source_products != blank and source_products.size > 0 -%}
+{%- if is_recently_viewed or source_products != blank and source_products.size > 0 -%}
 <div class="bot-section-{{ section.id }}">
   {%- if section.settings.heading != blank -%}
     <h4 class="bot-heading">
       {{- section.settings.heading -}}
       {%- if section.settings.heading_italic != blank -%}
-        {%- comment -%} Space before italic portion {%- endcomment -%}
         {{ ' ' }}<em>{{ section.settings.heading_italic }}</em>
       {%- endif -%}
     </h4>
@@ -85,16 +100,18 @@
 
   <div class="{{ swiper_id }} bot-swiper overflow-hidden relative">
     <div class="swiper-wrapper">
-      {%- for productItem in source_products limit: section.settings.max_products -%}
-        <div class="swiper-slide">
-          {% render 'card-product',
-            card_product: productItem,
-            media_aspect_ratio: section.settings.image_ratio,
-            section_id: section.id,
-            show_secondary_image: true
-          %}
-        </div>
-      {%- endfor -%}
+      {%- unless is_recently_viewed -%}
+        {%- for productItem in source_products limit: section.settings.max_products -%}
+          <div class="swiper-slide">
+            {% render 'card-product',
+              card_product: productItem,
+              media_aspect_ratio: section.settings.image_ratio,
+              section_id: section.id,
+              show_secondary_image: true
+            %}
+          </div>
+        {%- endfor -%}
+      {%- endunless -%}
     </div>
     <div class="{{ swiper_id }}-next bot-swiper-next">
       {% render 'icon-arrow-right' %}
@@ -107,34 +124,106 @@
 
 <script>
   (function() {
-    /* Wait for Swiper to be available (loaded by bundle.js) */
+    var sectionId = '{{ section.id }}';
+    var swiperId = '{{ swiper_id }}';
+    var isRecentlyViewed = {{ is_recently_viewed }};
+    var maxProducts = {{ section.settings.max_products }};
+    var mobileColumns = {{ section.settings.mobile_columns }};
+    var desktopColumns = {{ section.settings.desktop_columns }};
+    var imageRatio = '{{ section.settings.image_ratio }}';
+
     function initSwiper() {
       if (typeof window.Swiper === 'undefined') {
         setTimeout(initSwiper, 100);
         return;
       }
-      var el = document.querySelector('.{{ swiper_id }}');
+      var el = document.querySelector('.' + swiperId);
       if (!el) return;
       new window.Swiper(el, {
         direction: 'horizontal',
-        slidesPerView: {{ section.settings.mobile_columns }},
+        slidesPerView: mobileColumns,
         spaceBetween: 5,
         navigation: {
-          nextEl: '.{{ swiper_id }}-next',
-          prevEl: '.{{ swiper_id }}-prev'
+          nextEl: '.' + swiperId + '-next',
+          prevEl: '.' + swiperId + '-prev'
         },
         preventClicks: false,
         breakpoints: {
-          768: {
-            slidesPerView: {{ section.settings.desktop_columns }}
-          }
+          768: { slidesPerView: desktopColumns }
         }
       });
     }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initSwiper);
+
+    function loadRecentlyViewed() {
+      var stored = localStorage.getItem('recentlyViewedProduct');
+      if (!stored) {
+        /* Hide section if no recently viewed products */
+        var section = document.querySelector('.bot-section-' + sectionId);
+        if (section) section.style.display = 'none';
+        return;
+      }
+
+      var products;
+      try { products = JSON.parse(stored); } catch(e) { return; }
+      if (!products || !products.length) {
+        var section = document.querySelector('.bot-section-' + sectionId);
+        if (section) section.style.display = 'none';
+        return;
+      }
+
+      /* Filter out current product */
+      var currentHandle = '{{ product.handle }}';
+      products = products.filter(function(p) { return p.productHandle !== currentHandle; });
+      if (!products.length) {
+        var section = document.querySelector('.bot-section-' + sectionId);
+        if (section) section.style.display = 'none';
+        return;
+      }
+
+      /* Limit to max_products */
+      products = products.slice(0, maxProducts);
+
+      var wrapper = document.querySelector('.' + swiperId + ' .swiper-wrapper');
+      if (!wrapper) return;
+
+      var fetches = products.map(function(item) {
+        return fetch('/products/' + item.productHandle + '?section_id=card-product')
+          .then(function(r) { return r.text(); })
+          .then(function(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var card = doc.querySelector('.shopify-section');
+            return card ? card.innerHTML : null;
+          })
+          .catch(function() { return null; });
+      });
+
+      Promise.all(fetches).then(function(cards) {
+        var html = '';
+        cards.forEach(function(card) {
+          if (card) html += '<div class="swiper-slide">' + card + '</div>';
+        });
+        if (html) {
+          wrapper.innerHTML = html;
+          initSwiper();
+        } else {
+          var section = document.querySelector('.bot-section-' + sectionId);
+          if (section) section.style.display = 'none';
+        }
+      });
+    }
+
+    if (isRecentlyViewed) {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadRecentlyViewed);
+      } else {
+        loadRecentlyViewed();
+      }
     } else {
-      initSwiper();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSwiper);
+      } else {
+        initSwiper();
+      }
     }
   })();
 </script>
@@ -151,23 +240,31 @@
       "content": "Product source"
     },
     {
+      "type": "select",
+      "id": "product_source",
+      "label": "Product source (metafield / recently viewed)",
+      "info": "Select a metafield or 'Recently viewed'. Manual list and Collection below take priority if filled.",
+      "options": [
+        { "value": "none", "label": "— None (use manual list, collection, or fallback)" },
+        { "value": "recently_viewed", "label": "Recently viewed products" },
+        { "value": "my_fields.product_upsells", "label": "Upsells (my_fields.product_upsells)" },
+        { "value": "my_fields.collection_upsell", "label": "Collection upsell (my_fields.collection_upsell)" },
+        { "value": "custom.related_products", "label": "Related products (custom.related_products)" },
+        { "value": "custom.cross_sell", "label": "Cross-sell (custom.cross_sell)" }
+      ],
+      "default": "none"
+    },
+    {
       "type": "product_list",
       "id": "product_list",
       "label": "Manual product list",
-      "info": "Highest priority. Pick specific products to show."
+      "info": "Highest priority (except Recently viewed). Pick specific products."
     },
     {
       "type": "collection",
       "id": "collection",
       "label": "Collection",
       "info": "Used if no manual products are selected."
-    },
-    {
-      "type": "text",
-      "id": "metafield_key",
-      "label": "Product metafield key",
-      "info": "Format: namespace.key (e.g. my_fields.product_upsells). Used if no manual products or collection are set.",
-      "placeholder": "my_fields.product_upsells"
     },
     {
       "type": "range",
