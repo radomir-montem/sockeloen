@@ -28,13 +28,6 @@
       <div class="reviews-masonry__sidebar" data-reviews-sidebar>
         {%- comment -%} Reviews.io badge ribbon — updated live by JS {%- endcomment -%}
         <a class="reviews-masonry__ribbon" href="https://www.reviews.io/company-reviews/store/sockeloen-nl" target="_blank" rel="noopener noreferrer" aria-label="Review rating">
-          <div class="reviews-masonry__ribbon-logo">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-              <circle cx="12" cy="12" r="12" fill="#000"/>
-              <path d="M12 5.5l1.8 3.6 4 .6-2.9 2.8.7 4L12 14.7l-3.6 1.8.7-4-2.9-2.8 4-.6L12 5.5z" fill="#fff"/>
-            </svg>
-            <span class="reviews-masonry__ribbon-brand">REVIEWS.io</span>
-          </div>
           <div class="reviews-masonry__ribbon-rating">
             <div class="reviews-masonry__ribbon-stars" role="img" aria-label="4.5 out of 5 stars" data-reviews-badge-stars></div>
             <span class="reviews-masonry__ribbon-text" data-reviews-badge-count>Read our <strong data-reviews-badge-total>5,065</strong> reviews</span>
@@ -118,7 +111,7 @@
   (function () {
     var STORE_ID = 'sockeloen-nl';
     var REVIEWS_URL = 'https://www.reviews.io/company-reviews/store/' + STORE_ID;
-    var MAX_REVIEWS = 8;
+    var MAX_REVIEWS = 6;
     var MIN_RATING = {{ section.settings.min_rating | default: 4 }};
     var section = document.getElementById('reviews-masonry-{{ section.id }}');
     if (!section) return;
