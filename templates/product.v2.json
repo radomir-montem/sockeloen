@@ -155,7 +155,7 @@
         "show_vendor": false,
         "show_rating": false,
         "enable_quick_add": false,
-        "columns_mobile": "2"
+        "columns_mobile": "1"
       }
     },
     "benefits": {
