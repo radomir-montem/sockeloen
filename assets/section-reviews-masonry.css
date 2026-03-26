@@ -172,6 +172,16 @@
   column-gap: 16px;
 }
 
+/* Carousel track — on desktop acts as normal container, on mobile becomes horizontal scroller */
+.reviews-masonry__carousel-track {
+  display: contents;
+}
+
+/* Carousel nav dots — hidden on desktop */
+.reviews-masonry__carousel-nav {
+  display: none;
+}
+
 /* ---------- Individual card ---------- */
 
 .reviews-masonry__card {
@@ -269,6 +279,22 @@
   overflow: hidden;
 }
 
+/* Card images (user-uploaded photos) */
+
+.reviews-masonry__card-images {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.reviews-masonry__card-img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
 /* Card footer */
 
 .reviews-masonry__card-footer {
@@ -318,8 +344,58 @@
     font-size: 38px;
   }
 
+  /* Mobile carousel */
   .reviews-masonry__cards {
-    column-count: 1;
+    column-count: unset;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+  .reviews-masonry__cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .reviews-masonry__carousel-track {
+    display: contents;
+  }
+
+  .reviews-masonry__card {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+    margin-bottom: 0;
+    min-width: 0;
+  }
+
+  .reviews-masonry__carousel-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 16px;
+  }
+
+  .reviews-masonry__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .reviews-masonry__dot.is-active {
+    background: #000;
+    transform: scale(1.25);
+  }
+
+  .reviews-masonry__card-images {
+    flex-wrap: wrap;
   }
 }
 

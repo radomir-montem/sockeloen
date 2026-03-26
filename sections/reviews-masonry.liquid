@@ -59,7 +59,9 @@
       </div>
 
       {%- comment -%} Right cards area — populated by JS from Reviews.io API {%- endcomment -%}
+      {%- comment -%} Mobile: horizontal carousel / Desktop: masonry grid {%- endcomment -%}
       <div class="reviews-masonry__cards" role="list" data-reviews-cards>
+        <div class="reviews-masonry__carousel-track" data-reviews-track>
         {%- comment -%} Fallback: theme editor blocks shown until JS loads {%- endcomment -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'review' -%}
@@ -102,6 +104,10 @@
             </article>
           {%- endif -%}
         {%- endfor -%}
+        </div>{%- comment -%} /.reviews-masonry__carousel-track {%- endcomment -%}
+
+        {%- comment -%} Carousel nav dots — mobile only, populated by JS {%- endcomment -%}
+        <div class="reviews-masonry__carousel-nav" data-reviews-nav aria-label="Review navigation"></div>
       </div>
 
     </div>
@@ -112,12 +118,14 @@
   (function () {
     var STORE_ID = 'sockeloen-nl';
     var REVIEWS_URL = 'https://www.reviews.io/company-reviews/store/' + STORE_ID;
-    var MAX_REVIEWS = 6;
+    var MAX_REVIEWS = 8;
     var MIN_RATING = {{ section.settings.min_rating | default: 4 }};
     var section = document.getElementById('reviews-masonry-{{ section.id }}');
     if (!section) return;
 
     var cardsContainer = section.querySelector('[data-reviews-cards]');
+    var trackContainer = section.querySelector('[data-reviews-track]');
+    var navContainer = section.querySelector('[data-reviews-nav]');
     var badgeCount = section.querySelector('[data-reviews-badge-count]');
     var badgeStars = section.querySelector('[data-reviews-badge-stars]');
 
@@ -187,7 +195,7 @@
         author += ' ' + review.reviewer.last_name.charAt(0) + '.';
       }
       var date = review.date_created || review.timeago || '';
-      var reviewId = review.store_review_id || '';
+      var images = review.images || [];
 
       var html = '<a href="' + REVIEWS_URL + '" target="_blank" rel="noopener noreferrer" class="reviews-masonry__card reviews-masonry__card--link" role="listitem" data-reviews-card>';
       html += '<span class="reviews-masonry__quote" aria-hidden="true">&ldquo;</span>';
@@ -196,6 +204,19 @@
       html += '</div>';
       if (title) html += '<h3 class="reviews-masonry__card-title">' + escapeHtml(title) + '</h3>';
       if (body) html += '<p class="reviews-masonry__card-body">' + escapeHtml(body) + '</p>';
+
+      /* Render user-uploaded images */
+      if (images.length > 0) {
+        html += '<div class="reviews-masonry__card-images">';
+        var maxImages = Math.min(images.length, 3);
+        for (var img = 0; img < maxImages; img++) {
+          if (images[img].image && images[img].status === 'active') {
+            html += '<img class="reviews-masonry__card-img" src="' + images[img].image + '" alt="Customer photo" loading="lazy" />';
+          }
+        }
+        html += '</div>';
+      }
+
       html += '<div class="reviews-masonry__card-footer">';
       if (author) html += '<span class="reviews-masonry__card-author">' + escapeHtml(author) + '</span>';
       if (date) html += '<span class="reviews-masonry__card-date">' + timeAgo(date) + '</span>';
@@ -205,7 +226,7 @@
 
     /* Fetch merchant reviews + product rating stats in parallel */
     var merchantUrl = 'https://api.reviews.io/merchant/reviews?store=' + STORE_ID
-      + '&per_page=' + MAX_REVIEWS
+      + '&per_page=25'
       + '&min_rating=' + MIN_RATING
       + '&order=newest';
     var productRatingUrl = 'https://api.reviews.io/product/rating?store=' + STORE_ID;
@@ -246,10 +267,10 @@
         }
 
         /* Remove fallback blocks */
-        var fallbacks = cardsContainer.querySelectorAll('[data-fallback]');
+        var fallbacks = trackContainer.querySelectorAll('[data-fallback]');
         fallbacks.forEach(function (el) { el.remove(); });
 
-        /* Render real reviews — only ones with text, limit to 6 */
+        /* Render real reviews — only ones with text, limit to MAX_REVIEWS */
         var html = '';
         var count = 0;
         for (var r = 0; r < data.reviews.length; r++) {
@@ -260,7 +281,10 @@
           html += buildCard(review);
           count++;
         }
-        cardsContainer.insertAdjacentHTML('beforeend', html);
+        trackContainer.insertAdjacentHTML('beforeend', html);
+
+        /* Init carousel for mobile */
+        initCarousel();
 
         /* Re-run animations on new cards */
         initAnimations();
@@ -269,6 +293,55 @@
         console.warn('Reviews.io fetch failed, showing fallback blocks', err);
         initAnimations();
       });
+
+    function initCarousel() {
+      if (!trackContainer || !navContainer) return;
+      var cards = trackContainer.querySelectorAll('[data-reviews-card]');
+      if (cards.length < 2) return;
+
+      /* Build nav dots */
+      var dotsHtml = '';
+      for (var d = 0; d < cards.length; d++) {
+        dotsHtml += '<button class="reviews-masonry__dot' + (d === 0 ? ' is-active' : '') + '" data-slide="' + d + '" aria-label="Go to review ' + (d + 1) + '"></button>';
+      }
+      navContainer.innerHTML = dotsHtml;
+
+      var dots = navContainer.querySelectorAll('.reviews-masonry__dot');
+      var currentIndex = 0;
+
+      function goToSlide(index) {
+        currentIndex = index;
+        cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        dots.forEach(function (dot, i) {
+          dot.classList.toggle('is-active', i === index);
+        });
+      }
+
+      dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+          goToSlide(parseInt(this.getAttribute('data-slide'), 10));
+        });
+      });
+
+      /* Detect current slide on scroll (snap-based) */
+      var scrollTimeout;
+      cardsContainer.addEventListener('scroll', function () {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function () {
+          var scrollLeft = cardsContainer.scrollLeft;
+          var cardWidth = cards[0].offsetWidth;
+          var gap = 16;
+          var newIndex = Math.round(scrollLeft / (cardWidth + gap));
+          newIndex = Math.max(0, Math.min(newIndex, cards.length - 1));
+          if (newIndex !== currentIndex) {
+            currentIndex = newIndex;
+            dots.forEach(function (dot, i) {
+              dot.classList.toggle('is-active', i === currentIndex);
+            });
+          }
+        }, 50);
+      });
+    }
 
     function initAnimations() {
       var sidebar = section.querySelector('[data-reviews-sidebar]');
