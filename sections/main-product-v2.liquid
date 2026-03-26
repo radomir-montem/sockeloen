@@ -1659,32 +1659,50 @@
 
   <script>
     /* ── Mobile auto-scroll prevention ──────────────────────────────────
-     * On some mobile browsers, DOM reorders, third-party widgets (Taggbox,
-     * Reviews.io, Avada), or scroll-anchoring adjustments cause the page
-     * to jump away from the top during the first ~1.5 s of loading.
-     * Safety net: if scroll has moved past 100 px and the user hasn't
-     * touched the screen, reset back to the top.                          */
+     * Third-party widgets (Taggbox, Reviews.io, Avada) call scrollIntoView
+     * or similar during init, causing an unwanted scroll-down on mobile.
+     * Fix: intercept and block programmatic scroll calls during the first
+     * 2.5 s of page load. User-initiated scrolls (touch) are unaffected
+     * because they don't go through scrollIntoView / window.scrollTo.    */
     (function() {
-      if (window.innerWidth >= 750) return;            /* desktop: skip */
-      var userInteracted = false;
-      var mark = function() { userInteracted = true; };
-      window.addEventListener('touchstart', mark, { once: true, passive: true });
-      window.addEventListener('wheel',      mark, { once: true, passive: true });
+      if (window.innerWidth >= 750) return;
 
-      /* Check multiple times during the critical init window */
-      [800, 1200, 1800].forEach(function(ms) {
-        setTimeout(function() {
-          if (!userInteracted && window.scrollY > 100) {
-            window.scrollTo({ top: 0, behavior: 'instant' });
-          }
-        }, ms);
-      });
+      var locked = true;
+      var userScrolled = false;
 
-      /* Clean up after the danger window */
+      /* Detect real user interaction */
+      var markUser = function() { userScrolled = true; };
+      window.addEventListener('touchstart', markUser, { once: true, passive: true });
+
+      /* ---- Block Element.scrollIntoView ---- */
+      var origSIV = Element.prototype.scrollIntoView;
+      Element.prototype.scrollIntoView = function() {
+        if (locked) return;                    /* swallow during init */
+        return origSIV.apply(this, arguments);
+      };
+
+      /* ---- Block window.scrollTo / window.scroll ---- */
+      var origScrollTo = window.scrollTo;
+      var origScroll   = window.scroll;
+      var safeScrollTo = function() {
+        if (locked && !userScrolled) {
+          /* Allow our own scrollTo(0,0) restorations (args = 0,0) */
+          var y = arguments.length === 1 ? arguments[0].top : arguments[1];
+          if (y !== 0 && y !== undefined) return;   /* block non-zero scrolls */
+        }
+        return origScrollTo.apply(window, arguments);
+      };
+      window.scrollTo = safeScrollTo;
+      window.scroll   = safeScrollTo;
+
+      /* ---- Release after init window ---- */
       setTimeout(function() {
-        window.removeEventListener('touchstart', mark);
-        window.removeEventListener('wheel', mark);
-      }, 2000);
+        locked = false;
+        Element.prototype.scrollIntoView = origSIV;
+        window.scrollTo = origScrollTo;
+        window.scroll   = origScroll;
+        window.removeEventListener('touchstart', markUser);
+      }, 2500);
     })();
   </script>
 </section>
@@ -2090,19 +2108,19 @@
       "type": "text",
       "id": "default_benefit_1",
       "label": "Default benefit 1",
-      "default": "Worn by World Champions"
+      "default": "Worn by World Champions."
     },
     {
       "type": "text",
       "id": "default_benefit_2",
       "label": "Default benefit 2",
-      "default": "No burning feet or pressure points, thanks to the uniquely thin footbed."
+      "default": "No more burning feet on the bike."
     },
     {
       "type": "text",
       "id": "default_benefit_3",
       "label": "Default benefit 3",
-      "default": "Stay up. Sit at the perfect height. All ride long."
+      "default": "Make your calves look like the weapons they really are."
     },
     {
       "type": "header",
