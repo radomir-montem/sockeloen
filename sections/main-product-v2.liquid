@@ -1656,6 +1656,37 @@
       }
     })();
   </script>
+
+  <script>
+    /* ── Mobile auto-scroll prevention ──────────────────────────────────
+     * On some mobile browsers, DOM reorders, third-party widgets (Taggbox,
+     * Reviews.io, Avada), or scroll-anchoring adjustments cause the page
+     * to jump away from the top during the first ~1.5 s of loading.
+     * Safety net: if scroll has moved past 100 px and the user hasn't
+     * touched the screen, reset back to the top.                          */
+    (function() {
+      if (window.innerWidth >= 750) return;            /* desktop: skip */
+      var userInteracted = false;
+      var mark = function() { userInteracted = true; };
+      window.addEventListener('touchstart', mark, { once: true, passive: true });
+      window.addEventListener('wheel',      mark, { once: true, passive: true });
+
+      /* Check multiple times during the critical init window */
+      [800, 1200, 1800].forEach(function(ms) {
+        setTimeout(function() {
+          if (!userInteracted && window.scrollY > 100) {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+          }
+        }, ms);
+      });
+
+      /* Clean up after the danger window */
+      setTimeout(function() {
+        window.removeEventListener('touchstart', mark);
+        window.removeEventListener('wheel', mark);
+      }, 2000);
+    })();
+  </script>
 </section>
 
 {%- comment -%} ========== STICKY ATC V2 ========== {%- endcomment -%}
