@@ -101,6 +101,11 @@
     {% endif %}
     </div>
   </div>
+  <!-- Branding banner -->
+  <div class="footer-branding-bar" aria-hidden="true">
+    <span class="footer-branding-text">SOCKELOEN</span>
+  </div>
+
   <div class="md:px-8 md:mt-16">
     <div class="grid grid-cols-1 md2:grid-cols-3 place-items-center pt-6 px-8 footer-bottom">
       <localization-selector class="footer-locale-selector relative flex items-center">
@@ -113,13 +118,13 @@
             <path d="M4 5L8 0.833333L7.2 8.58591e-08L4 3.33333L0.8 9.5399e-09L4.9687e-08 0.833333L4 5Z" fill="currentColor"/>
           </svg>
         </label>
-        <ul class="localization-list hidden absolute bottom-full left-0 mb-2 w-[160px] bg-[#1a1a1a] border border-[#333] rounded-sm overflow-hidden z-50 shadow-lg">
-          <li class="localization-item"><a href="#" data-country-code="NL" data-language="en" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#9a9a9a] hover:text-white hover:bg-[#2a2a2a] transition-colors{% if localization.language.iso_code == 'en' and localization.country.currency.iso_code == 'EUR' %} !text-white{% endif %}">EN / EUR</a></li>
-          <li class="localization-item"><a href="#" data-country-code="NL" data-language="nl" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#9a9a9a] hover:text-white hover:bg-[#2a2a2a] transition-colors{% if localization.language.iso_code == 'nl' %} !text-white{% endif %}">NL / EUR</a></li>
-          <li class="localization-item"><a href="#" data-country-code="DE" data-language="de" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#9a9a9a] hover:text-white hover:bg-[#2a2a2a] transition-colors{% if localization.language.iso_code == 'de' %} !text-white{% endif %}">DE / EUR</a></li>
-          <li class="localization-item"><a href="#" data-country-code="NL" data-language="fr" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#9a9a9a] hover:text-white hover:bg-[#2a2a2a] transition-colors{% if localization.language.iso_code == 'fr' and localization.country.currency.iso_code == 'EUR' %} !text-white{% endif %}">FR / EUR</a></li>
-          <li class="localization-item"><a href="#" data-country-code="US" data-language="en" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#9a9a9a] hover:text-white hover:bg-[#2a2a2a] transition-colors{% if localization.language.iso_code == 'en' and localization.country.currency.iso_code == 'USD' %} !text-white{% endif %}">EN / USD</a></li>
-          <li class="localization-item"><a href="#" data-country-code="US" data-language="fr" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#9a9a9a] hover:text-white hover:bg-[#2a2a2a] transition-colors{% if localization.language.iso_code == 'fr' and localization.country.currency.iso_code == 'USD' %} !text-white{% endif %}">FR / USD</a></li>
+        <ul class="localization-list hidden absolute bottom-full left-0 mb-2 w-[160px] bg-white border border-[#ddd] rounded-sm overflow-hidden z-50 shadow-lg">
+          <li class="localization-item"><a href="#" data-country-code="NL" data-language="en" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'en' and localization.country.currency.iso_code == 'EUR' %} !text-black !font-bold{% endif %}">EN / EUR</a></li>
+          <li class="localization-item"><a href="#" data-country-code="NL" data-language="nl" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'nl' %} !text-black !font-bold{% endif %}">NL / EUR</a></li>
+          <li class="localization-item"><a href="#" data-country-code="DE" data-language="de" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'de' %} !text-black !font-bold{% endif %}">DE / EUR</a></li>
+          <li class="localization-item"><a href="#" data-country-code="NL" data-language="fr" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'fr' and localization.country.currency.iso_code == 'EUR' %} !text-black !font-bold{% endif %}">FR / EUR</a></li>
+          <li class="localization-item"><a href="#" data-country-code="US" data-language="en" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'en' and localization.country.currency.iso_code == 'USD' %} !text-black !font-bold{% endif %}">EN / USD</a></li>
+          <li class="localization-item"><a href="#" data-country-code="US" data-language="fr" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'fr' and localization.country.currency.iso_code == 'USD' %} !text-black !font-bold{% endif %}">FR / USD</a></li>
         </ul>
         {%- form 'localization', id: 'FooterLocalizationForm', class: 'hidden' -%}
           <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
