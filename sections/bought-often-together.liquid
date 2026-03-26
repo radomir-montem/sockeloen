@@ -1,10 +1,47 @@
-{% if product.metafields.my_fields.product_upsells.value != blank %}
-  {% assign products = product.metafields.my_fields.product_upsells.value %}
-{% else %}
-  {% assign products = settings.global_upsells.products %}
-{% endif %}
+{%- comment -%}
+  Product source priority:
+  1. Manual product list (section setting)
+  2. Collection (section setting)
+  3. Product metafield (configurable key)
+  4. Global upsells fallback
+{%- endcomment -%}
+
+{%- liquid
+  assign source_products = nil
+
+  if section.settings.product_list != blank and section.settings.product_list.size > 0
+    assign source_products = section.settings.product_list
+  elsif section.settings.collection != blank and section.settings.collection.products.size > 0
+    assign source_products = section.settings.collection.products
+  elsif section.settings.metafield_key != blank
+    assign meta_parts = section.settings.metafield_key | split: '.'
+    if meta_parts.size == 2
+      assign meta_ns = meta_parts[0]
+      assign meta_key = meta_parts[1]
+      assign meta_value = product.metafields[meta_ns][meta_key].value
+      if meta_value != blank
+        assign source_products = meta_value
+      endif
+    endif
+  endif
+
+  if source_products == nil or source_products == blank
+    if product.metafields.my_fields.product_upsells.value != blank
+      assign source_products = product.metafields.my_fields.product_upsells.value
+    else
+      assign source_products = settings.global_upsells.products
+    endif
+  endif
+
+  assign swiper_id = 'bot-swiper-' | append: section.id
+-%}
 
 {%- style -%}
+  .bot-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
   .bot-section-{{ section.id }} .bot-heading {
     font-size: {{ section.settings.heading_size }}px;
     font-weight: {{ section.settings.heading_weight }};
@@ -13,52 +50,134 @@
     text-align: {{ section.settings.heading_alignment }};
     color: {{ section.settings.heading_color }};
     margin: 0;
-    padding: 12px {{ section.settings.heading_alignment | replace: 'left', '16px' | replace: 'center', '0' | replace: 'right', '16px' }} 16px;
+    padding: 0 16px 16px;
   }
   .bot-section-{{ section.id }} .bot-heading em {
     font-style: italic;
     color: {{ section.settings.heading_italic_color }};
   }
   @media screen and (max-width: 749px) {
+    .bot-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
     .bot-section-{{ section.id }} .bot-heading {
       font-size: {{ section.settings.heading_size | times: 0.8 | round: 0 }}px;
-      padding-left: 16px;
-      padding-right: 16px;
     }
+  }
+  /* Ensure single-row carousel */
+  .{{ swiper_id }} .swiper-wrapper {
+    flex-wrap: nowrap !important;
   }
 {%- endstyle -%}
 
-<div class="bg-white pt-0 bot-section-{{ section.id }}">
+{%- if source_products != blank and source_products.size > 0 -%}
+<div class="bot-section-{{ section.id }}">
   {%- if section.settings.heading != blank -%}
     <h4 class="bot-heading">
       {{- section.settings.heading -}}
       {%- if section.settings.heading_italic != blank -%}
-        <em>{{ section.settings.heading_italic }}</em>
+        {%- comment -%} Space before italic portion {%- endcomment -%}
+        {{ ' ' }}<em>{{ section.settings.heading_italic }}</em>
       {%- endif -%}
     </h4>
   {%- endif -%}
 
-  <div class="bot-swiper overflow-hidden relative">
+  <div class="{{ swiper_id }} bot-swiper overflow-hidden relative">
     <div class="swiper-wrapper">
-      {% for productItem in products %}
+      {%- for productItem in source_products limit: section.settings.max_products -%}
         <div class="swiper-slide">
-          {% render 'card-product', card_product: productItem, media_aspect_ratio: 'square', section_id: section.id, show_secondary_image: true %}
+          {% render 'card-product',
+            card_product: productItem,
+            media_aspect_ratio: section.settings.image_ratio,
+            section_id: section.id,
+            show_secondary_image: true
+          %}
         </div>
-      {% endfor %}
+      {%- endfor -%}
     </div>
-    <div class="bot-swiper-next">
+    <div class="{{ swiper_id }}-next bot-swiper-next">
       {% render 'icon-arrow-right' %}
     </div>
-    <div class="bot-swiper-prev">
+    <div class="{{ swiper_id }}-prev bot-swiper-prev">
       {% render 'icon-arraw-left' %}
     </div>
   </div>
 </div>
 
+<script>
+  (function() {
+    /* Wait for Swiper to be available (loaded by bundle.js) */
+    function initSwiper() {
+      if (typeof window.Swiper === 'undefined') {
+        setTimeout(initSwiper, 100);
+        return;
+      }
+      var el = document.querySelector('.{{ swiper_id }}');
+      if (!el) return;
+      new window.Swiper(el, {
+        direction: 'horizontal',
+        slidesPerView: {{ section.settings.mobile_columns }},
+        spaceBetween: 5,
+        navigation: {
+          nextEl: '.{{ swiper_id }}-next',
+          prevEl: '.{{ swiper_id }}-prev'
+        },
+        preventClicks: false,
+        breakpoints: {
+          768: {
+            slidesPerView: {{ section.settings.desktop_columns }}
+          }
+        }
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSwiper);
+    } else {
+      initSwiper();
+    }
+  })();
+</script>
+{%- endif -%}
+
 {% schema %}
 {
-  "name": "Bought Often Together",
+  "name": "Product Carousel",
+  "tag": "section",
+  "class": "section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Product source"
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "Manual product list",
+      "info": "Highest priority. Pick specific products to show."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Used if no manual products are selected."
+    },
+    {
+      "type": "text",
+      "id": "metafield_key",
+      "label": "Product metafield key",
+      "info": "Format: namespace.key (e.g. my_fields.product_upsells). Used if no manual products or collection are set.",
+      "placeholder": "my_fields.product_upsells"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Max products to show",
+      "default": 8
+    },
     {
       "type": "header",
       "content": "Heading"
@@ -120,11 +239,74 @@
         { "value": "right", "label": "Right" }
       ],
       "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "adapt", "label": "Adapt to image" },
+        { "value": "portrait", "label": "Portrait (4:5)" }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Desktop columns",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "mobile_columns",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Mobile columns",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 20
     }
   ],
   "presets": [
     {
-      "name": "Bought Often Together"
+      "name": "Product Carousel"
     }
   ]
 }
