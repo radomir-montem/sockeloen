@@ -512,12 +512,12 @@ noscript .localization-selector.link {
 
 /* ---------- Footer bottom spacing for sticky ATC ---------- */
 footer.bg-black {
-  padding-bottom: 100px;
+  padding-bottom: 120px;
 }
 
 @media screen and (min-width: 990px) {
   footer.bg-black {
-    padding-bottom: 4rem;
+    padding-bottom: 120px;
   }
 }
 
