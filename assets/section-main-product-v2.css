@@ -1479,43 +1479,25 @@ sticky-atc-v2.hidden {
 }
 
 /* --- Scroll-triggered animations --- */
+/* Only the image/video animates — text is immediately visible */
 .product-benefit__image,
-.product-benefit__media,
-.product-benefit__content {
+.product-benefit__media {
   opacity: 0;
+  transform: translateY(24px);
   transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Image/video slides in from left (odd rows) */
-.product-benefit:nth-child(odd) .product-benefit__image,
-.product-benefit:nth-child(odd) .product-benefit__media {
-  transform: translateX(-40px);
-}
-.product-benefit:nth-child(odd) .product-benefit__content {
-  transform: translateX(40px);
-}
-
-/* Image/video slides in from right (even rows) */
-.product-benefit:nth-child(even) .product-benefit__image,
-.product-benefit:nth-child(even) .product-benefit__media {
-  transform: translateX(40px);
-}
-.product-benefit:nth-child(even) .product-benefit__content {
-  transform: translateX(-40px);
+/* Text content: no animation, always visible */
+.product-benefit__content {
+  opacity: 1;
 }
 
 /* Visible state — applied by IntersectionObserver */
 .product-benefit.is-visible .product-benefit__image,
-.product-benefit.is-visible .product-benefit__media,
-.product-benefit.is-visible .product-benefit__content {
+.product-benefit.is-visible .product-benefit__media {
   opacity: 1;
-  transform: translateX(0);
-}
-
-/* Stagger: content animates slightly after image */
-.product-benefit.is-visible .product-benefit__content {
-  transition-delay: 0.15s;
+  transform: translateY(0);
 }
 
 /* Respect prefers-reduced-motion */
@@ -1763,12 +1745,13 @@ body[class*="template--v2"] .bg-white > .flex:has(> h4) {
   display: none !important;
 }
 
-/* Add v2-styled labels via ::before on the carousel containers */
+/* Add v2-styled labels via ::before on the carousel containers
+ * Typography matches .product-benefit__heading for visual consistency */
 body[class*="template--v2"] .bot-swiper,
 body[class*="template--v2"] .mfc-swiper,
 body[class*="template--v2"] .yml-swiper,
 body[class*="template--v2"] .rvi-swiper {
-  padding-top: 48px;
+  padding-top: 56px;
   position: relative;
 }
 
@@ -1779,10 +1762,11 @@ body[class*="template--v2"] .rvi-swiper::before {
   position: absolute;
   top: 0;
   left: 0;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: none;
   color: #000;
   padding: 12px 0 0;
 }
@@ -1801,11 +1785,18 @@ body[class*="template--v2"] .rvi-swiper::before {
 }
 
 @media screen and (max-width: 999px) {
+  body[class*="template--v2"] .bot-swiper,
+  body[class*="template--v2"] .mfc-swiper,
+  body[class*="template--v2"] .yml-swiper,
+  body[class*="template--v2"] .rvi-swiper {
+    padding-top: 48px;
+  }
+
   body[class*="template--v2"] .bot-swiper::before,
   body[class*="template--v2"] .mfc-swiper::before,
   body[class*="template--v2"] .yml-swiper::before,
   body[class*="template--v2"] .rvi-swiper::before {
-    font-size: 13px;
+    font-size: 24px;
     padding-left: 16px;
   }
 }

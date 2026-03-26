@@ -25,11 +25,10 @@
         <div class="product-benefit__media">
           <video
             class="product-benefit__video"
-            autoplay
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="none"
             poster="{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 750 }}{%- endif -%}"
           >
             {%- for source in block.settings.video.sources -%}
@@ -42,11 +41,10 @@
         <div class="product-benefit__media">
           <video
             class="product-benefit__video"
-            autoplay
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="none"
             poster="{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 750 }}{%- endif -%}"
           >
             <source src="{{ block.settings.video_url }}" type="video/mp4">
