@@ -1739,6 +1739,27 @@ body[class*="template--v2"] product-recommendations h4 {
   display: none !important;
 }
 
+/* Restyle Featured-Collection-BG heading to match benefit heading style.
+ * The Liquid uses | upcase so text is uppercase in HTML — use CSS to
+ * force sentence case visually. */
+body[class*="template--v2"] .collection .ml-\[32px\] h4.h4 {
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: lowercase !important;
+  color: #000 !important;
+}
+body[class*="template--v2"] .collection .ml-\[32px\] h4.h4::first-letter {
+  text-transform: uppercase !important;
+}
+
+@media screen and (max-width: 999px) {
+  body[class*="template--v2"] .collection .ml-\[32px\] h4.h4 {
+    font-size: 24px !important;
+  }
+}
+
 /* Collapse the 60px header spacer wrapper in recently-viewed */
 body[class*="template--v2"] .rvi-swiper ~ .flex,
 body[class*="template--v2"] .bg-white > .flex:has(> h4) {
