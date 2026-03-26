@@ -1775,9 +1775,8 @@ body[class*="template--v2"] .bg-white > .flex:has(> h4) {
   display: none !important;
 }
 
-/* Add v2-styled labels via ::before on the carousel containers
- * Typography matches .product-benefit__heading for visual consistency */
-body[class*="template--v2"] .bot-swiper,
+/* Add v2-styled labels via ::before on carousel containers (not bot-swiper,
+ * which now has its own Liquid-rendered heading with full settings). */
 body[class*="template--v2"] .mfc-swiper,
 body[class*="template--v2"] .yml-swiper,
 body[class*="template--v2"] .rvi-swiper {
@@ -1785,7 +1784,6 @@ body[class*="template--v2"] .rvi-swiper {
   position: relative;
 }
 
-body[class*="template--v2"] .bot-swiper::before,
 body[class*="template--v2"] .mfc-swiper::before,
 body[class*="template--v2"] .yml-swiper::before,
 body[class*="template--v2"] .rvi-swiper::before {
@@ -1801,10 +1799,6 @@ body[class*="template--v2"] .rvi-swiper::before {
   padding: 12px 0 0;
 }
 
-body[class*="template--v2"] .bot-swiper::before {
-  content: "Complete your order";
-}
-
 body[class*="template--v2"] .mfc-swiper::before,
 body[class*="template--v2"] .yml-swiper::before {
   content: "You might also like";
@@ -1814,15 +1808,26 @@ body[class*="template--v2"] .rvi-swiper::before {
   content: "Recently viewed";
 }
 
+/* bot-swiper: remove old ::before (heading is now in Liquid) and reset padding */
+body[class*="template--v2"] .bot-swiper {
+  padding-top: 0;
+}
+body[class*="template--v2"] .bot-swiper::before {
+  display: none;
+}
+
+/* Force single-row carousel on mobile for bot-swiper */
+body[class*="template--v2"] .bot-swiper .swiper-wrapper {
+  flex-wrap: nowrap !important;
+}
+
 @media screen and (max-width: 999px) {
-  body[class*="template--v2"] .bot-swiper,
   body[class*="template--v2"] .mfc-swiper,
   body[class*="template--v2"] .yml-swiper,
   body[class*="template--v2"] .rvi-swiper {
     padding-top: 48px;
   }
 
-  body[class*="template--v2"] .bot-swiper::before,
   body[class*="template--v2"] .mfc-swiper::before,
   body[class*="template--v2"] .yml-swiper::before,
   body[class*="template--v2"] .rvi-swiper::before {
