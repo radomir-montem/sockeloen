@@ -45,29 +45,27 @@
   transform: translateX(0);
 }
 
-/* Reviews.io badge ribbon */
+/* Reviews.io badge ribbon — single line, no background */
 
 .reviews-masonry__ribbon {
   display: inline-flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
   color: inherit;
-  padding: 14px 18px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-  transition: box-shadow 0.2s ease;
+  padding: 0;
+  background: none;
+  transition: opacity 0.2s ease;
 }
 
 .reviews-masonry__ribbon:hover {
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  opacity: 0.75;
 }
 
 .reviews-masonry__ribbon-logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .reviews-masonry__ribbon-logo svg {
@@ -75,7 +73,7 @@
 }
 
 .reviews-masonry__ribbon-brand {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
   color: #000;
   letter-spacing: 0.02em;
@@ -83,8 +81,8 @@
 
 .reviews-masonry__ribbon-rating {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
 }
 
 .reviews-masonry__ribbon-stars {
@@ -93,8 +91,8 @@
 }
 
 .reviews-masonry__ribbon-star {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   display: block;
   flex-shrink: 0;
 }
@@ -103,6 +101,7 @@
   font-size: 13px;
   color: rgba(0, 0, 0, 0.55);
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .reviews-masonry__ribbon-text strong {
