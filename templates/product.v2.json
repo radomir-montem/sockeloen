@@ -169,12 +169,128 @@
     "recommendations": {
       "type": "product-recommendations",
       "settings": {}
+    },
+    "product_exploder_4gMj38": {
+      "type": "product-exploder",
+      "blocks": {
+        "hotspot_QEDVDk": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 50,
+            "hotspot_y": 50,
+            "heading": "",
+            "description": ""
+          }
+        },
+        "hotspot_cKCjnr": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 50,
+            "hotspot_y": 50,
+            "heading": "",
+            "description": ""
+          }
+        },
+        "hotspot_YfjpGW": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 50,
+            "hotspot_y": 50,
+            "heading": "",
+            "description": ""
+          }
+        },
+        "hotspot_bBQhNX": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 50,
+            "hotspot_y": 50,
+            "heading": "",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_QEDVDk",
+        "hotspot_cKCjnr",
+        "hotspot_YfjpGW",
+        "hotspot_bBQhNX"
+      ],
+      "name": "Product Exploder",
+      "settings": {
+        "heading": "Let's take a look",
+        "heading_italic": "inside the sock",
+        "subtitle": "",
+        "background_color": "#f5f1eb",
+        "text_color": "#000000",
+        "accent_color": "#F76503",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "reviews_masonry_NwNWHh": {
+      "type": "reviews-masonry",
+      "name": "Reviews Masonry",
+      "settings": {
+        "heading": "What our",
+        "heading_italic": "riders say?",
+        "subtitle": "Real feedback from cyclists who ride in Sockeloen socks every day.",
+        "review_count": "4.51/5 based on 2,376 reviews",
+        "min_rating": 4,
+        "background_color": "#f5f1eb",
+        "accent_color": "#F76503",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "satisfaction_guarantee_6fcj3K": {
+      "type": "satisfaction-guarantee",
+      "name": "Satisfaction Guarantee",
+      "settings": {
+        "heading": "Not 100% satisfied?",
+        "heading_italic": "No problem!",
+        "body": "<p>At Sockeloen, the customer is king. We stand behind every pair of socks we make with our 100% satisfaction guarantee. Not happy with your order? Simply reach out within 30 days and we'll make it right — whether that's an exchange, store credit, or a full refund. No hassle, no fine print.</p>",
+        "button_text": "Shop now",
+        "button_url": "",
+        "background_color": "#f3f3f3",
+        "text_color": "#000000",
+        "accent_color": "#F76503",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "bought_often_together_M9V6Ya": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
+      "settings": {
+        "product_source": "recently_viewed",
+        "product_list": [],
+        "collection": "",
+        "max_products": 8,
+        "heading": "recently",
+        "heading_italic": "Viewed",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
     }
   },
   "order": [
     "main",
     "benefits",
     "reviews",
-    "recommendations"
+    "recommendations",
+    "product_exploder_4gMj38",
+    "reviews_masonry_NwNWHh",
+    "satisfaction_guarantee_6fcj3K",
+    "bought_often_together_M9V6Ya"
   ]
 }
