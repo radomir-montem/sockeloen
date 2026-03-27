@@ -1408,85 +1408,50 @@
                 {%- endif -%}
               {%- endfor -%}
 
-              {%- comment -%} USP accordions — hardcoded, closed by default {%- endcomment -%}
-              <div class="product__accordion accordion product-v2__usp-accordion" >
-                <details>
-                  <summary>
-                    <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">Free shipping</h2>
-                    </div>
-                    {% render 'icon-caret' %}
-                  </summary>
-                  <div class="accordion__content rte">
-                    <p>We offer free shipping on all orders above €75. Orders placed before 15:00 CET on working days are shipped the same day. Delivery takes 1-3 business days within the EU.</p>
+              {%- comment -%} USP accordions — editable via theme editor blocks {%- endcomment -%}
+              {%- for inner_block in section.blocks -%}
+                {%- if inner_block.type == 'usp_accordion' -%}
+                  <div class="product__accordion accordion product-v2__usp-accordion" {{ inner_block.shopify_attributes }}>
+                    <details>
+                      <summary>
+                        <div class="summary__title">
+                          <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ inner_block.settings.heading }}</h2>
+                        </div>
+                        {% render 'icon-caret' %}
+                      </summary>
+                      <div class="accordion__content rte">
+                        {{ inner_block.settings.content }}
+                      </div>
+                    </details>
                   </div>
-                </details>
-              </div>
-
-              <div class="product__accordion accordion product-v2__usp-accordion">
-                <details>
-                  <summary>
-                    <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">100% Satisfaction guarantee</h2>
-                    </div>
-                    {% render 'icon-caret' %}
-                  </summary>
-                  <div class="accordion__content rte">
-                    <p>Not satisfied? We offer hassle-free returns within 30 days of purchase. No questions asked. Your satisfaction is our priority.</p>
-                  </div>
-                </details>
-              </div>
-
-              <div class="product__accordion accordion product-v2__usp-accordion">
-                <details>
-                  <summary>
-                    <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">Born in the peloton</h2>
-                    </div>
-                    {% render 'icon-caret' %}
-                  </summary>
-                  <div class="accordion__content rte">
-                    <p>Sockeloen socks are designed and tested by cyclists, for cyclists. Engineered for performance with premium materials that keep your feet comfortable on every ride.</p>
-                  </div>
-                </details>
-              </div>
-
-              <div class="product__accordion accordion product-v2__usp-accordion">
-                <details>
-                  <summary>
-                    <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">Customer is king</h2>
-                    </div>
-                    {% render 'icon-caret' %}
-                  </summary>
-                  <div class="accordion__content rte">
-                    <p>We go above and beyond for our customers. From personal support to fast delivery, we make sure you have the best experience possible.</p>
-                  </div>
-                </details>
-              </div>
+                {%- endif -%}
+              {%- endfor -%}
 
             {%- when 'collapsible_tab' -%}
-              {%- comment -%} Keep Description tab, hide product-specific tabs (replaced by USP accordions above) {%- endcomment -%}
-              {% if block.settings.heading == 'Description'
-                or block.settings.heading == 'Beschrijving'
-                or block.settings.heading == 'Beschreibung'
-              %}
-                <div class="product__accordion accordion quick-add-hidden product-v2__usp-accordion" {{ block.shopify_attributes }}>
-                  <details id="Details-{{ block.id }}-{{ section.id }}">
-                    <summary>
-                      <div class="summary__title">
-                        <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">
-                          {{ block.settings.heading | default: block.settings.page.title }}
-                        </h2>
-                      </div>
-                      {% render 'icon-caret' %}
-                    </summary>
-                    <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                      {{ product.description }}
+              {%- comment -%} Description tab renders product.description; other collapsible tabs render their own content {%- endcomment -%}
+              <div class="product__accordion accordion quick-add-hidden product-v2__usp-accordion" {{ block.shopify_attributes }}>
+                <details id="Details-{{ block.id }}-{{ section.id }}">
+                  <summary>
+                    <div class="summary__title">
+                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">
+                        {{ block.settings.heading | default: block.settings.page.title }}
+                      </h2>
                     </div>
-                  </details>
-                </div>
-              {% endif %}
+                    {% render 'icon-caret' %}
+                  </summary>
+                  <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+                    {%- if block.settings.heading == 'Description'
+                      or block.settings.heading == 'Beschrijving'
+                      or block.settings.heading == 'Beschreibung' -%}
+                      {{ product.description }}
+                    {%- elsif block.settings.page != blank -%}
+                      {{ block.settings.page.content }}
+                    {%- else -%}
+                      {{ block.settings.content }}
+                    {%- endif -%}
+                  </div>
+                </details>
+              </div>
 
             {%- when 'usps' -%}
               <div class="!grid grid-cols-2 gap-y-4 mb-6">
@@ -1956,6 +1921,23 @@
           "unit": "px",
           "label": "Logo size",
           "default": 26
+        }
+      ]
+    },
+    {
+      "type": "usp_accordion",
+      "name": "USP accordion row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "USP"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
         }
       ]
     },
