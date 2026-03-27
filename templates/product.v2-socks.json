@@ -78,12 +78,44 @@
             "page": "",
             "logos_size": 26
           }
+        },
+        "usp_free_shipping": {
+          "type": "usp_accordion",
+          "settings": {
+            "heading": "Free shipping",
+            "content": "<p>We offer free shipping on all orders above €75. Orders placed before 15:00 CET on working days are shipped the same day. Delivery takes 1-3 business days within the EU.</p>"
+          }
+        },
+        "usp_satisfaction": {
+          "type": "usp_accordion",
+          "settings": {
+            "heading": "100% Satisfaction guarantee",
+            "content": "<p>Not satisfied? We offer hassle-free returns within 30 days of purchase. No questions asked. Your satisfaction is our priority.</p>"
+          }
+        },
+        "usp_born_peloton": {
+          "type": "usp_accordion",
+          "settings": {
+            "heading": "Born in the peloton",
+            "content": "<p>Sockeloen socks are designed and tested by cyclists, for cyclists. Engineered for performance with premium materials that keep your feet comfortable on every ride.</p>"
+          }
+        },
+        "usp_customer_king": {
+          "type": "usp_accordion",
+          "settings": {
+            "heading": "Customer is king",
+            "content": "<p>We go above and beyond for our customers. From personal support to fast delivery, we make sure you have the best experience possible.</p>"
+          }
         }
       },
       "block_order": [
         "variant_picker",
         "quantity_selector",
         "shipping_info",
+        "usp_free_shipping",
+        "usp_satisfaction",
+        "usp_born_peloton",
+        "usp_customer_king",
         "description",
         "materials",
         "height",
