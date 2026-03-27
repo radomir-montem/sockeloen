@@ -148,9 +148,10 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "heading": "Product benefit",
-            "heading_italic": "",
-            "description": ""
+            "image": "shopify://shop_images/Tour_home_banner.png",
+            "heading": "No sweaty, stinky feet.",
+            "heading_italic": "Never again.",
+            "description": "<p>Sockeloen is more than just socks for the Mathieu van der Poels and Demi Vollerings of this planet. Our range includes countless socks for town-sign-sprinters, good-weather cyclists, the adventurers and even for the couch potatoes among us.When you want to ride comfortable, without pressure points, sweety or painfull feet: Sockeloen cycling socks are what you need.</p>"
           }
         }
       },
