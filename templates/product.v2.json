@@ -100,6 +100,41 @@
     },
     "benefits": {
       "type": "product-benefits",
+      "blocks": {
+        "benefit_fcWnXU": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "image": "shopify://shop_images/Sockeloen_-04_octobre_2025-61_1.jpg",
+            "heading": "Worn by",
+            "heading_italic": "World Champions",
+            "description": "<p>Some of the best male and female riders in the world choose Sockeloen, because of the materials, because of the wind tunnel test results, but often simply because they think they look great.</p>"
+          }
+        },
+        "benefit_BKLxKT": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "heading": "Product benefit",
+            "heading_italic": "",
+            "description": ""
+          }
+        },
+        "benefit_igt7xh": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "heading": "Product benefit",
+            "heading_italic": "",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "benefit_fcWnXU",
+        "benefit_BKLxKT",
+        "benefit_igt7xh"
+      ],
       "settings": {
         "background_color": "#ffffff",
         "text_color": "#000000",
