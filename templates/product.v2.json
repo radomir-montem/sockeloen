@@ -55,46 +55,6 @@
             "page": "",
             "logos_size": 26
           }
-        },
-        "materials": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Materials",
-            "icon": "lightning_bolt",
-            "content": "{{ product.metafields.custom.materials | metafield_tag }}",
-            "page": "",
-            "logos_size": 26
-          }
-        },
-        "height": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Height",
-            "icon": "ruler",
-            "content": "<p>{{ product.metafields.custom.height.value }}</p>",
-            "page": "",
-            "logos_size": 26
-          }
-        },
-        "knit_structure": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Knit Structure",
-            "icon": "carrot",
-            "content": "<p>{{ product.metafields.custom.knit_structure.value }}</p>",
-            "page": "",
-            "logos_size": 26
-          }
-        },
-        "type_of_sock": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Type of Sock",
-            "icon": "shoe",
-            "content": "<p>{{ product.metafields.custom.type_of_sock.value }}</p>",
-            "page": "",
-            "logos_size": 26
-          }
         }
       },
       "block_order": [
@@ -104,11 +64,7 @@
         "size_guide_EgJ68Q",
         "secure_checkout_WRKfCy",
         "shipping_info",
-        "description",
-        "materials",
-        "height",
-        "knit_structure",
-        "type_of_sock"
+        "description"
       ],
       "settings": {
         "social_proof_type": "athletes",
@@ -150,8 +106,8 @@
         "product_list": [],
         "collection": "",
         "max_products": 8,
-        "heading": "Other riders",
-        "heading_italic": "also bought",
+        "heading": "Complete",
+        "heading_italic": "your order",
         "heading_size": 30,
         "heading_weight": "800",
         "heading_color": "#000000",
@@ -184,8 +140,8 @@
             "video_url": "",
             "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1.png",
             "heading": "Make your calves look",
-            "heading_italic": "like Weapons.",
-            "description": "<p>The reason Sockeloen was founded. Most cycling socks didn't have the right sokheight. And mayb even worse, some tend to fall dow to your ankles. A nightmare. We developed a very stretchable sock, with the perfect sockheight, that never falls down. Make your legs look like the weapons they really are.</p>"
+            "heading_italic": "like weapons.",
+            "description": "<p>The reason Jasper Ockeloen founded Sockeloen. Most cycling socks don't have the perfect height. And even worse, some tend to fall down to your ankles. Your biggest nightmare. We developed the perfect fitting sock, that has the perfect tightness, is extremely stretchable and  makes your calves look like the weapons they really are.</p>"
           }
         },
         "benefit_iqDerf": {
@@ -219,8 +175,8 @@
           "settings": {
             "hotspot_x": 42,
             "hotspot_y": 24,
-            "heading": "Sockeloen Cuff",
-            "description": "<p>The Ultra Elastic super cuff makes sure this sock is always exactly on the right spott and won't fall down. We created this by sourcing the best elastane of Europe and mixed it into this sock.</p>"
+            "heading": "De Sockeloen super Cuff",
+            "description": "<p>Our ultra elastic cuff makes sure your sock is always exactly on the right spott and won't falls down. We created this by soursing the best elastane of Europe and mixed it into the sock.</p>"
           }
         },
         "hotspot_ywLkK6": {
@@ -228,8 +184,8 @@
           "settings": {
             "hotspot_x": 54,
             "hotspot_y": 36,
-            "heading": "Sockeloen Mesh",
-            "description": "<p>The o-mesh knitting structure combines: flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>"
+            "heading": "Fine knitted elastic leg",
+            "description": ""
           }
         },
         "hotspot_fWHm4w": {
@@ -237,26 +193,26 @@
           "settings": {
             "hotspot_x": 74,
             "hotspot_y": 60,
-            "heading": "Sockeloen Heels and Toes",
-            "description": "<p>To ensure a long lifetime of these high performance cycling socks we reinforced the heels and toes with a specific extra Polyamide yarn.</p>"
+            "heading": "Extra strong Heels and Toes",
+            "description": ""
           }
         },
         "hotspot_rxhE9M": {
           "type": "hotspot",
           "settings": {
             "hotspot_x": 49,
-            "hotspot_y": 66,
-            "heading": "Sockeloen Yarns",
-            "description": "<p>Through the whole sock we used anti-bacterial Q-skin yarns, blended with polyamide and elastane to create the perfect yarn blend.</p>"
+            "hotspot_y": 76,
+            "heading": "Recycled Material",
+            "description": "<p>Through the whole sock.</p>"
           }
         },
         "hotspot_CDyQBP": {
           "type": "hotspot",
           "settings": {
-            "hotspot_x": 30,
-            "hotspot_y": 74,
-            "heading": "Sockeloen Seemless Toe",
-            "description": "<p>To avoid irritating, or high pressure points inside your cycling shoe we work with a seemless toe without any area's that could irritate your toes while riding.</p>"
+            "hotspot_x": 26,
+            "hotspot_y": 80,
+            "heading": "Seemless Toe construction",
+            "description": ""
           }
         }
       },
@@ -271,7 +227,7 @@
       "settings": {
         "heading": "Let's take a look",
         "heading_italic": "inside the sock",
-        "subtitle": "<p>Discover what makes our socks truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
+        "subtitle": "<p>Discover what makes our socks truly special. From the premium materials we select to the meticulous craftsmanship in every pair, we've engineered comfort that lasts.</p>",
         "background_color": "#ffffff",
         "text_color": "#000000",
         "accent_color": "#f76503",
@@ -348,7 +304,7 @@
       "settings": {
         "heading": "Not 100% satisfied?",
         "heading_italic": "No problem!",
-        "body": "<p>At Sockeloen, the customer is king. We stand behind every pair of socks we make with our 100% satisfaction guarantee. Not happy with your order? Simply reach out within 30 days and we'll make it right.</p>",
+        "body": "<p>At Sockeloen, the customer is king. We stand behind every pair of socks we make with our 100% satisfaction guarantee. Not happy with your order? Simply reach out within 30 days and we'll make it right — whether that's an exchange, store credit, or a full refund. No hassle, no fine print.</p>",
         "button_text": "Shop now",
         "button_url": "shopify://collections/all",
         "background_color": "#f3f3f3",
@@ -393,35 +349,35 @@
           "type": "faq",
           "settings": {
             "question": "What size cycling socks should I choose?",
-            "answer": "<p>Our socks come in 36-42 and 43-48. If you're between sizes, we recommend sizing up for a more comfortable fit. Check our size guide on for detailed size tabels.</p>"
+            "answer": "<p>Our socks come in S/M (36-41) and L/XL (42-47). If you're between sizes, we recommend sizing up for a more comfortable fit. Check our size guide on each product page for detailed measurements.</p>"
           }
         },
         "faq_CedqnJ": {
           "type": "faq",
           "settings": {
             "question": "What material are Sockeloen socks made of?",
-            "answer": "<p>Our cycling socks are made from a premium blend of Q-skin, polyamide, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>"
+            "answer": "<p>Our cycling socks are made from a premium blend of recycled polyamide, polypropylene, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>"
           }
         },
         "faq_c3iNnN": {
           "type": "faq",
           "settings": {
             "question": "How should I wash my cycling socks?",
-            "answer": "<p>Machine wash at 30°C inside out. Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry, air dry for best results. This keeps the fibers intact and your socks performing at their best.</p>"
+            "answer": "<p>Machine wash at 30°C inside out. Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry — air dry for best results. This keeps the fibers intact and your socks performing at their best.</p>"
           }
         },
         "faq_r4cP6H": {
           "type": "faq",
           "settings": {
             "question": "How long do Sockeloen socks last?",
-            "answer": "<p>With proper care, our socks typically last 2-5 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>"
+            "answer": "<p>With proper care, our socks typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>"
           }
         },
         "faq_rVwptf": {
           "type": "faq",
           "settings": {
             "question": "Do you offer free shipping?",
-            "answer": "<p>Yes! We offer free shipping on all orders over €75 within Europe. You can go for manual or express shipping.</p>"
+            "answer": "<p>Yes! We offer free shipping on all orders over €50 within Europe. Orders are typically dispatched within 1-2 business days and delivered within 2-5 working days depending on your location.</p>"
           }
         },
         "faq_66kaKG": {
@@ -435,7 +391,7 @@
           "type": "faq",
           "settings": {
             "question": "Why are cycling socks longer than regular socks?",
-            "answer": "<p>The taller cuff cmakes your legs look like weapons. It also offers sun protection. Most pro cyclists prefer a cuff height of 19-21cm.</p>"
+            "answer": "<p>The taller cuff provides aerodynamic benefits by creating a smoother airflow over the leg. It also offers sun protection and prevents chafing from shoe edges. Most pro cyclists prefer a cuff height of 15-20cm.</p>"
           }
         },
         "faq_PE7adc": {
