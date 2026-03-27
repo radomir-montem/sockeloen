@@ -133,6 +133,15 @@
     "product_exploder_4gMj38": {
       "type": "product-exploder",
       "blocks": {
+        "hotspot_DcBjXY": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 44,
+            "hotspot_y": 21,
+            "heading": "Sockeloen Cuff",
+            "description": "<p>The Ultra Elastic super cuff makes sure this sock is always exactly on the right spott and won't fall down. We created this by sourcing the best elastane of Europe and mixed it into this sock.</p>"
+          }
+        },
         "hotspot_QEDVDk": {
           "type": "hotspot",
           "settings": {
@@ -171,6 +180,7 @@
         }
       },
       "block_order": [
+        "hotspot_DcBjXY",
         "hotspot_QEDVDk",
         "hotspot_cKCjnr",
         "hotspot_YfjpGW",
