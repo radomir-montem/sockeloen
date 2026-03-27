@@ -145,10 +145,10 @@
         "hotspot_QEDVDk": {
           "type": "hotspot",
           "settings": {
-            "hotspot_x": 50,
-            "hotspot_y": 50,
-            "heading": "",
-            "description": ""
+            "hotspot_x": 54,
+            "hotspot_y": 37,
+            "heading": "Sockeloen Mesh",
+            "description": "<p>The o-mesh knitting structure combines: flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>"
           }
         },
         "hotspot_cKCjnr": {
@@ -213,29 +213,6 @@
         "padding_bottom": 60
       }
     },
-    "bought_often_together_txwAy7": {
-      "type": "bought-often-together",
-      "name": "Product Carousel",
-      "settings": {
-        "product_source": "none",
-        "product_list": [],
-        "collection": "sale",
-        "max_products": 8,
-        "heading": "currently on",
-        "heading_italic": "Sale",
-        "heading_size": 30,
-        "heading_weight": "800",
-        "heading_color": "#000000",
-        "heading_italic_color": "#f76503",
-        "heading_alignment": "center",
-        "image_ratio": "portrait",
-        "desktop_columns": 4,
-        "mobile_columns": 2,
-        "background_color": "#ffffff",
-        "padding_top": 20,
-        "padding_bottom": 0
-      }
-    },
     "satisfaction_guarantee_6fcj3K": {
       "type": "satisfaction-guarantee",
       "name": "Satisfaction Guarantee",
@@ -252,16 +229,16 @@
         "padding_bottom": 80
       }
     },
-    "bought_often_together_M9V6Ya": {
+    "bought_often_together_txwAy7": {
       "type": "bought-often-together",
       "name": "Product Carousel",
       "settings": {
-        "product_source": "recently_viewed",
+        "product_source": "none",
         "product_list": [],
-        "collection": "",
+        "collection": "sale",
         "max_products": 8,
-        "heading": "recently",
-        "heading_italic": "Viewed",
+        "heading": "currently on",
+        "heading_italic": "Sale",
         "heading_size": 30,
         "heading_weight": "800",
         "heading_color": "#000000",
@@ -344,6 +321,29 @@
         "padding_top": 60,
         "padding_bottom": 60
       }
+    },
+    "bought_often_together_M9V6Ya": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
+      "settings": {
+        "product_source": "recently_viewed",
+        "product_list": [],
+        "collection": "",
+        "max_products": 8,
+        "heading": "recently",
+        "heading_italic": "Viewed",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
@@ -352,10 +352,10 @@
     "bought_often_together_tBPpcp",
     "product_exploder_4gMj38",
     "reviews_masonry_NwNWHh",
-    "bought_often_together_txwAy7",
     "satisfaction_guarantee_6fcj3K",
-    "bought_often_together_M9V6Ya",
+    "bought_often_together_txwAy7",
     "recommendations",
-    "product_faq_NDDGQE"
+    "product_faq_NDDGQE",
+    "bought_often_together_M9V6Ya"
   ]
 }
