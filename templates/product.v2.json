@@ -16,7 +16,7 @@
           "type": "variant_picker",
           "settings": {
             "picker_type": "button",
-            "color_swatch_style": "colors"
+            "color_swatch_style": "images"
           }
         },
         "aov_ai_bundle_offer_volume_RqqnNt": {
