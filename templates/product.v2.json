@@ -55,56 +55,6 @@
             "page": "",
             "logos_size": 26
           }
-        },
-        "collapsible_tab_cA3BtD": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Free Shipping",
-            "icon": "none",
-            "content": "<p>We offer free shipping on all orders above €75. Orders placed before 15:00 CET on working days are shipped the same day. Delivery takes 1-3 business days within the EU.</p>",
-            "page": "",
-            "logos_size": 26
-          }
-        },
-        "materials": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Materials",
-            "icon": "lightning_bolt",
-            "content": "{{ product.metafields.custom.materials | metafield_tag }}",
-            "page": "",
-            "logos_size": 26
-          }
-        },
-        "height": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Height",
-            "icon": "ruler",
-            "content": "<p>{{ product.metafields.custom.height.value }}</p>",
-            "page": "",
-            "logos_size": 26
-          }
-        },
-        "knit_structure": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Knit Structure",
-            "icon": "carrot",
-            "content": "<p>{{ product.metafields.custom.knit_structure.value }}</p>",
-            "page": "",
-            "logos_size": 26
-          }
-        },
-        "type_of_sock": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Type of Sock",
-            "icon": "shoe",
-            "content": "<p>{{ product.metafields.custom.type_of_sock.value }}</p>",
-            "page": "",
-            "logos_size": 26
-          }
         }
       },
       "block_order": [
@@ -114,12 +64,7 @@
         "size_guide_irnJtn",
         "shipping_info",
         "secure_checkout_pPnF4r",
-        "description",
-        "collapsible_tab_cA3BtD",
-        "materials",
-        "height",
-        "knit_structure",
-        "type_of_sock"
+        "description"
       ],
       "settings": {
         "social_proof_type": "athletes",
@@ -324,6 +269,71 @@
       "type": "product-recommendations",
       "disabled": true,
       "settings": {}
+    },
+    "product_faq_NDDGQE": {
+      "type": "product-faq",
+      "blocks": {
+        "faq_9RzfCj": {
+          "type": "faq",
+          "settings": {
+            "question": "What size cycling socks should I choose?",
+            "answer": "<p>Our socks come in S/M (36-41) and L/XL (42-47). If you're between sizes, we recommend sizing up for a more comfortable fit. Check our size guide on each product page for detailed measurements.</p>"
+          }
+        },
+        "faq_7idmHH": {
+          "type": "faq",
+          "settings": {
+            "question": "What material are Sockeloen socks made of?",
+            "answer": "<p>Our cycling socks are made from a premium blend of recycled polyamide, polypropylene, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>"
+          }
+        },
+        "faq_YhiEwH": {
+          "type": "faq",
+          "settings": {
+            "question": "How should I wash my cycling socks?",
+            "answer": "<p>Machine wash at 30°C inside out. Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry — air dry for best results. This keeps the fibers intact and your socks performing at their best.</p>"
+          }
+        },
+        "faq_NLxUKi": {
+          "type": "faq",
+          "settings": {
+            "question": "How long do Sockeloen socks last?",
+            "answer": "<p>With proper care, our socks typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>"
+          }
+        },
+        "faq_wRWWf3": {
+          "type": "faq",
+          "settings": {
+            "question": "Why are cycling socks longer than regular socks?",
+            "answer": "<p>The taller cuff provides aerodynamic benefits by creating a smoother airflow over the leg. It also offers sun protection and prevents chafing from shoe edges. Most pro cyclists prefer a cuff height of 15-20cm.</p>"
+          }
+        },
+        "faq_JgMmFK": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use these socks for other sports?",
+            "answer": "<p>Absolutely! While designed for cycling, our socks perform great for running, hiking, and everyday wear. The moisture-wicking properties and comfortable fit make them versatile for any activity.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_9RzfCj",
+        "faq_7idmHH",
+        "faq_YhiEwH",
+        "faq_NLxUKi",
+        "faq_wRWWf3",
+        "faq_JgMmFK"
+      ],
+      "name": "Product FAQ",
+      "settings": {
+        "heading": "Frequently asked",
+        "heading_italic": "questions",
+        "background_color": "#ffffff",
+        "text_color": "#000000",
+        "accent_color": "#F76503",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
@@ -335,6 +345,7 @@
     "bought_often_together_txwAy7",
     "satisfaction_guarantee_6fcj3K",
     "bought_often_together_M9V6Ya",
-    "recommendations"
+    "recommendations",
+    "product_faq_NDDGQE"
   ]
 }
