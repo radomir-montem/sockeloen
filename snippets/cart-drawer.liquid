@@ -69,7 +69,11 @@
         </div>
       {%- endif -%}
 
-      {%- comment -%} ===== HEADER ===== {%- endcomment -%}
+      {%- comment -%} ===== 2-COLUMN BODY (desktop: cross-sells left, cart right) ===== {%- endcomment -%}
+      <div class="drawer__body">
+        <div class="drawer__body-left">
+
+      {%- comment -%} ===== HEADER (inside cart column only) ===== {%- endcomment -%}
       <div class="drawer__header">
         <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
         <button
@@ -83,10 +87,6 @@
           </svg>
         </button>
       </div>
-
-      {%- comment -%} ===== 2-COLUMN BODY (desktop: cart left, cross-sells right) ===== {%- endcomment -%}
-      <div class="drawer__body">
-        <div class="drawer__body-left">
 
       {%- comment -%} ===== FREE SHIPPING BAR ===== {%- endcomment -%}
       {% if cart != empty %}
