@@ -176,19 +176,30 @@ async function fetch_upsells() {
     const response = await request.text()
     const innerHTML = new DOMParser().parseFromString(response, 'text/html')
 
+    /* Support both old (.upsell_list) and new (#cart-cross-sells) selectors */
+    const new_cross_sells = innerHTML.querySelector('#cart-cross-sells')
+    const actual_cross_sells = document.querySelector('#cart-cross-sells')
     const new_upsell_list = innerHTML.querySelector('.upsell_list')
     const actual_upsell_list = document.querySelector('.upsell_list')
-    actual_upsell_list.innerHTML = new_upsell_list.innerHTML
 
-    const upsells = actual_upsell_list.querySelectorAll('li')
-    const upsells_length = Array.from(upsells).length
-
-    const upsells_container = document.querySelector('.upsells_container')
-
-    if (upsells_length == 0) {
-      upsells_container.classList.add('!hidden')
-    } else {
-      upsells_container.classList.remove('!hidden')
+    if (actual_cross_sells && new_cross_sells) {
+      actual_cross_sells.innerHTML = new_cross_sells.innerHTML
+      const cards = actual_cross_sells.querySelectorAll('.cross-sell-card')
+      const upsells_container = document.querySelector('.upsells_container')
+      if (cards.length === 0 && upsells_container) {
+        upsells_container.classList.add('!hidden')
+      } else if (upsells_container) {
+        upsells_container.classList.remove('!hidden')
+      }
+    } else if (actual_upsell_list && new_upsell_list) {
+      actual_upsell_list.innerHTML = new_upsell_list.innerHTML
+      const upsells = actual_upsell_list.querySelectorAll('li')
+      const upsells_container = document.querySelector('.upsells_container')
+      if (upsells.length === 0 && upsells_container) {
+        upsells_container.classList.add('!hidden')
+      } else if (upsells_container) {
+        upsells_container.classList.remove('!hidden')
+      }
     }
   } catch (error) {
     console.log(error)

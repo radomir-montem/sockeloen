@@ -140,51 +140,44 @@ class CartItems extends HTMLElement {
   }
 
   updateProgressBar(finalPrice) {
-    
-
     const freeShipContainer = document.querySelectorAll('.free_shipping_container')
 
     if (freeShipContainer) {
       freeShipContainer.forEach(container => {
         const freeShipping = container.querySelector('.free_shipping')
+        if (!freeShipping) return
         const limit_price = freeShipping.dataset.limit
-        const free_prev_text = container.querySelector('.free_shipping_prev_text')
         const free_text = container.querySelector('.free_shipping_text')
         const progressBar = container.querySelector('.progressive_bar_shipping_price')
         const its_free = document.querySelector('#its_free')
-        const span_free = its_free.parentElement.querySelector('.money')
+        const span_free = its_free ? its_free.parentElement.querySelector('.money') : null
+        const reachedText = container.getAttribute('data-reached-text') || 'Your order qualifies for free shipping!'
+        const awayTemplate = container.getAttribute('data-away-text') || "You're <strong>__AMOUNT__</strong> away from <strong>FREE SHIPPING!</strong>"
+        const percent = Math.min((finalPrice / (limit_price * 100)) * 100, 100)
+
         if (finalPrice >= limit_price * 100) {
-          span_free.classList.add('!line-through')
-          its_free.classList.remove('hidden')
-          // freeShipping.classList.add('!hidden')
-          free_prev_text.classList.add('hidden')
-          free_text.classList.add('ml-0')
-          free_text.textContent = 'Your order is ready for free shipping!'
+          if (span_free) span_free.classList.add('!line-through')
+          if (its_free) its_free.classList.remove('hidden')
+          if (free_text) free_text.innerHTML = reachedText
+          progressBar.classList.remove('bg-[#F76503]')
           progressBar.classList.remove('bg-[#c0533f]')
-          progressBar.classList.add('bg-green')
-          progressBar.style.width = `${(finalPrice / (limit_price * 100)) * 100}%`
-          // freeShipping.innerHTML = formatMoney(limit_price*100 - finalPrice, )
+          progressBar.classList.add('bg-[#0395F6]')
+          progressBar.style.width = percent + '%'
           freeShipping.innerHTML = ''
         } else {
-          span_free.classList.remove('!line-through')
-          its_free.classList.add('hidden')
-          free_prev_text.classList.remove('hidden')
-          free_text.classList.remove('ml-0')
-          freeShipping.classList.remove('!hidden')
+          if (span_free) span_free.classList.remove('!line-through')
+          if (its_free) its_free.classList.add('hidden')
+          progressBar.classList.remove('bg-[#0395F6]')
           progressBar.classList.remove('bg-green')
-          progressBar.classList.add('bg-[#c0533f]')
-          free_text.innerHTML =
-            "away from <span class='font-bold text-black uppercase'>free shipping!</span>"
-          container.querySelector('.progressive_bar_shipping_price').style.width = `${
-            (finalPrice / (limit_price * 100)) * 100
-          }%`
-          freeShipping.innerHTML = ((limit_price * 100 - finalPrice) / 100).toLocaleString(
-            'en-UK',
-            {
-              style: 'currency',
-              currency: 'EUR',
-            },
-          )
+          progressBar.classList.remove('bg-[#c0533f]')
+          progressBar.classList.add('bg-[#F76503]')
+          progressBar.style.width = percent + '%'
+          const remaining = ((limit_price * 100 - finalPrice) / 100).toLocaleString('nl-NL', {
+            style: 'currency',
+            currency: 'EUR',
+          })
+          if (free_text) free_text.innerHTML = awayTemplate.replace('__AMOUNT__', remaining)
+          freeShipping.innerHTML = remaining
         }
       })
     }
