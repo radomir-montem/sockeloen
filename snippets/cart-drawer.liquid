@@ -84,6 +84,10 @@
         </button>
       </div>
 
+      {%- comment -%} ===== 2-COLUMN BODY (desktop: cart left, cross-sells right) ===== {%- endcomment -%}
+      <div class="drawer__body">
+        <div class="drawer__body-left">
+
       {%- comment -%} ===== FREE SHIPPING BAR ===== {%- endcomment -%}
       {% if cart != empty %}
         <div class="hide-when-container-is-empty drawer__shipping-bar" x-show="showShippingDetails">
@@ -262,8 +266,8 @@
           </details>
         {%- endif -%}
 
-        {%- comment -%} ===== CROSS-SELLS ===== {%- endcomment -%}
-        <div class="upsells_container">
+        {%- comment -%} ===== CROSS-SELLS (mobile only — inline) ===== {%- endcomment -%}
+        <div class="upsells_container upsells_container--mobile">
           {% render 'cart-cross-sells' %}
         </div>
 
@@ -301,9 +305,6 @@
               <a href="/checkout/" class="cart-drawer__checkout-btn">
                 {{- settings.cart_drawer_button_1_cta -}}
               </a>
-              <a href="{{ routes.cart_url }}" class="cart-drawer__viewcart-link">
-                {{- 'sections.cart.view_cart' | t -}}
-              </a>
               <div class="cart-drawer__payment-icons">
                 {% assign payMethods = 'shop_pay,visa,mastercard,apple_pay,google_pay,amex' | split: ',' %}
                 {% for payMethod in payMethods %}
@@ -315,6 +316,17 @@
             </div>
           </div>
         </div>
+
+        </div>{%- comment -%} close .drawer__body-left {%- endcomment -%}
+
+        {%- comment -%} ===== RIGHT COLUMN: CROSS-SELLS (desktop only) ===== {%- endcomment -%}
+        <div class="drawer__body-right upsells_container--desktop">
+          <div class="upsells_container" style="padding:0;">
+            {% render 'cart-cross-sells' %}
+          </div>
+        </div>
+
+      </div>{%- comment -%} close .drawer__body {%- endcomment -%}
       {% endif %}
     </div>
   </div>
