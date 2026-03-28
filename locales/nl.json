@@ -300,7 +300,16 @@
       "login": {
         "title": "Heb je een account?",
         "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Log in<\/a> om sneller af te rekenen."
-      }
+      },
+      "complete_your_kit": "Maak je kit compleet",
+      "best_seller": "Bestseller",
+      "free_shipping_reached": "Je bestelling komt in aanmerking voor gratis verzending!",
+      "free_shipping_away_html": "Nog <strong>{{ amount }}</strong> voor <strong>GRATIS VERZENDING!</strong>",
+      "shipping": "Verzending",
+      "shipping_free": "Gratis",
+      "select_size": "Kies maat",
+      "add": "Toevoegen",
+      "view_cart": "Bekijk winkelwagen"
     },
     "footer": {
       "payment": "Betaalmethoden"

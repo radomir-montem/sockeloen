@@ -301,7 +301,16 @@
       "login": {
         "title": "Have an account?",
         "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Log in<\/a> to check out faster."
-      }
+      },
+      "complete_your_kit": "Complete your kit",
+      "best_seller": "Best seller",
+      "free_shipping_reached": "Your order qualifies for free shipping!",
+      "free_shipping_away_html": "You're <strong>{{ amount }}</strong> away from <strong>FREE SHIPPING!</strong>",
+      "shipping": "Shipping",
+      "shipping_free": "Free",
+      "select_size": "Select size",
+      "add": "Add",
+      "view_cart": "View cart"
     },
     "footer": {
       "payment": "Payment methods"
