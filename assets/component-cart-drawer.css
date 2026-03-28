@@ -191,7 +191,7 @@ cart-drawer.is-empty .drawer__header {
 @media screen and (min-width: 750px) {
   .drawer__body-left {
     order: 2;
-    border-left: 1px solid #e5e5e5;
+    border-left: none;
   }
 }
 
@@ -578,14 +578,14 @@ cart-drawer-items::-webkit-scrollbar-thumb {
   background: #fff;
   border-radius: 0;
   overflow: hidden;
-  border: 2px solid #e5e5e5;
+  border: 2px solid transparent;
   display: flex;
   flex-direction: column;
   transition: border-color 0.2s ease;
 }
 
 .cross-sell-card:hover {
-  border-color: #bbb;
+  border-color: #e5e5e5;
 }
 
 .cross-sell-card__image-wrap {
