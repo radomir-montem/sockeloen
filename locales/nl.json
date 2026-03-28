@@ -192,7 +192,8 @@
       "size_guide_overshoes_intro": "Kies je overschoenmaat op basis van je schoenmaat (EU).",
       "size_guide_eu_shoe_size": "EU schoenmaat",
       "size_guide_sock_size": "Sokmaat",
-      "size_guide_measurement": "Afmeting"
+      "size_guide_measurement": "Afmeting",
+      "social_proof_text_html": "en <strong>+{{ count }}</strong> andere atleten rijden in {{ brand }}."
     },
     "modal": {
       "label": "Mediagalerij"

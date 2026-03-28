@@ -193,7 +193,8 @@
       "size_guide_overshoes_intro": "Choose your overshoe size based on your shoe size (EU).",
       "size_guide_eu_shoe_size": "EU shoe size",
       "size_guide_sock_size": "Sock size",
-      "size_guide_measurement": "Measurement"
+      "size_guide_measurement": "Measurement",
+      "social_proof_text_html": "and <strong>+{{ count }}</strong> other athletes ride in {{ brand }}."
     },
     "modal": {
       "label": "Media gallery"
