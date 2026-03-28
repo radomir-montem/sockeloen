@@ -116,7 +116,7 @@
           card.setAttribute('data-product-id', p.id);
 
           var imgSrc = p.featured_image ? p.featured_image.replace(/(\.[^.]+)$/, '_300x$1') : '';
-          var price = (p.price / 100).toLocaleString('nl-NL', {style:'currency', currency:'EUR'});
+          var price = (p.price / 100).toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
           card.innerHTML =
             '<div class="cross-sell-card__image-wrap">' +

@@ -141,10 +141,10 @@ if (!customElements.get('product-form')) {
                 (finalPrice / (limit_price * 100)) * 100
               }%`
               freeShipping.innerHTML = ((limit_price * 100 - finalPrice) / 100).toLocaleString(
-                'en-GB',
+                'nl-NL',
                 {
-                style: 'currency',
-                currency: 'EUR',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
                 },
               )
             }

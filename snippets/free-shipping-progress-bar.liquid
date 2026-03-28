@@ -10,7 +10,7 @@
       <span class="free_shipping_text ml-0">{{ 'sections.cart.free_shipping_reached' | t }}</span>
     {% else %}
       <span class="free_shipping_prev_text">{{ 'sections.cart.free_shipping_away_html' | t: amount: '' | split: '<strong>' | first }}</span>
-      <span data-limit="{{ settings.free_shipping }}" class="free_shipping font-bold text-black">{{ free_shipping | minus: cart.total_price | money }}</span>
+      <span data-limit="{{ settings.free_shipping }}" class="free_shipping font-bold text-black">{{ free_shipping | minus: cart.total_price | money_without_currency }}</span>
       <span class="free_shipping_text">away from <span class="font-bold text-black uppercase">FREE SHIPPING!</span></span>
     {% endif %}
   </h4>

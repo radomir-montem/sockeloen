@@ -1,0 +1,210 @@
+{% comment %}
+  Quick size picker popup for cart drawer cross-sells.
+  Rendered once inside cart-drawer, populated dynamically via JS.
+{% endcomment %}
+
+<div id="cart-size-picker" class="cart-size-picker" style="display:none;">
+  <div class="cart-size-picker__overlay" onclick="window.cartSizePicker.close()"></div>
+  <div class="cart-size-picker__panel">
+    <div class="cart-size-picker__header">
+      <div class="cart-size-picker__product-info">
+        <img id="cart-size-picker-img" src="" alt="" width="60" height="60" loading="lazy">
+        <div>
+          <p id="cart-size-picker-title" class="cart-size-picker__title"></p>
+          <p id="cart-size-picker-price" class="cart-size-picker__price"></p>
+        </div>
+      </div>
+      <button type="button" class="cart-size-picker__close" onclick="window.cartSizePicker.close()" aria-label="{{ 'accessibility.close' | t }}">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div id="cart-size-picker-options" class="cart-size-picker__options"></div>
+
+    <button type="button" id="cart-size-picker-confirm" class="cart-size-picker__confirm" disabled onclick="window.cartSizePicker.addToCart()">
+      {{ 'sections.cart.add' | t }}
+    </button>
+
+    <div id="cart-size-picker-loading" class="cart-size-picker__loading" style="display:none;">
+      <svg class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.cartSizePicker = {
+    data: null,
+    selectedVariantId: null,
+    selectedOptions: {},
+
+    open: function(btn) {
+      var self = this;
+      var url = btn.getAttribute('data-product-url');
+      var picker = document.getElementById('cart-size-picker');
+      var loading = document.getElementById('cart-size-picker-loading');
+      var optionsContainer = document.getElementById('cart-size-picker-options');
+      var confirmBtn = document.getElementById('cart-size-picker-confirm');
+
+      picker.style.display = 'flex';
+      loading.style.display = 'flex';
+      optionsContainer.innerHTML = '';
+      confirmBtn.disabled = true;
+      self.selectedVariantId = null;
+      self.selectedOptions = {};
+
+      fetch(url)
+        .then(function(r) { return r.json(); })
+        .then(function(json) {
+          var product = json.product;
+          self.data = product;
+
+          document.getElementById('cart-size-picker-img').src = product.image ? product.image.src.replace(/(\.[^.]+)$/, '_120x$1') : '';
+          document.getElementById('cart-size-picker-title').textContent = product.title;
+          document.getElementById('cart-size-picker-price').textContent = (product.variants[0].price / 100).toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+          loading.style.display = 'none';
+
+          /* If only default variant, just add directly */
+          if (product.variants.length === 1 && product.options.length === 1 && product.options[0] === 'Title') {
+            self.selectedVariantId = product.variants[0].id;
+            self.addToCart();
+            return;
+          }
+
+          /* Build option groups */
+          product.options.forEach(function(optionName, optIndex) {
+            var group = document.createElement('div');
+            group.className = 'cart-size-picker__option-group';
+
+            var label = document.createElement('p');
+            label.className = 'cart-size-picker__option-label';
+            label.textContent = optionName;
+            group.appendChild(label);
+
+            var buttons = document.createElement('div');
+            buttons.className = 'cart-size-picker__option-buttons';
+
+            var values = [];
+            product.variants.forEach(function(v) {
+              var val = v['option' + (optIndex + 1)];
+              if (val && values.indexOf(val) === -1 && v.available) {
+                values.push(val);
+              }
+            });
+
+            values.forEach(function(val) {
+              var btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'cart-size-picker__option-btn';
+              btn.textContent = val;
+              btn.setAttribute('data-option-index', optIndex);
+              btn.setAttribute('data-option-value', val);
+              btn.addEventListener('click', function() {
+                /* Deselect siblings */
+                buttons.querySelectorAll('.cart-size-picker__option-btn').forEach(function(b) {
+                  b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                self.selectedOptions[optIndex] = val;
+                self.matchVariant();
+              });
+              buttons.appendChild(btn);
+            });
+
+            group.appendChild(buttons);
+            optionsContainer.appendChild(group);
+          });
+
+          /* Auto-select if only one value per option */
+          product.options.forEach(function(optionName, optIndex) {
+            var btns = optionsContainer.querySelectorAll('[data-option-index="' + optIndex + '"]');
+            if (btns.length === 1) {
+              btns[0].click();
+            }
+          });
+        })
+        .catch(function(err) {
+          console.error('Size picker error:', err);
+          loading.style.display = 'none';
+        });
+    },
+
+    matchVariant: function() {
+      var self = this;
+      var product = self.data;
+      if (!product) return;
+
+      var confirmBtn = document.getElementById('cart-size-picker-confirm');
+
+      var match = product.variants.find(function(v) {
+        return product.options.every(function(opt, i) {
+          return self.selectedOptions[i] === v['option' + (i + 1)];
+        });
+      });
+
+      if (match && match.available) {
+        self.selectedVariantId = match.id;
+        confirmBtn.disabled = false;
+      } else {
+        self.selectedVariantId = null;
+        confirmBtn.disabled = true;
+      }
+    },
+
+    addToCart: function() {
+      var self = this;
+      if (!self.selectedVariantId) return;
+
+      var confirmBtn = document.getElementById('cart-size-picker-confirm');
+      var loading = document.getElementById('cart-size-picker-loading');
+      confirmBtn.disabled = true;
+      loading.style.display = 'flex';
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: [{ id: self.selectedVariantId, quantity: 1 }] })
+      })
+        .then(function(r) { return r.json(); })
+        .then(function() {
+          self.close();
+          /* Re-render cart drawer */
+          fetch('/?sections=cart-drawer,cart-icon-bubble')
+            .then(function(r) { return r.json(); })
+            .then(function(sections) {
+              var drawerEl = document.getElementById('CartDrawer');
+              if (drawerEl && sections['cart-drawer']) {
+                var parsed = new DOMParser().parseFromString(sections['cart-drawer'], 'text/html');
+                var newDrawer = parsed.getElementById('CartDrawer');
+                if (newDrawer) {
+                  drawerEl.innerHTML = newDrawer.innerHTML;
+                }
+              }
+              var bubble = document.getElementById('cart-icon-bubble');
+              if (bubble && sections['cart-icon-bubble']) {
+                var parsedBubble = new DOMParser().parseFromString(sections['cart-icon-bubble'], 'text/html');
+                var newBubble = parsedBubble.getElementById('cart-icon-bubble');
+                if (newBubble) {
+                  bubble.innerHTML = newBubble.innerHTML;
+                }
+              }
+              /* Remove is-empty class */
+              var cartDrawer = document.querySelector('cart-drawer');
+              if (cartDrawer) cartDrawer.classList.remove('is-empty');
+            });
+        })
+        .catch(function(err) {
+          console.error('Add to cart error:', err);
+          loading.style.display = 'none';
+          confirmBtn.disabled = false;
+        });
+    },
+
+    close: function() {
+      document.getElementById('cart-size-picker').style.display = 'none';
+      this.data = null;
+      this.selectedVariantId = null;
+      this.selectedOptions = {};
+    }
+  };
+</script>

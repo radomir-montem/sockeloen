@@ -173,8 +173,8 @@ class CartItems extends HTMLElement {
           progressBar.classList.add('bg-[#F76503]')
           progressBar.style.width = percent + '%'
           const remaining = ((limit_price * 100 - finalPrice) / 100).toLocaleString('nl-NL', {
-            style: 'currency',
-            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
           })
           if (free_text) free_text.innerHTML = awayTemplate.replace('__AMOUNT__', remaining)
           freeShipping.innerHTML = remaining

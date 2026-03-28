@@ -169,10 +169,10 @@
                           </div>
                           <div class="cart-item__price-wrapper">
                             {%- if item.original_line_price != item.final_line_price -%}
-                              <s class="cart-drawer-item__old-price">{{ item.original_line_price | money }}</s>
-                              <span class="cart-drawer-item__sale-price">{{ item.final_line_price | money }}</span>
+                              <s class="cart-drawer-item__old-price">{{ item.original_line_price | money_without_currency }}</s>
+                              <span class="cart-drawer-item__sale-price">{{ item.final_line_price | money_without_currency }}</span>
                             {%- else -%}
-                              <span>{{ item.original_line_price | money }}</span>
+                              <span>{{ item.original_line_price | money_without_currency }}</span>
                             {%- endif -%}
                           </div>
                         </div>
@@ -278,7 +278,7 @@
             <div class="cart-drawer__totals hide-when-container-is-empty" role="status">
               <div class="cart-drawer__total-row">
                 <span class="cart-drawer__total-label">{{ 'sections.cart.subtotal' | t }}</span>
-                <span class="cart-drawer__total-value">{{ cart.total_price | money }}</span>
+                <span class="cart-drawer__total-value">{{ cart.total_price | money_without_currency }}</span>
               </div>
               <div class="cart-drawer__total-row cart-drawer__total-row--shipping">
                 {% assign free_shipping_cents = settings.free_shipping | times: 100 %}
@@ -296,7 +296,7 @@
                   <li class="discounts__discount discounts__discount--end">
                     {%- render 'icon-discount' -%}
                     {{ discount.title }}
-                    (-{{ discount.total_allocated_amount | money }})
+                    (-{{ discount.total_allocated_amount | money_without_currency }})
                   </li>
                 {%- endfor -%}
               </ul>
