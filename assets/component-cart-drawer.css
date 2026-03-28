@@ -510,6 +510,16 @@ cart-drawer-items::-webkit-scrollbar-thumb {
   flex-shrink: 0;
 }
 
+/* Mobile: white bg section, extra bottom padding so half is behind sticky checkout */
+@media screen and (max-width: 749px) {
+  .upsells_container--mobile {
+    background: #fff;
+    margin: 0 -1.5rem;
+    padding: 0 1.5rem 120px;
+    margin-top: 16px;
+  }
+}
+
 .cart-cross-sells__wrapper {
   padding: 4px 0 12px;
 }
@@ -561,21 +571,12 @@ cart-drawer-items::-webkit-scrollbar-thumb {
   .drawer__body-right .cart-cross-sells__heading {
     display: none;
   }
-
-  .drawer__body-right .cross-sell-card {
-    border: none;
-    background: #F4F4F1;
-  }
-
-  .drawer__body-right .cross-sell-card:hover {
-    border: none;
-  }
 }
 
 .cross-sell-card {
   flex: 0 0 140px;
   scroll-snap-align: start;
-  background: #fff;
+  background: #F4F4F1;
   border-radius: 0;
   overflow: hidden;
   border: 2px solid transparent;
