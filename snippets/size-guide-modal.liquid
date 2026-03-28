@@ -27,7 +27,7 @@
 <div class="size-guide-overlay" id="size-guide-overlay" style="display:none;">
   <div class="size-guide-modal">
     <div class="size-guide-modal__header">
-      <h3 class="size-guide-modal__title">{{ t_title | default: 'Size guide' }}</h3>
+      <h3 class="size-guide-modal__title">{{ 'products.v2.size_guide_title' | t }}</h3>
       <button class="size-guide-modal__close" aria-label="Close size guide" onclick="document.getElementById('size-guide-overlay').style.display='none'; document.body.classList.remove('noscroll');">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -39,12 +39,12 @@
       {% case guide_type %}
 
         {% when 'socks' %}
-          <p class="size-guide-modal__intro">{{ t_socks_intro | default: 'Find your sock size based on your shoe size.' }}</p>
+          <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_socks_intro' | t }}</p>
           <table class="size-guide-table">
             <thead>
               <tr>
-                <th>{{ t_eu_shoe_size | default: 'EU shoe size' }}</th>
-                <th>{{ t_sock_size | default: 'Sock size' }}</th>
+                <th>{{ 'products.v2.size_guide_eu_shoe_size' | t }}</th>
+                <th>{{ 'products.v2.size_guide_sock_size' | t }}</th>
                 <th>US Men</th>
                 <th>US Women</th>
                 <th>UK</th>
@@ -97,7 +97,7 @@
           </table>
 
         {% when 'gloves' %}
-          <p class="size-guide-modal__intro">{{ t_gloves_intro | default: 'Measure the width of your index finger to find your glove size.' }}</p>
+          <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_gloves_intro' | t }}</p>
           <table class="size-guide-table">
             <thead>
               <tr>
@@ -115,12 +115,12 @@
           </table>
 
         {% when 'baselayer' %}
-          <p class="size-guide-modal__intro">{{ t_baselayer_intro | default: 'All measurements in centimetres (cm).' }}</p>
+          <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_baselayer_intro' | t }}</p>
           <div class="size-guide-table-scroll">
             <table class="size-guide-table">
               <thead>
                 <tr>
-                  <th>{{ t_measurement | default: 'Measurement' }}</th>
+                  <th>{{ 'products.v2.size_guide_measurement' | t }}</th>
                   <th>XS</th>
                   <th>S</th>
                   <th>M</th>
@@ -143,12 +143,12 @@
           </div>
 
         {% when 'overshoes' %}
-          <p class="size-guide-modal__intro">{{ t_overshoes_intro | default: 'Choose your overshoe size based on your shoe size (EU).' }}</p>
+          <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_overshoes_intro' | t }}</p>
           <table class="size-guide-table">
             <thead>
               <tr>
                 <th>Overshoe size</th>
-                <th>EU shoe size</th>
+                <th>{{ 'products.v2.size_guide_eu_shoe_size' | t }}</th>
               </tr>
             </thead>
             <tbody>
@@ -162,6 +162,6 @@
       {% endcase %}
     </div>
 
-    <a href="/pages/size-guide" class="size-guide-modal__link">{{ t_full_guide_link | default: 'View full size guide' }}</a>
+    <a href="/pages/size-guide" class="size-guide-modal__link">{{ 'products.v2.size_guide_full_link' | t }}</a>
   </div>
 </div>

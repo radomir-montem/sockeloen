@@ -556,13 +556,13 @@
           assign ben2 = product.metafields.custom.custom_benefit_2.value | default: product.metafields.custom.custom_benefit_2
           assign ben3 = product.metafields.custom.custom_benefit_3.value | default: product.metafields.custom.custom_benefit_3
           if ben1 == blank
-            assign ben1 = section.settings.default_benefit_1
+            assign ben1 = 'products.v2.default_benefit_1' | t
           endif
           if ben2 == blank
-            assign ben2 = section.settings.default_benefit_2
+            assign ben2 = 'products.v2.default_benefit_2' | t
           endif
           if ben3 == blank
-            assign ben3 = section.settings.default_benefit_3
+            assign ben3 = 'products.v2.default_benefit_3' | t
           endif
         -%}
         {%- if ben1 != blank or ben2 != blank or ben3 != blank -%}
@@ -1112,13 +1112,9 @@
                           disabled
                         >
                         {%- comment -%} Low stock warning — shows when inventory <= threshold {%- endcomment -%}
-                        {%- liquid
-                          assign ls_singular = section.settings.low_stock_singular | default: 'Low stock — only 1 item left'
-                          assign ls_plural = section.settings.low_stock_plural | default: 'Low stock — only [qty] items left'
-                        -%}
                         <div class="product-v2__low-stock" style="display:none;" id="low-stock-{{ section.id }}"
-                          data-low-stock-singular="{{ ls_singular | escape }}"
-                          data-low-stock-plural="{{ ls_plural | escape }}">
+                          data-low-stock-singular="{{ 'products.v2.low_stock_singular' | t | escape }}"
+                          data-low-stock-plural="{{ 'products.v2.low_stock_plural' | t: qty: '[qty]' | escape }}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <circle cx="8" cy="8" r="7" stroke="#F76503" stroke-width="1.5"/>
                             <path d="M8 4.5V9" stroke="#F76503" stroke-width="1.5" stroke-linecap="round"/>
@@ -1273,7 +1269,7 @@
                   class="klaviyo-bis-trigger bg-black font-medium tracking-[0.02em] uppercase button w-full button--primary !mb-0"
                   href="#"
                 >
-                  {{ section.settings.notifyme_button | default: 'Notify me when available' }}
+                  {{ 'products.v2.notify_me' | t }}
                 </a>
 
               </div>
@@ -1281,19 +1277,10 @@
             {%- when 'size_guide' -%}
               {%- unless product.has_only_default_variant -%}
                 <div {{ block.shopify_attributes }}>
-                  <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">{{ block.settings.link_text | default: 'Not sure about your size?' }}</a>
+                  <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">{{ 'products.v2.size_guide_link' | t }}</a>
                   {%- render 'size-guide-modal',
                     product: product,
-                    guide_type_override: block.settings.guide_type,
-                    t_title: section.settings.sg_title,
-                    t_socks_intro: section.settings.sg_socks_intro,
-                    t_gloves_intro: section.settings.sg_gloves_intro,
-                    t_baselayer_intro: section.settings.sg_baselayer_intro,
-                    t_overshoes_intro: section.settings.sg_overshoes_intro,
-                    t_full_guide_link: section.settings.sg_full_guide_link,
-                    t_eu_shoe_size: section.settings.sg_eu_shoe_size,
-                    t_sock_size: section.settings.sg_sock_size,
-                    t_measurement: section.settings.sg_measurement
+                    guide_type_override: block.settings.guide_type
                   -%}
                 </div>
               {%- endunless -%}
@@ -1426,70 +1413,29 @@
                 {%- endif -%}
               {%- endfor -%}
 
-              {%- comment -%} USP accordions — from section settings, translatable {%- endcomment -%}
-              {%- if section.settings.usp_1_heading != blank -%}
-              <div class="product__accordion accordion product-v2__usp-accordion" >
-                <details>
-                  <summary>
-                    <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ section.settings.usp_1_heading }}</h2>
+              {%- comment -%} USP accordions — from locale translations {%- endcomment -%}
+              {%- assign usp_headings = 'products.v2.usp_1_heading,products.v2.usp_2_heading,products.v2.usp_3_heading,products.v2.usp_4_heading' | split: ',' -%}
+              {%- assign usp_bodies = 'products.v2.usp_1_body_html,products.v2.usp_2_body_html,products.v2.usp_3_body_html,products.v2.usp_4_body_html' | split: ',' -%}
+              {%- for heading_key in usp_headings -%}
+                {%- assign body_key = usp_bodies[forloop.index0] -%}
+                {%- assign usp_heading = heading_key | t -%}
+                {%- assign usp_body = body_key | t -%}
+                {%- if usp_heading != blank -%}
+                <div class="product__accordion accordion product-v2__usp-accordion">
+                  <details>
+                    <summary>
+                      <div class="summary__title">
+                        <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ usp_heading }}</h2>
+                      </div>
+                      {% render 'icon-caret' %}
+                    </summary>
+                    <div class="accordion__content rte">
+                      {{ usp_body }}
                     </div>
-                    {% render 'icon-caret' %}
-                  </summary>
-                  <div class="accordion__content rte">
-                    {{ section.settings.usp_1_body }}
-                  </div>
-                </details>
-              </div>
-              {%- endif -%}
-
-              {%- if section.settings.usp_2_heading != blank -%}
-              <div class="product__accordion accordion product-v2__usp-accordion">
-                <details>
-                  <summary>
-                    <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ section.settings.usp_2_heading }}</h2>
-                    </div>
-                    {% render 'icon-caret' %}
-                  </summary>
-                  <div class="accordion__content rte">
-                    {{ section.settings.usp_2_body }}
-                  </div>
-                </details>
-              </div>
-              {%- endif -%}
-
-              {%- if section.settings.usp_3_heading != blank -%}
-              <div class="product__accordion accordion product-v2__usp-accordion">
-                <details>
-                  <summary>
-                    <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ section.settings.usp_3_heading }}</h2>
-                    </div>
-                    {% render 'icon-caret' %}
-                  </summary>
-                  <div class="accordion__content rte">
-                    {{ section.settings.usp_3_body }}
-                  </div>
-                </details>
-              </div>
-              {%- endif -%}
-
-              {%- if section.settings.usp_4_heading != blank -%}
-              <div class="product__accordion accordion product-v2__usp-accordion">
-                <details>
-                  <summary>
-                    <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ section.settings.usp_4_heading }}</h2>
-                    </div>
-                    {% render 'icon-caret' %}
-                  </summary>
-                  <div class="accordion__content rte">
-                    {{ section.settings.usp_4_body }}
-                  </div>
-                </details>
-              </div>
-              {%- endif -%}
+                  </details>
+                </div>
+                {%- endif -%}
+              {%- endfor -%}
 
             {%- when 'collapsible_tab' -%}
               {%- comment -%} Keep Description tab, hide product-specific tabs (replaced by USP accordions above) {%- endcomment -%}
@@ -1745,9 +1691,9 @@
         </span>
       </div>
       <ul class="product-v2-sticky-bar__usps">
-        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ section.settings.sticky_usp_1 | default: 'Free shipping' }}</span></li>
-        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ section.settings.sticky_usp_2 | default: '100% satisfaction guarantee' }}</span></li>
-        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ section.settings.sticky_usp_3 | default: 'Born in the peloton' }}</span></li>
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ 'products.v2.sticky_usp_1' | t }}</span></li>
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ 'products.v2.sticky_usp_2' | t }}</span></li>
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ 'products.v2.sticky_usp_3' | t }}</span></li>
       </ul>
       <button
         type="button"
@@ -1763,13 +1709,13 @@
   <div class="product-v2-size-modal" aria-hidden="true">
     <div class="product-v2-size-modal__backdrop"></div>
     <div class="product-v2-size-modal__content">
-      <p class="product-v2-size-modal__heading">{{ section.settings.size_modal_heading | default: 'Are you sure about your size?' }}</p>
+      <p class="product-v2-size-modal__heading">{{ 'products.v2.size_modal_heading' | t }}</p>
       <div class="product-v2-size-modal__size-display">
         <span class="product-v2-size-modal__selection"></span>
       </div>
       <div class="product-v2-size-modal__actions">
-        <button type="button" class="product-v2-size-modal__confirm">{{ section.settings.size_modal_confirm | default: 'Yes, add to cart' }}</button>
-        <button type="button" class="product-v2-size-modal__change">{{ section.settings.size_modal_change | default: 'No, let me change' }}</button>
+        <button type="button" class="product-v2-size-modal__confirm">{{ 'products.v2.size_modal_confirm' | t }}</button>
+        <button type="button" class="product-v2-size-modal__change">{{ 'products.v2.size_modal_change' | t }}</button>
       </div>
     </div>
   </div>
@@ -2199,183 +2145,6 @@
       "id": "show_dynamic_checkout",
       "default": false,
       "label": "Show dynamic checkout buttons"
-    },
-    {
-      "type": "text",
-      "id": "notifyme_button",
-      "label": "Notify me button text",
-      "default": "Notify me when available"
-    },
-    {
-      "type": "header",
-      "content": "USP Accordions"
-    },
-    {
-      "type": "text",
-      "id": "usp_1_heading",
-      "label": "USP 1 heading",
-      "default": "Free shipping"
-    },
-    {
-      "type": "richtext",
-      "id": "usp_1_body",
-      "label": "USP 1 body",
-      "default": "<p>We offer free shipping on all orders above €75. Orders placed before 15:00 CET on working days are shipped the same day. Delivery takes 1-3 business days within the EU.</p>"
-    },
-    {
-      "type": "text",
-      "id": "usp_2_heading",
-      "label": "USP 2 heading",
-      "default": "100% Satisfaction guarantee"
-    },
-    {
-      "type": "richtext",
-      "id": "usp_2_body",
-      "label": "USP 2 body",
-      "default": "<p>Not satisfied? We offer hassle-free returns within 30 days of purchase. No questions asked. Your satisfaction is our priority.</p>"
-    },
-    {
-      "type": "text",
-      "id": "usp_3_heading",
-      "label": "USP 3 heading",
-      "default": "Born in the peloton"
-    },
-    {
-      "type": "richtext",
-      "id": "usp_3_body",
-      "label": "USP 3 body",
-      "default": "<p>Sockeloen socks are designed and tested by cyclists, for cyclists. Engineered for performance with premium materials that keep your feet comfortable on every ride.</p>"
-    },
-    {
-      "type": "text",
-      "id": "usp_4_heading",
-      "label": "USP 4 heading",
-      "default": "Customer is king"
-    },
-    {
-      "type": "richtext",
-      "id": "usp_4_body",
-      "label": "USP 4 body",
-      "default": "<p>We go above and beyond for our customers. From personal support to fast delivery, we make sure you have the best experience possible.</p>"
-    },
-    {
-      "type": "header",
-      "content": "Sticky bar USPs"
-    },
-    {
-      "type": "text",
-      "id": "sticky_usp_1",
-      "label": "Sticky bar USP 1",
-      "default": "Free shipping"
-    },
-    {
-      "type": "text",
-      "id": "sticky_usp_2",
-      "label": "Sticky bar USP 2",
-      "default": "100% satisfaction guarantee"
-    },
-    {
-      "type": "text",
-      "id": "sticky_usp_3",
-      "label": "Sticky bar USP 3",
-      "default": "Born in the peloton"
-    },
-    {
-      "type": "header",
-      "content": "Size modal"
-    },
-    {
-      "type": "text",
-      "id": "size_modal_heading",
-      "label": "Size modal heading",
-      "default": "Are you sure about your size?"
-    },
-    {
-      "type": "text",
-      "id": "size_modal_confirm",
-      "label": "Size modal confirm button",
-      "default": "Yes, add to cart"
-    },
-    {
-      "type": "text",
-      "id": "size_modal_change",
-      "label": "Size modal change button",
-      "default": "No, let me change"
-    },
-    {
-      "type": "header",
-      "content": "Low stock"
-    },
-    {
-      "type": "text",
-      "id": "low_stock_singular",
-      "label": "Low stock text (1 item)",
-      "default": "Low stock — only 1 item left"
-    },
-    {
-      "type": "text",
-      "id": "low_stock_plural",
-      "label": "Low stock text (multiple)",
-      "default": "Low stock — only [qty] items left",
-      "info": "Use [qty] as placeholder for the quantity"
-    },
-    {
-      "type": "header",
-      "content": "Size guide popup"
-    },
-    {
-      "type": "text",
-      "id": "sg_title",
-      "label": "Size guide title",
-      "default": "Size guide"
-    },
-    {
-      "type": "text",
-      "id": "sg_socks_intro",
-      "label": "Socks intro text",
-      "default": "Find your sock size based on your shoe size."
-    },
-    {
-      "type": "text",
-      "id": "sg_gloves_intro",
-      "label": "Gloves intro text",
-      "default": "Measure the width of your index finger to find your glove size."
-    },
-    {
-      "type": "text",
-      "id": "sg_baselayer_intro",
-      "label": "Baselayer intro text",
-      "default": "All measurements in centimetres (cm)."
-    },
-    {
-      "type": "text",
-      "id": "sg_overshoes_intro",
-      "label": "Overshoes intro text",
-      "default": "Choose your overshoe size based on your shoe size (EU)."
-    },
-    {
-      "type": "text",
-      "id": "sg_full_guide_link",
-      "label": "Full guide link text",
-      "default": "View full size guide"
-    },
-    {
-      "type": "text",
-      "id": "sg_eu_shoe_size",
-      "label": "EU shoe size label",
-      "default": "EU shoe size"
-    },
-    {
-      "type": "text",
-      "id": "sg_sock_size",
-      "label": "Sock size label",
-      "default": "Sock size"
-    },
-    {
-      "type": "text",
-      "id": "sg_measurement",
-      "label": "Measurement label",
-      "default": "Measurement"
     },
     {
       "type": "header",
