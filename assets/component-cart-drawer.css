@@ -561,6 +561,15 @@ cart-drawer-items::-webkit-scrollbar-thumb {
   .drawer__body-right .cart-cross-sells__heading {
     display: none;
   }
+
+  .drawer__body-right .cross-sell-card {
+    border: none;
+    background: #F4F4F1;
+  }
+
+  .drawer__body-right .cross-sell-card:hover {
+    border: none;
+  }
 }
 
 .cross-sell-card {
