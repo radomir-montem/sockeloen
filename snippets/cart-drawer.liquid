@@ -242,9 +242,7 @@
           </div>
           <div id="CartDrawer-CartErrors" role="alert"></div>
         </form>
-      </cart-drawer-items>
 
-      {% if cart != empty %}
         {%- comment -%} ===== CART NOTE ===== {%- endcomment -%}
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer" class="drawer__note-details">
@@ -266,10 +264,13 @@
           </details>
         {%- endif -%}
 
-        {%- comment -%} ===== CROSS-SELLS (mobile only — inline) ===== {%- endcomment -%}
+        {%- comment -%} ===== CROSS-SELLS (mobile only — scrolls with products) ===== {%- endcomment -%}
         <div class="upsells_container upsells_container--mobile">
           {% render 'cart-cross-sells' %}
         </div>
+      </cart-drawer-items>
+
+      {% if cart != empty %}
 
         {%- comment -%} ===== FOOTER (sticky on mobile) ===== {%- endcomment -%}
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
