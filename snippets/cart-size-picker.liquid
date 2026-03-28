@@ -58,27 +58,42 @@
           var product = json.product;
           self.data = product;
 
-          document.getElementById('cart-size-picker-img').src = product.image ? product.image.src.replace(/(\.[^.]+)$/, '_120x$1') : '';
+          /* product.image can be object {src:...} or null */
+          var imgSrc = '';
+          if (product.image && product.image.src) {
+            imgSrc = product.image.src.replace(/(\.[^.]+)$/, '_120x$1');
+          } else if (product.images && product.images.length > 0) {
+            imgSrc = (product.images[0].src || product.images[0]).toString().replace(/(\.[^.]+)$/, '_120x$1');
+          }
+          document.getElementById('cart-size-picker-img').src = imgSrc;
           document.getElementById('cart-size-picker-title').textContent = product.title;
-          document.getElementById('cart-size-picker-price').textContent = (product.variants[0].price / 100).toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+          /* Price from /products/handle.json is a string like "29.95", not cents */
+          var priceVal = parseFloat(product.variants[0].price);
+          document.getElementById('cart-size-picker-price').textContent = priceVal.toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
           loading.style.display = 'none';
 
+          /* product.options is an array of objects: [{name:"Size", values:[...]}, ...] */
+          var optionNames = product.options.map(function(o) {
+            return typeof o === 'string' ? o : o.name;
+          });
+
           /* If only default variant, just add directly */
-          if (product.variants.length === 1 && product.options.length === 1 && product.options[0] === 'Title') {
+          if (product.variants.length === 1 && optionNames.length === 1 && optionNames[0] === 'Title') {
             self.selectedVariantId = product.variants[0].id;
             self.addToCart();
             return;
           }
 
           /* Build option groups */
-          product.options.forEach(function(optionName, optIndex) {
+          optionNames.forEach(function(optName, optIndex) {
             var group = document.createElement('div');
             group.className = 'cart-size-picker__option-group';
 
             var label = document.createElement('p');
             label.className = 'cart-size-picker__option-label';
-            label.textContent = optionName;
+            label.textContent = optName;
             group.appendChild(label);
 
             var buttons = document.createElement('div');
@@ -116,7 +131,7 @@
           });
 
           /* Auto-select if only one value per option */
-          product.options.forEach(function(optionName, optIndex) {
+          optionNames.forEach(function(optName, optIndex) {
             var btns = optionsContainer.querySelectorAll('[data-option-index="' + optIndex + '"]');
             if (btns.length === 1) {
               btns[0].click();
@@ -135,9 +150,12 @@
       if (!product) return;
 
       var confirmBtn = document.getElementById('cart-size-picker-confirm');
+      var optionNames = product.options.map(function(o) {
+        return typeof o === 'string' ? o : o.name;
+      });
 
       var match = product.variants.find(function(v) {
-        return product.options.every(function(opt, i) {
+        return optionNames.every(function(opt, i) {
           return self.selectedOptions[i] === v['option' + (i + 1)];
         });
       });
