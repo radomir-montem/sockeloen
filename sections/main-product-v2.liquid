@@ -1112,7 +1112,13 @@
                           disabled
                         >
                         {%- comment -%} Low stock warning — shows when inventory <= threshold {%- endcomment -%}
-                        <div class="product-v2__low-stock" style="display:none;" id="low-stock-{{ section.id }}">
+                        {%- liquid
+                          assign ls_singular = section.settings.low_stock_singular | default: 'Low stock — only 1 item left'
+                          assign ls_plural = section.settings.low_stock_plural | default: 'Low stock — only [qty] items left'
+                        -%}
+                        <div class="product-v2__low-stock" style="display:none;" id="low-stock-{{ section.id }}"
+                          data-low-stock-singular="{{ ls_singular | escape }}"
+                          data-low-stock-plural="{{ ls_plural | escape }}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <circle cx="8" cy="8" r="7" stroke="#F76503" stroke-width="1.5"/>
                             <path d="M8 4.5V9" stroke="#F76503" stroke-width="1.5" stroke-linecap="round"/>
@@ -1140,7 +1146,7 @@
                               });
                               if (match && stockData[match.id]) {
                                 var qty = stockData[match.id];
-                                txt.textContent = qty === 1 ? 'Low stock — only 1 item left' : 'Low stock — only ' + qty + ' items left';
+                                txt.textContent = qty === 1 ? el.getAttribute('data-low-stock-singular') : el.getAttribute('data-low-stock-plural').replace('[qty]', qty);
                                 el.style.display = 'flex';
                               } else {
                                 el.style.display = 'none';
@@ -1408,62 +1414,70 @@
                 {%- endif -%}
               {%- endfor -%}
 
-              {%- comment -%} USP accordions — hardcoded, closed by default {%- endcomment -%}
+              {%- comment -%} USP accordions — from section settings, translatable {%- endcomment -%}
+              {%- if section.settings.usp_1_heading != blank -%}
               <div class="product__accordion accordion product-v2__usp-accordion" >
                 <details>
                   <summary>
                     <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">Free shipping</h2>
+                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ section.settings.usp_1_heading }}</h2>
                     </div>
                     {% render 'icon-caret' %}
                   </summary>
                   <div class="accordion__content rte">
-                    <p>We offer free shipping on all orders above €75. Orders placed before 15:00 CET on working days are shipped the same day. Delivery takes 1-3 business days within the EU.</p>
+                    {{ section.settings.usp_1_body }}
                   </div>
                 </details>
               </div>
+              {%- endif -%}
 
+              {%- if section.settings.usp_2_heading != blank -%}
               <div class="product__accordion accordion product-v2__usp-accordion">
                 <details>
                   <summary>
                     <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">100% Satisfaction guarantee</h2>
+                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ section.settings.usp_2_heading }}</h2>
                     </div>
                     {% render 'icon-caret' %}
                   </summary>
                   <div class="accordion__content rte">
-                    <p>Not satisfied? We offer hassle-free returns within 30 days of purchase. No questions asked. Your satisfaction is our priority.</p>
+                    {{ section.settings.usp_2_body }}
                   </div>
                 </details>
               </div>
+              {%- endif -%}
 
+              {%- if section.settings.usp_3_heading != blank -%}
               <div class="product__accordion accordion product-v2__usp-accordion">
                 <details>
                   <summary>
                     <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">Born in the peloton</h2>
+                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ section.settings.usp_3_heading }}</h2>
                     </div>
                     {% render 'icon-caret' %}
                   </summary>
                   <div class="accordion__content rte">
-                    <p>Sockeloen socks are designed and tested by cyclists, for cyclists. Engineered for performance with premium materials that keep your feet comfortable on every ride.</p>
+                    {{ section.settings.usp_3_body }}
                   </div>
                 </details>
               </div>
+              {%- endif -%}
 
+              {%- if section.settings.usp_4_heading != blank -%}
               <div class="product__accordion accordion product-v2__usp-accordion">
                 <details>
                   <summary>
                     <div class="summary__title">
-                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">Customer is king</h2>
+                      <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ section.settings.usp_4_heading }}</h2>
                     </div>
                     {% render 'icon-caret' %}
                   </summary>
                   <div class="accordion__content rte">
-                    <p>We go above and beyond for our customers. From personal support to fast delivery, we make sure you have the best experience possible.</p>
+                    {{ section.settings.usp_4_body }}
                   </div>
                 </details>
               </div>
+              {%- endif -%}
 
             {%- when 'collapsible_tab' -%}
               {%- comment -%} Keep Description tab, hide product-specific tabs (replaced by USP accordions above) {%- endcomment -%}
@@ -1719,9 +1733,9 @@
         </span>
       </div>
       <ul class="product-v2-sticky-bar__usps">
-        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>Free shipping</span></li>
-        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>100% satisfaction guarantee</span></li>
-        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>Born in the peloton</span></li>
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ section.settings.sticky_usp_1 | default: 'Free shipping' }}</span></li>
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ section.settings.sticky_usp_2 | default: '100% satisfaction guarantee' }}</span></li>
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ section.settings.sticky_usp_3 | default: 'Born in the peloton' }}</span></li>
       </ul>
       <button
         type="button"
@@ -1737,13 +1751,13 @@
   <div class="product-v2-size-modal" aria-hidden="true">
     <div class="product-v2-size-modal__backdrop"></div>
     <div class="product-v2-size-modal__content">
-      <p class="product-v2-size-modal__heading">Are you sure about your size?</p>
+      <p class="product-v2-size-modal__heading">{{ section.settings.size_modal_heading | default: 'Are you sure about your size?' }}</p>
       <div class="product-v2-size-modal__size-display">
         <span class="product-v2-size-modal__selection"></span>
       </div>
       <div class="product-v2-size-modal__actions">
-        <button type="button" class="product-v2-size-modal__confirm">Yes, add to cart</button>
-        <button type="button" class="product-v2-size-modal__change">No, let me change</button>
+        <button type="button" class="product-v2-size-modal__confirm">{{ section.settings.size_modal_confirm | default: 'Yes, add to cart' }}</button>
+        <button type="button" class="product-v2-size-modal__change">{{ section.settings.size_modal_change | default: 'No, let me change' }}</button>
       </div>
     </div>
   </div>
@@ -2179,6 +2193,123 @@
       "id": "notifyme_button",
       "label": "Notify me button text",
       "default": "Notify me when available"
+    },
+    {
+      "type": "header",
+      "content": "USP Accordions"
+    },
+    {
+      "type": "text",
+      "id": "usp_1_heading",
+      "label": "USP 1 heading",
+      "default": "Free shipping"
+    },
+    {
+      "type": "richtext",
+      "id": "usp_1_body",
+      "label": "USP 1 body",
+      "default": "<p>We offer free shipping on all orders above €75. Orders placed before 15:00 CET on working days are shipped the same day. Delivery takes 1-3 business days within the EU.</p>"
+    },
+    {
+      "type": "text",
+      "id": "usp_2_heading",
+      "label": "USP 2 heading",
+      "default": "100% Satisfaction guarantee"
+    },
+    {
+      "type": "richtext",
+      "id": "usp_2_body",
+      "label": "USP 2 body",
+      "default": "<p>Not satisfied? We offer hassle-free returns within 30 days of purchase. No questions asked. Your satisfaction is our priority.</p>"
+    },
+    {
+      "type": "text",
+      "id": "usp_3_heading",
+      "label": "USP 3 heading",
+      "default": "Born in the peloton"
+    },
+    {
+      "type": "richtext",
+      "id": "usp_3_body",
+      "label": "USP 3 body",
+      "default": "<p>Sockeloen socks are designed and tested by cyclists, for cyclists. Engineered for performance with premium materials that keep your feet comfortable on every ride.</p>"
+    },
+    {
+      "type": "text",
+      "id": "usp_4_heading",
+      "label": "USP 4 heading",
+      "default": "Customer is king"
+    },
+    {
+      "type": "richtext",
+      "id": "usp_4_body",
+      "label": "USP 4 body",
+      "default": "<p>We go above and beyond for our customers. From personal support to fast delivery, we make sure you have the best experience possible.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Sticky bar USPs"
+    },
+    {
+      "type": "text",
+      "id": "sticky_usp_1",
+      "label": "Sticky bar USP 1",
+      "default": "Free shipping"
+    },
+    {
+      "type": "text",
+      "id": "sticky_usp_2",
+      "label": "Sticky bar USP 2",
+      "default": "100% satisfaction guarantee"
+    },
+    {
+      "type": "text",
+      "id": "sticky_usp_3",
+      "label": "Sticky bar USP 3",
+      "default": "Born in the peloton"
+    },
+    {
+      "type": "header",
+      "content": "Size modal"
+    },
+    {
+      "type": "text",
+      "id": "size_modal_heading",
+      "label": "Size modal heading",
+      "default": "Are you sure about your size?"
+    },
+    {
+      "type": "text",
+      "id": "size_modal_confirm",
+      "label": "Size modal confirm button",
+      "default": "Yes, add to cart"
+    },
+    {
+      "type": "text",
+      "id": "size_modal_change",
+      "label": "Size modal change button",
+      "default": "No, let me change"
+    },
+    {
+      "type": "header",
+      "content": "Low stock"
+    },
+    {
+      "type": "text",
+      "id": "low_stock_singular",
+      "label": "Low stock text (1 item)",
+      "default": "Low stock — only 1 item left"
+    },
+    {
+      "type": "text",
+      "id": "low_stock_plural",
+      "label": "Low stock text (multiple)",
+      "default": "Low stock — only [qty] items left",
+      "info": "Use [qty] as placeholder for the quantity"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",
