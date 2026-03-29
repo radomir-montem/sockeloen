@@ -175,7 +175,9 @@
             "hotspot_x": 44,
             "hotspot_y": 21,
             "heading": "Sockeloen Cuff",
-            "description": "<p>The Ultra Elastic super cuff makes sure this sock is always exactly on the right spott and won't fall down. We created this by sourcing the best elastane of Europe and mixed it into this sock.</p>"
+            "description": "<p>The Ultra Elastic super cuff makes sure this sock is always exactly on the right spott and won't fall down. We created this by sourcing the best elastane of Europe and mixed it into this sock.</p>",
+            "metafield_text": "The cuff height of this sock is",
+            "metafield_key": "custom.height"
           }
         },
         "hotspot_QEDVDk": {
@@ -184,7 +186,9 @@
             "hotspot_x": 54,
             "hotspot_y": 37,
             "heading": "Sockeloen Mesh",
-            "description": "<p>The o-mesh knitting structure combines: flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>"
+            "description": "<p>The o-mesh knitting structure combines: flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>",
+            "metafield_text": "",
+            "metafield_key": ""
           }
         },
         "hotspot_cKCjnr": {
@@ -193,7 +197,9 @@
             "hotspot_x": 71,
             "hotspot_y": 57,
             "heading": "Sockeloen Heels and Toes",
-            "description": "<p>To ensure a long lifetime of these high performance cycling socks we reinforced the heels and toes with a specific extra Polyamide yarn.</p>"
+            "description": "<p>To ensure a long lifetime of these high performance cycling socks we reinforced the heels and toes with a specific extra Polyamide yarn.</p>",
+            "metafield_text": "",
+            "metafield_key": ""
           }
         },
         "hotspot_YfjpGW": {
@@ -202,7 +208,9 @@
             "hotspot_x": 56,
             "hotspot_y": 63,
             "heading": "Sockeloen Yarns",
-            "description": "<p>Through the whole sock we used anti-bacterial Q-skin yarns, blended with polyamide and elastane to create the perfect yarn blend.</p>"
+            "description": "<p>Through the whole sock we used anti-bacterial Q-skin yarns, blended with polyamide and elastane to create the perfect yarn blend.</p>",
+            "metafield_text": "",
+            "metafield_key": ""
           }
         },
         "hotspot_bBQhNX": {
@@ -211,7 +219,9 @@
             "hotspot_x": 29,
             "hotspot_y": 74,
             "heading": "Sockeloen Seemless Toe",
-            "description": "<p>To avoid irritating, or high pressure points inside your cycling shoe we work with a seemless toe without any area's that could irritate your toes while riding.</p>"
+            "description": "<p>To avoid irritating, or high pressure points inside your cycling shoe we work with a seemless toe without any area's that could irritate your toes while riding.</p>",
+            "metafield_text": "",
+            "metafield_key": ""
           }
         }
       },
