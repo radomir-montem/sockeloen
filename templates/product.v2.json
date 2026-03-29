@@ -296,6 +296,13 @@
     "product_faq_NDDGQE": {
       "type": "product-faq",
       "blocks": {
+        "faq_Y8JLka": {
+          "type": "faq",
+          "settings": {
+            "question": "Which sockheight are these socks?",
+            "answer": "<p>We optimised our fitt for the perfect sockheigt. The 36-42 size is 17cm height and the 43-48 size is 19cm height. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>"
+          }
+        },
         "faq_9RzfCj": {
           "type": "faq",
           "settings": {
@@ -340,6 +347,7 @@
         }
       },
       "block_order": [
+        "faq_Y8JLka",
         "faq_9RzfCj",
         "faq_7idmHH",
         "faq_YhiEwH",
