@@ -310,7 +310,7 @@
           "type": "faq",
           "settings": {
             "question": "How much watts can I save with sockeloen aero socks?",
-            "answer": "<p>The watt saving you can achieve compared to normal socks can be between 5 and 15 watts, depending on speed, jaw angle, body shape and total cda. In our research we normally measure total cda and the % of change on your total cda.</p>",
+            "answer": "<p>The watt saving you can achieve compared to normal socks can <strong>be between 5 and 15 watts</strong>, depending on speed, jaw angle, body shape and total cda. In our research we normally measure total cda and the % of change on your total cda.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
