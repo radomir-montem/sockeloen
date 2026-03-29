@@ -516,7 +516,28 @@ cart-drawer-items::-webkit-scrollbar-thumb {
     background: #fff;
     margin: 0 -1.5rem;
     padding: 0 1.5rem 120px;
-    margin-top: 16px;
+    margin-top: 32px;
+  }
+
+  .cross-sell-card__title {
+    font-size: 11px;
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+
+  .cross-sell-card__price {
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .cross-sell-card__info {
+    padding: 6px 8px;
+  }
+
+  .cross-sell-card__add-btn {
+    font-size: 11px;
+    padding: 6px 0;
   }
 }
 
