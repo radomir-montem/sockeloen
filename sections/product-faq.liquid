@@ -49,7 +49,32 @@
             </button>
             <div class="product-faq__answer">
               {%- if block.settings.answer != blank -%}
-                <div class="rte-inner">{{ block.settings.answer }}</div>
+                {%- liquid
+                  assign faq_desc_output = block.settings.answer
+                  assign faq_mf_obj = nil
+                  if block.settings.metafield_key != blank
+                    assign faq_mf_parts = block.settings.metafield_key | split: '.'
+                    if faq_mf_parts.size == 2
+                      assign faq_mf_ns = faq_mf_parts[0]
+                      assign faq_mf_k = faq_mf_parts[1]
+                      assign faq_mf_obj = product.metafields[faq_mf_ns][faq_mf_k]
+                    endif
+                  endif
+                -%}
+                {%- if faq_mf_obj != blank -%}
+                  {%- capture faq_mf_val -%}{{ faq_mf_obj | metafield_tag | strip_html }}{%- endcapture -%}
+                {%- endif -%}
+                {%- liquid
+                  assign faq_mf_val = faq_mf_val | strip
+                  if faq_mf_obj != blank and faq_mf_val != blank
+                    assign faq_desc_output = faq_desc_output | replace: '[metafield]', faq_mf_val
+                  elsif block.settings.metafield_fallback != blank
+                    assign faq_desc_output = faq_desc_output | replace: '[metafield]', block.settings.metafield_fallback
+                  else
+                    assign faq_desc_output = faq_desc_output | replace: '[metafield]', ''
+                  endif
+                -%}
+                <div class="rte-inner">{{ faq_desc_output }}</div>
               {%- endif -%}
             </div>
           </div>
@@ -250,6 +275,34 @@
           "type": "richtext",
           "id": "answer",
           "label": "Answer"
+        },
+        {
+          "type": "header",
+          "content": "Dynamic metafield"
+        },
+        {
+          "type": "select",
+          "id": "metafield_key",
+          "label": "Insert metafield value",
+          "info": "Use [metafield] in the answer as placeholder. It will be replaced with the selected metafield value.",
+          "options": [
+            { "value": "", "label": "— None —" },
+            { "value": "custom.height", "label": "Height" },
+            { "value": "custom.knit_structure", "label": "Knit Structure" },
+            { "value": "custom.materials", "label": "Materials" },
+            { "value": "custom.benefit_1", "label": "Benefit 1" },
+            { "value": "custom.benefit_2", "label": "Benefit 2" },
+            { "value": "custom.benefit_3", "label": "Benefit 3" },
+            { "value": "custom.badge", "label": "Badge" },
+            { "value": "descriptors.subtitle", "label": "Subtitle" }
+          ],
+          "default": ""
+        },
+        {
+          "type": "text",
+          "id": "metafield_fallback",
+          "label": "Fallback text",
+          "info": "Shown in place of [metafield] when the product has no value for the selected metafield."
         }
       ]
     }
