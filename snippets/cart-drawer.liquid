@@ -53,9 +53,12 @@
           </div>
           <div class="cart-drawer__empty-body">
             <p class="cart-drawer__empty-text">{{ 'sections.cart.empty' | t }}</p>
-            <a href="{{ routes.all_products_collection_url }}" class="cart-drawer__checkout-btn">
+            <button type="button" class="cart-drawer__checkout-btn" onclick="this.closest('cart-drawer').close()">
               {{ 'general.continue_shopping' | t }}
-            </a>
+            </button>
+          </div>
+          <div class="cart-drawer__empty-cross-sells">
+            {% render 'cart-cross-sells' %}
           </div>
         </div>
       {%- endif -%}

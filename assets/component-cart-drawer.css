@@ -50,7 +50,7 @@
   height: 100%;
   padding: 0;
   background-color: #F4F4F1;
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -70,15 +70,33 @@ cart-drawer.is-empty .drawer__header {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1;
-  padding: 0 2rem;
+  padding: 3rem 2rem 1.5rem;
   gap: 1.5rem;
+  flex-shrink: 0;
 }
 
 .cart-drawer__empty-text {
   font-size: 1rem;
   color: #666;
   margin: 0;
+}
+
+.cart-drawer__empty-cross-sells {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.cart-drawer__empty-cross-sells .cart-cross-sells {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cart-drawer__empty-cross-sells .cart-cross-sells::-webkit-scrollbar {
+  display: none;
 }
 
 cart-drawer {
