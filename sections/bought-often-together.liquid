@@ -1,55 +1,132 @@
 {%- comment -%}
-  Product source priority:
-  1. "Recently viewed" (client-side, from localStorage)
-  2. Manual product list (section setting)
-  3. Collection (section setting)
-  4. Product metafield (dropdown selection)
-  5. Global upsells fallback
+  Product carousel logic:
+  1. "Recently viewed" — fully client-side (if selected)
+  2. First 3 slots: product source metafield / manual list / fallback upsells metafield
+  3. Remaining slots (up to max): filled from Collection setting (no duplicates)
+  4. If nothing else: global upsells fallback
 {%- endcomment -%}
 
 {%- liquid
   assign source_products = nil
   assign is_recently_viewed = false
   assign swiper_id = 'bot-swiper-' | append: section.id
+  assign max_items = section.settings.max_products
+  assign metafield_limit = 3
 
   if section.settings.product_source == 'recently_viewed'
     assign is_recently_viewed = true
-  elsif section.settings.product_list != blank and section.settings.product_list.size > 0
-    assign source_products = section.settings.product_list
-  elsif section.settings.collection != blank and section.settings.collection.products.size > 0
-    assign source_products = section.settings.collection.products
-  elsif section.settings.product_source != 'none' and section.settings.product_source != 'recently_viewed'
-    assign meta_key = section.settings.product_source
-    if meta_key == 'my_fields.product_upsells'
-      assign meta_value = product.metafields.my_fields.product_upsells.value
-    elsif meta_key == 'my_fields.collection_upsell'
-      assign meta_value = product.metafields.my_fields.collection_upsell.value.products
-    elsif meta_key == 'custom.related_products'
-      assign meta_value = product.metafields.custom.related_products.value
-    elsif meta_key == 'custom.cross_sell'
-      assign meta_value = product.metafields.custom.cross_sell.value
-    elsif meta_key != blank
-      assign meta_parts = meta_key | split: '.'
-      if meta_parts.size == 2
-        assign meta_ns = meta_parts[0]
-        assign meta_k = meta_parts[1]
-        assign meta_value = product.metafields[meta_ns][meta_k].value
+  else
+    comment
+      Step 1: Gather metafield products (first 3 slots)
+    endcomment
+    assign meta_products = nil
+    if section.settings.product_source != 'none' and section.settings.product_source != 'recently_viewed'
+      assign meta_key = section.settings.product_source
+      if meta_key == 'my_fields.product_upsells'
+        assign meta_products = product.metafields.my_fields.product_upsells.value
+      elsif meta_key == 'my_fields.collection_upsell'
+        assign meta_products = product.metafields.my_fields.collection_upsell.value.products
+      elsif meta_key == 'custom.related_products'
+        assign meta_products = product.metafields.custom.related_products.value
+      elsif meta_key == 'custom.cross_sell'
+        assign meta_products = product.metafields.custom.cross_sell.value
+      elsif meta_key != blank
+        assign meta_parts = meta_key | split: '.'
+        if meta_parts.size == 2
+          assign meta_ns = meta_parts[0]
+          assign meta_k = meta_parts[1]
+          assign meta_products = product.metafields[meta_ns][meta_k].value
+        endif
       endif
+    elsif section.settings.product_list != blank and section.settings.product_list.size > 0
+      assign meta_products = section.settings.product_list
     endif
-    if meta_value != blank
-      assign source_products = meta_value
-    endif
-  endif
 
-  unless is_recently_viewed
-    if source_products == nil or source_products == blank
+    comment
+      Fallback: if no metafield products, try default upsells metafield
+    endcomment
+    if meta_products == nil or meta_products == blank
       if product.metafields.my_fields.product_upsells.value != blank
-        assign source_products = product.metafields.my_fields.product_upsells.value
-      else
-        assign source_products = settings.global_upsells.products
+        assign meta_products = product.metafields.my_fields.product_upsells.value
       endif
     endif
-  endunless
+
+    comment
+      Step 2: Build combined list — metafield products first (up to 3), then fill from collection (up to max)
+    endcomment
+    assign combined_handles = ''
+    assign combined_count = 0
+
+    if meta_products != blank
+      for item in meta_products
+        if combined_count >= metafield_limit
+          break
+        endif
+        if item.handle != product.handle and item.available
+          if combined_handles == ''
+            assign combined_handles = item.handle
+          else
+            assign combined_handles = combined_handles | append: ',' | append: item.handle
+          endif
+          assign combined_count = combined_count | plus: 1
+        endif
+      endfor
+    endif
+
+    comment
+      Step 3: Fill remaining slots from collection
+    endcomment
+    if section.settings.collection != blank and combined_count < max_items
+      for col_product in section.settings.collection.products
+        if combined_count >= max_items
+          break
+        endif
+        if col_product.handle == product.handle
+          continue
+        endif
+        if col_product.available == false
+          continue
+        endif
+        assign already_added = false
+        assign handle_check = combined_handles | split: ','
+        for h in handle_check
+          if h == col_product.handle
+            assign already_added = true
+            break
+          endif
+        endfor
+        unless already_added
+          if combined_handles == ''
+            assign combined_handles = col_product.handle
+          else
+            assign combined_handles = combined_handles | append: ',' | append: col_product.handle
+          endif
+          assign combined_count = combined_count | plus: 1
+        endunless
+      endfor
+    endif
+
+    comment
+      Step 4: If still no products, fall back to global upsells
+    endcomment
+    if combined_count == 0 and settings.global_upsells != blank
+      for fallback_product in settings.global_upsells.products
+        if combined_count >= max_items
+          break
+        endif
+        if fallback_product.handle != product.handle and fallback_product.available
+          if combined_handles == ''
+            assign combined_handles = fallback_product.handle
+          else
+            assign combined_handles = combined_handles | append: ',' | append: fallback_product.handle
+          endif
+          assign combined_count = combined_count | plus: 1
+        endif
+      endfor
+    endif
+
+    assign combined_handle_array = combined_handles | split: ','
+  endif
 -%}
 
 {%- style -%}
@@ -100,7 +177,7 @@
   }
 {%- endstyle -%}
 
-{%- if is_recently_viewed or source_products != blank and source_products.size > 0 -%}
+{%- if is_recently_viewed or combined_handle_array != blank and combined_handle_array.size > 0 -%}
 <div class="bot-section-{{ section.id }}">
   {%- if section.settings.heading != blank -%}
     <h4 class="bot-heading">
@@ -114,15 +191,18 @@
   <div class="{{ swiper_id }} bot-swiper overflow-hidden relative">
     <div class="swiper-wrapper">
       {%- unless is_recently_viewed -%}
-        {%- for productItem in source_products limit: section.settings.max_products -%}
-          <div class="swiper-slide">
-            {% render 'card-product',
-              card_product: productItem,
-              media_aspect_ratio: section.settings.image_ratio,
-              section_id: section.id,
-              show_secondary_image: true
-            %}
-          </div>
+        {%- for handle in combined_handle_array -%}
+          {%- assign carouselProduct = all_products[handle] -%}
+          {%- if carouselProduct != blank -%}
+            <div class="swiper-slide">
+              {% render 'card-product',
+                card_product: carouselProduct,
+                media_aspect_ratio: section.settings.image_ratio,
+                section_id: section.id,
+                show_secondary_image: true
+              %}
+            </div>
+          {%- endif -%}
         {%- endfor -%}
       {%- endunless -%}
     </div>
@@ -256,7 +336,7 @@
       "type": "select",
       "id": "product_source",
       "label": "Product source (metafield / recently viewed)",
-      "info": "Select a metafield or 'Recently viewed'. Manual list and Collection below take priority if filled.",
+      "info": "Select a metafield or 'Recently viewed'. First 3 slots come from this source, remaining slots are filled from the Collection below.",
       "options": [
         { "value": "none", "label": "— None (use manual list, collection, or fallback)" },
         { "value": "recently_viewed", "label": "Recently viewed products" },
@@ -277,7 +357,7 @@
       "type": "collection",
       "id": "collection",
       "label": "Collection",
-      "info": "Used if no manual products are selected."
+      "info": "Used to fill remaining carousel slots after metafield products."
     },
     {
       "type": "range",
