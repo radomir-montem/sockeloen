@@ -112,6 +112,8 @@
                     assign mf_val = product.metafields[mf_ns][mf_k].value | default: product.metafields[mf_ns][mf_k]
                     if mf_val != blank
                       assign desc_output = desc_output | replace: '[metafield]', mf_val
+                    elsif block.settings.metafield_fallback != blank
+                      assign desc_output = desc_output | replace: '[metafield]', block.settings.metafield_fallback
                     else
                       assign desc_output = desc_output | replace: '[metafield]', ''
                     endif
@@ -387,13 +389,22 @@
           "info": "Use [metafield] in the description as placeholder. It will be replaced with the selected metafield value.",
           "options": [
             { "value": "", "label": "— None —" },
-            { "value": "custom.height", "label": "Height (custom.height)" },
-            { "value": "custom.custom_benefit_1", "label": "Benefit 1 (custom.custom_benefit_1)" },
-            { "value": "custom.custom_benefit_2", "label": "Benefit 2 (custom.custom_benefit_2)" },
-            { "value": "custom.custom_benefit_3", "label": "Benefit 3 (custom.custom_benefit_3)" },
-            { "value": "descriptors.subtitle", "label": "Subtitle (descriptors.subtitle)" }
+            { "value": "custom.height", "label": "Height" },
+            { "value": "custom.knit_structure", "label": "Knit Structure" },
+            { "value": "custom.materials", "label": "Materials" },
+            { "value": "custom.benefit_1", "label": "Benefit 1" },
+            { "value": "custom.benefit_2", "label": "Benefit 2" },
+            { "value": "custom.benefit_3", "label": "Benefit 3" },
+            { "value": "custom.badge", "label": "Badge" },
+            { "value": "descriptors.subtitle", "label": "Subtitle" }
           ],
           "default": ""
+        },
+        {
+          "type": "text",
+          "id": "metafield_fallback",
+          "label": "Fallback text",
+          "info": "Shown in place of [metafield] when the product has no value for the selected metafield."
         }
       ]
     }
