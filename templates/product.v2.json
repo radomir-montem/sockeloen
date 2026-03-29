@@ -208,7 +208,7 @@
             "hotspot_x": 56,
             "hotspot_y": 63,
             "heading": "Sockeloen Yarns",
-            "description": "<p><strong>Through the whole sock we used anti-bacterial [metafield] yarns</strong>, blended with polyamide and elastane to create the perfect yarn blend.</p>",
+            "description": "<p><strong>Through the whole sock we used [metafield] yarns</strong>, blended with polyamide and elastane to create the perfect yarn blend.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-skin"
           }
