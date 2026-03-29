@@ -43,13 +43,8 @@
     endif
 
     comment
-      Fallback: if no metafield products, try default upsells metafield
+      No fallback to metafields when 'none' is selected — only collection fills the carousel
     endcomment
-    if meta_products == nil or meta_products == blank
-      if product.metafields.my_fields.product_upsells.value != blank
-        assign meta_products = product.metafields.my_fields.product_upsells.value
-      endif
-    endif
 
     comment
       Step 2: Build combined list — metafield products first (up to 3), then fill from collection (up to max)
