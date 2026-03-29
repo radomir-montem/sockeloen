@@ -306,11 +306,20 @@
     "product_faq_NDDGQE": {
       "type": "product-faq",
       "blocks": {
+        "faq_RBwrTX": {
+          "type": "faq",
+          "settings": {
+            "question": "How much watts can I save with sockeloen aero socks?",
+            "answer": "<p>The watt saving you can achieve compared to normal socks can be between 5 and 15 watts, depending on speed, jaw angle, body shape and total cda. In our research we normally measure total cda and the % of change on your total cda.</p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        },
         "faq_Y8JLka": {
           "type": "faq",
           "settings": {
-            "question": "Which sockheight are these socks?",
-            "answer": "<p><strong>This sock is [metafield] high. </strong>We optimized our fitt for the perfect looking sockheight on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
+            "question": "Which sockheight are these sockeloen aero socks?",
+            "answer": "<p><strong>This sock in [metafield] high. </strong>We optimized our fitt for the perfect looking sockheight on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
@@ -318,7 +327,7 @@
         "faq_9RzfCj": {
           "type": "faq",
           "settings": {
-            "question": "What if I am between sizes of the cycling socks?",
+            "question": "What if I am between sizes of the aero socks?",
             "answer": "<p>Our socks come in 36-42 and 43-48 or one size(39-46). If you're between sizes, we recommend sizing up for a more comfortable fit. Check our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>size guide</strong></span></a> for detailed measurements.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
@@ -327,8 +336,8 @@
         "faq_7idmHH": {
           "type": "faq",
           "settings": {
-            "question": "What material are Sockeloen socks made of?",
-            "answer": "<p>These cycling socks are made from a premium blend of [metafield], polypropylene, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>",
+            "question": "What material are Sockeloen aero socks made of?",
+            "answer": "<p>The top layers of our aero socks can be an aerodynamic lycra yarn (classic aero sock) or a woven aerodynamic material (fastest socks on the planet). The foot part of these aero socks are made from a premium blend of [metafield], polypropylene, and elastane. </p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-Skin"
           }
@@ -371,6 +380,7 @@
         }
       },
       "block_order": [
+        "faq_RBwrTX",
         "faq_Y8JLka",
         "faq_9RzfCj",
         "faq_7idmHH",
