@@ -439,7 +439,7 @@ a.product-v2__sp-avatar {
 }
 
 /* From/compare price wrapper — show second, smaller */
-.product-v2__price .price__sale > span:first-of-type {
+.product-v2__price .price__sale > span:not(.visually-hidden):not(.real-price) {
   order: 2;
 }
 
