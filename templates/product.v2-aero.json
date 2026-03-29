@@ -123,6 +123,16 @@
     "benefits": {
       "type": "product-benefits",
       "blocks": {
+        "benefit_igt7xh": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "image": "shopify://shop_images/FSOTP2_BANNER_1000X1000_8babf915-09c3-4e70-9b5a-9b65b5512b4c.jpg",
+            "heading": "Windtunnel",
+            "heading_italic": "Proven.",
+            "description": "<p>At Sockeloen we know how athletes think. They don't want bullshit marketing claims. They want transparant research reports. So that's what we did. All our research reports are downloadable on our website. This is how we keep ourselves and our products the fastest.</p>"
+          }
+        },
         "benefit_fcWnXU": {
           "type": "benefit",
           "settings": {
@@ -142,22 +152,12 @@
             "heading_italic": "like Weapons.",
             "description": "<p>The reason Sockeloen was founded. Most cycling socks didn't have the right sokheight. And mayb even worse, some tend to fall dow to your ankles. A nightmare. We developed a very stretchable sock, with the perfect sockheight, that never falls down. Make your legs look like the weapons they really are.</p>"
           }
-        },
-        "benefit_igt7xh": {
-          "type": "benefit",
-          "settings": {
-            "video_url": "",
-            "image": "shopify://shop_images/FSOTP2_BANNER_1000X1000_8babf915-09c3-4e70-9b5a-9b65b5512b4c.jpg",
-            "heading": "Windtunnel",
-            "heading_italic": "Proven.",
-            "description": "<p>At Sockeloen we know how athletes think. They don't want bullshit marketing claims. They want transparant research reports. So that's what we did. All our research reports are downloadable on our website. This is how we keep ourselves and our products the fastest.</p>"
-          }
         }
       },
       "block_order": [
+        "benefit_igt7xh",
         "benefit_fcWnXU",
-        "benefit_BKLxKT",
-        "benefit_igt7xh"
+        "benefit_BKLxKT"
       ],
       "settings": {
         "background_color": "#f3f3f3",
