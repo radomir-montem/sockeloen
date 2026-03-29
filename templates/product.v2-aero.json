@@ -127,7 +127,7 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/Champ_homepage_studio.png",
+            "image": "shopify://shop_images/Studiobanner_WK_25_Mobile.png",
             "heading": "Worn by",
             "heading_italic": "World Champions",
             "description": "<p>Some of the best male and female riders in the world choose Sockeloen, because of the materials, because of the wind tunnel test results, but often simply because they think they look great.</p>"
@@ -137,7 +137,7 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/Studiobanner_WK_25_Mobile.png",
+            "image": "shopify://shop_images/FSOTP_BANNER_800X800_082ded83-f350-4ed8-8f4d-0e3ec8e910b9.jpg",
             "heading": "Make your calves look ",
             "heading_italic": "like Weapons.",
             "description": "<p>The reason Sockeloen was founded. Most cycling socks didn't have the right sokheight. And mayb even worse, some tend to fall dow to your ankles. A nightmare. We developed a very stretchable sock, with the perfect sockheight, that never falls down. Make your legs look like the weapons they really are.</p>"
@@ -147,10 +147,10 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/Tour_home_banner.png",
-            "heading": "No sweaty, stinky feet.",
-            "heading_italic": "Never again.",
-            "description": "<p>Sockeloen is more than just socks for the Mathieu van der Poels and Demi Vollerings of this planet. Our range includes countless socks for town-sign-sprinters, good-weather cyclists, the adventurers and even for the couch potatoes among us.When you want to ride comfortable, without pressure points, sweety or painfull feet: Sockeloen cycling socks are what you need.</p>"
+            "image": "shopify://shop_images/FSOTP2_BANNER_1000X1000_8babf915-09c3-4e70-9b5a-9b65b5512b4c.jpg",
+            "heading": "Windtunnel",
+            "heading_italic": "Proven.",
+            "description": "<p>At Sockeloen we know how athletes think. They don't want bullshit marketing claims. They want transparant research reports. So that's what we did. All our research reports are downloadable on our website. This is how we keep ourselves and our products the fastest.</p>"
           }
         }
       },
@@ -173,9 +173,9 @@
           "type": "hotspot",
           "settings": {
             "hotspot_x": 44,
-            "hotspot_y": 21,
-            "heading": "Sockeloen Cuff",
-            "description": "<p><strong>The Ultra Elastic super cuff  is [metafield] high</strong> and makes sure this sock is always exactly on the right spott and won't fall down. We created this by sourcing the best elastane of Europe and mixed it into this sock.</p>",
+            "hotspot_y": 35,
+            "heading": "Sockeloen Aerodynamic Leg",
+            "description": "<p><strong>The Sockeloen aerodynamic leg is </strong>tested extensively in the windtunnel.TAnd is designed to reduce aerodynamic drag. This can save you up to 10 Watts. The cuff is in <strong>[metafield] high.</strong></p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
@@ -183,10 +183,10 @@
         "hotspot_QEDVDk": {
           "type": "hotspot",
           "settings": {
-            "hotspot_x": 54,
-            "hotspot_y": 37,
-            "heading": "Sockeloen Mesh",
-            "description": "<p><strong>The [metafield] knitting structure combines: </strong>flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>",
+            "hotspot_x": 44,
+            "hotspot_y": 21,
+            "heading": "Sockeloen Double Anti Slip",
+            "description": "<p><strong>To make sure the socks stay up, </strong>without losing aerodynamic advantages, we developped our <strong>double anti slip layer </strong>on the inside of the sock. It sticks like glue and keeps the socks on the spot they belong to be.</p>",
             "metafield_key": "custom.knit_structure",
             "metafield_fallback": "O-Mesh"
           }
@@ -208,7 +208,7 @@
             "hotspot_x": 56,
             "hotspot_y": 63,
             "heading": "Sockeloen Yarns",
-            "description": "<p><strong>Through the whole sock we used [metafield] yarns</strong>, blended with polyamide and elastane to create the perfect yarn blend.</p>",
+            "description": "<p><strong>In the footpart of the sock we used [metafield] yarns</strong>, blended with polyamide and elastane to create the perfect yarn blend.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-skin"
           }
