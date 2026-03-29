@@ -31,6 +31,18 @@
   </div>
 </div>
 
+{%- comment -%}
+  Hidden product-form: uses the EXACT same add-to-cart logic as the main product page.
+  product-form.js handles: fetch to /cart/add.js, renderContents, is-empty removal, fetch_upsells.
+{%- endcomment -%}
+<product-form id="cart-upsell-product-form" style="display:none !important;">
+  {%- form 'product', product, id: 'cart-upsell-form' -%}
+    <input type="hidden" name="id" value="" disabled>
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit">Add</button>
+  {%- endform -%}
+</product-form>
+
 <script>
   window.cartSizePicker = {
     data: null,
@@ -39,23 +51,19 @@
 
     /* Find the first image associated with a variant that has a specific option value */
     getVariantImage: function(product, optIndex, optValue) {
-      /* Find a variant with this option value */
       var variant = product.variants.find(function(v) {
         return v['option' + (optIndex + 1)] === optValue;
       });
       if (!variant) return null;
 
-      /* Check variant.featured_image — .js returns object {src:...}, .json same */
       if (variant.featured_image) {
         var fiSrc = typeof variant.featured_image === 'string' ? variant.featured_image : variant.featured_image.src;
         if (fiSrc) return fiSrc.replace(/(\.[^.]+)$/, '_80x$1');
       }
 
-      /* Fall back to product.images — .js: array of strings, .json: array of objects */
       if (product.images && product.images.length > 0) {
         var firstImg = product.images[0];
         if (typeof firstImg === 'object' && firstImg.variant_ids) {
-          /* .json format: objects with variant_ids */
           var img = product.images.find(function(im) {
             return im.variant_ids && im.variant_ids.indexOf(variant.id) !== -1;
           });
@@ -65,7 +73,6 @@
       return null;
     },
 
-    /* Check if an option is a "color" type option */
     isColorOption: function(optName) {
       var name = optName.toLowerCase();
       return name === 'color' || name === 'colour' || name === 'kleur';
@@ -76,7 +83,6 @@
       var url = btn.getAttribute('data-product-url');
       if (!url) { console.error('Size picker: no data-product-url'); return; }
 
-      /* Read disabled variant IDs from the button (set by Liquid via metafield) */
       var disabledAttr = btn.getAttribute('data-disabled-variants') || '';
       var disabledVariantIds = disabledAttr ? disabledAttr.split(',').map(function(id) { return parseInt(id, 10); }) : [];
 
@@ -100,20 +106,19 @@
           return r.json();
         })
         .then(function(json) {
-          /* .js endpoint returns product directly (no wrapper) */
           var product = json.product || json;
           if (!product || !product.variants) throw new Error('No product in response');
 
-          /* Filter out disabled variants */
-          if (disabledVariantIds.length > 0) {
-            product.variants = product.variants.filter(function(v) {
-              return disabledVariantIds.indexOf(v.id) === -1;
-            });
-          }
+          /* Filter out disabled + sold-out variants */
+          product.variants = product.variants.filter(function(v) {
+            if (disabledVariantIds.length > 0 && disabledVariantIds.indexOf(v.id) !== -1) return false;
+            if (v.available === false) return false;
+            return true;
+          });
 
           self.data = product;
 
-          /* Product image — .js: featured_image is a string URL; .json: image.src */
+          /* Product image */
           var imgSrc = '';
           if (product.featured_image) {
             imgSrc = (typeof product.featured_image === 'string' ? product.featured_image : (product.featured_image.src || '')).replace(/(\.[^.]+)$/, '_120x$1');
@@ -125,14 +130,13 @@
           document.getElementById('cart-size-picker-img').src = imgSrc;
           document.getElementById('cart-size-picker-title').textContent = product.title;
 
-          /* Price: .js returns cents (integer), .json returns string like "29.95" */
+          /* Price: .js returns cents (integer), .json returns string */
           var rawPrice = product.variants[0].price;
           var priceVal = (typeof rawPrice === 'number' && rawPrice > 1000) ? rawPrice / 100 : parseFloat(rawPrice);
           document.getElementById('cart-size-picker-price').textContent = priceVal.toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
           loading.style.display = 'none';
 
-          /* product.options is an array of objects: [{name:"Size", values:[...]}, ...] */
           var optionNames = product.options.map(function(o) {
             return typeof o === 'string' ? o : o.name;
           });
@@ -141,6 +145,12 @@
           if (product.variants.length === 1 && optionNames.length === 1 && optionNames[0] === 'Title') {
             self.selectedVariantId = product.variants[0].id;
             self.addToCart();
+            return;
+          }
+
+          /* If no available variants remain, show message */
+          if (product.variants.length === 0) {
+            optionsContainer.innerHTML = '<p style="padding:12px 0;color:#999;">Sold out</p>';
             return;
           }
 
@@ -161,7 +171,7 @@
             var values = [];
             product.variants.forEach(function(v) {
               var val = v['option' + (optIndex + 1)];
-              if (val && values.indexOf(val) === -1 && v.available !== false) {
+              if (val && values.indexOf(val) === -1) {
                 values.push(val);
               }
             });
@@ -173,7 +183,6 @@
               btn.setAttribute('data-option-index', optIndex);
               btn.setAttribute('data-option-value', val);
 
-              /* For color options, try to show variant image as thumbnail */
               if (isColor) {
                 var variantImg = self.getVariantImage(product, optIndex, val);
                 if (variantImg) {
@@ -195,7 +204,6 @@
               }
 
               btn.addEventListener('click', function() {
-                /* Deselect siblings */
                 buttons.querySelectorAll('.cart-size-picker__option-btn').forEach(function(b) {
                   b.classList.remove('active');
                 });
@@ -203,7 +211,6 @@
                 self.selectedOptions[optIndex] = val;
                 self.matchVariant();
 
-                /* Update product image when color changes */
                 if (isColor) {
                   var varImg = self.getVariantImage(product, optIndex, val);
                   if (varImg) {
@@ -229,7 +236,6 @@
         .catch(function(err) {
           console.error('Size picker error:', err);
           loading.style.display = 'none';
-          /* Close picker on error so user isn't stuck */
           setTimeout(function() { self.close(); }, 500);
         });
     },
@@ -244,7 +250,6 @@
         return typeof o === 'string' ? o : o.name;
       });
 
-      /* Only match if ALL options have been selected */
       var allSelected = optionNames.every(function(opt, i) {
         return self.selectedOptions[i] !== undefined;
       });
@@ -261,11 +266,10 @@
         });
       });
 
-      if (match && match.available !== false) {
+      if (match) {
         self.selectedVariantId = match.id;
         confirmBtn.disabled = false;
 
-        /* Update price to matched variant price */
         var rawPrice = match.price;
         var priceVal = (typeof rawPrice === 'number' && rawPrice > 1000) ? rawPrice / 100 : parseFloat(rawPrice);
         document.getElementById('cart-size-picker-price').textContent = priceVal.toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
@@ -275,6 +279,11 @@
       }
     },
 
+    /* ================================================================
+       ADD TO CART — uses the exact same <product-form> mechanism
+       as the main product page (product-form.js handles everything:
+       fetch, renderContents, is-empty removal, fetch_upsells).
+       ================================================================ */
     addToCart: function() {
       var self = this;
       if (!self.selectedVariantId) return;
@@ -284,71 +293,26 @@
       confirmBtn.disabled = true;
       loading.style.display = 'flex';
 
-      var formData = new FormData();
-      formData.append('id', self.selectedVariantId);
-      formData.append('quantity', 1);
-      formData.append('sections', 'cart-drawer,cart-icon-bubble');
-      formData.append('sections_url', window.location.pathname);
+      /* Set the variant ID on the hidden product-form's input */
+      var hiddenForm = document.querySelector('#cart-upsell-product-form form');
+      var hiddenInput = hiddenForm.querySelector('[name="id"]');
+      hiddenInput.value = self.selectedVariantId;
+      hiddenInput.disabled = false;
 
-      fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        body: formData
-      })
-        .then(function(r) { return r.json(); })
-        .then(function(response) {
-          if (response.status) {
-            throw new Error(response.description || 'Could not add to cart');
-          }
-          self.close();
+      /* Close the picker UI */
+      self.close();
 
-          /* Use cart-drawer's built-in renderContents for proper re-rendering */
-          var cartDrawer = document.querySelector('cart-drawer');
-          if (cartDrawer && cartDrawer.renderContents && response.sections) {
-            cartDrawer.renderContents(response);
-          } else {
-            /* Fallback: manual re-render */
-            fetch('/?sections=cart-drawer,cart-icon-bubble')
-              .then(function(r) { return r.json(); })
-              .then(function(sections) {
-                var drawerEl = document.getElementById('CartDrawer');
-                if (drawerEl && sections['cart-drawer']) {
-                  var parsed = new DOMParser().parseFromString(sections['cart-drawer'], 'text/html');
-                  var newDrawer = parsed.getElementById('CartDrawer');
-                  if (newDrawer) {
-                    drawerEl.innerHTML = newDrawer.innerHTML;
-                  }
-                }
-                var bubble = document.getElementById('cart-icon-bubble');
-                if (bubble && sections['cart-icon-bubble']) {
-                  var parsedBubble = new DOMParser().parseFromString(sections['cart-icon-bubble'], 'text/html');
-                  var newBubble = parsedBubble.getElementById('cart-icon-bubble');
-                  if (newBubble) {
-                    bubble.innerHTML = newBubble.innerHTML;
-                  }
-                }
-                if (cartDrawer) {
-                  cartDrawer.classList.remove('is-empty');
-                  /* Re-attach overlay handler and re-open drawer */
-                  var overlay = document.getElementById('CartDrawer-Overlay');
-                  if (overlay) overlay.addEventListener('click', cartDrawer.close.bind(cartDrawer));
-                  cartDrawer.open();
-                }
-              });
-          }
-
-          /* Re-run upsells refresh */
-          if (window.fetch_upsells) window.fetch_upsells();
-        })
-        .catch(function(err) {
-          console.error('Add to cart error:', err);
-          loading.style.display = 'none';
-          confirmBtn.disabled = false;
-        });
+      /* Submit the hidden form — product-form.js onSubmitHandler takes over:
+         1. POSTs to /cart/add.js with sections
+         2. Calls cartDrawer.renderContents(response) to re-render drawer
+         3. Removes is-empty class from cart-drawer
+         4. Calls fetch_upsells() to refresh cross-sell cards */
+      hiddenForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     },
 
     close: function() {
       document.getElementById('cart-size-picker').style.display = 'none';
+      document.getElementById('cart-size-picker-loading').style.display = 'none';
       this.data = null;
       this.selectedVariantId = null;
       this.selectedOptions = {};

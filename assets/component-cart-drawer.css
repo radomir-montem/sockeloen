@@ -187,6 +187,7 @@ cart-drawer.is-empty .drawer__header {
   flex: 1;
   overflow: hidden;
   min-width: 0;
+  min-height: 0; /* allow flex child to shrink so inner scroll works */
 }
 
 @media screen and (min-width: 750px) {
@@ -278,6 +279,7 @@ cart-drawer.is-empty .drawer__header {
 cart-drawer-items {
   overflow: auto;
   flex: 1;
+  min-height: 0; /* critical: allow flex child to shrink below content size so overflow:auto works */
   padding: 0 1.5rem;
 }
 
