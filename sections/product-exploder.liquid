@@ -18,7 +18,17 @@
   }
 {%- endstyle -%}
 
-{%- assign exploder_img = section.settings.image | default: product.featured_image -%}
+{%- liquid
+  assign exploder_img = section.settings.image
+  if exploder_img == blank
+    assign title_lower = product.title | downcase
+    if title_lower contains 'pack' and product.images.size >= 4
+      assign exploder_img = product.images[3]
+    else
+      assign exploder_img = product.featured_image
+    endif
+  endif
+-%}
 
 <section
   class="product-exploder product-exploder--{{ section.id }} section-{{ section.id }}-padding"
