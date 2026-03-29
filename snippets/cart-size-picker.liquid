@@ -264,45 +264,61 @@
       confirmBtn.disabled = true;
       loading.style.display = 'flex';
 
+      var formData = new FormData();
+      formData.append('id', self.selectedVariantId);
+      formData.append('quantity', 1);
+      formData.append('sections', 'cart-drawer,cart-icon-bubble');
+      formData.append('sections_url', window.location.pathname);
+
       fetch('/cart/add.js', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: [{ id: self.selectedVariantId, quantity: 1 }] })
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: formData
       })
         .then(function(r) { return r.json(); })
-        .then(function(addResp) {
-          if (addResp.status) {
-            /* Shopify returns {status: 422, ...} on error */
-            throw new Error(addResp.description || 'Could not add to cart');
+        .then(function(response) {
+          if (response.status) {
+            throw new Error(response.description || 'Could not add to cart');
           }
           self.close();
-          /* Re-render cart drawer */
-          fetch('/?sections=cart-drawer,cart-icon-bubble')
-            .then(function(r) { return r.json(); })
-            .then(function(sections) {
-              var drawerEl = document.getElementById('CartDrawer');
-              if (drawerEl && sections['cart-drawer']) {
-                var parsed = new DOMParser().parseFromString(sections['cart-drawer'], 'text/html');
-                var newDrawer = parsed.getElementById('CartDrawer');
-                if (newDrawer) {
-                  drawerEl.innerHTML = newDrawer.innerHTML;
-                }
-              }
-              var bubble = document.getElementById('cart-icon-bubble');
-              if (bubble && sections['cart-icon-bubble']) {
-                var parsedBubble = new DOMParser().parseFromString(sections['cart-icon-bubble'], 'text/html');
-                var newBubble = parsedBubble.getElementById('cart-icon-bubble');
-                if (newBubble) {
-                  bubble.innerHTML = newBubble.innerHTML;
-                }
-              }
-              /* Remove is-empty class */
-              var cartDrawer = document.querySelector('cart-drawer');
-              if (cartDrawer) cartDrawer.classList.remove('is-empty');
 
-              /* Re-run upsells refresh */
-              if (window.fetch_upsells) window.fetch_upsells();
-            });
+          /* Use cart-drawer's built-in renderContents for proper re-rendering */
+          var cartDrawer = document.querySelector('cart-drawer');
+          if (cartDrawer && cartDrawer.renderContents && response.sections) {
+            cartDrawer.renderContents(response);
+          } else {
+            /* Fallback: manual re-render */
+            fetch('/?sections=cart-drawer,cart-icon-bubble')
+              .then(function(r) { return r.json(); })
+              .then(function(sections) {
+                var drawerEl = document.getElementById('CartDrawer');
+                if (drawerEl && sections['cart-drawer']) {
+                  var parsed = new DOMParser().parseFromString(sections['cart-drawer'], 'text/html');
+                  var newDrawer = parsed.getElementById('CartDrawer');
+                  if (newDrawer) {
+                    drawerEl.innerHTML = newDrawer.innerHTML;
+                  }
+                }
+                var bubble = document.getElementById('cart-icon-bubble');
+                if (bubble && sections['cart-icon-bubble']) {
+                  var parsedBubble = new DOMParser().parseFromString(sections['cart-icon-bubble'], 'text/html');
+                  var newBubble = parsedBubble.getElementById('cart-icon-bubble');
+                  if (newBubble) {
+                    bubble.innerHTML = newBubble.innerHTML;
+                  }
+                }
+                if (cartDrawer) {
+                  cartDrawer.classList.remove('is-empty');
+                  /* Re-attach overlay handler and re-open drawer */
+                  var overlay = document.getElementById('CartDrawer-Overlay');
+                  if (overlay) overlay.addEventListener('click', cartDrawer.close.bind(cartDrawer));
+                  cartDrawer.open();
+                }
+              });
+          }
+
+          /* Re-run upsells refresh */
+          if (window.fetch_upsells) window.fetch_upsells();
         })
         .catch(function(err) {
           console.error('Add to cart error:', err);

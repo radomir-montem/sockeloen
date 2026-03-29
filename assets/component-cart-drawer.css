@@ -110,12 +110,13 @@ cart-drawer {
 .drawer__header {
   position: relative;
   background-color: #F4F4F1;
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: none;
   flex-shrink: 0;
+  min-height: 56px;
 }
 
 cart-drawer.is-empty .drawer__header {
