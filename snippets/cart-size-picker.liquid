@@ -102,7 +102,7 @@
             var values = [];
             product.variants.forEach(function(v) {
               var val = v['option' + (optIndex + 1)];
-              if (val && values.indexOf(val) === -1 && v.available) {
+              if (val && values.indexOf(val) === -1 && v.available !== false) {
                 values.push(val);
               }
             });
@@ -160,7 +160,7 @@
         });
       });
 
-      if (match && match.available) {
+      if (match && match.available !== false) {
         self.selectedVariantId = match.id;
         confirmBtn.disabled = false;
       } else {
