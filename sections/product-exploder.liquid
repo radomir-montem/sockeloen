@@ -381,10 +381,19 @@
           "content": "Dynamic metafield"
         },
         {
-          "type": "text",
+          "type": "select",
           "id": "metafield_key",
-          "label": "Metafield key (namespace.key)",
-          "info": "Use [metafield] in the description above as a placeholder. It will be replaced with the metafield value (e.g. 'custom.height')."
+          "label": "Insert metafield value",
+          "info": "Use [metafield] in the description as placeholder. It will be replaced with the selected metafield value.",
+          "options": [
+            { "value": "", "label": "— None —" },
+            { "value": "custom.height", "label": "Height (custom.height)" },
+            { "value": "custom.custom_benefit_1", "label": "Benefit 1 (custom.custom_benefit_1)" },
+            { "value": "custom.custom_benefit_2", "label": "Benefit 2 (custom.custom_benefit_2)" },
+            { "value": "custom.custom_benefit_3", "label": "Benefit 3 (custom.custom_benefit_3)" },
+            { "value": "descriptors.subtitle", "label": "Subtitle (descriptors.subtitle)" }
+          ],
+          "default": ""
         }
       ]
     }
