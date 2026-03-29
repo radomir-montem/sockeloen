@@ -109,15 +109,21 @@
                   if mf_parts.size == 2
                     assign mf_ns = mf_parts[0]
                     assign mf_k = mf_parts[1]
-                    assign mf_val = product.metafields[mf_ns][mf_k].value | default: product.metafields[mf_ns][mf_k]
-                    if mf_val != blank
-                      assign desc_output = desc_output | replace: '[metafield]', mf_val
-                    elsif block.settings.metafield_fallback != blank
-                      assign desc_output = desc_output | replace: '[metafield]', block.settings.metafield_fallback
-                    else
-                      assign desc_output = desc_output | replace: '[metafield]', ''
-                    endif
+                    assign mf_obj = product.metafields[mf_ns][mf_k]
                   endif
+                endif
+              -%}
+              {%- if mf_obj != blank -%}
+                {%- capture mf_val -%}{{ mf_obj | metafield_tag | strip_html }}{%- endcapture -%}
+              {%- endif -%}
+              {%- liquid
+                assign mf_val = mf_val | strip
+                if mf_obj != blank and mf_val != blank
+                  assign desc_output = desc_output | replace: '[metafield]', mf_val
+                elsif block.settings.metafield_fallback != blank
+                  assign desc_output = desc_output | replace: '[metafield]', block.settings.metafield_fallback
+                else
+                  assign desc_output = desc_output | replace: '[metafield]', ''
                 endif
               -%}
               <div class="rte-inner">{{ desc_output }}</div>
