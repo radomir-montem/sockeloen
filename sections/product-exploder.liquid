@@ -104,6 +104,22 @@
             {%- if block.settings.description != blank -%}
               <div class="rte-inner">{{ block.settings.description }}</div>
             {%- endif -%}
+            {%- if block.settings.metafield_key != blank -%}
+              {%- liquid
+                assign mf_parts = block.settings.metafield_key | split: '.'
+                assign mf_val = nil
+                if mf_parts.size == 2
+                  assign mf_ns = mf_parts[0]
+                  assign mf_k = mf_parts[1]
+                  assign mf_val = product.metafields[mf_ns][mf_k].value | default: product.metafields[mf_ns][mf_k]
+                endif
+              -%}
+              {%- if mf_val != blank -%}
+                <p class="product-exploder__metafield-text">
+                  {{ block.settings.metafield_text }}{{ mf_val }}
+                </p>
+              {%- endif -%}
+            {%- endif -%}
           </div>
         </div>
       {%- endfor -%}
@@ -359,6 +375,22 @@
           "type": "richtext",
           "id": "description",
           "label": "Description"
+        },
+        {
+          "type": "header",
+          "content": "Dynamic metafield"
+        },
+        {
+          "type": "text",
+          "id": "metafield_text",
+          "label": "Text before metafield value",
+          "info": "e.g. 'The cuff height of these socks is '"
+        },
+        {
+          "type": "text",
+          "id": "metafield_key",
+          "label": "Metafield key (namespace.key)",
+          "info": "e.g. 'custom.cuff_height'. The metafield value is appended after the text above."
         }
       ]
     }
