@@ -74,6 +74,10 @@
       var url = btn.getAttribute('data-product-url');
       if (!url) { console.error('Size picker: no data-product-url'); return; }
 
+      /* Read disabled variant IDs from the button (set by Liquid via metafield) */
+      var disabledAttr = btn.getAttribute('data-disabled-variants') || '';
+      var disabledVariantIds = disabledAttr ? disabledAttr.split(',').map(function(id) { return parseInt(id, 10); }) : [];
+
       var picker = document.getElementById('cart-size-picker');
       var loading = document.getElementById('cart-size-picker-loading');
       var optionsContainer = document.getElementById('cart-size-picker-options');
@@ -86,6 +90,7 @@
       self.selectedVariantId = null;
       self.selectedOptions = {};
       self.data = null;
+      self.disabledVariantIds = disabledVariantIds;
 
       fetch(url)
         .then(function(r) {
@@ -95,6 +100,14 @@
         .then(function(json) {
           var product = json.product;
           if (!product) throw new Error('No product in response');
+
+          /* Filter out disabled variants */
+          if (disabledVariantIds.length > 0) {
+            product.variants = product.variants.filter(function(v) {
+              return disabledVariantIds.indexOf(v.id) === -1;
+            });
+          }
+
           self.data = product;
 
           /* Product image */
