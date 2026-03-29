@@ -65,9 +65,7 @@
           </div>
           {%- comment -%} Desktop cross-sells column (hidden on mobile) {%- endcomment -%}
           <div class="cart-drawer__empty-cross-sells cart-drawer__empty-cross-sells--desktop">
-            <div class="upsells_container" style="padding:0;">
-              {% render 'cart-cross-sells' %}
-            </div>
+            {% render 'cart-cross-sells' %}
           </div>
         </div>
       {%- endif -%}
