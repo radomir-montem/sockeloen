@@ -303,7 +303,10 @@
 
       fetch(routes.cart_add_url, {
         method: 'POST',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/javascript'
+        },
         body: formData
       })
         .then(function(r) { return r.json(); })
