@@ -175,7 +175,7 @@
             "hotspot_x": 44,
             "hotspot_y": 35,
             "heading": "Sockeloen Aerodynamic Leg",
-            "description": "<p><strong>The Sockeloen aerodynamic leg is </strong>tested extensively in the windtunnel.TAnd is designed to reduce aerodynamic drag. This can save you up to 10 Watts. The cuff is in <strong>[metafield] high.</strong></p>",
+            "description": "<p><strong>The Sockeloen aerodynamic leg is </strong>tested extensively in the windtunnel. And is designed to reduce aerodynamic drag. This can save you up to 10 Watts. The cuff is in <strong>[metafield] high.</strong></p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
