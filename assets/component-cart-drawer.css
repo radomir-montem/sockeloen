@@ -889,9 +889,10 @@ cart-drawer-items::-webkit-scrollbar-thumb {
   background: #fff;
   border-radius: 16px 16px 0 0;
   padding: 20px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   width: 100%;
   max-width: 400px;
-  max-height: 80vh;
+  max-height: 75vh;
   overflow-y: auto;
 }
 
