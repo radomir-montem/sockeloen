@@ -70,6 +70,7 @@
       {%- endif -%}
 
       {%- comment -%} ===== 2-COLUMN BODY (desktop: cross-sells left, cart right) ===== {%- endcomment -%}
+      {% if cart != empty %}
       <div class="drawer__body">
         <div class="drawer__body-left">
 
@@ -319,7 +320,7 @@
           </div>
         </div>
 
-      {% endif %}
+      {% endif %}{%- comment -%} close cart != empty for footer {%- endcomment -%}
 
         </div>{%- comment -%} close .drawer__body-left {%- endcomment -%}
 
@@ -331,6 +332,7 @@
         </div>
 
       </div>{%- comment -%} close .drawer__body {%- endcomment -%}
+      {% endif %}{%- comment -%} close cart != empty for drawer__body {%- endcomment -%}
     </div>
   </div>
 </cart-drawer>
