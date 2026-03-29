@@ -31,18 +31,6 @@
   </div>
 </div>
 
-{%- comment -%}
-  Hidden product-form: uses the EXACT same add-to-cart logic as the main product page.
-  product-form.js handles: fetch to /cart/add.js, renderContents, is-empty removal, fetch_upsells.
-{%- endcomment -%}
-<product-form id="cart-upsell-product-form" style="display:none !important;">
-  {%- form 'product', product, id: 'cart-upsell-form' -%}
-    <input type="hidden" name="id" value="" disabled>
-    <input type="hidden" name="quantity" value="1">
-    <button type="submit">Add</button>
-  {%- endform -%}
-</product-form>
-
 <script>
   window.cartSizePicker = {
     data: null,
@@ -280,9 +268,9 @@
     },
 
     /* ================================================================
-       ADD TO CART — uses the exact same <product-form> mechanism
-       as the main product page (product-form.js handles everything:
-       fetch, renderContents, is-empty removal, fetch_upsells).
+       ADD TO CART — direct fetch to /cart/add.js replicating the
+       exact same logic as product-form.js onSubmitHandler.
+       No hidden form needed — works on any page context.
        ================================================================ */
     addToCart: function() {
       var self = this;
@@ -293,21 +281,56 @@
       confirmBtn.disabled = true;
       loading.style.display = 'flex';
 
-      /* Set the variant ID on the hidden product-form's input */
-      var hiddenForm = document.querySelector('#cart-upsell-product-form form');
-      var hiddenInput = hiddenForm.querySelector('[name="id"]');
-      hiddenInput.value = self.selectedVariantId;
-      hiddenInput.disabled = false;
+      /* Save variant ID before close() resets it */
+      var variantId = self.selectedVariantId;
 
       /* Close the picker UI */
       self.close();
 
-      /* Submit the hidden form — product-form.js onSubmitHandler takes over:
-         1. POSTs to /cart/add.js with sections
-         2. Calls cartDrawer.renderContents(response) to re-render drawer
-         3. Removes is-empty class from cart-drawer
-         4. Calls fetch_upsells() to refresh cross-sell cards */
-      hiddenForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      /* Get the cart drawer element (same lookup as product-form.js) */
+      var cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+
+      /* Build FormData exactly like product-form.js */
+      var formData = new FormData();
+      formData.append('id', variantId);
+      formData.append('quantity', 1);
+
+      if (cart) {
+        formData.append('sections', cart.getSectionsToRender().map(function(s) { return s.id; }));
+        formData.append('sections_url', window.location.pathname);
+        cart.setActiveElement(document.activeElement);
+      }
+
+      fetch(routes.cart_add_url, {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: formData
+      })
+        .then(function(r) { return r.json(); })
+        .then(function(response) {
+          if (response.status) {
+            /* Error — item couldn't be added (sold out, etc.) */
+            console.error('Cross-sell add to cart error:', response.description);
+            return;
+          }
+          if (!cart) {
+            window.location = window.routes.cart_url;
+            return;
+          }
+          /* Re-render the cart drawer with updated sections (same as product-form.js) */
+          cart.renderContents(response);
+        })
+        .catch(function(e) {
+          console.error('Cross-sell add to cart fetch error:', e);
+        })
+        .finally(function() {
+          if (cart && cart.classList.contains('is-empty')) {
+            cart.classList.remove('is-empty');
+          }
+          if (typeof fetch_upsells === 'function') {
+            fetch_upsells();
+          }
+        });
     },
 
     close: function() {
