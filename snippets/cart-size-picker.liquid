@@ -97,10 +97,9 @@
           var product = json.product || json;
           if (!product || !product.variants) throw new Error('No product in response');
 
-          /* Filter out disabled + sold-out variants */
+          /* Filter out disabled variants only (keep sold-out to show as disabled) */
           product.variants = product.variants.filter(function(v) {
             if (disabledVariantIds.length > 0 && disabledVariantIds.indexOf(v.id) !== -1) return false;
-            if (v.available === false) return false;
             return true;
           });
 
@@ -119,7 +118,8 @@
           document.getElementById('cart-size-picker-title').textContent = product.title;
 
           /* Price: .js returns cents (integer), .json returns string */
-          var rawPrice = product.variants[0].price;
+          var firstAvailable = product.variants.find(function(v) { return v.available; }) || product.variants[0];
+          var rawPrice = firstAvailable.price;
           var priceVal = (typeof rawPrice === 'number' && rawPrice > 1000) ? rawPrice / 100 : parseFloat(rawPrice);
           document.getElementById('cart-size-picker-price').textContent = priceVal.toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
@@ -129,15 +129,18 @@
             return typeof o === 'string' ? o : o.name;
           });
 
-          /* If only default variant, just add directly */
-          if (product.variants.length === 1 && optionNames.length === 1 && optionNames[0] === 'Title') {
-            self.selectedVariantId = product.variants[0].id;
+          /* Check if any variant is available at all */
+          var availableVariants = product.variants.filter(function(v) { return v.available; });
+
+          /* If only default variant and it's available, just add directly */
+          if (availableVariants.length === 1 && optionNames.length === 1 && optionNames[0] === 'Title') {
+            self.selectedVariantId = availableVariants[0].id;
             self.addToCart();
             return;
           }
 
           /* If no available variants remain, show message */
-          if (product.variants.length === 0) {
+          if (availableVariants.length === 0) {
             optionsContainer.innerHTML = '<p style="padding:12px 0;color:#999;">Sold out</p>';
             return;
           }
@@ -156,6 +159,7 @@
             var buttons = document.createElement('div');
             buttons.className = 'cart-size-picker__option-buttons';
 
+            /* Collect ALL option values (including sold-out) */
             var values = [];
             product.variants.forEach(function(v) {
               var val = v['option' + (optIndex + 1)];
@@ -170,6 +174,15 @@
               btn.className = 'cart-size-picker__option-btn';
               btn.setAttribute('data-option-index', optIndex);
               btn.setAttribute('data-option-value', val);
+
+              /* Check if any available variant has this option value */
+              var hasAvailable = availableVariants.some(function(v) {
+                return v['option' + (optIndex + 1)] === val;
+              });
+              if (!hasAvailable) {
+                btn.classList.add('cart-size-picker__option-btn--sold-out');
+                btn.disabled = true;
+              }
 
               if (isColor) {
                 var variantImg = self.getVariantImage(product, optIndex, val);

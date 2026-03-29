@@ -81,22 +81,68 @@ cart-drawer.is-empty .drawer__header {
   margin: 0;
 }
 
-.cart-drawer__empty-cross-sells {
+/* Empty cart: main column (header + empty text + mobile cross-sells) */
+.drawer__inner-empty__main {
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+}
+
+/* Mobile cross-sells */
+.cart-drawer__empty-cross-sells--mobile {
   padding: 0 1.5rem 1.5rem;
 }
 
-.cart-drawer__empty-cross-sells .cart-cross-sells {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
+/* Desktop cross-sells column — hidden on mobile */
+.cart-drawer__empty-cross-sells--desktop {
+  display: none;
 }
 
-.cart-drawer__empty-cross-sells .cart-cross-sells::-webkit-scrollbar {
-  display: none;
+@media screen and (min-width: 750px) {
+  .drawer__inner-empty {
+    flex-direction: row;
+  }
+
+  .drawer__inner-empty__main {
+    order: 2;
+    flex: 1;
+  }
+
+  /* Hide mobile cross-sells on desktop */
+  .cart-drawer__empty-cross-sells--mobile {
+    display: none;
+  }
+
+  /* Show desktop cross-sells column */
+  .cart-drawer__empty-cross-sells--desktop {
+    display: flex;
+    flex-direction: column;
+    width: 42%;
+    max-width: 42%;
+    flex-shrink: 0;
+    background: #fff;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+    order: 1;
+  }
+
+  .cart-drawer__empty-cross-sells--desktop .cart-cross-sells {
+    flex-direction: column;
+    overflow-x: visible;
+    overflow-y: auto;
+    gap: 12px;
+  }
+
+  .cart-drawer__empty-cross-sells--desktop .cross-sell-card {
+    flex: none;
+    width: 100%;
+  }
+
+  .cart-drawer__empty-cross-sells--desktop .cart-cross-sells__heading {
+    display: none;
+  }
 }
 
 cart-drawer {
@@ -1021,6 +1067,13 @@ cart-drawer-items::-webkit-scrollbar-thumb {
   border-color: #0395F6;
   background: #fff;
   color: #1a1a1a;
+}
+
+.cart-size-picker__option-btn--sold-out {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  pointer-events: none;
 }
 
 /* Color option buttons with variant image thumbnails */
