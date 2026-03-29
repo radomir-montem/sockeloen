@@ -119,7 +119,7 @@ cart-drawer {
 }
 
 cart-drawer.is-empty .drawer__header {
-  display: none;
+  display: flex;
 }
 
 .drawer__heading {
