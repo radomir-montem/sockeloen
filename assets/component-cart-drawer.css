@@ -519,25 +519,25 @@ cart-drawer-items::-webkit-scrollbar-thumb {
     margin-top: 32px;
   }
 
-  .cross-sell-card__title {
-    font-size: 11px;
-    line-height: 1.2;
-    margin-bottom: 2px;
+  .upsells_container--mobile .cross-sell-card__title {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 2px !important;
   }
 
-  .cross-sell-card__price {
-    font-size: 11px;
-    font-weight: 500;
-    margin-bottom: 6px;
+  .upsells_container--mobile .cross-sell-card__price {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    margin-bottom: 6px !important;
   }
 
-  .cross-sell-card__info {
-    padding: 6px 8px;
+  .upsells_container--mobile .cross-sell-card__info {
+    padding: 6px 8px !important;
   }
 
-  .cross-sell-card__add-btn {
-    font-size: 11px;
-    padding: 6px 0;
+  .upsells_container--mobile .cross-sell-card__add-btn {
+    font-size: 11px !important;
+    padding: 6px 0 !important;
   }
 }
 
