@@ -48,38 +48,37 @@
 
 .drawer__inner-empty {
   height: 100%;
-  padding: 0 1.5rem;
+  padding: 0;
   background-color: #F4F4F1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.cart-drawer__warnings {
+cart-drawer.is-empty .drawer__inner {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  justify-content: center;
-}
-
-cart-drawer.is-empty .drawer__inner {
-  display: grid;
-  grid-template-rows: 1fr;
-  align-items: center;
   padding: 0;
 }
 
 cart-drawer.is-empty .drawer__header {
-  display: none;
+  display: flex;
 }
 
-cart-drawer:not(.is-empty) .cart-drawer__warnings,
-cart-drawer:not(.is-empty) .cart-drawer__collection {
-  display: none;
+.cart-drawer__empty-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 0 2rem;
+  gap: 1.5rem;
 }
 
-.cart-drawer__warnings--has-collection .cart__login-title {
-  margin-top: 2.5rem;
+.cart-drawer__empty-text {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
 }
 
 cart-drawer {
