@@ -177,7 +177,7 @@
             "heading": "Sockeloen Cuff",
             "description": "<p><strong>The Ultra Elastic super cuff  is [metafield] high</strong> and makes sure this sock is always exactly on the right spott and won't fall down. We created this by sourcing the best elastane of Europe and mixed it into this sock.</p>",
             "metafield_key": "custom.height",
-            "metafield_fallback": ""
+            "metafield_fallback": "19cm"
           }
         },
         "hotspot_QEDVDk": {
@@ -186,7 +186,7 @@
             "hotspot_x": 54,
             "hotspot_y": 37,
             "heading": "Sockeloen Mesh",
-            "description": "<p>The [metafield] knitting structure combines: flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>",
+            "description": "<p><strong>The [metafield] knitting structure combines: </strong>flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>",
             "metafield_key": "custom.knit_structure",
             "metafield_fallback": "O-Mesh"
           }
