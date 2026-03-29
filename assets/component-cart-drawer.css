@@ -516,28 +516,33 @@ cart-drawer-items::-webkit-scrollbar-thumb {
     background: #fff;
     margin: 0 -1.5rem;
     padding: 0 1.5rem 120px;
-    margin-top: 32px;
+    margin-top: 48px;
   }
 
   .upsells_container--mobile .cross-sell-card__title {
-    font-size: 11px !important;
-    line-height: 1.2 !important;
-    margin-bottom: 2px !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 1px !important;
   }
 
   .upsells_container--mobile .cross-sell-card__price {
-    font-size: 11px !important;
+    font-size: 10px !important;
     font-weight: 500 !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
   }
 
   .upsells_container--mobile .cross-sell-card__info {
-    padding: 6px 8px !important;
+    padding: 4px 6px !important;
   }
 
   .upsells_container--mobile .cross-sell-card__add-btn {
-    font-size: 11px !important;
-    padding: 6px 0 !important;
+    font-size: 10px !important;
+    padding: 5px 0 !important;
+  }
+
+  .upsells_container--mobile .cart-cross-sells__heading {
+    font-size: 13px !important;
+    margin-bottom: 8px !important;
   }
 }
 
@@ -600,14 +605,9 @@ cart-drawer-items::-webkit-scrollbar-thumb {
   background: #F4F4F1;
   border-radius: 0;
   overflow: hidden;
-  border: 2px solid transparent;
+  border: none;
   display: flex;
   flex-direction: column;
-  transition: border-color 0.2s ease;
-}
-
-.cross-sell-card:hover {
-  border-color: #e5e5e5;
 }
 
 .cross-sell-card__image-wrap {
