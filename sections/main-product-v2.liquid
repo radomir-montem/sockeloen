@@ -59,7 +59,7 @@
       {%- comment -%} Breadcrumb overlay {%- endcomment -%}
       {% render 'breadcrumb-overlay' %}
 
-      {%- comment -%} Product badges {%- endcomment -%}
+      {%- comment -%} Product badges (sale badge hidden in v2 — shown in price area instead) {%- endcomment -%}
       {% assign showOthersBadges = true %}
       <div class="absolute top-[15px] left-[12px] card-badge !py-6 z-[1]" style="top: 44px;">
         {%- if product.available == false -%}
@@ -73,19 +73,8 @@
             </span>
           {% endunless %}
         {%- elsif product.compare_at_price > product.price and product.available -%}
-          {% for tag in product.tags %}
-            {% if tag == 'sale' %}
-              {% assign showOthersBadges = false %}
-              <span
-                id="Badge-{{ section.id }}-{{ product.id }}"
-                class="badge badge--bottom-left"
-                style="background-color: {{ settings.sale_badge_color }};"
-              >
-                {{- 'products.product.on_sale' | t -}}
-              </span>
-              {% break %}
-            {% endif %}
-          {% endfor %}
+          {%- comment -%} Sale badge hidden — using save badge in price area instead {%- endcomment -%}
+          {% assign showOthersBadges = false %}
         {%- endif -%}
         {% if showOthersBadges %}
           {% for badge in product.metafields.custom.badge.value %}

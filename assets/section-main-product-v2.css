@@ -408,18 +408,44 @@ a.product-v2__sp-avatar {
   gap: 0;
 }
 
-.product-v2__price .price .regular-text,
-.product-v2__price .price__sale .real-price {
+/* Price container: flexbox to reorder price / from-price / save-badge */
+.product-v2__price .price__container {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 8px;
+}
+
+/* Make price__sale use display:contents so children participate in flex order */
+.product-v2__price .price__sale {
+  display: contents !important;
+}
+
+/* Regular price (non-sale) */
+.product-v2__price .price .regular-text {
   font-size: 20px !important;
   color: #000 !important;
   font-weight: 400;
   line-height: 1.3;
 }
 
-/* From/compare price: same size, grey, strikethrough */
+/* Sale price (current price) — show first */
+.product-v2__price .price__sale .real-price {
+  font-size: 20px !important;
+  color: #000 !important;
+  font-weight: 400;
+  line-height: 1.3;
+  order: 1;
+}
+
+/* From/compare price wrapper — show second, smaller */
+.product-v2__price .price__sale > span:first-of-type {
+  order: 2;
+}
+
 .product-v2__price .price__sale > span > .regular-text,
 .product-v2__price .price__sale > span > span:not(.visually-hidden) {
-  font-size: 20px !important;
+  font-size: 14px !important;
   color: #999 !important;
   font-weight: 400;
   text-decoration: line-through;
@@ -428,16 +454,18 @@ a.product-v2__sp-avatar {
 
 /* From text override */
 .product-v2__price .price__sale > span > span[class*="font-roboto"][class*="italic"] {
-  font-size: 20px !important;
+  font-size: 14px !important;
   color: #999 !important;
   font-style: italic;
   line-height: 1.3;
 }
 
-/* Save badge: vertically centered */
+/* Save badge: green, show third */
 .product-v2__price .product-save-badge {
-  margin-left: 8px;
+  margin-left: 0;
   vertical-align: middle;
+  order: 3;
+  background: #5a9a00 !important;
 }
 
 /* ---------- Benefits Checklist ---------- */
