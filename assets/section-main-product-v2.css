@@ -1207,7 +1207,13 @@ a.product-v2__sp-avatar {
 }
 
 .product-v2 .product-form-wrapper {
+  margin-top: 12px;
   margin-bottom: 16px;
+}
+
+/* Remove extra top margin when Avada volume discount is present above ATC */
+.product-v2 .Avada-Volume__Body ~ .product-form-wrapper {
+  margin-top: 0;
 }
 
 /* ---------- Collapsible Tabs ---------- */
