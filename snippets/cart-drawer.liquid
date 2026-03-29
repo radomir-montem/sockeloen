@@ -115,8 +115,9 @@
                     class="cart-drawer-item"
                     x-ref="main_container"
                   >
-                    {%- comment -%} Product Image {%- endcomment -%}
+                    {%- comment -%} Product Image with quantity badge {%- endcomment -%}
                     <div class="cart-drawer-item__image">
+                      <span class="cart-drawer-item__qty-badge">{{ item.quantity }}</span>
                       {% if item.image %}
                         <a href="{{ item.url }}">
                           <img

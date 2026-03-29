@@ -37,9 +37,43 @@
     selectedVariantId: null,
     selectedOptions: {},
 
+    /* Find the first image associated with a variant that has a specific option value */
+    getVariantImage: function(product, optIndex, optValue) {
+      /* Find a variant with this option value */
+      var variant = product.variants.find(function(v) {
+        return v['option' + (optIndex + 1)] === optValue;
+      });
+      if (!variant) return null;
+
+      /* Check variant.featured_image first */
+      if (variant.featured_image && variant.featured_image.src) {
+        return variant.featured_image.src.replace(/(\.[^.]+)$/, '_80x$1');
+      }
+
+      /* Fall back to product.images with matching variant_ids */
+      if (product.images && product.images.length > 0) {
+        var img = product.images.find(function(im) {
+          return im.variant_ids && im.variant_ids.indexOf(variant.id) !== -1;
+        });
+        if (img) {
+          var src = img.src || '';
+          return src.replace(/(\.[^.]+)$/, '_80x$1');
+        }
+      }
+      return null;
+    },
+
+    /* Check if an option is a "color" type option */
+    isColorOption: function(optName) {
+      var name = optName.toLowerCase();
+      return name === 'color' || name === 'colour' || name === 'kleur';
+    },
+
     open: function(btn) {
       var self = this;
       var url = btn.getAttribute('data-product-url');
+      if (!url) { console.error('Size picker: no data-product-url'); return; }
+
       var picker = document.getElementById('cart-size-picker');
       var loading = document.getElementById('cart-size-picker-loading');
       var optionsContainer = document.getElementById('cart-size-picker-options');
@@ -51,14 +85,19 @@
       confirmBtn.disabled = true;
       self.selectedVariantId = null;
       self.selectedOptions = {};
+      self.data = null;
 
       fetch(url)
-        .then(function(r) { return r.json(); })
+        .then(function(r) {
+          if (!r.ok) throw new Error('Product fetch failed: ' + r.status);
+          return r.json();
+        })
         .then(function(json) {
           var product = json.product;
+          if (!product) throw new Error('No product in response');
           self.data = product;
 
-          /* product.image can be object {src:...} or null */
+          /* Product image */
           var imgSrc = '';
           if (product.image && product.image.src) {
             imgSrc = product.image.src.replace(/(\.[^.]+)$/, '_120x$1');
@@ -96,6 +135,7 @@
             label.textContent = optName;
             group.appendChild(label);
 
+            var isColor = self.isColorOption(optName);
             var buttons = document.createElement('div');
             buttons.className = 'cart-size-picker__option-buttons';
 
@@ -111,9 +151,30 @@
               var btn = document.createElement('button');
               btn.type = 'button';
               btn.className = 'cart-size-picker__option-btn';
-              btn.textContent = val;
               btn.setAttribute('data-option-index', optIndex);
               btn.setAttribute('data-option-value', val);
+
+              /* For color options, try to show variant image as thumbnail */
+              if (isColor) {
+                var variantImg = self.getVariantImage(product, optIndex, val);
+                if (variantImg) {
+                  btn.classList.add('cart-size-picker__option-btn--image');
+                  var img = document.createElement('img');
+                  img.src = variantImg;
+                  img.alt = val;
+                  img.width = 40;
+                  img.height = 40;
+                  btn.appendChild(img);
+                  var span = document.createElement('span');
+                  span.textContent = val;
+                  btn.appendChild(span);
+                } else {
+                  btn.textContent = val;
+                }
+              } else {
+                btn.textContent = val;
+              }
+
               btn.addEventListener('click', function() {
                 /* Deselect siblings */
                 buttons.querySelectorAll('.cart-size-picker__option-btn').forEach(function(b) {
@@ -122,6 +183,14 @@
                 btn.classList.add('active');
                 self.selectedOptions[optIndex] = val;
                 self.matchVariant();
+
+                /* Update product image when color changes */
+                if (isColor) {
+                  var varImg = self.getVariantImage(product, optIndex, val);
+                  if (varImg) {
+                    document.getElementById('cart-size-picker-img').src = varImg.replace('_80x', '_120x');
+                  }
+                }
               });
               buttons.appendChild(btn);
             });
@@ -141,6 +210,8 @@
         .catch(function(err) {
           console.error('Size picker error:', err);
           loading.style.display = 'none';
+          /* Close picker on error so user isn't stuck */
+          setTimeout(function() { self.close(); }, 500);
         });
     },
 
@@ -154,6 +225,17 @@
         return typeof o === 'string' ? o : o.name;
       });
 
+      /* Only match if ALL options have been selected */
+      var allSelected = optionNames.every(function(opt, i) {
+        return self.selectedOptions[i] !== undefined;
+      });
+
+      if (!allSelected) {
+        self.selectedVariantId = null;
+        confirmBtn.disabled = true;
+        return;
+      }
+
       var match = product.variants.find(function(v) {
         return optionNames.every(function(opt, i) {
           return self.selectedOptions[i] === v['option' + (i + 1)];
@@ -163,6 +245,10 @@
       if (match && match.available !== false) {
         self.selectedVariantId = match.id;
         confirmBtn.disabled = false;
+
+        /* Update price to matched variant price */
+        var priceVal = parseFloat(match.price);
+        document.getElementById('cart-size-picker-price').textContent = priceVal.toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
       } else {
         self.selectedVariantId = null;
         confirmBtn.disabled = true;
@@ -184,7 +270,11 @@
         body: JSON.stringify({ items: [{ id: self.selectedVariantId, quantity: 1 }] })
       })
         .then(function(r) { return r.json(); })
-        .then(function() {
+        .then(function(addResp) {
+          if (addResp.status) {
+            /* Shopify returns {status: 422, ...} on error */
+            throw new Error(addResp.description || 'Could not add to cart');
+          }
           self.close();
           /* Re-render cart drawer */
           fetch('/?sections=cart-drawer,cart-icon-bubble')
@@ -209,6 +299,9 @@
               /* Remove is-empty class */
               var cartDrawer = document.querySelector('cart-drawer');
               if (cartDrawer) cartDrawer.classList.remove('is-empty');
+
+              /* Re-run upsells refresh */
+              if (window.fetch_upsells) window.fetch_upsells();
             });
         })
         .catch(function(err) {

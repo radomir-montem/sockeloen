@@ -54,7 +54,7 @@
 
 <div class="cart-cross-sells__wrapper" id="cart-cross-sells">
   <h4 class="cart-cross-sells__heading">
-    {{ 'sections.cart.complete_your_kit' | t }}
+    {{ settings.cart_cross_sells_heading_1 | default: 'Complete' }} <em>{{ settings.cart_cross_sells_heading_2 | default: 'your kit' }}</em>
   </h4>
   <div class="cart-cross-sells" id="cart-cross-sells-list">
     {% assign card_index = 0 %}

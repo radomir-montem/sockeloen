@@ -1589,6 +1589,18 @@
         "id": "cart_drawer_out_of_stock_text",
         "label": "Out of stock text",
         "default": "Variant is unavailable"
+      },
+      {
+        "type": "text",
+        "id": "cart_cross_sells_heading_1",
+        "label": "Cross-sells heading (regular part)",
+        "default": "Complete"
+      },
+      {
+        "type": "text",
+        "id": "cart_cross_sells_heading_2",
+        "label": "Cross-sells heading (italic/orange part)",
+        "default": "your kit"
       }
     ]
   }
