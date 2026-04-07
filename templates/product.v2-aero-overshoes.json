@@ -137,10 +137,10 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1.png",
-            "heading": "Make your calves look ",
-            "heading_italic": "like Weapons.",
-            "description": "<p>The reason Sockeloen was founded. Most cycling socks didn't have the right sokheight. And mayb even worse, some tend to fall dow to your ankles. A nightmare. We developed a very stretchable sock, with the perfect sockheight, that never falls down. Make your legs look like the weapons they really are.</p>"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-04-07_at_11.26.22.jpg",
+            "heading": "Stays always white",
+            "heading_italic": "in perfect style",
+            "description": "<p>The reason this overshoe was founded. Most cycling overshoes either fit too loose, let the wind straight through, or fall apart after one rainy ride. A nightmare. We developed a very sleek overshoe, with the perfect fit and protection, that stays put no matter what the road throws at you. And the best part? They stay white. Always. </p>"
           }
         },
         "benefit_igt7xh": {
@@ -237,6 +237,7 @@
         "heading": "Let's take a look",
         "heading_italic": "inside the sock",
         "subtitle": "<p>Discover what makes our socks truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
+        "image": "shopify://shop_images/AERO_Shoes_Cover_Del_Crosso_White_7_OUTSIDE_R_3D_e534b636-196a-4ebe-ba86-609db52a0f27.png",
         "background_color": "#ffffff",
         "text_color": "#000000",
         "accent_color": "#f76503",
