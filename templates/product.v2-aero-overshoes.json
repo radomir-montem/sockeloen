@@ -174,8 +174,8 @@
           "settings": {
             "hotspot_x": 44,
             "hotspot_y": 21,
-            "heading": "Sockeloen Cuff",
-            "description": "<p><strong>The Ultra Elastic super cuff  is [metafield] high</strong> and makes sure this sock is always exactly on the right spott and won't fall down. We created this by sourcing the best elastane of Europe and mixed it into this sock.</p>",
+            "heading": "Sockeloen Velcro",
+            "description": "<p>Made from<strong>strong, high quality velcro</strong>that keeps a secure fit ride after ride — easy to put on, reliable enough to stay in place no matter the conditions.<br/><br/></p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
