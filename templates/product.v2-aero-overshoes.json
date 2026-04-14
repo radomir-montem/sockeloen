@@ -207,7 +207,7 @@
           "settings": {
             "hotspot_x": 56,
             "hotspot_y": 63,
-            "heading": "Sockeloen Soles",
+            "heading": "Sockeloen soles",
             "description": "<p>The <strong>reinforced sole </strong>protects your shoes and provides grip when putting on and taking off. Compatible with SPD and Look cleats.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-skin"
@@ -218,7 +218,7 @@
           "settings": {
             "hotspot_x": 29,
             "hotspot_y": 74,
-            "heading": "Reinforced toe cap",
+            "heading": "Sockeloen toe cap",
             "description": "<p><strong>Taped and double-stitched seams</strong>prevent water from seeping in and ensure the overshoe holds up over time — even under heavy use.<br/><br/></p>",
             "metafield_key": "",
             "metafield_fallback": ""
