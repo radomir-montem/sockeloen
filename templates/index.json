@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "new race essentials",
+            "heading": "get ready for summer",
             "heading_size": "h2",
             "use_h1_tag": false
           }
@@ -23,7 +23,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "make the difference with our new items.",
+            "text": "make your legs look like weapons",
             "text_style": "subtitle"
           }
         },
@@ -46,8 +46,8 @@
       ],
       "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/1200x600_RACE_essentials_webbanner2_jpg.jpg",
-        "image_mobile": "shopify://shop_images/aero-mobile-banner.png",
+        "image": "shopify://shop_images/CUSTOM.SOCKS.banner.png",
+        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_6fe30e01-0264-44da-bac7-870afc3655ba.png",
         "image_overlay_opacity": 30,
         "banner_image_height": 700,
         "image_height_mobile": 650,
