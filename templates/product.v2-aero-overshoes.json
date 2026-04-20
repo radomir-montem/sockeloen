@@ -207,8 +207,8 @@
           "settings": {
             "hotspot_x": 56,
             "hotspot_y": 63,
-            "heading": "Sockeloen soles",
-            "description": "<p>The <strong>reinforced sole </strong>protects your shoes and provides grip when putting on and taking off. Compatible with SPD and Look cleats.</p>",
+            "heading": "Sockeloen velcro",
+            "description": "<p>The Sockeloen extra reinforced velcro keeps the overshoe locked in place — no matter how hard you ride. </p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-skin"
           }
