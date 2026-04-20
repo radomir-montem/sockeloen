@@ -310,7 +310,7 @@
           "type": "faq",
           "settings": {
             "question": "Which height are these overshoes?",
-            "answer": "<p><strong>This overshoe is 19 cm high. </strong>We optimized our fitt for the perfect looking height on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
+            "answer": "<p><strong>This overshoes are 17, 19 and 21cm high. </strong>We optimized our fitt for the perfect looking height on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
