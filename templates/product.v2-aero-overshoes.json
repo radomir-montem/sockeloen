@@ -319,7 +319,7 @@
           "type": "faq",
           "settings": {
             "question": "Is this overshoe waterproof?",
-            "answer": "<p>Yes, these overshoes are fully waterproof, built for any weather condition and extremely easy to clean.</p>",
+            "answer": "<p>No, these overshoes are not fully waterproof, only the feet part is watterproof.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
