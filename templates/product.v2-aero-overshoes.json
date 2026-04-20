@@ -137,7 +137,7 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/WhatsApp_Image_2026-04-07_at_11.26.22.jpg",
+            "image": "shopify://shop_images/SOCKELOEN_2024_30_JANUARI_V2-51_2.jpg",
             "heading": "This is why",
             "heading_italic": "this overshoe makes you better",
             "description": "<p>High, aerodynamic and elastic fit that wraps around your shoe like a second skin. The included anti-slip strip keeps everything locked in place, no matter how hard you push. Save watts, go faster, ride longer. Built to last through every ride, every condition, every season. </p>"
@@ -147,7 +147,7 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/Schermafbeelding_2026-04-07_114019.png",
+            "image": "shopify://shop_images/SOCKELOEN_2024_30_JANUARI_V2-50_1.jpg",
             "heading": "Wind tunnel",
             "heading_italic": "proven",
             "description": "<p>Thoroughly tested and refined. The updated version features extra reinforced velcro — because details make the difference. More secure, more reliable and more aerodynamic than ever. Built to cut through the wind and handle everything the road throws at you.</p>"
@@ -174,8 +174,8 @@
           "settings": {
             "hotspot_x": 44,
             "hotspot_y": 21,
-            "heading": "Sockeloen Velcro",
-            "description": "<p>Made from <strong>strong, high quality velcro </strong>that keeps a secure fit ride after ride — easy to put on, reliable enough to stay in place no matter the conditions.<br/><br/></p>",
+            "heading": "Sockeloen anti-slip strip",
+            "description": "<p>The elastic stretch fit and anti-slip strip keep the overshoe locked in place all ride long — no sliding, no sagging, no distractions.<br/><br/></p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
