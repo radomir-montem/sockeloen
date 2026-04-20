@@ -1,0 +1,430 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product-v2",
+      "blocks": {
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "color_swatch_style": "images"
+          }
+        },
+        "aov_ai_bundle_offer_volume_RqqnNt": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "size_guide_irnJtn": {
+          "type": "size_guide",
+          "settings": {
+            "guide_type": "auto",
+            "link_text": "Not sure about your size?"
+          }
+        },
+        "shipping_info": {
+          "type": "shipping_info",
+          "settings": {
+            "no_shipment_text": "There is no shipment for your country"
+          }
+        },
+        "secure_checkout_pPnF4r": {
+          "type": "secure_checkout",
+          "settings": {
+            "text": "Safe & secure checkout — pay with iDEAL, creditcard or PayPal"
+          }
+        },
+        "description": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Description",
+            "icon": "chat_bubble",
+            "content": "",
+            "page": "",
+            "logos_size": 26
+          }
+        }
+      },
+      "block_order": [
+        "variant_picker",
+        "aov_ai_bundle_offer_volume_RqqnNt",
+        "quantity_selector",
+        "size_guide_irnJtn",
+        "shipping_info",
+        "secure_checkout_pPnF4r",
+        "description"
+      ],
+      "settings": {
+        "social_proof_type": "athletes",
+        "sp_athlete_1_name": "Tibor del Grosso",
+        "sp_avatar_1": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.30.36.png",
+        "sp_athlete_1_link": "",
+        "sp_athlete_2_name": "Riejanne Markus",
+        "sp_avatar_2": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.31.03.png",
+        "sp_athlete_2_link": "",
+        "sp_athlete_3_name": "Demi Vollering",
+        "sp_avatar_3": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.31.47.png",
+        "sp_athlete_3_link": "",
+        "sp_verified_badge": true,
+        "sp_follower_count": "78.342",
+        "sp_brand_name": "Sockeloen",
+        "sp_bg_color": "#ffffff",
+        "sp_text_color": "#000000",
+        "default_benefit_1": "No more soaked, sweaty socks during riding.",
+        "default_benefit_2": "No burning feet or pressure points, thanks to the uniquely thin footbed.",
+        "default_benefit_3": "Stay up. Sit at the perfect height. All ride long.",
+        "show_sale_banner": false,
+        "sale_banner_text": "",
+        "sale_banner_bg_color": "#abcc15",
+        "sale_banner_text_color": "#000000",
+        "enable_sticky_info": true,
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "show_dynamic_checkout": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "bought_often_together_tBPpcp": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
+      "settings": {
+        "product_source": "my_fields.product_upsells",
+        "product_list": [],
+        "collection": "best-sellers-1",
+        "max_products": 8,
+        "heading": "other riders",
+        "heading_italic": "Also bought",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 0
+      }
+    },
+    "benefits": {
+      "type": "product-benefits",
+      "blocks": {
+        "benefit_fcWnXU": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "image": "shopify://shop_images/Sockeloen_-04_octobre_2025-61_1.jpg",
+            "heading": "Worn by",
+            "heading_italic": "World Champions",
+            "description": "<p>Some of the best male and female riders in the world choose Sockeloen, because of the materials, because of the wind tunnel test results, but often simply because they think they look great.</p>"
+          }
+        },
+        "benefit_BKLxKT": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-04-07_at_11.26.22.jpg",
+            "heading": "This is why",
+            "heading_italic": "this overshoe makes you better",
+            "description": "<p>The reason this overshoe was founded. Most cycling overshoes either fit too loose, let the wind straight through, or fall apart after one rainy ride. A nightmare. We developed a very sleek overshoe, with the perfect fit and protection, that stays put no matter what the road throws at you. And the best part? They stay white. Always. </p>"
+          }
+        },
+        "benefit_igt7xh": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "image": "shopify://shop_images/Schermafbeelding_2026-04-07_114019.png",
+            "heading": "White in, white out.",
+            "heading_italic": "Every ride",
+            "description": "<p>This overshoe is more than just protection for the serious cyclist. Our design leaves no room for compromise — no loose fits, no soaked feet, no dirty white after one ride. Built for road and off-road use, crafted for those who refuse to sacrifice style for function. When you want to ride comfortable, without pressure points, wet or muddy feet: this overshoe is what you need.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_fcWnXU",
+        "benefit_BKLxKT",
+        "benefit_igt7xh"
+      ],
+      "settings": {
+        "background_color": "#f3f3f3",
+        "text_color": "#000000",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "product_exploder_4gMj38": {
+      "type": "product-exploder",
+      "blocks": {
+        "hotspot_DcBjXY": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 44,
+            "hotspot_y": 21,
+            "heading": "Sockeloen Velcro",
+            "description": "<p>Made from <strong>strong, high quality velcro </strong>that keeps a secure fit ride after ride — easy to put on, reliable enough to stay in place no matter the conditions.<br/><br/></p>",
+            "metafield_key": "custom.height",
+            "metafield_fallback": "19cm"
+          }
+        },
+        "hotspot_QEDVDk": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 54,
+            "hotspot_y": 37,
+            "heading": "Sockeloen logo",
+            "description": "<p>The <strong>gold logo </strong>stays looking sharp ride after ride — resistant to fading and peeling even after heavy use in all conditions.</p>",
+            "metafield_key": "custom.knit_structure",
+            "metafield_fallback": "O-Mesh"
+          }
+        },
+        "hotspot_cKCjnr": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 71,
+            "hotspot_y": 57,
+            "heading": "Reinforced seams",
+            "description": "<p><strong>Taped and double-stitched seams </strong>prevent water from seeping in and ensure the overshoe holds up over time — even under heavy use.</p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        },
+        "hotspot_YfjpGW": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 56,
+            "hotspot_y": 63,
+            "heading": "Sockeloen soles",
+            "description": "<p>The <strong>reinforced sole </strong>protects your shoes and provides grip when putting on and taking off. Compatible with SPD and Look cleats.</p>",
+            "metafield_key": "custom.materials",
+            "metafield_fallback": "Q-skin"
+          }
+        },
+        "hotspot_bBQhNX": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 29,
+            "hotspot_y": 74,
+            "heading": "Sockeloen toe cap",
+            "description": "<p><strong>Taped and double-stitched seams</strong>prevent water from seeping in and ensure the overshoe holds up over time — even under heavy use.<br/><br/></p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_DcBjXY",
+        "hotspot_QEDVDk",
+        "hotspot_cKCjnr",
+        "hotspot_YfjpGW",
+        "hotspot_bBQhNX"
+      ],
+      "name": "Product Exploder",
+      "settings": {
+        "heading": "Let's take a look",
+        "heading_italic": "inside the overshoe",
+        "subtitle": "<p>Discover what makes our overshoes truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
+        "background_color": "#ffffff",
+        "text_color": "#000000",
+        "accent_color": "#f76503",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "reviews_masonry_NwNWHh": {
+      "type": "reviews-masonry",
+      "name": "Reviews Masonry",
+      "settings": {
+        "heading": "What our",
+        "heading_italic": "riders say?",
+        "subtitle": "Real feedback from cyclists who ride in Sockeloen socks every day.",
+        "review_count": "4.51/5 based on 2,376 reviews",
+        "min_rating": 4,
+        "background_color": "#f3f3f3",
+        "accent_color": "#f76503",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "satisfaction_guarantee_6fcj3K": {
+      "type": "satisfaction-guarantee",
+      "name": "Satisfaction Guarantee",
+      "settings": {
+        "heading": "Not 100% satisfied?",
+        "heading_italic": "No problem!",
+        "body": "<p>At Sockeloen, the customer is king. We stand behind every pair of socks we make with our 100% satisfaction guarantee. Not happy with your order? Simply reach out within 30 days and we'll make it right.</p>",
+        "button_text": "Shop now",
+        "button_url": "",
+        "background_color": "#f3f3f3",
+        "text_color": "#000000",
+        "accent_color": "#f76503",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "bought_often_together_txwAy7": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
+      "settings": {
+        "product_source": "none",
+        "product_list": [],
+        "collection": "sale",
+        "max_products": 8,
+        "heading": "currently on",
+        "heading_italic": "Sale",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 0
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {}
+    },
+    "product_faq_NDDGQE": {
+      "type": "product-faq",
+      "blocks": {
+        "faq_Y8JLka": {
+          "type": "faq",
+          "settings": {
+            "question": "Which height are these overshoes?",
+            "answer": "<p><strong>This overshoe is 19 cm high. </strong>We optimized our fitt for the perfect looking height on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
+            "metafield_key": "custom.height",
+            "metafield_fallback": "19cm"
+          }
+        },
+        "faq_9RzfCj": {
+          "type": "faq",
+          "settings": {
+            "question": "Is this overshoe waterproof?",
+            "answer": "<p>Yes, these overshoes are fully waterproof, built for any weather condition and extremely easy to clean.</p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        },
+        "faq_7idmHH": {
+          "type": "faq",
+          "settings": {
+            "question": "What material are Sockeloen overshoes made of?",
+            "answer": "<p>These overshoes are made from a premium blend of velgro. This provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>",
+            "metafield_key": "custom.materials",
+            "metafield_fallback": "Q-Skin"
+          }
+        },
+        "faq_YhiEwH": {
+          "type": "faq",
+          "settings": {
+            "question": "How should I wash my overhoes?",
+            "answer": "<p>Machine wash at 30°C inside out. Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry — air dry for best results. This keeps the fibers intact and your overshoes performing at their best.</p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        },
+        "faq_NLxUKi": {
+          "type": "faq",
+          "settings": {
+            "question": "How long do Sockeloen overshoes last?",
+            "answer": "<p>With proper care, our socks typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        },
+        "faq_wRWWf3": {
+          "type": "faq",
+          "disabled": true,
+          "settings": {
+            "question": "Why are cycling socks longer than regular socks?",
+            "answer": "<p>The taller cuff make  your legs look better and stronger on the bike. Our aero sock material is faster then your skin, so the higher this sock the more aero gains. Most pro cyclists prefer a cuff height between 17 to 21cm depending on their leg length.</p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        },
+        "faq_JgMmFK": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use these overshoes for road and off-road?",
+            "answer": "<p>Absolutely! These overshoes are compatible with both road and cross pedals.</p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        }
+      },
+      "block_order": [
+        "faq_Y8JLka",
+        "faq_9RzfCj",
+        "faq_7idmHH",
+        "faq_YhiEwH",
+        "faq_NLxUKi",
+        "faq_wRWWf3",
+        "faq_JgMmFK"
+      ],
+      "name": "Product FAQ",
+      "settings": {
+        "heading": "Frequently asked",
+        "heading_italic": "questions",
+        "background_color": "#ffffff",
+        "text_color": "#000000",
+        "accent_color": "#f76503",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "bought_often_together_M9V6Ya": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
+      "settings": {
+        "product_source": "recently_viewed",
+        "product_list": [],
+        "collection": "",
+        "max_products": 8,
+        "heading": "recently",
+        "heading_italic": "Viewed",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "bought_often_together_tBPpcp",
+    "benefits",
+    "product_exploder_4gMj38",
+    "reviews_masonry_NwNWHh",
+    "satisfaction_guarantee_6fcj3K",
+    "bought_often_together_txwAy7",
+    "recommendations",
+    "product_faq_NDDGQE",
+    "bought_often_together_M9V6Ya"
+  ]
+}
