@@ -319,7 +319,7 @@
           "type": "faq",
           "settings": {
             "question": "Is this overshoe waterproof?",
-            "answer": "<p>Yes, these overshoes are fully waterproof, built for any weather condition and extremely easy to clean.</p>",
+            "answer": "<p>Yes, these overshoes are<strong> fully waterproof, </strong>built for any weather condition and extremely easy to clean.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -328,7 +328,7 @@
           "type": "faq",
           "settings": {
             "question": "What material are Sockeloen overshoes made of?",
-            "answer": "<p>These overshoes are made from a premium blend of waterproof fabrics. This provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>",
+            "answer": "<p><strong>These overshoes are made from a premium blend of waterproof fabrics</strong>. This provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-Skin"
           }
@@ -337,7 +337,7 @@
           "type": "faq",
           "settings": {
             "question": "How should I wash my overhoes?",
-            "answer": "<p>Machine wash at 30°C inside out. Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry — air dry for best results. This keeps the fibers intact and your overshoes performing at their best.</p>",
+            "answer": "<p>Machine wash<strong> at 30°C inside out.</strong> Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry — air dry for best results. This keeps the fibers intact and your overshoes performing at their best.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -346,7 +346,7 @@
           "type": "faq",
           "settings": {
             "question": "How long do Sockeloen overshoes last?",
-            "answer": "<p>With proper care, our socks typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>",
+            "answer": "<p>With proper care, our socks<strong> typically last 1-2 years </strong>of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -365,7 +365,7 @@
           "type": "faq",
           "settings": {
             "question": "Can I use these overshoes for road and off-road?",
-            "answer": "<p>Absolutely! These overshoes are compatible with both road and cross pedals.</p>",
+            "answer": "<p><strong>Absolutely!</strong> These overshoes are compatible with both road and cross pedals.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
