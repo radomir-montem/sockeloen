@@ -328,8 +328,8 @@
         "faq_7idmHH": {
           "type": "faq",
           "settings": {
-            "question": "What material are Sockeloen socks made of?",
-            "answer": "<p>These cycling socks are made from a premium blend of [metafield], polypropylene, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>",
+            "question": "What material are Sockeloen overshoes made of?",
+            "answer": "<p>These overshoes are made from a premium blend of velgro. This provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-Skin"
           }
