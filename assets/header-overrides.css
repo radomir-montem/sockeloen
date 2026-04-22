@@ -35,12 +35,9 @@
   /* Smaller, tighter radius — matches EME's compact corner style.
      Top corners rounded, bottom flush against the pill beneath. */
   border-radius: 8px 8px 0 0 !important;
-  /* Directional edge highlight — top + sides only, so the seam with the
-     pill below has no double-line effect and the two pieces read as one. */
-  box-shadow:
-    inset 1px 0 0 0 rgba(255, 255, 255, 0.18),
-    inset -1px 0 0 0 rgba(255, 255, 255, 0.18),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
+  /* Borderless — no inset highlights or rim, only the glass surface. */
+  border: none !important;
+  box-shadow: none !important;
   /* Fixed height (not min-height) — guarantees the pill below can sit exactly
      flush against it with no sub-pixel gap. Reduced from 46px → 32px for a
      tighter, less bulky notification strip. */
@@ -227,12 +224,10 @@ header.header {
   background: rgba(255, 255, 255, 0.30) !important;
   backdrop-filter: blur(70px) saturate(200%);
   -webkit-backdrop-filter: blur(70px) saturate(200%);
-  /* Directional inset — bottom + sides only. Top has no highlight so the
-     seam with the announcement bar above reads as one continuous surface. */
+  /* Borderless — no inset highlights or rim. Keep the soft drop shadow
+     below so the pill still lifts visibly over white content when scrolling. */
+  border: none !important;
   box-shadow:
-    inset 1px 0 0 0 rgba(255, 255, 255, 0.30),
-    inset -1px 0 0 0 rgba(255, 255, 255, 0.30),
-    inset 0 -1px 0 0 rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.05);
   padding-top: 6px;
@@ -259,17 +254,28 @@ header.header.absolute {
   margin: 0 !important;
 }
 
-/* On hero pages the announcement bar is ALSO absolute (to kill the white
-   gap above the bg image). The pill must drop EXACTLY below its full height
-   so the two pieces are flush — no sub-pixel gap between them. */
+/* On hero pages the announcement bar is ALSO fixed (to kill the white
+   gap above the bg image AND to share the same viewport reference point
+   as the pill). Both MUST use position: fixed so the `top` values measure
+   from the same origin — otherwise the pill drifts down from the bar
+   because .absolute is measured from .header-wrapper (position: relative)
+   while the bar is measured from the viewport. */
 body.template--index header.header.absolute,
 body.template--custom-made header.header.absolute {
+  position: fixed !important;
   top: 44px !important;  /* 12px margin + 32px bar = perfectly flush */
+  left: 20px !important;
+  right: 20px !important;
+  width: auto !important;
+  margin: 0 !important;
 }
 @media screen and (max-width: 989px) {
   body.template--index header.header.absolute,
   body.template--custom-made header.header.absolute {
+    position: fixed !important;
     top: 36px !important;  /* 8px + 28px */
+    left: 12px !important;
+    right: 12px !important;
   }
 }
 
@@ -281,10 +287,9 @@ header.header.sticky-navbar {
   background: rgba(255, 255, 255, 0.30) !important;
   backdrop-filter: blur(70px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(70px) saturate(200%) !important;
+  /* Borderless — only the outer drop shadow */
+  border: none !important;
   box-shadow:
-    inset 1px 0 0 0 rgba(255, 255, 255, 0.30),
-    inset -1px 0 0 0 rgba(255, 255, 255, 0.30),
-    inset 0 -1px 0 0 rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.05) !important;
 }
@@ -1060,6 +1065,71 @@ body.template--custom-made .card__content {
   overflow: hidden;
 }
 
+/* ==========================================================================
+   PRODUCT CARDS — rounded bottom corners SITE-WIDE (not just homepage).
+   Applies to collection pages, search, related products, cross-sells, etc.
+   Uses an 8px radius by default so standalone pages match the homepage look.
+   ========================================================================== */
+.card-wrapper,
+.card,
+.product-card-wrapper,
+.product-card {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+.card-wrapper .card,
+.card-wrapper .card__inner,
+.card-wrapper .card__media,
+.product-card-wrapper .card__media,
+.card .media,
+.card-wrapper .media {
+  border-radius: 8px 8px 0 0 !important;
+  overflow: hidden !important;
+}
+.card__content,
+.card__information,
+.card-wrapper .card__content,
+.product-card__content,
+.product-card__info {
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  overflow: hidden;
+}
+.card-wrapper:hover,
+.card:hover,
+.card-wrapper:focus-within,
+.card:focus-within,
+.product-card-wrapper:hover,
+.product-card:hover {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+@media screen and (max-width: 989px) {
+  .card-wrapper,
+  .card,
+  .product-card-wrapper,
+  .product-card {
+    border-radius: 7px !important;
+  }
+  .card-wrapper .card,
+  .card-wrapper .card__inner,
+  .card-wrapper .card__media,
+  .product-card-wrapper .card__media,
+  .card .media,
+  .card-wrapper .media {
+    border-radius: 7px 7px 0 0 !important;
+  }
+  .card__content,
+  .card__information,
+  .card-wrapper .card__content,
+  .product-card__content,
+  .product-card__info {
+    border-bottom-left-radius: 7px !important;
+    border-bottom-right-radius: 7px !important;
+  }
+}
+
 /* Preserve radius on :hover / :focus-within — many themes add overflow:visible
    on hover for zoom effects, which breaks the clip. Lock it down. */
 body.template--index .card:hover,
@@ -1160,10 +1230,13 @@ body.template--custom-made .slideshow .button {
   background-color: rgba(255, 255, 255, 0.30) !important;
   backdrop-filter: blur(70px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(70px) saturate(200%) !important;
+  /* Borderless — no rim, no inset highlight. Outer drop shadow only,
+     matching the header pill exactly so both elements read as the same
+     design system. */
   border: none !important;
-  color: #000 !important;
+  outline: none !important;
+  color: #fff !important;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.05) !important;
   border-radius: var(--home-radius-sm) !important;
@@ -1193,16 +1266,26 @@ body.template--index .slideshow__content .button:hover,
 body.template--index .hero .button:hover,
 body.template--index .image-banner .button:hover,
 body.template--custom-made .banner .button:hover {
-  background: rgba(255, 255, 255, 0.50) !important;
-  background-color: rgba(255, 255, 255, 0.50) !important;
-  color: #000 !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+  background-color: rgba(255, 255, 255, 0.45) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Ensure button text/labels render cleanly on the glass */
+/* White button text across every nested layer (Shopify sometimes wraps the
+   label in span/strong/em) */
+body.template--index .banner .button,
 body.template--index .banner .button span,
+body.template--index .banner .button strong,
+body.template--index .slideshow .button,
 body.template--index .slideshow .button span,
+body.template--index .hero .button,
 body.template--index .hero .button span,
-body.template--index .banner .button {
-  color: #000 !important;
+body.template--index .image-banner .button,
+body.template--index .image-banner .button span {
+  color: #fff !important;
   font-weight: 500;
 }
