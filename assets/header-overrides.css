@@ -11,7 +11,7 @@
   color: #fff !important;
 }
 .announcement-bar a {
-  padding: 16px 0; /* slightly taller bar */
+  padding: 16px 0;
   font-weight: 500;
 }
 
@@ -24,14 +24,15 @@
    FLOATING PILL HEADER — EME Studio style
    ========================================================================== */
 
-/* Section: zero out margin so hero slides up behind header */
+/* Section: zero out margin so the hero slides up behind the absolute header */
 .section-header {
   margin-bottom: 0 !important;
 }
 
-/* ALL wrapper layers: fully transparent — pill is the only visible surface.
-   background-image: none kills the gradient class fallback.
-   overflow: visible lets the language dropdown escape the container. */
+/* ALL wrapper layers: fully transparent.
+   background-image: none kills the .gradient class's background.
+   overflow: visible lets the language dropdown escape.
+   ⚠ Do NOT set position here — the inner header.header handles its own. */
 .header-wrapper,
 .header-wrapper.gradient,
 sticky-header,
@@ -52,38 +53,44 @@ sticky-header.header-wrapper,
   overflow: visible !important;
 }
 
-/* Remove border-bottom separator line */
 .header-wrapper--border-bottom {
   border-bottom: none !important;
 }
 
-/* THE PILL — inner header element.
-   width: auto prevents implicit 100% width from fighting the margin
-   (100% + margin-left + margin-right = overflow, right side appears cut off). */
+/* THE PILL
+   ⚠ NO position: relative here — that overrides the Tailwind `absolute` class
+     that the homepage applies to this element. Without `absolute`, the header
+     falls into normal flow, creating the large white gap under the announcement
+     bar and blurring a white background instead of the hero image.
+   width: auto prevents the theme's implicit width:100% from fighting the margin
+     (100% + margin-left + margin-right = viewport overflow, cutting off the
+     right rounded corner). */
 header.header {
-  position: relative; /* needed for absolute logo centering on mobile */
   width: auto !important;
   margin: 12px 20px !important;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.15) !important;
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+  /* Same background for BOTH scroll states — consistent look */
+  background: rgba(255, 255, 255, 0.62) !important;
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.30);
   padding-top: 6px;
   padding-bottom: 6px;
   overflow: visible !important; /* let language dropdown escape the pill */
 }
 
-/* Sticky: keep blur, go more opaque */
+/* Sticky state: same blur/opacity as default — "before scroll = during scroll" */
 header.header.sticky-navbar {
-  background: rgba(255, 255, 255, 0.88) !important;
-  backdrop-filter: blur(28px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  background: rgba(255, 255, 255, 0.62) !important;
+  backdrop-filter: blur(32px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
 }
 
 /* ==========================================================================
    Text & icon colours — ALWAYS BLACK
-   Override the inline <style> in header.liquid that sets #fff on the homepage.
+   Overrides the inline <style> in header.liquid that sets #fff on the homepage.
+   Using color: #000 on the container catches fill="currentColor" SVGs;
+   fill: #000 !important on paths catches any explicit fill attribute overrides.
    ========================================================================== */
 
 /* Nav text */
@@ -98,34 +105,26 @@ header.header.sticky-navbar {
   text-transform: uppercase;
 }
 
-/* color: #000 on the icon button itself handles fill="currentColor" SVGs */
+/* Icon container: color cascades into fill="currentColor" child SVGs */
 .header__icon {
   color: #000 !important;
 }
 
-/* Explicit path overrides for any filled/stroked paths */
+/* Explicit fill override on paths — only set color, NOT stroke-width.
+   Adding stroke-width to filled icons (person, cart) makes them look much
+   bolder than intended; leave the icon's own stroke design intact. */
 .header__icon .icon path,
 .header__icon svg path,
 .header__icon svg line,
 .header__icon svg polyline,
 .header__icon svg rect {
   fill: #000 !important;
-  stroke: currentColor;
-  stroke-width: 1.5px;
 }
 
-/* Cart icon — also needs stroke */
+/* Cart icon */
 .header__icon--cart .icon path {
   fill: #000 !important;
-  stroke: #000 !important;
-  stroke-width: 1.5px;
-}
-
-/* Search icon in SVG sprite */
-#icon-search path {
-  stroke: currentColor;
-  stroke-width: 1.5px;
-  fill: none !important; /* search is outline only */
+  stroke: #000;
 }
 
 /* Language label */
@@ -133,16 +132,12 @@ header.header.sticky-navbar {
   color: #000 !important;
 }
 
-/* Dropdown caret on menu items */
-.menu-arrow-down {
-  color: #000;
-}
-.header__icon .icon-caret path {
-  fill: #000 !important;
-}
+/* Caret on dropdown nav items */
+.menu-arrow-down { color: #000; }
+.header__icon .icon-caret path { fill: #000 !important; }
 
 /* ==========================================================================
-   Language selector — shown in header on all screen sizes
+   Language selector
    ========================================================================== */
 
 header localization-selector,
@@ -168,12 +163,11 @@ header localization-selector,
   border-radius: 20px;
   transition: background 0.15s;
 }
-
 .localization-label:hover {
   background: rgba(0, 0, 0, 0.06);
 }
 
-/* Hide the old arrow SVG; show a CSS chevron instead */
+/* Hide the old inline SVG arrow; use a CSS chevron */
 .localization-label svg { display: none; }
 .localization-label::after {
   content: '';
@@ -195,7 +189,6 @@ header localization-selector,
   overflow: hidden;
   z-index: 9999 !important;
 }
-
 .localization-item a {
   font-size: 13px;
   font-weight: 400;
@@ -206,7 +199,7 @@ header localization-selector,
 }
 .localization-item:hover a { opacity: 0.55; }
 
-/* Mobile drawer: language dropdown opens DOWNWARD (not upward / bottom-full) */
+/* Mobile drawer: override bottom-full → open downward */
 @media screen and (max-width: 989px) {
   .menu-drawer localization-selector {
     overflow: visible !important;
@@ -220,19 +213,16 @@ header localization-selector,
 }
 
 /* ==========================================================================
-   Icon sizing & spacing — consistent across all icons
+   Icon sizing & spacing
    ========================================================================== */
 
 .header__icon--cart .icon { width: 2rem; height: 2rem; }
 .header__icon--cart { margin-right: 4px; }
 .header__icon { padding: 8px 10px; }
-.header__icons {
-  gap: 2px;
-  overflow: visible; /* allow dropdown to escape */
-}
+.header__icons { gap: 2px; overflow: visible; }
 
 /* ==========================================================================
-   Dropdown arrow on nav items with children — desktop only
+   Dropdown caret on nav items — desktop only
    ========================================================================== */
 
 .menu-arrow-down { display: none; }
@@ -248,7 +238,7 @@ header localization-selector,
 }
 
 /* ==========================================================================
-   Mobile adjustments
+   Mobile
    ========================================================================== */
 
 @media screen and (max-width: 989px) {
@@ -257,13 +247,25 @@ header localization-selector,
     border-radius: 14px;
   }
 
-  /* True-center the logo regardless of left/right icon count asymmetry.
-     Left: [hamburger] — Right: [lang][search][cart] → logo is NOT flex-centered.
-     Position it absolutely in the middle of the pill instead. */
-  header.header .header__heading-link {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1; /* stay above pill background, below dropdown */
+  /* True-center the logo on mobile.
+     The right side (lang + search + cart) is wider than the left (hamburger),
+     so the logo can't be flex-centered naturally.
+     Give both ends flex:1 so they share remaining space equally — the middle
+     logo element lands exactly in the center without touching position. */
+  header.header > header-drawer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  header.header > .header__icons {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  /* Prevent the heading from growing (theme may set flex:1 on it) */
+  header.header > .header__heading,
+  header.header > a.header__heading-link {
+    flex: 0 0 auto;
   }
 }
