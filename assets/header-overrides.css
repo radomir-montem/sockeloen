@@ -121,22 +121,15 @@
   font-size: 12px;
 }
 
+/* Mobile: same visual style as desktop (height, radius, font, bg).
+   Only horizontal inset is slightly reduced for narrow viewports. */
 @media screen and (max-width: 989px) {
   #announcement-bar {
-    margin: 8px 12px 0 12px;
-  }
-  #announcement-bar .announcement-bar,
-  #announcement-bar .announcement-bar.gradient {
-    border-radius: 7px 7px 0 0 !important;
-    height: 28px;
+    margin: 12px 12px 0 12px;
   }
   .announcement-bar > a,
   .announcement-bar__link {
-    font-size: 10px;
     padding: 0 14px;
-  }
-  #announcement-bar .announcement-bar__message {
-    font-size: 10px;
   }
 }
 
@@ -153,7 +146,7 @@
 }
 @media screen and (max-width: 989px) {
   #announcement-bar {
-    top: 8px !important;
+    top: 12px !important;
     left: 12px !important;
     right: 12px !important;
   }
@@ -247,7 +240,7 @@ header.header.absolute {
   header.header,
   header.header:not(.absolute),
   header.header.absolute {
-    top: 36px !important;  /* 8px + 28px */
+    top: 44px !important;  /* 12px + 32px bar — same as desktop */
     left: 12px !important;
     right: 12px !important;
   }
@@ -266,7 +259,7 @@ body:not(.template--index):not(.template--custom-made) main#MainContent {
   body:not(.template--index):not(.template--custom-made) #MainContent,
   body:not(.template--index):not(.template--custom-made) main,
   body:not(.template--index):not(.template--custom-made) main#MainContent {
-    padding-top: 94px;
+    padding-top: 108px;  /* 12 + 32 bar + 48 pill + 16 buffer */
   }
 }
 
@@ -540,18 +533,17 @@ header.header.sticky-navbar .header__heading-logo,
 
 .search-modal.modal__content {
   position: fixed !important;
-  /* Sits OVER the header pill — same coordinates as header.header.
-     When the search opens, the search pill replaces the header visually
-     (same top: 44px + same left/right inset) so the user sees the input
-     field exactly where the nav was. Bottom rounds both corners, since
-     there's no announcement bar attached to it like the header. */
+  /* Sits OVER the header pill — SAME coordinates and SAME height as
+     header.header. When search opens, the pill swaps visually from nav
+     to input field with zero vertical drift. Header = 6px padding + 36px
+     icon row = 48px; search matches that exactly. */
   top: 44px !important;
   left: 20px !important;
   right: 20px !important;
   bottom: auto !important;
   width: auto !important;
-  height: auto !important;
-  min-height: 64px !important;
+  height: 48px !important;
+  min-height: 48px !important;
 
   border-radius: 8px !important;
   /* Same opaque white surface as the header pill */
@@ -575,13 +567,14 @@ body.template--custom-made .search-modal.modal__content {
   top: 44px !important;
 }
 
-/* Inner wrapper — flex row with padding so the input frame has breathing room
-   against the pill's inner edge. Close button sits outside the input frame. */
+/* Inner wrapper — same 6px vertical padding as header.header so the
+   interactive row inside is exactly 36px tall (matches header's icon row). */
 .search-modal__content {
   display: flex !important;
   align-items: center !important;
-  padding: 10px 10px !important;
-  min-height: 64px;
+  padding: 6px 10px !important;
+  min-height: 48px;
+  height: 48px;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -624,8 +617,8 @@ body.template--custom-made .search-modal.modal__content {
   border-radius: 6px !important;
   padding: 0 6px 0 0 !important;
   margin: 0 !important;
-  height: 44px;
-  min-height: 44px;
+  height: 36px;
+  min-height: 36px;
   position: relative;
   transition: background 0.15s ease;
 }
@@ -650,12 +643,12 @@ body.template--custom-made .search-modal.modal__content {
   box-shadow: none !important;
   outline: none !important;
   color: #000 !important;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.01em;
   padding: 0 6px 0 0 !important;
-  height: 44px;
-  line-height: 44px;
+  height: 36px;
+  line-height: 36px;
 }
 .search-modal .field__input:focus,
 .search-modal .search__input:focus {
@@ -672,12 +665,12 @@ body.template--custom-made .search-modal.modal__content {
 /* Float-label styled as a visible placeholder so users clearly see the CTA */
 .search-modal .field__label {
   position: absolute !important;
-  left: 44px !important;  /* after magnifier */
+  left: 38px !important;  /* after magnifier */
   top: 50% !important;
   transform: translateY(-50%) !important;
   margin: 0 !important;
   padding: 0 !important;
-  font-size: 15px !important;
+  font-size: 14px !important;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.6) !important;
   background: transparent !important;
@@ -703,8 +696,8 @@ body.template--custom-made .search-modal.modal__content {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 40px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   padding: 0 !important;
   margin: 0 !important;
   background: transparent !important;
@@ -729,8 +722,8 @@ body.template--custom-made .search-modal.modal__content {
 .search-modal .modal__close-button {
   position: static !important;
   flex: 0 0 auto;
-  width: 40px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   right: auto !important;
   top: auto !important;
   transform: none !important;
@@ -789,45 +782,47 @@ body.template--custom-made .search-modal.modal__content {
 
 @media screen and (max-width: 989px) {
   .search-modal.modal__content {
-    /* Same top as header.header on mobile (36px) — sits directly over the pill */
-    top: 36px !important;
+    /* Same top as header.header on mobile (44px) — sits directly over the pill */
+    top: 44px !important;
     left: 12px !important;
     right: 12px !important;
-    border-radius: 7px !important;
-    min-height: 56px !important;
+    border-radius: 8px !important;
+    height: 48px !important;
+    min-height: 48px !important;
   }
   body.template--index .search-modal.modal__content,
   body.template--custom-made .search-modal.modal__content {
-    top: 36px !important;
+    top: 44px !important;
   }
   .search-modal__content {
-    min-height: 56px;
-    padding: 8px 8px !important;
-    border-radius: 7px !important;
+    min-height: 48px;
+    height: 48px;
+    padding: 6px 8px !important;
+    border-radius: 8px !important;
     gap: 4px;
   }
   .search-modal .field {
-    height: 40px;
-    min-height: 40px;
+    height: 36px;
+    min-height: 36px;
   }
   .search-modal .field__input,
   .search-modal .search__input {
     font-size: 14px;
-    height: 40px;
-    line-height: 40px;
+    height: 36px;
+    line-height: 36px;
   }
   .search-modal .field__label {
-    left: 40px !important;
+    left: 36px !important;
     font-size: 14px !important;
   }
   .search-modal .search__button,
   .search-modal .field__button {
     width: 36px;
-    height: 40px;
+    height: 36px;
   }
   .search-modal .modal__close-button {
     width: 36px;
-    height: 40px;
+    height: 36px;
   }
 }
 
@@ -927,16 +922,16 @@ body.template--custom-made .menu-drawer {
 @media screen and (max-width: 989px) {
   .js .menu-drawer,
   .menu-drawer {
-    top: 88px !important;
+    top: 100px !important;  /* 44px bar bottom + 48px pill + 8px gap */
     left: 12px !important;
     right: 12px !important;
     max-width: none !important;
     width: calc(100vw - 24px) !important;
-    border-radius: 7px !important;
+    border-radius: 8px !important;
   }
   body.template--index .menu-drawer,
   body.template--custom-made .menu-drawer {
-    top: 88px !important;
+    top: 100px !important;
   }
 }
 
