@@ -296,19 +296,23 @@
                       <localization-selector class="relative flex items-center large-up-hide w-[180px]">
                         <label class="localization-label border border-[#7C7D80] flex justify-between items-center w-full text-black py-4 px-6">
                           <span>
-                            {{ localization.language.iso_code | downcase }} / {{ localization.country.currency.iso_code | downcase }}
+                            {%- if localization.country.iso_code == 'US' -%}
+                              {%- if localization.language.iso_code == 'fr' -%}FR — USA{%- else -%}USA{%- endif -%}
+                            {%- else -%}
+                              {{ localization.language.iso_code | upcase }}
+                            {%- endif -%}
                           </span>
                           <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 5L8 0.833333L7.2 8.58591e-08L4 3.33333L0.8 9.5399e-09L4.9687e-08 0.833333L4 5Z" fill="#7C7D80"/>
-                          </svg>                            
+                          </svg>
                         </label>
                         <ul class="localization-list px-4 py-4 bg-white text-black absolute bottom-full left-1/2 -translate-x-1/2 w-48 text-center hidden">
-                          <li class="localization-item cursor-pointer py-2 low"><a href="#" data-country-code="NL" data-language="en">en / eur</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">nl / eur</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">de / eur</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">fr / eur</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">en / usd</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">fr / usd</a></li>
+                          <li class="localization-item cursor-pointer py-2 low"><a href="#" data-country-code="NL" data-language="en">EN</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">NL</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">DE</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">FR</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">USA</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">FR — USA</a></li>
                         </ul>
                         {%- form 'localization', id: 'HeaderLocalizationForm', class: 'hidden' -%}
                           <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
@@ -505,16 +509,20 @@
           <label class="localization-label flex justify-center items-center text-black cursor-pointer">
             
             <span>
-              {{ localization.language.iso_code | upcase }} / {{ localization.country.currency.iso_code | upcase }}
+              {%- if localization.country.iso_code == 'US' -%}
+                {%- if localization.language.iso_code == 'fr' -%}FR — USA{%- else -%}USA{%- endif -%}
+              {%- else -%}
+                {{ localization.language.iso_code | upcase }}
+              {%- endif -%}
             </span>
           </label>
           <ul class="localization-list hidden px-4 py-4 bg-white text-black absolute top-full left-1/2 -translate-x-1/2 w-48 text-center">
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="en">en / eur</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">nl / eur</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">de / eur</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">fr / eur</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">en / usd</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">fr / usd</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="en">EN</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">NL</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">DE</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">FR</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">USA</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">FR — USA</a></li>
           </ul>
           {%- form 'localization', id: 'HeaderLocalizationForm', class: 'hidden' -%}
             <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
