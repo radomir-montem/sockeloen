@@ -2,17 +2,34 @@
    Global Header Overrides
    ========================================================================== */
 
-/* Announcement bar — hardcoded orange so dev theme matches live */
+/* ==========================================================================
+   Announcement bar — fixed height so different messages don't change layout
+   ========================================================================== */
+
 #announcement-bar .announcement-bar {
   background-color: #F76503 !important;
+  min-height: 46px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
 #announcement-bar .announcement-bar__message,
 #announcement-bar .announcement-bar a {
   color: #fff !important;
 }
 .announcement-bar a {
-  padding: 16px 0;
+  padding: 12px 20px;
   font-weight: 500;
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+@media screen and (max-width: 640px) {
+  .announcement-bar a {
+    font-size: 11px;
+    padding: 10px 16px;
+  }
 }
 
 /* Cart count bubble — orange */
@@ -30,7 +47,7 @@
 }
 
 /* ALL wrapper layers: fully transparent.
-   background-image: none kills the .gradient class's background.
+   background-image: none kills the .gradient class background.
    overflow: visible lets the language dropdown escape.
    ⚠ Do NOT set position here — the inner header.header handles its own. */
 .header-wrapper,
@@ -57,29 +74,37 @@ sticky-header.header-wrapper,
   border-bottom: none !important;
 }
 
-/* THE PILL
-   ⚠ NO position: relative here — that overrides the Tailwind `absolute` class
-     that the homepage applies to this element. Without `absolute`, the header
-     falls into normal flow, creating the large white gap under the announcement
-     bar and blurring a white background instead of the hero image.
-   width: auto prevents the theme's implicit width:100% from fighting the margin
-     (100% + margin-left + margin-right = viewport overflow, cutting off the
-     right rounded corner). */
+/* THE PILL — shared styles for all pages/states */
 header.header {
-  width: auto !important;
-  margin: 12px 20px !important;
   border-radius: 20px;
-  /* Same background for BOTH scroll states — consistent look */
   background: rgba(255, 255, 255, 0.62) !important;
   backdrop-filter: blur(32px) saturate(180%);
   -webkit-backdrop-filter: blur(32px) saturate(180%);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.30);
   padding-top: 6px;
   padding-bottom: 6px;
-  overflow: visible !important; /* let language dropdown escape the pill */
+  overflow: visible !important;
+  transition: none !important; /* kill color-swap flicker on scroll */
 }
 
-/* Sticky state: same blur/opacity as default — "before scroll = during scroll" */
+/* In-flow headers (non-homepage): use margin to inset the pill */
+header.header:not(.absolute) {
+  margin: 12px 20px !important;
+}
+
+/* Absolute-positioned header (homepage): margin won't constrain width on an
+   absolute element, so use left/right offsets instead. This is the fix for
+   "desktop bar is mobile width" — width:auto on an absolute element without
+   left/right collapses to content width. */
+header.header.absolute {
+  top: 0 !important;
+  left: 20px !important;
+  right: 20px !important;
+  width: auto !important;
+  margin: 12px 0 0 0 !important;
+}
+
+/* Sticky state: identical styling — no flicker, no color change on scroll */
 header.header.sticky-navbar {
   background: rgba(255, 255, 255, 0.62) !important;
   backdrop-filter: blur(32px) saturate(180%) !important;
@@ -87,18 +112,36 @@ header.header.sticky-navbar {
 }
 
 /* ==========================================================================
-   Text & icon colours — ALWAYS BLACK
-   Overrides the inline <style> in header.liquid that sets #fff on the homepage.
-   Using color: #000 on the container catches fill="currentColor" SVGs;
-   fill: #000 !important on paths catches any explicit fill attribute overrides.
+   Text & icon colours — ALWAYS BLACK, in every state
+   Override the inline <style> in header.liquid (lines 110-163) which sets
+   #fff on the homepage and toggles black on .sticky-navbar.
    ========================================================================== */
 
-/* Nav text */
+/* Kill transitions on icons — prevents the visible color-swap on scroll */
+.header__icon,
+.header__icon .icon,
+.header__icon .icon path,
+.header__icon svg,
+.header__icon svg path,
+.header__icon--cart .icon,
+.header__icon--cart .icon path,
 .header__menu-item span,
-.header__menu-item.link-only span {
-  display: inline-block;
-  text-transform: lowercase;
+.localization-label {
+  transition: none !important;
+}
+
+/* Nav text: always black */
+header.header .header__menu-item span,
+header.header .header__menu-item.link-only span,
+header.header.absolute .header__menu-item span,
+header.header.absolute .header__menu-item.link-only span,
+header.header.sticky-navbar .header__menu-item span,
+header.header.sticky-navbar .header__menu-item.link-only span,
+header.header .header__icons .header__menu-item span,
+header.header.absolute .header__icons .header__menu-item span {
   color: #000 !important;
+  text-transform: lowercase;
+  display: inline-block;
 }
 .header__menu-item span::first-letter,
 .header__menu-item.link-only span::first-letter {
@@ -106,35 +149,50 @@ header.header.sticky-navbar {
 }
 
 /* Icon container: color cascades into fill="currentColor" child SVGs */
-.header__icon {
+header.header .header__icon,
+header.header.absolute .header__icon,
+header.header.sticky-navbar .header__icon,
+header.header .header__icons .header__icon,
+header.header.absolute .header__icons .header__icon,
+header.header.sticky-navbar .header__icons .header__icon {
   color: #000 !important;
 }
 
-/* Explicit fill override on paths — only set color, NOT stroke-width.
-   Adding stroke-width to filled icons (person, cart) makes them look much
-   bolder than intended; leave the icon's own stroke design intact. */
-.header__icon .icon path,
-.header__icon svg path,
-.header__icon svg line,
-.header__icon svg polyline,
-.header__icon svg rect {
+/* Explicit fill override on paths — do NOT set stroke-width here, each icon
+   keeps its own designed line weight. */
+header.header .header__icon .icon path,
+header.header .header__icon svg path,
+header.header .header__icon svg line,
+header.header .header__icon svg polyline,
+header.header .header__icon svg rect,
+header.header.absolute .header__icon .icon path,
+header.header.absolute .header__icon svg path,
+header.header.sticky-navbar .header__icon .icon path,
+header.header.sticky-navbar .header__icon svg path {
   fill: #000 !important;
 }
 
-/* Cart icon */
-.header__icon--cart .icon path {
+/* Cart icon: black fill + stroke */
+header.header .header__icon--cart .icon path,
+header.header.absolute .header__icon--cart .icon path,
+header.header.sticky-navbar .header__icon--cart .icon path {
   fill: #000 !important;
-  stroke: #000;
+  stroke: #000 !important;
 }
 
-/* Language label */
-.localization-label {
+/* Language label: always black */
+header.header .localization-label,
+header.header.absolute .localization-label,
+header.header.sticky-navbar .localization-label {
   color: #000 !important;
 }
 
-/* Caret on dropdown nav items */
-.menu-arrow-down { color: #000; }
-.header__icon .icon-caret path { fill: #000 !important; }
+/* Dropdown carets on nav items */
+.menu-arrow-down { color: #000 !important; }
+.header__menu-item .icon-caret path,
+.header__icon .icon-caret path {
+  fill: #000 !important;
+}
 
 /* ==========================================================================
    Language selector
@@ -161,13 +219,12 @@ header localization-selector,
   white-space: nowrap;
   padding: 4px 10px;
   border-radius: 20px;
-  transition: background 0.15s;
 }
 .localization-label:hover {
   background: rgba(0, 0, 0, 0.06);
 }
 
-/* Hide the old inline SVG arrow; use a CSS chevron */
+/* Hide old SVG arrow; use CSS chevron */
 .localization-label svg { display: none; }
 .localization-label::after {
   content: '';
@@ -238,20 +295,29 @@ header localization-selector,
 }
 
 /* ==========================================================================
-   Mobile
+   Mobile adjustments
    ========================================================================== */
 
 @media screen and (max-width: 989px) {
-  header.header {
+  /* In-flow mobile header */
+  header.header:not(.absolute) {
     margin: 8px 12px !important;
     border-radius: 14px;
   }
 
+  /* Absolute mobile header (homepage) */
+  header.header.absolute {
+    top: 0 !important;
+    left: 12px !important;
+    right: 12px !important;
+    margin: 8px 0 0 0 !important;
+    border-radius: 14px;
+  }
+
   /* True-center the logo on mobile.
-     The right side (lang + search + cart) is wider than the left (hamburger),
-     so the logo can't be flex-centered naturally.
-     Give both ends flex:1 so they share remaining space equally — the middle
-     logo element lands exactly in the center without touching position. */
+     Right side (lang + search + cart) is wider than the left (hamburger),
+     so a natural flex layout shifts the logo left. Give both ends flex:1
+     so they share remaining space equally — logo lands exactly centered. */
   header.header > header-drawer {
     flex: 1;
     display: flex;
@@ -263,7 +329,7 @@ header localization-selector,
     justify-content: flex-end;
     align-items: center;
   }
-  /* Prevent the heading from growing (theme may set flex:1 on it) */
+  /* Prevent theme CSS from giving the heading flex:1 */
   header.header > .header__heading,
   header.header > a.header__heading-link {
     flex: 0 0 auto;
