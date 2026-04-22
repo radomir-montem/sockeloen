@@ -3,16 +3,31 @@
    ========================================================================== */
 
 /* ==========================================================================
-   Announcement bar — fixed height so different messages don't change layout
-   Only the visible (non-.hidden) bar gets flex layout — the script hides
-   inactive rotation bars with .hidden, which must still hide them.
+   Announcement bar — INTEGRATED INTO THE PILL (EME Studio style)
+   The orange strip and the glass nav below form a SINGLE floating element:
+   - Announcement bar: rounded top corners only, flat bottom
+   - Header pill: flat top, rounded bottom corners (see further down)
+   - Same horizontal inset (left/right) so the two shapes align perfectly
+   - Zero vertical gap between them
+   Only the visible (non-.hidden) rotation bar gets flex layout; .hidden
+   still hides inactive siblings.
    ========================================================================== */
 
-#announcement-bar .announcement-bar {
-  background-color: #F76503 !important;
-  min-height: 46px;
+#announcement-bar {
+  margin: 12px 20px 0 20px;  /* horizontal inset matches the pill below */
+  position: relative;
+  z-index: 10;
+}
+
+#announcement-bar .announcement-bar,
+#announcement-bar .announcement-bar.gradient {
+  background: #F76503 !important;
+  background-image: none !important;
+  border-radius: 12px 12px 0 0 !important;
+  min-height: 38px;
   align-items: center;
   justify-content: center;
+  overflow: hidden;  /* clip link padding to rounded top edges */
 }
 #announcement-bar .announcement-bar:not(.hidden) {
   display: flex !important;
@@ -25,17 +40,25 @@
   color: #fff !important;
 }
 .announcement-bar a {
-  padding: 12px 20px;
+  padding: 9px 20px;
   font-weight: 500;
   white-space: nowrap;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.2;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 989px) {
+  #announcement-bar {
+    margin: 8px 12px 0 12px;
+  }
+  #announcement-bar .announcement-bar,
+  #announcement-bar .announcement-bar.gradient {
+    border-radius: 10px 10px 0 0 !important;
+    min-height: 34px;
+  }
   .announcement-bar a {
     font-size: 11px;
-    padding: 10px 16px;
+    padding: 8px 14px;
   }
 }
 
@@ -82,11 +105,12 @@ sticky-header.header-wrapper,
 }
 
 /* THE PILL — shared styles for all pages/states.
-   - Reduced corner radius to match EME Studio (less pillowy than before).
+   - Flat top (announcement bar sits directly on top).
+   - Rounded bottom — together with the orange strip above, forms one shape.
    - Drop shadow reads as a soft lift on white backgrounds during scroll;
      on the hero image it's barely perceptible, exactly like EME. */
 header.header {
-  border-radius: 12px;
+  border-radius: 0 0 12px 12px;
   background: rgba(255, 255, 255, 0.62) !important;
   backdrop-filter: blur(32px) saturate(180%);
   -webkit-backdrop-filter: blur(32px) saturate(180%);
@@ -100,21 +124,22 @@ header.header {
   transition: none !important; /* kill color-swap flicker on scroll */
 }
 
-/* In-flow headers (non-homepage): use margin to inset the pill */
+/* In-flow headers (non-homepage): flush against announcement bar above,
+   same horizontal inset. */
 header.header:not(.absolute) {
-  margin: 12px 20px !important;
+  margin: 0 20px !important;
 }
 
 /* Absolute-positioned header (homepage): margin won't constrain width on an
-   absolute element, so use left/right offsets instead. This is the fix for
-   "desktop bar is mobile width" — width:auto on an absolute element without
-   left/right collapses to content width. */
+   absolute element, so use left/right offsets instead. top:0 puts the pill
+   at the top of sticky-header, which is right below the announcement bar
+   section — so the two shapes touch with zero gap. */
 header.header.absolute {
   top: 0 !important;
   left: 20px !important;
   right: 20px !important;
   width: auto !important;
-  margin: 12px 0 0 0 !important;
+  margin: 0 !important;
 }
 
 /* Sticky state: identical styling — no flicker, no color change on scroll.
@@ -383,19 +408,20 @@ header.header.sticky-navbar .header__heading-logo,
    ========================================================================== */
 
 @media screen and (max-width: 989px) {
-  /* In-flow mobile header */
+  /* In-flow mobile header — flush against announcement bar above,
+     same horizontal inset, bottom-rounded only. */
   header.header:not(.absolute) {
-    margin: 8px 12px !important;
-    border-radius: 10px;
+    margin: 0 12px !important;
+    border-radius: 0 0 10px 10px;
   }
 
-  /* Absolute mobile header (homepage) */
+  /* Absolute mobile header (homepage) — same treatment. */
   header.header.absolute {
     top: 0 !important;
     left: 12px !important;
     right: 12px !important;
-    margin: 8px 0 0 0 !important;
-    border-radius: 10px;
+    margin: 0 !important;
+    border-radius: 0 0 10px 10px;
   }
 
   /* True-center the logo on mobile.
