@@ -1,29 +1,33 @@
 {% comment %}
-  Size guide modal — renders contextual size chart based on product type.
-  Detects: socks (default), base layer, gloves, overshoes.
+  Size guide modal — renders contextual size chart.
+  Accepts an explicit guide_type override, otherwise auto-detects from product.
 
-  Usage: {% render 'size-guide-modal', product: product %}
+  Usage:
+    {% render 'size-guide-modal', product: product, guide_type_override: 'socks' %}
 {% endcomment %}
 
 {%- liquid
-  assign p_type = product.type | downcase
-  assign p_tags = product.tags | join: ',' | downcase
-  assign p_title = product.title | downcase
+  assign guide_type = guide_type_override | default: ''
 
-  assign guide_type = 'socks'
-  if p_type contains 'base' or p_type contains 'accessoires' and p_title contains 'base layer'
-    assign guide_type = 'baselayer'
-  elsif p_title contains 'glove'
-    assign guide_type = 'gloves'
-  elsif p_type contains 'shoe cover' or p_title contains 'overshoe'
-    assign guide_type = 'overshoes'
+  if guide_type == '' or guide_type == 'auto'
+    assign p_type = product.type | downcase
+    assign p_title = product.title | downcase
+
+    assign guide_type = 'socks'
+    if p_type contains 'base' or p_type contains 'accessoires' and p_title contains 'base layer'
+      assign guide_type = 'baselayer'
+    elsif p_title contains 'glove'
+      assign guide_type = 'gloves'
+    elsif p_type contains 'shoe cover' or p_title contains 'overshoe'
+      assign guide_type = 'overshoes'
+    endif
   endif
 -%}
 
 <div class="size-guide-overlay" id="size-guide-overlay" style="display:none;">
   <div class="size-guide-modal">
     <div class="size-guide-modal__header">
-      <h3 class="size-guide-modal__title">Size guide</h3>
+      <h3 class="size-guide-modal__title">{{ 'products.v2.size_guide_title' | t }}</h3>
       <button class="size-guide-modal__close" aria-label="Close size guide" onclick="document.getElementById('size-guide-overlay').style.display='none'; document.body.classList.remove('noscroll');">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -35,12 +39,12 @@
       {% case guide_type %}
 
         {% when 'socks' %}
-          <p class="size-guide-modal__intro">Find your sock size based on your shoe size.</p>
+          <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_socks_intro' | t }}</p>
           <table class="size-guide-table">
             <thead>
               <tr>
-                <th>EU shoe size</th>
-                <th>Sock size</th>
+                <th>{{ 'products.v2.size_guide_eu_shoe_size' | t }}</th>
+                <th>{{ 'products.v2.size_guide_sock_size' | t }}</th>
                 <th>US Men</th>
                 <th>US Women</th>
                 <th>UK</th>
@@ -93,7 +97,7 @@
           </table>
 
         {% when 'gloves' %}
-          <p class="size-guide-modal__intro">Measure the width of your index finger to find your glove size.</p>
+          <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_gloves_intro' | t }}</p>
           <table class="size-guide-table">
             <thead>
               <tr>
@@ -111,12 +115,12 @@
           </table>
 
         {% when 'baselayer' %}
-          <p class="size-guide-modal__intro">All measurements in centimetres (cm).</p>
+          <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_baselayer_intro' | t }}</p>
           <div class="size-guide-table-scroll">
             <table class="size-guide-table">
               <thead>
                 <tr>
-                  <th>Measurement</th>
+                  <th>{{ 'products.v2.size_guide_measurement' | t }}</th>
                   <th>XS</th>
                   <th>S</th>
                   <th>M</th>
@@ -127,21 +131,24 @@
               </thead>
               <tbody>
                 <tr><td><strong>Front length</strong></td><td>47</td><td>49</td><td>51</td><td>53</td><td>55</td><td>57</td></tr>
-                <tr><td><strong>Back length</strong></td><td>57.5</td><td>59.5</td><td>61.5</td><td>63.5</td><td>65.5</td><td>67.5</td></tr>
-                <tr><td><strong>Chest (1/2)</strong></td><td>33.5</td><td>36</td><td>38.5</td><td>41</td><td>43.5</td><td>46</td></tr>
-                <tr><td><strong>Hem (1/2)</strong></td><td>30</td><td>32.5</td><td>35</td><td>37.5</td><td>40</td><td>42.5</td></tr>
-                <tr><td><strong>Sleeve length</strong></td><td>13.5</td><td>14</td><td>14.5</td><td>15.1</td><td>15.7</td><td>16.3</td></tr>
+                <tr><td><strong>Back length</strong></td><td>57,5</td><td>59,5</td><td>61,5</td><td>63,5</td><td>65,5</td><td>67,5</td></tr>
+                <tr><td><strong>Chest &ndash; &frac12; width</strong></td><td>33,5</td><td>36</td><td>38,5</td><td>41</td><td>43,5</td><td>46</td></tr>
+                <tr><td><strong>Hem relaxed &ndash; &frac12; width</strong></td><td>30</td><td>32,5</td><td>35</td><td>37,5</td><td>40</td><td>42,5</td></tr>
+                <tr><td><strong>Circumference collar</strong></td><td>25,2</td><td>26,1</td><td>27</td><td>27,9</td><td>28,8</td><td>29,7</td></tr>
+                <tr><td><strong>Sleeve length</strong></td><td>13,5</td><td>14</td><td>14,5</td><td>15,1</td><td>15,7</td><td>16,3</td></tr>
+                <tr><td><strong>Biceps width</strong></td><td>10,4</td><td>10,9</td><td>11,4</td><td>11,9</td><td>12,4</td><td>12,9</td></tr>
+                <tr><td><strong>Bottom sleeve width</strong></td><td>54</td><td>55,5</td><td>57</td><td>58,6</td><td>60,2</td><td>61,8</td></tr>
               </tbody>
             </table>
           </div>
 
         {% when 'overshoes' %}
-          <p class="size-guide-modal__intro">Choose your overshoe size based on your shoe size (EU).</p>
+          <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_overshoes_intro' | t }}</p>
           <table class="size-guide-table">
             <thead>
               <tr>
                 <th>Overshoe size</th>
-                <th>EU shoe size</th>
+                <th>{{ 'products.v2.size_guide_eu_shoe_size' | t }}</th>
               </tr>
             </thead>
             <tbody>
@@ -155,6 +162,6 @@
       {% endcase %}
     </div>
 
-    <a href="/pages/size-guide" class="size-guide-modal__link">View full size guide</a>
+    <a href="/pages/size-guide" class="size-guide-modal__link">{{ 'products.v2.size_guide_full_link' | t }}</a>
   </div>
 </div>

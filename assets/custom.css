@@ -711,11 +711,15 @@ fieldset.product-form__input {
 }
 
 footer .localization-label {
-    color: #000;
+    color: #9a9a9a;
     width: 140px;
     padding-left: 10px;
     padding-right: 10px;
     cursor: pointer;
+}
+
+footer .localization-label:hover {
+    color: #fff;
 }
 
 footer .localization-list {

@@ -141,10 +141,10 @@ if (!customElements.get('product-form')) {
                 (finalPrice / (limit_price * 100)) * 100
               }%`
               freeShipping.innerHTML = ((limit_price * 100 - finalPrice) / 100).toLocaleString(
-                'en-GB',
+                'nl-NL',
                 {
-                style: 'currency',
-                currency: 'EUR',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
                 },
               )
             }
@@ -176,19 +176,38 @@ async function fetch_upsells() {
     const response = await request.text()
     const innerHTML = new DOMParser().parseFromString(response, 'text/html')
 
+    /* Support both old (.upsell_list) and new (#cart-cross-sells) selectors */
+    const new_cross_sells = innerHTML.querySelector('#cart-cross-sells')
     const new_upsell_list = innerHTML.querySelector('.upsell_list')
-    const actual_upsell_list = document.querySelector('.upsell_list')
-    actual_upsell_list.innerHTML = new_upsell_list.innerHTML
 
-    const upsells = actual_upsell_list.querySelectorAll('li')
-    const upsells_length = Array.from(upsells).length
+    /* Update ALL cross-sell containers (mobile + desktop have separate instances) */
+    const all_cross_sells = document.querySelectorAll('#cart-cross-sells')
+    const all_upsells_containers = document.querySelectorAll('.upsells_container')
 
-    const upsells_container = document.querySelector('.upsells_container')
-
-    if (upsells_length == 0) {
-      upsells_container.classList.add('!hidden')
-    } else {
-      upsells_container.classList.remove('!hidden')
+    if (all_cross_sells.length > 0 && new_cross_sells) {
+      const newHTML = new_cross_sells.innerHTML
+      const cards = new_cross_sells.querySelectorAll('.cross-sell-card')
+      all_cross_sells.forEach(el => { el.innerHTML = newHTML })
+      all_upsells_containers.forEach(container => {
+        if (cards.length === 0) {
+          container.classList.add('!hidden')
+        } else {
+          container.classList.remove('!hidden')
+        }
+      })
+    } else if (new_upsell_list) {
+      const actual_upsell_list = document.querySelector('.upsell_list')
+      if (actual_upsell_list) {
+        actual_upsell_list.innerHTML = new_upsell_list.innerHTML
+        const upsells = actual_upsell_list.querySelectorAll('li')
+        all_upsells_containers.forEach(container => {
+          if (upsells.length === 0) {
+            container.classList.add('!hidden')
+          } else {
+            container.classList.remove('!hidden')
+          }
+        })
+      }
     }
   } catch (error) {
     console.log(error)

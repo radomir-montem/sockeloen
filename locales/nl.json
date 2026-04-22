@@ -162,6 +162,39 @@
       "choose_options": "Opties kiezen",
       "choose_product_options": "Opties kiezen voor {{ product_name }}"
     },
+    "v2": {
+      "usp_1_heading": "Gratis verzending",
+      "usp_1_body_html": "<p>Wij bieden gratis verzending op alle bestellingen boven €75. Bestellingen geplaatst vóór 15:00 CET op werkdagen worden dezelfde dag verzonden. Levering duurt 1-3 werkdagen binnen de EU.<\/p>",
+      "usp_2_heading": "100% Tevredenheidsgarantie",
+      "usp_2_body_html": "<p>Niet tevreden? Wij bieden een probleemloze retour binnen 30 dagen na aankoop. Geen vragen gesteld. Jouw tevredenheid is onze prioriteit.<\/p>",
+      "usp_3_heading": "Born in the peloton",
+      "usp_3_body_html": "<p>Sockeloen sokken zijn ontworpen en getest door wielrenners, voor wielrenners. Ontwikkeld voor prestaties met premium materialen die je voeten comfortabel houden op elke rit.<\/p>",
+      "usp_4_heading": "De klant is koning",
+      "usp_4_body_html": "<p>Wij gaan verder dan verwacht voor onze klanten. Van persoonlijke ondersteuning tot snelle levering, wij zorgen ervoor dat je de beste ervaring hebt.<\/p>",
+      "sticky_usp_1": "Gratis verzending",
+      "sticky_usp_2": "100% tevredenheidsgarantie",
+      "sticky_usp_3": "Born in the peloton",
+      "default_benefit_1": "Gedragen door Wereldkampioenen.",
+      "default_benefit_2": "Geen brandende voeten meer op de fiets.",
+      "default_benefit_3": "Laat je kuiten eruitzien als de wapens die ze echt zijn.",
+      "size_modal_heading": "Weet je zeker dat je de juiste maat hebt?",
+      "size_modal_confirm": "Ja, voeg toe aan winkelwagen",
+      "size_modal_change": "Nee, laat me wijzigen",
+      "low_stock_singular": "Lage voorraad — nog maar 1 item over",
+      "low_stock_plural": "Lage voorraad — nog maar {{ qty }} items over",
+      "notify_me": "Laat me weten wanneer beschikbaar",
+      "size_guide_title": "Maattabel",
+      "size_guide_link": "Twijfel je over je maat?",
+      "size_guide_full_link": "Bekijk de volledige maattabel",
+      "size_guide_socks_intro": "Vind je sokmaat op basis van je schoenmaat.",
+      "size_guide_gloves_intro": "Meet de breedte van je wijsvinger om je handschoenmaat te vinden.",
+      "size_guide_baselayer_intro": "Alle maten in centimeters (cm).",
+      "size_guide_overshoes_intro": "Kies je overschoenmaat op basis van je schoenmaat (EU).",
+      "size_guide_eu_shoe_size": "EU schoenmaat",
+      "size_guide_sock_size": "Sokmaat",
+      "size_guide_measurement": "Afmeting",
+      "social_proof_text_html": "en <strong>+{{ count }}</strong> andere atleten rijden in {{ brand }}."
+    },
     "modal": {
       "label": "Mediagalerij"
     },
@@ -267,7 +300,16 @@
       "login": {
         "title": "Heb je een account?",
         "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Log in<\/a> om sneller af te rekenen."
-      }
+      },
+      "complete_your_kit": "Maak je kit compleet",
+      "best_seller": "Bestseller",
+      "free_shipping_reached": "Je bestelling komt in aanmerking voor gratis verzending!",
+      "free_shipping_away_html": "Nog <strong>{{ amount }}</strong> voor <strong>GRATIS VERZENDING!</strong>",
+      "shipping": "Verzending",
+      "shipping_free": "Gratis",
+      "select_size": "Kies maat",
+      "add": "Toevoegen",
+      "view_cart": "Bekijk winkelwagen"
     },
     "footer": {
       "payment": "Betaalmethoden"

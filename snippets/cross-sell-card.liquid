@@ -1,0 +1,47 @@
+{% comment %}
+  Cross-sell product card for cart drawer carousel
+  Accepts: cross_product (product object), show_badge (boolean)
+{% endcomment %}
+
+{%- if cross_product != blank and cross_product.available -%}
+  {%- comment -%} Collect variant IDs hidden via custom.disable metafield {%- endcomment -%}
+  {%- assign disabled_ids = '' -%}
+  {%- for variant in cross_product.variants -%}
+    {%- if variant.metafields.custom.disable == true -%}
+      {%- if disabled_ids != '' -%}{%- assign disabled_ids = disabled_ids | append: ',' -%}{%- endif -%}
+      {%- assign disabled_ids = disabled_ids | append: variant.id -%}
+    {%- endif -%}
+  {%- endfor -%}
+  <div class="cross-sell-card" data-product-handle="{{ cross_product.handle }}" data-product-id="{{ cross_product.id }}">
+    <div class="cross-sell-card__image-wrap">
+      {% if show_badge %}
+        <span class="cross-sell-card__badge">{{ 'sections.cart.best_seller' | t }}</span>
+      {% endif %}
+      <a href="{{ cross_product.url }}">
+        <img
+          src="{{ cross_product.featured_image | image_url: width: 300 }}"
+          alt="{{ cross_product.title | escape }}"
+          loading="lazy"
+          width="140"
+          height="140"
+        >
+      </a>
+    </div>
+    <div class="cross-sell-card__info">
+      <a href="{{ cross_product.url }}" class="cross-sell-card__title">
+        {{ cross_product.title | truncate: 40 }}
+      </a>
+      <span class="cross-sell-card__price">{{ cross_product.price | money_without_currency }}</span>
+      <button
+        type="button"
+        class="cross-sell-card__add-btn"
+        data-product-handle="{{ cross_product.handle }}"
+        data-product-url="{{ cross_product.url }}.js"
+        {% if disabled_ids != '' %}data-disabled-variants="{{ disabled_ids }}"{% endif %}
+        onclick="window.cartSizePicker.open(this)"
+      >
+        {{ 'sections.cart.add' | t }}
+      </button>
+    </div>
+  </div>
+{%- endif -%}

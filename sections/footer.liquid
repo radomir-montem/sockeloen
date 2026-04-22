@@ -1,3 +1,39 @@
+<script src="{{ 'localization-selector.js' | asset_url }}" defer="defer"></script>
+<style>
+  /* Footer branding banner */
+  .footer-branding-bar {
+    overflow: hidden;
+    padding: 20px 0 12px;
+    margin-top: 32px;
+  }
+  .footer-branding-text {
+    display: block !important;
+    width: 100% !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    font-size: 15vw !important;
+    line-height: 1 !important;
+    letter-spacing: -0.02em !important;
+    white-space: nowrap !important;
+  }
+  @media screen and (min-width: 750px) {
+    .footer-branding-text {
+      font-size: 10vw !important;
+    }
+  }
+  /* Footer bottom spacing for sticky ATC */
+  footer.bg-black {
+    padding-bottom: 120px !important;
+  }
+  @media screen and (min-width: 990px) {
+    footer.bg-black {
+      padding-bottom: 120px !important;
+    }
+  }
+</style>
 <footer class="bg-black py-12 md:py-16 mt-[-1px]">
   <div class="flex flex-col-reverse lg:flex-row footer-top">
     <div class="grid grid-cols-1 md:grid-cols-3 justify-center mx-8 lg:w-4/5" x-data="{ selected: null}">
@@ -100,26 +136,32 @@
     {% endif %}
     </div>
   </div>
+  <!-- Branding banner -->
+  <div class="footer-branding-bar" aria-hidden="true">
+    <span class="footer-branding-text">SOCKELOEN™</span>
+  </div>
+
   <div class="md:px-8 md:mt-16">
     <div class="grid grid-cols-1 md2:grid-cols-3 place-items-center pt-6 px-8 footer-bottom">
-      <localization-selector class="relative flex items-center w-[180px] mt-3 mb-8">
-        <label class="localization-label border border-[#7C7D80] flex justify-between items-center w-full text-black py-4 px-6 bg-white">
-          <span>
-            {{ localization.language.iso_code | upcase }} / {{ localization.country.currency.iso_code | upcase }}
-          </span>
-          <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 5L8 0.833333L7.2 8.58591e-08L4 3.33333L0.8 9.5399e-09L4.9687e-08 0.833333L4 5Z" fill="#7C7D80"/>
-          </svg>                            
+      <localization-selector class="footer-locale-selector relative flex items-center">
+        <label class="localization-label flex items-center gap-2 text-[#9a9a9a] hover:text-white transition-colors cursor-pointer text-[12px] tracking-[0.06em] uppercase" tabindex="0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <span>{{ localization.language.iso_code | upcase }} / {{ localization.country.currency.iso_code | upcase }}</span>
+          <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-transform duration-200">
+            <path d="M4 5L8 0.833333L7.2 8.58591e-08L4 3.33333L0.8 9.5399e-09L4.9687e-08 0.833333L4 5Z" fill="currentColor"/>
+          </svg>
         </label>
-        <ul class="localization-list hidden px-4 py-4 bg-white text-black absolute bottom-full left-1/2 -translate-x-1/2 w-48 text-center">
-          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="en">EN / EUR</a></li>
-          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">NL / EUR</a></li>
-          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">DE / EUR</a></li>
-          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">FR / EUR</a></li>
-          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">EN / USD</a></li>
-          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">FR / USD</a></li>
+        <ul class="localization-list hidden absolute bottom-full left-0 mb-2 w-[160px] bg-white border border-[#ddd] rounded-sm overflow-hidden z-50 shadow-lg">
+          <li class="localization-item"><a href="#" data-country-code="NL" data-language="en" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'en' and localization.country.currency.iso_code == 'EUR' %} !text-black !font-bold{% endif %}">EN / EUR</a></li>
+          <li class="localization-item"><a href="#" data-country-code="NL" data-language="nl" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'nl' %} !text-black !font-bold{% endif %}">NL / EUR</a></li>
+          <li class="localization-item"><a href="#" data-country-code="DE" data-language="de" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'de' %} !text-black !font-bold{% endif %}">DE / EUR</a></li>
+          <li class="localization-item"><a href="#" data-country-code="NL" data-language="fr" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'fr' and localization.country.currency.iso_code == 'EUR' %} !text-black !font-bold{% endif %}">FR / EUR</a></li>
+          <li class="localization-item"><a href="#" data-country-code="US" data-language="en" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'en' and localization.country.currency.iso_code == 'USD' %} !text-black !font-bold{% endif %}">EN / USD</a></li>
+          <li class="localization-item"><a href="#" data-country-code="US" data-language="fr" class="block px-4 py-[10px] text-[12px] tracking-[0.04em] text-[#333] hover:text-black hover:bg-[#f0f0f0] transition-colors{% if localization.language.iso_code == 'fr' and localization.country.currency.iso_code == 'USD' %} !text-black !font-bold{% endif %}">FR / USD</a></li>
         </ul>
-        {%- form 'localization', id: 'HeaderLocalizationForm', class: 'hidden' -%}
+        {%- form 'localization', id: 'FooterLocalizationForm', class: 'hidden' -%}
           <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
           <input type="hidden" name="locale_code" value="{{ localization.language.iso_code }}">
         {%- endform -%}

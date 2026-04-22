@@ -15,7 +15,8 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "button"
+            "picker_type": "button",
+            "color_swatch_style": "images"
           }
         },
         "aov_ai_bundle_offer_volume_RqqnNt": {
@@ -26,10 +27,23 @@
           "type": "quantity_selector",
           "settings": {}
         },
+        "size_guide_irnJtn": {
+          "type": "size_guide",
+          "settings": {
+            "guide_type": "auto",
+            "link_text": "Not sure about your size?"
+          }
+        },
         "shipping_info": {
           "type": "shipping_info",
           "settings": {
             "no_shipment_text": "There is no shipment for your country"
+          }
+        },
+        "secure_checkout_pPnF4r": {
+          "type": "secure_checkout",
+          "settings": {
+            "text": "Safe & secure checkout — pay with iDEAL, creditcard or PayPal"
           }
         },
         "description": {
@@ -41,58 +55,16 @@
             "page": "",
             "logos_size": 26
           }
-        },
-        "materials": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Materials",
-            "icon": "lightning_bolt",
-            "content": "{{ product.metafields.custom.materials | metafield_tag }}",
-            "page": "",
-            "logos_size": 26
-          }
-        },
-        "height": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Height",
-            "icon": "ruler",
-            "content": "<p>{{ product.metafields.custom.height.value }}</p>",
-            "page": "",
-            "logos_size": 26
-          }
-        },
-        "knit_structure": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Knit Structure",
-            "icon": "carrot",
-            "content": "<p>{{ product.metafields.custom.knit_structure.value }}</p>",
-            "page": "",
-            "logos_size": 26
-          }
-        },
-        "type_of_sock": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Type of Sock",
-            "icon": "shoe",
-            "content": "<p>{{ product.metafields.custom.type_of_sock.value }}</p>",
-            "page": "",
-            "logos_size": 26
-          }
         }
       },
       "block_order": [
         "variant_picker",
         "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
+        "size_guide_irnJtn",
         "shipping_info",
-        "description",
-        "materials",
-        "height",
-        "knit_structure",
-        "type_of_sock"
+        "secure_checkout_pPnF4r",
+        "description"
       ],
       "settings": {
         "social_proof_type": "athletes",
@@ -121,33 +93,305 @@
         "hide_variants": true,
         "enable_video_looping": false,
         "show_dynamic_checkout": false,
-        "notifyme_button": "Notify me when available",
         "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "bought_often_together_tBPpcp": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
+      "settings": {
+        "product_source": "my_fields.product_upsells",
+        "product_list": [],
+        "collection": "",
+        "max_products": 8,
+        "heading": "other riders",
+        "heading_italic": "Also bought",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
         "padding_bottom": 0
       }
     },
     "benefits": {
       "type": "product-benefits",
+      "blocks": {
+        "benefit_fcWnXU": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "image": "shopify://shop_images/Sockeloen_-04_octobre_2025-61_1.jpg",
+            "heading": "Worn by",
+            "heading_italic": "World Champions",
+            "description": "<p>Some of the best male and female riders in the world choose Sockeloen, because of the materials, because of the wind tunnel test results, but often simply because they think they look great.</p>"
+          }
+        },
+        "benefit_BKLxKT": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1.png",
+            "heading": "Make your calves look ",
+            "heading_italic": "like Weapons.",
+            "description": "<p>The reason Sockeloen was founded. Most cycling socks didn't have the right sokheight. And mayb even worse, some tend to fall dow to your ankles. A nightmare. We developed a very stretchable sock, with the perfect sockheight, that never falls down. Make your legs look like the weapons they really are.</p>"
+          }
+        },
+        "benefit_igt7xh": {
+          "type": "benefit",
+          "settings": {
+            "video_url": "",
+            "image": "shopify://shop_images/Tour_home_banner.png",
+            "heading": "No sweaty, stinky feet.",
+            "heading_italic": "Never again.",
+            "description": "<p>Sockeloen is more than just socks for the Mathieu van der Poels and Demi Vollerings of this planet. Our range includes countless socks for town-sign-sprinters, good-weather cyclists, the adventurers and even for the couch potatoes among us.When you want to ride comfortable, without pressure points, sweety or painfull feet: Sockeloen cycling socks are what you need.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_fcWnXU",
+        "benefit_BKLxKT",
+        "benefit_igt7xh"
+      ],
       "settings": {
-        "background_color": "#ffffff",
+        "background_color": "#f3f3f3",
         "text_color": "#000000",
         "padding_top": 36,
         "padding_bottom": 36
       }
     },
-    "reviews": {
-      "type": "reviews-product",
-      "settings": {}
+    "product_exploder_4gMj38": {
+      "type": "product-exploder",
+      "blocks": {
+        "hotspot_DcBjXY": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 44,
+            "hotspot_y": 21,
+            "heading": "Sockeloen Cuff",
+            "description": "<p>The Ultra Elastic super cuff makes sure this sock is always exactly on the right spott and won't fall down. We created this by sourcing the best elastane of Europe and mixed it into this sock.</p>"
+          }
+        },
+        "hotspot_QEDVDk": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 54,
+            "hotspot_y": 37,
+            "heading": "Sockeloen Mesh",
+            "description": "<p>The o-mesh knitting structure combines: flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>"
+          }
+        },
+        "hotspot_cKCjnr": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 71,
+            "hotspot_y": 57,
+            "heading": "Sockeloen Heels and Toes",
+            "description": "<p>To ensure a long lifetime of these high performance cycling socks we reinforced the heels and toes with a specific extra Polyamide yarn.</p>"
+          }
+        },
+        "hotspot_YfjpGW": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 56,
+            "hotspot_y": 63,
+            "heading": "Sockeloen Yarns",
+            "description": "<p>Through the whole sock we used anti-bacterial Q-skin yarns, blended with polyamide and elastane to create the perfect yarn blend.</p>"
+          }
+        },
+        "hotspot_bBQhNX": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 29,
+            "hotspot_y": 74,
+            "heading": "Sockeloen Seemless Toe",
+            "description": "<p>To avoid irritating, or high pressure points inside your cycling shoe we work with a seemless toe without any area's that could irritate your toes while riding.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_DcBjXY",
+        "hotspot_QEDVDk",
+        "hotspot_cKCjnr",
+        "hotspot_YfjpGW",
+        "hotspot_bBQhNX"
+      ],
+      "name": "Product Exploder",
+      "settings": {
+        "heading": "Let's take a look",
+        "heading_italic": "inside the sock",
+        "subtitle": "<p>Discover what makes our socks truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
+        "background_color": "#ffffff",
+        "text_color": "#000000",
+        "accent_color": "#F76503",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "reviews_masonry_NwNWHh": {
+      "type": "reviews-masonry",
+      "name": "Reviews Masonry",
+      "settings": {
+        "heading": "What our",
+        "heading_italic": "riders say?",
+        "subtitle": "Real feedback from cyclists who ride in Sockeloen socks every day.",
+        "review_count": "4.51/5 based on 2,376 reviews",
+        "min_rating": 4,
+        "background_color": "#f3f3f3",
+        "accent_color": "#F76503",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "satisfaction_guarantee_6fcj3K": {
+      "type": "satisfaction-guarantee",
+      "name": "Satisfaction Guarantee",
+      "settings": {
+        "heading": "Not 100% satisfied?",
+        "heading_italic": "No problem!",
+        "body": "<p>At Sockeloen, the customer is king. We stand behind every pair of socks we make with our 100% satisfaction guarantee. Not happy with your order? Simply reach out within 30 days and we'll make it right.</p>",
+        "button_text": "Shop now",
+        "button_url": "",
+        "background_color": "#f3f3f3",
+        "text_color": "#000000",
+        "accent_color": "#F76503",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "bought_often_together_txwAy7": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
+      "settings": {
+        "product_source": "none",
+        "product_list": [],
+        "collection": "sale",
+        "max_products": 8,
+        "heading": "currently on",
+        "heading_italic": "Sale",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 0
+      }
     },
     "recommendations": {
       "type": "product-recommendations",
+      "disabled": true,
       "settings": {}
+    },
+    "product_faq_NDDGQE": {
+      "type": "product-faq",
+      "blocks": {
+        "faq_9RzfCj": {
+          "type": "faq",
+          "settings": {
+            "question": "What size cycling socks should I choose?",
+            "answer": "<p>Our socks come in S/M (36-41) and L/XL (42-47). If you're between sizes, we recommend sizing up for a more comfortable fit. Check our size guide on each product page for detailed measurements.</p>"
+          }
+        },
+        "faq_7idmHH": {
+          "type": "faq",
+          "settings": {
+            "question": "What material are Sockeloen socks made of?",
+            "answer": "<p>Our cycling socks are made from a premium blend of recycled polyamide, polypropylene, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>"
+          }
+        },
+        "faq_YhiEwH": {
+          "type": "faq",
+          "settings": {
+            "question": "How should I wash my cycling socks?",
+            "answer": "<p>Machine wash at 30°C inside out. Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry — air dry for best results. This keeps the fibers intact and your socks performing at their best.</p>"
+          }
+        },
+        "faq_NLxUKi": {
+          "type": "faq",
+          "settings": {
+            "question": "How long do Sockeloen socks last?",
+            "answer": "<p>With proper care, our socks typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>"
+          }
+        },
+        "faq_wRWWf3": {
+          "type": "faq",
+          "settings": {
+            "question": "Why are cycling socks longer than regular socks?",
+            "answer": "<p>The taller cuff provides aerodynamic benefits by creating a smoother airflow over the leg. It also offers sun protection and prevents chafing from shoe edges. Most pro cyclists prefer a cuff height of 15-20cm.</p>"
+          }
+        },
+        "faq_JgMmFK": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use these socks for other sports?",
+            "answer": "<p>Absolutely! While designed for cycling, our socks perform great for running, hiking, and everyday wear. The moisture-wicking properties and comfortable fit make them versatile for any activity.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_9RzfCj",
+        "faq_7idmHH",
+        "faq_YhiEwH",
+        "faq_NLxUKi",
+        "faq_wRWWf3",
+        "faq_JgMmFK"
+      ],
+      "name": "Product FAQ",
+      "settings": {
+        "heading": "Frequently asked",
+        "heading_italic": "questions",
+        "background_color": "#ffffff",
+        "text_color": "#000000",
+        "accent_color": "#F76503",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "bought_often_together_M9V6Ya": {
+      "type": "bought-often-together",
+      "name": "Product Carousel",
+      "settings": {
+        "product_source": "recently_viewed",
+        "product_list": [],
+        "collection": "",
+        "max_products": 8,
+        "heading": "recently",
+        "heading_italic": "Viewed",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "main",
+    "bought_often_together_tBPpcp",
     "benefits",
-    "reviews",
-    "recommendations"
+    "product_exploder_4gMj38",
+    "reviews_masonry_NwNWHh",
+    "satisfaction_guarantee_6fcj3K",
+    "bought_often_together_txwAy7",
+    "recommendations",
+    "product_faq_NDDGQE",
+    "bought_often_together_M9V6Ya"
   ]
 }

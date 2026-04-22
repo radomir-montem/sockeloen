@@ -1,0 +1,142 @@
+{% comment %}
+  Cart drawer cross-sells — 3-tier waterfall:
+  1. Manual metafield: my_fields.cart_cross_sells (list of product refs)
+  2. Shopify Recommendations API (loaded via JS)
+  3. Global fallback: settings.global_upsells collection
+{% endcomment %}
+
+{% assign cross_sell_products = '' %}
+{% assign cross_sell_handles = '' %}
+{% assign max_cross_sells = 3 %}
+
+{%- comment -%} Collect cart product IDs for exclusion & recommendations {%- endcomment -%}
+{% assign cart_handles = '' %}
+{% assign cart_product_ids = '' %}
+{% for item in cart.items %}
+  {% assign cart_handles = cart_handles | append: ',' | append: item.product.handle %}
+  {% assign cart_product_ids = cart_product_ids | append: ',' | append: item.product.id %}
+{% endfor %}
+
+{%- comment -%} Tier 1: Manual metafield per product in cart {%- endcomment -%}
+{% assign manual_products = '' %}
+{% assign manual_count = 0 %}
+
+{% for item in cart.items %}
+  {% assign meta_cross = item.product.metafields.custom.cart_cross_sells.value %}
+  {% if meta_cross != blank %}
+    {% for ref_product in meta_cross %}
+      {% unless cart_handles contains ref_product.handle or cross_sell_handles contains ref_product.handle %}
+        {% if ref_product.available and manual_count < max_cross_sells %}
+          {% assign cross_sell_handles = cross_sell_handles | append: ',' | append: ref_product.handle %}
+          {% assign manual_count = manual_count | plus: 1 %}
+        {% endif %}
+      {% endunless %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+{%- comment -%} Tier 3: Global fallback (fills remaining slots) {%- endcomment -%}
+{% assign global_products = settings.global_upsells %}
+{% assign fallback_count = manual_count %}
+
+{% if fallback_count < max_cross_sells and global_products != blank %}
+  {% for gp in global_products.products %}
+    {% unless cart_handles contains gp.handle or cross_sell_handles contains gp.handle %}
+      {% if gp.available and fallback_count < max_cross_sells %}
+        {% assign cross_sell_handles = cross_sell_handles | append: ',' | append: gp.handle %}
+        {% assign fallback_count = fallback_count | plus: 1 %}
+      {% endif %}
+    {% endunless %}
+  {% endfor %}
+{% endif %}
+
+{% assign handle_list = cross_sell_handles | split: ',' %}
+
+<div class="cart-cross-sells__wrapper" id="cart-cross-sells">
+  <h4 class="cart-cross-sells__heading">
+    {{ settings.cart_cross_sells_heading_1 | default: 'Complete' }} <em>{{ settings.cart_cross_sells_heading_2 | default: 'your kit' }}</em>
+  </h4>
+  <div class="cart-cross-sells" id="cart-cross-sells-list">
+    {% assign card_index = 0 %}
+    {% for handle in handle_list %}
+      {% if handle != blank %}
+        {% assign cross_product = all_products[handle] %}
+        {% if cross_product != blank and cross_product.available %}
+          {% assign show_badge = false %}
+          {% if card_index == 0 %}{% assign show_badge = true %}{% endif %}
+          {% render 'cross-sell-card', cross_product: cross_product, show_badge: show_badge %}
+          {% assign card_index = card_index | plus: 1 %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+  {%- comment -%} Skeleton cards for Recommendations API loading {%- endcomment -%}
+  <div class="cart-cross-sells cart-cross-sells--skeleton" id="cart-cross-sells-skeleton" style="display:none;">
+    {% for i in (1..3) %}
+      <div class="cross-sell-card cross-sell-card--skeleton">
+        <div class="cross-sell-card__image-wrap skeleton-pulse"></div>
+        <div class="cross-sell-card__info">
+          <span class="skeleton-pulse" style="height:14px;width:80%;display:block;margin-bottom:6px;"></span>
+          <span class="skeleton-pulse" style="height:14px;width:40%;display:block;"></span>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  {%- comment -%} Tier 2: Shopify Recommendations API {%- endcomment -%}
+  (function() {
+    var container = document.getElementById('cart-cross-sells-list');
+    var currentCount = container ? container.querySelectorAll('.cross-sell-card').length : 0;
+    if (currentCount >= {{ max_cross_sells }}) return;
+
+    var cartProductIds = [{{ cart_product_ids | remove_first: ',' }}];
+    var cartHandles = {{ cart_handles | remove_first: ',' | split: ',' | json }};
+    var existingHandles = {{ cross_sell_handles | remove_first: ',' | split: ',' | json }};
+    var maxNeeded = {{ max_cross_sells }} - currentCount;
+
+    if (cartProductIds.length === 0 || maxNeeded <= 0) return;
+
+    var productId = cartProductIds[0];
+    fetch('/recommendations/products.json?product_id=' + productId + '&limit=6&intent=related')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data.products || data.products.length === 0) return;
+        var added = 0;
+        data.products.forEach(function(p) {
+          if (added >= maxNeeded) return;
+          if (cartHandles.indexOf(p.handle) !== -1) return;
+          if (existingHandles.indexOf(p.handle) !== -1) return;
+          if (!p.available) return;
+
+          var card = document.createElement('div');
+          card.className = 'cross-sell-card';
+          card.setAttribute('data-product-handle', p.handle);
+          card.setAttribute('data-product-id', p.id);
+
+          var imgSrc = p.featured_image ? p.featured_image.replace(/(\.[^.]+)$/, '_300x$1') : '';
+          var price = (p.price / 100).toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+          card.innerHTML =
+            '<div class="cross-sell-card__image-wrap">' +
+              (added === 0 && currentCount === 0 ? '<span class="cross-sell-card__badge">{{ "sections.cart.best_seller" | t | escape }}</span>' : '') +
+              '<a href="/products/' + p.handle + '">' +
+                '<img src="' + imgSrc + '" alt="' + p.title + '" loading="lazy" width="140" height="140">' +
+              '</a>' +
+            '</div>' +
+            '<div class="cross-sell-card__info">' +
+              '<a href="/products/' + p.handle + '" class="cross-sell-card__title">' + p.title + '</a>' +
+              '<span class="cross-sell-card__price">' + price + '</span>' +
+              '<button type="button" class="cross-sell-card__add-btn" data-product-handle="' + p.handle + '" data-product-url="/products/' + p.handle + '.js" onclick="window.cartSizePicker.open(this)">' +
+                '{{ "sections.cart.add" | t | escape }}' +
+              '</button>' +
+            '</div>';
+
+          container.appendChild(card);
+          added++;
+        });
+      })
+      .catch(function(e) { console.log('Recommendations API error:', e); });
+  })();
+</script>

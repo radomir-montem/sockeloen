@@ -18,8 +18,10 @@ header.header {
   background-color: #F76503;
 }
 
-/* Hide language/currency switcher */
-localization-selector {
+/* Hide language/currency switcher in header only */
+header localization-selector,
+.header localization-selector,
+.header__icons localization-selector {
   display: none !important;
 }
 
