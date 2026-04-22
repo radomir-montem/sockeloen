@@ -8,24 +8,56 @@
   font-weight: 500;
 }
 
-header.header {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
 /* Cart count bubble — orange */
 .cart-count-bubble {
   background-color: #F76503;
 }
 
-/* Hide language/currency switcher in header only */
-header localization-selector,
-.header localization-selector,
-.header__icons localization-selector {
-  display: none !important;
+/* ==========================================================================
+   FLOATING PILL HEADER — EME Studio style
+   ========================================================================== */
+
+/* Section: zero out the bottom margin so the hero slides up behind the header */
+.section-header {
+  margin-bottom: 0 !important;
 }
 
-/* Title-case menu items (SHOP → Shop) + black text */
+/* The header wrapper becomes the floating pill */
+.header-wrapper {
+  margin: 10px 16px !important;
+  border-radius: 60px !important;
+  background: rgba(255, 255, 255, 0.10) !important;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18) !important;
+  border: none !important;
+}
+
+/* Remove the theme's default bottom border */
+.header-wrapper--border-bottom {
+  border-bottom: none !important;
+}
+
+/* Inner header — no extra padding since the pill wrapper adds visual space */
+header.header {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* When scrolled (sticky-navbar class added by JS) — more opaque white pill */
+header.header.sticky-navbar ~ .header-wrapper,
+.shopify-section-header-sticky .header-wrapper {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ==========================================================================
+   Text & icon colours
+   ========================================================================== */
+
+/* Default: black text for nav items */
 .header__menu-item span,
 .header__menu-item.link-only span {
   display: inline-block;
@@ -38,7 +70,7 @@ header localization-selector,
   text-transform: uppercase;
 }
 
-/* Homepage: transparent header with white text — override black */
+/* Homepage (absolute header over hero): white text */
 header.header.absolute .header__menu-item span,
 header.header.absolute .header__menu-item.link-only span {
   color: #fff !important;
@@ -48,8 +80,17 @@ header.header.absolute .menu-arrow-down {
   color: #fff;
 }
 
-/* Homepage: sticky navbar reverts to black — must match or exceed
-   specificity of header.header.absolute rule above */
+header.header.absolute .header__icon,
+header.header.absolute .header__icon .icon path {
+  color: #fff;
+  fill: #fff;
+}
+
+header.header.absolute .localization-label {
+  color: #fff !important;
+}
+
+/* Homepage sticky: revert to black once scrolled */
 header.header.sticky-navbar .header__menu-item span,
 header.header.sticky-navbar .header__menu-item.link-only span {
   color: #000 !important;
@@ -59,19 +100,97 @@ header.header.sticky-navbar .menu-arrow-down {
   color: #000;
 }
 
-/* Thicker icon lines — add stroke on top of filled paths (account + cart) */
+header.header.sticky-navbar .header__icon,
+header.header.sticky-navbar .header__icon .icon path {
+  color: #000;
+  fill: #000;
+}
+
+header.header.sticky-navbar .localization-label {
+  color: #000 !important;
+}
+
+/* ==========================================================================
+   Language selector — desktop pill style (EN ▼)
+   ========================================================================== */
+
+/* Un-hide the language selector */
+header localization-selector,
+.header localization-selector,
+.header__icons localization-selector {
+  display: flex !important;
+  align-items: center;
+}
+
+.localization-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  white-space: nowrap;
+  color: inherit;
+  padding: 4px 8px;
+  border-radius: 20px;
+  transition: background 0.15s;
+}
+
+.localization-label:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* Dropdown arrow next to language label */
+.localization-label::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 4px;
+  background-image: url("data:image/svg+xml,%3Csvg width='7' height='4' viewBox='0 0 7 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.5 0.5L3.5 3.5L6.5 0.5' stroke='currentColor' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 2px;
+  opacity: 0.7;
+}
+
+/* Dropdown list */
+.localization-list {
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  min-width: 160px;
+  z-index: 200;
+}
+
+.localization-item a {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.localization-item a:hover {
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   Icons
+   ========================================================================== */
+
+/* Thicker icon lines */
 .header__icon .icon path {
   stroke: currentColor;
   stroke-width: 0.6px;
 }
 
-/* Thicker search icon — symbol referenced via <use>, target symbol path */
 #icon-search path {
   stroke: currentColor;
   stroke-width: 0.6px;
 }
 
-/* Cart icon — cropped viewBox matches search/account, use same 2rem */
+/* Cart icon sizing */
 .header__icon--cart .icon {
   width: 2rem;
   height: 2rem;
@@ -81,7 +200,7 @@ header.header.sticky-navbar .menu-arrow-down {
   margin-right: 4px;
 }
 
-/* Better spacing around header icons for good UX */
+/* Icon tap area */
 .header__icon {
   padding: 8px 10px;
 }
@@ -90,7 +209,10 @@ header.header.sticky-navbar .menu-arrow-down {
   gap: 2px;
 }
 
-/* Down arrow SVG next to menu items with dropdowns */
+/* ==========================================================================
+   Dropdown arrow on menu items
+   ========================================================================== */
+
 .menu-arrow-down {
   display: none;
 }
@@ -102,5 +224,21 @@ header.header.sticky-navbar .menu-arrow-down {
     height: 5px;
     margin-left: 4px;
     flex-shrink: 0;
+  }
+}
+
+/* ==========================================================================
+   Mobile header pill adjustments
+   ========================================================================== */
+
+@media screen and (max-width: 989px) {
+  .header-wrapper {
+    margin: 8px 10px !important;
+    border-radius: 40px !important;
+  }
+
+  header.header {
+    padding-top: 6px;
+    padding-bottom: 6px;
   }
 }
