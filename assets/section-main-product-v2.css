@@ -1615,24 +1615,21 @@ sticky-atc-v2.hidden {
 
 @media screen and (min-width: 990px) {
 
-  /* Two-column product layout */
-  .product-v2 > .grid__item {
-    width: auto;
-    max-width: none;
+  /* Two-column product layout — CSS Grid avoids flex/box-sizing conflicts */
+  .product-v2.grid {
+    display: grid !important;
+    grid-template-columns: 55% 45%;
+    flex-wrap: unset;
   }
 
-  .product-v2__media-wrapper {
-    max-width: 55%;
-    width: 55%;
-    flex: 0 0 55%;
+  .product-v2 > .grid__item {
+    width: auto !important;
+    max-width: none !important;
+    flex: none !important;
   }
 
   .product-v2__info-wrapper {
-    box-sizing: border-box;
     padding: 24px 0 24px 4rem;
-    max-width: 45%;
-    width: 45%;
-    flex: 0 0 45%;
   }
 
   .product-v2__info-container--sticky {
