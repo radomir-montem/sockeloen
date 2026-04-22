@@ -297,7 +297,7 @@
                         <label class="localization-label border border-[#7C7D80] flex justify-between items-center w-full text-black py-4 px-6">
                           <span>
                             {%- if localization.country.iso_code == 'US' -%}
-                              {%- if localization.language.iso_code == 'fr' -%}FR — USA{%- else -%}USA{%- endif -%}
+                              {%- if localization.language.iso_code == 'fr' -%}Canada{%- else -%}USA{%- endif -%}
                             {%- else -%}
                               {{ localization.language.iso_code | upcase }}
                             {%- endif -%}
@@ -312,7 +312,7 @@
                           <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">DE</a></li>
                           <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">FR</a></li>
                           <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">USA</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">FR — USA</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">Canada</a></li>
                         </ul>
                         {%- form 'localization', id: 'HeaderLocalizationForm', class: 'hidden' -%}
                           <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
@@ -510,7 +510,7 @@
             
             <span>
               {%- if localization.country.iso_code == 'US' -%}
-                {%- if localization.language.iso_code == 'fr' -%}FR — USA{%- else -%}USA{%- endif -%}
+                {%- if localization.language.iso_code == 'fr' -%}Canada{%- else -%}USA{%- endif -%}
               {%- else -%}
                 {{ localization.language.iso_code | upcase }}
               {%- endif -%}
@@ -522,7 +522,7 @@
             <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">DE</a></li>
             <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">FR</a></li>
             <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">USA</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">FR — USA</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">Canada</a></li>
           </ul>
           {%- form 'localization', id: 'HeaderLocalizationForm', class: 'hidden' -%}
             <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">

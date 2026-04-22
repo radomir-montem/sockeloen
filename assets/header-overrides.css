@@ -3,14 +3,17 @@
    ========================================================================== */
 
 /* ==========================================================================
-   Announcement bar — INTEGRATED INTO THE PILL (EME Studio style)
-   The orange strip and the glass nav below form a SINGLE floating element:
+   Announcement bar — INTEGRATED INTO THE PILL (EME Studio glass style)
+   The orange strip + glass nav below form a SINGLE floating element:
    - Announcement bar: rounded top corners only, flat bottom
-   - Header pill: flat top, rounded bottom corners (see further down)
-   - Same horizontal inset (left/right) so the two shapes align perfectly
+   - Header pill: flat top, rounded bottom (see further down)
+   - Same horizontal inset so the two shapes align perfectly
    - Zero vertical gap between them
-   Only the visible (non-.hidden) rotation bar gets flex layout; .hidden
-   still hides inactive siblings.
+   - BOTH use backdrop-filter blur for the EME glass look — the orange
+     strip is a translucent tint over the blurred hero, not a solid fill
+   On homepage pages, the whole assembly floats over the hero via absolute
+   positioning (same mechanism as the pill), so the blur has something to
+   blur and there's no white gap above the bg image.
    ========================================================================== */
 
 #announcement-bar {
@@ -21,13 +24,26 @@
 
 #announcement-bar .announcement-bar,
 #announcement-bar .announcement-bar.gradient {
-  background: #F76503 !important;
+  /* Orange, but translucent so the blurred hero underneath shows through —
+     matches the white-glass pill below for a cohesive EME look. */
+  background: rgba(247, 101, 3, 0.82) !important;
   background-image: none !important;
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
   border-radius: 12px 12px 0 0 !important;
-  min-height: 38px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  min-height: 46px;  /* a touch taller for breathing room */
+  min-width: 0;
   align-items: center;
   justify-content: center;
-  overflow: hidden;  /* clip link padding to rounded top edges */
+  overflow: hidden;
+}
+
+/* Close-X on the announcement bar — hidden globally. We don't want the
+   bar to be dismissible; it also steals horizontal space from truncated
+   messages and breaks the EME layout on narrow screens. */
+#announcement-bar .announcement-bar__close {
+  display: none !important;
 }
 #announcement-bar .announcement-bar:not(.hidden) {
   display: flex !important;
@@ -39,12 +55,38 @@
 #announcement-bar .announcement-bar a {
   color: #fff !important;
 }
-.announcement-bar a {
+
+/* Long-text handling — truncate with ellipsis so a long message never
+   breaks the integrated pill layout. min-width: 0 on every flex ancestor
+   is required so the p can actually shrink and trigger the ellipsis. */
+.announcement-bar > a,
+.announcement-bar__link {
   padding: 9px 20px;
   font-weight: 500;
-  white-space: nowrap;
   font-size: 12px;
   line-height: 1.2;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.announcement-bar .page-width {
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  padding-left: 0;
+  padding-right: 0;
+}
+#announcement-bar .announcement-bar__message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  font-size: 12px;
 }
 
 @media screen and (max-width: 989px) {
@@ -54,11 +96,39 @@
   #announcement-bar .announcement-bar,
   #announcement-bar .announcement-bar.gradient {
     border-radius: 10px 10px 0 0 !important;
-    min-height: 34px;
+    min-height: 40px;
   }
-  .announcement-bar a {
+  .announcement-bar > a,
+  .announcement-bar__link {
     font-size: 11px;
-    padding: 8px 14px;
+    padding: 10px 14px;
+  }
+  #announcement-bar .announcement-bar__message {
+    font-size: 11px;
+  }
+}
+
+/* Homepage / custom-made hero pages: announcement bar floats over the hero
+   image via absolute positioning, exactly like the pill. This kills the
+   white gap above the bg image and gives the orange tint something to
+   blur. The pill below is pushed down to clear the bar's height. */
+body.template--index #announcement-bar,
+body.template--custom-made #announcement-bar,
+body[class*="template--"][class*="custom-made"] #announcement-bar {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  right: 20px;
+  margin: 0;
+  z-index: 50;
+}
+@media screen and (max-width: 989px) {
+  body.template--index #announcement-bar,
+  body.template--custom-made #announcement-bar,
+  body[class*="template--"][class*="custom-made"] #announcement-bar {
+    top: 8px;
+    left: 12px;
+    right: 12px;
   }
 }
 
@@ -107,13 +177,15 @@ sticky-header.header-wrapper,
 /* THE PILL — shared styles for all pages/states.
    - Flat top (announcement bar sits directly on top).
    - Rounded bottom — together with the orange strip above, forms one shape.
+   - Stronger blur (40px / 200% saturate) + lower opacity bg to match EME's
+     milky translucent look. The hero reads softly through the pill.
    - Drop shadow reads as a soft lift on white backgrounds during scroll;
      on the hero image it's barely perceptible, exactly like EME. */
 header.header {
   border-radius: 0 0 12px 12px;
-  background: rgba(255, 255, 255, 0.62) !important;
-  backdrop-filter: blur(32px) saturate(180%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.08),
@@ -131,9 +203,9 @@ header.header:not(.absolute) {
 }
 
 /* Absolute-positioned header (homepage): margin won't constrain width on an
-   absolute element, so use left/right offsets instead. top:0 puts the pill
-   at the top of sticky-header, which is right below the announcement bar
-   section — so the two shapes touch with zero gap. */
+   absolute element, so use left/right offsets instead. top is overridden
+   below for homepage/custom-made pages where the announcement bar is also
+   absolute and needs room above the pill. */
 header.header.absolute {
   top: 0 !important;
   left: 20px !important;
@@ -142,13 +214,26 @@ header.header.absolute {
   margin: 0 !important;
 }
 
+/* On hero pages the announcement bar is ALSO absolute (to kill the white
+   gap above the bg image). The pill must drop below its full height. */
+body.template--index header.header.absolute,
+body.template--custom-made header.header.absolute {
+  top: 58px !important;  /* 12px margin + 46px bar */
+}
+@media screen and (max-width: 989px) {
+  body.template--index header.header.absolute,
+  body.template--custom-made header.header.absolute {
+    top: 48px !important;  /* 8px + 40px */
+  }
+}
+
 /* Sticky state: identical styling — no flicker, no color change on scroll.
    Shadow is preserved here so the pill reads as lifted over white content
    as you scroll past the hero. */
 header.header.sticky-navbar {
-  background: rgba(255, 255, 255, 0.62) !important;
-  backdrop-filter: blur(32px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(40px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.08),
@@ -348,17 +433,31 @@ header.header.sticky-navbar .header__heading-logo,
 
 /* Dropdown panel — ALWAYS opens downward (top: 100%), never upward.
    !important on top/bottom overrides Tailwind's top-full / bottom-full AND
-   any inline style the localization-selector.js might set. */
+   any inline style the localization-selector.js might set.
+   Matches the header pill design: glass blur, soft shadow, same radius. */
 .localization-list {
   top: 100% !important;
   bottom: auto !important;
   margin-top: 8px;
-  border-radius: 14px !important;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12) !important;
-  border: 1px solid rgba(0, 0, 0, 0.06) !important;
-  min-width: 120px;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+    0 6px 20px rgba(0, 0, 0, 0.10),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  border: none !important;
+  min-width: 140px;
   overflow: hidden;
   z-index: 9999 !important;
+  padding: 6px !important;
+}
+.localization-item {
+  border-radius: 8px;
+  padding: 0 !important;
+  margin: 2px 0;
 }
 .localization-item a {
   font-size: 13px;
@@ -367,8 +466,13 @@ header.header.sticky-navbar .header__heading-logo,
   text-decoration: none;
   letter-spacing: 0.03em;
   display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
-.localization-item:hover a { opacity: 0.55; }
+.localization-item:hover a {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.05);
+}
 
 /* Mobile drawer: ensure overflow isn't clipping the downward dropdown */
 @media screen and (max-width: 989px) {
@@ -376,6 +480,270 @@ header.header.sticky-navbar .header__heading-logo,
     overflow: visible !important;
     position: relative;
   }
+}
+
+/* ==========================================================================
+   Search modal — match the header pill design exactly
+   When the search icon opens the modal, replace the default full-width
+   white bar with a floating glass pill that visually takes the header's
+   place. Same inset, radius, blur, shadow, and edge highlight as the pill.
+   ========================================================================== */
+
+.search-modal.modal__content {
+  position: fixed !important;
+  top: 12px !important;
+  left: 20px !important;
+  right: 20px !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 56px !important;
+
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+    0 6px 20px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  overflow: visible !important;
+  z-index: 200;
+  border-bottom: none !important;
+}
+
+/* On hero pages the search pill drops below the absolute announcement
+   bar so it lines up with where the header pill normally sits. */
+body.template--index .search-modal.modal__content,
+body.template--custom-made .search-modal.modal__content {
+  top: 58px !important;
+}
+
+.search-modal__content {
+  padding: 8px 56px 8px 20px !important;
+  min-height: 56px;
+  border-radius: 12px;
+}
+
+/* Input: transparent, black text, no borders/shadows from the theme. */
+.search-modal .field__input,
+.search-modal .search__input {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #000 !important;
+  font-size: 14px;
+  padding: 0 0 0 34px !important;  /* space for the inline search icon */
+}
+.search-modal .field__input:focus,
+.search-modal .search__input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.search-modal .field__label {
+  color: rgba(0, 0, 0, 0.55) !important;
+  left: 34px !important;
+}
+
+/* Search submit button (magnifier) — positioned inline at left of input */
+.search-modal .search__button,
+.search-modal .field__button {
+  position: absolute !important;
+  left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #000 !important;
+}
+.search-modal .search__button .icon,
+.search-modal .field__button .icon {
+  width: 18px;
+  height: 18px;
+  color: #000 !important;
+}
+
+/* Close button — black X, flush right */
+.search-modal .modal__close-button {
+  color: #000 !important;
+  right: 14px !important;
+}
+.search-modal .modal__close-button .icon {
+  color: #000 !important;
+  width: 16px;
+  height: 16px;
+}
+
+/* Predictive search results panel — floats below the pill, same style */
+.search-modal .predictive-search {
+  margin-top: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+    0 8px 24px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
+}
+
+/* Overlay dimming under the floating search pill */
+.search-modal .modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(0, 0, 0, 0.25) !important;
+  z-index: 199;
+}
+.search-modal .modal-overlay::after {
+  display: none !important;
+}
+
+@media screen and (max-width: 989px) {
+  .search-modal.modal__content {
+    left: 12px !important;
+    right: 12px !important;
+    border-radius: 10px !important;
+    min-height: 48px !important;
+  }
+  body.template--index .search-modal.modal__content,
+  body.template--custom-made .search-modal.modal__content {
+    top: 48px !important;
+  }
+  .search-modal__content {
+    padding: 6px 48px 6px 16px !important;
+    min-height: 48px;
+    border-radius: 10px;
+  }
+  .search-modal .field__input,
+  .search-modal .search__input {
+    padding: 0 0 0 30px !important;
+    font-size: 13px;
+  }
+  .search-modal .field__label {
+    left: 30px !important;
+    font-size: 13px;
+  }
+  .search-modal .search__button,
+  .search-modal .field__button {
+    left: 10px !important;
+  }
+  .search-modal .modal__close-button {
+    right: 10px !important;
+  }
+}
+
+/* ==========================================================================
+   Mobile menu drawer — match the header pill design (glass blur, rounded,
+   inset floating panel instead of full-height slide-in sidebar). The panel
+   appears BELOW the header pill so the whole assembly reads as one system.
+   ========================================================================== */
+
+.js .menu-drawer,
+.menu-drawer {
+  position: fixed !important;
+  top: 108px !important;
+  left: 12px !important;
+  right: 12px !important;
+  width: auto !important;
+  max-width: 360px !important;
+  height: auto !important;
+  max-height: calc(100vh - 120px) !important;
+
+  padding: 10px !important;
+  border: none !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+    0 6px 20px rgba(0, 0, 0, 0.10),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  filter: none !important;  /* kill the theme's drop-shadow filter */
+  overflow: hidden auto !important;
+  overscroll-behavior: contain;
+
+  /* Animation: fade + drop in (not slide from left) */
+  transform: translateY(-10px) !important;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.22s ease, opacity 0.22s ease, visibility 0.22s ease !important;
+}
+
+.js details[open] > .menu-drawer,
+.js details[open].menu-opening > .menu-drawer,
+.no-js details[open] > .menu-drawer {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Drawer internal layout — reset tight padding of the floating pill */
+.menu-drawer__inner-container {
+  padding: 0 !important;
+}
+.menu-drawer__navigation {
+  padding: 4px !important;
+}
+.menu-drawer__menu {
+  padding: 0 !important;
+}
+.menu-drawer__menu-item {
+  padding: 10px 12px !important;
+  border-radius: 8px;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  border-bottom: none !important;
+  transition: background 0.15s ease;
+}
+.menu-drawer__menu-item:hover,
+.menu-drawer__menu-item:focus {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Drawer utility links row — inset spacing, no hard dividers */
+.menu-drawer__utility-links {
+  padding: 8px !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: 4px;
+}
+
+/* Drawer language selector — match the header language dropdown styling */
+.menu-drawer localization-selector .localization-label {
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* On hero pages the header assembly is taller (48px + announcement) — drop
+   the drawer lower so it clears the pill. */
+body.template--index .menu-drawer,
+body.template--custom-made .menu-drawer {
+  top: 108px !important;
+}
+
+@media screen and (max-width: 989px) {
+  .js .menu-drawer,
+  .menu-drawer {
+    top: 104px !important;
+    left: 12px !important;
+    right: 12px !important;
+    max-width: none !important;
+    width: calc(100vw - 24px) !important;
+  }
+  body.template--index .menu-drawer,
+  body.template--custom-made .menu-drawer {
+    top: 104px !important;
+  }
+}
+
+/* Backdrop when drawer open — soft dim, not the theme's default hard dark */
+.js menu-drawer > details[open] > summary::before,
+menu-drawer > details[open] > summary::before {
+  background: rgba(0, 0, 0, 0.25) !important;
 }
 
 /* ==========================================================================
