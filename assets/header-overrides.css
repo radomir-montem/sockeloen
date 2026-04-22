@@ -25,11 +25,13 @@
 #announcement-bar .announcement-bar,
 #announcement-bar .announcement-bar.gradient {
   /* Orange, but translucent so the blurred hero underneath shows through —
-     matches the white-glass pill below for a cohesive EME look. */
-  background: rgba(247, 101, 3, 0.82) !important;
+     matches the white-glass pill below for a cohesive EME look.
+     Lower orange opacity + wider blur radius so shapes/colors behind
+     dissolve into a soft wash rather than being faintly recognisable. */
+  background: rgba(247, 101, 3, 0.60) !important;
   background-image: none !important;
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  backdrop-filter: blur(70px) saturate(200%);
+  -webkit-backdrop-filter: blur(70px) saturate(200%);
   /* Smaller, tighter radius — matches EME's compact corner style.
      Top corners rounded, bottom flush against the pill beneath. */
   border-radius: 8px 8px 0 0 !important;
@@ -142,13 +144,16 @@
 }
 
 /* Homepage / custom-made hero pages: announcement bar floats over the hero
-   image via absolute positioning, exactly like the pill. This kills the
-   white gap above the bg image and gives the orange tint something to
-   blur. The pill below is pushed down to clear the bar's height. */
+   image via FIXED positioning. Both the bar and the pill share the same
+   viewport-relative reference point, which guarantees zero sub-pixel gap
+   between them — the main reason the two pieces drifted apart before was
+   that the pill measured its `top` from `.header-wrapper` (position: relative)
+   while the bar measured from the document origin. Fixed for both removes
+   that mismatch. */
 body.template--index #announcement-bar,
 body.template--custom-made #announcement-bar,
 body[class*="template--"][class*="custom-made"] #announcement-bar {
-  position: absolute;
+  position: fixed;
   top: 12px;
   left: 20px;
   right: 20px;
@@ -217,9 +222,11 @@ sticky-header.header-wrapper,
 header.header {
   /* Smaller bottom radius to match EME's tighter corners */
   border-radius: 0 0 8px 8px;
-  background: rgba(255, 255, 255, 0.45) !important;
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  /* More transparent + wider blur radius: colour shapes behind dissolve
+     into broad washes instead of being readable through the pill. */
+  background: rgba(255, 255, 255, 0.30) !important;
+  backdrop-filter: blur(70px) saturate(200%);
+  -webkit-backdrop-filter: blur(70px) saturate(200%);
   /* Directional inset — bottom + sides only. Top has no highlight so the
      seam with the announcement bar above reads as one continuous surface. */
   box-shadow:
@@ -271,9 +278,9 @@ body.template--custom-made header.header.absolute {
    as you scroll past the hero. */
 header.header.sticky-navbar {
   border-radius: 0 0 8px 8px;
-  background: rgba(255, 255, 255, 0.45) !important;
-  backdrop-filter: blur(40px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
+  background: rgba(255, 255, 255, 0.30) !important;
+  backdrop-filter: blur(70px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(70px) saturate(200%) !important;
   box-shadow:
     inset 1px 0 0 0 rgba(255, 255, 255, 0.30),
     inset -1px 0 0 0 rgba(255, 255, 255, 0.30),
@@ -482,10 +489,11 @@ header.header.sticky-navbar .header__heading-logo,
   bottom: auto !important;
   margin-top: 8px;
   border-radius: 8px !important;
-  background: rgba(255, 255, 255, 0.85) !important;
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  /* Keep dropdown readable — moderately opaque, wider blur radius */
+  background: rgba(255, 255, 255, 0.70) !important;
+  background-color: rgba(255, 255, 255, 0.70) !important;
+  backdrop-filter: blur(70px) saturate(200%);
+  -webkit-backdrop-filter: blur(70px) saturate(200%);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.10),
@@ -525,10 +533,12 @@ header.header.sticky-navbar .header__heading-logo,
 }
 
 /* ==========================================================================
-   Search modal — match the header pill design exactly
-   When the search icon opens the modal, replace the default full-width
-   white bar with a floating glass pill that visually takes the header's
-   place. Same inset, radius, blur, shadow, and edge highlight as the pill.
+   Search modal — clean single-row layout inside the glass pill.
+   LAYOUT: [magnifier icon] [ input ............. ] [× close]
+   - No inner borders or sub-boxes (Shopify's default .field has a visible
+     outline — we flatten it so only the pill's glass surface shows).
+   - All three elements vertically centered in a fixed-height row.
+   - Generous click targets; sans-serif placeholder that fades on type.
    ========================================================================== */
 
 .search-modal.modal__content {
@@ -539,62 +549,153 @@ header.header.sticky-navbar .header__heading-logo,
   bottom: auto !important;
   width: auto !important;
   height: auto !important;
-  min-height: 56px !important;
+  min-height: 52px !important;
 
   border-radius: 8px !important;
-  background: rgba(255, 255, 255, 0.45) !important;
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  background: rgba(255, 255, 255, 0.30) !important;
+  backdrop-filter: blur(70px) saturate(200%);
+  -webkit-backdrop-filter: blur(70px) saturate(200%);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.05) !important;
   overflow: visible !important;
   z-index: 200;
+  border: none !important;
   border-bottom: none !important;
 }
 
-/* On hero pages the search pill drops below the absolute announcement
+/* On hero pages the search pill drops below the (fixed) announcement
    bar so it lines up with where the header pill normally sits. */
 body.template--index .search-modal.modal__content,
 body.template--custom-made .search-modal.modal__content {
   top: 44px !important;
 }
 
+/* Inner wrapper — flex row, no padding (children manage their own spacing) */
 .search-modal__content {
-  padding: 8px 56px 8px 20px !important;
-  min-height: 56px;
-  border-radius: 8px;
-}
-
-/* Input: transparent, black text, no borders/shadows from the theme. */
-.search-modal .field__input,
-.search-modal .search__input {
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 !important;
+  min-height: 52px;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+  border-radius: 8px !important;
+  position: relative;
+}
+
+/* The form fills the row */
+.search-modal__content .search-modal__form,
+.search-modal__content form.search {
+  flex: 1;
+  min-width: 0;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Kill the visible sub-rectangle (.field default has a border/outline) and
+   make it a flat flex row: magnifier on left, input fills the rest. */
+.search-modal .field {
+  flex: 1;
+  min-width: 0;
+  display: flex !important;
+  flex-direction: row-reverse !important;  /* magnifier (last child) on left */
+  align-items: center !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: 52px;
+  position: relative;
+}
+.search-modal .field::before,
+.search-modal .field::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Input: transparent, black text, fills remaining row space */
+.search-modal .field__input,
+.search-modal .search__input {
+  flex: 1;
+  min-width: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
   color: #000 !important;
-  font-size: 14px;
-  padding: 0 0 0 34px !important;  /* space for the inline search icon */
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  padding: 0 12px 0 4px !important;
+  height: 52px;
+  line-height: 52px;
 }
 .search-modal .field__input:focus,
 .search-modal .search__input:focus {
   outline: none !important;
   box-shadow: none !important;
+  border: none !important;
 }
-.search-modal .field__label {
-  color: rgba(0, 0, 0, 0.55) !important;
-  left: 34px !important;
+.search-modal .field__input::placeholder,
+.search-modal .search__input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
 }
 
-/* Search submit button (magnifier) — positioned inline at left of input */
-.search-modal .search__button,
-.search-modal .field__button {
+/* Float-label: position as a simple placeholder (vertically centered, next
+   to the magnifier). Hide it once the user starts typing or focuses in. */
+.search-modal .field__label {
   position: absolute !important;
-  left: 14px !important;
+  left: 52px !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 15px !important;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5) !important;
+  background: transparent !important;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+.search-modal .field__input:focus ~ .field__label,
+.search-modal .search__input:focus ~ .field__label,
+.search-modal .field__input:not(:placeholder-shown) ~ .field__label,
+.search-modal .search__input:not(:placeholder-shown) ~ .field__label {
+  opacity: 0;
+}
+
+/* Magnifier submit button — inline flex child on the LEFT (flex-direction
+   row-reverse makes .field render it first visually). */
+.search-modal .search__button,
+.search-modal .field__button {
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  flex: 0 0 auto;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px;
+  height: 52px;
+  padding: 0 !important;
+  margin: 0 0 0 4px !important;
+  background: transparent !important;
+  border: none !important;
   color: #000 !important;
+  cursor: pointer;
 }
 .search-modal .search__button .icon,
 .search-modal .field__button .icon {
@@ -602,25 +703,53 @@ body.template--custom-made .search-modal.modal__content {
   height: 18px;
   color: #000 !important;
 }
+.search-modal .search__button .icon path,
+.search-modal .field__button .icon path {
+  fill: #000 !important;
+  stroke: #000 !important;
+}
 
-/* Close button — black X, flush right */
+/* Close button — flush right, same height as the row */
 .search-modal .modal__close-button {
+  position: static !important;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 52px;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  margin: 0 4px 0 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
   color: #000 !important;
-  right: 14px !important;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+.search-modal .modal__close-button:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
 }
 .search-modal .modal__close-button .icon {
   color: #000 !important;
   width: 16px;
   height: 16px;
 }
+.search-modal .modal__close-button .icon path {
+  fill: #000 !important;
+  stroke: #000 !important;
+}
 
 /* Predictive search results panel — floats below the pill, same style */
 .search-modal .predictive-search {
   margin-top: 12px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.92) !important;
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  /* Predictive-search needs readable text — keep fairly opaque but widen blur */
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(70px) saturate(200%);
+  -webkit-backdrop-filter: blur(70px) saturate(200%);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.30),
     0 8px 24px rgba(0, 0, 0, 0.10);
@@ -646,32 +775,37 @@ body.template--custom-made .search-modal.modal__content {
     left: 12px !important;
     right: 12px !important;
     border-radius: 7px !important;
-    min-height: 48px !important;
+    min-height: 46px !important;
   }
   body.template--index .search-modal.modal__content,
   body.template--custom-made .search-modal.modal__content {
     top: 36px !important;
   }
   .search-modal__content {
-    padding: 6px 48px 6px 16px !important;
-    min-height: 48px;
-    border-radius: 7px;
+    min-height: 46px;
+    border-radius: 7px !important;
+  }
+  .search-modal .field {
+    min-height: 46px;
   }
   .search-modal .field__input,
   .search-modal .search__input {
-    padding: 0 0 0 30px !important;
-    font-size: 13px;
+    font-size: 14px;
+    height: 46px;
+    line-height: 46px;
   }
   .search-modal .field__label {
-    left: 30px !important;
-    font-size: 13px;
+    left: 46px !important;
+    font-size: 14px !important;
   }
   .search-modal .search__button,
   .search-modal .field__button {
-    left: 10px !important;
+    width: 40px;
+    height: 46px;
   }
   .search-modal .modal__close-button {
-    right: 10px !important;
+    width: 40px;
+    height: 46px;
   }
 }
 
@@ -695,10 +829,11 @@ body.template--custom-made .search-modal.modal__content {
   padding: 10px !important;
   border: none !important;
   border-radius: 8px !important;
-  background: rgba(255, 255, 255, 0.85) !important;
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  /* Menu drawer: readable list items need moderate opacity, wider blur */
+  background: rgba(255, 255, 255, 0.70) !important;
+  background-color: rgba(255, 255, 255, 0.70) !important;
+  backdrop-filter: blur(70px) saturate(200%);
+  -webkit-backdrop-filter: blur(70px) saturate(200%);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.10),
@@ -891,7 +1026,9 @@ body.template--custom-made .banner__media {
   overflow: hidden;
 }
 
-/* Cards, tiles and collection items on the homepage */
+/* Cards, tiles and collection items on the homepage.
+   overflow: hidden is critical so the child media/content stays clipped to
+   the rounded corners even on :hover when some themes switch overflow. */
 body.template--index .card,
 body.template--index .card-wrapper,
 body.template--index .card__media,
@@ -901,11 +1038,38 @@ body.template--index .collection__item,
 body.template--index .product-card,
 body.template--index .product-card-wrapper,
 body.template--index .grid__item .card,
+body.template--index .grid__item .card-wrapper,
 body.template--custom-made .card,
 body.template--custom-made .card-wrapper,
 body.template--custom-made .card__media {
   border-radius: var(--home-radius) !important;
+  overflow: hidden !important;
+}
+
+/* Card bottom/content area — ensures the lower portion of the card (title,
+   price, "new" badge row) is also clipped by the same radius. Shopify's
+   .card__content sits BELOW .card__media; applying the same radius to the
+   wrapper is enough in most themes, but some render content outside the
+   clip so we set explicit bottom-radius on the content too. */
+body.template--index .card__content,
+body.template--index .card__information,
+body.template--index .card-wrapper .card__content,
+body.template--custom-made .card__content {
+  border-bottom-left-radius: var(--home-radius) !important;
+  border-bottom-right-radius: var(--home-radius) !important;
   overflow: hidden;
+}
+
+/* Preserve radius on :hover / :focus-within — many themes add overflow:visible
+   on hover for zoom effects, which breaks the clip. Lock it down. */
+body.template--index .card:hover,
+body.template--index .card-wrapper:hover,
+body.template--index .card-wrapper:focus-within,
+body.template--index .card:focus-within,
+body.template--custom-made .card:hover,
+body.template--custom-made .card-wrapper:hover {
+  border-radius: var(--home-radius) !important;
+  overflow: hidden !important;
 }
 
 /* Media wrappers — images, ratio containers used throughout the homepage */
@@ -919,15 +1083,39 @@ body.template--custom-made .media > img {
   border-radius: var(--home-radius) !important;
 }
 
-/* Buttons on the homepage — compact radius to match the pill/card radius */
+/* Buttons on the homepage — compact radius to match the pill/card radius.
+   Cover every visual layer (::before / ::after which some Shopify themes
+   use for bg fills) and every state (hover/focus/active) so the radius
+   never disappears under a theme style. */
 body.template--index .button,
 body.template--index .button--primary,
 body.template--index .button--secondary,
+body.template--index .button--tertiary,
 body.template--index button.button,
 body.template--index a.button,
 body.template--index .shopify-payment-button__button,
+body.template--index .btn,
 body.template--custom-made .button,
-body.template--custom-made a.button {
+body.template--custom-made a.button,
+body.template--custom-made .btn {
+  border-radius: var(--home-radius-sm) !important;
+  overflow: hidden;
+}
+body.template--index .button::before,
+body.template--index .button::after,
+body.template--index .btn::before,
+body.template--index .btn::after,
+body.template--custom-made .button::before,
+body.template--custom-made .button::after {
+  border-radius: var(--home-radius-sm) !important;
+}
+body.template--index .button:hover,
+body.template--index .button:focus,
+body.template--index .button:active,
+body.template--index a.button:hover,
+body.template--index .btn:hover,
+body.template--custom-made .button:hover,
+body.template--custom-made .btn:hover {
   border-radius: var(--home-radius-sm) !important;
 }
 
@@ -944,4 +1132,77 @@ body.template--custom-made .field__input {
     --home-radius: 7px;
     --home-radius-sm: 5px;
   }
+}
+
+/* ==========================================================================
+   HERO BUTTONS — match the header pill glass effect exactly.
+   Hero/banner/slideshow CTAs ("top 8 - best sellers", "shop race essentials")
+   get the same translucent-white + wide blur + edge highlight + soft shadow
+   treatment so the whole above-the-fold assembly reads as one design system.
+   Scoped to hero contexts only — regular buttons elsewhere keep their
+   standard solid styling.
+   ========================================================================== */
+
+body.template--index .banner .button,
+body.template--index .banner__content .button,
+body.template--index .banner__buttons .button,
+body.template--index .slideshow .button,
+body.template--index .slideshow__content .button,
+body.template--index .slideshow__text .button,
+body.template--index .slideshow__buttons .button,
+body.template--index .image-banner .button,
+body.template--index .hero .button,
+body.template--index .hero__buttons .button,
+body.template--custom-made .banner .button,
+body.template--custom-made .slideshow .button {
+  /* Glass base — same visual recipe as header.header */
+  background: rgba(255, 255, 255, 0.30) !important;
+  background-color: rgba(255, 255, 255, 0.30) !important;
+  backdrop-filter: blur(70px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(70px) saturate(200%) !important;
+  border: none !important;
+  color: #000 !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+    0 6px 20px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  border-radius: var(--home-radius-sm) !important;
+  text-shadow: none !important;
+  transition: background 0.2s ease !important;
+}
+
+/* Nuke theme's ::before/::after fill layers so the glass shows through */
+body.template--index .banner .button::before,
+body.template--index .banner .button::after,
+body.template--index .slideshow .button::before,
+body.template--index .slideshow .button::after,
+body.template--index .hero .button::before,
+body.template--index .hero .button::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: var(--home-radius-sm) !important;
+}
+
+/* Hover: a touch more opaque so the button lifts off the pill behind it */
+body.template--index .banner .button:hover,
+body.template--index .banner__buttons .button:hover,
+body.template--index .slideshow .button:hover,
+body.template--index .slideshow__content .button:hover,
+body.template--index .hero .button:hover,
+body.template--index .image-banner .button:hover,
+body.template--custom-made .banner .button:hover {
+  background: rgba(255, 255, 255, 0.50) !important;
+  background-color: rgba(255, 255, 255, 0.50) !important;
+  color: #000 !important;
+}
+
+/* Ensure button text/labels render cleanly on the glass */
+body.template--index .banner .button span,
+body.template--index .slideshow .button span,
+body.template--index .hero .button span,
+body.template--index .banner .button {
+  color: #000 !important;
+  font-weight: 500;
 }
