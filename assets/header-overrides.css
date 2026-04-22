@@ -140,30 +140,22 @@
   }
 }
 
-/* Homepage / custom-made hero pages: announcement bar floats over the hero
-   image via FIXED positioning. Both the bar and the pill share the same
-   viewport-relative reference point, which guarantees zero sub-pixel gap
-   between them — the main reason the two pieces drifted apart before was
-   that the pill measured its `top` from `.header-wrapper` (position: relative)
-   while the bar measured from the document origin. Fixed for both removes
-   that mismatch. */
-body.template--index #announcement-bar,
-body.template--custom-made #announcement-bar,
-body[class*="template--"][class*="custom-made"] #announcement-bar {
-  position: fixed;
-  top: 12px;
-  left: 20px;
-  right: 20px;
-  margin: 0;
-  z-index: 50;
+/* ALL PAGES: announcement bar floats fixed over content. Same geometry
+   everywhere so the header assembly behaves identically regardless of
+   template (homepage, product, collection, cart, etc.). */
+#announcement-bar {
+  position: fixed !important;
+  top: 12px !important;
+  left: 20px !important;
+  right: 20px !important;
+  margin: 0 !important;
+  z-index: 50 !important;
 }
 @media screen and (max-width: 989px) {
-  body.template--index #announcement-bar,
-  body.template--custom-made #announcement-bar,
-  body[class*="template--"][class*="custom-made"] #announcement-bar {
-    top: 8px;
-    left: 12px;
-    right: 12px;
+  #announcement-bar {
+    top: 8px !important;
+    left: 12px !important;
+    right: 12px !important;
   }
 }
 
@@ -219,9 +211,10 @@ sticky-header.header-wrapper,
 header.header {
   /* Smaller bottom radius to match EME's tighter corners */
   border-radius: 0 0 8px 8px;
-  /* More transparent + wider blur radius: colour shapes behind dissolve
-     into broad washes instead of being readable through the pill. */
-  background: rgba(255, 255, 255, 0.30) !important;
+  /* Opaque white surface — the blur still widens background colours
+     subtly through the sub-pixel translucency, but the pill reads as a
+     clean solid white panel. */
+  background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(70px) saturate(200%);
   -webkit-backdrop-filter: blur(70px) saturate(200%);
   /* Borderless — no inset highlights or rim. Keep the soft drop shadow
@@ -236,46 +229,44 @@ header.header {
   transition: none !important; /* kill color-swap flicker on scroll */
 }
 
-/* In-flow headers (non-homepage): flush against announcement bar above,
-   same horizontal inset. */
-header.header:not(.absolute) {
-  margin: 0 20px !important;
-}
-
-/* Absolute-positioned header (homepage): margin won't constrain width on an
-   absolute element, so use left/right offsets instead. top is overridden
-   below for homepage/custom-made pages where the announcement bar is also
-   absolute and needs room above the pill. */
+/* ALL PAGES: header pill is fixed, floating, identical geometry.
+   Overrides whether .absolute class is present or not — the goal is
+   homogeneous behaviour across homepage, product pages, collection
+   pages, etc. */
+header.header,
+header.header:not(.absolute),
 header.header.absolute {
-  top: 0 !important;
-  left: 20px !important;
-  right: 20px !important;
-  width: auto !important;
-  margin: 0 !important;
-}
-
-/* On hero pages the announcement bar is ALSO fixed (to kill the white
-   gap above the bg image AND to share the same viewport reference point
-   as the pill). Both MUST use position: fixed so the `top` values measure
-   from the same origin — otherwise the pill drifts down from the bar
-   because .absolute is measured from .header-wrapper (position: relative)
-   while the bar is measured from the viewport. */
-body.template--index header.header.absolute,
-body.template--custom-made header.header.absolute {
   position: fixed !important;
-  top: 44px !important;  /* 12px margin + 32px bar = perfectly flush */
+  top: 44px !important;  /* 12px + 32px bar = flush beneath announcement */
   left: 20px !important;
   right: 20px !important;
   width: auto !important;
   margin: 0 !important;
 }
 @media screen and (max-width: 989px) {
-  body.template--index header.header.absolute,
-  body.template--custom-made header.header.absolute {
-    position: fixed !important;
+  header.header,
+  header.header:not(.absolute),
+  header.header.absolute {
     top: 36px !important;  /* 8px + 28px */
     left: 12px !important;
     right: 12px !important;
+  }
+}
+
+/* Reserve space on non-hero pages so the page content doesn't hide behind
+   the fixed announcement bar + pill. Hero pages (homepage, custom-made)
+   intentionally flow their hero image up to y=0 so the pill overlays it,
+   but every other template needs a proper offset. */
+body:not(.template--index):not(.template--custom-made) #MainContent,
+body:not(.template--index):not(.template--custom-made) main,
+body:not(.template--index):not(.template--custom-made) main#MainContent {
+  padding-top: 110px;
+}
+@media screen and (max-width: 989px) {
+  body:not(.template--index):not(.template--custom-made) #MainContent,
+  body:not(.template--index):not(.template--custom-made) main,
+  body:not(.template--index):not(.template--custom-made) main#MainContent {
+    padding-top: 94px;
   }
 }
 
@@ -284,7 +275,8 @@ body.template--custom-made header.header.absolute {
    as you scroll past the hero. */
 header.header.sticky-navbar {
   border-radius: 0 0 8px 8px;
-  background: rgba(255, 255, 255, 0.30) !important;
+  /* Same opaque white as the default state — no flicker on scroll */
+  background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(70px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(70px) saturate(200%) !important;
   /* Borderless — only the outer drop shadow */
@@ -548,10 +540,12 @@ header.header.sticky-navbar .header__heading-logo,
 
 .search-modal.modal__content {
   position: fixed !important;
-  /* Sits BELOW the full header (announcement bar + pill) instead of
-     replacing the header. This keeps the nav visible while the user
-     searches, and makes the input area its own focused element. */
-  top: 100px !important;
+  /* Sits OVER the header pill — same coordinates as header.header.
+     When the search opens, the search pill replaces the header visually
+     (same top: 44px + same left/right inset) so the user sees the input
+     field exactly where the nav was. Bottom rounds both corners, since
+     there's no announcement bar attached to it like the header. */
+  top: 44px !important;
   left: 20px !important;
   right: 20px !important;
   bottom: auto !important;
@@ -560,7 +554,8 @@ header.header.sticky-navbar .header__heading-logo,
   min-height: 64px !important;
 
   border-radius: 8px !important;
-  background: rgba(255, 255, 255, 0.30) !important;
+  /* Same opaque white surface as the header pill */
+  background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(70px) saturate(200%);
   -webkit-backdrop-filter: blur(70px) saturate(200%);
   /* Borderless — only the soft drop shadow lifts the pill. No inset rim. */
@@ -574,10 +569,10 @@ header.header.sticky-navbar .header__heading-logo,
   z-index: 200;
 }
 
-/* Homepage and custom-made share the same header geometry — same top */
+/* All pages share the same header geometry — search lands right over the pill */
 body.template--index .search-modal.modal__content,
 body.template--custom-made .search-modal.modal__content {
-  top: 112px !important;
+  top: 44px !important;
 }
 
 /* Inner wrapper — flex row with padding so the input frame has breathing room
@@ -794,7 +789,8 @@ body.template--custom-made .search-modal.modal__content {
 
 @media screen and (max-width: 989px) {
   .search-modal.modal__content {
-    top: 88px !important;
+    /* Same top as header.header on mobile (36px) — sits directly over the pill */
+    top: 36px !important;
     left: 12px !important;
     right: 12px !important;
     border-radius: 7px !important;
@@ -802,7 +798,7 @@ body.template--custom-made .search-modal.modal__content {
   }
   body.template--index .search-modal.modal__content,
   body.template--custom-made .search-modal.modal__content {
-    top: 96px !important;
+    top: 36px !important;
   }
   .search-modal__content {
     min-height: 56px;
@@ -1033,23 +1029,42 @@ body.template--custom-made {
   --home-radius-sm: 6px;
 }
 
-/* Slideshow / image banner / video hero — all the big hero sections.
-   Shopify Dawn-derived themes use these common class names. */
+/* Hero banner / slideshow / image-banner / video hero — NO RADIUS.
+   The hero reaches the full viewport edges (square corners) so the
+   header pill reads as floating over an unbroken hero image. Image-with-text
+   further down the page keeps its own radius via the generic media rule. */
 body.template--index .slideshow,
 body.template--index .slideshow__slide,
 body.template--index .slideshow__media,
 body.template--index .banner,
 body.template--index .banner__media,
-body.template--index .image-with-text__media,
 body.template--index .video-section,
 body.template--index .video-section__media,
 body.template--index .image-banner,
+body.template--index .image-banner__media,
 body.template--custom-made .slideshow,
 body.template--custom-made .slideshow__slide,
+body.template--custom-made .slideshow__media,
 body.template--custom-made .banner,
-body.template--custom-made .banner__media {
-  border-radius: var(--home-radius) !important;
-  overflow: hidden;
+body.template--custom-made .banner__media,
+body.template--custom-made .image-banner,
+body.template--custom-made .image-banner__media {
+  border-radius: 0 !important;
+}
+/* Also null the radius on any inner media/img of these hero sections so the
+   theme's own rules can't reintroduce rounded corners. */
+body.template--index .slideshow .media,
+body.template--index .slideshow img,
+body.template--index .banner .media,
+body.template--index .banner img,
+body.template--index .image-banner .media,
+body.template--index .image-banner img,
+body.template--index .video-section .media,
+body.template--custom-made .slideshow .media,
+body.template--custom-made .slideshow img,
+body.template--custom-made .banner .media,
+body.template--custom-made .banner img {
+  border-radius: 0 !important;
 }
 
 /* Cards, tiles and collection items on the homepage.
@@ -1246,9 +1261,9 @@ body.template--index .hero .button,
 body.template--index .hero__buttons .button,
 body.template--custom-made .banner .button,
 body.template--custom-made .slideshow .button {
-  /* Glass base — same visual recipe as header.header */
-  background: rgba(255, 255, 255, 0.30) !important;
-  background-color: rgba(255, 255, 255, 0.30) !important;
+  /* Opaque white surface — same as the header pill */
+  background: rgba(255, 255, 255, 0.95) !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(70px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(70px) saturate(200%) !important;
   /* Borderless — no rim, no inset highlight. Outer drop shadow only,
@@ -1256,7 +1271,7 @@ body.template--custom-made .slideshow .button {
      design system. */
   border: none !important;
   outline: none !important;
-  color: #fff !important;
+  color: #000 !important;
   box-shadow:
     0 6px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.05) !important;
@@ -1265,7 +1280,7 @@ body.template--custom-made .slideshow .button {
   transition: background 0.2s ease !important;
 }
 
-/* Nuke theme's ::before/::after fill layers so the glass shows through */
+/* Nuke theme's ::before/::after fill layers so the white bg shows through */
 body.template--index .banner .button::before,
 body.template--index .banner .button::after,
 body.template--index .slideshow .button::before,
@@ -1279,7 +1294,7 @@ body.template--index .hero .button::after {
   border-radius: var(--home-radius-sm) !important;
 }
 
-/* Hover: a touch more opaque so the button lifts off the pill behind it */
+/* Hover: fully opaque white — subtle lift, text stays black */
 body.template--index .banner .button:hover,
 body.template--index .banner__buttons .button:hover,
 body.template--index .slideshow .button:hover,
@@ -1287,16 +1302,16 @@ body.template--index .slideshow__content .button:hover,
 body.template--index .hero .button:hover,
 body.template--index .image-banner .button:hover,
 body.template--custom-made .banner .button:hover {
-  background: rgba(255, 255, 255, 0.45) !important;
-  background-color: rgba(255, 255, 255, 0.45) !important;
-  color: #fff !important;
+  background: rgba(255, 255, 255, 1) !important;
+  background-color: rgba(255, 255, 255, 1) !important;
+  color: #000 !important;
   border: none !important;
   box-shadow:
-    0 6px 20px rgba(0, 0, 0, 0.08),
-    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* White button text across every nested layer (Shopify sometimes wraps the
+/* Black button text across every nested layer (Shopify sometimes wraps the
    label in span/strong/em) */
 body.template--index .banner .button,
 body.template--index .banner .button span,
@@ -1307,6 +1322,6 @@ body.template--index .hero .button,
 body.template--index .hero .button span,
 body.template--index .image-banner .button,
 body.template--index .image-banner .button span {
-  color: #fff !important;
+  color: #000 !important;
   font-weight: 500;
 }
