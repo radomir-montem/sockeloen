@@ -208,20 +208,36 @@ header localization-selector,
   z-index: 200;
 }
 
+/* Language label — just text, no button background.
+   Matches icon line thickness via font-weight 400 and icon height via
+   matching the header__icon padding (8px 10px). */
 .localization-label {
   display: flex;
   align-items: center;
   gap: 5px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.04em;
   cursor: pointer;
   white-space: nowrap;
-  padding: 4px 10px;
-  border-radius: 20px;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  line-height: 1;
 }
 .localization-label:hover {
-  background: rgba(0, 0, 0, 0.06);
+  background: transparent !important;
+  opacity: 0.6;
+}
+
+/* Give the selector container the same padding as .header__icon so the
+   click area aligns in height/width with the other symbols, even though
+   only the text itself is the label (no button background). */
+header localization-selector,
+.header localization-selector,
+.header__icons localization-selector {
+  padding: 8px 10px;
 }
 
 /* Hide old SVG arrow; use CSS chevron */
@@ -237,8 +253,13 @@ header localization-selector,
   opacity: 0.7;
 }
 
-/* Dropdown panel */
+/* Dropdown panel — ALWAYS opens downward (top: 100%), never upward.
+   !important on top/bottom overrides Tailwind's top-full / bottom-full AND
+   any inline style the localization-selector.js might set. */
 .localization-list {
+  top: 100% !important;
+  bottom: auto !important;
+  margin-top: 8px;
   border-radius: 14px !important;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12) !important;
   border: 1px solid rgba(0, 0, 0, 0.06) !important;
@@ -256,16 +277,11 @@ header localization-selector,
 }
 .localization-item:hover a { opacity: 0.55; }
 
-/* Mobile drawer: override bottom-full → open downward */
+/* Mobile drawer: ensure overflow isn't clipping the downward dropdown */
 @media screen and (max-width: 989px) {
   .menu-drawer localization-selector {
     overflow: visible !important;
     position: relative;
-  }
-  .menu-drawer .localization-list {
-    top: 100% !important;
-    bottom: auto !important;
-    z-index: 9999 !important;
   }
 }
 
