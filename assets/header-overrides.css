@@ -30,9 +30,19 @@
   background-image: none !important;
   backdrop-filter: blur(40px) saturate(200%);
   -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border-radius: 12px 12px 0 0 !important;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
-  min-height: 46px;  /* a touch taller for breathing room */
+  /* Smaller, tighter radius — matches EME's compact corner style.
+     Top corners rounded, bottom flush against the pill beneath. */
+  border-radius: 8px 8px 0 0 !important;
+  /* Directional edge highlight — top + sides only, so the seam with the
+     pill below has no double-line effect and the two pieces read as one. */
+  box-shadow:
+    inset 1px 0 0 0 rgba(255, 255, 255, 0.18),
+    inset -1px 0 0 0 rgba(255, 255, 255, 0.18),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
+  /* Fixed height (not min-height) — guarantees the pill below can sit exactly
+     flush against it with no sub-pixel gap. Reduced from 46px → 32px for a
+     tighter, less bulky notification strip. */
+  height: 32px;
   min-width: 0;
   align-items: center;
   justify-content: center;
@@ -58,12 +68,15 @@
 
 /* Long-text handling — truncate with ellipsis so a long message never
    breaks the integrated pill layout. min-width: 0 on every flex ancestor
-   is required so the p can actually shrink and trigger the ellipsis. */
+   is required so the p can actually shrink and trigger the ellipsis.
+   Padding tuned so the link fills the full 32px bar height without forcing
+   it taller (height + padding must not exceed the bar). */
 .announcement-bar > a,
 .announcement-bar__link {
-  padding: 9px 20px;
+  padding: 0 20px;
+  height: 100%;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.2;
   max-width: 100%;
   min-width: 0;
@@ -71,6 +84,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Kill the theme's hover styles — no bg tint, no arrow shift, no opacity
+     change. The notification strip stays static on hover. */
+  background: transparent !important;
+  transition: none !important;
+}
+.announcement-bar > a:hover,
+.announcement-bar__link:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #fff !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+}
+/* Kill the animate-arrow transform on the inline icon */
+.announcement-bar .animate-arrow .icon-arrow,
+.announcement-bar .animate-arrow:hover .icon-arrow,
+.announcement-bar .animate-arrow .icon-arrow path,
+.announcement-bar .animate-arrow:hover .icon-arrow path {
+  transform: none !important;
+  transition: none !important;
 }
 .announcement-bar .page-width {
   max-width: 100%;
@@ -95,16 +128,16 @@
   }
   #announcement-bar .announcement-bar,
   #announcement-bar .announcement-bar.gradient {
-    border-radius: 10px 10px 0 0 !important;
-    min-height: 40px;
+    border-radius: 7px 7px 0 0 !important;
+    height: 28px;
   }
   .announcement-bar > a,
   .announcement-bar__link {
-    font-size: 11px;
-    padding: 10px 14px;
+    font-size: 10px;
+    padding: 0 14px;
   }
   #announcement-bar .announcement-bar__message {
-    font-size: 11px;
+    font-size: 10px;
   }
 }
 
@@ -182,12 +215,17 @@ sticky-header.header-wrapper,
    - Drop shadow reads as a soft lift on white backgrounds during scroll;
      on the hero image it's barely perceptible, exactly like EME. */
 header.header {
-  border-radius: 0 0 12px 12px;
+  /* Smaller bottom radius to match EME's tighter corners */
+  border-radius: 0 0 8px 8px;
   background: rgba(255, 255, 255, 0.45) !important;
   backdrop-filter: blur(40px) saturate(200%);
   -webkit-backdrop-filter: blur(40px) saturate(200%);
+  /* Directional inset — bottom + sides only. Top has no highlight so the
+     seam with the announcement bar above reads as one continuous surface. */
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+    inset 1px 0 0 0 rgba(255, 255, 255, 0.30),
+    inset -1px 0 0 0 rgba(255, 255, 255, 0.30),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.05);
   padding-top: 6px;
@@ -215,15 +253,16 @@ header.header.absolute {
 }
 
 /* On hero pages the announcement bar is ALSO absolute (to kill the white
-   gap above the bg image). The pill must drop below its full height. */
+   gap above the bg image). The pill must drop EXACTLY below its full height
+   so the two pieces are flush — no sub-pixel gap between them. */
 body.template--index header.header.absolute,
 body.template--custom-made header.header.absolute {
-  top: 58px !important;  /* 12px margin + 46px bar */
+  top: 44px !important;  /* 12px margin + 32px bar = perfectly flush */
 }
 @media screen and (max-width: 989px) {
   body.template--index header.header.absolute,
   body.template--custom-made header.header.absolute {
-    top: 48px !important;  /* 8px + 40px */
+    top: 36px !important;  /* 8px + 28px */
   }
 }
 
@@ -231,11 +270,14 @@ body.template--custom-made header.header.absolute {
    Shadow is preserved here so the pill reads as lifted over white content
    as you scroll past the hero. */
 header.header.sticky-navbar {
+  border-radius: 0 0 8px 8px;
   background: rgba(255, 255, 255, 0.45) !important;
   backdrop-filter: blur(40px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+    inset 1px 0 0 0 rgba(255, 255, 255, 0.30),
+    inset -1px 0 0 0 rgba(255, 255, 255, 0.30),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.05) !important;
 }
@@ -439,7 +481,7 @@ header.header.sticky-navbar .header__heading-logo,
   top: 100% !important;
   bottom: auto !important;
   margin-top: 8px;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   background: rgba(255, 255, 255, 0.85) !important;
   background-color: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: blur(40px) saturate(200%);
@@ -455,7 +497,7 @@ header.header.sticky-navbar .header__heading-logo,
   padding: 6px !important;
 }
 .localization-item {
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 0 !important;
   margin: 2px 0;
 }
@@ -467,7 +509,7 @@ header.header.sticky-navbar .header__heading-logo,
   letter-spacing: 0.03em;
   display: block;
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 .localization-item:hover a {
   opacity: 1;
@@ -499,7 +541,7 @@ header.header.sticky-navbar .header__heading-logo,
   height: auto !important;
   min-height: 56px !important;
 
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   background: rgba(255, 255, 255, 0.45) !important;
   backdrop-filter: blur(40px) saturate(200%);
   -webkit-backdrop-filter: blur(40px) saturate(200%);
@@ -516,13 +558,13 @@ header.header.sticky-navbar .header__heading-logo,
    bar so it lines up with where the header pill normally sits. */
 body.template--index .search-modal.modal__content,
 body.template--custom-made .search-modal.modal__content {
-  top: 58px !important;
+  top: 44px !important;
 }
 
 .search-modal__content {
   padding: 8px 56px 8px 20px !important;
   min-height: 56px;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 /* Input: transparent, black text, no borders/shadows from the theme. */
@@ -575,7 +617,7 @@ body.template--custom-made .search-modal.modal__content {
 /* Predictive search results panel — floats below the pill, same style */
 .search-modal .predictive-search {
   margin-top: 12px;
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.92) !important;
   backdrop-filter: blur(40px) saturate(200%);
   -webkit-backdrop-filter: blur(40px) saturate(200%);
@@ -603,17 +645,17 @@ body.template--custom-made .search-modal.modal__content {
   .search-modal.modal__content {
     left: 12px !important;
     right: 12px !important;
-    border-radius: 10px !important;
+    border-radius: 7px !important;
     min-height: 48px !important;
   }
   body.template--index .search-modal.modal__content,
   body.template--custom-made .search-modal.modal__content {
-    top: 48px !important;
+    top: 36px !important;
   }
   .search-modal__content {
     padding: 6px 48px 6px 16px !important;
     min-height: 48px;
-    border-radius: 10px;
+    border-radius: 7px;
   }
   .search-modal .field__input,
   .search-modal .search__input {
@@ -642,17 +684,17 @@ body.template--custom-made .search-modal.modal__content {
 .js .menu-drawer,
 .menu-drawer {
   position: fixed !important;
-  top: 108px !important;
+  top: 94px !important;
   left: 12px !important;
   right: 12px !important;
   width: auto !important;
   max-width: 360px !important;
   height: auto !important;
-  max-height: calc(100vh - 120px) !important;
+  max-height: calc(100vh - 110px) !important;
 
   padding: 10px !important;
   border: none !important;
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   background: rgba(255, 255, 255, 0.85) !important;
   background-color: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: blur(40px) saturate(200%);
@@ -692,7 +734,7 @@ body.template--custom-made .search-modal.modal__content {
 }
 .menu-drawer__menu-item {
   padding: 10px 12px !important;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 14px;
   letter-spacing: 0.01em;
   border-bottom: none !important;
@@ -713,30 +755,31 @@ body.template--custom-made .search-modal.modal__content {
 /* Drawer language selector — match the header language dropdown styling */
 .menu-drawer localization-selector .localization-label {
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
-  border-radius: 10px !important;
+  border-radius: 7px !important;
   padding: 10px 14px !important;
   background: rgba(255, 255, 255, 0.5) !important;
 }
 
-/* On hero pages the header assembly is taller (48px + announcement) — drop
-   the drawer lower so it clears the pill. */
+/* On hero pages the header assembly is (32px bar + 12px + pill height) —
+   drop the drawer below the pill. */
 body.template--index .menu-drawer,
 body.template--custom-made .menu-drawer {
-  top: 108px !important;
+  top: 94px !important;
 }
 
 @media screen and (max-width: 989px) {
   .js .menu-drawer,
   .menu-drawer {
-    top: 104px !important;
+    top: 88px !important;
     left: 12px !important;
     right: 12px !important;
     max-width: none !important;
     width: calc(100vw - 24px) !important;
+    border-radius: 7px !important;
   }
   body.template--index .menu-drawer,
   body.template--custom-made .menu-drawer {
-    top: 104px !important;
+    top: 88px !important;
   }
 }
 
@@ -780,7 +823,7 @@ menu-drawer > details[open] > summary::before {
      same horizontal inset, bottom-rounded only. */
   header.header:not(.absolute) {
     margin: 0 12px !important;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 7px 7px;
   }
 
   /* Absolute mobile header (homepage) — same treatment. */
@@ -789,7 +832,7 @@ menu-drawer > details[open] > summary::before {
     left: 12px !important;
     right: 12px !important;
     margin: 0 !important;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 7px 7px;
   }
 
   /* True-center the logo on mobile.
@@ -811,5 +854,94 @@ menu-drawer > details[open] > summary::before {
   header.header > .header__heading,
   header.header > a.header__heading-link {
     flex: 0 0 auto;
+  }
+}
+
+/* ==========================================================================
+   HOMEPAGE-WIDE CORNER RADIUS — match EME's compact 8px / 7px system.
+   Applies to hero, media, product cards, buttons, and images across the
+   index and custom-made templates so the whole page reads as a unified
+   design language. Scoped to those templates to avoid affecting product
+   pages, collection pages, etc., which have their own established styling.
+   ========================================================================== */
+
+body.template--index,
+body.template--custom-made {
+  /* Expose the radius as a CSS variable so child sections can opt-in. */
+  --home-radius: 8px;
+  --home-radius-sm: 6px;
+}
+
+/* Slideshow / image banner / video hero — all the big hero sections.
+   Shopify Dawn-derived themes use these common class names. */
+body.template--index .slideshow,
+body.template--index .slideshow__slide,
+body.template--index .slideshow__media,
+body.template--index .banner,
+body.template--index .banner__media,
+body.template--index .image-with-text__media,
+body.template--index .video-section,
+body.template--index .video-section__media,
+body.template--index .image-banner,
+body.template--custom-made .slideshow,
+body.template--custom-made .slideshow__slide,
+body.template--custom-made .banner,
+body.template--custom-made .banner__media {
+  border-radius: var(--home-radius) !important;
+  overflow: hidden;
+}
+
+/* Cards, tiles and collection items on the homepage */
+body.template--index .card,
+body.template--index .card-wrapper,
+body.template--index .card__media,
+body.template--index .card__inner,
+body.template--index .collection-list__item,
+body.template--index .collection__item,
+body.template--index .product-card,
+body.template--index .product-card-wrapper,
+body.template--index .grid__item .card,
+body.template--custom-made .card,
+body.template--custom-made .card-wrapper,
+body.template--custom-made .card__media {
+  border-radius: var(--home-radius) !important;
+  overflow: hidden;
+}
+
+/* Media wrappers — images, ratio containers used throughout the homepage */
+body.template--index .media,
+body.template--index .media--transparent,
+body.template--index .media > img,
+body.template--index .media picture img,
+body.template--index .rich-text__image img,
+body.template--custom-made .media,
+body.template--custom-made .media > img {
+  border-radius: var(--home-radius) !important;
+}
+
+/* Buttons on the homepage — compact radius to match the pill/card radius */
+body.template--index .button,
+body.template--index .button--primary,
+body.template--index .button--secondary,
+body.template--index button.button,
+body.template--index a.button,
+body.template--index .shopify-payment-button__button,
+body.template--custom-made .button,
+body.template--custom-made a.button {
+  border-radius: var(--home-radius-sm) !important;
+}
+
+/* Newsletter / form inputs on the homepage */
+body.template--index .field__input,
+body.template--index .newsletter-form__field-wrapper,
+body.template--custom-made .field__input {
+  border-radius: var(--home-radius-sm) !important;
+}
+
+@media screen and (max-width: 989px) {
+  body.template--index,
+  body.template--custom-made {
+    --home-radius: 7px;
+    --home-radius-sm: 5px;
   }
 }
