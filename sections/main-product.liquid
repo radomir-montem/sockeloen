@@ -646,7 +646,7 @@
                               {% if renderComingSoon %}
                                 id="coming-soon-product"
                               {% endif %}
-                              class="product-form__submit bg-black font-medium tracking-[0.02em] uppercase button button--full-width {% if block.settings.show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+                              class="product-form__submit bg-black font-medium tracking-[0.02em] uppercase button button--full-width button--primary"
                               {% if product.selected_or_first_available_variant.available == false or renderComingSoon %}
                                 disabled
                               {% endif %}
@@ -709,6 +709,8 @@
                     </pickup-availability>
                   </div>
                 </div>
+                {%- comment -%} Dynamic checkout buttons disabled {%- endcomment -%}
+                {%- if false -%}
                 <div class="w-full mt-6">
                   {%- form 'product',
                     product,
@@ -730,14 +732,10 @@
                           {{ form | payment_button }}
                         </div>
                       </div>
-                      {% comment %}
-                        {% if additional_checkout_buttons %}
-                          {{ content_for_additional_checkout_buttons }}
-                        {% endif %}
-                      {% endcomment %}
                     </div>
                   {%- endform -%}
                 </div>
+                {%- endif -%}
                 <a
                   style="display: none;"
                   id="out-of-stock"
