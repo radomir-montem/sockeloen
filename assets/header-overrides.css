@@ -2,7 +2,14 @@
    Global Header Overrides
    ========================================================================== */
 
-/* Announcement bar */
+/* Announcement bar — hardcoded orange so dev theme matches live */
+#announcement-bar .announcement-bar {
+  background-color: #F76503 !important;
+}
+#announcement-bar .announcement-bar__message,
+#announcement-bar .announcement-bar a {
+  color: #fff !important;
+}
 .announcement-bar a {
   padding: 14px 0;
   font-weight: 500;
@@ -17,47 +24,55 @@
    FLOATING PILL HEADER — EME Studio style
    ========================================================================== */
 
-/* Section: zero out the bottom margin so the hero slides up behind the header */
+/* Section: zero out margin so the hero image slides up directly behind header */
 .section-header {
   margin-bottom: 0 !important;
 }
 
-/* The header wrapper becomes the floating pill */
+/* Wrapper: fully transparent — the INNER header element is the visible pill.
+   This prevents the wrapper's margin from creating a white gap in the flow. */
 .header-wrapper {
-  margin: 10px 16px !important;
-  border-radius: 60px !important;
-  background: rgba(255, 255, 255, 0.10) !important;
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
-/* Remove the theme's default bottom border */
-.header-wrapper--border-bottom {
-  border-bottom: none !important;
-}
-
-/* Inner header — no extra padding since the pill wrapper adds visual space */
+/* THE PILL — on the inner header element.
+   For absolute (homepage) headers, margin doesn't create flow gaps.
+   For in-flow (other pages) headers, it creates a floating indent. */
 header.header {
+  margin: 8px 16px;
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-/* When scrolled (sticky-navbar class added by JS) — more opaque white pill */
-header.header.sticky-navbar ~ .header-wrapper,
-.shopify-section-header-sticky .header-wrapper {
-  background: rgba(255, 255, 255, 0.82) !important;
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08) !important;
+/* Override the sticky-navbar white background — keep blur always */
+header.header.sticky-navbar {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(32px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+}
+
+/* Remove border-bottom separator line */
+.header-wrapper--border-bottom {
+  border-bottom: none !important;
 }
 
 /* ==========================================================================
    Text & icon colours
    ========================================================================== */
 
-/* Default: black text for nav items */
+/* Default: black text */
 .header__menu-item span,
 .header__menu-item.link-only span {
   display: inline-block;
@@ -70,51 +85,30 @@ header.header.sticky-navbar ~ .header-wrapper,
   text-transform: uppercase;
 }
 
-/* Homepage (absolute header over hero): white text */
+/* Homepage transparent header: white text/icons over hero */
 header.header.absolute .header__menu-item span,
 header.header.absolute .header__menu-item.link-only span {
   color: #fff !important;
 }
+header.header.absolute .menu-arrow-down { color: #fff; }
+header.header.absolute .header__icon .icon path { fill: #fff; }
+header.header.absolute .localization-label { color: #fff !important; }
+header.header.absolute .header__icon--cart .icon path { fill: #fff; stroke: #fff; }
 
-header.header.absolute .menu-arrow-down {
-  color: #fff;
-}
-
-header.header.absolute .header__icon,
-header.header.absolute .header__icon .icon path {
-  color: #fff;
-  fill: #fff;
-}
-
-header.header.absolute .localization-label {
-  color: #fff !important;
-}
-
-/* Homepage sticky: revert to black once scrolled */
+/* Homepage sticky: revert icons/text to black after scroll */
 header.header.sticky-navbar .header__menu-item span,
 header.header.sticky-navbar .header__menu-item.link-only span {
   color: #000 !important;
 }
-
-header.header.sticky-navbar .menu-arrow-down {
-  color: #000;
-}
-
-header.header.sticky-navbar .header__icon,
-header.header.sticky-navbar .header__icon .icon path {
-  color: #000;
-  fill: #000;
-}
-
-header.header.sticky-navbar .localization-label {
-  color: #000 !important;
-}
+header.header.sticky-navbar .menu-arrow-down { color: #000; }
+header.header.sticky-navbar .header__icon .icon path { fill: #000; }
+header.header.sticky-navbar .localization-label { color: #000 !important; }
 
 /* ==========================================================================
-   Language selector — desktop pill style (EN ▼)
+   Language selector — desktop (EN ▼ style)
    ========================================================================== */
 
-/* Un-hide the language selector */
+/* Show language selector on desktop */
 header localization-selector,
 .header localization-selector,
 .header__icons localization-selector {
@@ -125,14 +119,14 @@ header localization-selector,
 .localization-label {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   cursor: pointer;
   white-space: nowrap;
   color: inherit;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: 20px;
   transition: background 0.15s;
 }
@@ -141,26 +135,27 @@ header localization-selector,
   background: rgba(0, 0, 0, 0.06);
 }
 
-/* Dropdown arrow next to language label */
+/* Small chevron next to language code */
+.localization-label svg { display: none; } /* hide old arrow svg if present */
 .localization-label::after {
   content: '';
   display: inline-block;
-  width: 7px;
-  height: 4px;
-  background-image: url("data:image/svg+xml,%3Csvg width='7' height='4' viewBox='0 0 7 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.5 0.5L3.5 3.5L6.5 0.5' stroke='currentColor' stroke-linecap='round'/%3E%3C/svg%3E");
+  width: 8px;
+  height: 5px;
+  background-image: url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L4 4L7 1' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: contain;
-  margin-left: 2px;
   opacity: 0.7;
 }
 
-/* Dropdown list */
+/* Dropdown */
 .localization-list {
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  min-width: 160px;
-  z-index: 200;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  min-width: 120px;
+  overflow: hidden;
+  z-index: 300;
 }
 
 .localization-item a {
@@ -168,54 +163,34 @@ header localization-selector,
   font-weight: 400;
   color: #000;
   text-decoration: none;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
+  display: block;
 }
 
-.localization-item a:hover {
-  opacity: 0.6;
-}
+.localization-item:hover a { opacity: 0.55; }
 
 /* ==========================================================================
    Icons
    ========================================================================== */
 
-/* Thicker icon lines */
 .header__icon .icon path {
   stroke: currentColor;
   stroke-width: 0.6px;
 }
-
 #icon-search path {
   stroke: currentColor;
   stroke-width: 0.6px;
 }
-
-/* Cart icon sizing */
-.header__icon--cart .icon {
-  width: 2rem;
-  height: 2rem;
-}
-
-.header__icon--cart {
-  margin-right: 4px;
-}
-
-/* Icon tap area */
-.header__icon {
-  padding: 8px 10px;
-}
-
-.header__icons {
-  gap: 2px;
-}
+.header__icon--cart .icon { width: 2rem; height: 2rem; }
+.header__icon--cart { margin-right: 4px; }
+.header__icon { padding: 8px 10px; }
+.header__icons { gap: 2px; }
 
 /* ==========================================================================
-   Dropdown arrow on menu items
+   Dropdown arrow on menu items with sublinks
    ========================================================================== */
 
-.menu-arrow-down {
-  display: none;
-}
+.menu-arrow-down { display: none; }
 
 @media screen and (min-width: 990px) {
   .menu-arrow-down {
@@ -228,17 +203,12 @@ header localization-selector,
 }
 
 /* ==========================================================================
-   Mobile header pill adjustments
+   Mobile adjustments
    ========================================================================== */
 
 @media screen and (max-width: 989px) {
-  .header-wrapper {
-    margin: 8px 10px !important;
-    border-radius: 40px !important;
-  }
-
   header.header {
-    padding-top: 6px;
-    padding-bottom: 6px;
+    margin: 6px 10px;
+    border-radius: 40px;
   }
 }
