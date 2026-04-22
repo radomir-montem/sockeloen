@@ -548,46 +548,51 @@ header.header.sticky-navbar .header__heading-logo,
 
 .search-modal.modal__content {
   position: fixed !important;
-  top: 12px !important;
+  /* Sits BELOW the full header (announcement bar + pill) instead of
+     replacing the header. This keeps the nav visible while the user
+     searches, and makes the input area its own focused element. */
+  top: 100px !important;
   left: 20px !important;
   right: 20px !important;
   bottom: auto !important;
   width: auto !important;
   height: auto !important;
-  min-height: 52px !important;
+  min-height: 64px !important;
 
   border-radius: 8px !important;
   background: rgba(255, 255, 255, 0.30) !important;
   backdrop-filter: blur(70px) saturate(200%);
   -webkit-backdrop-filter: blur(70px) saturate(200%);
+  /* Borderless — only the soft drop shadow lifts the pill. No inset rim. */
+  border: none !important;
+  border-bottom: none !important;
+  outline: none !important;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
     0 6px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.05) !important;
   overflow: visible !important;
   z-index: 200;
-  border: none !important;
-  border-bottom: none !important;
 }
 
-/* On hero pages the search pill drops below the (fixed) announcement
-   bar so it lines up with where the header pill normally sits. */
+/* Homepage and custom-made share the same header geometry — same top */
 body.template--index .search-modal.modal__content,
 body.template--custom-made .search-modal.modal__content {
-  top: 44px !important;
+  top: 112px !important;
 }
 
-/* Inner wrapper — flex row, no padding (children manage their own spacing) */
+/* Inner wrapper — flex row with padding so the input frame has breathing room
+   against the pill's inner edge. Close button sits outside the input frame. */
 .search-modal__content {
   display: flex !important;
   align-items: center !important;
-  padding: 0 !important;
-  min-height: 52px;
+  padding: 10px 10px !important;
+  min-height: 64px;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 8px !important;
   position: relative;
+  gap: 6px;
 }
 
 /* The form fills the row */
@@ -604,23 +609,34 @@ body.template--custom-made .search-modal.modal__content {
   box-shadow: none !important;
 }
 
-/* Kill the visible sub-rectangle (.field default has a border/outline) and
-   make it a flat flex row: magnifier on left, input fills the rest. */
+/* The .field IS the visible input frame.
+   CRO: a clear tinted rectangle inside the glass pill tells the user "this
+   is where you type". Subtle darkening keeps it on-brand with the glass,
+   but the contrast is strong enough to read as an input field.
+   Layout: [magnifier] [input .........]  (via row-reverse, magnifier = last
+   DOM child, rendered first visually). */
 .search-modal .field {
   flex: 1;
   min-width: 0;
   display: flex !important;
-  flex-direction: row-reverse !important;  /* magnifier (last child) on left */
+  flex-direction: row-reverse !important;
   align-items: center !important;
-  background: transparent !important;
-  background-color: transparent !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+  background-color: rgba(0, 0, 0, 0.06) !important;
   border: none !important;
+  outline: none !important;
   box-shadow: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
+  border-radius: 6px !important;
+  padding: 0 6px 0 0 !important;
   margin: 0 !important;
-  min-height: 52px;
+  height: 44px;
+  min-height: 44px;
   position: relative;
+  transition: background 0.15s ease;
+}
+.search-modal .field:focus-within {
+  background: rgba(0, 0, 0, 0.09) !important;
+  background-color: rgba(0, 0, 0, 0.09) !important;
 }
 .search-modal .field::before,
 .search-modal .field::after {
@@ -628,7 +644,7 @@ body.template--custom-made .search-modal.modal__content {
   content: none !important;
 }
 
-/* Input: transparent, black text, fills remaining row space */
+/* Input: transparent (the .field provides the frame), bolder text for CRO */
 .search-modal .field__input,
 .search-modal .search__input {
   flex: 1;
@@ -640,11 +656,11 @@ body.template--custom-made .search-modal.modal__content {
   outline: none !important;
   color: #000 !important;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.01em;
-  padding: 0 12px 0 4px !important;
-  height: 52px;
-  line-height: 52px;
+  padding: 0 6px 0 0 !important;
+  height: 44px;
+  line-height: 44px;
 }
 .search-modal .field__input:focus,
 .search-modal .search__input:focus {
@@ -654,21 +670,21 @@ body.template--custom-made .search-modal.modal__content {
 }
 .search-modal .field__input::placeholder,
 .search-modal .search__input::placeholder {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: 500;
 }
 
-/* Float-label: position as a simple placeholder (vertically centered, next
-   to the magnifier). Hide it once the user starts typing or focuses in. */
+/* Float-label styled as a visible placeholder so users clearly see the CTA */
 .search-modal .field__label {
   position: absolute !important;
-  left: 52px !important;
+  left: 44px !important;  /* after magnifier */
   top: 50% !important;
   transform: translateY(-50%) !important;
   margin: 0 !important;
   padding: 0 !important;
   font-size: 15px !important;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.5) !important;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6) !important;
   background: transparent !important;
   pointer-events: none;
   transition: opacity 0.15s ease;
@@ -680,8 +696,7 @@ body.template--custom-made .search-modal.modal__content {
   opacity: 0;
 }
 
-/* Magnifier submit button — inline flex child on the LEFT (flex-direction
-   row-reverse makes .field render it first visually). */
+/* Magnifier — sits inside the tinted input frame on the LEFT */
 .search-modal .search__button,
 .search-modal .field__button {
   position: static !important;
@@ -693,12 +708,13 @@ body.template--custom-made .search-modal.modal__content {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 44px;
-  height: 52px;
+  width: 40px;
+  height: 44px;
   padding: 0 !important;
-  margin: 0 0 0 4px !important;
+  margin: 0 !important;
   background: transparent !important;
   border: none !important;
+  outline: none !important;
   color: #000 !important;
   cursor: pointer;
 }
@@ -714,28 +730,29 @@ body.template--custom-made .search-modal.modal__content {
   stroke: #000 !important;
 }
 
-/* Close button — flush right, same height as the row */
+/* Close button — OUTSIDE the input frame, on the far right of the pill */
 .search-modal .modal__close-button {
   position: static !important;
   flex: 0 0 auto;
-  width: 44px;
-  height: 52px;
+  width: 40px;
+  height: 44px;
   right: auto !important;
   top: auto !important;
   transform: none !important;
-  margin: 0 4px 0 0 !important;
+  margin: 0 !important;
   padding: 0 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   background: transparent !important;
   border: none !important;
+  outline: none !important;
   color: #000 !important;
   border-radius: 6px;
   transition: background 0.15s ease;
 }
 .search-modal .modal__close-button:hover {
-  background: rgba(0, 0, 0, 0.05) !important;
+  background: rgba(0, 0, 0, 0.08) !important;
 }
 .search-modal .modal__close-button .icon {
   color: #000 !important;
@@ -747,17 +764,17 @@ body.template--custom-made .search-modal.modal__content {
   stroke: #000 !important;
 }
 
-/* Predictive search results panel — floats below the pill, same style */
+/* Predictive search results panel — floats below the pill, same style.
+   Borderless: no inset rim, only the outer shadow. */
 .search-modal .predictive-search {
   margin-top: 12px;
   border-radius: 8px;
-  /* Predictive-search needs readable text — keep fairly opaque but widen blur */
   background: rgba(255, 255, 255, 0.82) !important;
   backdrop-filter: blur(70px) saturate(200%);
   -webkit-backdrop-filter: blur(70px) saturate(200%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
-    0 8px 24px rgba(0, 0, 0, 0.10);
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10) !important;
   overflow: hidden;
 }
 
@@ -777,40 +794,44 @@ body.template--custom-made .search-modal.modal__content {
 
 @media screen and (max-width: 989px) {
   .search-modal.modal__content {
+    top: 88px !important;
     left: 12px !important;
     right: 12px !important;
     border-radius: 7px !important;
-    min-height: 46px !important;
+    min-height: 56px !important;
   }
   body.template--index .search-modal.modal__content,
   body.template--custom-made .search-modal.modal__content {
-    top: 36px !important;
+    top: 96px !important;
   }
   .search-modal__content {
-    min-height: 46px;
+    min-height: 56px;
+    padding: 8px 8px !important;
     border-radius: 7px !important;
+    gap: 4px;
   }
   .search-modal .field {
-    min-height: 46px;
+    height: 40px;
+    min-height: 40px;
   }
   .search-modal .field__input,
   .search-modal .search__input {
     font-size: 14px;
-    height: 46px;
-    line-height: 46px;
+    height: 40px;
+    line-height: 40px;
   }
   .search-modal .field__label {
-    left: 46px !important;
+    left: 40px !important;
     font-size: 14px !important;
   }
   .search-modal .search__button,
   .search-modal .field__button {
-    width: 40px;
-    height: 46px;
+    width: 36px;
+    height: 40px;
   }
   .search-modal .modal__close-button {
-    width: 40px;
-    height: 46px;
+    width: 36px;
+    height: 40px;
   }
 }
 
