@@ -4,14 +4,21 @@
 
 /* ==========================================================================
    Announcement bar — fixed height so different messages don't change layout
+   Only the visible (non-.hidden) bar gets flex layout — the script hides
+   inactive rotation bars with .hidden, which must still hide them.
    ========================================================================== */
 
 #announcement-bar .announcement-bar {
   background-color: #F76503 !important;
   min-height: 46px;
-  display: flex !important;
   align-items: center;
   justify-content: center;
+}
+#announcement-bar .announcement-bar:not(.hidden) {
+  display: flex !important;
+}
+#announcement-bar .announcement-bar.hidden {
+  display: none !important;
 }
 #announcement-bar .announcement-bar__message,
 #announcement-bar .announcement-bar a {
@@ -148,13 +155,22 @@ header.header.absolute .header__icons .header__menu-item span {
   text-transform: uppercase;
 }
 
-/* Icon container: color cascades into fill="currentColor" child SVGs */
+/* Icon container: color cascades into fill="currentColor" child SVGs.
+   NOTE: theme targets .icon directly with `color: #fff` on the homepage
+   (.header__icons .header__icon .icon), so we MUST override on .icon
+   itself — not only on the parent .header__icon. */
 header.header .header__icon,
 header.header.absolute .header__icon,
 header.header.sticky-navbar .header__icon,
 header.header .header__icons .header__icon,
 header.header.absolute .header__icons .header__icon,
-header.header.sticky-navbar .header__icons .header__icon {
+header.header.sticky-navbar .header__icons .header__icon,
+header.header .header__icon .icon,
+header.header.absolute .header__icon .icon,
+header.header.sticky-navbar .header__icon .icon,
+header.header .header__icons .header__icon .icon,
+header.header.absolute .header__icons .header__icon .icon,
+header.header.sticky-navbar .header__icons .header__icon .icon {
   color: #000 !important;
 }
 
@@ -167,17 +183,25 @@ header.header .header__icon svg polyline,
 header.header .header__icon svg rect,
 header.header.absolute .header__icon .icon path,
 header.header.absolute .header__icon svg path,
+header.header.absolute .header__icons .header__icon .icon path,
 header.header.sticky-navbar .header__icon .icon path,
 header.header.sticky-navbar .header__icon svg path {
   fill: #000 !important;
 }
 
-/* Cart icon: black fill + stroke */
+/* Cart icon: black fill, NO stroke (avoid making the outline thicker than
+   the other icons — theme's cart path is fill-only). */
+header.header .header__icon--cart .icon,
+header.header.absolute .header__icon--cart .icon,
+header.header.sticky-navbar .header__icon--cart .icon {
+  color: #000 !important;
+}
 header.header .header__icon--cart .icon path,
 header.header.absolute .header__icon--cart .icon path,
 header.header.sticky-navbar .header__icon--cart .icon path {
   fill: #000 !important;
-  stroke: #000 !important;
+  stroke: none !important;
+  stroke-width: 0 !important;
 }
 
 /* Language label: always black */
@@ -195,14 +219,46 @@ header.header.sticky-navbar .localization-label {
 }
 
 /* ==========================================================================
+   Sockeloen logo — ALWAYS BLACK, never switches on scroll.
+   The theme's inline CSS toggles `filter: none` vs `filter: invert(100%)`
+   between .absolute and .sticky-navbar on the homepage. We lock both
+   classes to invert(100%) so the white-source logo renders black in every
+   state. Specificity is raised via header.header ancestor to beat the
+   theme's `.sticky-navbar .header__heading-link img` selector.
+   ========================================================================== */
+
+header.header .header__heading-link img,
+header.header .header__heading-logo,
+header.header.absolute .header__heading-link img,
+header.header.absolute .header__heading-logo,
+header.header.sticky-navbar .header__heading-link img,
+header.header.sticky-navbar .header__heading-logo,
+.header-wrapper .header__heading-link img,
+.header-wrapper .header__heading-logo,
+.shopify-section-header-sticky .header__heading-link img,
+.shopify-section-header-sticky .header__heading-logo {
+  filter: invert(100%) !important;
+  transition: none !important;
+}
+
+/* ==========================================================================
    Language selector
    ========================================================================== */
 
-header localization-selector,
-.header localization-selector,
+/* Desktop selector: only force flex on desktop so the theme's
+   small-hide / medium-hide classes keep it hidden on mobile. */
+@media screen and (min-width: 990px) {
+  .header__icons localization-selector {
+    display: flex !important;
+    align-items: center;
+    position: relative;
+    overflow: visible !important;
+    z-index: 200;
+  }
+}
+
+/* Shared overflow/position fix for all viewports (without forcing display) */
 .header__icons localization-selector {
-  display: flex !important;
-  align-items: center;
   position: relative;
   overflow: visible !important;
   z-index: 200;
@@ -231,13 +287,13 @@ header localization-selector,
   opacity: 0.6;
 }
 
-/* Give the selector container the same padding as .header__icon so the
-   click area aligns in height/width with the other symbols, even though
+/* Give the desktop selector container the same padding as .header__icon so
+   the click area aligns in height/width with the other symbols, even though
    only the text itself is the label (no button background). */
-header localization-selector,
-.header localization-selector,
-.header__icons localization-selector {
-  padding: 8px 10px;
+@media screen and (min-width: 990px) {
+  .header__icons localization-selector {
+    padding: 8px 10px;
+  }
 }
 
 /* Hide old SVG arrow; use CSS chevron */
