@@ -1628,6 +1628,7 @@ sticky-atc-v2.hidden {
   }
 
   .product-v2__info-wrapper {
+    box-sizing: border-box;
     padding: 24px 0 24px 4rem;
     max-width: 45%;
     width: 45%;
