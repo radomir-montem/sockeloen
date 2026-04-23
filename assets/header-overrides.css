@@ -1344,6 +1344,41 @@ body.template--custom-made .menu-drawer {
   }
 }
 
+/* ==========================================================================
+   V2 mobile menu — content-sized drawer overrides
+   --------------------------------------------------------------------------
+   The block above sizes the drawer to calc(100vh - 104px) so the OLD abs-
+   positioned nav panels have room. The v2 menu flows naturally — the root
+   panel is position:relative and the drawer should hug its content. We use
+   :has(.mobile-menu--v2) to scope these rules so only v2 menus collapse to
+   content height; the legacy drawer keeps its full-height behaviour.
+
+   Result: drawer ≈ root list + locale footer (+ radius), with the rounded
+   bottom corners visible above the page, matching the desktop dropdown.
+   ========================================================================== */
+@media screen and (max-width: 989px) {
+  .js .menu-drawer:has(.mobile-menu--v2),
+  .menu-drawer:has(.mobile-menu--v2) {
+    height: auto !important;
+    max-height: calc(100vh - 180px) !important;  /* leaves ~180px below for visible rounded corners */
+    min-height: 0 !important;
+  }
+  .menu-drawer:has(.mobile-menu--v2) .menu-drawer__inner-container,
+  .menu-drawer:has(.mobile-menu--v2) .menu-drawer__navigation-container {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .menu-drawer:has(.mobile-menu--v2) .menu-drawer__navigation-container > .relative {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  /* Kill the panel padding override too — v2 root panel manages its own
+     spacing and we want the body flush against the drawer chrome. */
+  .menu-drawer:has(.mobile-menu--v2) .mobile-menu__panel {
+    padding: 0 !important;
+  }
+}
+
 /* Backdrop when drawer open — soft dim, not the theme's default hard dark.
    Must stack above the announcement bar (z-index 50) but below the drawer
    itself (z-index 60) so the dim covers the whole viewport and the drawer
