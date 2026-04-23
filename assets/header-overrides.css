@@ -1018,13 +1018,15 @@ body.template--custom-made .search-modal.modal__content {
 }
 
 /* Predictive search results panel — floats below the pill, same style.
-   Borderless: no inset rim, only the outer shadow. */
+   Opaque white (NOT semi-transparent) so the overlay dim underneath doesn't
+   tint the panel grey. Matches the pill's solid white bg for a unified look. */
 .search-modal .predictive-search {
   margin-top: 12px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.82) !important;
-  backdrop-filter: blur(70px) saturate(200%);
-  -webkit-backdrop-filter: blur(70px) saturate(200%);
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border: none !important;
   outline: none !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10) !important;
