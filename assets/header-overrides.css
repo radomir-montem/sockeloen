@@ -1384,6 +1384,36 @@ body.template--custom-made .menu-drawer {
   .menu-drawer:has(.mobile-menu--v2) .menu-drawer__utility-links {
     display: none !important;
   }
+
+  /* ------------------------------------------------------------------------
+     Sub panel active → expand the drawer so the shop grid isn't clipped.
+     --------------------------------------------------------------------
+     When activeMenu > 0 the wrap gets .mobile-menu--v2-sub-active. The
+     root panel stays mounted (position: relative) but we collapse it to
+     height 0 via its max-height so the wrap and drawer size to the sub
+     panel's actual content. Without this, the sub inherits the root's
+     ~284px height and the category tiles overflow invisibly. */
+  .menu-drawer:has(.mobile-menu--v2-sub-active),
+  .js .menu-drawer:has(.mobile-menu--v2-sub-active) {
+    height: auto !important;
+    max-height: calc(100vh - 104px) !important;
+  }
+  .mobile-menu--v2-sub-active .mobile-menu__panel--root {
+    max-height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+  }
+  /* Sub panels flow in normal document order when active so they contribute
+     height to the wrap (and the drawer grows to match their content). */
+  .mobile-menu--v2-sub-active .mobile-menu__panel--sub[x-show],
+  .mobile-menu--v2-sub-active .mobile-menu__panel--subsub[x-show] {
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
 }
 
 /* Backdrop when drawer open — soft dim, not the theme's default hard dark.
