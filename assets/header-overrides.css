@@ -1033,6 +1033,24 @@ body.template--custom-made .search-modal.modal__content {
   overflow: hidden;
 }
 
+/* Kill the grey theme bg on the inner results list and its container — these
+   have Tailwind arbitrary-value classes like bg-[#e2e2e2] and border-[#7c7d80]
+   baked into the theme that would tint the whole panel grey. */
+.search-modal .predictive-search > div,
+.search-modal .predictive-search .predictive-search__results-list,
+.search-modal .predictive-search ul.predictive-search__results-list {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: none !important;
+}
+
+/* Section heading ("products", "articles") — subtle light-grey strip to act
+   as a divider between sections, but not the garish 226,226,226 block. */
+.search-modal .predictive-search__heading {
+  background: #f7f7f7 !important;
+  background-color: #f7f7f7 !important;
+}
+
 /* Overlay dimming under the floating search pill.
    STACKING CONTEXT NOTE: .search-modal.modal__content has z-index: 300 which
    creates a stacking context. The overlay is a DOM child of the modal, so
