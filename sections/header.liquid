@@ -430,7 +430,7 @@
 
     {%- if section.settings.menu != blank -%}
       {%- if section.settings.menu_type_desktop == 'dropdown' -%}
-        {%- render 'menu-desktop' -%}
+        {%- render 'mega-menu-desktop', menu: section.settings.menu -%}
       {%- else -%}
         <nav class="header__inline-menu">
           <ul class="list-menu list-menu--inline" role="list">
