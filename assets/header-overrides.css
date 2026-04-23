@@ -149,11 +149,19 @@
   transition: none !important;
 }
 .announcement-bar .page-width {
+  /* Fill the bar's content area (flex item) so overflow detection and
+     marquee measurements line up with the real pill width. The theme's
+     .page-width normally limits to ~120rem but we want full-bleed here. */
+  width: 100%;
   max-width: 100%;
   min-width: 0;
+  flex: 1 1 auto;
   overflow: hidden;
   padding-left: 0;
   padding-right: 0;
+  /* Centering now handled inside the block — not by the flex parent — so
+     .page-width still stretches and the text stays visually centered. */
+  text-align: center;
 }
 #announcement-bar .announcement-bar__message {
   white-space: nowrap;
@@ -183,6 +191,7 @@
   overflow: hidden !important;
   padding: 0 !important;
   display: block !important;
+  text-align: left !important;    /* track starts at left, not centered */
 }
 .announcement-bar.is-marquee .announcement-bar__marquee-track {
   display: flex !important;
