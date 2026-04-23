@@ -259,25 +259,49 @@ sticky-header.header-wrapper,
 header.header {
   /* Smaller bottom radius to match EME's tighter corners */
   border-radius: 0 0 8px 8px;
-  /* Opaque white surface — visually indistinguishable from a blurred 0.95
-     white, but critically WITHOUT backdrop-filter so this element does NOT
-     create a containing block for fixed descendants. The search modal and
-     overlay are position:fixed children; they must stay referenced to the
-     viewport, otherwise they land inside the header instead of on top. */
+  /* Opaque white surface — no backdrop-filter (would create a containing
+     block for fixed descendants, trapping the search modal/overlay). */
   background: #ffffff !important;
   background-color: #ffffff !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  /* Borderless — no inset highlights or rim. Keep the soft drop shadow
-     below so the pill still lifts visibly over white content when scrolling. */
   border: none !important;
   box-shadow:
     0 6px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.05);
-  padding-top: 6px;
-  padding-bottom: 6px;
+  /* Explicit pill height: 6px padding + 36px content + 6px padding = 48px.
+     Setting height + min/max keeps the logo anchor (which wraps the 32px
+     logo in an anchor that naturally expands to ~47px) from pushing the
+     pill taller than the search modal (also 48px). User explicitly called
+     out that header and search must have matching heights. */
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  box-sizing: border-box !important;
   overflow: visible !important;
   transition: none !important; /* kill color-swap flicker on scroll */
+}
+
+/* Force every inline header region to 36px content height so the pill
+   stays exactly 48px total (6 + 36 + 6). Theme's default anchor wrapping
+   around the logo inflates .header__heading to ~47px otherwise. */
+header.header .header__heading,
+header.header .header__heading-link,
+header.header .header__heading a,
+header.header .header__icons,
+header.header > header-drawer,
+header.header > header-drawer > details > summary {
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+header.header .header__heading-logo {
+  max-height: 32px !important;
+  height: auto !important;
 }
 
 /* ALL PAGES: header pill is fixed, floating, identical geometry.
