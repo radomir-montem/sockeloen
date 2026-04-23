@@ -800,7 +800,14 @@ body.template--custom-made .search-modal.modal__content {
    interactive row inside is exactly 36px tall, vertically centered on
    the pill's centerline. Content is horizontally centered so the search
    field sits in the middle of the pill (matching the pre-redesign layout)
-   with the close button absolutely positioned on the far right. */
+   with the close button absolutely positioned on the far right.
+
+   Opaque white + z-index:1 is CRITICAL: within the modal's stacking context
+   (z:300), the overlay child at z:-1 still paints ABOVE the modal's own
+   background (per CSS stacking spec — negative z-index paints after bg, not
+   before it). Giving this wrapper z:1 + solid white puts an opaque layer
+   ABOVE the overlay within the modal rect, so the pill reads as pure white
+   (matching the header) while the overlay still dims the rest of the page. */
 .search-modal__content {
   display: flex !important;
   align-items: center !important;
@@ -808,11 +815,13 @@ body.template--custom-made .search-modal.modal__content {
   padding: 6px 10px !important;
   min-height: 48px !important;
   height: 48px !important;
-  background: transparent !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 8px !important;
   position: relative;
+  z-index: 1;
   gap: 6px;
   box-sizing: border-box !important;
 }
