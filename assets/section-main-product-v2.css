@@ -920,6 +920,7 @@ a.product-v2__sp-avatar {
 /* ---------- Size Picker — Card Style (matching Avada tiers) ---------- */
 .product-v2 .product-form__input.size-input {
   gap: 10px;
+  flex-direction: column;
 }
 
 .product-v2 .product-form__input.size-input input[type='radio'] + label {
@@ -932,7 +933,7 @@ a.product-v2__sp-avatar {
   background-color: #fff !important;
   cursor: pointer;
   transition: border-color 0.2s ease;
-  flex: 1 1 0;
+  width: 100%;
   min-width: 0;
   justify-content: center;
 }
