@@ -1878,15 +1878,14 @@ body.template--index .image-banner .button span {
   position: absolute;
 }
 
-/* ---- Root menu list ---- */
+/* ---- Root menu list ----
+   Content-sized: takes only the height needed for the menu items. For
+   very long menus that exceed the drawer's max-height, the drawer
+   itself provides the scroll via its `overflow: hidden auto`. */
 .mobile-menu--v2 .mobile-menu__list--root {
   list-style: none;
-  /* Bottom padding gives breathing room so the last menu item isn't flush
-     against the footer divider when the list is scrolled to the end. */
   padding: 8px 24px 24px;
   margin: 0;
-  flex: 1;
-  overflow-y: auto;
 }
 
 .mobile-menu--v2 .mobile-menu__item--root {
@@ -2065,6 +2064,20 @@ body.template--index .image-banner .button span {
 .mobile-menu--v2 .mobile-locale-link.is-active {
   background: #F0EEEA;
   font-weight: 700;
+}
+
+/* ---- Root panel: flows in normal document order so drawer auto-sizes
+   to root content (tight fit, visible rounded bottom corners).
+   Override Tailwind's `absolute h-full` utility classes on the root panel
+   only — sub panels stay absolute for slide-in animations. */
+.mobile-menu--v2 .mobile-menu__panel--root.mobile-menu__panel--root {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  height: auto;
+  overflow: visible;
 }
 
 /* ---- Sub panel (cards + sticky CTA) ---- */
