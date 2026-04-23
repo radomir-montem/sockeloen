@@ -37,15 +37,24 @@
   border-radius: 8px 8px 0 0 !important;
   /* Borderless — no inset highlights or rim, only the glass surface. */
   border: none !important;
+  border-bottom: none !important;
   box-shadow: none !important;
   /* Fixed height (not min-height) — guarantees the pill below can sit exactly
      flush against it with no sub-pixel gap. Reduced from 46px → 32px for a
      tighter, less bulky notification strip. */
-  height: 32px;
+  height: 32px !important;
+  min-height: 32px !important;
+  width: 100% !important;
   min-width: 0;
-  align-items: center;
-  justify-content: center;
+  /* Explicit flex display + visibility — prevents any mobile theme CSS from
+     accidentally hiding the bar. Must override `:not(.hidden)` via !important. */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   overflow: hidden;
+  box-sizing: border-box !important;
 }
 
 /* Close-X on the announcement bar — hidden globally. We don't want the
@@ -72,21 +81,32 @@
    it taller (height + padding must not exceed the bar). */
 .announcement-bar > a,
 .announcement-bar__link {
-  padding: 0 20px;
-  height: 100%;
+  /* Reset theme's `padding: 1rem 0` which made the link taller than our
+     32px bar and caused visual clipping on mobile. */
+  padding: 0 20px !important;
+  height: 32px !important;
+  width: 100% !important;
   font-weight: 500;
   font-size: 11px;
-  line-height: 1.2;
+  line-height: 32px;
   max-width: 100%;
   min-width: 0;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
   /* Kill the theme's hover styles — no bg tint, no arrow shift, no opacity
      change. The notification strip stays static on hover. */
   background: transparent !important;
   transition: none !important;
+}
+/* Also reset padding on the p.announcement-bar__message — base.css gives it
+   `padding: 1rem 0` which pushes the text above/below the 32px bar and
+   (combined with overflow: hidden) was making the bar look empty on mobile. */
+#announcement-bar .announcement-bar__message,
+.announcement-bar__message {
+  padding: 0 !important;
 }
 .announcement-bar > a:hover,
 .announcement-bar__link:hover {
@@ -570,19 +590,28 @@ body.template--custom-made .search-modal.modal__content {
 }
 
 /* Inner wrapper — same 6px vertical padding as header.header so the
-   interactive row inside is exactly 36px tall (matches header's icon row). */
+   interactive row inside is exactly 36px tall, vertically centered on
+   the pill's centerline. */
 .search-modal__content {
   display: flex !important;
   align-items: center !important;
+  justify-content: flex-start !important;
   padding: 6px 10px !important;
-  min-height: 48px;
-  height: 48px;
+  min-height: 48px !important;
+  height: 48px !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 8px !important;
   position: relative;
   gap: 6px;
+  box-sizing: border-box !important;
+}
+/* Belt-and-braces: force every direct child of the search row to center
+   vertically so the field, magnifier, and close button all share the same
+   baseline as the header's icon row. */
+.search-modal__content > * {
+  align-self: center !important;
 }
 
 /* The form fills the row */
@@ -611,22 +640,29 @@ body.template--custom-made .search-modal.modal__content {
   display: flex !important;
   flex-direction: row-reverse !important;
   align-items: center !important;
-  background: rgba(0, 0, 0, 0.06) !important;
-  background-color: rgba(0, 0, 0, 0.06) !important;
+  /* Transparent input frame — the white pill bg shows through directly so
+     the search bar reads as one clean white surface matching the header. */
+  background: transparent !important;
+  background-color: transparent !important;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
   border-radius: 6px !important;
   padding: 0 6px 0 0 !important;
   margin: 0 !important;
-  height: 36px;
-  min-height: 36px;
+  /* Fill the inner row so the field sits on the vertical centerline of
+     the 48px search pill exactly the way the nav icons sit in the header. */
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
   position: relative;
+  align-self: center !important;
   transition: background 0.15s ease;
 }
 .search-modal .field:focus-within {
-  background: rgba(0, 0, 0, 0.09) !important;
-  background-color: rgba(0, 0, 0, 0.09) !important;
+  /* Subtle hint on focus, still reads as white */
+  background: rgba(0, 0, 0, 0.03) !important;
+  background-color: rgba(0, 0, 0, 0.03) !important;
 }
 .search-modal .field::before,
 .search-modal .field::after {
