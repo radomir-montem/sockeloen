@@ -17,7 +17,13 @@
 {%- endcomment -%}
 
 <div class="relative mobile-menu mobile-menu--v2" x-data="{
-      activeMenu: 1,
+      /* Panel state:
+           activeMenu = 0  → root panel
+           activeMenu = N  → sub panel for menu.links[N-1] (forloop.index is 1-based)
+         The previous default was 1, which collided with the first sub panel's
+         forloop.index (1) and caused both root AND first sub to render
+         simultaneously — invisible until you noticed the stacked content. */
+      activeMenu: 0,
       childMenu: 0,
       collectionMenu: 0,
       get isActive() {
@@ -43,12 +49,15 @@
         if (d) d.removeAttribute('open');
         document.body.classList.remove('noscroll');
         document.body.classList.remove('menu-opening');
+        /* Reset nav state so reopening always lands on root */
+        this.activeMenu = 0;
+        this.childMenu = 0;
       },
     }" x-transition.scale>
 
-  {%- comment -%} ============ ROOT PANEL (level 1) ============ {%- endcomment -%}
+  {%- comment -%} ============ ROOT PANEL (level 0) ============ {%- endcomment -%}
   <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--root h-full w-full bg-white absolute top-0 z-30 overflow-auto"
-    x-show="(isActive == 1)"
+    x-show="(isActive == 0)"
     x-transition:enter-end="left-0"
     x-transition:enter-start="-left-full"
     x-transition:enter="transition-all ease-out duration-200"
