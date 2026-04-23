@@ -179,16 +179,15 @@
         <div class="mobile-menu__body mobile-menu__body--sub flex flex-col">
 
           {%- comment -%}
-            Floating back button — no topbar, cards start at the top.
-            Positioned absolute so it overlays the top-left corner without
-            reserving layout space.
+            Floating close X — no topbar, cards start at the top.
+            Tap to dismiss the entire drawer (reopen returns to root).
           {%- endcomment -%}
           <button type="button"
-                  class="mobile-menu__back-floating"
-                  aria-label="Back"
-                  @click="setActive(1); setChild(0)">
-            <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  class="mobile-menu__close-floating"
+                  aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"
+                  @click="closeDrawer()">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
           </button>
 
@@ -283,13 +282,13 @@
                 x-transition:leave="transition-all ease-in duration-200">
 
                 <div class="mobile-menu__body mobile-menu__body--subsub flex flex-col">
-                  {%- comment -%} Floating back button (returns to parent sub) {%- endcomment -%}
+                  {%- comment -%} Floating close X — dismisses entire drawer {%- endcomment -%}
                   <button type="button"
-                          class="mobile-menu__back-floating"
-                          aria-label="Back"
-                          @click="setChild(0)">
-                    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          class="mobile-menu__close-floating"
+                          aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"
+                          @click="closeDrawer()">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
                   </button>
 
