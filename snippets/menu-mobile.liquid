@@ -169,20 +169,19 @@
 
         <div class="mobile-menu__body mobile-menu__body--sub flex flex-col">
 
-          {%- comment -%} Topbar: back / title / close {%- endcomment -%}
-          <div class="mobile-menu__topbar mobile-menu__topbar--sub">
-            <button type="button" class="mobile-menu__back-btn" aria-label="Back" @click="setActive(1); setChild(0)">
-              <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <h2 class="mobile-menu__title">{{ link.title }}</h2>
-            <button type="button" class="mobile-menu__close-btn" aria-label="{{ 'accessibility.close' | t | default: 'Close' }}" @click="closeDrawer()">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </button>
-          </div>
+          {%- comment -%}
+            Floating back button — no topbar, cards start at the top.
+            Positioned absolute so it overlays the top-left corner without
+            reserving layout space.
+          {%- endcomment -%}
+          <button type="button"
+                  class="mobile-menu__back-floating"
+                  aria-label="Back"
+                  @click="setActive(1); setChild(0)">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
 
           {%- comment -%} Scrollable card list {%- endcomment -%}
           <ul class="mobile-menu__cards">
@@ -275,19 +274,15 @@
                 x-transition:leave="transition-all ease-in duration-200">
 
                 <div class="mobile-menu__body mobile-menu__body--subsub flex flex-col">
-                  <div class="mobile-menu__topbar mobile-menu__topbar--sub">
-                    <button type="button" class="mobile-menu__back-btn" aria-label="Back" @click="setChild(0)">
-                      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </button>
-                    <h2 class="mobile-menu__title">{{ sub_link.title }}</h2>
-                    <button type="button" class="mobile-menu__close-btn" aria-label="{{ 'accessibility.close' | t | default: 'Close' }}" @click="closeDrawer()">
-                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                      </svg>
-                    </button>
-                  </div>
+                  {%- comment -%} Floating back button (returns to parent sub) {%- endcomment -%}
+                  <button type="button"
+                          class="mobile-menu__back-floating"
+                          aria-label="Back"
+                          @click="setChild(0)">
+                    <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
 
                   <ul class="mobile-menu__cards">
                     {%- for grandchild in sub_link.links -%}
