@@ -2190,11 +2190,22 @@ body.template--index .image-banner .button span {
 /* Floating close X on sub-panels — no topbar above the cards, just a
    subtle circle in the top-right corner to dismiss the drawer entirely.
    Back-to-parent navigation is intentionally removed: reopening always
-   lands on the root panel (closeDrawer() resets activeMenu/childMenu). */
+   lands on the root panel (closeDrawer() resets activeMenu/childMenu).
+
+   Sticky positioning: the drawer scrolls internally when the sub panel
+   is tall (category grid). The close X sticks 12px from the top of the
+   drawer's viewport so users can always dismiss without scrolling back up.
+   margin-bottom:-60px collapses the space it would otherwise take in flow,
+   so the panel content starts at the top (not 48px below the sticky
+   button). align-self:flex-end pins it to the right edge inside the flex
+   column body. */
 .mobile-menu--v2 .mobile-menu__close-floating {
-  position: absolute;
+  position: sticky;
   top: 12px;
-  right: 12px;
+  align-self: flex-end;
+  margin-right: 12px;
+  margin-top: 12px;
+  margin-bottom: -48px;
   z-index: 5;
   width: 36px;
   height: 36px;
@@ -2208,6 +2219,7 @@ body.template--index .image-banner .button span {
   color: #111111;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
 }
 
 .mobile-menu--v2 .mobile-menu__close-floating:hover {
