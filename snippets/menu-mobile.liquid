@@ -55,15 +55,13 @@
       },
     }" x-transition.scale>
 
-  {%- comment -%} ============ ROOT PANEL (level 0) ============ {%- endcomment -%}
-  <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--root h-full w-full bg-white absolute top-0 z-30 overflow-auto"
-    x-show="(isActive == 0)"
-    x-transition:enter-end="left-0"
-    x-transition:enter-start="-left-full"
-    x-transition:enter="transition-all ease-out duration-200"
-    x-transition:leave-end="-left-full"
-    x-transition:leave-start="left-0"
-    x-transition:leave="transition-all ease-in duration-200">
+  {%- comment -%}
+    ============ ROOT PANEL (level 0) ============
+    Root stays in the DOM flow (no x-show) so the drawer can auto-size to
+    root content height — giving the "end visibly with radius corners"
+    look. Sub panels slide in as absolute overlays on top of the root.
+  {%- endcomment -%}
+  <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--root w-full bg-white">
 
     <div class="mobile-menu__body mobile-menu__body--root flex flex-col">
 
@@ -167,7 +165,6 @@
   {%- for link in menu.links -%}
     {%- if link.links.size > 0 -%}
       <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--sub w-full bg-white absolute top-0 z-30"
-        style="height: 100vh"
         x-show="(isActive == {{ forloop.index }})"
         x-transition:enter-end="left-0"
         x-transition:enter-start="-left-full"
@@ -272,8 +269,7 @@
           {% for sub_link in link.links %}
             {% if sub_link.links.size > 0 %}
               <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--subsub w-full bg-white absolute top-0 z-30"
-                style="height: 100vh"
-                x-show="(isChild == {{ forloop.index }})"
+                        x-show="(isChild == {{ forloop.index }})"
                 x-transition:enter-end="left-0"
                 x-transition:enter-start="-left-full"
                 x-transition:enter="transition-all ease-out duration-200"
