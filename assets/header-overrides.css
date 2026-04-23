@@ -1847,6 +1847,16 @@ body.template--index .image-banner .button span {
 
 .mobile-menu--v2 .mobile-menu__topbar--root {
   justify-content: center;
+  /* Root panel sits flush under the header pill which already shows the
+     wordmark — no need for a big branded bar. Shrink to just fit the
+     close-X button with a tight padding. */
+  min-height: 0;
+  padding: 10px 16px;
+}
+
+/* Hide the wordmark on root — the header pill above already has it. */
+.mobile-menu--v2 .mobile-menu__topbar--root .mobile-menu__wordmark {
+  display: none;
 }
 
 .mobile-menu--v2 .mobile-menu__topbar--sub {
