@@ -1224,12 +1224,37 @@ body.template--custom-made .menu-drawer {
     top: 92px !important;
   }
 
-  /* When the mobile menu is open, flatten the header's bottom corners so
-     the header + drawer merge into a single seamless surface. */
+  /* When the mobile menu is open, flatten the header's bottom corners AND
+     remove its bottom drop-shadow so the header + drawer merge into a
+     single seamless white surface with no visible seam line. */
   sticky-header:has(header-drawer > details[open]) header.header,
   .header-wrapper:has(header-drawer > details[open]) header.header,
   header.header:has(> header-drawer > details[open]) {
     border-radius: 0 !important;
+    /* Keep the TOP shadow (nothing above to catch it) and kill the bottom
+       glow so there's no dark line at the seam with the drawer. */
+    box-shadow: none !important;
+  }
+  /* Focus/active outline around the hamburger + close <summary> creates a
+     visible box in the drawer. Drop the 2px outline to none — the icon
+     colour change already communicates focus. */
+  header.header > header-drawer > details > summary {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  header.header > header-drawer > details > summary:focus,
+  header.header > header-drawer > details > summary:focus-visible,
+  header.header > header-drawer > details > summary:active {
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  /* Subtle localization pill at the drawer footer — since the drawer is now
+     fully opaque white, drop the translucent fill and tighten the border so
+     it reads as a quiet control, not a heavy tile. */
+  .menu-drawer localization-selector .localization-label {
+    background: transparent !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
   }
 
   /* Menu content fix (mobile):
