@@ -365,55 +365,59 @@ header.header .header__icons {
   align-items: center !important;
 }
 
-/* NAV column: the theme's nav anchors ship with `padding: 20px 0 10px` which
-   makes each <a> 48.2px tall. CSS Grid then sizes the single header row to
-   54.7px (taller than the 48px pill) and — because padding-top is 20px and
-   padding-bottom is 10px — the visible text sits ~9px BELOW the pill's true
-   centerline. We flatten the padding and clamp every level (nav → ul → li → a)
-   to 36px so all three columns (nav / logo / icons) share the same content
-   box and `align-items: center` on the header grid actually centers them. */
-header.header > nav.header__inline-menu,
-header.header .header__inline-menu {
-  height: 36px !important;
-  min-height: 36px !important;
-  max-height: 36px !important;
-  display: flex !important;
-  align-items: center !important;
-}
-header.header .header__inline-menu > ul,
-header.header .header__inline-menu ul.list-menu {
-  height: 36px !important;
-  min-height: 36px !important;
-  max-height: 36px !important;
-  align-items: center !important;
-  display: inline-flex !important;
-  margin: 0 !important;
-}
-header.header .header__inline-menu li {
-  height: 36px !important;
-  min-height: 36px !important;
-  max-height: 36px !important;
-  display: flex !important;
-  align-items: center !important;
-  margin: 0 !important;
-}
-header.header .header__inline-menu li > a,
-header.header .header__inline-menu li > details > summary,
-header.header .header__inline-menu .header__menu-item,
-header.header .header__inline-menu .list-menu__item {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  height: 36px !important;
-  min-height: 36px !important;
-  max-height: 36px !important;
-  display: flex !important;
-  align-items: center !important;
-}
+/* NAV column (DESKTOP only — on mobile the inline-menu is hidden by the
+   theme and replaced by the hamburger drawer). The theme's nav anchors ship
+   with `padding: 20px 0 10px` which makes each <a> 48.2px tall. CSS Grid
+   then sizes the single header row to 54.7px (taller than the 48px pill)
+   and — because padding-top is 20px and padding-bottom is 10px — the visible
+   text sits ~9px BELOW the pill's true centerline. We flatten the padding
+   and clamp every level (nav → ul → li → a) to 36px so all three columns
+   (nav / logo / icons) share the same content box and `align-items: center`
+   on the header grid actually centers them. */
+@media screen and (min-width: 990px) {
+  header.header > nav.header__inline-menu,
+  header.header .header__inline-menu {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  header.header .header__inline-menu > ul,
+  header.header .header__inline-menu ul.list-menu {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    align-items: center !important;
+    display: inline-flex !important;
+    margin: 0 !important;
+  }
+  header.header .header__inline-menu li {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+  header.header .header__inline-menu li > a,
+  header.header .header__inline-menu li > details > summary,
+  header.header .header__inline-menu .header__menu-item,
+  header.header .header__inline-menu .list-menu__item {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
 
-/* Force the single grid row to the exact content height so items vertically
-   centre on y=68 (pill midline) rather than on the inflated row midline. */
-header.header {
-  grid-template-rows: 36px !important;
+  /* Force the single grid row to the exact content height so items vertically
+     centre on y=68 (pill midline) rather than on the inflated row midline. */
+  header.header {
+    grid-template-rows: 36px !important;
+  }
 }
 
 /* Header-drawer (mobile hamburger) height — do NOT set display here, because
@@ -868,9 +872,12 @@ body.template--custom-made .search-modal.modal__content {
   transition: background 0.15s ease;
 }
 .search-modal .field:focus-within {
-  /* Subtle hint on focus, still reads as white */
-  background: rgba(0, 0, 0, 0.03) !important;
-  background-color: rgba(0, 0, 0, 0.03) !important;
+  /* Keep pure white on focus — user explicitly requested that the area
+     around/behind the input field matches the header pill (white). Any
+     tint, even 3%, reads as grey when the overlay is behind (was causing
+     the "grey search bar" complaint). */
+  background: transparent !important;
+  background-color: transparent !important;
 }
 .search-modal .field::before,
 .search-modal .field::after {
