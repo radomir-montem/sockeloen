@@ -920,7 +920,6 @@ a.product-v2__sp-avatar {
 /* ---------- Size Picker — Card Style (matching Avada tiers) ---------- */
 .product-v2 .product-form__input.size-input {
   gap: 10px;
-  flex-direction: column;
 }
 
 .product-v2 .product-form__input.size-input input[type='radio'] + label {
@@ -933,7 +932,7 @@ a.product-v2__sp-avatar {
   background-color: #fff !important;
   cursor: pointer;
   transition: border-color 0.2s ease;
-  width: 100%;
+  flex: 1 1 0;
   min-width: 0;
   justify-content: center;
 }
@@ -1002,41 +1001,41 @@ a.product-v2__sp-avatar {
   background-color: #fff;
 }
 
-/* ---------- Color Picker — Dots left, name right (single card) ---------- */
+/* ---------- Color Picker — Stacked full-width cards ---------- */
 .product-v2 .product-form__input.color-input {
   display: flex;
+  flex-direction: column;
   flex-wrap: nowrap;
-  gap: 0;
-  border: 2px solid #e5e5e5;
-  border-radius: 10px;
-  background: #fff;
-  padding: 12px 16px;
-  align-items: center;
+  gap: 10px;
+  border: none;
+  background: none;
+  padding: 0;
   margin-bottom: 16px;
 }
 
-/* Color dots row on the left */
+/* Each color option is its own full-width card */
 .product-v2 .product-form__input.color-input label {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 !important;
-  border: none !important;
-  border-radius: 0 !important;
-  background: none !important;
+  gap: 12px;
+  padding: 12px 16px !important;
+  border: 2px solid #e5e5e5 !important;
+  border-radius: 10px !important;
+  background: #fff !important;
   cursor: pointer;
-  margin-right: 6px;
-  flex: 0 0 auto;
-  min-width: 0;
+  width: 100%;
+  margin-right: 0;
+  flex: none;
+  transition: border-color 0.2s ease;
 }
 
 .product-v2 .product-form__input.color-input label:hover {
-  border: none !important;
+  border-color: #bbb !important;
 }
 
 .product-v2 .product-form__input.color-input input[type='radio']:checked + label {
-  border: none !important;
-  background: none !important;
+  border-color: #0395F6 !important;
+  background: #fff !important;
 }
 
 /* Hide any leftover image elements from color labels (except image swatches) */
@@ -1056,16 +1055,7 @@ a.product-v2__sp-avatar {
   border-radius: 50%;
   display: block;
   flex-shrink: 0;
-  transition: box-shadow 0.2s ease;
   box-sizing: border-box;
-}
-
-.product-v2 .product-form__input.color-input label:hover .color-dot {
-  box-shadow: 0 0 0 2px #bbb;
-}
-
-.product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-dot {
-  box-shadow: 0 0 0 2px #0395F6;
 }
 
 /* Image-based color swatches — larger thumbnails */
@@ -1086,20 +1076,18 @@ a.product-v2__sp-avatar {
   border-radius: 50%;
 }
 
-/* Hide color name inside each label — we show it via JS in a shared element */
+/* Color name shown inside each card */
 .product-v2 .color-input__name {
-  display: none;
-}
-
-/* Selected color name — shown on the right side of the card */
-.product-v2 .color-input__selected-name {
-  margin-left: auto;
+  display: block;
   font-size: 14px;
   font-weight: 600;
   color: #1a1a1a;
   letter-spacing: 0.02em;
-  white-space: nowrap;
-  padding-left: 12px;
+}
+
+/* Hide shared selected-name (no longer needed) */
+.product-v2 .color-input__selected-name {
+  display: none;
 }
 
 /* ---------- Size Guide Link (below ATC button) ---------- */
