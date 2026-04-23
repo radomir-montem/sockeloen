@@ -594,9 +594,8 @@ header.header.sticky-navbar .header__heading-logo,
 .search-modal.modal__content {
   position: fixed !important;
   /* Sits OVER the header pill — SAME coordinates and SAME height as
-     header.header. When search opens, the pill swaps visually from nav
-     to input field with zero vertical drift. Header = 6px padding + 36px
-     icon row = 48px; search matches that exactly. */
+     header.header. Header rendered height is 48px (see .header__heading
+     + .header__icons constraints further down). */
   top: 44px !important;
   left: 20px !important;
   right: 20px !important;
@@ -604,12 +603,19 @@ header.header.sticky-navbar .header__heading-logo,
   width: auto !important;
   height: 48px !important;
   min-height: 48px !important;
+  max-height: 48px !important;
 
-  border-radius: 8px !important;
-  /* Same opaque white surface as the header pill */
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(70px) saturate(200%);
-  -webkit-backdrop-filter: blur(70px) saturate(200%);
+  border-radius: 0 0 8px 8px !important;  /* match header pill radius exactly */
+  /* SOLID white — removed backdrop-filter because it creates a containing
+     block for fixed descendants (spec: elements with backdrop-filter become
+     the containing block for position:fixed children). The overlay child
+     was getting trapped to the modal's 48px rect instead of covering the
+     full viewport, which made the 0.95 translucent white modal look grey
+     (the 0.25 black dim showed through from BEHIND the modal content). */
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   /* Borderless — only the soft drop shadow lifts the pill. No inset rim. */
   border: none !important;
   border-bottom: none !important;
