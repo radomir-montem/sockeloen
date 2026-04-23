@@ -1152,9 +1152,13 @@ menu-drawer > details[open] > summary::before {
 
 @media screen and (max-width: 989px) {
   /* In-flow mobile header — flush against announcement bar above,
-     same horizontal inset, bottom-rounded only. */
+     same horizontal inset, bottom-rounded only.
+     NOTE: Do NOT set margin here. The base rule at the top of this file
+     already sets `left: 12px; right: 12px` for the fixed header. Adding
+     `margin: 0 12px` on top of that would double the inset (24px each side)
+     and make the header narrower than the announcement bar. */
   header.header:not(.absolute) {
-    margin: 0 12px !important;
+    margin: 0 !important;
     border-radius: 0 0 7px 7px;
   }
 
