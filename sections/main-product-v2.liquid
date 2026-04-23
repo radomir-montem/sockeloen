@@ -59,7 +59,7 @@
       {%- comment -%} Breadcrumb overlay {%- endcomment -%}
       {% render 'breadcrumb-overlay' %}
 
-      {%- comment -%} Product badges {%- endcomment -%}
+      {%- comment -%} Product badges (sale badge hidden in v2 — shown in price area instead) {%- endcomment -%}
       {% assign showOthersBadges = true %}
       <div class="absolute top-[15px] left-[12px] card-badge !py-6 z-[1]" style="top: 44px;">
         {%- if product.available == false -%}
@@ -73,19 +73,8 @@
             </span>
           {% endunless %}
         {%- elsif product.compare_at_price > product.price and product.available -%}
-          {% for tag in product.tags %}
-            {% if tag == 'sale' %}
-              {% assign showOthersBadges = false %}
-              <span
-                id="Badge-{{ section.id }}-{{ product.id }}"
-                class="badge badge--bottom-left"
-                style="background-color: {{ settings.sale_badge_color }};"
-              >
-                {{- 'products.product.on_sale' | t -}}
-              </span>
-              {% break %}
-            {% endif %}
-          {% endfor %}
+          {%- comment -%} Sale badge hidden — using save badge in price area instead {%- endcomment -%}
+          {% assign showOthersBadges = false %}
         {%- endif -%}
         {% if showOthersBadges %}
           {% for badge in product.metafields.custom.badge.value %}
@@ -445,12 +434,27 @@
                     {%- assign av_img = section.settings.sp_avatar_3 -%}
                     {%- assign av_link = section.settings.sp_athlete_3_link -%}
                   {%- endif -%}
-                  {%- if av_img != blank -%}
+                  {%- comment -%} Fallback avatars when no image is set in theme editor {%- endcomment -%}
+                  {%- if av_img == blank -%}
+                    {%- if idx == 1 -%}
+                      {%- assign av_fallback_url = 'Scherm_afbeelding_2026-03-21_om_23.30.36.png' | file_img_url: '80x80', crop: 'center' -%}
+                    {%- elsif idx == 2 -%}
+                      {%- assign av_fallback_url = 'Scherm_afbeelding_2026-03-21_om_23.31.03.png' | file_img_url: '80x80', crop: 'center' -%}
+                    {%- else -%}
+                      {%- assign av_fallback_url = 'Scherm_afbeelding_2026-03-21_om_23.31.47.png' | file_img_url: '80x80', crop: 'center' -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                  {%- if av_img != blank or av_fallback_url != blank -%}
                     {%- assign sp_pos_class = 'product-v2__sp-avatar--' | append: forloop.index -%}
                     <{% if av_link != blank %}a href="{{ av_link }}" target="_blank" rel="noopener"{% else %}div{% endif %} class="product-v2__sp-avatar {{ sp_pos_class }}">
-                      <img src="{{ av_img | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy">
+                      {%- if av_img != blank -%}
+                        <img src="{{ av_img | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy">
+                      {%- else -%}
+                        <img src="{{ av_fallback_url }}" alt="" width="40" height="40" loading="lazy">
+                      {%- endif -%}
                     </{% if av_link != blank %}a{% else %}div{% endif %}>
                   {%- endif -%}
+                  {%- assign av_fallback_url = nil -%}
                 {%- endfor -%}
               </div>
               <p class="product-v2__sp-text" style="color: {{ section.settings.sp_text_color }};">
@@ -466,7 +470,7 @@
                     </svg>
                   </span>
                 {%- endif -%}
-                &nbsp;and <strong>+{{ section.settings.sp_follower_count }}</strong> other athletes ride in {{ section.settings.sp_brand_name }}.
+                &nbsp;{{ 'products.v2.social_proof_text_html' | t: count: section.settings.sp_follower_count, brand: section.settings.sp_brand_name }}
               </p>
             </div>
           </div>
@@ -492,26 +496,37 @@
         </div>
         <script>
           (function(){
+            var _stripping = false;
             function stripEuro(root){
+              if (_stripping) return;
+              _stripping = true;
               root.querySelectorAll('.regular-text, .price-item, .real-price, .product-v2-sticky-bar__price').forEach(function(el){
                 el.childNodes.forEach(function(n){
                   if(n.nodeType===3) n.textContent = n.textContent.replace(/€\s*/g,'');
                 });
               });
+              _stripping = false;
             }
             /* Strip immediately for elements already in DOM */
             stripEuro(document);
             /* Re-run after full DOM is ready (sticky bar renders later) */
             document.addEventListener('DOMContentLoaded', function(){
               stripEuro(document);
-              /* Observe price wrapper for variant changes */
+              /* Observe price wrapper for variant changes — debounced to avoid loops */
+              var _priceTimer = null;
               var priceWrap = document.getElementById('price-{{ section.id }}');
               if(priceWrap){
-                new MutationObserver(function(){ stripEuro(priceWrap); }).observe(priceWrap, {childList:true, subtree:true, characterData:true});
+                new MutationObserver(function(){
+                  clearTimeout(_priceTimer);
+                  _priceTimer = setTimeout(function(){ stripEuro(priceWrap); }, 50);
+                }).observe(priceWrap, {childList:true, subtree:true});
               }
               var stickyPrice = document.querySelector('.product-v2-sticky-bar__price');
               if(stickyPrice){
-                new MutationObserver(function(){ stripEuro(stickyPrice.parentElement); }).observe(stickyPrice, {childList:true, subtree:true, characterData:true});
+                new MutationObserver(function(){
+                  clearTimeout(_priceTimer);
+                  _priceTimer = setTimeout(function(){ stripEuro(stickyPrice.parentElement); }, 50);
+                }).observe(stickyPrice, {childList:true, subtree:true});
               }
             });
           })();
@@ -530,13 +545,13 @@
           assign ben2 = product.metafields.custom.custom_benefit_2.value | default: product.metafields.custom.custom_benefit_2
           assign ben3 = product.metafields.custom.custom_benefit_3.value | default: product.metafields.custom.custom_benefit_3
           if ben1 == blank
-            assign ben1 = section.settings.default_benefit_1
+            assign ben1 = 'products.v2.default_benefit_1' | t
           endif
           if ben2 == blank
-            assign ben2 = section.settings.default_benefit_2
+            assign ben2 = 'products.v2.default_benefit_2' | t
           endif
           if ben3 == blank
-            assign ben3 = section.settings.default_benefit_3
+            assign ben3 = 'products.v2.default_benefit_3' | t
           endif
         -%}
         {%- if ben1 != blank or ben2 != blank or ben3 != blank -%}
@@ -792,8 +807,8 @@
                         </fieldset>
                         {%- comment -%} Size guide link moved below ATC button {%- endcomment -%}
                       {%- else -%}
-                        {%- comment -%} Single-value option: render as hidden fieldset so updateOptions() still finds it {%- endcomment -%}
-                        <fieldset class="js product-form__input" style="display:none !important;">
+                        {%- comment -%} Single-value option: hidden fieldset for JS variant matching {%- endcomment -%}
+                        <fieldset class="js product-form__input{% if is_color %} color-input{% endif %}" style="display:none !important;">
                           <input
                             type="radio"
                             name="{{ option.name }}"
@@ -802,6 +817,15 @@
                             checked
                           >
                         </fieldset>
+                        {%- unless is_color -%}
+                          {%- comment -%} Visible read-only tile so users know which size is selected {%- endcomment -%}
+                          <fieldset class="product-form__input product-form__input--pill size-input size-input--single">
+                            <legend class="form__label">{{ option.name }}</legend>
+                            <div class="size-pill-single">
+                              <span class="size-label-text">{{ option.values.first | escape }}</span>
+                            </div>
+                          </fieldset>
+                        {%- endunless -%}
                       {%- endif -%}
                     {%- endfor -%}
                     <script type="application/json">
@@ -841,8 +865,72 @@
                                 var nameSpan = label ? label.querySelector('.color-input__name') : null;
                                 if (nameSpan) nameEl.textContent = nameSpan.textContent;
                               }
+                              filterSizesByColor();
                             });
                           });
+
+                          /* Initial filter on load */
+                          filterSizesByColor();
+                        }
+
+                        function filterSizesByColor() {
+                          var variants = {{ product.variants | json }};
+                          var options = {{ product.options_with_values | json }};
+
+                          /* Find the color option position (1-indexed) */
+                          var colorPos = -1;
+                          var sizePos = -1;
+                          for (var i = 0; i < options.length; i++) {
+                            var name = options[i].name.toLowerCase().replace(/:$/, '');
+                            if (name === 'color' || name === 'kleur' || name === 'couleur') {
+                              colorPos = i;
+                            } else if (name === 'size' || name === 'maat') {
+                              sizePos = i;
+                            }
+                          }
+                          if (colorPos === -1 || sizePos === -1) return;
+
+                          /* Get selected color */
+                          var colorFieldset = document.querySelector('.product-v2 .color-input');
+                          if (!colorFieldset) return;
+                          var checkedColor = colorFieldset.querySelector('input[type="radio"]:checked');
+                          if (!checkedColor) return;
+                          var selectedColor = checkedColor.value;
+
+                          /* Find sizes available for this color */
+                          var availableSizes = {};
+                          for (var v = 0; v < variants.length; v++) {
+                            var variant = variants[v];
+                            if (variant.options[colorPos] === selectedColor) {
+                              availableSizes[variant.options[sizePos]] = true;
+                            }
+                          }
+
+                          /* Show/hide size radios */
+                          var sizeFieldset = document.querySelector('.product-v2 .size-input');
+                          if (!sizeFieldset) return;
+                          var needsReselect = false;
+                          sizeFieldset.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+                            var label = radio.nextElementSibling;
+                            if (!label) return;
+                            if (availableSizes[radio.value]) {
+                              radio.style.display = '';
+                              label.style.display = '';
+                            } else {
+                              radio.style.display = 'none';
+                              label.style.display = 'none';
+                              if (radio.checked) needsReselect = true;
+                            }
+                          });
+
+                          /* If the currently selected size is no longer visible, select the first available */
+                          if (needsReselect) {
+                            var firstVisible = sizeFieldset.querySelector('input[type="radio"]:not([style*="display: none"])');
+                            if (firstVisible) {
+                              firstVisible.checked = true;
+                              firstVisible.dispatchEvent(new Event('change', { bubbles: true }));
+                            }
+                          }
                         }
 
                         function init() {
@@ -941,8 +1029,6 @@
                 </div>
               </noscript>
 
-              {%- render 'size-guide-modal', product: product -%}
-
               <div class="variant-notes">
                 {% for variant in product.variants %}
                   {% if variant.metafields.custom.note != blank %}
@@ -1023,6 +1109,50 @@
                           value="{{ product.selected_or_first_available_variant.id }}"
                           disabled
                         >
+                        {%- comment -%} Low stock warning — shows when inventory <= threshold {%- endcomment -%}
+                        <div class="product-v2__low-stock" style="display:none;" id="low-stock-{{ section.id }}"
+                          data-low-stock-singular="{{ 'products.v2.low_stock_singular' | t | escape }}"
+                          data-low-stock-plural="{{ 'products.v2.low_stock_plural' | t: qty: '[qty]' | escape }}">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="8" cy="8" r="7" stroke="#F76503" stroke-width="1.5"/>
+                            <path d="M8 4.5V9" stroke="#F76503" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="8" cy="11.5" r="0.75" fill="#F76503"/>
+                          </svg>
+                          <span id="low-stock-text-{{ section.id }}"></span>
+                        </div>
+                        <script>
+                          (function() {
+                            var stockData = {};
+                            {%- for variant in product.variants -%}
+                              {%- if variant.inventory_management == 'shopify' and variant.inventory_quantity > 0 and variant.inventory_quantity <= 10 -%}
+                                stockData['{{ variant.id }}'] = {{ variant.inventory_quantity }};
+                              {%- endif -%}
+                            {%- endfor -%}
+                            var el = document.getElementById('low-stock-{{ section.id }}');
+                            var txt = document.getElementById('low-stock-text-{{ section.id }}');
+                            function updateStock() {
+                              var radios = document.querySelectorAll('variant-radios input[type="radio"]:checked');
+                              var opts = [];
+                              radios.forEach(function(r) { opts.push(r.value); });
+                              var variants = {{ product.variants | json }};
+                              var match = variants.find(function(v) {
+                                return v.options.every(function(o, i) { return o === opts[i]; });
+                              });
+                              if (match && stockData[match.id]) {
+                                var qty = stockData[match.id];
+                                txt.textContent = qty === 1 ? el.getAttribute('data-low-stock-singular') : el.getAttribute('data-low-stock-plural').replace('[qty]', qty);
+                                el.style.display = 'flex';
+                              } else {
+                                el.style.display = 'none';
+                              }
+                            }
+                            updateStock();
+                            document.addEventListener('change', function(e) {
+                              if (e.target.closest('variant-radios')) updateStock();
+                            });
+                          })();
+                        </script>
+
                         <div class="product-form__buttons">
                           {% render 'outlink-custom',
                             product: product,
@@ -1103,8 +1233,8 @@
                   </div>
                 </div>
 
-                {%- comment -%} Dynamic checkout buttons {%- endcomment -%}
-                {%- if section.settings.show_dynamic_checkout -%}
+                {%- comment -%} Dynamic checkout buttons (disabled) {%- endcomment -%}
+                {%- if false -%}
                   <div class="w-full mt-6">
                     {%- form 'product',
                       product,
@@ -1137,14 +1267,24 @@
                   class="klaviyo-bis-trigger bg-black font-medium tracking-[0.02em] uppercase button w-full button--primary !mb-0"
                   href="#"
                 >
-                  {{ section.settings.notifyme_button | default: 'Notify me when available' }}
+                  {{ 'products.v2.notify_me' | t }}
                 </a>
 
-                {%- comment -%} Size guide link — below ATC for less friction {%- endcomment -%}
-                {%- unless product.has_only_default_variant -%}
-                  <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">Not sure about your size?</a>
-                {%- endunless -%}
               </div>
+
+            {%- when 'size_guide' -%}
+              {%- unless product.has_only_default_variant -%}
+                <div {{ block.shopify_attributes }}>
+                  <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">{{ 'products.v2.size_guide_link' | t }}</a>
+                  {%- render 'size-guide-modal',
+                    product: product,
+                    guide_type_override: block.settings.guide_type
+                  -%}
+                </div>
+              {%- endunless -%}
+
+            {%- when 'secure_checkout' -%}
+              {%- comment -%} Rendered inside shipping_info block instead — this is a no-op here {%- endcomment -%}
 
             {%- when 'shipping_info' -%}
               {%- comment -%}
@@ -1152,8 +1292,28 @@
                 - Before 15:00 CET/CEST on a working day → shipped today
                 - After 15:00 or on a weekend → shipped next working day
                 - Automatically handles CET ↔ CEST via Intl timezone
+
+                The secure_checkout block is also rendered here (after ship date, before USP accordions)
+                so it always appears in the right visual position regardless of block order.
               {%- endcomment -%}
-              <div id="shipment-message-v2" class="shipment-container !m-0 !mb-6" {{ block.shopify_attributes }}>
+              <div id="shipment-message-v2" class="shipment-container !m-0 product-v2__trust-row product-v2__shipping-row" {{ block.shopify_attributes }}>
+                <svg class="product-v2__shipping-icon" width="39" height="24" viewBox="0 0 39 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="0.5" y="0.5" width="38" height="23" rx="3.5" fill="#FFFFFF" stroke="#E0E0E0"/>
+                  <g clip-path="url(#clip_ship_{{ section.id }})">
+                    <path d="M15.2539 16.2399C17.1739 18.1666 20.1406 18.5599 22.4939 17.1999C24.8472 15.8466 25.9939 13.0732 25.2939 10.4532C24.5939 7.82658 22.2139 6.00659 19.5006 6.00659" stroke="#0F1A2B" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M13.5 12H13.5067" stroke="#0F1A2B" stroke-linecap="round"/>
+                    <path d="M17.168 6.33325H17.1746" stroke="#0F1A2B" stroke-linecap="round"/>
+                    <path d="M13.9531 14.2532H13.9598" stroke="#0F1A2B" stroke-linecap="round"/>
+                    <path d="M13.9531 9.68652H13.9598" stroke="#0F1A2B" stroke-linecap="round"/>
+                    <path d="M15.2461 7.74658H15.2528" stroke="#0F1A2B" stroke-linecap="round"/>
+                    <path d="M19.0469 9.6001V12.3001L20.8535 14.1001" stroke="#0F1A2B" stroke-linecap="round" stroke-linejoin="round"/>
+                  </g>
+                  <defs>
+                    <clipPath id="clip_ship_{{ section.id }}">
+                      <rect width="16" height="16" fill="white" transform="translate(11.5 4)"/>
+                    </clipPath>
+                  </defs>
+                </svg>
                 <p class="shipping-text" id="ship-date-text" style="display:none;"></p>
               </div>
               <script>
@@ -1242,17 +1402,50 @@
                 })();
               </script>
 
+              {%- comment -%} Render secure_checkout block here (between shipping & USP accordions) {%- endcomment -%}
+              {%- for inner_block in section.blocks -%}
+                {%- if inner_block.type == 'secure_checkout' -%}
+                  <div {{ inner_block.shopify_attributes }}>
+                    {%- render 'secure-checkout', section_id: section.id, trust_text: inner_block.settings.text -%}
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- comment -%} USP accordions — from locale translations {%- endcomment -%}
+              {%- assign usp_headings = 'products.v2.usp_1_heading,products.v2.usp_2_heading,products.v2.usp_3_heading,products.v2.usp_4_heading' | split: ',' -%}
+              {%- assign usp_bodies = 'products.v2.usp_1_body_html,products.v2.usp_2_body_html,products.v2.usp_3_body_html,products.v2.usp_4_body_html' | split: ',' -%}
+              {%- for heading_key in usp_headings -%}
+                {%- assign body_key = usp_bodies[forloop.index0] -%}
+                {%- assign usp_heading = heading_key | t -%}
+                {%- assign usp_body = body_key | t -%}
+                {%- if usp_heading != blank -%}
+                <div class="product__accordion accordion product-v2__usp-accordion">
+                  <details>
+                    <summary>
+                      <div class="summary__title">
+                        <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">{{ usp_heading }}</h2>
+                      </div>
+                      {% render 'icon-caret' %}
+                    </summary>
+                    <div class="accordion__content rte">
+                      {{ usp_body }}
+                    </div>
+                  </details>
+                </div>
+                {%- endif -%}
+              {%- endfor -%}
+
             {%- when 'collapsible_tab' -%}
+              {%- comment -%} Keep Description tab, hide product-specific tabs (replaced by USP accordions above) {%- endcomment -%}
               {% if block.settings.heading == 'Description'
                 or block.settings.heading == 'Beschrijving'
                 or block.settings.heading == 'Beschreibung'
               %}
-                <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-                  <details id="Details-{{ block.id }}-{{ section.id }}" open>
+                <div class="product__accordion accordion quick-add-hidden product-v2__usp-accordion" {{ block.shopify_attributes }}>
+                  <details id="Details-{{ block.id }}-{{ section.id }}">
                     <summary>
                       <div class="summary__title">
-                        {% render 'icon-accordion', icon: block.settings.icon %}
-                        <h2 class="h4 accordion__title font-medium !text-[16px] uppercase tracking-[0.02em]">
+                        <h2 class="h4 accordion__title font-normal !text-[16px] tracking-[0.02em]">
                           {{ block.settings.heading | default: block.settings.page.title }}
                         </h2>
                       </div>
@@ -1263,38 +1456,6 @@
                     </div>
                   </details>
                 </div>
-              {% else %}
-                {% if block.settings.content != '' %}
-                  <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-                    <details id="Details-{{ block.id }}-{{ section.id }}">
-                      <summary>
-                        <div class="summary__title">
-                          {% render 'icon-accordion', icon: block.settings.icon %}
-                          <h2 class="h4 accordion__title font-medium !text-[16px] uppercase tracking-[0.02em]">
-                            {{ block.settings.heading | default: block.settings.page.title }}
-                          </h2>
-                        </div>
-                        {% render 'icon-caret' %}
-                      </summary>
-                      <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                        {% if block.settings.heading contains 'Logo' or block.settings.heading contains 'logo' %}
-                          <div class="flex">
-                            {% for logo in product.metafields.custom.logo_s.value %}
-                              <img
-                                src="{{ logo | file_url }}"
-                                alt="logo"
-                                style="width: {{ block.settings.logos_size }}px;"
-                              >
-                            {% endfor %}
-                          </div>
-                        {% else %}
-                          {{ block.settings.content }}
-                        {% endif %}
-                        {{ block.settings.page.content }}
-                      </div>
-                    </details>
-                  </div>
-                {% endif %}
               {% endif %}
 
             {%- when 'usps' -%}
@@ -1395,7 +1556,7 @@
     (function() {
       var sectionSelector = '#MainProduct-{{ section.id }}';
 
-      function filterVariantMedia(el) {
+      function filterVariantMedia(el, skipPrepend) {
         if (!el.currentVariant || !el.currentVariant.featured_media) return;
         var selectedAlt = el.currentVariant.featured_media.alt;
         if (!selectedAlt) return;
@@ -1415,11 +1576,16 @@
           item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
         });
 
-        /* Re-call setActiveMedia so slider resets pages with correct visible items */
+        /* Re-call setActiveMedia so slider resets pages with correct visible items.
+         * On initial page load, skip prepend (DOM reorder) to prevent
+         * scroll-anchoring jumps on mobile stacked layouts. */
+        var shouldPrepend = !skipPrepend;
         var mediaGallery = section.querySelector('media-gallery');
         if (mediaGallery) {
           var mediaId = el.dataset.section + '-' + el.currentVariant.featured_media.id;
-          mediaGallery.setActiveMedia(mediaId, true);
+          var scrollY = window.scrollY;
+          mediaGallery.setActiveMedia(mediaId, shouldPrepend);
+          window.scrollTo(0, scrollY);
         }
       }
 
@@ -1430,11 +1596,14 @@
          * This works regardless of listener registration order.
          */
         el.addEventListener('change', function() {
-          setTimeout(function() { filterVariantMedia(el); }, 0);
+          setTimeout(function() { filterVariantMedia(el, false); }, 0);
         });
 
-        /* Initial page load: connectedCallback fires onVariantChange after 500ms */
-        setTimeout(function() { filterVariantMedia(el); }, 600);
+        /* Initial page load: connectedCallback fires onVariantChange after 500ms.
+         * Pass skipPrepend=true to avoid DOM reorder that causes scroll jumps. */
+        setTimeout(function() {
+          filterVariantMedia(el, true);
+        }, 600);
       }
 
       /* Attach as soon as variant-radios appears in the DOM */
@@ -1457,6 +1626,55 @@
       }
     })();
   </script>
+
+  <script>
+    /* ── Mobile auto-scroll prevention ──────────────────────────────────
+     * Third-party widgets (Taggbox, Reviews.io, Avada) call scrollIntoView
+     * or similar during init, causing an unwanted scroll-down on mobile.
+     * Fix: intercept and block programmatic scroll calls during the first
+     * 2.5 s of page load. User-initiated scrolls (touch) are unaffected
+     * because they don't go through scrollIntoView / window.scrollTo.    */
+    (function() {
+      if (window.innerWidth >= 750) return;
+
+      var locked = true;
+      var userScrolled = false;
+
+      /* Detect real user interaction */
+      var markUser = function() { userScrolled = true; };
+      window.addEventListener('touchstart', markUser, { once: true, passive: true });
+
+      /* ---- Block Element.scrollIntoView ---- */
+      var origSIV = Element.prototype.scrollIntoView;
+      Element.prototype.scrollIntoView = function() {
+        if (locked) return;                    /* swallow during init */
+        return origSIV.apply(this, arguments);
+      };
+
+      /* ---- Block window.scrollTo / window.scroll ---- */
+      var origScrollTo = window.scrollTo;
+      var origScroll   = window.scroll;
+      var safeScrollTo = function() {
+        if (locked && !userScrolled) {
+          /* Allow our own scrollTo(0,0) restorations (args = 0,0) */
+          var y = arguments.length === 1 ? arguments[0].top : arguments[1];
+          if (y !== 0 && y !== undefined) return;   /* block non-zero scrolls */
+        }
+        return origScrollTo.apply(window, arguments);
+      };
+      window.scrollTo = safeScrollTo;
+      window.scroll   = safeScrollTo;
+
+      /* ---- Release after init window ---- */
+      setTimeout(function() {
+        locked = false;
+        Element.prototype.scrollIntoView = origSIV;
+        window.scrollTo = origScrollTo;
+        window.scroll   = origScroll;
+        window.removeEventListener('touchstart', markUser);
+      }, 2500);
+    })();
+  </script>
 </section>
 
 {%- comment -%} ========== STICKY ATC V2 ========== {%- endcomment -%}
@@ -1470,6 +1688,11 @@
           {{ product.selected_or_first_available_variant.price | money }}
         </span>
       </div>
+      <ul class="product-v2-sticky-bar__usps">
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ 'products.v2.sticky_usp_1' | t }}</span></li>
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ 'products.v2.sticky_usp_2' | t }}</span></li>
+        <li class="product-v2-sticky-bar__usp">{% render 'icon-checkmark' %}<span>{{ 'products.v2.sticky_usp_3' | t }}</span></li>
+      </ul>
       <button
         type="button"
         class="product-v2-sticky-bar__atc-btn product-sticky-atc bg-black font-medium tracking-[0.02em] uppercase button button--primary"
@@ -1484,13 +1707,13 @@
   <div class="product-v2-size-modal" aria-hidden="true">
     <div class="product-v2-size-modal__backdrop"></div>
     <div class="product-v2-size-modal__content">
-      <p class="product-v2-size-modal__heading">Are you sure about your size?</p>
+      <p class="product-v2-size-modal__heading">{{ 'products.v2.size_modal_heading' | t }}</p>
       <div class="product-v2-size-modal__size-display">
         <span class="product-v2-size-modal__selection"></span>
       </div>
       <div class="product-v2-size-modal__actions">
-        <button type="button" class="product-v2-size-modal__confirm">Yes, add to cart</button>
-        <button type="button" class="product-v2-size-modal__change">No, let me change</button>
+        <button type="button" class="product-v2-size-modal__confirm">{{ 'products.v2.size_modal_confirm' | t }}</button>
+        <button type="button" class="product-v2-size-modal__change">{{ 'products.v2.size_modal_change' | t }}</button>
       </div>
     </div>
   </div>
@@ -1512,6 +1735,8 @@
     showEmptyStars: true,
   });
 </script>
+
+{%- comment -%} Avada price fixes (€ removal + decimal comma) now handled in product-v2.js {%- endcomment -%}
 
 {% schema %}
 {
@@ -1565,6 +1790,46 @@
       "type": "quantity_selector",
       "name": "Quantity & Add to cart",
       "limit": 1
+    },
+    {
+      "type": "size_guide",
+      "name": "Size guide",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "guide_type",
+          "label": "Size guide type",
+          "options": [
+            { "value": "auto", "label": "Auto-detect from product" },
+            { "value": "socks", "label": "Socks" },
+            { "value": "baselayer", "label": "Base layers" },
+            { "value": "gloves", "label": "Gloves" },
+            { "value": "overshoes", "label": "Overshoes" }
+          ],
+          "default": "auto",
+          "info": "Choose which size chart to show in the pop-up. 'Auto-detect' picks based on product type and title."
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Not sure about your size?"
+        }
+      ]
+    },
+    {
+      "type": "secure_checkout",
+      "name": "Secure checkout",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Trust text",
+          "default": "Safe & secure checkout — pay with iDEAL, creditcard or PayPal"
+        }
+      ]
     },
     {
       "type": "shipping_info",
@@ -1813,19 +2078,19 @@
       "type": "text",
       "id": "default_benefit_1",
       "label": "Default benefit 1",
-      "default": "No more soaked, sweaty socks during riding."
+      "default": "Worn by World Champions."
     },
     {
       "type": "text",
       "id": "default_benefit_2",
       "label": "Default benefit 2",
-      "default": "No burning feet or pressure points, thanks to the uniquely thin footbed."
+      "default": "No more burning feet on the bike."
     },
     {
       "type": "text",
       "id": "default_benefit_3",
       "label": "Default benefit 3",
-      "default": "Stay up. Sit at the perfect height. All ride long."
+      "default": "Make your calves look like the weapons they really are."
     },
     {
       "type": "header",
@@ -1880,10 +2145,8 @@
       "label": "Show dynamic checkout buttons"
     },
     {
-      "type": "text",
-      "id": "notifyme_button",
-      "label": "Notify me button text",
-      "default": "Notify me when available"
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",

@@ -4,6 +4,15 @@
 
 /* Header styles now in global header-overrides.css */
 
+/* ---------- Disable scroll-anchoring on v2 pages ----------
+ * DOM reordering in the media gallery (prepend) triggers browser
+ * scroll-anchoring, causing an unwanted jump on mobile.  Disabling
+ * it on both html and body covers all scroll-container modes. */
+html:has(body[class*="template--v2"]),
+body[class*="template--v2"] {
+  overflow-anchor: none;
+}
+
 /* ---------- Layout ---------- */
 .product-section {
   background: #F4F4F1;
@@ -95,6 +104,7 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
+  overflow-anchor: none;
   font-size: 0;
   line-height: 0;
 }
@@ -398,18 +408,44 @@ a.product-v2__sp-avatar {
   gap: 0;
 }
 
-.product-v2__price .price .regular-text,
-.product-v2__price .price__sale .real-price {
+/* Price container: flexbox to reorder price / from-price / save-badge */
+.product-v2__price .price__container {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 8px;
+}
+
+/* Make price__sale use display:contents so children participate in flex order */
+.product-v2__price .price__sale {
+  display: contents !important;
+}
+
+/* Regular price (non-sale) */
+.product-v2__price .price .regular-text {
   font-size: 20px !important;
   color: #000 !important;
   font-weight: 400;
   line-height: 1.3;
 }
 
-/* From/compare price: same size, grey, strikethrough */
+/* Sale price (current price) — show first */
+.product-v2__price .price__sale .real-price {
+  font-size: 20px !important;
+  color: #000 !important;
+  font-weight: 400;
+  line-height: 1.3;
+  order: 1;
+}
+
+/* From/compare price wrapper — show second, smaller */
+.product-v2__price .price__sale > span:not(.visually-hidden):not(.real-price) {
+  order: 2;
+}
+
 .product-v2__price .price__sale > span > .regular-text,
 .product-v2__price .price__sale > span > span:not(.visually-hidden) {
-  font-size: 20px !important;
+  font-size: 14px !important;
   color: #999 !important;
   font-weight: 400;
   text-decoration: line-through;
@@ -418,16 +454,18 @@ a.product-v2__sp-avatar {
 
 /* From text override */
 .product-v2__price .price__sale > span > span[class*="font-roboto"][class*="italic"] {
-  font-size: 20px !important;
+  font-size: 14px !important;
   color: #999 !important;
   font-style: italic;
   line-height: 1.3;
 }
 
-/* Save badge: vertically centered */
+/* Save badge: green, show third */
 .product-v2__price .product-save-badge {
-  margin-left: 8px;
+  margin-left: 0;
   vertical-align: middle;
+  order: 3;
+  background: #5a9a00 !important;
 }
 
 /* ---------- Benefits Checklist ---------- */
@@ -455,6 +493,16 @@ a.product-v2__sp-avatar {
   height: 16px;
   margin-top: 0;
   color: #5a9a00;
+  animation: benefitIconIn 0.4s ease both;
+}
+
+.product-v2__benefit:nth-child(1) svg { animation-delay: 0.1s; }
+.product-v2__benefit:nth-child(2) svg { animation-delay: 0.25s; }
+.product-v2__benefit:nth-child(3) svg { animation-delay: 0.4s; }
+
+@keyframes benefitIconIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .product-v2__benefit svg path {
@@ -504,6 +552,35 @@ a.product-v2__sp-avatar {
   margin-top: 2px !important;
 }
 
+/* Reserve space and fade in Avada tiles to reduce layout shift */
+.product-v2 .Avada-Volume__Body {
+  min-height: 140px;
+}
+
+/* Hide Avada price text until JS fixes € and decimal format, then fade in */
+.product-v2 .Avada-Volume__Body .Avada-Offer__PriceDiscount,
+.product-v2 .Avada-Volume__Body .Avada-Offer__PriceDefault,
+.product-v2 .AOV-Offer__Body .AOV-Offer__DiscountPrice,
+.product-v2 .AOV-Offer__Body .AOV-Offer__BasePrice {
+  opacity: 0 !important;
+  transition: opacity 0.15s ease !important;
+}
+.product-v2 .avada-prices-ready .Avada-Offer__PriceDiscount,
+.product-v2 .avada-prices-ready .Avada-Offer__PriceDefault,
+.product-v2 .avada-prices-ready .AOV-Offer__DiscountPrice,
+.product-v2 .avada-prices-ready .AOV-Offer__BasePrice {
+  opacity: 1 !important;
+}
+
+.product-v2 .Avada-Volume__Item {
+  animation: avadaFadeIn 0.3s ease both;
+}
+
+@keyframes avadaFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Tier cards — horizontal single-row layout */
 /* Force Avada tier items to stack vertically */
 .product-v2 .Avada-Volume__Body,
@@ -511,7 +588,7 @@ a.product-v2__sp-avatar {
 .product-v2 [class*="Avada-Volume"]:has(> .Avada-Volume__Item) {
   display: flex !important;
   flex-direction: column !important;
-  gap: 8px !important;
+  gap: 20px !important;
 }
 
 .product-v2 .Avada-Volume__Item {
@@ -533,7 +610,7 @@ a.product-v2__sp-avatar {
 /* Selected tier */
 .product-v2 .Avada-Volume__Item--Selected {
   border-color: #0395F6 !important;
-  background: #f0f8ff !important;
+  background: #ffffff !important;
 }
 
 .product-v2 .Avada-Volume__Item--Selected:hover {
@@ -581,14 +658,15 @@ a.product-v2__sp-avatar {
 /* Tier quantity label (1 Pair, 3 Pairs) */
 .product-v2 .Avada-Volume__Info--TriggerQty {
   font-size: 14px !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   color: #1a1a1a !important;
 }
 
-/* Discount text ("for") — hide the dash, show "for" */
+/* Discount text ("for", "Standard price") — match customer benefits style */
 .product-v2 .Avada-Volume__DiscountText {
-  font-size: 12px !important;
-  color: #666 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #1a1a1a !important;
 }
 
 /* Prices — push to the right, stack vertically */
@@ -603,8 +681,8 @@ a.product-v2__sp-avatar {
 }
 
 .product-v2 .Avada-Offer__PriceDiscount {
-  font-size: 15px !important;
-  font-weight: 700 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
   color: #1a1a1a !important;
   order: 1 !important;
 }
@@ -644,12 +722,12 @@ a.product-v2__sp-avatar {
 /* Shipping date — bold black for date, orange for countdown */
 .product-v2 .shipping-text .ship-date {
   color: #1a1a1a !important;
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 .product-v2 .shipping-text .ship-countdown {
   color: #F76503 !important;
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 /* Per-pair label */
@@ -783,6 +861,8 @@ a.product-v2__sp-avatar {
   background-color: #F76503 !important;
   background-image: none !important;
   box-shadow: none !important;
+  padding-right: 0 !important;
+  background-position: center !important;
 }
 
 /* Keep ATC button styled when disabled during variant switch */
@@ -863,7 +943,7 @@ a.product-v2__sp-avatar {
 
 .product-v2 .product-form__input.size-input input[type='radio']:checked + label {
   border-color: #0395F6 !important;
-  background: #f0f8ff !important;
+  background: #ffffff !important;
   color: #1a1a1a !important;
 }
 
@@ -901,6 +981,24 @@ a.product-v2__sp-avatar {
 .product-v2 .product-form__input.size-input input[type='radio'].disabled + label .size-label-text {
   text-decoration: line-through;
   color: #999;
+}
+
+/* Single-value size tile (read-only, pre-selected appearance) */
+.product-v2 .size-input--single {
+  pointer-events: none;
+  margin-bottom: 4px;
+}
+
+.product-v2 .size-input--single .size-pill-single {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  min-width: 0;
+  border: 2px solid #0395F6;
+  border-radius: 10px;
+  padding: 12px 16px;
+  background-color: #fff;
 }
 
 /* ---------- Color Picker — Dots left, name right (single card) ---------- */
@@ -969,8 +1067,11 @@ a.product-v2__sp-avatar {
   box-shadow: 0 0 0 2px #0395F6;
 }
 
-/* Image-based color swatches */
+/* Image-based color swatches — larger thumbnails */
 .product-v2 .color-dot--image {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
   overflow: hidden;
   padding: 0;
   background: #f5f5f5;
@@ -1012,7 +1113,7 @@ a.product-v2__sp-avatar {
   cursor: pointer;
   transition: color 0.2s ease;
   margin-top: 10px;
-  margin-bottom: 0;
+  margin-bottom: 16px;
   text-align: center;
 }
 
@@ -1124,12 +1225,23 @@ a.product-v2__sp-avatar {
 }
 
 .product-v2 .product-form-wrapper {
+  margin-top: 12px;
   margin-bottom: 16px;
+}
+
+/* Remove extra top margin when Avada volume discount is present above ATC */
+.product-v2 .Avada-Volume__Body ~ .product-form-wrapper {
+  margin-top: 0;
 }
 
 /* ---------- Collapsible Tabs ---------- */
 .product-v2 .product__accordion {
   border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.product-v2 .product__accordion + .product__accordion {
+  border-top: none;
 }
 
 /* ---------- Sticky ATC Bar ---------- */
@@ -1166,7 +1278,7 @@ sticky-atc-v2.hidden {
   flex-direction: column;
   gap: 2px;
   min-width: 0;
-  flex: 1;
+  flex-shrink: 0;
 }
 
 .product-v2-sticky-bar__title {
@@ -1185,9 +1297,48 @@ sticky-atc-v2.hidden {
   color: #000;
 }
 
+/* Sticky bar USPs */
+.product-v2-sticky-bar__usps {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+@media screen and (min-width: 990px) {
+  .product-v2-sticky-bar__usps {
+    display: flex;
+  }
+}
+
+.product-v2-sticky-bar__usp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #000;
+  white-space: nowrap;
+}
+
+.product-v2-sticky-bar__usp svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  color: #5a9a00;
+}
+
+.product-v2-sticky-bar__usp svg path {
+  fill: #5a9a00;
+}
+
 .product-v2-sticky-bar__atc-btn {
   flex-shrink: 0;
-  padding: 12px 24px;
+  padding: 12px 40px;
   font-size: 14px;
   font-weight: 500;
   text-transform: capitalize;
@@ -1313,56 +1464,167 @@ sticky-atc-v2.hidden {
   border-color: #000;
 }
 
+/* ---------- Reviews Section — prevent vertical scroll on mobile ---------- */
+@media screen and (max-width: 749px) {
+  .reviews-product,
+  .reviews-product > div {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+
+  .reviews-product #ReviewsWidget,
+  .reviews-product .ElementsWidget-prefix,
+  .reviews-product .ElementsWidget,
+  .reviews-product .ElementsWidget__inner,
+  .reviews-product .ElementsWidget__list,
+  .reviews-product .R-ContentList-container,
+  .reviews-product .R-ContentList {
+    overflow: visible !important;
+    overflow-y: visible !important;
+    max-height: none !important;
+    height: auto !important;
+    -webkit-overflow-scrolling: auto !important;
+  }
+
+  /* Prevent touch scroll capture inside review items */
+  .reviews-product .R-ContentList__item {
+    overflow: visible !important;
+  }
+}
+
+/* ---------- Product Carousel — prevent vertical scroll on mobile ---------- */
+@media screen and (max-width: 749px) {
+  [class*="bot-section-"] .bot-swiper {
+    overflow: hidden !important;
+    -webkit-overflow-scrolling: auto !important;
+    touch-action: pan-x !important;
+  }
+
+  [class*="bot-section-"] .swiper-wrapper {
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+  }
+
+  [class*="bot-section-"] .swiper-slide {
+    flex-shrink: 0 !important;
+  }
+}
+
 /* ---------- Product Benefits Section ---------- */
 .product-benefits-section {
   overflow: hidden;
 }
 
+.product-benefits-section .product-benefit {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .product-benefit {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .product-benefit + .product-benefit {
-  margin-top: 0;
+  margin-top: 16px;
 }
 
-.product-benefit__image {
+.product-benefit__image,
+.product-benefit__media {
   width: 100%;
   overflow: hidden;
+  padding: 20px;
 }
 
-.product-benefit__image img {
+.product-benefit__image img,
+.product-benefit__media img,
+.product-benefit__media video {
   width: 100%;
   height: auto;
   display: block;
   object-fit: cover;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Hover zoom on images */
+.product-benefit__image:hover img,
+.product-benefit__media:hover img,
+.product-benefit__media:hover video {
+  transform: scale(1.03);
 }
 
 .product-benefit__content {
-  padding: 24px 16px 32px;
+  padding: 28px 20px 36px;
 }
 
 .product-benefit__heading {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0 0 12px;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
 }
 
 .product-benefit__heading em {
   font-style: italic;
+  color: #F76503;
 }
 
 .product-benefit__description {
   font-size: 15px;
-  line-height: 1.6;
-  color: rgba(0, 0, 0, 0.75);
+  line-height: 1.7;
+  color: rgba(0, 0, 0, 0.6);
   margin: 0;
 }
 
 .product-benefit__description p {
   margin: 0;
+}
+
+/* --- Scroll-triggered animations --- */
+/* Only the image/video animates — text is immediately visible */
+.product-benefit__image,
+.product-benefit__media {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Text content: no animation, always visible */
+.product-benefit__content {
+  opacity: 1;
+}
+
+/* Visible state — applied by IntersectionObserver */
+.product-benefit.is-visible .product-benefit__image,
+.product-benefit.is-visible .product-benefit__media {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .product-benefit__image,
+  .product-benefit__media,
+  .product-benefit__content {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .product-benefit__media img,
+  .product-benefit__media video {
+    transition: none;
+  }
+  .product-benefit__media:hover img,
+  .product-benefit__media:hover video {
+    transform: none;
+  }
 }
 
 /* ==========================================================================
@@ -1371,23 +1633,21 @@ sticky-atc-v2.hidden {
 
 @media screen and (min-width: 990px) {
 
-  /* Two-column product layout */
-  .product-v2 > .grid__item {
-    width: auto;
-    max-width: none;
+  /* Two-column product layout — CSS Grid avoids flex/box-sizing conflicts */
+  .product-v2.grid {
+    display: grid !important;
+    grid-template-columns: 55% 45%;
+    flex-wrap: unset;
   }
 
-  .product-v2__media-wrapper {
-    max-width: 55%;
-    width: 55%;
-    flex: 0 0 55%;
+  .product-v2 > .grid__item {
+    width: auto !important;
+    max-width: none !important;
+    flex: none !important;
   }
 
   .product-v2__info-wrapper {
     padding: 24px 0 24px 4rem;
-    max-width: 45%;
-    width: 45%;
-    flex: 0 0 45%;
   }
 
   .product-v2__info-container--sticky {
@@ -1432,37 +1692,64 @@ sticky-atc-v2.hidden {
     font-size: 28px;
   }
 
-  /* Hide sticky ATC on desktop */
+  /* Sticky ATC on desktop — show it */
   sticky-atc-v2 {
-    display: none;
+    display: block;
   }
 
   /* Benefits section - side by side */
+  .product-benefits-section {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
   .product-benefit {
     flex-direction: row;
     align-items: center;
+    gap: 0;
   }
 
   .product-benefit:nth-child(even) {
     flex-direction: row-reverse;
   }
 
-  .product-benefit__image {
-    width: 50%;
+  .product-benefit__image,
+  .product-benefit__media {
+    width: 40%;
     flex-shrink: 0;
+    padding: 40px 40px 40px 60px;
   }
 
-  .product-benefit__image img {
-    aspect-ratio: 4/3;
+  .product-benefit:nth-child(even) .product-benefit__image,
+  .product-benefit:nth-child(even) .product-benefit__media {
+    padding: 40px 60px 40px 40px;
+  }
+
+  .product-benefit__image img,
+  .product-benefit__media img,
+  .product-benefit__media video {
+    aspect-ratio: 1/1;
+    border-radius: 10px;
   }
 
   .product-benefit__content {
-    width: 50%;
-    padding: 40px 60px;
+    width: 60%;
+    padding: 40px 60px 40px 40px;
+  }
+
+  .product-benefit:nth-child(even) .product-benefit__content {
+    padding: 40px 40px 40px 60px;
   }
 
   .product-benefit__heading {
-    font-size: 30px;
+    font-size: 38px;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+
+  .product-benefit__description {
+    font-size: 16px;
+    line-height: 1.75;
   }
 
   /* Modal centered on desktop */
@@ -1480,5 +1767,168 @@ sticky-atc-v2.hidden {
 @media screen and (min-width: 750px) and (max-width: 989px) {
   .product-v2__info-wrapper {
     padding: 24px 0 24px 3rem;
+  }
+}
+
+/* Low stock warning */
+.product-v2__low-stock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-v2__low-stock span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #c2410c;
+}
+
+/* Shipping & secure checkout rows — shared icon + text style */
+.product-v2__trust-row {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-v2__secure-row {
+  margin-top: 12px !important;
+  margin-bottom: 20px;
+}
+
+.product-v2__trust-row svg {
+  flex-shrink: 0;
+  width: 39px;
+  height: 24px;
+}
+
+.product-v2__trust-row .shipping-text,
+.product-v2__trust-row span {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #1a1a1a !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* USP accordions — same style as other accordions but closed by default */
+.product-v2__usp-accordion {
+  margin-bottom: 0;
+}
+
+.product-v2 .product__accordion .accordion__content {
+  padding: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #1a1a1a;
+  line-height: 1.5;
+}
+
+.product-v2 .product__accordion .accordion__content p {
+  font-size: 16px;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+/* ---------- V2 Product Carousel Headers ---------- */
+/* Scoped to v2 templates only — does not affect other product templates */
+
+/* Collapse all empty carousel h4 headers */
+body[class*="template--v2"] .bg-white > h4,
+body[class*="template--v2"] .bg-white.no-js-hidden h4,
+body[class*="template--v2"] product-recommendations h4 {
+  display: none !important;
+}
+
+/* Restyle Featured-Collection-BG heading to match benefit heading style.
+ * The Liquid uses | upcase so text is uppercase in HTML — use CSS to
+ * force sentence case visually. */
+body[class*="template--v2"] .collection .ml-\[32px\] h4.h4 {
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: lowercase !important;
+  color: #000 !important;
+}
+body[class*="template--v2"] .collection .ml-\[32px\] h4.h4::first-letter {
+  text-transform: uppercase !important;
+}
+
+@media screen and (max-width: 999px) {
+  body[class*="template--v2"] .collection .ml-\[32px\] h4.h4 {
+    font-size: 24px !important;
+  }
+}
+
+/* Collapse the 60px header spacer wrapper in recently-viewed */
+body[class*="template--v2"] .rvi-swiper ~ .flex,
+body[class*="template--v2"] .bg-white > .flex:has(> h4) {
+  display: none !important;
+}
+
+/* Add v2-styled labels via ::before on carousel containers (not bot-swiper,
+ * which now has its own Liquid-rendered heading with full settings). */
+body[class*="template--v2"] .mfc-swiper,
+body[class*="template--v2"] .yml-swiper,
+body[class*="template--v2"] .rvi-swiper {
+  padding-top: 56px;
+  position: relative;
+}
+
+body[class*="template--v2"] .mfc-swiper::before,
+body[class*="template--v2"] .yml-swiper::before,
+body[class*="template--v2"] .rvi-swiper::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: #000;
+  padding: 12px 0 0;
+}
+
+body[class*="template--v2"] .mfc-swiper::before,
+body[class*="template--v2"] .yml-swiper::before {
+  content: "You might also like";
+}
+
+body[class*="template--v2"] .rvi-swiper::before {
+  content: "Recently viewed";
+}
+
+/* bot-swiper: remove old ::before (heading is now in Liquid) and reset padding */
+body[class*="template--v2"] .bot-swiper {
+  padding-top: 0;
+}
+body[class*="template--v2"] .bot-swiper::before {
+  display: none;
+}
+
+/* Force single-row carousel on mobile for bot-swiper */
+body[class*="template--v2"] .bot-swiper .swiper-wrapper {
+  flex-wrap: nowrap !important;
+}
+
+@media screen and (max-width: 999px) {
+  body[class*="template--v2"] .mfc-swiper,
+  body[class*="template--v2"] .yml-swiper,
+  body[class*="template--v2"] .rvi-swiper {
+    padding-top: 48px;
+  }
+
+  body[class*="template--v2"] .mfc-swiper::before,
+  body[class*="template--v2"] .yml-swiper::before,
+  body[class*="template--v2"] .rvi-swiper::before {
+    font-size: 24px;
+    padding-left: 16px;
   }
 }
