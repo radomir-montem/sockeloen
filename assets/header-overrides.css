@@ -1730,3 +1730,734 @@ body.template--index .image-banner .button span {
   color: #000 !important;
   font-weight: 500;
 }
+
+/* ============================================================
+   CLOUDPILLO-STYLE MENU REDESIGN
+   Mobile drawer + desktop mega menu.
+   Scoped with .mobile-menu--v2 / .mega-menu-v2-* so v1 is untouched.
+   ============================================================ */
+
+/* x-cloak — hide elements until Alpine hydrates (prevents FOUC on panels) */
+[x-cloak] { display: none !important; }
+
+/* ------------------------------------------------------------
+   MOBILE DRAWER (v2)
+   ------------------------------------------------------------ */
+
+/* Override legacy panel padding (set elsewhere with !important) */
+.menu-drawer .mobile-menu--v2 .mobile-menu__panel,
+.mobile-menu--v2 .mobile-menu__panel {
+  padding: 0 !important;
+  background: #ffffff;
+}
+
+.mobile-menu--v2 {
+  height: 100%;
+  overflow: hidden;
+}
+
+.mobile-menu--v2 .mobile-menu__body {
+  height: 100%;
+  min-height: 100%;
+  background: #ffffff;
+}
+
+/* Root body: wordmark + list + footer vertical rhythm */
+.mobile-menu--v2 .mobile-menu__body--root {
+  height: 100%;
+  min-height: 100%;
+  padding: 0;
+}
+
+/* ---- Topbar ---- */
+.mobile-menu--v2 .mobile-menu__topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #F0EEEA;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__topbar--root {
+  justify-content: center;
+}
+
+.mobile-menu--v2 .mobile-menu__topbar--sub {
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+
+.mobile-menu--v2 .mobile-menu__wordmark {
+  display: inline-flex;
+  align-items: center;
+  color: #111111;
+  text-decoration: none;
+}
+
+.mobile-menu--v2 .mobile-menu__wordmark-img {
+  display: block;
+  max-height: 28px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.mobile-menu--v2 .mobile-menu__wordmark-text {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+.mobile-menu--v2 .mobile-menu__title {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #111111;
+}
+
+.mobile-menu--v2 .mobile-menu__close-btn,
+.mobile-menu--v2 .mobile-menu__back-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: 1px solid #E5E5E5;
+  border-radius: 999px;
+  color: #111111;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__close-btn { right: 20px; }
+.mobile-menu--v2 .mobile-menu__back-btn { left: 20px; }
+
+.mobile-menu--v2 .mobile-menu__close-btn:hover,
+.mobile-menu--v2 .mobile-menu__back-btn:hover {
+  background: #F5F2ED;
+  border-color: #D5D5D5;
+}
+
+.mobile-menu--v2 .mobile-menu__topbar--sub .mobile-menu__back-btn,
+.mobile-menu--v2 .mobile-menu__topbar--sub .mobile-menu__close-btn {
+  position: absolute;
+}
+
+/* ---- Root menu list ---- */
+.mobile-menu--v2 .mobile-menu__list--root {
+  list-style: none;
+  padding: 8px 24px 16px;
+  margin: 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-menu--v2 .mobile-menu__item--root {
+  border-bottom: 1px solid #F0EEEA;
+}
+
+.mobile-menu--v2 .mobile-menu__item--root:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu--v2 .mobile-menu__item-link--root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 4px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: #111111;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__item-link--root:hover {
+  color: #0395F6;
+}
+
+.mobile-menu--v2 .mobile-menu__item-link--root.is-sale {
+  color: #E53935;
+}
+
+.mobile-menu--v2 .mobile-menu__chevron {
+  flex-shrink: 0;
+  color: #111111;
+  margin-left: 12px;
+}
+
+/* ---- Footer: reviews ribbon + locale ---- */
+.mobile-menu--v2 .mobile-menu__footer {
+  padding: 20px 24px 28px;
+  border-top: 1px solid #F0EEEA;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+/* Reviews.io ribbon (green stars on green bg) */
+.mobile-menu--v2 .mobile-menu__reviews-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #00B67A;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.mobile-menu--v2 .mobile-menu__reviews-stars {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.mobile-menu--v2 .mobile-menu__reviews-star svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.mobile-menu--v2 .mobile-menu__reviews-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.mobile-menu--v2 .mobile-menu__reviews-text strong {
+  font-weight: 700;
+}
+
+.mobile-menu--v2 .mobile-menu__reviews-logo {
+  height: 16px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
+  margin-left: 2px;
+}
+
+/* Locale switcher */
+.mobile-menu--v2 .mobile-menu__locale {
+  position: relative;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  width: 100%;
+  background: #F5F2ED;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111111;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-toggle:hover {
+  background: #ECE8E1;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-globe {
+  color: #111111;
+  flex-shrink: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-toggle span {
+  flex: 1;
+  text-align: left;
+  letter-spacing: 0.02em;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-chevron {
+  transition: transform 0.15s ease;
+  color: #111111;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.mobile-menu--v2 .mobile-menu__locale-list {
+  list-style: none;
+  margin: 8px 0 0 0;
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-list li { margin: 0; }
+
+.mobile-menu--v2 .mobile-locale-link {
+  display: block;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.12s ease;
+}
+
+.mobile-menu--v2 .mobile-locale-link:hover {
+  background: #F5F2ED;
+}
+
+.mobile-menu--v2 .mobile-locale-link.is-active {
+  background: #F0EEEA;
+  font-weight: 700;
+}
+
+/* ---- Sub panel (cards + sticky CTA) ---- */
+.mobile-menu--v2 .mobile-menu__panel--sub,
+.mobile-menu--v2 .mobile-menu__panel--subsub {
+  overflow: hidden;
+}
+
+.mobile-menu--v2 .mobile-menu__body--sub,
+.mobile-menu--v2 .mobile-menu__body--subsub {
+  height: 100%;
+  min-height: 100%;
+  padding: 0;
+  position: relative;
+}
+
+.mobile-menu--v2 .mobile-menu__cards {
+  list-style: none;
+  padding: 16px 20px 120px;
+  margin: 0;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu--v2 .mobile-menu__card-wrap {
+  margin-bottom: 12px;
+}
+
+.mobile-menu--v2 .mobile-menu__card-wrap:last-child {
+  margin-bottom: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  background: #F8F6F2;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #111111;
+  transition: background 0.15s ease;
+  position: relative;
+}
+
+.mobile-menu--v2 .mobile-menu__card:hover {
+  background: #F0EEEA;
+}
+
+.mobile-menu--v2 .mobile-menu__card-img {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  background: #ECE8E1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mobile-menu--v2 .mobile-menu__card-img-el,
+.mobile-menu--v2 .mobile-menu__card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.mobile-menu--v2 .mobile-menu__card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__card-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+  color: #111111;
+  margin-bottom: 6px;
+}
+
+.mobile-menu--v2 .mobile-menu__card-feature {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6B6B6B;
+  line-height: 1.3;
+}
+
+.mobile-menu--v2 .mobile-menu__card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #ECE8E1;
+  border-radius: 999px;
+  flex-shrink: 0;
+  color: #6B6B6B;
+}
+
+.mobile-menu--v2 .mobile-menu__card-icon-el,
+.mobile-menu--v2 .mobile-menu__card-icon img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  display: block;
+}
+
+.mobile-menu--v2 .mobile-menu__card-feature-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__card-chevron {
+  flex-shrink: 0;
+  color: #111111;
+  margin-left: 8px;
+}
+
+/* Sticky CTA at bottom of sub panel */
+.mobile-menu--v2 .mobile-menu__cta-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 16px 20px 20px;
+  background: #ffffff;
+  border-top: 1px solid #F0EEEA;
+  z-index: 2;
+}
+
+.mobile-menu--v2 .mobile-menu__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 18px 20px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background 0.15s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__cta:hover {
+  background: #000000;
+}
+
+/* ------------------------------------------------------------
+   DESKTOP MEGA MENU (v2)
+   Anchored below the floating pill; full viewport width panel.
+   ------------------------------------------------------------ */
+
+.mega-menu-v2-nav { position: relative; }
+
+.mega-menu-v2-nav .list-menu--inline { display: flex; flex-wrap: nowrap; }
+
+.mega-menu-v2-item-wrap {
+  position: static;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.mega-menu-v2-trigger {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 14px;
+  position: relative;
+}
+
+.mega-menu-v2-trigger-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  color: #3A3A3A;
+  transition: color 0.15s ease;
+}
+
+.mega-menu-v2-trigger-link.is-open,
+.mega-menu-v2-trigger-link:hover { color: #111111; }
+
+.mega-menu-v2-chevron {
+  transition: transform 0.15s ease;
+  color: currentColor;
+}
+
+.mega-menu-v2-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* Full-width dropdown panel */
+.mega-menu-v2-panel {
+  position: fixed;
+  top: 100px;              /* anchored below floating pill */
+  left: 0;
+  right: 0;
+  width: 100vw;
+  background: #ffffff;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  border-top: 1px solid #F0EEEA;
+  z-index: 100;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+/* Alpine transitions */
+.mega-menu-v2-panel-enter {
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+.mega-menu-v2-panel-enter-start {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+.mega-menu-v2-panel-enter-end {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mega-menu-v2-panel-leave {
+  transition: opacity 120ms ease-in, transform 120ms ease-in;
+}
+.mega-menu-v2-panel-leave-start {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mega-menu-v2-panel-leave-end {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.mega-menu-v2-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 48px 48px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 48px;
+}
+
+/* ---- Sidebar ---- */
+.mega-menu-v2-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mega-menu-v2-cat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mega-menu-v2-cat-item { margin: 0; }
+
+.mega-menu-v2-cat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: #6B6B6B;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.12s ease, color 0.12s ease;
+  cursor: pointer;
+}
+
+.mega-menu-v2-cat:hover {
+  color: #111111;
+  background: #F8F6F2;
+}
+
+.mega-menu-v2-cat.is-active {
+  color: #111111;
+  background: #F5F2ED;
+}
+
+.mega-menu-v2-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 14px 24px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background 0.15s ease;
+}
+
+.mega-menu-v2-cta:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* ---- Grid (product cards) ---- */
+.mega-menu-v2-grid-wrap {
+  min-width: 0;
+  position: relative;
+}
+
+.mega-menu-v2-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.mega-menu-v2-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: #111111;
+  border-radius: 12px;
+  transition: transform 0.18s ease;
+}
+
+.mega-menu-v2-card:hover {
+  transform: translateY(-2px);
+}
+
+.mega-menu-v2-card-img {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  background: #F5F2ED;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 12px;
+  transition: background 0.15s ease;
+}
+
+.mega-menu-v2-card:hover .mega-menu-v2-card-img {
+  background: #ECE8E1;
+}
+
+.mega-menu-v2-card-img-el,
+.mega-menu-v2-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.mega-menu-v2-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+  color: #111111;
+  margin-bottom: 4px;
+}
+
+.mega-menu-v2-card-feature {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6B6B6B;
+  line-height: 1.3;
+}
+
+.mega-menu-v2-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #F5F2ED;
+  border-radius: 999px;
+  flex-shrink: 0;
+  color: #6B6B6B;
+}
+
+.mega-menu-v2-card-icon-el,
+.mega-menu-v2-card-icon img {
+  width: 12px;
+  height: 12px;
+  object-fit: contain;
+  display: block;
+}
+
+.mega-menu-v2-card-feature-text {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Single-feature card (when category has no grandchildren) spans full width */
+.mega-menu-v2-card--single {
+  grid-column: 1 / -1;
+  max-width: 320px;
+}
+
+/* Hide mega menu nav on narrow viewports */
+@media (max-width: 989px) {
+  .mega-menu-v2-nav { display: none; }
+  .mega-menu-v2-panel { display: none !important; }
+}
+
+/* Fine-tune for tighter desktop breakpoints */
+@media (min-width: 990px) and (max-width: 1199px) {
+  .mega-menu-v2-inner {
+    padding: 32px 32px 40px;
+    gap: 32px;
+    grid-template-columns: 200px 1fr;
+  }
+  .mega-menu-v2-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
