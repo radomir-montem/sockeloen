@@ -807,7 +807,7 @@
                         </fieldset>
                         {%- comment -%} Size guide link moved below ATC button {%- endcomment -%}
                       {%- else -%}
-                        {%- comment -%} Single-value option: render as hidden fieldset so updateOptions() still finds it {%- endcomment -%}
+                        {%- comment -%} Single-value option: hidden fieldset for JS variant matching {%- endcomment -%}
                         <fieldset class="js product-form__input{% if is_color %} color-input{% endif %}" style="display:none !important;">
                           <input
                             type="radio"
@@ -817,6 +817,15 @@
                             checked
                           >
                         </fieldset>
+                        {%- unless is_color -%}
+                          {%- comment -%} Visible read-only tile so users know which size is selected {%- endcomment -%}
+                          <fieldset class="product-form__input product-form__input--pill size-input size-input--single">
+                            <legend class="form__label">{{ option.name }}</legend>
+                            <div class="size-pill-single">
+                              <span class="size-label-text">{{ option.values.first | escape }}</span>
+                            </div>
+                          </fieldset>
+                        {%- endunless -%}
                       {%- endif -%}
                     {%- endfor -%}
                     <script type="application/json">

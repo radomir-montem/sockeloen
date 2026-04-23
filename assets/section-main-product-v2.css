@@ -983,6 +983,24 @@ a.product-v2__sp-avatar {
   color: #999;
 }
 
+/* Single-value size tile (read-only, pre-selected appearance) */
+.product-v2 .size-input--single {
+  pointer-events: none;
+  margin-bottom: 4px;
+}
+
+.product-v2 .size-input--single .size-pill-single {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  min-width: 0;
+  border: 2px solid #0395F6;
+  border-radius: 10px;
+  padding: 12px 16px;
+  background-color: #fff;
+}
+
 /* ---------- Color Picker — Dots left, name right (single card) ---------- */
 .product-v2 .product-form__input.color-input {
   display: flex;
