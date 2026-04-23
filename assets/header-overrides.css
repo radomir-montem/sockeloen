@@ -24,11 +24,16 @@
 
 #announcement-bar .announcement-bar,
 #announcement-bar .announcement-bar.gradient {
-  /* Translucent orange over the blurred hero. */
-  background: rgba(247, 101, 3, 0.92) !important;
+  /* Solid orange — removed backdrop-filter because on iOS Safari it
+     interacts badly with fade animations on the inner message: the bar
+     appears to "disappear" after the first class-cycle tick. Since the
+     pill below is already opaque white and the orange stripe is a solid
+     brand colour, the glass effect here was cosmetic at best. */
+  background: #F76503 !important;
+  background-color: #F76503 !important;
   background-image: none !important;
-  backdrop-filter: blur(70px) saturate(200%);
-  -webkit-backdrop-filter: blur(70px) saturate(200%);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   /* Smaller, tighter radius — matches EME's compact corner style.
      Top corners rounded, bottom flush against the pill beneath. */
   border-radius: 8px 8px 0 0 !important;
@@ -67,6 +72,22 @@
 #announcement-bar .announcement-bar__message,
 #announcement-bar .announcement-bar a {
   color: #fff !important;
+}
+
+/* Kill custom.css fade animations on the message — they leave iOS Safari
+   stuck at opacity 0 after the first class-cycle tick, making the bar
+   look empty. Force opacity 1 permanently on visible bars. */
+#announcement-bar .announcement-bar:not(.hidden) .announcement-bar__message,
+#announcement-bar .announcement-bar:not(.hidden) .announcement-bar__link {
+  opacity: 1 !important;
+  animation: none !important;
+  -webkit-animation: none !important;
+}
+#announcement-bar .announcement-bar.hidden {
+  /* Belt-and-braces — fully remove from layout, no animation residue. */
+  opacity: 0 !important;
+  animation: none !important;
+  -webkit-animation: none !important;
 }
 
 /* Long-text handling — truncate with ellipsis so a long message never
@@ -157,6 +178,17 @@
   right: 20px !important;
   margin: 0 !important;
   z-index: 50 !important;
+  /* Lock the wrapper's vertical footprint — iOS Safari was collapsing it
+     to 0 during class-cycle transitions (especially when both inner bars
+     were briefly display:none between ticks), making the orange strip
+     vanish. Fixed height + explicit display keeps the reserved space
+     visible regardless of child state. */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  overflow: hidden;
 }
 @media screen and (max-width: 989px) {
   #announcement-bar {
