@@ -1141,7 +1141,11 @@ body.template--custom-made .search-modal.modal__content {
   width: auto !important;
   max-width: 360px !important;
   height: auto !important;
-  max-height: calc(100vh - 110px) !important;
+  /* Cap the drawer well short of the viewport bottom so the rounded
+     bottom corners are clearly visible against the page below — matching
+     the desktop mega menu which ends at its content, not the viewport.
+     220px reserves: 94px top offset + ~126px visible footer area. */
+  max-height: calc(100vh - 220px) !important;
   /* Must sit above the announcement bar (z-index 50) and the header pill —
      otherwise the drawer opens behind them and taps on menu items are
      intercepted by the bar/pill above. */
@@ -2076,12 +2080,14 @@ body.template--index .image-banner .button span {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Floating back button on sub-panels — no topbar above the cards, just
-   a subtle circle in the top-left corner to navigate back. */
-.mobile-menu--v2 .mobile-menu__back-floating {
+/* Floating close X on sub-panels — no topbar above the cards, just a
+   subtle circle in the top-right corner to dismiss the drawer entirely.
+   Back-to-parent navigation is intentionally removed: reopening always
+   lands on the root panel (closeDrawer() resets activeMenu/childMenu). */
+.mobile-menu--v2 .mobile-menu__close-floating {
   position: absolute;
   top: 12px;
-  left: 12px;
+  right: 12px;
   z-index: 5;
   width: 36px;
   height: 36px;
@@ -2097,7 +2103,7 @@ body.template--index .image-banner .button span {
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.mobile-menu--v2 .mobile-menu__back-floating:hover {
+.mobile-menu--v2 .mobile-menu__close-floating:hover {
   background: #F5F2ED;
   border-color: #D5D5D5;
 }
