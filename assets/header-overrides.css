@@ -22,6 +22,15 @@
   z-index: 10;
 }
 
+/* The announcement SECTION wrapper must paint above the header section.
+   Theme's base.css sets #shopify-section-header to z-index 15, which traps
+   the announcement bar below it on mobile (header covers the bar). Raising
+   the announcement section to 20 lets its fixed child paint on top. */
+#shopify-section-announcement-bar {
+  z-index: 20 !important;
+  position: relative;  /* ensure z-index applies */
+}
+
 #announcement-bar .announcement-bar,
 #announcement-bar .announcement-bar.gradient {
   /* Solid orange — removed backdrop-filter because on iOS Safari it
@@ -1066,9 +1075,11 @@ menu-drawer > details[open] > summary::before {
     border-radius: 0 0 7px 7px;
   }
 
-  /* Absolute mobile header (homepage) — same treatment. */
+  /* Absolute mobile header (homepage) — same treatment.
+     CRITICAL: top must match the base rule (44px). Previous `top: 0` made
+     the header cover the notification bar at y=12-44 on mobile. */
   header.header.absolute {
-    top: 0 !important;
+    top: 44px !important;
     left: 12px !important;
     right: 12px !important;
     margin: 0 !important;
