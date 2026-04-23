@@ -933,9 +933,55 @@
                           }
                         }
 
+                        function updateMediaByAlt(targetAlt) {
+                          if (!targetAlt) return;
+
+                          /* Main gallery slides */
+                          var slider = document.getElementById('Slider-Gallery-{{ section.id }}');
+                          if (slider) {
+                            slider.querySelectorAll('li[data-variant-alt]').forEach(function(item) {
+                              var itemAlt = item.getAttribute('data-variant-alt') || '';
+                              if (!itemAlt || itemAlt === targetAlt) {
+                                item.style.removeProperty('display');
+                              } else {
+                                item.style.display = 'none';
+                              }
+                            });
+                          }
+
+                          /* Thumbnail strip */
+                          var thumbs = document.getElementById('Slider-Thumbnails-{{ section.id }}');
+                          if (thumbs) {
+                            thumbs.querySelectorAll('li[data-variant-alt]').forEach(function(item) {
+                              var itemAlt = item.getAttribute('data-variant-alt') || '';
+                              if (!itemAlt || itemAlt === targetAlt) {
+                                item.style.removeProperty('display');
+                              } else {
+                                item.style.display = 'none';
+                              }
+                            });
+                          }
+                        }
+
+                        function initMediaSwitching() {
+                          var variantRadios = document.querySelector('.product-v2 variant-radios');
+                          if (!variantRadios) return;
+
+                          variantRadios.addEventListener('change', function() {
+                            /* setTimeout(0) ensures onVariantChange() has finished setting currentVariant */
+                            setTimeout(function() {
+                              var variant = variantRadios.currentVariant;
+                              if (variant && variant.featured_media) {
+                                updateMediaByAlt(variant.featured_media.alt);
+                              }
+                            }, 0);
+                          });
+                        }
+
                         function init() {
                           initColorPicker();
                           syncHiddenVariants();
+                          initMediaSwitching();
                           /* Re-sync after global.js checkAvaiable runs (fires ~500ms after page load) */
                           setTimeout(syncHiddenVariants, 600);
                           setTimeout(syncHiddenVariants, 1200);
