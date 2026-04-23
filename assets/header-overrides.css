@@ -1865,7 +1865,9 @@ body.template--index .image-banner .button span {
 /* ---- Root menu list ---- */
 .mobile-menu--v2 .mobile-menu__list--root {
   list-style: none;
-  padding: 8px 24px 16px;
+  /* Bottom padding gives breathing room so the last menu item isn't flush
+     against the footer divider when the list is scrolled to the end. */
+  padding: 8px 24px 24px;
   margin: 0;
   flex: 1;
   overflow-y: auto;
@@ -1907,12 +1909,16 @@ body.template--index .image-banner .button span {
   margin-left: 12px;
 }
 
-/* ---- Footer: reviews ribbon + locale ---- */
+/* ---- Footer: reviews ribbon + locale ----
+   Positioned so the upward-opening locale dropdown has an absolute
+   containing block. padding-bottom respects iOS safe-area inset so the
+   language toggle always has breathing room above the home indicator. */
 .mobile-menu--v2 .mobile-menu__footer {
-  padding: 20px 24px 28px;
+  padding: 20px 24px calc(20px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid #F0EEEA;
   background: #ffffff;
   flex-shrink: 0;
+  position: relative;
 }
 
 /* Reviews.io ribbon (green stars on green bg) */
