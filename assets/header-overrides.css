@@ -431,10 +431,12 @@ header.header.sticky-navbar .header__heading-logo,
 .localization-label {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0.04em;
+  gap: 6px;
+  /* Bumped from 13px → 15px so the text weight matches the 20px icons
+     next to it (cart, search, account). Chevron caret also scales up. */
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
   cursor: pointer;
   white-space: nowrap;
   padding: 0 !important;
@@ -462,12 +464,12 @@ header.header.sticky-navbar .header__heading-logo,
 .localization-label::after {
   content: '';
   display: inline-block;
-  width: 8px;
-  height: 5px;
+  width: 10px;
+  height: 6px;
   background-image: url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L4 4L7 1' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: contain;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 /* Dropdown panel — ALWAYS opens downward (top: 100%), never upward.
@@ -500,13 +502,13 @@ header.header.sticky-navbar .header__heading-logo,
   margin: 2px 0;
 }
 .localization-item a {
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
   color: #000;
   text-decoration: none;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   display: block;
-  padding: 8px 12px;
+  padding: 9px 14px;
   border-radius: 6px;
 }
 .localization-item:hover a {
