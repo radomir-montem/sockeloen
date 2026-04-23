@@ -365,6 +365,57 @@ header.header .header__icons {
   align-items: center !important;
 }
 
+/* NAV column: the theme's nav anchors ship with `padding: 20px 0 10px` which
+   makes each <a> 48.2px tall. CSS Grid then sizes the single header row to
+   54.7px (taller than the 48px pill) and — because padding-top is 20px and
+   padding-bottom is 10px — the visible text sits ~9px BELOW the pill's true
+   centerline. We flatten the padding and clamp every level (nav → ul → li → a)
+   to 36px so all three columns (nav / logo / icons) share the same content
+   box and `align-items: center` on the header grid actually centers them. */
+header.header > nav.header__inline-menu,
+header.header .header__inline-menu {
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+header.header .header__inline-menu > ul,
+header.header .header__inline-menu ul.list-menu {
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  align-items: center !important;
+  display: inline-flex !important;
+  margin: 0 !important;
+}
+header.header .header__inline-menu li {
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+header.header .header__inline-menu li > a,
+header.header .header__inline-menu li > details > summary,
+header.header .header__inline-menu .header__menu-item,
+header.header .header__inline-menu .list-menu__item {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Force the single grid row to the exact content height so items vertically
+   centre on y=68 (pill midline) rather than on the inflated row midline. */
+header.header {
+  grid-template-rows: 36px !important;
+}
+
 /* Header-drawer (mobile hamburger) height — do NOT set display here, because
    the theme hides header-drawer with `display: none` at min-width:990px.
    Mobile styles further down re-enable display:flex for the mobile viewport. */
@@ -964,7 +1015,17 @@ body.template--custom-made .search-modal.modal__content {
   overflow: hidden;
 }
 
-/* Overlay dimming under the floating search pill */
+/* Overlay dimming under the floating search pill.
+   STACKING CONTEXT NOTE: .search-modal.modal__content has z-index: 300 which
+   creates a stacking context. The overlay is a DOM child of the modal, so
+   its z-index is painted RELATIVE to the modal. If we give it a positive
+   z-index (e.g. 299), it paints ABOVE the modal's own implicit background
+   layer INSIDE the modal rect — and `rgba(0,0,0,0.25)` over `#fff` gives
+   rgb(191,191,191), so the search pill looks tinted grey.
+   Fix: give it z-index: -1 so it paints BELOW the modal's bg inside the
+   stacking context. Outside the modal rect the overlay is still visible
+   (nothing in the stacking context paints there except the overlay), so
+   the page is still dimmed while the pill stays pure white. */
 .search-modal .modal-overlay {
   position: fixed !important;
   top: 0 !important;
@@ -972,9 +1033,7 @@ body.template--custom-made .search-modal.modal__content {
   right: 0 !important;
   bottom: 0 !important;
   background: rgba(0, 0, 0, 0.25) !important;
-  /* Just below the search pill (300) — dims everything else including
-     the header icons and announcement bar. */
-  z-index: 299 !important;
+  z-index: -1 !important;
 }
 .search-modal .modal-overlay::after {
   display: none !important;
