@@ -196,7 +196,7 @@
             <div id="menu-drawer" class="gradient menu-drawer motion-reduce !pt-[40px]" tabindex="-1">
               <div class="menu-drawer__inner-container">
                 <div class="menu-drawer__navigation-container">
-                  {% render 'menu-mobile', menu: section.settings.menu %}
+                  {% render 'menu-mobile', menu: section.settings.menu, logo: section.settings.logo, logo_width: section.settings.logo_width %}
                   <div class="menu-drawer__utility-links flex flex-col">
                     {% comment %} <a href="/" class="menu-drawer__account link focus-inset h5">
                       Index
