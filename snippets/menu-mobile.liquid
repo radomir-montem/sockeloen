@@ -134,7 +134,23 @@
         </a>
 
         <div class="mobile-menu__locale" x-data="{ localeOpen: false }">
-          <button @click="localeOpen = !localeOpen" type="button" class="mobile-menu__locale-toggle">
+          {%- comment -%}
+            Intentionally a <div role="button"> instead of <button>. The theme's
+            MenuDrawer custom element (global.js) runs
+              `this.querySelectorAll('button').forEach(b => b.addEventListener('click', this.onCloseButtonClick.bind(this)))`
+            at construction, which would treat every <button> inside the drawer
+            as a submenu-close trigger — clicking this would close the entire
+            drawer ~400ms after toggling localeOpen. Using a div keeps the
+            querySelectorAll('button') miss-list. Keyboard support (Enter/Space)
+            is restored via @keydown handlers below.
+          {%- endcomment -%}
+          <div @click="localeOpen = !localeOpen"
+               @keydown.enter.prevent="localeOpen = !localeOpen"
+               @keydown.space.prevent="localeOpen = !localeOpen"
+               role="button"
+               tabindex="0"
+               :aria-expanded="localeOpen ? 'true' : 'false'"
+               class="mobile-menu__locale-toggle">
             <svg class="mobile-menu__locale-globe" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
               <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
             </svg>
@@ -142,7 +158,7 @@
             <svg class="mobile-menu__locale-chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" :class="localeOpen && 'is-open'">
               <path d="M4 5L8 0.833333L7.2 8.58591e-08L4 3.33333L0.8 9.5399e-09L4.9687e-08 0.833333L4 5Z" fill="currentColor"/>
             </svg>
-          </button>
+          </div>
           <ul x-show="localeOpen" x-transition class="mobile-menu__locale-list">
             <li><a href="#" data-country-code="NL" data-language="en" class="mobile-locale-link{% if localization.language.iso_code == 'en' and localization.country.currency.iso_code == 'EUR' %} is-active{% endif %}">EN / EUR</a></li>
             <li><a href="#" data-country-code="NL" data-language="nl" class="mobile-locale-link{% if localization.language.iso_code == 'nl' %} is-active{% endif %}">NL / EUR</a></li>
