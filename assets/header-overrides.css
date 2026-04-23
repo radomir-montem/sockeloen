@@ -1760,21 +1760,33 @@ body.template--index .image-banner .button span {
   background: #ffffff;
 }
 
+/* ----------------------------------------------------------------------
+   Menu sizing — content-first
+   ----------------------------------------------------------------------
+   The menu ends at its content (like the desktop mega panel) so the
+   drawer's rounded bottom corners are visible against the page.
+
+   Strategy:
+   - Root panel flows normally (position: relative) → contributes its
+     natural height to the drawer's auto height.
+   - Sub/sub-sub panels stay absolute so they slide over the root with
+     Alpine transitions (left: -100% → 0).
+   - Body has no min-height (no forced vertical fill). List is content-
+     sized; for very long menus it scrolls internally via its own
+     overflow-y.
+   Result: drawer sizes to root content, capped by drawer max-height. */
 .mobile-menu--v2 {
-  height: 100%;
   overflow: hidden;
 }
 
 .mobile-menu--v2 .mobile-menu__body {
-  height: 100%;
-  min-height: 100%;
   background: #ffffff;
 }
 
-/* Root body: wordmark + list + footer vertical rhythm */
+/* Root body: natural content height */
 .mobile-menu--v2 .mobile-menu__body--root {
-  height: 100%;
-  min-height: 100%;
+  height: auto;
+  min-height: 0;
   padding: 0;
 }
 
