@@ -24,37 +24,32 @@
 
 #announcement-bar .announcement-bar,
 #announcement-bar .announcement-bar.gradient {
-  /* Orange, but translucent so the blurred hero underneath shows through —
-     matches the white-glass pill below for a cohesive EME look.
-     Lower orange opacity + wider blur radius so shapes/colors behind
-     dissolve into a soft wash rather than being faintly recognisable. */
-  background: rgba(247, 101, 3, 0.60) !important;
+  /* Translucent orange over the blurred hero. */
+  background: rgba(247, 101, 3, 0.92) !important;
   background-image: none !important;
   backdrop-filter: blur(70px) saturate(200%);
   -webkit-backdrop-filter: blur(70px) saturate(200%);
   /* Smaller, tighter radius — matches EME's compact corner style.
      Top corners rounded, bottom flush against the pill beneath. */
   border-radius: 8px 8px 0 0 !important;
-  /* Borderless — no inset highlights or rim, only the glass surface. */
   border: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
-  /* Fixed height (not min-height) — guarantees the pill below can sit exactly
-     flush against it with no sub-pixel gap. Reduced from 46px → 32px for a
-     tighter, less bulky notification strip. */
-  height: 32px !important;
-  min-height: 32px !important;
-  width: 100% !important;
+  /* Fixed height (not min-height) — guarantees the pill below sits exactly
+     flush against it with no sub-pixel gap. */
+  height: 32px;
   min-width: 0;
-  /* Explicit flex display + visibility — prevents any mobile theme CSS from
-     accidentally hiding the bar. Must override `:not(.hidden)` via !important. */
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+/* Force visible state for the active bar (first, or the one made active by JS).
+   Scoped via :not(.hidden) so hidden bars correctly stay display:none. */
+#announcement-bar .announcement-bar:not(.hidden) {
   display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
   visibility: visible !important;
   opacity: 1 !important;
-  overflow: hidden;
-  box-sizing: border-box !important;
 }
 
 /* Close-X on the announcement bar — hidden globally. We don't want the
@@ -84,18 +79,17 @@
   /* Reset theme's `padding: 1rem 0` which made the link taller than our
      32px bar and caused visual clipping on mobile. */
   padding: 0 20px !important;
-  height: 32px !important;
-  width: 100% !important;
+  width: 100%;
   font-weight: 500;
   font-size: 11px;
   line-height: 32px;
   max-width: 100%;
   min-width: 0;
   overflow: hidden;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-sizing: border-box !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   /* Kill the theme's hover styles — no bg tint, no arrow shift, no opacity
      change. The notification strip stays static on hover. */
   background: transparent !important;
@@ -580,7 +574,10 @@ header.header.sticky-navbar .header__heading-logo,
     0 6px 20px rgba(0, 0, 0, 0.08),
     0 2px 6px rgba(0, 0, 0, 0.05) !important;
   overflow: visible !important;
-  z-index: 200;
+  /* Must be ABOVE the announcement bar (50), header pill, menu drawer (60)
+     and drawer backdrop. The search pill replaces the header visually when
+     open, so it has to cover the icons that otherwise stick through. */
+  z-index: 300 !important;
 }
 
 /* All pages share the same header geometry — search lands right over the pill */
@@ -591,11 +588,13 @@ body.template--custom-made .search-modal.modal__content {
 
 /* Inner wrapper — same 6px vertical padding as header.header so the
    interactive row inside is exactly 36px tall, vertically centered on
-   the pill's centerline. */
+   the pill's centerline. Content is horizontally centered so the search
+   field sits in the middle of the pill (matching the pre-redesign layout)
+   with the close button absolutely positioned on the far right. */
 .search-modal__content {
   display: flex !important;
   align-items: center !important;
-  justify-content: flex-start !important;
+  justify-content: center !important;
   padding: 6px 10px !important;
   min-height: 48px !important;
   height: 48px !important;
@@ -614,15 +613,18 @@ body.template--custom-made .search-modal.modal__content {
   align-self: center !important;
 }
 
-/* The form fills the row */
+/* The form is horizontally centered with a capped max-width so the input
+   reads as a centered search field (not a full-width row). */
 .search-modal__content .search-modal__form,
 .search-modal__content form.search {
-  flex: 1;
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: 600px;
   min-width: 0;
+  margin: 0 auto !important;
   display: flex !important;
   align-items: center !important;
   padding: 0 !important;
-  margin: 0 !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -756,15 +758,17 @@ body.template--custom-made .search-modal.modal__content {
   stroke: #000 !important;
 }
 
-/* Close button — OUTSIDE the input frame, on the far right of the pill */
+/* Close button — OUTSIDE the input frame, absolutely pinned to the far
+   right of the pill so the centered form in the middle stays centered
+   regardless of the close button's width. */
 .search-modal .modal__close-button {
-  position: static !important;
+  position: absolute !important;
+  top: 50% !important;
+  right: 10px !important;
+  transform: translateY(-50%) !important;
   flex: 0 0 auto;
   width: 36px;
   height: 36px;
-  right: auto !important;
-  top: auto !important;
-  transform: none !important;
   margin: 0 !important;
   padding: 0 !important;
   display: flex !important;
@@ -776,6 +780,7 @@ body.template--custom-made .search-modal.modal__content {
   color: #000 !important;
   border-radius: 6px;
   transition: background 0.15s ease;
+  z-index: 2;
 }
 .search-modal .modal__close-button:hover {
   background: rgba(0, 0, 0, 0.08) !important;
@@ -812,7 +817,9 @@ body.template--custom-made .search-modal.modal__content {
   right: 0 !important;
   bottom: 0 !important;
   background: rgba(0, 0, 0, 0.25) !important;
-  z-index: 199;
+  /* Just below the search pill (300) — dims everything else including
+     the header icons and announcement bar. */
+  z-index: 299 !important;
 }
 .search-modal .modal-overlay::after {
   display: none !important;
@@ -880,6 +887,10 @@ body.template--custom-made .search-modal.modal__content {
   max-width: 360px !important;
   height: auto !important;
   max-height: calc(100vh - 110px) !important;
+  /* Must sit above the announcement bar (z-index 50) and the header pill —
+     otherwise the drawer opens behind them and taps on menu items are
+     intercepted by the bar/pill above. */
+  z-index: 60 !important;
 
   padding: 10px !important;
   border: none !important;
@@ -973,10 +984,14 @@ body.template--custom-made .menu-drawer {
   }
 }
 
-/* Backdrop when drawer open — soft dim, not the theme's default hard dark */
+/* Backdrop when drawer open — soft dim, not the theme's default hard dark.
+   Must stack above the announcement bar (z-index 50) but below the drawer
+   itself (z-index 60) so the dim covers the whole viewport and the drawer
+   sits on top of the dim. */
 .js menu-drawer > details[open] > summary::before,
 menu-drawer > details[open] > summary::before {
   background: rgba(0, 0, 0, 0.25) !important;
+  z-index: 55 !important;
 }
 
 /* ==========================================================================
