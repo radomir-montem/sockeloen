@@ -1183,18 +1183,46 @@ body.template--custom-made .menu-drawer {
 }
 
 @media screen and (max-width: 989px) {
+  /* Drawer sits FLUSH against the header pill (y:92 = header bottom) so the
+     two merge into one continuous white surface. Same horizontal inset as the
+     header (12px each side) so widths align exactly. Flat top + rounded
+     bottom mirrors the header's rounded bottom being flattened (below), so
+     the pair reads as one big rounded-bottom rectangle. */
   .js .menu-drawer,
   .menu-drawer {
-    top: 100px !important;  /* 44px bar bottom + 48px pill + 8px gap */
+    top: 92px !important;  /* header bottom — NO gap */
     left: 12px !important;
     right: 12px !important;
     max-width: none !important;
     width: calc(100vw - 24px) !important;
-    border-radius: 8px !important;
+    /* Flat top, rounded bottom — merges with the header's flattened bottom */
+    border-radius: 0 0 8px 8px !important;
+    /* Opaque white — matches header pill exactly. Drop the blur + translucency
+       because the two surfaces must read as one uniform shape. */
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    /* Borderless — outer shadow only */
+    box-shadow:
+      0 6px 20px rgba(0, 0, 0, 0.10),
+      0 2px 6px rgba(0, 0, 0, 0.05) !important;
+    /* Reduce inner padding so the content area lines up with the header
+       content area (the 8px padding is what was making the inset content
+       look "too wide" relative to the pill above). */
+    padding: 6px !important;
   }
   body.template--index .menu-drawer,
   body.template--custom-made .menu-drawer {
-    top: 100px !important;
+    top: 92px !important;
+  }
+
+  /* When the mobile menu is open, flatten the header's bottom corners so
+     the header + drawer merge into a single seamless surface. */
+  sticky-header:has(header-drawer > details[open]) header.header,
+  .header-wrapper:has(header-drawer > details[open]) header.header,
+  header.header:has(> header-drawer > details[open]) {
+    border-radius: 0 !important;
   }
 
   /* Menu content fix (mobile):
@@ -1207,8 +1235,8 @@ body.template--custom-made .menu-drawer {
      height and stretch the inner containers so `h-full` resolves properly. */
   .js .menu-drawer,
   .menu-drawer {
-    height: calc(100vh - 120px) !important;
-    max-height: calc(100vh - 120px) !important;
+    height: calc(100vh - 104px) !important;  /* 44 bar + 48 pill + 12 bottom gutter */
+    max-height: calc(100vh - 104px) !important;
   }
   .menu-drawer .menu-drawer__inner-container {
     height: 100% !important;
@@ -1225,15 +1253,21 @@ body.template--custom-made .menu-drawer {
     display: block;
   }
   /* Remove the extra top padding the theme injects (!pt-[40px]) since the
-     drawer already sits 8px below the header pill. */
+     drawer now sits flush against the header pill with no gap. */
   .menu-drawer.\!pt-\[40px\],
   .menu-drawer[class*="!pt-"] {
-    padding-top: 10px !important;
+    padding-top: 6px !important;
   }
   /* Mobile nav panel padding — theme uses py-[64px] px-[32px] which is huge
-     inside our inset drawer. Trim it so nav items sit closer to the top. */
+     inside our inset drawer. Trim it so nav items sit closer to the top
+     and the inner content lines up with the header pill's horizontal rhythm. */
   .menu-drawer .mobile-menu__panel {
-    padding: 16px 20px !important;
+    padding: 20px 18px !important;
+  }
+  /* Kill any rounded corners on the inner navigation panels so they fill
+     the drawer edge-to-edge — the drawer provides the only radius. */
+  .menu-drawer .mobile-navigation {
+    border-radius: 0 0 6px 6px !important;
   }
 }
 
