@@ -165,6 +165,64 @@
   font-size: 12px;
 }
 
+/* ==========================================================================
+   Marquee mode — activates via JS (.is-marquee class on .announcement-bar)
+   when the text width exceeds the pill width. Text continuously scrolls
+   right-to-left with a duplicated track for a seamless loop.
+   ========================================================================== */
+
+/* When marquee is active, replace ellipsis truncation with overflow scroll */
+.announcement-bar.is-marquee .announcement-bar__link {
+  justify-content: flex-start !important;
+  padding: 0 !important;          /* track is full-bleed inside the pill */
+  overflow: hidden !important;
+}
+.announcement-bar.is-marquee .page-width {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  display: block !important;
+}
+.announcement-bar.is-marquee .announcement-bar__marquee-track {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  width: max-content !important;
+  animation: announcement-marquee var(--marquee-duration, 25s) linear infinite;
+  will-change: transform;
+}
+.announcement-bar.is-marquee .announcement-bar__marquee-track .announcement-bar__message {
+  white-space: nowrap !important;
+  overflow: visible !important;     /* no ellipsis inside the track */
+  text-overflow: clip !important;
+  flex-shrink: 0 !important;
+  max-width: none !important;
+  padding-right: 60px !important;   /* consistent gap between loops */
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px;
+}
+/* Pause on hover/focus-within for readability */
+.announcement-bar.is-marquee:hover .announcement-bar__marquee-track,
+.announcement-bar.is-marquee:focus-within .announcement-bar__marquee-track {
+  animation-play-state: paused;
+}
+/* Respect reduced-motion: pause but still show full first copy */
+@media (prefers-reduced-motion: reduce) {
+  .announcement-bar.is-marquee .announcement-bar__marquee-track {
+    animation: none !important;
+  }
+}
+
+@keyframes announcement-marquee {
+  from { transform: translateX(0); }
+  /* Exactly -50% because two identical items each get padding-right: 60px,
+     so the track loops seamlessly when shifted by one full item unit. */
+  to   { transform: translateX(-50%); }
+}
+
 /* Mobile: same visual style as desktop (height, radius, font, bg).
    Only horizontal inset is slightly reduced for narrow viewports. */
 @media screen and (max-width: 989px) {
