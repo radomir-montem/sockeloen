@@ -1056,6 +1056,45 @@ body.template--custom-made .menu-drawer {
   body.template--custom-made .menu-drawer {
     top: 100px !important;
   }
+
+  /* Menu content fix (mobile):
+     The theme's mobile nav uses `.mobile-navigation { position: absolute; height: 100% }`
+     so multiple menu panels can stack and slide via Alpine.js transitions. For
+     `height: 100%` to resolve, the containing block (`.relative`) needs an
+     explicit height — but in our inset floating drawer its natural height is 0
+     (children are absolutely positioned), so the panel collapses and menu
+     items render outside the drawer box. Give the drawer a comfortable inset
+     height and stretch the inner containers so `h-full` resolves properly. */
+  .js .menu-drawer,
+  .menu-drawer {
+    height: calc(100vh - 120px) !important;
+    max-height: calc(100vh - 120px) !important;
+  }
+  .menu-drawer .menu-drawer__inner-container {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+  .menu-drawer .menu-drawer__navigation-container {
+    height: 100% !important;
+    min-height: 0 !important;
+    grid-template-rows: 1fr auto !important;  /* nav fills, utility row hugs */
+  }
+  .menu-drawer .menu-drawer__navigation-container > .relative {
+    min-height: 360px;  /* ensures abs-positioned panel has room */
+    height: 100%;
+    display: block;
+  }
+  /* Remove the extra top padding the theme injects (!pt-[40px]) since the
+     drawer already sits 8px below the header pill. */
+  .menu-drawer.\!pt-\[40px\],
+  .menu-drawer[class*="!pt-"] {
+    padding-top: 10px !important;
+  }
+  /* Mobile nav panel padding — theme uses py-[64px] px-[32px] which is huge
+     inside our inset drawer. Trim it so nav items sit closer to the top. */
+  .menu-drawer .mobile-menu__panel {
+    padding: 16px 20px !important;
+  }
 }
 
 /* Backdrop when drawer open — soft dim, not the theme's default hard dark.
