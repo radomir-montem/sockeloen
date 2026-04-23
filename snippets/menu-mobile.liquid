@@ -16,7 +16,9 @@
   Links without a matched block fall back to title-only (no image, no feature line).
 {%- endcomment -%}
 
-<div class="relative mobile-menu mobile-menu--v2" x-data="{
+<div class="relative mobile-menu mobile-menu--v2"
+     :class="{ 'mobile-menu--v2-sub-active': activeMenu > 0 }"
+     x-data="{
       /* Panel state:
            activeMenu = 0  → root panel
            activeMenu = N  → sub panel for menu.links[N-1] (forloop.index is 1-based)
