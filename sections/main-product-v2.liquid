@@ -818,13 +818,12 @@
                           >
                         </fieldset>
                         {%- unless is_color -%}
-                          {%- comment -%} Visible read-only tile so users know which size is selected {%- endcomment -%}
-                          <fieldset class="product-form__input product-form__input--pill size-input size-input--single">
-                            <legend class="form__label">{{ option.name }}</legend>
+                          {%- comment -%} Visible read-only tile — div not fieldset so updateOptions() skips it {%- endcomment -%}
+                          <div class="product-form__input product-form__input--pill size-input size-input--single">
                             <div class="size-pill-single">
                               <span class="size-label-text">{{ option.values.first | escape }}</span>
                             </div>
-                          </fieldset>
+                          </div>
                         {%- endunless -%}
                       {%- endif -%}
                     {%- endfor -%}
