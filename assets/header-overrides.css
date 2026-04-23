@@ -2470,3 +2470,27 @@ body.template--index .image-banner .button span {
   }
 }
 
+/* When the desktop mega panel is open, flatten the pill's bottom corners
+   and drop its shadow so the pill + panel read as one continuous white
+   surface (no 8px corner notches, no seam shadow between them). */
+@media (min-width: 990px) {
+  sticky-header:has(.mega-menu-v2-panel:not([style*="display: none"])) header.header,
+  .header-wrapper:has(.mega-menu-v2-panel:not([style*="display: none"])) header.header,
+  header.header:has(.mega-menu-v2-panel:not([style*="display: none"])) {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Mobile drawer: drop the drawer's internal 6px inset when the v2 menu is
+   inside so the wordmark topbar + menu content sit flush with the drawer
+   edges (which already align with the pill's horizontal inset). Also
+   flatten drawer's own TOP corners so top meets pill bottom flat-to-flat. */
+@media (max-width: 989px) {
+  .js .menu-drawer:has(.mobile-menu--v2),
+  .menu-drawer:has(.mobile-menu--v2) {
+    padding: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+  }
+}
+
