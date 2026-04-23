@@ -1414,6 +1414,38 @@ body.template--custom-made .menu-drawer {
     height: auto !important;
     min-height: 0 !important;
   }
+
+  /* ------------------------------------------------------------------------
+     Sticky close-X fix: open up the overflow chain when sub is active.
+     --------------------------------------------------------------------
+     `.mobile-menu__close-floating` uses `position: sticky` to stay pinned
+     to the top of the drawer viewport while the drawer scrolls. Sticky
+     resolves to the NEAREST scrolling ancestor, so anything between the
+     sticky element and `.menu-drawer` (the real scroll container) with
+     `overflow: hidden|auto|scroll` traps it — the button rides the content
+     off-screen instead of sticking.
+
+     Ancestor chain when sub-active (inside-out):
+       body--sub (visible)
+       → panel--sub (HIDDEN — used during slide-in animation)
+       → mobile-menu--v2 (HIDDEN — belt-and-suspenders for slide)
+       → navigation-container (AUTO — theme default)
+       → inner-container (visible)
+       → .menu-drawer (the scroll container we actually want)
+
+     Override the three blockers to `visible` once sub-active is latched.
+     By then the slide-in is visually complete and horizontal overflow is
+     already clipped by the drawer itself, so removing hidden on the
+     intermediates has no visual side-effect. */
+  .mobile-menu--v2-sub-active,
+  .mobile-menu--v2-sub-active .mobile-menu__panel--sub,
+  .mobile-menu--v2-sub-active .mobile-menu__panel--subsub {
+    overflow: visible !important;
+  }
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container,
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__inner-container {
+    overflow: visible !important;
+  }
 }
 
 /* Backdrop when drawer open — soft dim, not the theme's default hard dark.
