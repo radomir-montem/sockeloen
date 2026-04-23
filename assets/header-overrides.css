@@ -290,14 +290,28 @@ header.header {
 header.header .header__heading,
 header.header .header__heading-link,
 header.header .header__heading a,
-header.header .header__icons,
-header.header > header-drawer,
-header.header > header-drawer > details > summary {
+header.header .header__icons {
   height: 36px !important;
   min-height: 36px !important;
   max-height: 36px !important;
   display: flex !important;
   align-items: center !important;
+}
+
+/* Header-drawer (mobile hamburger) height — do NOT set display here, because
+   the theme hides header-drawer with `display: none` at min-width:990px.
+   Mobile styles further down re-enable display:flex for the mobile viewport. */
+header.header > header-drawer,
+header.header > header-drawer > details > summary {
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  align-items: center !important;
+}
+@media screen and (min-width: 990px) {
+  header.header > header-drawer {
+    display: none !important;
+  }
 }
 header.header .header__heading-logo {
   max-height: 32px !important;
