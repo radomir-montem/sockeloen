@@ -1377,6 +1377,13 @@ body.template--custom-made .menu-drawer {
   .menu-drawer:has(.mobile-menu--v2) .mobile-menu__panel {
     padding: 0 !important;
   }
+  /* Hide the stock drawer footer (social icons + localization-selector).
+     The v2 menu renders its own locale pill inside the root panel, so the
+     utility-links row would be a duplicate "EN" selector sitting below the
+     v2 content. */
+  .menu-drawer:has(.mobile-menu--v2) .menu-drawer__utility-links {
+    display: none !important;
+  }
 }
 
 /* Backdrop when drawer open — soft dim, not the theme's default hard dark.
