@@ -2230,18 +2230,27 @@ body.template--index .image-banner .button span {
   transform: rotate(180deg);
 }
 
-/* Full-width dropdown panel */
+/* Dropdown panel — width + inset matches the floating pill so the two
+   surfaces read as one continuous shape. Flush top at the pill's bottom
+   edge (y=92) means no gap/shadow line between them. Flat top corners +
+   rounded bottom mirrors the pill's (flattened-when-open) shape. */
 .mega-menu-v2-panel {
   position: fixed;
-  top: 100px;              /* anchored below floating pill */
-  left: 0;
-  right: 0;
-  width: 100vw;
-  background: #ffffff;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
-  border-top: 1px solid #F0EEEA;
-  z-index: 100;
-  max-height: calc(100vh - 120px);
+  top: 92px;                 /* pill bottom = 44 (top) + 48 (height) */
+  left: 20px;                /* matches pill's left inset */
+  right: 20px;               /* matches pill's right inset */
+  width: auto;
+  background: #ffffff;       /* same white as pill — seamless flow */
+  border-top: none;
+  border-radius: 0 0 8px 8px; /* flat top, rounded bottom (mirrors pill) */
+  /* Soft outer shadow on sides + bottom. clip-path trims the top shadow
+     so there's no visible seam line where pill meets panel. */
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.05);
+  clip-path: inset(0 -40px -40px -40px);
+  z-index: 50;               /* above announcement bar (20), under modal layers */
+  max-height: calc(100vh - 112px);
   overflow-y: auto;
 }
 
