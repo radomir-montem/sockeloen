@@ -2136,6 +2136,15 @@ body.template--index .image-banner .button span {
 .mobile-menu--v2 .mobile-menu__panel--sub,
 .mobile-menu--v2 .mobile-menu__panel--subsub {
   position: absolute; /* keep for slide animation */
+  /* Cover the drawer exactly — not 100vh, which would extend past the
+     drawer's rounded bottom. top:0 + bottom:0 makes height match the
+     drawer (which is now sized to root content). `left`/`right` are
+     intentionally left to Tailwind's transition utilities (-left-full /
+     left-0), which drive the horizontal slide. */
+  top: 0;
+  bottom: 0;
+  height: auto;
+  width: 100%;
 }
 
 .mobile-menu--v2 .mobile-menu__body--sub,
