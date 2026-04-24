@@ -1758,15 +1758,19 @@ body.template--custom-made .card__content {
 }
 
 /* ==========================================================================
-   PRODUCT CARDS — rounded bottom corners SITE-WIDE (not just homepage).
-   Applies to collection pages, search, related products, cross-sells, etc.
-   Uses an 8px radius by default so standalone pages match the homepage look.
+   PRODUCT CARDS — SQUARED corners SITE-WIDE (Round D).
+   User asked for flat / non-rounded product-card corners on every surface:
+   collection pages, homepage grids, search, related products, cross-sells,
+   etc. Zero radius on the outer wrapper + every inner slice (media, inner,
+   content, info) + hover/focus state so nothing reintroduces a rounded
+   corner under any state. overflow:hidden is kept so overflowing zoom
+   effects on hover still clip to the card's square bounds.
    ========================================================================== */
 .card-wrapper,
 .card,
 .product-card-wrapper,
 .product-card {
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   overflow: hidden !important;
 }
 .card-wrapper .card,
@@ -1774,8 +1778,10 @@ body.template--custom-made .card__content {
 .card-wrapper .card__media,
 .product-card-wrapper .card__media,
 .card .media,
-.card-wrapper .media {
-  border-radius: 8px 8px 0 0 !important;
+.card-wrapper .media,
+.product-card .media,
+.product-card-wrapper .media {
+  border-radius: 0 !important;
   overflow: hidden !important;
 }
 .card__content,
@@ -1783,8 +1789,7 @@ body.template--custom-made .card__content {
 .card-wrapper .card__content,
 .product-card__content,
 .product-card__info {
-  border-bottom-left-radius: 8px !important;
-  border-bottom-right-radius: 8px !important;
+  border-radius: 0 !important;
   overflow: hidden;
 }
 .card-wrapper:hover,
@@ -1793,33 +1798,8 @@ body.template--custom-made .card__content {
 .card:focus-within,
 .product-card-wrapper:hover,
 .product-card:hover {
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   overflow: hidden !important;
-}
-
-@media screen and (max-width: 989px) {
-  .card-wrapper,
-  .card,
-  .product-card-wrapper,
-  .product-card {
-    border-radius: 7px !important;
-  }
-  .card-wrapper .card,
-  .card-wrapper .card__inner,
-  .card-wrapper .card__media,
-  .product-card-wrapper .card__media,
-  .card .media,
-  .card-wrapper .media {
-    border-radius: 7px 7px 0 0 !important;
-  }
-  .card__content,
-  .card__information,
-  .card-wrapper .card__content,
-  .product-card__content,
-  .product-card__info {
-    border-bottom-left-radius: 7px !important;
-    border-bottom-right-radius: 7px !important;
-  }
 }
 
 /* Preserve radius on :hover / :focus-within — many themes add overflow:visible
