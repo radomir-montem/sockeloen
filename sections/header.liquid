@@ -196,7 +196,7 @@
             <div id="menu-drawer" class="gradient menu-drawer motion-reduce !pt-[40px]" tabindex="-1">
               <div class="menu-drawer__inner-container">
                 <div class="menu-drawer__navigation-container">
-                  {% render 'menu-mobile', menu: section.settings.menu %}
+                  {% render 'menu-mobile', menu: section.settings.menu, logo: section.settings.logo, logo_width: section.settings.logo_width %}
                   <div class="menu-drawer__utility-links flex flex-col">
                     {% comment %} <a href="/" class="menu-drawer__account link focus-inset h5">
                       Index
@@ -296,19 +296,23 @@
                       <localization-selector class="relative flex items-center large-up-hide w-[180px]">
                         <label class="localization-label border border-[#7C7D80] flex justify-between items-center w-full text-black py-4 px-6">
                           <span>
-                            {{ localization.language.iso_code | downcase }} / {{ localization.country.currency.iso_code | downcase }}
+                            {%- if localization.country.iso_code == 'US' -%}
+                              {%- if localization.language.iso_code == 'fr' -%}Can{%- else -%}USA{%- endif -%}
+                            {%- else -%}
+                              {{ localization.language.iso_code | upcase }}
+                            {%- endif -%}
                           </span>
                           <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 5L8 0.833333L7.2 8.58591e-08L4 3.33333L0.8 9.5399e-09L4.9687e-08 0.833333L4 5Z" fill="#7C7D80"/>
-                          </svg>                            
+                          </svg>
                         </label>
                         <ul class="localization-list px-4 py-4 bg-white text-black absolute bottom-full left-1/2 -translate-x-1/2 w-48 text-center hidden">
-                          <li class="localization-item cursor-pointer py-2 low"><a href="#" data-country-code="NL" data-language="en">en / eur</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">nl / eur</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">de / eur</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">fr / eur</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">en / usd</a></li>
-                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">fr / usd</a></li>
+                          <li class="localization-item cursor-pointer py-2 low"><a href="#" data-country-code="NL" data-language="en">EN</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">NL</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">DE</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">FR</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">USA</a></li>
+                          <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">Can</a></li>
                         </ul>
                         {%- form 'localization', id: 'HeaderLocalizationForm', class: 'hidden' -%}
                           <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
@@ -426,7 +430,7 @@
 
     {%- if section.settings.menu != blank -%}
       {%- if section.settings.menu_type_desktop == 'dropdown' -%}
-        {%- render 'menu-desktop' -%}
+        {%- render 'mega-menu-desktop', menu: section.settings.menu -%}
       {%- else -%}
         <nav class="header__inline-menu">
           <ul class="list-menu list-menu--inline" role="list">
@@ -500,21 +504,48 @@
     {%- endif -%}
 
     <div class="header__icons">
+      {%- comment -%}
+        Drawer-back button — only visible when the mobile drawer is in
+        the sub-sub-menu state (body.drawer-subsub-active set by the
+        Alpine scope in menu-mobile.liquid). Sits in the same slot as
+        cart/search/account; those siblings get hidden via the same body
+        class, so the header reads "close on the left, back on the
+        right" inside a sub-sub view. Clicks dispatch a custom event
+        that the Alpine scope handles by resetting childMenu to 0.
+      {%- endcomment -%}
+      <button type="button"
+              class="header__icon header__icon--drawer-back"
+              aria-label="{{ 'accessibility.back' | t | default: 'Back' }}"
+              onclick="window.dispatchEvent(new CustomEvent('drawer:back'))">
+        {%- comment -%}
+          Typographic "<" look — matches the close X's hairline weight.
+          stroke-width 1.5 (same as card chevrons / locale chevron) reads
+          as a clean angular glyph instead of a chunky bracket. Path is
+          inset from the 14 viewBox so the chevron feels character-like.
+        {%- endcomment -%}
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M9 2.5L4 7L9 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
       {% if section.settings.language_selector %}
         <localization-selector class="relative flex justify-center items-center small-hide medium-hide">
           <label class="localization-label flex justify-center items-center text-black cursor-pointer">
             
             <span>
-              {{ localization.language.iso_code | upcase }} / {{ localization.country.currency.iso_code | upcase }}
+              {%- if localization.country.iso_code == 'US' -%}
+                {%- if localization.language.iso_code == 'fr' -%}Can{%- else -%}USA{%- endif -%}
+              {%- else -%}
+                {{ localization.language.iso_code | upcase }}
+              {%- endif -%}
             </span>
           </label>
           <ul class="localization-list hidden px-4 py-4 bg-white text-black absolute top-full left-1/2 -translate-x-1/2 w-48 text-center">
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="en">en / eur</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">nl / eur</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">de / eur</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">fr / eur</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">en / usd</a></li>
-            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">fr / usd</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="en">EN</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">NL</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">DE</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="fr">FR</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="en">USA</a></li>
+            <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="US" data-language="fr">Can</a></li>
           </ul>
           {%- form 'localization', id: 'HeaderLocalizationForm', class: 'hidden' -%}
             <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
@@ -974,6 +1005,33 @@
           "type": "image_picker",
           "id": "image_item",
           "label": "Image item"
+        },
+        {
+          "type": "text",
+          "id": "feature_text",
+          "label": "Feature tagline (EN)",
+          "info": "Short tagline shown under the menu card (Cloudpillo-style). Leave blank for title-only."
+        },
+        {
+          "type": "text",
+          "id": "feature_text_nl",
+          "label": "Feature tagline (NL)"
+        },
+        {
+          "type": "text",
+          "id": "feature_text_de",
+          "label": "Feature tagline (DE)"
+        },
+        {
+          "type": "text",
+          "id": "feature_text_fr",
+          "label": "Feature tagline (FR)"
+        },
+        {
+          "type": "image_picker",
+          "id": "feature_icon",
+          "label": "Feature icon",
+          "info": "Small icon shown next to the tagline. ~24x24 SVG or PNG."
         }
       ]
     }
