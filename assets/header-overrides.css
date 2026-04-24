@@ -1409,16 +1409,19 @@ body.template--custom-made .menu-drawer {
   .menu-drawer:has(.mobile-menu--v2-subsub-active),
   .js .menu-drawer:has(.mobile-menu--v2-sub-active),
   .js .menu-drawer:has(.mobile-menu--v2-subsub-active) {
-    /* Two-line declaration so modern iOS Safari (15.4+) uses 100svh —
-       the "small viewport height" that excludes the URL/tab bar at
-       the bottom — while older browsers fall back to a vh value with
-       an extra-large bottom reservation so the Shop CTA never lands
-       under the Safari chrome. 104px covers announcement bar + pill
-       on the top side; the svh unit handles the bottom side. */
-    height: calc(100vh - 180px) !important;
-    max-height: calc(100vh - 180px) !important;
-    height: calc(100svh - 104px) !important;
-    max-height: calc(100svh - 104px) !important;
+    /* Drawer stretches from the bottom of the pill (y:92) to the bottom
+       of the small viewport (svh excludes Safari's URL/tab bar). With
+       only 92px subtracted, the drawer's white surface now reaches the
+       visible bottom edge of the screen — the white continues past the
+       Shop-all-products CTA to cover the rest of the viewport below it.
+       Safe-area padding on the CTA wrap lifts the pill above the iOS
+       home indicator without introducing a gap in the white surface.
+       Fallback (100vh - 172px) keeps older browsers from overflowing
+       into Safari's chrome. */
+    height: calc(100vh - 172px) !important;
+    max-height: calc(100vh - 172px) !important;
+    height: calc(100svh - 92px) !important;
+    max-height: calc(100svh - 92px) !important;
     overflow: hidden !important;  /* panel manages its own scroll */
   }
   .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__inner-container,
