@@ -2219,8 +2219,12 @@ body.template--index .image-banner .button span {
    containing block. padding-bottom respects iOS safe-area inset so the
    language toggle always has breathing room above the home indicator. */
 .mobile-menu--v2 .mobile-menu__footer {
-  padding: 20px 24px calc(20px + env(safe-area-inset-bottom, 0px));
-  border-top: 1px solid #F0EEEA;
+  /* Tight vertical rhythm — reviews sits almost flush under the scrollable
+     card list, and the locale toggle meets the CTA pill below with only a
+     tiny gap between them. Horizontal padding (20px) matches the CTA wrap
+     so reviews ribbon, locale toggle, and Shop-all-products pill all share
+     the exact same visual width — three equal-width tiles stacked. */
+  padding: 6px 20px 0;
   background: #ffffff;
   flex-shrink: 0;
   position: relative;
@@ -2228,18 +2232,26 @@ body.template--index .image-banner .button span {
 
 /* Reviews.io ribbon — clean, transparent layout:
    stars green, text + REVIEWS.io logo black, whole row centered
-   horizontally and vertically inside the ribbon. */
+   horizontally and vertically inside the ribbon.
+
+   Sizing note: padding-block 14px matches the locale toggle's vertical
+   padding so both tiles resolve to the same height. Horizontal padding
+   0 lets the ribbon span the full footer inner width (20px gutters are
+   provided by the footer itself) — same effective width as the locale
+   toggle below, which also fills the footer's inner box. margin-bottom
+   6px tucks it close to the locale toggle; the tight rhythm is what
+   Round C asked for. */
 .mobile-menu--v2 .mobile-menu__reviews-ribbon {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 12px 16px;
+  padding: 14px 0;
   background: transparent;
   border-radius: 0;
   text-decoration: none;
   color: #111111;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
 }
 
 .mobile-menu--v2 .mobile-menu__reviews-stars {
