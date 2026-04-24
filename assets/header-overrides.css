@@ -1907,21 +1907,46 @@ body.template--custom-made .slideshow .button {
   transition: background 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-/* Nuke theme's ::before/::after fill layers so the white bg shows through */
-body.template--index .banner .button::before,
+/* ::after: hide so only our ::before gradient border shows */
 body.template--index .banner .button::after,
-body.template--index .slideshow .button::before,
 body.template--index .slideshow .button::after,
-body.template--index .hero .button::before,
 body.template--index .hero .button::after {
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: var(--home-radius-sm) !important;
+  display: none !important;
 }
 
-/* Hover: fully opaque white — subtle lift, text stays black */
+/* ::before: right+bottom gradient border (transparent → grey → light grey).
+   Mask punch-out technique: padding=1px ring = the visible border area. */
+body.template--index .banner .button::before,
+body.template--index .slideshow .button::before,
+body.template--index .hero .button::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: -1px !important;
+  border-radius: calc(var(--home-radius-sm) + 1px) !important;
+  padding: 1px !important;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 42%,
+    rgba(120, 120, 120, 0.60) 62%,
+    rgba(215, 215, 215, 0.90) 100%
+  ) !important;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0) !important;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0) !important;
+  mask-composite: exclude !important;
+  -webkit-mask-composite: destination-out !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  pointer-events: none;
+  z-index: -1 !important;
+}
+
+/* Hover: brighter glass — more opaque, stronger shadow */
 body.template--index .banner .button:hover,
 body.template--index .banner__buttons .button:hover,
 body.template--index .slideshow .button:hover,
@@ -1929,13 +1954,15 @@ body.template--index .slideshow__content .button:hover,
 body.template--index .hero .button:hover,
 body.template--index .image-banner .button:hover,
 body.template--custom-made .banner .button:hover {
-  background: rgba(255, 255, 255, 1) !important;
-  background-color: rgba(255, 255, 255, 1) !important;
-  color: #000 !important;
+  background: rgba(255, 255, 255, 0.18) !important;
+  background-color: rgba(255, 255, 255, 0.18) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
   border: none !important;
   box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.12),
-    0 2px 6px rgba(0, 0, 0, 0.06) !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 0 18px rgba(255, 255, 255, 0.10),
+    0 10px 32px rgba(0, 0, 0, 0.45),
+    0 3px 10px rgba(0, 0, 0, 0.28) !important;
 }
 
 /* Black button text across every nested layer (Shopify sometimes wraps the
