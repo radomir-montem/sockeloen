@@ -214,12 +214,33 @@
             Each card is image + product title, reusing .mega-menu-v2-card so
             the look matches submenu panels.
           {%- endcomment -%}
+          {%- comment -%}
+            Resolve which collection to source from, in this order:
+              1. link.object when link.type == 'collection_link' (cleanest)
+              2. Parse handle from link.url when URL looks like /collections/<handle>
+                 (covers http_link type — common when merchants paste URLs manually)
+          {%- endcomment -%}
           {%- assign bs_coll = blank -%}
-          {%- if link.type == 'collection_link' -%}
+          {%- assign has_coll = false -%}
+          {%- if link.type == 'collection_link' and link.object.products.size > 0 -%}
             {%- assign bs_coll = link.object -%}
+            {%- assign has_coll = true -%}
+          {%- endif -%}
+          {%- if has_coll == false and link.url contains '/collections/' -%}
+            {%- assign handle_chunk = link.url | split: '/collections/' | last -%}
+            {%- assign handle_chunk = handle_chunk | split: '?' | first -%}
+            {%- assign handle_chunk = handle_chunk | split: '#' | first -%}
+            {%- assign handle_chunk = handle_chunk | split: '/' | first -%}
+            {%- if handle_chunk != blank -%}
+              {%- assign candidate_coll = collections[handle_chunk] -%}
+              {%- if candidate_coll.products.size > 0 -%}
+                {%- assign bs_coll = candidate_coll -%}
+                {%- assign has_coll = true -%}
+              {%- endif -%}
+            {%- endif -%}
           {%- endif -%}
 
-          {%- if bs_coll != blank and bs_coll.products.size > 0 -%}
+          {%- if has_coll -%}
             <div class="mega-menu-v2-trigger"
                  @mouseenter="open({{ forloop.index }})"
                  @mouseleave="scheduleClose()">
