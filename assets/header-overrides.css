@@ -1822,6 +1822,23 @@ body.template--custom-made .media > img {
   border-radius: var(--home-radius) !important;
 }
 
+/* Override: product cards on homepage must stay fully squared (Round D).
+   The generic `.media` rule above would otherwise reintroduce an 8px radius
+   on the product image INSIDE a squared card, which reads as a rounded
+   inset. Higher specificity (.card + .media) + !important force 0 back. */
+body.template--index .card .media,
+body.template--index .card-wrapper .media,
+body.template--index .product-card .media,
+body.template--index .product-card-wrapper .media,
+body.template--index .card .media > img,
+body.template--index .card-wrapper .media > img,
+body.template--index .card-wrapper .media picture img,
+body.template--custom-made .card .media,
+body.template--custom-made .card-wrapper .media,
+body.template--custom-made .card .media > img {
+  border-radius: 0 !important;
+}
+
 /* Buttons on the homepage — compact radius to match the pill/card radius.
    Cover every visual layer (::before / ::after which some Shopify themes
    use for bg fills) and every state (hover/focus/active) so the radius
