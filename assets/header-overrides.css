@@ -2207,16 +2207,19 @@ body.template--index .image-banner .button span {
   position: relative;
 }
 
-/* Reviews.io ribbon (green stars on green bg) */
+/* Reviews.io ribbon — clean, transparent layout:
+   stars green, text + REVIEWS.io logo black, whole row centered
+   horizontally and vertically inside the ribbon. */
 .mobile-menu--v2 .mobile-menu__reviews-ribbon {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   padding: 12px 16px;
-  background: #00B67A;
-  border-radius: 8px;
+  background: transparent;
+  border-radius: 0;
   text-decoration: none;
-  color: #ffffff;
+  color: #111111;
   margin-bottom: 16px;
 }
 
@@ -2224,6 +2227,7 @@ body.template--index .image-banner .button span {
   display: inline-flex;
   gap: 2px;
   align-items: center;
+  color: #00B67A;  /* green fills the stars via currentColor */
 }
 
 .mobile-menu--v2 .mobile-menu__reviews-star svg {
@@ -2232,23 +2236,33 @@ body.template--index .image-banner .button span {
   display: block;
 }
 
+/* Override the inline `fill="#fff"` on the star path so CSS color
+   (the green above via currentColor) paints the star. */
+.mobile-menu--v2 .mobile-menu__reviews-star svg path {
+  fill: currentColor;
+}
+
 .mobile-menu--v2 .mobile-menu__reviews-text {
   font-size: 13px;
   font-weight: 500;
-  color: #ffffff;
+  color: #111111;
   letter-spacing: 0;
   line-height: 1;
+  text-align: center;
 }
 
 .mobile-menu--v2 .mobile-menu__reviews-text strong {
   font-weight: 700;
 }
 
+/* Force the reviews.io logo to render pure black regardless of its
+   native color (their CDN SVG has a green star + dark text by default,
+   and we previously inverted it to white for the green bg). */
 .mobile-menu--v2 .mobile-menu__reviews-logo {
   height: 16px;
   width: auto;
   display: block;
-  filter: brightness(0) invert(1);
+  filter: brightness(0);
   margin-left: 2px;
 }
 
