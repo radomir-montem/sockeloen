@@ -1485,7 +1485,14 @@ menu-drawer > details[open] > summary::before {
      menu-mobile.liquid handles by zeroing childMenu.
    ========================================================================== */
 
-/* --- Header close pill (round white circle when drawer is open) --- */
+/* --- Header close pill (round white circle when drawer is open) ---
+   header-drawer carries `margin-left: -12px` to align the closed-state
+   hamburger flush with the header edge. We cancel that while the drawer
+   is open so the pill has the same 12.5px breathing room from the edge
+   that the right-side icons get from the header's 12.5px right padding. */
+header-drawer:has(details#Details-menu-drawer-container[open]) {
+  margin-left: 0 !important;
+}
 details#Details-menu-drawer-container[open] > summary.header__icon--menu {
   width: 36px !important;
   height: 36px !important;
