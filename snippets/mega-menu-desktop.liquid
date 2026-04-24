@@ -200,9 +200,91 @@
             </div>
           </div>
         {%- else -%}
-          <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset link-only{% if link.current %} active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
-            <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
-          </a>
+          {%- comment -%}
+            No submenu — render a Cloudpillo-style mega panel containing 8
+            best-seller product cards instead of a plain anchor.
+
+            Source preference order (first with >0 products wins):
+              1. collections['best-sellers']  (manual/automated best-seller collection)
+              2. collections['frontpage']      (Shopify's default "Home page" collection)
+              3. collections.all               (all published products)
+
+            Each card is image + product title, reusing the existing
+            .mega-menu-v2-card styling so the look matches submenu panels.
+          {%- endcomment -%}
+          {%- assign bs_coll = collections['best-sellers'] -%}
+          {%- if bs_coll.products.size == 0 -%}
+            {%- assign bs_coll = collections['frontpage'] -%}
+          {%- endif -%}
+          {%- if bs_coll.products.size == 0 -%}
+            {%- assign bs_coll = collections.all -%}
+          {%- endif -%}
+
+          {%- if bs_coll.products.size > 0 -%}
+            <div class="mega-menu-v2-trigger"
+                 @mouseenter="open({{ forloop.index }})"
+                 @mouseleave="scheduleClose()">
+              <a class="header__menu-item list-menu__item link link--text focus-inset link-only child-menu mega-menu-v2-trigger-link{% if link.current %} active{% endif %}"
+                 :class="isActive({{ forloop.index }}) ? 'is-open !text-[#111111]' : ''"
+                 href="{{ link.url }}"
+                 aria-haspopup="true"
+                 :aria-expanded="isActive({{ forloop.index }}) ? 'true' : 'false'"
+                 aria-controls="mega-menu-panel-{{ forloop.index }}"
+                 {%- if link.current %} aria-current="page"{% endif %}>
+                <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title }}</span>
+                <svg class="menu-arrow-down mega-menu-v2-chevron"
+                     :class="isActive({{ forloop.index }}) ? 'is-open' : ''"
+                     xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5" fill="none">
+                  <path d="M1 1L4 4L7 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+
+              <div id="mega-menu-panel-{{ forloop.index }}"
+                   class="mega-menu-v2-panel"
+                   role="region"
+                   aria-label="{{ link.title | escape }} menu"
+                   x-show="isActive({{ forloop.index }})"
+                   x-cloak
+                   @mouseenter="cancelClose()"
+                   @mouseleave="scheduleClose()"
+                   x-transition:enter="mega-menu-v2-panel-enter"
+                   x-transition:enter-start="mega-menu-v2-panel-enter-start"
+                   x-transition:enter-end="mega-menu-v2-panel-enter-end"
+                   x-transition:leave="mega-menu-v2-panel-leave"
+                   x-transition:leave-start="mega-menu-v2-panel-leave-start"
+                   x-transition:leave-end="mega-menu-v2-panel-leave-end">
+                <div class="mega-menu-v2-inner mega-menu-v2-inner--bestsellers">
+                  <div class="mega-menu-v2-grid-wrap">
+                    <div class="mega-menu-v2-grid mega-menu-v2-grid--bestsellers">
+                      {%- for product in bs_coll.products limit: 8 -%}
+                        <a class="mega-menu-v2-card" href="{{ product.url }}">
+                          <div class="mega-menu-v2-card-img">
+                            {%- if product.featured_image != blank -%}
+                              <img
+                                src="{{ product.featured_image | image_url: width: 400 }}"
+                                srcset="{{ product.featured_image | image_url: width: 200 }} 200w, {{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w"
+                                sizes="(max-width: 1199px) 22vw, 220px"
+                                alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                                loading="lazy"
+                                class="mega-menu-v2-card-img-el"
+                                width="{{ product.featured_image.width }}"
+                                height="{{ product.featured_image.height }}">
+                            {%- endif -%}
+                          </div>
+                          <div class="mega-menu-v2-card-title">{{ product.title | escape }}</div>
+                        </a>
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- else -%}
+            {%- comment -%} Zero products found in any fallback collection — render plain anchor {%- endcomment -%}
+            <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset link-only{% if link.current %} active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+              <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+            </a>
+          {%- endif -%}
         {%- endif -%}
       </li>
     {%- endfor -%}
