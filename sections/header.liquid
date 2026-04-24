@@ -504,6 +504,23 @@
     {%- endif -%}
 
     <div class="header__icons">
+      {%- comment -%}
+        Drawer-back button — only visible when the mobile drawer is in
+        the sub-sub-menu state (body.drawer-subsub-active set by the
+        Alpine scope in menu-mobile.liquid). Sits in the same slot as
+        cart/search/account; those siblings get hidden via the same body
+        class, so the header reads "close on the left, back on the
+        right" inside a sub-sub view. Clicks dispatch a custom event
+        that the Alpine scope handles by resetting childMenu to 0.
+      {%- endcomment -%}
+      <button type="button"
+              class="header__icon header__icon--drawer-back"
+              aria-label="{{ 'accessibility.back' | t | default: 'Back' }}"
+              onclick="window.dispatchEvent(new CustomEvent('drawer:back'))">
+        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M7 1L1 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
       {% if section.settings.language_selector %}
         <localization-selector class="relative flex justify-center items-center small-hide medium-hide">
           <label class="localization-label flex justify-center items-center text-black cursor-pointer">
