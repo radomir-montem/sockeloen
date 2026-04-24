@@ -1887,23 +1887,24 @@ body.template--index .hero .button,
 body.template--index .hero__buttons .button,
 body.template--custom-made .banner .button,
 body.template--custom-made .slideshow .button {
-  /* Opaque white surface — same as the header pill */
-  background: rgba(255, 255, 255, 0.95) !important;
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(70px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(70px) saturate(200%) !important;
-  /* Borderless — no rim, no inset highlight. Outer drop shadow only,
-     matching the header pill exactly so both elements read as the same
-     design system. */
+  /* Glassmorphism: semi-transparent + blurred hero image behind */
+  isolation: isolate;
+  background: rgba(255, 255, 255, 0.10) !important;
+  background-color: rgba(255, 255, 255, 0.10) !important;
+  backdrop-filter: blur(16px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
   border: none !important;
   outline: none !important;
-  color: #000 !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  /* Inner top-edge highlight + soft inner glow + outer bottom dark shadow */
   box-shadow:
-    0 6px 20px rgba(0, 0, 0, 0.08),
-    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 0 16px rgba(255, 255, 255, 0.07),
+    0 8px 28px rgba(0, 0, 0, 0.42),
+    0 2px 8px rgba(0, 0, 0, 0.22) !important;
   border-radius: var(--home-radius-sm) !important;
-  text-shadow: none !important;
-  transition: background 0.2s ease !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.30);
+  transition: background 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 /* Nuke theme's ::before/::after fill layers so the white bg shows through */
