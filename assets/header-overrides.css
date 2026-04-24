@@ -2307,7 +2307,11 @@ body.template--index .image-banner .button span {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 16px;
+  /* 14px vertical padding matches the reviews ribbon and the reduced CTA
+     pill so all three rows sit at the same ~46px height. width:100% + the
+     footer's 20px horizontal gutters give this tile the same effective
+     width as the CTA wrap below. */
+  padding: 14px 16px;
   width: 100%;
   background: #F5F2ED;
   border: none;
