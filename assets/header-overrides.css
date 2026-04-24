@@ -686,7 +686,7 @@ header.header.sticky-navbar .header__heading-logo,
   /* Bumped from 13px → 15px so the text weight matches the 20px icons
      next to it (cart, search, account). Chevron caret also scales up. */
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.03em;
   cursor: pointer;
   white-space: nowrap;

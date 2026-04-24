@@ -101,7 +101,7 @@
                 {%- comment -%} Grid: one per category {%- endcomment -%}
                 <div class="mega-menu-v2-grid-wrap">
                   {%- for sub_link in link.links -%}
-                    <div class="mega-menu-v2-grid"
+                    <div class="mega-menu-v2-grid{% if sub_link.links.size == 0 %} mega-menu-v2-grid--products{% endif %}"
                          x-show="isCategory({{ forloop.index }})"
                          x-cloak>
                       {%- if sub_link.links.size > 0 -%}
