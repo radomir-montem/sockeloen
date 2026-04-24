@@ -2721,7 +2721,10 @@ body.template--index .image-banner .button span {
 .mega-menu-v2-inner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 48px 48px;
+  /* Vertical padding kept tight so the open panel leaves ~20% of the
+     viewport visible below it on standard laptops. Adjust the 16px/20px
+     values if merchant wants more breathing room. */
+  padding: 16px 48px 20px;
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 48px;
