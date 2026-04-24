@@ -1,5 +1,5 @@
 {%- comment -%}
-  Mobile drawer — category-row accordion (v4)
+  Mobile drawer — Ekster-style redesign (v5)
   Accepts:
     menu        — linklist (required)
     logo        — image (optional)
@@ -7,21 +7,20 @@
 
   Structure:
     Sub panel (always shown on drawer open):
-      - Plain text category rows with > chevron
-      - Tap a row → inline 3-column product grid expands below it (accordion)
-      - Footer: Shop-all CTA, reviews ribbon, locale switcher
+      - Bold category text rows with > chevron (no images)
+      - Tap row → 2-column product grid with image + title + price (accordion)
+      - "Shop all [Category] →" text link below each expanded grid
+      - Pinned footer: Shop-all CTA, reviews ribbon, locale switcher
 
-  Products are resolved from each category's collection link at render time
-  and hidden/shown via Alpine's x-show. No sub-sub panel navigation.
+  Products are resolved from each category's collection link at render time.
+  No sub-sub panel navigation.
 
-  Close X lives in the page header (see sections/header.liquid and
-  assets/header-overrides.css).
+  Fold-down animation handled by header-overrides.css (translateY on .menu-drawer).
+  Close X lives in the page header.
 {%- endcomment -%}
 
 <div class="relative mobile-menu mobile-menu--v2"
-     :class="{
-       'mobile-menu--v2-sub-active': activeMenu > 0,
-     }"
+     :class="{ 'mobile-menu--v2-sub-active': activeMenu > 0 }"
      x-data="{
       activeMenu: 1,
       expandedCategory: -1,
@@ -53,7 +52,6 @@
     }"
     x-transition.scale>
 
-  {%- comment -%} ============ SUBMENU PANELS ============ {%- endcomment -%}
   {%- for link in menu.links -%}
     {%- if link.links.size > 0 -%}
       <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--sub w-full bg-white absolute top-0 z-30"
@@ -71,7 +69,7 @@
           <ul class="mobile-menu__cat-list">
             {%- for sub_link in link.links -%}
 
-              {%- comment -%} Resolve collection from sub_link {%- endcomment -%}
+              {%- comment -%} Resolve collection from sub_link URL {%- endcomment -%}
               {%- assign mob_coll = blank -%}
               {%- assign mob_has_coll = false -%}
               {%- if sub_link.type == 'collection_link' and sub_link.object.products.size > 0 -%}
@@ -105,53 +103,72 @@
                     <span class="mobile-menu__cat-name">{{ sub_link.title }}</span>
                     <svg class="mobile-menu__cat-chevron"
                          :class="expandedCategory == {{ forloop.index }} ? 'is-open' : ''"
-                         width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M1 1L6 6L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                         width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </div>
 
-                  {%- comment -%} Inline product grid {%- endcomment -%}
-                  <div class="mobile-menu__products-grid"
+                  {%- comment -%} Inline product grid + shop-all link {%- endcomment -%}
+                  <div class="mobile-menu__cat-products"
                        x-show="expandedCategory == {{ forloop.index }}"
                        x-cloak>
-                    {%- assign mob_tile_limit = 5 -%}
-                    {%- if mob_coll.products.size <= 5 -%}
-                      {%- assign mob_tile_limit = mob_coll.products.size -%}
-                    {%- endif -%}
-                    {%- for product in mob_coll.products limit: mob_tile_limit -%}
-                      <a class="mobile-menu__product-card" href="{{ product.url }}">
-                        <div class="mobile-menu__product-img">
-                          {%- if product.featured_image != blank -%}
-                            <img
-                              src="{{ product.featured_image | image_url: width: 300 }}"
-                              srcset="{{ product.featured_image | image_url: width: 150 }} 150w, {{ product.featured_image | image_url: width: 300 }} 300w"
-                              sizes="30vw"
-                              alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                              loading="lazy"
-                              class="mobile-menu__product-img-el"
-                              width="{{ product.featured_image.width }}"
-                              height="{{ product.featured_image.height }}">
-                          {%- endif -%}
-                        </div>
-                        <div class="mobile-menu__product-title">{{ product.title | escape }}</div>
-                      </a>
-                    {%- endfor -%}
-                    <a class="mobile-menu__product-card mobile-menu__product-card--shop-all" href="{{ mob_coll.url }}">
-                      <div class="mobile-menu__product-img mobile-menu__product-img--shop-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                          <path d="M6 14h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </div>
-                      <div class="mobile-menu__product-title">Shop all</div>
+
+                    <div class="mobile-menu__products-grid">
+                      {%- for product in mob_coll.products limit: 4 -%}
+
+                        {%- comment -%} Detect sale and new badge {%- endcomment -%}
+                        {%- assign mob_is_sale = false -%}
+                        {%- if product.compare_at_price > product.price -%}
+                          {%- assign mob_is_sale = true -%}
+                        {%- endif -%}
+
+                        <a class="mobile-menu__product-card" href="{{ product.url }}">
+                          <div class="mobile-menu__product-img">
+                            {%- if mob_is_sale -%}
+                              <span class="mobile-menu__product-badge mobile-menu__product-badge--sale">Sale</span>
+                            {%- endif -%}
+                            {%- if product.featured_image != blank -%}
+                              <img
+                                src="{{ product.featured_image | image_url: width: 400 }}"
+                                srcset="{{ product.featured_image | image_url: width: 200 }} 200w, {{ product.featured_image | image_url: width: 400 }} 400w"
+                                sizes="45vw"
+                                alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                                loading="lazy"
+                                class="mobile-menu__product-img-el"
+                                width="{{ product.featured_image.width }}"
+                                height="{{ product.featured_image.height }}">
+                            {%- endif -%}
+                          </div>
+                          <div class="mobile-menu__product-info">
+                            <p class="mobile-menu__product-title">{{ product.title | escape }}</p>
+                            <p class="mobile-menu__product-price">
+                              {%- if mob_is_sale -%}
+                                <span class="mobile-menu__product-price--sale">{{ product.price | money }}</span>
+                                <s class="mobile-menu__product-price--compare">{{ product.compare_at_price | money }}</s>
+                              {%- else -%}
+                                <span>{{ product.price | money }}</span>
+                              {%- endif -%}
+                            </p>
+                          </div>
+                        </a>
+                      {%- endfor -%}
+                    </div>
+
+                    <a class="mobile-menu__cat-shopall-link" href="{{ mob_coll.url }}">
+                      Shop all {{ sub_link.title }}
+                      <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
                     </a>
+
                   </div>
 
                 {%- else -%}
-                  {%- comment -%} Direct link (no collection resolved) {%- endcomment -%}
+                  {%- comment -%} Direct link — no collection resolved {%- endcomment -%}
                   <a class="mobile-menu__cat-row mobile-menu__cat-row--link" href="{{ sub_link.url }}">
                     <span class="mobile-menu__cat-name">{{ sub_link.title }}</span>
-                    <svg class="mobile-menu__cat-chevron" width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M1 1L6 6L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg class="mobile-menu__cat-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </a>
                 {%- endif -%}
@@ -159,17 +176,13 @@
             {%- endfor -%}
           </ul>
 
-          {%- comment -%} CTA: "Shop all" for the top-level menu {%- endcomment -%}
+          {%- comment -%} Pinned bottom CTA {%- endcomment -%}
           <div class="mobile-menu__cta-wrap">
             {% assign link_title_lower = link.title | downcase | strip %}
             {% if link_title_lower == 'shop' %}
-              <a class="mobile-menu__cta" href="{{ routes.collections_url }}/all">
-                Shop all products
-              </a>
+              <a class="mobile-menu__cta" href="{{ routes.collections_url }}/all">Shop all products</a>
             {% else %}
-              <a class="mobile-menu__cta" href="{{ link.url }}">
-                Shop {{ link.title }}
-              </a>
+              <a class="mobile-menu__cta" href="{{ link.url }}">Shop {{ link.title }}</a>
             {% endif %}
           </div>
 
@@ -189,16 +202,14 @@
               <span class="mobile-menu__reviews-text"><strong>2,410</strong> reviews</span>
               <img class="mobile-menu__reviews-logo"
                 src="https://assets.reviews.io/img/all-global-assets/logo/reviewsio-logo.svg"
-                alt="REVIEWS.io"
-                width="72" height="16" loading="lazy">
+                alt="REVIEWS.io" width="72" height="16" loading="lazy">
             </a>
 
             <div class="mobile-menu__locale" x-data="{ localeOpen: false }">
               <div @click="localeOpen = !localeOpen"
                    @keydown.enter.prevent="localeOpen = !localeOpen"
                    @keydown.space.prevent="localeOpen = !localeOpen"
-                   role="button"
-                   tabindex="0"
+                   role="button" tabindex="0"
                    :aria-expanded="localeOpen ? 'true' : 'false'"
                    class="mobile-menu__locale-toggle">
                 <svg class="mobile-menu__locale-globe" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
