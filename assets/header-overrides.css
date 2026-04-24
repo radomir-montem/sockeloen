@@ -1429,24 +1429,17 @@ body.template--custom-made .menu-drawer {
   }
 
   /* ------------------------------------------------------------------------
-     Open up the overflow chain so internal scrolling resolves to the
-     .menu-drawer viewport (not a trapped ancestor). Needed in both
-     sub-active and subsub-active states. See the earlier comment about
-     why overflow:visible is safe here (horizontal overflow is clipped
-     by the drawer box itself, so the slide animation still looks fine). */
+     Overflow chain — previously forced `overflow: visible` on all the
+     intermediate containers so a sticky close X could resolve its
+     scroll ancestor to .menu-drawer. The sticky X is gone (the close
+     button lives in the page header now), so we let the theme's stock
+     `overflow-y: auto` on .menu-drawer__navigation-container and
+     .menu-drawer__inner-container do the scrolling for tall panels.
+     Horizontal overflow on the panel wrapper still needs hiding so the
+     sub / subsub slide-in animations don't leak past the drawer edge. */
   .mobile-menu--v2-sub-active,
-  .mobile-menu--v2-subsub-active,
-  .mobile-menu--v2-sub-active .mobile-menu__panel--sub,
-  .mobile-menu--v2-sub-active .mobile-menu__panel--subsub,
-  .mobile-menu--v2-subsub-active .mobile-menu__panel--sub,
-  .mobile-menu--v2-subsub-active .mobile-menu__panel--subsub {
-    overflow: visible !important;
-  }
-  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container,
-  .menu-drawer:has(.mobile-menu--v2-subsub-active) .menu-drawer__navigation-container,
-  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__inner-container,
-  .menu-drawer:has(.mobile-menu--v2-subsub-active) .menu-drawer__inner-container {
-    overflow: visible !important;
+  .mobile-menu--v2-subsub-active {
+    overflow-x: hidden;
   }
 }
 
