@@ -326,7 +326,7 @@
                 <div class="mega-menu-v2-inner mega-menu-v2-inner--bestsellers">
                   <div class="mega-menu-v2-grid-wrap">
                     <div class="mega-menu-v2-grid mega-menu-v2-grid--bestsellers">
-                      {%- for product in bs_coll.products limit: 8 -%}
+                      {%- for product in bs_coll.products limit: 10 -%}
                         <a class="mega-menu-v2-card" href="{{ product.url }}">
                           <div class="mega-menu-v2-card-img">
                             {%- if product.featured_image != blank -%}
