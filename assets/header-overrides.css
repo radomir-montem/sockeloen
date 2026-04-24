@@ -1723,9 +1723,10 @@ body.template--custom-made .banner img {
   border-radius: 0 !important;
 }
 
-/* Cards, tiles and collection items on the homepage.
-   overflow: hidden is critical so the child media/content stays clipped to
-   the rounded corners even on :hover when some themes switch overflow. */
+/* Cards, tiles and collection items on the homepage — SQUARED (Round D).
+   Product cards are flat-cornered site-wide now, and the homepage must
+   match. overflow:hidden is still required so zoom-on-hover effects clip
+   to the card's square bounds rather than bleeding out. */
 body.template--index .card,
 body.template--index .card-wrapper,
 body.template--index .card__media,
@@ -1739,21 +1740,16 @@ body.template--index .grid__item .card-wrapper,
 body.template--custom-made .card,
 body.template--custom-made .card-wrapper,
 body.template--custom-made .card__media {
-  border-radius: var(--home-radius) !important;
+  border-radius: 0 !important;
   overflow: hidden !important;
 }
 
-/* Card bottom/content area — ensures the lower portion of the card (title,
-   price, "new" badge row) is also clipped by the same radius. Shopify's
-   .card__content sits BELOW .card__media; applying the same radius to the
-   wrapper is enough in most themes, but some render content outside the
-   clip so we set explicit bottom-radius on the content too. */
+/* Card bottom/content area — squared to match the wrapper. */
 body.template--index .card__content,
 body.template--index .card__information,
 body.template--index .card-wrapper .card__content,
 body.template--custom-made .card__content {
-  border-bottom-left-radius: var(--home-radius) !important;
-  border-bottom-right-radius: var(--home-radius) !important;
+  border-radius: 0 !important;
   overflow: hidden;
 }
 
@@ -1802,15 +1798,16 @@ body.template--custom-made .card__content {
   overflow: hidden !important;
 }
 
-/* Preserve radius on :hover / :focus-within — many themes add overflow:visible
-   on hover for zoom effects, which breaks the clip. Lock it down. */
+/* Preserve 0 radius on :hover / :focus-within — cards stay squared under
+   every interaction state (Round D). overflow:hidden is still needed here
+   because some themes flip overflow:visible on hover for zoom effects. */
 body.template--index .card:hover,
 body.template--index .card-wrapper:hover,
 body.template--index .card-wrapper:focus-within,
 body.template--index .card:focus-within,
 body.template--custom-made .card:hover,
 body.template--custom-made .card-wrapper:hover {
-  border-radius: var(--home-radius) !important;
+  border-radius: 0 !important;
   overflow: hidden !important;
 }
 
