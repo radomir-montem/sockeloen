@@ -1913,7 +1913,6 @@ body.template--custom-made .banner .button,
 body.template--custom-made .slideshow .button {
   isolation: isolate;
   background: rgba(255, 255, 255, 0.26) !important;
-  background-color: transparent !important;
   backdrop-filter: blur(13px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(13px) saturate(180%) !important;
   border: none !important;
@@ -1975,7 +1974,6 @@ body.template--index .hero .button:hover,
 body.template--index .image-banner .button:hover,
 body.template--custom-made .banner .button:hover {
   background: rgba(255, 255, 255, 0.34) !important;
-  background-color: transparent !important;
   color: rgba(255, 255, 255, 0.95) !important;
   border: none !important;
   box-shadow:
