@@ -898,7 +898,8 @@ sticky-atc.show {
     text-transform: lowercase;
     justify-content: center;
     align-items: center;
-    border: 1px solid #d9d9d9;
+    border: none;
+    border-radius: 10px;
     background-color: #fff;
     gap: 5px;
     color: #000;
