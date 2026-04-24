@@ -2899,6 +2899,19 @@ body.template--index .image-banner .button span {
   max-width: 320px;
 }
 
+/* ---- Best-sellers variant (top-level menu item with no submenu) ----
+   Drops the sidebar and spreads 8 product cards across a 4x2 grid so
+   the panel stays balanced without categories. Reuses .mega-menu-v2-card
+   so the visual language matches the rest of the Cloudpillo-style menu. */
+.mega-menu-v2-inner--bestsellers {
+  grid-template-columns: 1fr;
+}
+
+.mega-menu-v2-grid--bestsellers {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px 20px;
+}
+
 /* Hide mega menu nav on narrow viewports */
 @media (max-width: 989px) {
   .mega-menu-v2-nav { display: none; }
@@ -2912,9 +2925,16 @@ body.template--index .image-banner .button span {
     gap: 32px;
     grid-template-columns: 200px 1fr;
   }
+  .mega-menu-v2-inner--bestsellers {
+    grid-template-columns: 1fr;
+  }
   .mega-menu-v2-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
+  }
+  .mega-menu-v2-grid--bestsellers {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px 16px;
   }
 }
 
