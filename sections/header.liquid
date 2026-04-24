@@ -518,13 +518,13 @@
               aria-label="{{ 'accessibility.back' | t | default: 'Back' }}"
               onclick="window.dispatchEvent(new CustomEvent('drawer:back'))">
         {%- comment -%}
-          Sized to match the 12×12 stock icon-close that fills the open-state
-          pill on the left, with stroke-width 2 for visual parity (the X has
-          comparable weight). viewBox 14 gives a slight extra hairline of room
-          so the chevron reads as chunky, not cramped.
+          Typographic "<" look — matches the close X's hairline weight.
+          stroke-width 1.5 (same as card chevrons / locale chevron) reads
+          as a clean angular glyph instead of a chunky bracket. Path is
+          inset from the 14 viewBox so the chevron feels character-like.
         {%- endcomment -%}
-        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M9 1.5L3 7L9 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M9 2.5L4 7L9 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
       {% if section.settings.language_selector %}
