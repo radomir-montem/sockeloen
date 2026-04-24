@@ -1945,14 +1945,12 @@ body.template--index .hero .button::before {
   content: '' !important;
   position: absolute !important;
   inset: -1px !important;
-  border-radius: calc(var(--home-radius-sm) + 1px) !important;
+  border-radius: 0 !important;
   padding: 1px !important;
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.10) 30%,
-    rgba(255, 255, 255, 0.32) 65%,
-    rgba(255, 255, 255, 0.50) 100%
+    rgba(255, 255, 255, 0.60) 100%
   ) !important;
   mask:
     linear-gradient(#fff 0 0) content-box,
@@ -1976,20 +1974,14 @@ body.template--index .slideshow__content .button:hover,
 body.template--index .hero .button:hover,
 body.template--index .image-banner .button:hover,
 body.template--custom-made .banner .button:hover {
-  background: radial-gradient(
-    ellipse at 50% 20%,
-    rgba(255, 255, 255, 0.26) 0%,
-    rgba(255, 255, 255, 0.14) 70%
-  ) !important;
+  background: rgba(255, 255, 255, 0.34) !important;
   background-color: transparent !important;
   color: rgba(255, 255, 255, 0.95) !important;
   border: none !important;
   box-shadow:
-    inset 0 0.5px 0 rgba(255, 255, 255, 0.65),
-    inset -5px 0 14px rgba(255, 255, 255, 0.09),
-    inset 0 -5px 14px rgba(255, 255, 255, 0.09),
-    0 8px 26px rgba(0, 0, 0, 0.40),
-    0 3px 7px rgba(0, 0, 0, 0.22) !important;
+    inset -6px 0 16px rgba(255, 255, 255, 0.24),
+    inset 0 -6px 16px rgba(255, 255, 255, 0.24),
+    0 8px 32px rgba(0, 0, 0, 0.14) !important;
 }
 
 /* White text on all nested layers (glass sits on a dark hero image) */
