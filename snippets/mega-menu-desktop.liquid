@@ -201,26 +201,25 @@
           </div>
         {%- else -%}
           {%- comment -%}
-            No submenu — render a Cloudpillo-style mega panel containing 8
-            best-seller product cards instead of a plain anchor.
+            No submenu — render a Cloudpillo-style mega panel containing up to
+            8 popular products from the COLLECTION this menu link points to
+            (e.g. "Cycling" → /collections/cycling → the Cycling collection's
+            products). Merchants control which products surface by setting
+            the collection's sort order in Shopify admin ("Best selling" gives
+            the closest match to a best-seller rail).
 
-            Source preference order (first with >0 products wins):
-              1. collections['best-sellers']  (manual/automated best-seller collection)
-              2. collections['frontpage']      (Shopify's default "Home page" collection)
-              3. collections.all               (all published products)
+            If the link doesn't resolve to a collection (page link, external,
+            etc.), fall back to a plain anchor — no mega panel.
 
-            Each card is image + product title, reusing the existing
-            .mega-menu-v2-card styling so the look matches submenu panels.
+            Each card is image + product title, reusing .mega-menu-v2-card so
+            the look matches submenu panels.
           {%- endcomment -%}
-          {%- assign bs_coll = collections['best-sellers'] -%}
-          {%- if bs_coll.products.size == 0 -%}
-            {%- assign bs_coll = collections['frontpage'] -%}
-          {%- endif -%}
-          {%- if bs_coll.products.size == 0 -%}
-            {%- assign bs_coll = collections.all -%}
+          {%- assign bs_coll = blank -%}
+          {%- if link.type == 'collection_link' -%}
+            {%- assign bs_coll = link.object -%}
           {%- endif -%}
 
-          {%- if bs_coll.products.size > 0 -%}
+          {%- if bs_coll != blank and bs_coll.products.size > 0 -%}
             <div class="mega-menu-v2-trigger"
                  @mouseenter="open({{ forloop.index }})"
                  @mouseleave="scheduleClose()">
