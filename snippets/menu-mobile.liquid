@@ -165,10 +165,26 @@
             them into the sub panel so they're still reachable since sub
             is the new entry point.
           {%- endcomment -%}
+          {%- comment -%}
+            CTA label + URL: when the parent link is the generic "shop"
+            top-level menu, "Shop {{ link.title }}" produces the awkward
+            "Shop shop". For that one case, show "Shop all products" and
+            point at the storefront-wide /collections/all instead of the
+            merchant-configured link URL (which may be a landing page).
+            Every other top-level link (e.g. "accessories") keeps the
+            normal "Shop {title}" + link.url pattern.
+          {%- endcomment -%}
           <div class="mobile-menu__cta-wrap">
-            <a class="mobile-menu__cta" href="{{ link.url }}">
-              Shop {{ link.title }}
-            </a>
+            {% assign link_title_lower = link.title | downcase | strip %}
+            {% if link_title_lower == 'shop' %}
+              <a class="mobile-menu__cta" href="{{ routes.collections_url }}/all">
+                Shop all products
+              </a>
+            {% else %}
+              <a class="mobile-menu__cta" href="{{ link.url }}">
+                Shop {{ link.title }}
+              </a>
+            {% endif %}
           </div>
 
           <div class="mobile-menu__footer">
@@ -184,7 +200,7 @@
                   </span>
                 {% endfor %}
               </span>
-              <span class="mobile-menu__reviews-text"><strong>2,410</strong> reviews on</span>
+              <span class="mobile-menu__reviews-text"><strong>2,410</strong> reviews</span>
               <img class="mobile-menu__reviews-logo"
                 src="https://assets.reviews.io/img/all-global-assets/logo/reviewsio-logo.svg"
                 alt="REVIEWS.io"
