@@ -1723,9 +1723,10 @@ body.template--custom-made .banner img {
   border-radius: 0 !important;
 }
 
-/* Cards, tiles and collection items on the homepage.
-   overflow: hidden is critical so the child media/content stays clipped to
-   the rounded corners even on :hover when some themes switch overflow. */
+/* Cards, tiles and collection items on the homepage — SQUARED (Round D).
+   Product cards are flat-cornered site-wide now, and the homepage must
+   match. overflow:hidden is still required so zoom-on-hover effects clip
+   to the card's square bounds rather than bleeding out. */
 body.template--index .card,
 body.template--index .card-wrapper,
 body.template--index .card__media,
@@ -1739,34 +1740,33 @@ body.template--index .grid__item .card-wrapper,
 body.template--custom-made .card,
 body.template--custom-made .card-wrapper,
 body.template--custom-made .card__media {
-  border-radius: var(--home-radius) !important;
+  border-radius: 0 !important;
   overflow: hidden !important;
 }
 
-/* Card bottom/content area — ensures the lower portion of the card (title,
-   price, "new" badge row) is also clipped by the same radius. Shopify's
-   .card__content sits BELOW .card__media; applying the same radius to the
-   wrapper is enough in most themes, but some render content outside the
-   clip so we set explicit bottom-radius on the content too. */
+/* Card bottom/content area — squared to match the wrapper. */
 body.template--index .card__content,
 body.template--index .card__information,
 body.template--index .card-wrapper .card__content,
 body.template--custom-made .card__content {
-  border-bottom-left-radius: var(--home-radius) !important;
-  border-bottom-right-radius: var(--home-radius) !important;
+  border-radius: 0 !important;
   overflow: hidden;
 }
 
 /* ==========================================================================
-   PRODUCT CARDS — rounded bottom corners SITE-WIDE (not just homepage).
-   Applies to collection pages, search, related products, cross-sells, etc.
-   Uses an 8px radius by default so standalone pages match the homepage look.
+   PRODUCT CARDS — SQUARED corners SITE-WIDE (Round D).
+   User asked for flat / non-rounded product-card corners on every surface:
+   collection pages, homepage grids, search, related products, cross-sells,
+   etc. Zero radius on the outer wrapper + every inner slice (media, inner,
+   content, info) + hover/focus state so nothing reintroduces a rounded
+   corner under any state. overflow:hidden is kept so overflowing zoom
+   effects on hover still clip to the card's square bounds.
    ========================================================================== */
 .card-wrapper,
 .card,
 .product-card-wrapper,
 .product-card {
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   overflow: hidden !important;
 }
 .card-wrapper .card,
@@ -1774,8 +1774,10 @@ body.template--custom-made .card__content {
 .card-wrapper .card__media,
 .product-card-wrapper .card__media,
 .card .media,
-.card-wrapper .media {
-  border-radius: 8px 8px 0 0 !important;
+.card-wrapper .media,
+.product-card .media,
+.product-card-wrapper .media {
+  border-radius: 0 !important;
   overflow: hidden !important;
 }
 .card__content,
@@ -1783,8 +1785,7 @@ body.template--custom-made .card__content {
 .card-wrapper .card__content,
 .product-card__content,
 .product-card__info {
-  border-bottom-left-radius: 8px !important;
-  border-bottom-right-radius: 8px !important;
+  border-radius: 0 !important;
   overflow: hidden;
 }
 .card-wrapper:hover,
@@ -1793,44 +1794,20 @@ body.template--custom-made .card__content {
 .card:focus-within,
 .product-card-wrapper:hover,
 .product-card:hover {
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   overflow: hidden !important;
 }
 
-@media screen and (max-width: 989px) {
-  .card-wrapper,
-  .card,
-  .product-card-wrapper,
-  .product-card {
-    border-radius: 7px !important;
-  }
-  .card-wrapper .card,
-  .card-wrapper .card__inner,
-  .card-wrapper .card__media,
-  .product-card-wrapper .card__media,
-  .card .media,
-  .card-wrapper .media {
-    border-radius: 7px 7px 0 0 !important;
-  }
-  .card__content,
-  .card__information,
-  .card-wrapper .card__content,
-  .product-card__content,
-  .product-card__info {
-    border-bottom-left-radius: 7px !important;
-    border-bottom-right-radius: 7px !important;
-  }
-}
-
-/* Preserve radius on :hover / :focus-within — many themes add overflow:visible
-   on hover for zoom effects, which breaks the clip. Lock it down. */
+/* Preserve 0 radius on :hover / :focus-within — cards stay squared under
+   every interaction state (Round D). overflow:hidden is still needed here
+   because some themes flip overflow:visible on hover for zoom effects. */
 body.template--index .card:hover,
 body.template--index .card-wrapper:hover,
 body.template--index .card-wrapper:focus-within,
 body.template--index .card:focus-within,
 body.template--custom-made .card:hover,
 body.template--custom-made .card-wrapper:hover {
-  border-radius: var(--home-radius) !important;
+  border-radius: 0 !important;
   overflow: hidden !important;
 }
 
@@ -1843,6 +1820,23 @@ body.template--index .rich-text__image img,
 body.template--custom-made .media,
 body.template--custom-made .media > img {
   border-radius: var(--home-radius) !important;
+}
+
+/* Override: product cards on homepage must stay fully squared (Round D).
+   The generic `.media` rule above would otherwise reintroduce an 8px radius
+   on the product image INSIDE a squared card, which reads as a rounded
+   inset. Higher specificity (.card + .media) + !important force 0 back. */
+body.template--index .card .media,
+body.template--index .card-wrapper .media,
+body.template--index .product-card .media,
+body.template--index .product-card-wrapper .media,
+body.template--index .card .media > img,
+body.template--index .card-wrapper .media > img,
+body.template--index .card-wrapper .media picture img,
+body.template--custom-made .card .media,
+body.template--custom-made .card-wrapper .media,
+body.template--custom-made .card .media > img {
+  border-radius: 0 !important;
 }
 
 /* Buttons on the homepage — compact radius to match the pill/card radius.
