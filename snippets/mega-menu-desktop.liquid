@@ -152,45 +152,94 @@
                           </a>
                         {%- endfor -%}
                       {%- else -%}
-                        {%- comment -%} No grandchildren — render the category itself as a single feature card {%- endcomment -%}
-                        {% assign fallback_block = nil %}
-                        {% for b in section.blocks %}
-                          {% if sub_link.title == b.settings.title
-                             or sub_link.title == b.settings.title_translate
-                             or sub_link.title == b.settings.title_translate_german
-                             or sub_link.title == b.settings.title_translate_french %}
-                            {% assign fallback_block = b %}
-                          {% endif %}
-                        {% endfor %}
-                        {% assign fb_feat = blank %}
-                        {% if fallback_block %}
-                          {% assign fb_feat = fallback_block.settings.feature_text %}
-                          {% if localization.language.iso_code == 'nl' and fallback_block.settings.feature_text_nl != blank %}{% assign fb_feat = fallback_block.settings.feature_text_nl %}{% endif %}
-                          {% if localization.language.iso_code == 'de' and fallback_block.settings.feature_text_de != blank %}{% assign fb_feat = fallback_block.settings.feature_text_de %}{% endif %}
-                          {% if localization.language.iso_code == 'fr' and fallback_block.settings.feature_text_fr != blank %}{% assign fb_feat = fallback_block.settings.feature_text_fr %}{% endif %}
-                        {% endif %}
-                        <a class="mega-menu-v2-card mega-menu-v2-card--single" href="{{ sub_link.url }}">
-                          <div class="mega-menu-v2-card-img">
-                            {% if fallback_block.settings.image_item != blank %}
-                              {%- render 'c-image-element',
-                                image: fallback_block.settings.image_item,
-                                lazy: true,
-                                class: "mega-menu-v2-card-img-el"
-                              -%}
+                        {%- comment -%}
+                          No grandchildren — render up to 8 products from this
+                          category's collection (most-popular first when the
+                          merchant sets the collection's sort to "Best selling"
+                          in admin). Resolve the collection via link.object
+                          first, then parse /collections/<handle> from the URL
+                          as a fallback (covers http_link type).
+                        {%- endcomment -%}
+                        {%- assign sub_coll = blank -%}
+                        {%- assign sub_has_coll = false -%}
+                        {%- if sub_link.type == 'collection_link' and sub_link.object.products.size > 0 -%}
+                          {%- assign sub_coll = sub_link.object -%}
+                          {%- assign sub_has_coll = true -%}
+                        {%- endif -%}
+                        {%- if sub_has_coll == false and sub_link.url contains '/collections/' -%}
+                          {%- assign sub_handle = sub_link.url | split: '/collections/' | last -%}
+                          {%- assign sub_handle = sub_handle | split: '?' | first -%}
+                          {%- assign sub_handle = sub_handle | split: '#' | first -%}
+                          {%- assign sub_handle = sub_handle | split: '/' | first -%}
+                          {%- if sub_handle != blank -%}
+                            {%- assign sub_candidate = collections[sub_handle] -%}
+                            {%- if sub_candidate.products.size > 0 -%}
+                              {%- assign sub_coll = sub_candidate -%}
+                              {%- assign sub_has_coll = true -%}
+                            {%- endif -%}
+                          {%- endif -%}
+                        {%- endif -%}
+
+                        {%- if sub_has_coll -%}
+                          {%- for product in sub_coll.products limit: 8 -%}
+                            <a class="mega-menu-v2-card" href="{{ product.url }}">
+                              <div class="mega-menu-v2-card-img">
+                                {%- if product.featured_image != blank -%}
+                                  <img
+                                    src="{{ product.featured_image | image_url: width: 400 }}"
+                                    srcset="{{ product.featured_image | image_url: width: 200 }} 200w, {{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w"
+                                    sizes="(max-width: 1199px) 22vw, 220px"
+                                    alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                                    loading="lazy"
+                                    class="mega-menu-v2-card-img-el"
+                                    width="{{ product.featured_image.width }}"
+                                    height="{{ product.featured_image.height }}">
+                                {%- endif -%}
+                              </div>
+                              <div class="mega-menu-v2-card-title">{{ product.title | escape }}</div>
+                            </a>
+                          {%- endfor -%}
+                        {%- else -%}
+                          {%- comment -%} Couldn't resolve a collection — fall back to original single feature card {%- endcomment -%}
+                          {% assign fallback_block = nil %}
+                          {% for b in section.blocks %}
+                            {% if sub_link.title == b.settings.title
+                               or sub_link.title == b.settings.title_translate
+                               or sub_link.title == b.settings.title_translate_german
+                               or sub_link.title == b.settings.title_translate_french %}
+                              {% assign fallback_block = b %}
                             {% endif %}
-                          </div>
-                          <div class="mega-menu-v2-card-title">{{ sub_link.title }}</div>
-                          {% if fb_feat != blank %}
-                            <div class="mega-menu-v2-card-feature">
-                              {% if fallback_block.settings.feature_icon != blank %}
-                                <span class="mega-menu-v2-card-icon">
-                                  {%- render 'c-image-element', image: fallback_block.settings.feature_icon, lazy: true, class: "mega-menu-v2-card-icon-el" -%}
-                                </span>
-                              {% endif %}
-                              <span class="mega-menu-v2-card-feature-text">{{ fb_feat }}</span>
-                            </div>
+                          {% endfor %}
+                          {% assign fb_feat = blank %}
+                          {% if fallback_block %}
+                            {% assign fb_feat = fallback_block.settings.feature_text %}
+                            {% if localization.language.iso_code == 'nl' and fallback_block.settings.feature_text_nl != blank %}{% assign fb_feat = fallback_block.settings.feature_text_nl %}{% endif %}
+                            {% if localization.language.iso_code == 'de' and fallback_block.settings.feature_text_de != blank %}{% assign fb_feat = fallback_block.settings.feature_text_de %}{% endif %}
+                            {% if localization.language.iso_code == 'fr' and fallback_block.settings.feature_text_fr != blank %}{% assign fb_feat = fallback_block.settings.feature_text_fr %}{% endif %}
                           {% endif %}
-                        </a>
+                          <a class="mega-menu-v2-card mega-menu-v2-card--single" href="{{ sub_link.url }}">
+                            <div class="mega-menu-v2-card-img">
+                              {% if fallback_block.settings.image_item != blank %}
+                                {%- render 'c-image-element',
+                                  image: fallback_block.settings.image_item,
+                                  lazy: true,
+                                  class: "mega-menu-v2-card-img-el"
+                                -%}
+                              {% endif %}
+                            </div>
+                            <div class="mega-menu-v2-card-title">{{ sub_link.title }}</div>
+                            {% if fb_feat != blank %}
+                              <div class="mega-menu-v2-card-feature">
+                                {% if fallback_block.settings.feature_icon != blank %}
+                                  <span class="mega-menu-v2-card-icon">
+                                    {%- render 'c-image-element', image: fallback_block.settings.feature_icon, lazy: true, class: "mega-menu-v2-card-icon-el" -%}
+                                  </span>
+                                {% endif %}
+                                <span class="mega-menu-v2-card-feature-text">{{ fb_feat }}</span>
+                              </div>
+                            {% endif %}
+                          </a>
+                        {%- endif -%}
                       {%- endif -%}
                     </div>
                   {%- endfor -%}
