@@ -1404,8 +1404,16 @@ body.template--custom-made .menu-drawer {
   .menu-drawer:has(.mobile-menu--v2-subsub-active),
   .js .menu-drawer:has(.mobile-menu--v2-sub-active),
   .js .menu-drawer:has(.mobile-menu--v2-subsub-active) {
-    height: calc(100vh - 104px) !important;
-    max-height: calc(100vh - 104px) !important;
+    /* Two-line declaration so modern iOS Safari (15.4+) uses 100svh —
+       the "small viewport height" that excludes the URL/tab bar at
+       the bottom — while older browsers fall back to a vh value with
+       an extra-large bottom reservation so the Shop CTA never lands
+       under the Safari chrome. 104px covers announcement bar + pill
+       on the top side; the svh unit handles the bottom side. */
+    height: calc(100vh - 180px) !important;
+    max-height: calc(100vh - 180px) !important;
+    height: calc(100svh - 104px) !important;
+    max-height: calc(100svh - 104px) !important;
     overflow: hidden !important;  /* panel manages its own scroll */
   }
   .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__inner-container,
@@ -2544,13 +2552,14 @@ body.template--index .image-banner .button span {
    `order: 99` pushes it past the reviews/locale footer (which sits
    after it in the DOM) so the CTA is always the very last item in the
    flex column — flush with the drawer's bottom edge regardless of
-   how tall the cards list or footer get. */
+   how tall the cards list or footer get. No border-top: the footer
+   (reviews + locale) above is already on white bg and we want a
+   seamless transition into the CTA pill. */
 .mobile-menu--v2 .mobile-menu__cta-wrap {
   position: static;
   order: 99;
   padding: 16px 20px 12px;
   background: #ffffff;
-  border-top: 1px solid #F0EEEA;
   flex-shrink: 0;
 }
 
