@@ -501,6 +501,14 @@ body:not(.template--index):not(.template--custom-made) main#MainContent {
   }
 }
 
+/* Collection pages WITH a banner image: banner extends behind header pill,
+   same as homepage hero. Collections without an image keep the 110px offset. */
+body.template--collection:has(.banner .banner__media) #MainContent,
+body.template--collection:has(.banner .banner__media) main,
+body.template--collection:has(.banner .banner__media) main#MainContent {
+  padding-top: 0 !important;
+}
+
 /* Sticky state: identical styling — no flicker, no color change on scroll.
    Shadow is preserved here so the pill reads as lifted over white content
    as you scroll past the hero. */
