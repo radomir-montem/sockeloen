@@ -79,7 +79,9 @@
                  x-transition:leave-end="mega-menu-v2-panel-leave-end">
               <div class="mega-menu-v2-inner">
 
-                {%- comment -%} Sidebar: categories + Shop all CTA {%- endcomment -%}
+                {%- comment -%} Sidebar: categories only. The global "Shop all" CTA
+                  was removed — each category's panel now ends with its own per-
+                  category "Shop all <name>" tile inside the grid (see below). {%- endcomment -%}
                 <aside class="mega-menu-v2-sidebar">
                   <ul class="mega-menu-v2-cat-list" role="list">
                     {%- for sub_link in link.links -%}
@@ -93,15 +95,12 @@
                       </li>
                     {%- endfor -%}
                   </ul>
-                  <a href="{{ link.url }}" class="mega-menu-v2-cta">
-                    Shop all
-                  </a>
                 </aside>
 
                 {%- comment -%} Grid: one per category {%- endcomment -%}
                 <div class="mega-menu-v2-grid-wrap">
                   {%- for sub_link in link.links -%}
-                    <div class="mega-menu-v2-grid"
+                    <div class="mega-menu-v2-grid{% if sub_link.links.size == 0 %} mega-menu-v2-grid--products{% endif %}"
                          x-show="isCategory({{ forloop.index }})"
                          x-cloak>
                       {%- if sub_link.links.size > 0 -%}
@@ -152,45 +151,121 @@
                           </a>
                         {%- endfor -%}
                       {%- else -%}
-                        {%- comment -%} No grandchildren — render the category itself as a single feature card {%- endcomment -%}
-                        {% assign fallback_block = nil %}
-                        {% for b in section.blocks %}
-                          {% if sub_link.title == b.settings.title
-                             or sub_link.title == b.settings.title_translate
-                             or sub_link.title == b.settings.title_translate_german
-                             or sub_link.title == b.settings.title_translate_french %}
-                            {% assign fallback_block = b %}
-                          {% endif %}
-                        {% endfor %}
-                        {% assign fb_feat = blank %}
-                        {% if fallback_block %}
-                          {% assign fb_feat = fallback_block.settings.feature_text %}
-                          {% if localization.language.iso_code == 'nl' and fallback_block.settings.feature_text_nl != blank %}{% assign fb_feat = fallback_block.settings.feature_text_nl %}{% endif %}
-                          {% if localization.language.iso_code == 'de' and fallback_block.settings.feature_text_de != blank %}{% assign fb_feat = fallback_block.settings.feature_text_de %}{% endif %}
-                          {% if localization.language.iso_code == 'fr' and fallback_block.settings.feature_text_fr != blank %}{% assign fb_feat = fallback_block.settings.feature_text_fr %}{% endif %}
-                        {% endif %}
-                        <a class="mega-menu-v2-card mega-menu-v2-card--single" href="{{ sub_link.url }}">
-                          <div class="mega-menu-v2-card-img">
-                            {% if fallback_block.settings.image_item != blank %}
-                              {%- render 'c-image-element',
-                                image: fallback_block.settings.image_item,
-                                lazy: true,
-                                class: "mega-menu-v2-card-img-el"
-                              -%}
-                            {% endif %}
-                          </div>
-                          <div class="mega-menu-v2-card-title">{{ sub_link.title }}</div>
-                          {% if fb_feat != blank %}
-                            <div class="mega-menu-v2-card-feature">
-                              {% if fallback_block.settings.feature_icon != blank %}
-                                <span class="mega-menu-v2-card-icon">
-                                  {%- render 'c-image-element', image: fallback_block.settings.feature_icon, lazy: true, class: "mega-menu-v2-card-icon-el" -%}
-                                </span>
-                              {% endif %}
-                              <span class="mega-menu-v2-card-feature-text">{{ fb_feat }}</span>
+                        {%- comment -%}
+                          No grandchildren — render up to 8 products from this
+                          category's collection (most-popular first when the
+                          merchant sets the collection's sort to "Best selling"
+                          in admin). Resolve the collection via link.object
+                          first, then parse /collections/<handle> from the URL
+                          as a fallback (covers http_link type).
+                        {%- endcomment -%}
+
+                        {%- assign sub_coll = blank -%}
+                        {%- assign sub_has_coll = false -%}
+                        {%- if sub_link.type == 'collection_link' and sub_link.object.products.size > 0 -%}
+                          {%- assign sub_coll = sub_link.object -%}
+                          {%- assign sub_has_coll = true -%}
+                        {%- endif -%}
+                        {%- if sub_has_coll == false and sub_link.url contains '/collections/' -%}
+                          {%- assign sub_handle = sub_link.url | split: '/collections/' | last -%}
+                          {%- assign sub_handle = sub_handle | split: '?' | first -%}
+                          {%- assign sub_handle = sub_handle | split: '#' | first -%}
+                          {%- assign sub_handle = sub_handle | split: '/' | first -%}
+                          {%- if sub_handle != blank -%}
+                            {%- assign sub_candidate = collections[sub_handle] -%}
+                            {%- if sub_candidate.products.size > 0 -%}
+                              {%- assign sub_coll = sub_candidate -%}
+                              {%- assign sub_has_coll = true -%}
+                            {%- endif -%}
+                          {%- endif -%}
+                        {%- endif -%}
+
+                        {%- if sub_has_coll -%}
+                          {%- comment -%}
+                            When the collection has more than 10 products, cap the
+                            product tiles at 9 so the 10th slot becomes the "Shop
+                            all" tile (keeps the grid at a clean 5×2). Smaller
+                            collections just get all products followed by the
+                            shop-all tile as the last card.
+                          {%- endcomment -%}
+                          {%- assign product_tile_limit = 10 -%}
+                          {%- if sub_coll.products.size > 10 -%}
+                            {%- assign product_tile_limit = 9 -%}
+                          {%- endif -%}
+                          {%- for product in sub_coll.products limit: product_tile_limit -%}
+                            <a class="mega-menu-v2-card" href="{{ product.url }}">
+                              <div class="mega-menu-v2-card-img">
+                                {%- if product.featured_image != blank -%}
+                                  <img
+                                    src="{{ product.featured_image | image_url: width: 400 }}"
+                                    srcset="{{ product.featured_image | image_url: width: 200 }} 200w, {{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w"
+                                    sizes="(max-width: 1199px) 22vw, 220px"
+                                    alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                                    loading="lazy"
+                                    class="mega-menu-v2-card-img-el"
+                                    width="{{ product.featured_image.width }}"
+                                    height="{{ product.featured_image.height }}">
+                                {%- endif -%}
+                              </div>
+                              <div class="mega-menu-v2-card-title">{{ product.title | escape }}</div>
+                            </a>
+                          {%- endfor -%}
+
+                          {%- comment -%}
+                            Per-category "Shop all" tile — always the last card.
+                            Links to sub_coll.url (the bare collection URL) so we
+                            land on the full category page, stripping any tag
+                            filter that may exist on sub_link.url.
+                          {%- endcomment -%}
+                          <a class="mega-menu-v2-card mega-menu-v2-card--shop-all" href="{{ sub_coll.url }}">
+                            <div class="mega-menu-v2-card-img mega-menu-v2-card-img--shop-all">
+                              <svg class="mega-menu-v2-card-shop-all-arrow" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <path d="M6 14h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
                             </div>
+                            <div class="mega-menu-v2-card-title">Shop all {{ sub_link.title | escape }}</div>
+                          </a>
+                        {%- else -%}
+                          {%- comment -%} Couldn't resolve a collection — fall back to original single feature card {%- endcomment -%}
+                          {% assign fallback_block = nil %}
+                          {% for b in section.blocks %}
+                            {% if sub_link.title == b.settings.title
+                               or sub_link.title == b.settings.title_translate
+                               or sub_link.title == b.settings.title_translate_german
+                               or sub_link.title == b.settings.title_translate_french %}
+                              {% assign fallback_block = b %}
+                            {% endif %}
+                          {% endfor %}
+                          {% assign fb_feat = blank %}
+                          {% if fallback_block %}
+                            {% assign fb_feat = fallback_block.settings.feature_text %}
+                            {% if localization.language.iso_code == 'nl' and fallback_block.settings.feature_text_nl != blank %}{% assign fb_feat = fallback_block.settings.feature_text_nl %}{% endif %}
+                            {% if localization.language.iso_code == 'de' and fallback_block.settings.feature_text_de != blank %}{% assign fb_feat = fallback_block.settings.feature_text_de %}{% endif %}
+                            {% if localization.language.iso_code == 'fr' and fallback_block.settings.feature_text_fr != blank %}{% assign fb_feat = fallback_block.settings.feature_text_fr %}{% endif %}
                           {% endif %}
-                        </a>
+                          <a class="mega-menu-v2-card mega-menu-v2-card--single" href="{{ sub_link.url }}">
+                            <div class="mega-menu-v2-card-img">
+                              {% if fallback_block.settings.image_item != blank %}
+                                {%- render 'c-image-element',
+                                  image: fallback_block.settings.image_item,
+                                  lazy: true,
+                                  class: "mega-menu-v2-card-img-el"
+                                -%}
+                              {% endif %}
+                            </div>
+                            <div class="mega-menu-v2-card-title">{{ sub_link.title }}</div>
+                            {% if fb_feat != blank %}
+                              <div class="mega-menu-v2-card-feature">
+                                {% if fallback_block.settings.feature_icon != blank %}
+                                  <span class="mega-menu-v2-card-icon">
+                                    {%- render 'c-image-element', image: fallback_block.settings.feature_icon, lazy: true, class: "mega-menu-v2-card-icon-el" -%}
+                                  </span>
+                                {% endif %}
+                                <span class="mega-menu-v2-card-feature-text">{{ fb_feat }}</span>
+                              </div>
+                            {% endif %}
+                          </a>
+                        {%- endif -%}
                       {%- endif -%}
                     </div>
                   {%- endfor -%}
@@ -200,9 +275,111 @@
             </div>
           </div>
         {%- else -%}
-          <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset link-only{% if link.current %} active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
-            <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
-          </a>
+          {%- comment -%}
+            No submenu — render a Cloudpillo-style mega panel containing up to
+            8 popular products from the COLLECTION this menu link points to
+            (e.g. "Cycling" → /collections/cycling → the Cycling collection's
+            products). Merchants control which products surface by setting
+            the collection's sort order in Shopify admin ("Best selling" gives
+            the closest match to a best-seller rail).
+
+            If the link doesn't resolve to a collection (page link, external,
+            etc.), fall back to a plain anchor — no mega panel.
+
+            Each card is image + product title, reusing .mega-menu-v2-card so
+            the look matches submenu panels.
+          {%- endcomment -%}
+          {%- comment -%}
+            Resolve which collection to source from, in this order:
+              1. link.object when link.type == 'collection_link' (cleanest)
+              2. Parse handle from link.url when URL looks like /collections/<handle>
+                 (covers http_link type — common when merchants paste URLs manually)
+          {%- endcomment -%}
+          {%- assign bs_coll = blank -%}
+          {%- assign has_coll = false -%}
+          {%- if link.type == 'collection_link' and link.object.products.size > 0 -%}
+            {%- assign bs_coll = link.object -%}
+            {%- assign has_coll = true -%}
+          {%- endif -%}
+          {%- if has_coll == false and link.url contains '/collections/' -%}
+            {%- assign handle_chunk = link.url | split: '/collections/' | last -%}
+            {%- assign handle_chunk = handle_chunk | split: '?' | first -%}
+            {%- assign handle_chunk = handle_chunk | split: '#' | first -%}
+            {%- assign handle_chunk = handle_chunk | split: '/' | first -%}
+            {%- if handle_chunk != blank -%}
+              {%- assign candidate_coll = collections[handle_chunk] -%}
+              {%- if candidate_coll.products.size > 0 -%}
+                {%- assign bs_coll = candidate_coll -%}
+                {%- assign has_coll = true -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- if has_coll -%}
+            <div class="mega-menu-v2-trigger"
+                 @mouseenter="open({{ forloop.index }})"
+                 @mouseleave="scheduleClose()">
+              <a class="header__menu-item list-menu__item link link--text focus-inset link-only child-menu mega-menu-v2-trigger-link{% if link.current %} active{% endif %}"
+                 :class="isActive({{ forloop.index }}) ? 'is-open !text-[#111111]' : ''"
+                 href="{{ link.url }}"
+                 aria-haspopup="true"
+                 :aria-expanded="isActive({{ forloop.index }}) ? 'true' : 'false'"
+                 aria-controls="mega-menu-panel-{{ forloop.index }}"
+                 {%- if link.current %} aria-current="page"{% endif %}>
+                <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title }}</span>
+                <svg class="menu-arrow-down mega-menu-v2-chevron"
+                     :class="isActive({{ forloop.index }}) ? 'is-open' : ''"
+                     xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5" fill="none">
+                  <path d="M1 1L4 4L7 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+
+              <div id="mega-menu-panel-{{ forloop.index }}"
+                   class="mega-menu-v2-panel"
+                   role="region"
+                   aria-label="{{ link.title | escape }} menu"
+                   x-show="isActive({{ forloop.index }})"
+                   x-cloak
+                   @mouseenter="cancelClose()"
+                   @mouseleave="scheduleClose()"
+                   x-transition:enter="mega-menu-v2-panel-enter"
+                   x-transition:enter-start="mega-menu-v2-panel-enter-start"
+                   x-transition:enter-end="mega-menu-v2-panel-enter-end"
+                   x-transition:leave="mega-menu-v2-panel-leave"
+                   x-transition:leave-start="mega-menu-v2-panel-leave-start"
+                   x-transition:leave-end="mega-menu-v2-panel-leave-end">
+                <div class="mega-menu-v2-inner mega-menu-v2-inner--bestsellers">
+                  <div class="mega-menu-v2-grid-wrap">
+                    <div class="mega-menu-v2-grid mega-menu-v2-grid--bestsellers">
+                      {%- for product in bs_coll.products limit: 10 -%}
+                        <a class="mega-menu-v2-card" href="{{ product.url }}">
+                          <div class="mega-menu-v2-card-img">
+                            {%- if product.featured_image != blank -%}
+                              <img
+                                src="{{ product.featured_image | image_url: width: 400 }}"
+                                srcset="{{ product.featured_image | image_url: width: 200 }} 200w, {{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w"
+                                sizes="(max-width: 1199px) 22vw, 220px"
+                                alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                                loading="lazy"
+                                class="mega-menu-v2-card-img-el"
+                                width="{{ product.featured_image.width }}"
+                                height="{{ product.featured_image.height }}">
+                            {%- endif -%}
+                          </div>
+                          <div class="mega-menu-v2-card-title">{{ product.title | escape }}</div>
+                        </a>
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- else -%}
+            {%- comment -%} Not a collection link (or collection has no products) — plain anchor {%- endcomment -%}
+            <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset link-only{% if link.current %} active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+              <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+            </a>
+          {%- endif -%}
         {%- endif -%}
       </li>
     {%- endfor -%}

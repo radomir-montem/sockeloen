@@ -2721,7 +2721,10 @@ body.template--index .image-banner .button span {
 .mega-menu-v2-inner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 48px 48px;
+  /* Vertical padding kept tight so the open panel leaves ~20% of the
+     viewport visible below it on standard laptops. Adjust the 16px/20px
+     values if merchant wants more breathing room. */
+  padding: 16px 48px 20px;
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 48px;
@@ -2900,8 +2903,64 @@ body.template--index .image-banner .button span {
 }
 
 .mega-menu-v2-grid--bestsellers {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px 20px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px 16px;
+}
+
+/* ---- Category products variant (sub-category with no grandchildren) ----
+   When a sidebar category has no grandchildren, we auto-fill the grid with
+   up to 10 products from that collection — 5x2 keeps the grid balanced and
+   matches the base 5-column rhythm so cards don't look oversized. Double-
+   class selector keeps specificity above the base .mega-menu-v2-grid rule. */
+.mega-menu-v2-grid.mega-menu-v2-grid--products {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px 16px;
+}
+
+/* ---- Product-tile typography ----
+   Lighter weight + lowercase for a less shouty, more refined look than the
+   homepage bold-title. Still Roboto for consistency. Truncate to a single
+   line so longer names don't push the grid into an uneven 2-line layout.
+   Applies to tiles in the product grid AND the best-sellers grid, and
+   includes the "Shop all" tile title. */
+.mega-menu-v2-grid--products .mega-menu-v2-card-title,
+.mega-menu-v2-grid--bestsellers .mega-menu-v2-card-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0.01em;
+  text-transform: lowercase;
+  color: #111111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+}
+
+/* ---- "Shop all <category>" tile ----
+   Visually distinct from product tiles: filled dark-grey image area with a
+   white arrow glyph, keeping the same aspect-ratio / dimensions as product
+   cards so the 5x2 grid stays perfectly aligned. */
+.mega-menu-v2-card-img.mega-menu-v2-card-img--shop-all {
+  background: #3a3a3a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+.mega-menu-v2-card--shop-all:hover .mega-menu-v2-card-img--shop-all {
+  background: #2a2a2a;
+}
+.mega-menu-v2-card-shop-all-arrow {
+  width: 28px;
+  height: 28px;
+  display: block;
+  transition: transform 0.18s ease;
+}
+.mega-menu-v2-card--shop-all:hover .mega-menu-v2-card-shop-all-arrow {
+  transform: translateX(3px);
 }
 
 /* Hide mega menu nav on narrow viewports */
@@ -2913,7 +2972,7 @@ body.template--index .image-banner .button span {
 /* Fine-tune for tighter desktop breakpoints */
 @media (min-width: 990px) and (max-width: 1199px) {
   .mega-menu-v2-inner {
-    padding: 32px 32px 40px;
+    padding: 14px 32px 18px;
     gap: 32px;
     grid-template-columns: 200px 1fr;
   }
@@ -2924,9 +2983,10 @@ body.template--index .image-banner .button span {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
   }
-  .mega-menu-v2-grid--bestsellers {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px 16px;
+  .mega-menu-v2-grid--bestsellers,
+  .mega-menu-v2-grid.mega-menu-v2-grid--products {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px 12px;
   }
 }
 
