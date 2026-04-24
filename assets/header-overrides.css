@@ -1911,21 +1911,16 @@ body.template--index .hero .button,
 body.template--index .hero__buttons .button,
 body.template--custom-made .banner .button,
 body.template--custom-made .slideshow .button {
-  isolation: isolate;
-  background: rgba(255, 255, 255, 0.26) !important;
-  backdrop-filter: blur(13px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(13px) saturate(180%) !important;
-  border: none !important;
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 2px solid #e5e5e5 !important;
   outline: none !important;
-  color: rgba(255, 255, 255, 0.95) !important;
-  /* Light source bottom-right: inner glow on right + bottom edges, soft drop shadow */
-  box-shadow:
-    inset -6px 0 16px rgba(255, 255, 255, 0.18),
-    inset 0 -6px 16px rgba(255, 255, 255, 0.18),
-    0 8px 32px rgba(0, 0, 0, 0.10) !important;
-  border-radius: 0 !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  transition: background 0.2s ease, box-shadow 0.2s ease !important;
+  color: #1a1a1a !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+  text-shadow: none !important;
+  transition: border-color 0.2s ease, background-color 0.2s ease !important;
 }
 
 /* ::after: hide base.css border pseudo-element */
@@ -1935,37 +1930,14 @@ body.template--index .hero .button::after {
   display: none !important;
 }
 
-/* ::before: gradient border — subtle at top/left, visible at right/bottom.
-   Mask punch-out: the 1px padding ring is the visible "border" area.
-   135° gradient means bottom-right corner gets the brightest value. */
+/* ::before: hide glass gradient border */
 body.template--index .banner .button::before,
 body.template--index .slideshow .button::before,
 body.template--index .hero .button::before {
-  content: '' !important;
-  position: absolute !important;
-  inset: -1px !important;
-  border-radius: 0 !important;
-  padding: 1px !important;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.60) 100%
-  ) !important;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask-composite: destination-out;
-  box-shadow: none !important;
-  border: none !important;
-  pointer-events: none;
-  z-index: 1 !important;
+  display: none !important;
 }
 
-/* Hover: brighter glass — more opaque, stronger shadow */
+/* Hover: darken border like the product tiles */
 body.template--index .banner .button:hover,
 body.template--index .banner__buttons .button:hover,
 body.template--index .slideshow .button:hover,
@@ -1973,17 +1945,14 @@ body.template--index .slideshow__content .button:hover,
 body.template--index .hero .button:hover,
 body.template--index .image-banner .button:hover,
 body.template--custom-made .banner .button:hover {
-  background: rgba(255, 255, 255, 0.34) !important;
-  color: rgba(255, 255, 255, 0.95) !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow:
-    inset -6px 0 16px rgba(255, 255, 255, 0.24),
-    inset 0 -6px 16px rgba(255, 255, 255, 0.24),
-    0 8px 32px rgba(0, 0, 0, 0.14) !important;
+  background: #ffffff !important;
+  border-color: #bbb !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  color: #1a1a1a !important;
 }
 
-/* White text on all nested layers (glass sits on a dark hero image) */
+/* Dark text on all nested layers */
 body.template--index .banner .button,
 body.template--index .banner .button span,
 body.template--index .banner .button strong,
@@ -1993,7 +1962,7 @@ body.template--index .hero .button,
 body.template--index .hero .button span,
 body.template--index .image-banner .button,
 body.template--index .image-banner .button span {
-  color: rgba(255, 255, 255, 0.95) !important;
+  color: #1a1a1a !important;
   font-weight: 500;
 }
 
@@ -2899,6 +2868,19 @@ body.template--index .image-banner .button span {
   max-width: 320px;
 }
 
+/* ---- Best-sellers variant (top-level menu item with no submenu) ----
+   Drops the sidebar and spreads 8 product cards across a 4x2 grid so
+   the panel stays balanced without categories. Reuses .mega-menu-v2-card
+   so the visual language matches the rest of the Cloudpillo-style menu. */
+.mega-menu-v2-inner--bestsellers {
+  grid-template-columns: 1fr;
+}
+
+.mega-menu-v2-grid--bestsellers {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px 20px;
+}
+
 /* Hide mega menu nav on narrow viewports */
 @media (max-width: 989px) {
   .mega-menu-v2-nav { display: none; }
@@ -2912,9 +2894,16 @@ body.template--index .image-banner .button span {
     gap: 32px;
     grid-template-columns: 200px 1fr;
   }
+  .mega-menu-v2-inner--bestsellers {
+    grid-template-columns: 1fr;
+  }
   .mega-menu-v2-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
+  }
+  .mega-menu-v2-grid--bestsellers {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px 16px;
   }
 }
 
