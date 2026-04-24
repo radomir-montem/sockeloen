@@ -1386,64 +1386,66 @@ body.template--custom-made .menu-drawer {
   }
 
   /* ------------------------------------------------------------------------
-     Sub panel active → expand the drawer so the shop grid isn't clipped.
+     Sub / sub-sub panel active → expand the drawer.
      --------------------------------------------------------------------
-     When activeMenu > 0 the wrap gets .mobile-menu--v2-sub-active. The
-     root panel stays mounted (position: relative) but we collapse it to
-     height 0 via its max-height so the wrap and drawer size to the sub
-     panel's actual content. Without this, the sub inherits the root's
-     ~284px height and the category tiles overflow invisibly. */
+     The v3 drawer goes straight into the sub panel (root is gone), so a
+     sub-active or subsub-active state applies from the moment the drawer
+     opens. Both states need the same sizing treatment: auto-height,
+     capped at viewport minus the header/announcement padding. */
   .menu-drawer:has(.mobile-menu--v2-sub-active),
-  .js .menu-drawer:has(.mobile-menu--v2-sub-active) {
+  .menu-drawer:has(.mobile-menu--v2-subsub-active),
+  .js .menu-drawer:has(.mobile-menu--v2-sub-active),
+  .js .menu-drawer:has(.mobile-menu--v2-subsub-active) {
     height: auto !important;
     max-height: calc(100vh - 104px) !important;
   }
-  .mobile-menu--v2-sub-active .mobile-menu__panel--root {
+  /* Legacy root-panel collapse rule — harmless now that root is removed
+     from the markup; kept in case any cached template ships the old
+     DOM. */
+  .mobile-menu--v2-sub-active .mobile-menu__panel--root,
+  .mobile-menu--v2-subsub-active .mobile-menu__panel--root {
     max-height: 0 !important;
     min-height: 0 !important;
     overflow: hidden !important;
     pointer-events: none !important;
   }
-  /* Sub panels flow in normal document order when active so they contribute
-     height to the wrap (and the drawer grows to match their content). */
+  /* The active panel flows in normal document order so it contributes
+     height to the wrap (drawer grows to match content). */
   .mobile-menu--v2-sub-active .mobile-menu__panel--sub[x-show],
-  .mobile-menu--v2-sub-active .mobile-menu__panel--subsub[x-show] {
+  .mobile-menu--v2-subsub-active .mobile-menu__panel--subsub[x-show] {
     position: relative !important;
     top: auto !important;
     bottom: auto !important;
     height: auto !important;
     min-height: 0 !important;
   }
+  /* When the user descends into a sub-sub menu, the sub panel gets out
+     of the way — the sub-sub replaces it visually (not stacks). The
+     overlay effect is close enough for the "slide in covering" feel
+     the user asked for, and it lets the drawer size to sub-sub height
+     instead of the taller sub grid. */
+  .mobile-menu--v2-subsub-active .mobile-menu__panel--sub[x-show] {
+    display: none !important;
+  }
 
   /* ------------------------------------------------------------------------
-     Sticky close-X fix: open up the overflow chain when sub is active.
-     --------------------------------------------------------------------
-     `.mobile-menu__close-floating` uses `position: sticky` to stay pinned
-     to the top of the drawer viewport while the drawer scrolls. Sticky
-     resolves to the NEAREST scrolling ancestor, so anything between the
-     sticky element and `.menu-drawer` (the real scroll container) with
-     `overflow: hidden|auto|scroll` traps it — the button rides the content
-     off-screen instead of sticking.
-
-     Ancestor chain when sub-active (inside-out):
-       body--sub (visible)
-       → panel--sub (HIDDEN — used during slide-in animation)
-       → mobile-menu--v2 (HIDDEN — belt-and-suspenders for slide)
-       → navigation-container (AUTO — theme default)
-       → inner-container (visible)
-       → .menu-drawer (the scroll container we actually want)
-
-     Override the three blockers to `visible` once sub-active is latched.
-     By then the slide-in is visually complete and horizontal overflow is
-     already clipped by the drawer itself, so removing hidden on the
-     intermediates has no visual side-effect. */
+     Open up the overflow chain so internal scrolling resolves to the
+     .menu-drawer viewport (not a trapped ancestor). Needed in both
+     sub-active and subsub-active states. See the earlier comment about
+     why overflow:visible is safe here (horizontal overflow is clipped
+     by the drawer box itself, so the slide animation still looks fine). */
   .mobile-menu--v2-sub-active,
+  .mobile-menu--v2-subsub-active,
   .mobile-menu--v2-sub-active .mobile-menu__panel--sub,
-  .mobile-menu--v2-sub-active .mobile-menu__panel--subsub {
+  .mobile-menu--v2-sub-active .mobile-menu__panel--subsub,
+  .mobile-menu--v2-subsub-active .mobile-menu__panel--sub,
+  .mobile-menu--v2-subsub-active .mobile-menu__panel--subsub {
     overflow: visible !important;
   }
   .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container,
-  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__inner-container {
+  .menu-drawer:has(.mobile-menu--v2-subsub-active) .menu-drawer__navigation-container,
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__inner-container,
+  .menu-drawer:has(.mobile-menu--v2-subsub-active) .menu-drawer__inner-container {
     overflow: visible !important;
   }
 }
