@@ -356,8 +356,10 @@ header.header {
   transition: none !important; /* kill color-swap flicker on scroll */
 }
 
-/* Product page: match header bg to the product section background */
-body.template--product header.header {
+/* Product pages: background behind the header pill matches product section */
+body.template--product sticky-header,
+body.template--product .header-wrapper,
+body.template--product .shopify-section-group-header-section {
   background: #F4F4F1 !important;
   background-color: #F4F4F1 !important;
 }
