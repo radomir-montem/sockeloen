@@ -1575,6 +1575,16 @@ body.drawer-subsub-active .header__icons > *:not(.header__icon--drawer-back) {
   display: none !important;
 }
 
+/* The stock header rule `header.header .header__icon svg path` hardcodes
+   fill: #000 on every icon path — fine for filled-symbol icons (hamburger,
+   search, cart) but it turns our stroke-only chevron into a solid filled
+   triangle. Force fill:none on the back button path so the SVG renders
+   as the intended thin "<" stroke. */
+.header__icon--drawer-back svg path,
+header.header .header__icon--drawer-back svg path {
+  fill: none !important;
+}
+
 /* ==========================================================================
    Dropdown caret on nav items — desktop only
    ========================================================================== */
