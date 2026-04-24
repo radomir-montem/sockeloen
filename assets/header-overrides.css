@@ -1386,18 +1386,40 @@ body.template--custom-made .menu-drawer {
   }
 
   /* ------------------------------------------------------------------------
-     Sub / sub-sub panel active → expand the drawer.
+     Sub / sub-sub panel active → lock the drawer to the viewport.
      --------------------------------------------------------------------
-     The v3 drawer goes straight into the sub panel (root is gone), so a
-     sub-active or subsub-active state applies from the moment the drawer
-     opens. Both states need the same sizing treatment: auto-height,
-     capped at viewport minus the header/announcement padding. */
+     The v3 drawer goes straight into the sub panel (root is gone). We
+     want the drawer to be *exactly* the viewport height (minus the pill
+     + announcement bar) with NO native scroll — the sub panel handles
+     its own scroll internally so the Shop-category CTA can stay pinned
+     at the bottom while the cards scroll.
+
+     Chain: fixed-height drawer → 100% inner → 100% nav → 100% mobile-menu
+     (which is the .relative containing block for the absolute sub panel).
+     With the chain in place, the sub panel's top:0/bottom:0 resolves
+     against the full drawer height, giving the inner flex layout the
+     concrete height it needs for `flex: 1; min-height: 0; overflow-y:
+     auto` on the card list to actually produce an internal scroll. */
   .menu-drawer:has(.mobile-menu--v2-sub-active),
   .menu-drawer:has(.mobile-menu--v2-subsub-active),
   .js .menu-drawer:has(.mobile-menu--v2-sub-active),
   .js .menu-drawer:has(.mobile-menu--v2-subsub-active) {
-    height: auto !important;
+    height: calc(100vh - 104px) !important;
     max-height: calc(100vh - 104px) !important;
+    overflow: hidden !important;  /* panel manages its own scroll */
+  }
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__inner-container,
+  .menu-drawer:has(.mobile-menu--v2-subsub-active) .menu-drawer__inner-container,
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container,
+  .menu-drawer:has(.mobile-menu--v2-subsub-active) .menu-drawer__navigation-container {
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container > .relative,
+  .menu-drawer:has(.mobile-menu--v2-subsub-active) .menu-drawer__navigation-container > .relative {
+    height: 100% !important;
+    min-height: 0 !important;
   }
   /* Legacy root-panel collapse rule — harmless now that root is removed
      from the markup; kept in case any cached template ships the old
@@ -1409,13 +1431,18 @@ body.template--custom-made .menu-drawer {
     overflow: hidden !important;
     pointer-events: none !important;
   }
-  /* The active panel flows in normal document order so it contributes
-     height to the wrap (drawer grows to match content). */
+  /* Sub / sub-sub panel fills the drawer. Previously forced to
+     `position: relative; height: auto` so the drawer grew to content;
+     that path made the whole drawer scroll natively and the CTA scrolled
+     off with it. Now the panel stretches to the drawer via absolute
+     top:0/bottom:0 and the inner flex body handles scroll + pinned CTA. */
   .mobile-menu--v2-sub-active .mobile-menu__panel--sub[x-show],
   .mobile-menu--v2-subsub-active .mobile-menu__panel--subsub[x-show] {
-    position: relative !important;
-    top: auto !important;
-    bottom: auto !important;
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
     height: auto !important;
     min-height: 0 !important;
   }
@@ -1428,14 +1455,7 @@ body.template--custom-made .menu-drawer {
     display: none !important;
   }
 
-  /* ------------------------------------------------------------------------
-     Overflow chain — previously forced `overflow: visible` on all the
-     intermediate containers so a sticky close X could resolve its
-     scroll ancestor to .menu-drawer. The sticky X is gone (the close
-     button lives in the page header now), so we let the theme's stock
-     `overflow-y: auto` on .menu-drawer__navigation-container and
-     .menu-drawer__inner-container do the scrolling for tall panels.
-     Horizontal overflow on the panel wrapper still needs hiding so the
+  /* Horizontal overflow on the panel wrapper still needs hiding so the
      sub / subsub slide-in animations don't leak past the drawer edge. */
   .mobile-menu--v2-sub-active,
   .mobile-menu--v2-subsub-active {
