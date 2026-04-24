@@ -1909,63 +1909,48 @@ body.template--index .hero .button,
 body.template--index .hero__buttons .button,
 body.template--custom-made .banner .button,
 body.template--custom-made .slideshow .button {
-  /* Glassmorphism: semi-transparent + blurred hero image behind */
+  /* Glassmorphism: clean frosted pane over the hero image */
   isolation: isolate;
   background: rgba(255, 255, 255, 0.10) !important;
   background-color: rgba(255, 255, 255, 0.10) !important;
-  backdrop-filter: blur(16px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
   border: none !important;
   outline: none !important;
   color: rgba(255, 255, 255, 0.95) !important;
-  /* Inner top-edge highlight + soft inner glow + outer bottom dark shadow */
+  /* Clean top-edge light highlight + tight bottom drop shadow */
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.45),
-    inset 0 0 16px rgba(255, 255, 255, 0.07),
-    0 8px 28px rgba(0, 0, 0, 0.42),
-    0 2px 8px rgba(0, 0, 0, 0.22) !important;
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.55),
+    0 4px 16px rgba(0, 0, 0, 0.30),
+    0 1px 3px rgba(0, 0, 0, 0.18) !important;
   border-radius: var(--home-radius-sm) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.30);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   transition: background 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-/* ::after: hide so only our ::before gradient border shows */
+/* ::after: hide base.css border pseudo-element */
 body.template--index .banner .button::after,
 body.template--index .slideshow .button::after,
 body.template--index .hero .button::after {
   display: none !important;
 }
 
-/* ::before: right+bottom gradient border (transparent → grey → light grey).
-   Mask punch-out technique: padding=1px ring = the visible border area. */
+/* ::before: clean uniform 1px border all around — no gradient asymmetry */
 body.template--index .banner .button::before,
 body.template--index .slideshow .button::before,
 body.template--index .hero .button::before {
   content: '' !important;
   position: absolute !important;
-  inset: -1px !important;
-  border-radius: calc(var(--home-radius-sm) + 1px) !important;
-  padding: 1px !important;
-  background: linear-gradient(
-    135deg,
-    transparent 0%,
-    transparent 42%,
-    rgba(120, 120, 120, 0.60) 62%,
-    rgba(215, 215, 215, 0.90) 100%
-  ) !important;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0) !important;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0) !important;
-  mask-composite: exclude !important;
-  -webkit-mask-composite: destination-out !important;
+  inset: 0 !important;
+  border-radius: var(--home-radius-sm) !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  background: none !important;
   box-shadow: none !important;
-  background-color: transparent !important;
-  border: none !important;
   pointer-events: none;
-  z-index: -1 !important;
+  z-index: 1 !important;
+  mask: none !important;
+  -webkit-mask: none !important;
+  padding: 0 !important;
 }
 
 /* Hover: brighter glass — more opaque, stronger shadow */
