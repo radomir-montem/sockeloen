@@ -2673,7 +2673,7 @@ body.template--index .image-banner .button span {
 
 .mobile-menu--v2 .mobile-menu__cat-row:hover .mobile-menu__cat-name,
 .mobile-menu--v2 .mobile-menu__cat-row:focus .mobile-menu__cat-name {
-  color: #0395F6;
+  color: #111111;
 }
 
 .mobile-menu--v2 .mobile-menu__cat-name {
@@ -2716,7 +2716,7 @@ body.template--index .image-banner .button span {
 }
 
 .mobile-menu--v2 .mobile-menu__product-card:hover .mobile-menu__product-title {
-  color: #0395F6;
+  color: #111111;
 }
 
 /* Square image container — same warm background as desktop cards */
@@ -2765,7 +2765,62 @@ body.template--index .image-banner .button span {
 }
 
 .mobile-menu--v2 .mobile-menu__product-card--shop-all:hover .mobile-menu__product-img--shop-all {
-  background: #0395F6;
+  background: #333333;
+}
+
+/* ------------------------------------------------------------
+   MOBILE MENU — height + spacing overrides (mobile only)
+   Drawer ends at 80vh, leaving ~20% of the screen visible
+   below. Sub panel flows in-document so drawer auto-sizes
+   to content instead of forcing full-screen height.
+   ------------------------------------------------------------ */
+@media screen and (max-width: 989px) {
+  /* Cap the drawer at 80% of viewport — 20% gap below */
+  .menu-drawer:has(.mobile-menu--v2-sub-active),
+  .js .menu-drawer:has(.mobile-menu--v2-sub-active) {
+    height: auto !important;
+    max-height: calc(80svh - 92px) !important;
+    overflow: hidden !important;
+  }
+
+  /* Inner containers: auto height so the drawer shrinks to content */
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__inner-container,
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    grid-template-rows: auto !important;
+  }
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container > .relative {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  /* Sub panel: relative flow so the parent height drives the drawer size */
+  .mobile-menu--v2-sub-active .mobile-menu__panel--sub[x-show] {
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    height: auto !important;
+  }
+
+  /* Body: no forced fill height */
+  .mobile-menu--v2 .mobile-menu__body--sub {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  /* Cat-list: don't grow to fill; scroll internally when menu is very long */
+  .mobile-menu--v2 .mobile-menu__cat-list {
+    flex: 0 0 auto !important;
+    max-height: calc(80svh - 92px - 110px); /* 110px ≈ footer + reviews */
+    overflow-y: auto;
+  }
+
+  /* Footer: small breathing room at the very bottom */
+  .mobile-menu--v2 .mobile-menu__footer {
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+  }
 }
 
 /* ------------------------------------------------------------
