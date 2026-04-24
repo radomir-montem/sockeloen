@@ -1909,20 +1909,27 @@ body.template--index .hero .button,
 body.template--index .hero__buttons .button,
 body.template--custom-made .banner .button,
 body.template--custom-made .slideshow .button {
-  /* Glassmorphism: clean frosted pane over the hero image */
+  /* Glassmorphism: frosted pane with inner white luminance */
   isolation: isolate;
-  background: rgba(255, 255, 255, 0.10) !important;
-  background-color: rgba(255, 255, 255, 0.10) !important;
+  /* Radial gradient: brighter center fading out — mixes with backdrop blur */
+  background: radial-gradient(
+    ellipse at 50% 20%,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.08) 70%
+  ) !important;
+  background-color: transparent !important;
   backdrop-filter: blur(20px) saturate(160%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
   border: none !important;
   outline: none !important;
   color: rgba(255, 255, 255, 0.95) !important;
-  /* Clean top-edge light highlight + tight bottom drop shadow */
+  /* Top edge highlight + right/bottom inner glow + bottom drop shadow */
   box-shadow:
     inset 0 0.5px 0 rgba(255, 255, 255, 0.55),
-    0 4px 16px rgba(0, 0, 0, 0.30),
-    0 1px 3px rgba(0, 0, 0, 0.18) !important;
+    inset -5px 0 14px rgba(255, 255, 255, 0.06),
+    inset 0 -5px 14px rgba(255, 255, 255, 0.06),
+    0 6px 22px rgba(0, 0, 0, 0.35),
+    0 2px 5px rgba(0, 0, 0, 0.18) !important;
   border-radius: var(--home-radius-sm) !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   transition: background 0.2s ease, box-shadow 0.2s ease !important;
@@ -1975,14 +1982,20 @@ body.template--index .slideshow__content .button:hover,
 body.template--index .hero .button:hover,
 body.template--index .image-banner .button:hover,
 body.template--custom-made .banner .button:hover {
-  background: rgba(255, 255, 255, 0.18) !important;
-  background-color: rgba(255, 255, 255, 0.18) !important;
+  background: radial-gradient(
+    ellipse at 50% 20%,
+    rgba(255, 255, 255, 0.26) 0%,
+    rgba(255, 255, 255, 0.14) 70%
+  ) !important;
+  background-color: transparent !important;
   color: rgba(255, 255, 255, 0.95) !important;
   border: none !important;
   box-shadow:
     inset 0 0.5px 0 rgba(255, 255, 255, 0.65),
-    0 6px 20px rgba(0, 0, 0, 0.35),
-    0 2px 4px rgba(0, 0, 0, 0.20) !important;
+    inset -5px 0 14px rgba(255, 255, 255, 0.09),
+    inset 0 -5px 14px rgba(255, 255, 255, 0.09),
+    0 8px 26px rgba(0, 0, 0, 0.40),
+    0 3px 7px rgba(0, 0, 0, 0.22) !important;
 }
 
 /* White text on all nested layers (glass sits on a dark hero image) */
