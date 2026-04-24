@@ -1519,8 +1519,13 @@ details#Details-menu-drawer-container[open] > summary.header__icon--menu .icon-h
 /* --- Sticky floating X (legacy, now removed from markup) --- */
 .mobile-menu__close-floating { display: none !important; }
 
-/* --- Header back arrow (visible only in sub-sub state) --- */
-.header__icon--drawer-back {
+/* --- Header back arrow (visible only in sub-sub state) ---
+   Specificity note: base.css has `.header__icon:not(.header__icon--summary)`
+   (0,2,0) setting display:flex. Our button carries both .header__icon and
+   .header__icon--drawer-back classes, so we match specificity with the
+   stacked-class selector below and rely on source order (this file loads
+   after base.css) to win. */
+.header__icon.header__icon--drawer-back {
   display: none;
   width: 36px;
   height: 36px;
@@ -1535,11 +1540,11 @@ details#Details-menu-drawer-container[open] > summary.header__icon--menu .icon-h
   transition: background 0.15s ease, border-color 0.15s ease;
   box-sizing: border-box;
 }
-.header__icon--drawer-back:hover {
+.header__icon.header__icon--drawer-back:hover {
   background: #F5F2ED;
   border-color: #D5D5D5;
 }
-body.drawer-subsub-active .header__icon--drawer-back {
+body.drawer-subsub-active .header__icon.header__icon--drawer-back {
   display: inline-flex;
 }
 /* When back is showing, hide the other right-side header icons so the
