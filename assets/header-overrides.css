@@ -1626,7 +1626,7 @@ header.header.sticky-navbar .header__icon.header__icon--drawer-back svg path {
      and make the header narrower than the announcement bar. */
   header.header:not(.absolute) {
     margin: 0 !important;
-    border-radius: 0 0 7px 7px;
+    border-radius: 0;
   }
 
   /* Absolute mobile header (homepage) — same treatment.
@@ -1637,7 +1637,7 @@ header.header.sticky-navbar .header__icon.header__icon--drawer-back svg path {
     left: 12px !important;
     right: 12px !important;
     margin: 0 !important;
-    border-radius: 0 0 7px 7px;
+    border-radius: 0;
   }
 
   /* True-center the logo on mobile.
