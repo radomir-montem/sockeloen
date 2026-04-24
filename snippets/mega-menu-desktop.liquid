@@ -279,7 +279,7 @@
               </div>
             </div>
           {%- else -%}
-            {%- comment -%} Zero products found in any fallback collection — render plain anchor {%- endcomment -%}
+            {%- comment -%} Not a collection link (or collection has no products) — plain anchor {%- endcomment -%}
             <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset link-only{% if link.current %} active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
               <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
             </a>
