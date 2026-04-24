@@ -1,0 +1,210 @@
+{%- comment -%}
+  Desktop mega menu — Cloudpillo-style
+  Full-width dropdown anchored below the floating pill header.
+
+  Layout per open panel:
+    ┌─────────────────────────────────────────────────────────────┐
+    │ Sidebar (categories)  │   Grid of product cards (5×2)       │
+    │                       │                                      │
+    │ [Shop all]            │                                      │
+    └─────────────────────────────────────────────────────────────┘
+
+  Category list = link.links (sidebar), grid = sub_link.links (grandchildren).
+  Cards auto-enrich from section.blocks matched by grandchild.title.
+  If a category has no grandchildren, the category link itself is shown as a
+  single featured card instead of a 10-tile grid.
+
+  Hover bridge pattern: 150ms delayed close on mouseleave, canceled by
+  mouseenter on either trigger or panel — avoids the mouse-between-gap close.
+{%- endcomment -%}
+
+<nav class="header__inline-menu mega-menu-v2-nav" x-data="{
+      activeMenu: -1,
+      activeCategory: 1,
+      closeTimer: null,
+      isActive(i) { return this.activeMenu == i; },
+      isCategory(i) { return this.activeCategory == i; },
+      open(i) {
+        clearTimeout(this.closeTimer);
+        this.activeMenu = i;
+        this.activeCategory = 1;
+      },
+      scheduleClose() {
+        var self = this;
+        /* Short bridge: panel is flush against the pill (no visual gap to
+           cross), so the delay only needs to cover a brief cursor stutter
+           at the trigger → panel boundary. 150ms felt like the hover state
+           was stuck after leaving; 50ms reads as immediate. */
+        this.closeTimer = setTimeout(function() { self.activeMenu = -1; }, 50);
+      },
+      cancelClose() {
+        clearTimeout(this.closeTimer);
+      },
+    }">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in menu.links -%}
+      <li class="mega-menu-v2-item-wrap{% if link.title == 'SALE' or link.title == 'BLACK FRIDAY SALE' %} link-color-red{% endif %}" data-item-title="{{ link.title | escape }}">
+        {%- if link.links != blank -%}
+          <div class="mega-menu-v2-trigger"
+               @mouseenter="open({{ forloop.index }})"
+               @mouseleave="scheduleClose()">
+            <a class="header__menu-item list-menu__item link link--text focus-inset link-only child-menu mega-menu-v2-trigger-link"
+               :class="isActive({{ forloop.index }}) ? 'is-open !text-[#111111]' : ''"
+               href="{{ link.url }}"
+               aria-haspopup="true"
+               :aria-expanded="isActive({{ forloop.index }}) ? 'true' : 'false'"
+               aria-controls="mega-menu-panel-{{ forloop.index }}">
+              <span>{{ link.title }}</span>
+              <svg class="menu-arrow-down mega-menu-v2-chevron"
+                   :class="isActive({{ forloop.index }}) ? 'is-open' : ''"
+                   xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5" fill="none">
+                <path d="M1 1L4 4L7 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+
+            {%- comment -%} ====== Full-width mega panel ====== {%- endcomment -%}
+            <div id="mega-menu-panel-{{ forloop.index }}"
+                 class="mega-menu-v2-panel"
+                 role="region"
+                 aria-label="{{ link.title | escape }} menu"
+                 x-show="isActive({{ forloop.index }})"
+                 x-cloak
+                 @mouseenter="cancelClose()"
+                 @mouseleave="scheduleClose()"
+                 x-transition:enter="mega-menu-v2-panel-enter"
+                 x-transition:enter-start="mega-menu-v2-panel-enter-start"
+                 x-transition:enter-end="mega-menu-v2-panel-enter-end"
+                 x-transition:leave="mega-menu-v2-panel-leave"
+                 x-transition:leave-start="mega-menu-v2-panel-leave-start"
+                 x-transition:leave-end="mega-menu-v2-panel-leave-end">
+              <div class="mega-menu-v2-inner">
+
+                {%- comment -%} Sidebar: categories + Shop all CTA {%- endcomment -%}
+                <aside class="mega-menu-v2-sidebar">
+                  <ul class="mega-menu-v2-cat-list" role="list">
+                    {%- for sub_link in link.links -%}
+                      <li class="mega-menu-v2-cat-item">
+                        <a href="{{ sub_link.url }}"
+                           class="mega-menu-v2-cat"
+                           :class="isCategory({{ forloop.index }}) ? 'is-active' : ''"
+                           @mouseenter="activeCategory = {{ forloop.index }}">
+                          {{ sub_link.title }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                  <a href="{{ link.url }}" class="mega-menu-v2-cta">
+                    Shop all
+                  </a>
+                </aside>
+
+                {%- comment -%} Grid: one per category {%- endcomment -%}
+                <div class="mega-menu-v2-grid-wrap">
+                  {%- for sub_link in link.links -%}
+                    <div class="mega-menu-v2-grid"
+                         x-show="isCategory({{ forloop.index }})"
+                         x-cloak>
+                      {%- if sub_link.links.size > 0 -%}
+                        {%- for grandchild in sub_link.links -%}
+                          {% assign card_block = nil %}
+                          {% for b in section.blocks %}
+                            {% if grandchild.title == b.settings.title
+                               or grandchild.title == b.settings.title_translate
+                               or grandchild.title == b.settings.title_translate_german
+                               or grandchild.title == b.settings.title_translate_french %}
+                              {% assign card_block = b %}
+                            {% endif %}
+                          {% endfor %}
+
+                          {% assign card_feat = blank %}
+                          {% if card_block %}
+                            {% assign card_feat = card_block.settings.feature_text %}
+                            {% if localization.language.iso_code == 'nl' and card_block.settings.feature_text_nl != blank %}{% assign card_feat = card_block.settings.feature_text_nl %}{% endif %}
+                            {% if localization.language.iso_code == 'de' and card_block.settings.feature_text_de != blank %}{% assign card_feat = card_block.settings.feature_text_de %}{% endif %}
+                            {% if localization.language.iso_code == 'fr' and card_block.settings.feature_text_fr != blank %}{% assign card_feat = card_block.settings.feature_text_fr %}{% endif %}
+                          {% endif %}
+
+                          <a class="mega-menu-v2-card" href="{{ grandchild.url }}">
+                            <div class="mega-menu-v2-card-img">
+                              {% if card_block.settings.image_item != blank %}
+                                {%- render 'c-image-element',
+                                  image: card_block.settings.image_item,
+                                  lazy: true,
+                                  class: "mega-menu-v2-card-img-el"
+                                -%}
+                              {% endif %}
+                            </div>
+                            <div class="mega-menu-v2-card-title">{{ grandchild.title }}</div>
+                            {% if card_feat != blank %}
+                              <div class="mega-menu-v2-card-feature">
+                                {% if card_block.settings.feature_icon != blank %}
+                                  <span class="mega-menu-v2-card-icon">
+                                    {%- render 'c-image-element',
+                                      image: card_block.settings.feature_icon,
+                                      lazy: true,
+                                      class: "mega-menu-v2-card-icon-el"
+                                    -%}
+                                  </span>
+                                {% endif %}
+                                <span class="mega-menu-v2-card-feature-text">{{ card_feat }}</span>
+                              </div>
+                            {% endif %}
+                          </a>
+                        {%- endfor -%}
+                      {%- else -%}
+                        {%- comment -%} No grandchildren — render the category itself as a single feature card {%- endcomment -%}
+                        {% assign fallback_block = nil %}
+                        {% for b in section.blocks %}
+                          {% if sub_link.title == b.settings.title
+                             or sub_link.title == b.settings.title_translate
+                             or sub_link.title == b.settings.title_translate_german
+                             or sub_link.title == b.settings.title_translate_french %}
+                            {% assign fallback_block = b %}
+                          {% endif %}
+                        {% endfor %}
+                        {% assign fb_feat = blank %}
+                        {% if fallback_block %}
+                          {% assign fb_feat = fallback_block.settings.feature_text %}
+                          {% if localization.language.iso_code == 'nl' and fallback_block.settings.feature_text_nl != blank %}{% assign fb_feat = fallback_block.settings.feature_text_nl %}{% endif %}
+                          {% if localization.language.iso_code == 'de' and fallback_block.settings.feature_text_de != blank %}{% assign fb_feat = fallback_block.settings.feature_text_de %}{% endif %}
+                          {% if localization.language.iso_code == 'fr' and fallback_block.settings.feature_text_fr != blank %}{% assign fb_feat = fallback_block.settings.feature_text_fr %}{% endif %}
+                        {% endif %}
+                        <a class="mega-menu-v2-card mega-menu-v2-card--single" href="{{ sub_link.url }}">
+                          <div class="mega-menu-v2-card-img">
+                            {% if fallback_block.settings.image_item != blank %}
+                              {%- render 'c-image-element',
+                                image: fallback_block.settings.image_item,
+                                lazy: true,
+                                class: "mega-menu-v2-card-img-el"
+                              -%}
+                            {% endif %}
+                          </div>
+                          <div class="mega-menu-v2-card-title">{{ sub_link.title }}</div>
+                          {% if fb_feat != blank %}
+                            <div class="mega-menu-v2-card-feature">
+                              {% if fallback_block.settings.feature_icon != blank %}
+                                <span class="mega-menu-v2-card-icon">
+                                  {%- render 'c-image-element', image: fallback_block.settings.feature_icon, lazy: true, class: "mega-menu-v2-card-icon-el" -%}
+                                </span>
+                              {% endif %}
+                              <span class="mega-menu-v2-card-feature-text">{{ fb_feat }}</span>
+                            </div>
+                          {% endif %}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  {%- endfor -%}
+                </div>
+
+              </div>
+            </div>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset link-only{% if link.current %} active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+            <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
