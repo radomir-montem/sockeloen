@@ -1,3 +1,5 @@
+{%- comment -%} VERSION MARKER: mega-menu-desktop v3 (products-in-category 2026-04-24) {%- endcomment -%}
+<!-- mega-menu-desktop v3 products-in-category 2026-04-24 -->
 {%- comment -%}
   Desktop mega menu — Cloudpillo-style
   Full-width dropdown anchored below the floating pill header.
@@ -160,6 +162,8 @@
                           first, then parse /collections/<handle> from the URL
                           as a fallback (covers http_link type).
                         {%- endcomment -%}
+                        <!-- mega-menu debug: title={{ sub_link.title }} type={{ sub_link.type }} url={{ sub_link.url }} -->
+
                         {%- assign sub_coll = blank -%}
                         {%- assign sub_has_coll = false -%}
                         {%- if sub_link.type == 'collection_link' and sub_link.object.products.size > 0 -%}
