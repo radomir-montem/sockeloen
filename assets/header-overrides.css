@@ -1935,22 +1935,36 @@ body.template--index .hero .button::after {
   display: none !important;
 }
 
-/* ::before: clean uniform 1px border all around — no gradient asymmetry */
+/* ::before: gradient border — subtle at top/left, visible at right/bottom.
+   Mask punch-out: the 1px padding ring is the visible "border" area.
+   135° gradient means bottom-right corner gets the brightest value. */
 body.template--index .banner .button::before,
 body.template--index .slideshow .button::before,
 body.template--index .hero .button::before {
   content: '' !important;
   position: absolute !important;
-  inset: 0 !important;
-  border-radius: var(--home-radius-sm) !important;
-  border: 1px solid rgba(255, 255, 255, 0.28) !important;
-  background: none !important;
+  inset: -1px !important;
+  border-radius: calc(var(--home-radius-sm) + 1px) !important;
+  padding: 1px !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.10) 30%,
+    rgba(255, 255, 255, 0.32) 65%,
+    rgba(255, 255, 255, 0.50) 100%
+  ) !important;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
   box-shadow: none !important;
+  border: none !important;
   pointer-events: none;
   z-index: 1 !important;
-  mask: none !important;
-  -webkit-mask: none !important;
-  padding: 0 !important;
 }
 
 /* Hover: brighter glass — more opaque, stronger shadow */
