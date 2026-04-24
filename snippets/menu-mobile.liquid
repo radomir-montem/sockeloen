@@ -248,7 +248,7 @@
       {% for sub_link in link.links %}
         {% if sub_link.links.size > 0 %}
           <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--subsub w-full bg-white absolute top-0 z-30"
-               x-show="(isChild == {{ forloop.index }})"
+               x-show="childMenu == {{ forloop.index }}"
                x-transition:enter-end="left-0"
                x-transition:enter-start="-left-full"
                x-transition:enter="transition-all ease-out duration-200"
