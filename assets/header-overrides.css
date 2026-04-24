@@ -2903,18 +2903,18 @@ body.template--index .image-banner .button span {
 }
 
 .mega-menu-v2-grid--bestsellers {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px 20px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px 16px;
 }
 
 /* ---- Category products variant (sub-category with no grandchildren) ----
    When a sidebar category has no grandchildren, we auto-fill the grid with
-   up to 8 products from that collection. Force 4-column layout so 8 cards
-   read as a balanced 4x2 instead of 5+3 ragged. Double-class selector keeps
-   specificity above the base .mega-menu-v2-grid rule. */
+   up to 10 products from that collection — 5x2 keeps the grid balanced and
+   matches the base 5-column rhythm so cards don't look oversized. Double-
+   class selector keeps specificity above the base .mega-menu-v2-grid rule. */
 .mega-menu-v2-grid.mega-menu-v2-grid--products {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px 20px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px 16px;
 }
 
 /* Hide mega menu nav on narrow viewports */
@@ -2926,7 +2926,7 @@ body.template--index .image-banner .button span {
 /* Fine-tune for tighter desktop breakpoints */
 @media (min-width: 990px) and (max-width: 1199px) {
   .mega-menu-v2-inner {
-    padding: 32px 32px 40px;
+    padding: 14px 32px 18px;
     gap: 32px;
     grid-template-columns: 200px 1fr;
   }
@@ -2939,8 +2939,8 @@ body.template--index .image-banner .button span {
   }
   .mega-menu-v2-grid--bestsellers,
   .mega-menu-v2-grid.mega-menu-v2-grid--products {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px 16px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px 12px;
   }
 }
 
