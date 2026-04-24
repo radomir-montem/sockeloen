@@ -324,8 +324,13 @@ sticky-header.header-wrapper,
    - Drop shadow reads as a soft lift on white backgrounds during scroll;
      on the hero image it's barely perceptible, exactly like EME. */
 header.header {
-  /* Smaller bottom radius to match EME's tighter corners */
-  border-radius: 0 0 8px 8px;
+  /* Smaller bottom radius to match EME's tighter corners.
+     !important — at one point this was being lost on mobile when the
+     drawer toggle state changed (pill rendered with flat bottom corners
+     even while the drawer was closed). Forcing it here keeps the rounded
+     bottom as the baseline for every state except the explicitly-scoped
+     "drawer open" / "mega menu open" overrides further down. */
+  border-radius: 0 0 8px 8px !important;
   /* Opaque white surface — no backdrop-filter (would create a containing
      block for fixed descendants, trapping the search modal/overlay). */
   background: #ffffff !important;
@@ -485,7 +490,7 @@ body:not(.template--index):not(.template--custom-made) main#MainContent {
    Shadow is preserved here so the pill reads as lifted over white content
    as you scroll past the hero. */
 header.header.sticky-navbar {
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 8px 8px !important;
   /* Fully opaque white — matches the default state exactly so there's no
      flicker on scroll, AND (critically) no backdrop-filter: backdrop-filter
      creates a containing block for fixed descendants, which would trap the
