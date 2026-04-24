@@ -1470,6 +1470,87 @@ menu-drawer > details[open] > summary::before {
 .header__icons { gap: 2px; overflow: visible; }
 
 /* ==========================================================================
+   Drawer close / back buttons in the page header
+   --------------------------------------------------------------------------
+   The mobile v3 drawer consolidates close + back affordances into the
+   page header itself (the old "X below the header bar" is gone).
+
+   * When the drawer is open, the <summary> toggle on the left is
+     restyled as a round white pill — the same look as the old
+     .mobile-menu__close-floating button the user liked.
+   * When the user descends into a sub-sub menu (childMenu > 0 →
+     body.drawer-subsub-active), a back arrow appears on the right in
+     the slot normally occupied by cart/search/account, and those icons
+     hide. Clicking it fires `drawer:back`, which the Alpine scope in
+     menu-mobile.liquid handles by zeroing childMenu.
+   ========================================================================== */
+
+/* --- Header close pill (round white circle when drawer is open) --- */
+details#Details-menu-drawer-container[open] > summary.header__icon--menu {
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  background: #ffffff !important;
+  border: 1px solid #E5E5E5 !important;
+  border-radius: 999px !important;
+  color: #111111 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+details#Details-menu-drawer-container[open] > summary.header__icon--menu:hover {
+  background: #F5F2ED !important;
+  border-color: #D5D5D5 !important;
+}
+/* Shrink the stock close svg (18×17) down to fit the 36×36 pill. */
+details#Details-menu-drawer-container[open] > summary.header__icon--menu .icon-close {
+  width: 12px !important;
+  height: 12px !important;
+}
+/* The hidden hamburger still lives inside the summary for the
+   closed-state swap; make sure it doesn't push the pill wider. */
+details#Details-menu-drawer-container[open] > summary.header__icon--menu .icon-hamburger {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* --- Sticky floating X (legacy, now removed from markup) --- */
+.mobile-menu__close-floating { display: none !important; }
+
+/* --- Header back arrow (visible only in sub-sub state) --- */
+.header__icon--drawer-back {
+  display: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: #ffffff;
+  border: 1px solid #E5E5E5;
+  border-radius: 999px;
+  color: #111111;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  box-sizing: border-box;
+}
+.header__icon--drawer-back:hover {
+  background: #F5F2ED;
+  border-color: #D5D5D5;
+}
+body.drawer-subsub-active .header__icon--drawer-back {
+  display: inline-flex;
+}
+/* When back is showing, hide the other right-side header icons so the
+   slot reads as just the back button. Scoped to children of
+   .header__icons so the logo and left-side <header-drawer> are not
+   affected. */
+body.drawer-subsub-active .header__icons > *:not(.header__icon--drawer-back) {
+  display: none !important;
+}
+
+/* ==========================================================================
    Dropdown caret on nav items — desktop only
    ========================================================================== */
 
