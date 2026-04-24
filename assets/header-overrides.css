@@ -2302,14 +2302,21 @@ body.template--index .image-banner .button span {
   overflow: visible;
 }
 
-/* ---- Sub panel (cards + sticky CTA) ---- */
+/* ---- Sub panel (scrollable cards + pinned Shop CTA) ---- */
 .mobile-menu--v2 .mobile-menu__panel--sub,
 .mobile-menu--v2 .mobile-menu__panel--subsub {
   overflow: hidden;
 }
 
+/* Body is a flex column filling the (absolute) panel. The cards area
+   flex-grows and scrolls internally; the CTA is pushed to the very end
+   via `order: 99` so it always sits flush with the drawer's bottom
+   edge, regardless of how many items (reviews, locale) follow it in
+   the DOM. */
 .mobile-menu--v2 .mobile-menu__body--sub,
 .mobile-menu--v2 .mobile-menu__body--subsub {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   min-height: 100%;
   padding: 0;
@@ -2318,15 +2325,17 @@ body.template--index .image-banner .button span {
 
 .mobile-menu--v2 .mobile-menu__cards {
   list-style: none;
-  /* Previously padded 56px top to reserve space for a floating back
-     button that lived above the cards. The back button is now in the
-     page header, so that reservation is gone — 12px just gives the
-     first card a bit of breathing room below the drawer edge. The
-     bottom 16px used to be 120px to clear a sticky `position:absolute`
-     CTA; the CTA now flows inline so that reservation is gone too. */
+  /* 12px top for a bit of breathing room below the header edge; 16px
+     bottom for clearance above the reviews/locale/CTA footer stack. */
   padding: 12px 20px 16px;
   margin: 0;
-  flex: 1;
+  /* flex: 1 + min-height: 0 is the magic combo that lets this child
+     actually shrink below its content height and activate overflow-y
+     scrolling inside a flex column. Without min-height:0 the child
+     refuses to shrink and the whole panel gets pushed taller than the
+     drawer, breaking the pinned CTA. */
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -2490,17 +2499,23 @@ body.template--index .image-banner .button span {
   margin-left: 8px;
 }
 
-/* "Shop all" CTA — now flows inline (static) so the reviews ribbon and
-   locale pill that follow it stay visible. Previously the CTA was
-   position:absolute bottom:0, which pinned it to the bottom of the sub
-   panel and stacked it on top of the footer (reviews + locale), making
-   both effectively invisible. The drawer handles its own scroll for
-   tall card lists, so a sticky bottom CTA isn't needed. */
+/* "Shop {category}" CTA — pinned at the bottom of the sub panel.
+   `order: 99` pushes it past the reviews/locale footer (which sits
+   after it in the DOM) so the CTA is always the very last item in the
+   flex column — flush with the drawer's bottom edge regardless of
+   how tall the cards list or footer get. */
 .mobile-menu--v2 .mobile-menu__cta-wrap {
   position: static;
+  order: 99;
   padding: 16px 20px 12px;
   background: #ffffff;
   border-top: 1px solid #F0EEEA;
+  flex-shrink: 0;
+}
+
+/* Reviews ribbon + locale footer — don't let them shrink; they sit
+   between the scrollable cards and the pinned CTA, always visible. */
+.mobile-menu--v2 .mobile-menu__footer {
   flex-shrink: 0;
 }
 
