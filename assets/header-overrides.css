@@ -1976,6 +1976,7 @@ body.template--custom-made .banner .button:hover {
   background: rgba(255, 255, 255, 0.34) !important;
   color: rgba(255, 255, 255, 0.95) !important;
   border: none !important;
+  border-radius: 0 !important;
   box-shadow:
     inset -6px 0 16px rgba(255, 255, 255, 0.24),
     inset 0 -6px 16px rgba(255, 255, 255, 0.24),
