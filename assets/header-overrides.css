@@ -1911,28 +1911,19 @@ body.template--index .hero .button,
 body.template--index .hero__buttons .button,
 body.template--custom-made .banner .button,
 body.template--custom-made .slideshow .button {
-  /* Glassmorphism: frosted pane with inner white luminance */
   isolation: isolate;
-  /* Radial gradient: brighter center fading out — mixes with backdrop blur */
-  background: radial-gradient(
-    ellipse at 50% 20%,
-    rgba(255, 255, 255, 0.18) 0%,
-    rgba(255, 255, 255, 0.08) 70%
-  ) !important;
-  background-color: transparent !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  background: rgba(255, 255, 255, 0.26) !important;
+  backdrop-filter: blur(13px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(13px) saturate(180%) !important;
   border: none !important;
   outline: none !important;
   color: rgba(255, 255, 255, 0.95) !important;
-  /* Top edge highlight + right/bottom inner glow + bottom drop shadow */
+  /* Light source bottom-right: inner glow on right + bottom edges, soft drop shadow */
   box-shadow:
-    inset 0 0.5px 0 rgba(255, 255, 255, 0.55),
-    inset -5px 0 14px rgba(255, 255, 255, 0.06),
-    inset 0 -5px 14px rgba(255, 255, 255, 0.06),
-    0 6px 22px rgba(0, 0, 0, 0.35),
-    0 2px 5px rgba(0, 0, 0, 0.18) !important;
-  border-radius: var(--home-radius-sm) !important;
+    inset -6px 0 16px rgba(255, 255, 255, 0.18),
+    inset 0 -6px 16px rgba(255, 255, 255, 0.18),
+    0 8px 32px rgba(0, 0, 0, 0.10) !important;
+  border-radius: 0 !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   transition: background 0.2s ease, box-shadow 0.2s ease !important;
 }
@@ -1953,14 +1944,12 @@ body.template--index .hero .button::before {
   content: '' !important;
   position: absolute !important;
   inset: -1px !important;
-  border-radius: calc(var(--home-radius-sm) + 1px) !important;
+  border-radius: 0 !important;
   padding: 1px !important;
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.10) 30%,
-    rgba(255, 255, 255, 0.32) 65%,
-    rgba(255, 255, 255, 0.50) 100%
+    rgba(255, 255, 255, 0.60) 100%
   ) !important;
   mask:
     linear-gradient(#fff 0 0) content-box,
@@ -1984,20 +1973,13 @@ body.template--index .slideshow__content .button:hover,
 body.template--index .hero .button:hover,
 body.template--index .image-banner .button:hover,
 body.template--custom-made .banner .button:hover {
-  background: radial-gradient(
-    ellipse at 50% 20%,
-    rgba(255, 255, 255, 0.26) 0%,
-    rgba(255, 255, 255, 0.14) 70%
-  ) !important;
-  background-color: transparent !important;
+  background: rgba(255, 255, 255, 0.34) !important;
   color: rgba(255, 255, 255, 0.95) !important;
   border: none !important;
   box-shadow:
-    inset 0 0.5px 0 rgba(255, 255, 255, 0.65),
-    inset -5px 0 14px rgba(255, 255, 255, 0.09),
-    inset 0 -5px 14px rgba(255, 255, 255, 0.09),
-    0 8px 26px rgba(0, 0, 0, 0.40),
-    0 3px 7px rgba(0, 0, 0, 0.22) !important;
+    inset -6px 0 16px rgba(255, 255, 255, 0.24),
+    inset 0 -6px 16px rgba(255, 255, 255, 0.24),
+    0 8px 32px rgba(0, 0, 0, 0.14) !important;
 }
 
 /* White text on all nested layers (glass sits on a dark hero image) */
