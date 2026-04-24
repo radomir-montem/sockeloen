@@ -2305,9 +2305,13 @@ body.template--index .image-banner .button span {
 
 .mobile-menu--v2 .mobile-menu__cards {
   list-style: none;
-  /* Top padding reserves space for the floating back button. 56px =
-     12px top + 36px button + 8px gap below */
-  padding: 56px 20px 120px;
+  /* Previously padded 56px top to reserve space for a floating back
+     button that lived above the cards. The back button is now in the
+     page header, so that reservation is gone — 12px just gives the
+     first card a bit of breathing room below the drawer edge. The
+     bottom 16px used to be 120px to clear a sticky `position:absolute`
+     CTA; the CTA now flows inline so that reservation is gone too. */
+  padding: 12px 20px 16px;
   margin: 0;
   flex: 1;
   overflow-y: auto;
@@ -2473,16 +2477,18 @@ body.template--index .image-banner .button span {
   margin-left: 8px;
 }
 
-/* Sticky CTA at bottom of sub panel */
+/* "Shop all" CTA — now flows inline (static) so the reviews ribbon and
+   locale pill that follow it stay visible. Previously the CTA was
+   position:absolute bottom:0, which pinned it to the bottom of the sub
+   panel and stacked it on top of the footer (reviews + locale), making
+   both effectively invisible. The drawer handles its own scroll for
+   tall card lists, so a sticky bottom CTA isn't needed. */
 .mobile-menu--v2 .mobile-menu__cta-wrap {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 16px 20px 20px;
+  position: static;
+  padding: 16px 20px 12px;
   background: #ffffff;
   border-top: 1px solid #F0EEEA;
-  z-index: 2;
+  flex-shrink: 0;
 }
 
 .mobile-menu--v2 .mobile-menu__cta {
