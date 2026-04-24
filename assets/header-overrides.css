@@ -366,6 +366,11 @@ body.template--product .section-header {
   background-color: #F4F4F1 !important;
 }
 
+body.template--product {
+  background: #F4F4F1 !important;
+  background-color: #F4F4F1 !important;
+}
+
 /* Force every inline header region to 36px content height so the pill
    stays exactly 48px total (6 + 36 + 6). Theme's default anchor wrapping
    around the logo inflates .header__heading to ~47px otherwise. */
