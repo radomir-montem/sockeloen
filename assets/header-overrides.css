@@ -2249,6 +2249,7 @@ body.template--index .image-banner .button span {
   letter-spacing: 0;
   line-height: 1;
   text-align: center;
+  white-space: nowrap;  /* keep "2,410 reviews" on one line */
 }
 
 .mobile-menu--v2 .mobile-menu__reviews-text strong {
