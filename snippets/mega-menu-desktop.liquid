@@ -79,7 +79,9 @@
                  x-transition:leave-end="mega-menu-v2-panel-leave-end">
               <div class="mega-menu-v2-inner">
 
-                {%- comment -%} Sidebar: categories + Shop all CTA {%- endcomment -%}
+                {%- comment -%} Sidebar: categories only. The global "Shop all" CTA
+                  was removed — each category's panel now ends with its own per-
+                  category "Shop all <name>" tile inside the grid (see below). {%- endcomment -%}
                 <aside class="mega-menu-v2-sidebar">
                   <ul class="mega-menu-v2-cat-list" role="list">
                     {%- for sub_link in link.links -%}
@@ -93,9 +95,6 @@
                       </li>
                     {%- endfor -%}
                   </ul>
-                  <a href="{{ link.url }}" class="mega-menu-v2-cta">
-                    Shop all
-                  </a>
                 </aside>
 
                 {%- comment -%} Grid: one per category {%- endcomment -%}
@@ -182,7 +181,18 @@
                         {%- endif -%}
 
                         {%- if sub_has_coll -%}
-                          {%- for product in sub_coll.products limit: 10 -%}
+                          {%- comment -%}
+                            When the collection has more than 10 products, cap the
+                            product tiles at 9 so the 10th slot becomes the "Shop
+                            all" tile (keeps the grid at a clean 5×2). Smaller
+                            collections just get all products followed by the
+                            shop-all tile as the last card.
+                          {%- endcomment -%}
+                          {%- assign product_tile_limit = 10 -%}
+                          {%- if sub_coll.products.size > 10 -%}
+                            {%- assign product_tile_limit = 9 -%}
+                          {%- endif -%}
+                          {%- for product in sub_coll.products limit: product_tile_limit -%}
                             <a class="mega-menu-v2-card" href="{{ product.url }}">
                               <div class="mega-menu-v2-card-img">
                                 {%- if product.featured_image != blank -%}
@@ -200,6 +210,21 @@
                               <div class="mega-menu-v2-card-title">{{ product.title | escape }}</div>
                             </a>
                           {%- endfor -%}
+
+                          {%- comment -%}
+                            Per-category "Shop all" tile — always the last card.
+                            Links to sub_coll.url (the bare collection URL) so we
+                            land on the full category page, stripping any tag
+                            filter that may exist on sub_link.url.
+                          {%- endcomment -%}
+                          <a class="mega-menu-v2-card mega-menu-v2-card--shop-all" href="{{ sub_coll.url }}">
+                            <div class="mega-menu-v2-card-img mega-menu-v2-card-img--shop-all">
+                              <svg class="mega-menu-v2-card-shop-all-arrow" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <path d="M6 14h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                            </div>
+                            <div class="mega-menu-v2-card-title">Shop all {{ sub_link.title | escape }}</div>
+                          </a>
                         {%- else -%}
                           {%- comment -%} Couldn't resolve a collection — fall back to original single feature card {%- endcomment -%}
                           {% assign fallback_block = nil %}

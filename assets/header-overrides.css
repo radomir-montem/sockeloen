@@ -2917,6 +2917,51 @@ body.template--index .image-banner .button span {
   gap: 20px 16px;
 }
 
+/* ---- Product-tile typography ----
+   Mirror the homepage product-card title style (.bold-title): Roboto 14/20
+   700 uppercase. Truncate to a single line so longer names don't push the
+   grid into an uneven 2-line layout. Applies to tiles in the product grid
+   AND the best-sellers grid, and includes the "Shop all" tile title. */
+.mega-menu-v2-grid--products .mega-menu-v2-card-title,
+.mega-menu-v2-grid--bestsellers .mega-menu-v2-card-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #111111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+}
+
+/* ---- "Shop all <category>" tile ----
+   Visually distinct from product tiles: filled black image area with a
+   white arrow glyph, keeping the same aspect-ratio / dimensions as product
+   cards so the 5x2 grid stays perfectly aligned. */
+.mega-menu-v2-card-img.mega-menu-v2-card-img--shop-all {
+  background: #111111;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+.mega-menu-v2-card--shop-all:hover .mega-menu-v2-card-img--shop-all {
+  background: #000000;
+}
+.mega-menu-v2-card-shop-all-arrow {
+  width: 28px;
+  height: 28px;
+  display: block;
+  transition: transform 0.18s ease;
+}
+.mega-menu-v2-card--shop-all:hover .mega-menu-v2-card-shop-all-arrow {
+  transform: translateX(3px);
+}
+
 /* Hide mega menu nav on narrow viewports */
 @media (max-width: 989px) {
   .mega-menu-v2-nav { display: none; }
