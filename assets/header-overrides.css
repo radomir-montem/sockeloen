@@ -2604,11 +2604,24 @@ body.template--index .image-banner .button span {
    flex column — flush with the drawer's bottom edge regardless of
    how tall the cards list or footer get. No border-top: the footer
    (reviews + locale) above is already on white bg and we want a
-   seamless transition into the CTA pill. */
+   seamless transition into the CTA pill.
+
+   Padding-top 6px ties the CTA visually tight to the locale toggle
+   above (Round C — decrease spacing). Horizontal padding 20px matches
+   the footer's horizontal padding so the CTA pill, reviews ribbon, and
+   locale toggle all share the same left/right drawer margins (Round C
+   — align widths).
+
+   Bottom padding does the heavy lifting on the "white bg below the CTA
+   covers all screen" request: the drawer stretches to 100svh now, and
+   this generous bottom cushion keeps the black pill lifted well above
+   the iOS home-indicator safe-area while the white surface of the wrap
+   continues down to the drawer's rounded bottom edge. env(safe-area-
+   inset-bottom) adds the per-device iOS inset on top. */
 .mobile-menu--v2 .mobile-menu__cta-wrap {
   position: static;
   order: 99;
-  padding: 16px 20px 12px;
+  padding: 6px 20px calc(36px + env(safe-area-inset-bottom, 0px));
   background: #ffffff;
   flex-shrink: 0;
 }
@@ -2624,7 +2637,12 @@ body.template--index .image-banner .button span {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 18px 20px;
+  /* 14px vertical padding matches the reviews ribbon + locale toggle so
+     all three tiles render at the same height. 20px horizontal padding
+     is internal; the outer CTA-wrap's 20px horizontal padding gives the
+     pill its drawer-edge offset, which matches the footer's horizontal
+     padding so the three stacked rows read as one consistent width. */
+  padding: 14px 20px;
   background: #111111;
   color: #ffffff;
   font-size: 16px;
