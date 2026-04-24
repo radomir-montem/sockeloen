@@ -356,6 +356,12 @@ header.header {
   transition: none !important; /* kill color-swap flicker on scroll */
 }
 
+/* Product page: match header bg to the product section background */
+body.template--product header.header {
+  background: #F4F4F1 !important;
+  background-color: #F4F4F1 !important;
+}
+
 /* Force every inline header region to 36px content height so the pill
    stays exactly 48px total (6 + 36 + 6). Theme's default anchor wrapping
    around the logo inflates .header__heading to ~47px otherwise. */
