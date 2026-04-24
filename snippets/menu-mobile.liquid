@@ -247,14 +247,19 @@
       {%- endcomment -%}
       {% for sub_link in link.links %}
         {% if sub_link.links.size > 0 %}
-          <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--subsub w-full bg-white absolute top-0 z-30"
+          {%- comment -%}
+            x-transition intentionally omitted. The Tailwind class-swap
+            transition used on the sub panel (-left-full → left-0) stalled
+            for the subsub — Alpine would add enter-start + enter classes
+            but never advance to enter-end, leaving the panel locked at
+            `left: -100%`. Dropping the transition makes the overlay flip
+            instantly, which matches the "replace" feel the user asked
+            for anyway. We still use `left: 0` from `left-0` so the panel
+            is positioned correctly when visible.
+          {%- endcomment -%}
+          <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--subsub w-full bg-white absolute top-0 left-0 z-30"
                x-show="childMenu == {{ forloop.index }}"
-               x-transition:enter-end="left-0"
-               x-transition:enter-start="-left-full"
-               x-transition:enter="transition-all ease-out duration-200"
-               x-transition:leave-end="-left-full"
-               x-transition:leave-start="left-0"
-               x-transition:leave="transition-all ease-in duration-200">
+               x-cloak>
 
             <div class="mobile-menu__body mobile-menu__body--subsub flex flex-col">
               <ul class="mobile-menu__cards">
