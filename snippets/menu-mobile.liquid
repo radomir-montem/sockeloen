@@ -232,83 +232,93 @@
             </div>
           </div>
 
-          {%- comment -%} ============ SUB-SUBMENU PANELS (level 3) ============ {%- endcomment -%}
-          {% for sub_link in link.links %}
-            {% if sub_link.links.size > 0 %}
-              <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--subsub w-full bg-white absolute top-0 z-30"
-                        x-show="(isChild == {{ forloop.index }})"
-                x-transition:enter-end="left-0"
-                x-transition:enter-start="-left-full"
-                x-transition:enter="transition-all ease-out duration-200"
-                x-transition:leave-end="-left-full"
-                x-transition:leave-start="left-0"
-                x-transition:leave="transition-all ease-in duration-200">
-
-                <div class="mobile-menu__body mobile-menu__body--subsub flex flex-col">
-                  <ul class="mobile-menu__cards">
-                    {%- for grandchild in sub_link.links -%}
-                      {% assign g_block = nil %}
-                      {% for b in section.blocks %}
-                        {% if grandchild.title == b.settings.title
-                           or grandchild.title == b.settings.title_translate
-                           or grandchild.title == b.settings.title_translate_german
-                           or grandchild.title == b.settings.title_translate_french %}
-                          {% assign g_block = b %}
-                        {% endif %}
-                      {% endfor %}
-
-                      {% assign g_feat = blank %}
-                      {% if g_block %}
-                        {% assign g_feat = g_block.settings.feature_text %}
-                        {% if localization.language.iso_code == 'nl' and g_block.settings.feature_text_nl != blank %}{% assign g_feat = g_block.settings.feature_text_nl %}{% endif %}
-                        {% if localization.language.iso_code == 'de' and g_block.settings.feature_text_de != blank %}{% assign g_feat = g_block.settings.feature_text_de %}{% endif %}
-                        {% if localization.language.iso_code == 'fr' and g_block.settings.feature_text_fr != blank %}{% assign g_feat = g_block.settings.feature_text_fr %}{% endif %}
-                      {% endif %}
-
-                      <li class="mobile-menu__card-wrap">
-                        <a class="mobile-menu__card" href="{{ grandchild.url }}">
-                          <div class="mobile-menu__card-img">
-                            {% if g_block.settings.image_item != blank %}
-                              {%- render 'c-image-element',
-                                image: g_block.settings.image_item,
-                                lazy: true,
-                                class: "mobile-menu__card-img-el"
-                              -%}
-                            {% endif %}
-                          </div>
-                          <div class="mobile-menu__card-body">
-                            <div class="mobile-menu__card-title">{{ grandchild.title }}</div>
-                            {% if g_feat != blank %}
-                              <div class="mobile-menu__card-feature">
-                                {% if g_block.settings.feature_icon != blank %}
-                                  <span class="mobile-menu__card-icon">
-                                    {%- render 'c-image-element',
-                                      image: g_block.settings.feature_icon,
-                                      lazy: true,
-                                      class: "mobile-menu__card-icon-el"
-                                    -%}
-                                  </span>
-                                {% endif %}
-                                <span class="mobile-menu__card-feature-text">{{ g_feat }}</span>
-                              </div>
-                            {% endif %}
-                          </div>
-                        </a>
-                      </li>
-                    {%- endfor -%}
-                  </ul>
-
-                  <div class="mobile-menu__cta-wrap">
-                    <a class="mobile-menu__cta" href="{{ sub_link.url }}">
-                      Shop {{ sub_link.title }}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            {% endif %}
-          {% endfor %}
         </div>
       </div>
+
+      {%- comment -%}
+        ============ SUB-SUBMENU PANELS (level 3) ============
+        Rendered as SIBLINGS of the sub panel (not nested inside its
+        body) so we can hide the sub panel via display:none when
+        childMenu > 0 without also hiding the subsub that should take
+        its place. The subsub panel is absolute-positioned inside the
+        wrap (matches .mobile-menu__panel--sub's layout), and when
+        subsub-active our CSS flips it to position:relative so it
+        contributes height and sizes the drawer.
+      {%- endcomment -%}
+      {% for sub_link in link.links %}
+        {% if sub_link.links.size > 0 %}
+          <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--subsub w-full bg-white absolute top-0 z-30"
+               x-show="(isChild == {{ forloop.index }})"
+               x-transition:enter-end="left-0"
+               x-transition:enter-start="-left-full"
+               x-transition:enter="transition-all ease-out duration-200"
+               x-transition:leave-end="-left-full"
+               x-transition:leave-start="left-0"
+               x-transition:leave="transition-all ease-in duration-200">
+
+            <div class="mobile-menu__body mobile-menu__body--subsub flex flex-col">
+              <ul class="mobile-menu__cards">
+                {%- for grandchild in sub_link.links -%}
+                  {% assign g_block = nil %}
+                  {% for b in section.blocks %}
+                    {% if grandchild.title == b.settings.title
+                       or grandchild.title == b.settings.title_translate
+                       or grandchild.title == b.settings.title_translate_german
+                       or grandchild.title == b.settings.title_translate_french %}
+                      {% assign g_block = b %}
+                    {% endif %}
+                  {% endfor %}
+
+                  {% assign g_feat = blank %}
+                  {% if g_block %}
+                    {% assign g_feat = g_block.settings.feature_text %}
+                    {% if localization.language.iso_code == 'nl' and g_block.settings.feature_text_nl != blank %}{% assign g_feat = g_block.settings.feature_text_nl %}{% endif %}
+                    {% if localization.language.iso_code == 'de' and g_block.settings.feature_text_de != blank %}{% assign g_feat = g_block.settings.feature_text_de %}{% endif %}
+                    {% if localization.language.iso_code == 'fr' and g_block.settings.feature_text_fr != blank %}{% assign g_feat = g_block.settings.feature_text_fr %}{% endif %}
+                  {% endif %}
+
+                  <li class="mobile-menu__card-wrap">
+                    <a class="mobile-menu__card" href="{{ grandchild.url }}">
+                      <div class="mobile-menu__card-img">
+                        {% if g_block.settings.image_item != blank %}
+                          {%- render 'c-image-element',
+                            image: g_block.settings.image_item,
+                            lazy: true,
+                            class: "mobile-menu__card-img-el"
+                          -%}
+                        {% endif %}
+                      </div>
+                      <div class="mobile-menu__card-body">
+                        <div class="mobile-menu__card-title">{{ grandchild.title }}</div>
+                        {% if g_feat != blank %}
+                          <div class="mobile-menu__card-feature">
+                            {% if g_block.settings.feature_icon != blank %}
+                              <span class="mobile-menu__card-icon">
+                                {%- render 'c-image-element',
+                                  image: g_block.settings.feature_icon,
+                                  lazy: true,
+                                  class: "mobile-menu__card-icon-el"
+                                -%}
+                              </span>
+                            {% endif %}
+                            <span class="mobile-menu__card-feature-text">{{ g_feat }}</span>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+              <div class="mobile-menu__cta-wrap">
+                <a class="mobile-menu__cta" href="{{ sub_link.url }}">
+                  Shop {{ sub_link.title }}
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
     {%- endif -%}
   {%- endfor -%}
 </div>
