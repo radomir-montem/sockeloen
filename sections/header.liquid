@@ -517,8 +517,14 @@
               class="header__icon header__icon--drawer-back"
               aria-label="{{ 'accessibility.back' | t | default: 'Back' }}"
               onclick="window.dispatchEvent(new CustomEvent('drawer:back'))">
-        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M7 1L1 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        {%- comment -%}
+          Sized to match the 12×12 stock icon-close that fills the open-state
+          pill on the left, with stroke-width 2 for visual parity (the X has
+          comparable weight). viewBox 14 gives a slight extra hairline of room
+          so the chevron reads as chunky, not cramped.
+        {%- endcomment -%}
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M9 1.5L3 7L9 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
       {% if section.settings.language_selector %}
