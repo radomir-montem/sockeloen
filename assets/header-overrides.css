@@ -2,15 +2,276 @@
    Global Header Overrides
    ========================================================================== */
 
-/* Announcement bar */
-.announcement-bar a {
-  padding: 14px 0;
-  font-weight: 500;
+/* ==========================================================================
+   Announcement bar — INTEGRATED INTO THE PILL (EME Studio glass style)
+   The orange strip + glass nav below form a SINGLE floating element:
+   - Announcement bar: rounded top corners only, flat bottom
+   - Header pill: flat top, rounded bottom (see further down)
+   - Same horizontal inset so the two shapes align perfectly
+   - Zero vertical gap between them
+   - BOTH use backdrop-filter blur for the EME glass look — the orange
+     strip is a translucent tint over the blurred hero, not a solid fill
+   On homepage pages, the whole assembly floats over the hero via absolute
+   positioning (same mechanism as the pill), so the blur has something to
+   blur and there's no white gap above the bg image.
+   ========================================================================== */
+
+#announcement-bar {
+  margin: 12px 20px 0 20px;  /* horizontal inset matches the pill below */
+  position: relative;
+  z-index: 10;
 }
 
-header.header {
-  padding-top: 10px;
-  padding-bottom: 10px;
+/* The announcement SECTION wrapper must paint above the header section.
+   Theme's base.css sets #shopify-section-header to z-index 15, which traps
+   the announcement bar below it on mobile (header covers the bar). Raising
+   the announcement section to 20 lets its fixed child paint on top. */
+#shopify-section-announcement-bar {
+  z-index: 20 !important;
+  position: relative;  /* ensure z-index applies */
+}
+
+#announcement-bar .announcement-bar,
+#announcement-bar .announcement-bar.gradient {
+  /* Solid orange — removed backdrop-filter because on iOS Safari it
+     interacts badly with fade animations on the inner message: the bar
+     appears to "disappear" after the first class-cycle tick. Since the
+     pill below is already opaque white and the orange stripe is a solid
+     brand colour, the glass effect here was cosmetic at best. */
+  background: #F76503 !important;
+  background-color: #F76503 !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* Smaller, tighter radius — matches EME's compact corner style.
+     Top corners rounded, bottom flush against the pill beneath. */
+  border-radius: 8px 8px 0 0 !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  /* Fixed height (not min-height) — guarantees the pill below sits exactly
+     flush against it with no sub-pixel gap. */
+  height: 32px;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+/* Force visible state for the active bar (first, or the one made active by JS).
+   Scoped via :not(.hidden) so hidden bars correctly stay display:none. */
+#announcement-bar .announcement-bar:not(.hidden) {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Close-X on the announcement bar — hidden globally. We don't want the
+   bar to be dismissible; it also steals horizontal space from truncated
+   messages and breaks the EME layout on narrow screens. */
+#announcement-bar .announcement-bar__close {
+  display: none !important;
+}
+#announcement-bar .announcement-bar:not(.hidden) {
+  display: flex !important;
+}
+#announcement-bar .announcement-bar.hidden {
+  display: none !important;
+}
+#announcement-bar .announcement-bar__message,
+#announcement-bar .announcement-bar a {
+  color: #fff !important;
+}
+
+/* Kill custom.css fade animations on the message — they leave iOS Safari
+   stuck at opacity 0 after the first class-cycle tick, making the bar
+   look empty. Force opacity 1 permanently on visible bars. */
+#announcement-bar .announcement-bar:not(.hidden) .announcement-bar__message,
+#announcement-bar .announcement-bar:not(.hidden) .announcement-bar__link {
+  opacity: 1 !important;
+  animation: none !important;
+  -webkit-animation: none !important;
+}
+#announcement-bar .announcement-bar.hidden {
+  /* Belt-and-braces — fully remove from layout, no animation residue. */
+  opacity: 0 !important;
+  animation: none !important;
+  -webkit-animation: none !important;
+}
+
+/* Long-text handling — truncate with ellipsis so a long message never
+   breaks the integrated pill layout. min-width: 0 on every flex ancestor
+   is required so the p can actually shrink and trigger the ellipsis.
+   Padding tuned so the link fills the full 32px bar height without forcing
+   it taller (height + padding must not exceed the bar). */
+.announcement-bar > a,
+.announcement-bar__link {
+  /* Reset theme's `padding: 1rem 0` which made the link taller than our
+     32px bar and caused visual clipping on mobile. */
+  padding: 0 20px !important;
+  width: 100%;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 32px;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  /* Kill the theme's hover styles — no bg tint, no arrow shift, no opacity
+     change. The notification strip stays static on hover. */
+  background: transparent !important;
+  transition: none !important;
+}
+/* Also reset padding on the p.announcement-bar__message — base.css gives it
+   `padding: 1rem 0` which pushes the text above/below the 32px bar and
+   (combined with overflow: hidden) was making the bar look empty on mobile. */
+#announcement-bar .announcement-bar__message,
+.announcement-bar__message {
+  padding: 0 !important;
+}
+.announcement-bar > a:hover,
+.announcement-bar__link:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #fff !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+}
+/* Kill the animate-arrow transform on the inline icon */
+.announcement-bar .animate-arrow .icon-arrow,
+.announcement-bar .animate-arrow:hover .icon-arrow,
+.announcement-bar .animate-arrow .icon-arrow path,
+.announcement-bar .animate-arrow:hover .icon-arrow path {
+  transform: none !important;
+  transition: none !important;
+}
+.announcement-bar .page-width {
+  /* Fill the bar's content area (flex item) so overflow detection and
+     marquee measurements line up with the real pill width. The theme's
+     .page-width normally limits to ~120rem but we want full-bleed here. */
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  padding-left: 0;
+  padding-right: 0;
+  /* Centering now handled inside the block — not by the flex parent — so
+     .page-width still stretches and the text stays visually centered. */
+  text-align: center;
+}
+#announcement-bar .announcement-bar__message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  font-size: 12px;
+}
+
+/* ==========================================================================
+   Marquee mode — activates via JS (.is-marquee class on .announcement-bar)
+   when the text width exceeds the pill width. Text continuously scrolls
+   right-to-left with a duplicated track for a seamless loop.
+   ========================================================================== */
+
+/* When marquee is active, replace ellipsis truncation with overflow scroll */
+.announcement-bar.is-marquee .announcement-bar__link {
+  justify-content: flex-start !important;
+  padding: 0 !important;          /* track is full-bleed inside the pill */
+  overflow: hidden !important;
+}
+.announcement-bar.is-marquee .page-width {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  display: block !important;
+  text-align: left !important;    /* track starts at left, not centered */
+}
+.announcement-bar.is-marquee .announcement-bar__marquee-track {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  width: max-content !important;
+  animation: announcement-marquee var(--marquee-duration, 25s) linear infinite;
+  will-change: transform;
+}
+.announcement-bar.is-marquee .announcement-bar__marquee-track .announcement-bar__message {
+  white-space: nowrap !important;
+  overflow: visible !important;     /* no ellipsis inside the track */
+  text-overflow: clip !important;
+  flex-shrink: 0 !important;
+  max-width: none !important;
+  padding-right: 60px !important;   /* consistent gap between loops */
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px;
+}
+/* Pause on hover/focus-within for readability */
+.announcement-bar.is-marquee:hover .announcement-bar__marquee-track,
+.announcement-bar.is-marquee:focus-within .announcement-bar__marquee-track {
+  animation-play-state: paused;
+}
+/* Respect reduced-motion: pause but still show full first copy */
+@media (prefers-reduced-motion: reduce) {
+  .announcement-bar.is-marquee .announcement-bar__marquee-track {
+    animation: none !important;
+  }
+}
+
+@keyframes announcement-marquee {
+  from { transform: translateX(0); }
+  /* Exactly -50% because two identical items each get padding-right: 60px,
+     so the track loops seamlessly when shifted by one full item unit. */
+  to   { transform: translateX(-50%); }
+}
+
+/* Mobile: same visual style as desktop (height, radius, font, bg).
+   Only horizontal inset is slightly reduced for narrow viewports. */
+@media screen and (max-width: 989px) {
+  #announcement-bar {
+    margin: 12px 12px 0 12px;
+  }
+  .announcement-bar > a,
+  .announcement-bar__link {
+    padding: 0 14px;
+  }
+}
+
+/* ALL PAGES: announcement bar floats fixed over content. Same geometry
+   everywhere so the header assembly behaves identically regardless of
+   template (homepage, product, collection, cart, etc.). */
+#announcement-bar {
+  position: fixed !important;
+  top: 12px !important;
+  left: 20px !important;
+  right: 20px !important;
+  margin: 0 !important;
+  z-index: 50 !important;
+  /* Lock the wrapper's vertical footprint — iOS Safari was collapsing it
+     to 0 during class-cycle transitions (especially when both inner bars
+     were briefly display:none between ticks), making the orange strip
+     vanish. Fixed height + explicit display keeps the reserved space
+     visible regardless of child state. */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  overflow: hidden;
+}
+@media screen and (max-width: 989px) {
+  #announcement-bar {
+    top: 12px !important;
+    left: 12px !important;
+    right: 12px !important;
+  }
 }
 
 /* Cart count bubble — orange */
@@ -18,82 +279,1337 @@ header.header {
   background-color: #F76503;
 }
 
-/* Hide language/currency switcher in header only */
-header localization-selector,
-.header localization-selector,
-.header__icons localization-selector {
-  display: none !important;
+/* ==========================================================================
+   FLOATING PILL HEADER — EME Studio style
+   ========================================================================== */
+
+/* Section: zero out margin so the hero slides up behind the absolute header */
+.section-header {
+  margin-bottom: 0 !important;
 }
 
-/* Title-case menu items (SHOP → Shop) + black text */
+/* ALL wrapper layers: fully transparent.
+   background-image: none kills the .gradient class background.
+   overflow: visible lets the language dropdown escape.
+   ⚠ Do NOT set position here — the inner header.header handles its own. */
+.header-wrapper,
+.header-wrapper.gradient,
+sticky-header,
+sticky-header.header-wrapper,
+.shopify-section-header-sticky,
+.shopify-section-group-header-section {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  background-attachment: initial !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+.header-wrapper--border-bottom {
+  border-bottom: none !important;
+}
+
+/* THE PILL — shared styles for all pages/states.
+   - Flat top (announcement bar sits directly on top).
+   - Rounded bottom — together with the orange strip above, forms one shape.
+   - Stronger blur (40px / 200% saturate) + lower opacity bg to match EME's
+     milky translucent look. The hero reads softly through the pill.
+   - Drop shadow reads as a soft lift on white backgrounds during scroll;
+     on the hero image it's barely perceptible, exactly like EME. */
+header.header {
+  /* Smaller bottom radius to match EME's tighter corners.
+     !important — at one point this was being lost on mobile when the
+     drawer toggle state changed (pill rendered with flat bottom corners
+     even while the drawer was closed). Forcing it here keeps the rounded
+     bottom as the baseline for every state except the explicitly-scoped
+     "drawer open" / "mega menu open" overrides further down. */
+  border-radius: 0 0 8px 8px !important;
+  /* Opaque white surface — no backdrop-filter (would create a containing
+     block for fixed descendants, trapping the search modal/overlay). */
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.05);
+  /* Explicit pill height: 6px padding + 36px content + 6px padding = 48px.
+     Setting height + min/max keeps the logo anchor (which wraps the 32px
+     logo in an anchor that naturally expands to ~47px) from pushing the
+     pill taller than the search modal (also 48px). User explicitly called
+     out that header and search must have matching heights. */
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  transition: none !important; /* kill color-swap flicker on scroll */
+}
+
+/* Force every inline header region to 36px content height so the pill
+   stays exactly 48px total (6 + 36 + 6). Theme's default anchor wrapping
+   around the logo inflates .header__heading to ~47px otherwise. */
+header.header .header__heading,
+header.header .header__heading-link,
+header.header .header__heading a,
+header.header .header__icons {
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* NAV column (DESKTOP only — on mobile the inline-menu is hidden by the
+   theme and replaced by the hamburger drawer). The theme's nav anchors ship
+   with `padding: 20px 0 10px` which makes each <a> 48.2px tall. CSS Grid
+   then sizes the single header row to 54.7px (taller than the 48px pill)
+   and — because padding-top is 20px and padding-bottom is 10px — the visible
+   text sits ~9px BELOW the pill's true centerline. We flatten the padding
+   and clamp every level (nav → ul → li → a) to 36px so all three columns
+   (nav / logo / icons) share the same content box and `align-items: center`
+   on the header grid actually centers them. */
+@media screen and (min-width: 990px) {
+  header.header > nav.header__inline-menu,
+  header.header .header__inline-menu {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  header.header .header__inline-menu > ul,
+  header.header .header__inline-menu ul.list-menu {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    align-items: center !important;
+    display: inline-flex !important;
+    margin: 0 !important;
+  }
+  header.header .header__inline-menu li {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+  header.header .header__inline-menu li > a,
+  header.header .header__inline-menu li > details > summary,
+  header.header .header__inline-menu .header__menu-item,
+  header.header .header__inline-menu .list-menu__item {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  /* Force the single grid row to the exact content height so items vertically
+     centre on y=68 (pill midline) rather than on the inflated row midline. */
+  header.header {
+    grid-template-rows: 36px !important;
+  }
+}
+
+/* Header-drawer (mobile hamburger) height — do NOT set display here, because
+   the theme hides header-drawer with `display: none` at min-width:990px.
+   Mobile styles further down re-enable display:flex for the mobile viewport. */
+header.header > header-drawer,
+header.header > header-drawer > details > summary {
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  align-items: center !important;
+}
+@media screen and (min-width: 990px) {
+  header.header > header-drawer {
+    display: none !important;
+  }
+}
+header.header .header__heading-logo {
+  max-height: 32px !important;
+  height: auto !important;
+}
+
+/* ALL PAGES: header pill is fixed, floating, identical geometry.
+   Overrides whether .absolute class is present or not — the goal is
+   homogeneous behaviour across homepage, product pages, collection
+   pages, etc. */
+header.header,
+header.header:not(.absolute),
+header.header.absolute {
+  position: fixed !important;
+  top: 44px !important;  /* 12px + 32px bar = flush beneath announcement */
+  left: 20px !important;
+  right: 20px !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+@media screen and (max-width: 989px) {
+  header.header,
+  header.header:not(.absolute),
+  header.header.absolute {
+    top: 44px !important;  /* 12px + 32px bar — same as desktop */
+    left: 12px !important;
+    right: 12px !important;
+  }
+}
+
+/* Reserve space on non-hero pages so the page content doesn't hide behind
+   the fixed announcement bar + pill. Hero pages (homepage, custom-made)
+   intentionally flow their hero image up to y=0 so the pill overlays it,
+   but every other template needs a proper offset. */
+body:not(.template--index):not(.template--custom-made) #MainContent,
+body:not(.template--index):not(.template--custom-made) main,
+body:not(.template--index):not(.template--custom-made) main#MainContent {
+  padding-top: 110px;
+}
+@media screen and (max-width: 989px) {
+  body:not(.template--index):not(.template--custom-made) #MainContent,
+  body:not(.template--index):not(.template--custom-made) main,
+  body:not(.template--index):not(.template--custom-made) main#MainContent {
+    padding-top: 108px;  /* 12 + 32 bar + 48 pill + 16 buffer */
+  }
+}
+
+/* Sticky state: identical styling — no flicker, no color change on scroll.
+   Shadow is preserved here so the pill reads as lifted over white content
+   as you scroll past the hero. */
+header.header.sticky-navbar {
+  border-radius: 0 0 8px 8px !important;
+  /* Fully opaque white — matches the default state exactly so there's no
+     flicker on scroll, AND (critically) no backdrop-filter: backdrop-filter
+     creates a containing block for fixed descendants, which would trap the
+     mega menu panel inside the pill (making it render 44px below the pill
+     bottom instead of flush against it when scrolled). */
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* Borderless — only the outer drop shadow */
+  border: none !important;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* ==========================================================================
+   Text & icon colours — ALWAYS BLACK, in every state
+   Override the inline <style> in header.liquid (lines 110-163) which sets
+   #fff on the homepage and toggles black on .sticky-navbar.
+   ========================================================================== */
+
+/* Kill transitions on icons — prevents the visible color-swap on scroll */
+.header__icon,
+.header__icon .icon,
+.header__icon .icon path,
+.header__icon svg,
+.header__icon svg path,
+.header__icon--cart .icon,
+.header__icon--cart .icon path,
 .header__menu-item span,
-.header__menu-item.link-only span {
-  display: inline-block;
-  text-transform: lowercase;
-  color: #000 !important;
+.localization-label {
+  transition: none !important;
 }
 
+/* Nav text: always black */
+header.header .header__menu-item span,
+header.header .header__menu-item.link-only span,
+header.header.absolute .header__menu-item span,
+header.header.absolute .header__menu-item.link-only span,
+header.header.sticky-navbar .header__menu-item span,
+header.header.sticky-navbar .header__menu-item.link-only span,
+header.header .header__icons .header__menu-item span,
+header.header.absolute .header__icons .header__menu-item span {
+  color: #000 !important;
+  text-transform: lowercase;
+  display: inline-block;
+}
 .header__menu-item span::first-letter,
 .header__menu-item.link-only span::first-letter {
   text-transform: uppercase;
 }
 
-/* Homepage: transparent header with white text — override black */
-header.header.absolute .header__menu-item span,
-header.header.absolute .header__menu-item.link-only span {
-  color: #fff !important;
-}
-
-header.header.absolute .menu-arrow-down {
-  color: #fff;
-}
-
-/* Homepage: sticky navbar reverts to black — must match or exceed
-   specificity of header.header.absolute rule above */
-header.header.sticky-navbar .header__menu-item span,
-header.header.sticky-navbar .header__menu-item.link-only span {
+/* Icon container: color cascades into fill="currentColor" child SVGs.
+   NOTE: theme targets .icon directly with `color: #fff` on the homepage
+   (.header__icons .header__icon .icon), so we MUST override on .icon
+   itself — not only on the parent .header__icon. */
+header.header .header__icon,
+header.header.absolute .header__icon,
+header.header.sticky-navbar .header__icon,
+header.header .header__icons .header__icon,
+header.header.absolute .header__icons .header__icon,
+header.header.sticky-navbar .header__icons .header__icon,
+header.header .header__icon .icon,
+header.header.absolute .header__icon .icon,
+header.header.sticky-navbar .header__icon .icon,
+header.header .header__icons .header__icon .icon,
+header.header.absolute .header__icons .header__icon .icon,
+header.header.sticky-navbar .header__icons .header__icon .icon {
   color: #000 !important;
 }
 
-header.header.sticky-navbar .menu-arrow-down {
+/* Explicit fill override on paths — do NOT set stroke-width here, each icon
+   keeps its own designed line weight. */
+header.header .header__icon .icon path,
+header.header .header__icon svg path,
+header.header .header__icon svg line,
+header.header .header__icon svg polyline,
+header.header .header__icon svg rect,
+header.header.absolute .header__icon .icon path,
+header.header.absolute .header__icon svg path,
+header.header.absolute .header__icons .header__icon .icon path,
+header.header.sticky-navbar .header__icon .icon path,
+header.header.sticky-navbar .header__icon svg path {
+  fill: #000 !important;
+}
+
+/* Cart icon: black fill, NO stroke (avoid making the outline thicker than
+   the other icons — theme's cart path is fill-only). */
+header.header .header__icon--cart .icon,
+header.header.absolute .header__icon--cart .icon,
+header.header.sticky-navbar .header__icon--cart .icon {
+  color: #000 !important;
+}
+header.header .header__icon--cart .icon path,
+header.header.absolute .header__icon--cart .icon path,
+header.header.sticky-navbar .header__icon--cart .icon path {
+  fill: #000 !important;
+  stroke: none !important;
+  stroke-width: 0 !important;
+}
+
+/* Language label: always black */
+header.header .localization-label,
+header.header.absolute .localization-label,
+header.header.sticky-navbar .localization-label {
+  color: #000 !important;
+}
+
+/* Dropdown carets on nav items */
+.menu-arrow-down { color: #000 !important; }
+.header__menu-item .icon-caret path,
+.header__icon .icon-caret path {
+  fill: #000 !important;
+}
+
+/* ==========================================================================
+   Sockeloen logo — ALWAYS BLACK, never switches on scroll.
+   The theme's inline CSS toggles `filter: none` vs `filter: invert(100%)`
+   between .absolute and .sticky-navbar on the homepage. We lock both
+   classes to invert(100%) so the white-source logo renders black in every
+   state. Specificity is raised via header.header ancestor to beat the
+   theme's `.sticky-navbar .header__heading-link img` selector.
+   ========================================================================== */
+
+header.header .header__heading-link img,
+header.header .header__heading-logo,
+header.header.absolute .header__heading-link img,
+header.header.absolute .header__heading-logo,
+header.header.sticky-navbar .header__heading-link img,
+header.header.sticky-navbar .header__heading-logo,
+.header-wrapper .header__heading-link img,
+.header-wrapper .header__heading-logo,
+.shopify-section-header-sticky .header__heading-link img,
+.shopify-section-header-sticky .header__heading-logo {
+  filter: invert(100%) !important;
+  transition: none !important;
+}
+
+/* ==========================================================================
+   Language selector
+   ========================================================================== */
+
+/* Desktop selector: only force flex on desktop so the theme's
+   small-hide / medium-hide classes keep it hidden on mobile. */
+@media screen and (min-width: 990px) {
+  .header__icons localization-selector {
+    display: flex !important;
+    align-items: center;
+    position: relative;
+    overflow: visible !important;
+    z-index: 200;
+  }
+}
+
+/* Shared overflow/position fix for all viewports (without forcing display) */
+.header__icons localization-selector {
+  position: relative;
+  overflow: visible !important;
+  z-index: 200;
+}
+
+/* Language label — just text, no button background.
+   Matches icon line thickness via font-weight 400 and icon height via
+   matching the header__icon padding (8px 10px). */
+.localization-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  /* Bumped from 13px → 15px so the text weight matches the 20px icons
+     next to it (cart, search, account). Chevron caret also scales up. */
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  line-height: 1;
+}
+.localization-label:hover {
+  background: transparent !important;
+  opacity: 0.6;
+}
+
+/* Give the desktop selector container the same padding as .header__icon so
+   the click area aligns in height/width with the other symbols, even though
+   only the text itself is the label (no button background). */
+@media screen and (min-width: 990px) {
+  .header__icons localization-selector {
+    padding: 8px 10px;
+  }
+}
+
+/* Hide old SVG arrow; use CSS chevron */
+.localization-label svg { display: none; }
+.localization-label::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 6px;
+  background-image: url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L4 4L7 1' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.8;
+}
+
+/* Dropdown panel — ALWAYS opens downward (top: 100%), never upward.
+   !important on top/bottom overrides Tailwind's top-full / bottom-full AND
+   any inline style the localization-selector.js might set.
+   Matches the header pill design: glass blur, soft shadow, same radius. */
+.localization-list {
+  top: 100% !important;
+  bottom: auto !important;
+  margin-top: 8px;
+  border-radius: 8px !important;
+  /* Keep dropdown readable — moderately opaque, wider blur radius */
+  background: rgba(255, 255, 255, 0.70) !important;
+  background-color: rgba(255, 255, 255, 0.70) !important;
+  backdrop-filter: blur(70px) saturate(200%);
+  -webkit-backdrop-filter: blur(70px) saturate(200%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+    0 6px 20px rgba(0, 0, 0, 0.10),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  border: none !important;
+  min-width: 140px;
+  overflow: hidden;
+  z-index: 9999 !important;
+  padding: 6px !important;
+}
+.localization-item {
+  border-radius: 6px;
+  padding: 0 !important;
+  margin: 2px 0;
+}
+.localization-item a {
+  font-size: 14px;
+  font-weight: 500;
   color: #000;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  display: block;
+  padding: 9px 14px;
+  border-radius: 6px;
+}
+.localization-item:hover a {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.05);
 }
 
-/* Thicker icon lines — add stroke on top of filled paths (account + cart) */
-.header__icon .icon path {
-  stroke: currentColor;
-  stroke-width: 0.6px;
+/* Mobile drawer: ensure overflow isn't clipping the downward dropdown */
+@media screen and (max-width: 989px) {
+  .menu-drawer localization-selector {
+    overflow: visible !important;
+    position: relative;
+  }
 }
 
-/* Thicker search icon — symbol referenced via <use>, target symbol path */
-#icon-search path {
-  stroke: currentColor;
-  stroke-width: 0.6px;
+/* ==========================================================================
+   Search modal — clean single-row layout inside the glass pill.
+   LAYOUT: [magnifier icon] [ input ............. ] [× close]
+   - No inner borders or sub-boxes (Shopify's default .field has a visible
+     outline — we flatten it so only the pill's glass surface shows).
+   - All three elements vertically centered in a fixed-height row.
+   - Generous click targets; sans-serif placeholder that fades on type.
+   ========================================================================== */
+
+.search-modal.modal__content {
+  position: fixed !important;
+  /* Sits OVER the header pill — SAME coordinates and SAME height as
+     header.header. Header rendered height is 48px (see .header__heading
+     + .header__icons constraints further down). */
+  top: 44px !important;
+  left: 20px !important;
+  right: 20px !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+
+  border-radius: 0 0 8px 8px !important;  /* match header pill radius exactly */
+  /* SOLID white — removed backdrop-filter because it creates a containing
+     block for fixed descendants (spec: elements with backdrop-filter become
+     the containing block for position:fixed children). The overlay child
+     was getting trapped to the modal's 48px rect instead of covering the
+     full viewport, which made the 0.95 translucent white modal look grey
+     (the 0.25 black dim showed through from BEHIND the modal content). */
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* Borderless — only the soft drop shadow lifts the pill. No inset rim. */
+  border: none !important;
+  border-bottom: none !important;
+  outline: none !important;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  overflow: visible !important;
+  /* Must be ABOVE the announcement bar (50), header pill, menu drawer (60)
+     and drawer backdrop. The search pill replaces the header visually when
+     open, so it has to cover the icons that otherwise stick through. */
+  z-index: 300 !important;
 }
 
-/* Cart icon — cropped viewBox matches search/account, use same 2rem */
-.header__icon--cart .icon {
-  width: 2rem;
-  height: 2rem;
+/* All pages share the same header geometry — search lands right over the pill */
+body.template--index .search-modal.modal__content,
+body.template--custom-made .search-modal.modal__content {
+  top: 44px !important;
 }
 
-.header__icon--cart {
-  margin-right: 4px;
+/* Inner wrapper — same 6px vertical padding as header.header so the
+   interactive row inside is exactly 36px tall, vertically centered on
+   the pill's centerline. Content is horizontally centered so the search
+   field sits in the middle of the pill (matching the pre-redesign layout)
+   with the close button absolutely positioned on the far right.
+
+   Opaque white + z-index:1 is CRITICAL: within the modal's stacking context
+   (z:300), the overlay child at z:-1 still paints ABOVE the modal's own
+   background (per CSS stacking spec — negative z-index paints after bg, not
+   before it). Giving this wrapper z:1 + solid white puts an opaque layer
+   ABOVE the overlay within the modal rect, so the pill reads as pure white
+   (matching the header) while the overlay still dims the rest of the page. */
+.search-modal__content {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 6px 10px !important;
+  min-height: 48px !important;
+  height: 48px !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+  position: relative;
+  z-index: 1;
+  gap: 6px;
+  box-sizing: border-box !important;
+}
+/* Belt-and-braces: force every direct child of the search row to center
+   vertically so the field, magnifier, and close button all share the same
+   baseline as the header's icon row. */
+.search-modal__content > * {
+  align-self: center !important;
 }
 
-/* Better spacing around header icons for good UX */
-.header__icon {
-  padding: 8px 10px;
+/* The form is horizontally centered with a capped max-width so the input
+   reads as a centered search field (not a full-width row). */
+.search-modal__content .search-modal__form,
+.search-modal__content form.search {
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: 600px;
+  min-width: 0;
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-.header__icons {
-  gap: 2px;
+/* The .field IS the visible input frame.
+   CRO: a clear tinted rectangle inside the glass pill tells the user "this
+   is where you type". Subtle darkening keeps it on-brand with the glass,
+   but the contrast is strong enough to read as an input field.
+   Layout: [magnifier] [input .........]  (via row-reverse, magnifier = last
+   DOM child, rendered first visually). */
+.search-modal .field {
+  flex: 1;
+  min-width: 0;
+  display: flex !important;
+  flex-direction: row-reverse !important;
+  align-items: center !important;
+  /* Transparent input frame — the white pill bg shows through directly so
+     the search bar reads as one clean white surface matching the header. */
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+  padding: 0 6px 0 0 !important;
+  margin: 0 !important;
+  /* Fill the inner row so the field sits on the vertical centerline of
+     the 48px search pill exactly the way the nav icons sit in the header. */
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  position: relative;
+  align-self: center !important;
+  transition: background 0.15s ease;
+}
+.search-modal .field:focus-within {
+  /* Keep pure white on focus — user explicitly requested that the area
+     around/behind the input field matches the header pill (white). Any
+     tint, even 3%, reads as grey when the overlay is behind (was causing
+     the "grey search bar" complaint). */
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.search-modal .field::before,
+.search-modal .field::after {
+  display: none !important;
+  content: none !important;
 }
 
-/* Down arrow SVG next to menu items with dropdowns */
-.menu-arrow-down {
+/* Input: transparent (the .field provides the frame), bolder text for CRO */
+.search-modal .field__input,
+.search-modal .search__input {
+  flex: 1;
+  min-width: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: #000 !important;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 0 6px 0 0 !important;
+  height: 36px;
+  line-height: 36px;
+}
+.search-modal .field__input:focus,
+.search-modal .search__input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+.search-modal .field__input::placeholder,
+.search-modal .search__input::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+}
+
+/* Float-label styled as a visible placeholder so users clearly see the CTA */
+.search-modal .field__label {
+  position: absolute !important;
+  left: 38px !important;  /* after magnifier */
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6) !important;
+  background: transparent !important;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+.search-modal .field__input:focus ~ .field__label,
+.search-modal .search__input:focus ~ .field__label,
+.search-modal .field__input:not(:placeholder-shown) ~ .field__label,
+.search-modal .search__input:not(:placeholder-shown) ~ .field__label {
+  opacity: 0;
+}
+
+/* Magnifier — sits inside the tinted input frame on the LEFT */
+.search-modal .search__button,
+.search-modal .field__button {
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  flex: 0 0 auto;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px;
+  height: 36px;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: #000 !important;
+  cursor: pointer;
+}
+.search-modal .search__button .icon,
+.search-modal .field__button .icon {
+  width: 18px;
+  height: 18px;
+  color: #000 !important;
+}
+.search-modal .search__button .icon path,
+.search-modal .field__button .icon path {
+  fill: #000 !important;
+  stroke: #000 !important;
+}
+
+/* Close button — OUTSIDE the input frame, absolutely pinned to the far
+   right of the pill so the centered form in the middle stays centered
+   regardless of the close button's width. */
+.search-modal .modal__close-button {
+  position: absolute !important;
+  top: 50% !important;
+  right: 10px !important;
+  transform: translateY(-50%) !important;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: #000 !important;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+  z-index: 2;
+}
+.search-modal .modal__close-button:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+.search-modal .modal__close-button .icon {
+  color: #000 !important;
+  width: 16px;
+  height: 16px;
+}
+.search-modal .modal__close-button .icon path {
+  fill: #000 !important;
+  stroke: #000 !important;
+}
+
+/* Predictive search results panel — floats below the pill, same style.
+   Opaque white (NOT semi-transparent) so the overlay dim underneath doesn't
+   tint the panel grey. Matches the pill's solid white bg for a unified look. */
+.search-modal .predictive-search {
+  margin-top: 12px;
+  border-radius: 8px;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10) !important;
+  overflow: hidden;
+}
+
+/* Kill the grey theme bg on the inner results list and its container — these
+   have Tailwind arbitrary-value classes like bg-[#e2e2e2] and border-[#7c7d80]
+   baked into the theme that would tint the whole panel grey. */
+.search-modal .predictive-search > div,
+.search-modal .predictive-search .predictive-search__results-list,
+.search-modal .predictive-search ul.predictive-search__results-list {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: none !important;
+}
+
+/* Section heading ("products", "articles") — subtle light-grey strip to act
+   as a divider between sections, but not the garish 226,226,226 block. */
+.search-modal .predictive-search__heading {
+  background: #f7f7f7 !important;
+  background-color: #f7f7f7 !important;
+}
+
+/* Overlay dimming under the floating search pill.
+   STACKING CONTEXT NOTE: .search-modal.modal__content has z-index: 300 which
+   creates a stacking context. The overlay is a DOM child of the modal, so
+   its z-index is painted RELATIVE to the modal. If we give it a positive
+   z-index (e.g. 299), it paints ABOVE the modal's own implicit background
+   layer INSIDE the modal rect — and `rgba(0,0,0,0.25)` over `#fff` gives
+   rgb(191,191,191), so the search pill looks tinted grey.
+   Fix: give it z-index: -1 so it paints BELOW the modal's bg inside the
+   stacking context. Outside the modal rect the overlay is still visible
+   (nothing in the stacking context paints there except the overlay), so
+   the page is still dimmed while the pill stays pure white. */
+.search-modal .modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(0, 0, 0, 0.25) !important;
+  z-index: -1 !important;
+}
+.search-modal .modal-overlay::after {
+  display: none !important;
+}
+
+@media screen and (max-width: 989px) {
+  .search-modal.modal__content {
+    /* Same top as header.header on mobile (44px) — sits directly over the pill */
+    top: 44px !important;
+    left: 12px !important;
+    right: 12px !important;
+    border-radius: 8px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+  }
+  body.template--index .search-modal.modal__content,
+  body.template--custom-made .search-modal.modal__content {
+    top: 44px !important;
+  }
+  .search-modal__content {
+    min-height: 48px;
+    height: 48px;
+    padding: 6px 8px !important;
+    border-radius: 8px !important;
+    gap: 4px;
+  }
+  .search-modal .field {
+    height: 36px;
+    min-height: 36px;
+  }
+  .search-modal .field__input,
+  .search-modal .search__input {
+    font-size: 14px;
+    height: 36px;
+    line-height: 36px;
+  }
+  .search-modal .field__label {
+    left: 36px !important;
+    font-size: 14px !important;
+  }
+  .search-modal .search__button,
+  .search-modal .field__button {
+    width: 36px;
+    height: 36px;
+  }
+  .search-modal .modal__close-button {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* ==========================================================================
+   Mobile menu drawer — match the header pill design (glass blur, rounded,
+   inset floating panel instead of full-height slide-in sidebar). The panel
+   appears BELOW the header pill so the whole assembly reads as one system.
+   ========================================================================== */
+
+.js .menu-drawer,
+.menu-drawer {
+  position: fixed !important;
+  top: 94px !important;
+  left: 12px !important;
+  right: 12px !important;
+  width: auto !important;
+  max-width: 360px !important;
+  height: auto !important;
+  /* Cap the drawer well short of the viewport bottom so the rounded
+     bottom corners are clearly visible against the page below — matching
+     the desktop mega menu which ends at its content, not the viewport.
+     220px reserves: 94px top offset + ~126px visible footer area. */
+  max-height: calc(100vh - 220px) !important;
+  /* Must sit above the announcement bar (z-index 50) and the header pill —
+     otherwise the drawer opens behind them and taps on menu items are
+     intercepted by the bar/pill above. */
+  z-index: 60 !important;
+
+  padding: 10px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  /* Menu drawer: readable list items need moderate opacity, wider blur */
+  background: rgba(255, 255, 255, 0.70) !important;
+  background-color: rgba(255, 255, 255, 0.70) !important;
+  backdrop-filter: blur(70px) saturate(200%);
+  -webkit-backdrop-filter: blur(70px) saturate(200%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+    0 6px 20px rgba(0, 0, 0, 0.10),
+    0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  filter: none !important;  /* kill the theme's drop-shadow filter */
+  overflow: hidden auto !important;
+  overscroll-behavior: contain;
+
+  /* Animation: fade + drop in (not slide from left) */
+  transform: translateY(-10px) !important;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.22s ease, opacity 0.22s ease, visibility 0.22s ease !important;
+}
+
+.js details[open] > .menu-drawer,
+.js details[open].menu-opening > .menu-drawer,
+.no-js details[open] > .menu-drawer {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Drawer internal layout — reset tight padding of the floating pill */
+.menu-drawer__inner-container {
+  padding: 0 !important;
+}
+.menu-drawer__navigation {
+  padding: 4px !important;
+}
+.menu-drawer__menu {
+  padding: 0 !important;
+}
+.menu-drawer__menu-item {
+  padding: 10px 12px !important;
+  border-radius: 6px;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  border-bottom: none !important;
+  transition: background 0.15s ease;
+}
+.menu-drawer__menu-item:hover,
+.menu-drawer__menu-item:focus {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Drawer utility links row — inset spacing, no hard dividers */
+.menu-drawer__utility-links {
+  padding: 8px !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: 4px;
+}
+
+/* Drawer language selector — match the header language dropdown styling */
+.menu-drawer localization-selector .localization-label {
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 7px !important;
+  padding: 10px 14px !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* On hero pages the header assembly is (32px bar + 12px + pill height) —
+   drop the drawer below the pill. */
+body.template--index .menu-drawer,
+body.template--custom-made .menu-drawer {
+  top: 94px !important;
+}
+
+@media screen and (max-width: 989px) {
+  /* Drawer sits FLUSH against the header pill (y:92 = header bottom) so the
+     two merge into one continuous white surface. Same horizontal inset as the
+     header (12px each side) so widths align exactly. Flat top + rounded
+     bottom mirrors the header's rounded bottom being flattened (below), so
+     the pair reads as one big rounded-bottom rectangle. */
+  .js .menu-drawer,
+  .menu-drawer {
+    top: 92px !important;  /* header bottom — NO gap */
+    left: 12px !important;
+    right: 12px !important;
+    max-width: none !important;
+    width: calc(100vw - 24px) !important;
+    /* Flat top, rounded bottom — merges with the header's flattened bottom */
+    border-radius: 0 0 8px 8px !important;
+    /* Opaque white — matches header pill exactly. Drop the blur + translucency
+       because the two surfaces must read as one uniform shape. */
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    /* Borderless — outer shadow ONLY below/sides. Clip the top so the
+       shadow doesn't bleed up over the seam with the header pill (which
+       would read as a thin grey band at y=92 where they meet). */
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.10),
+      0 2px 6px rgba(0, 0, 0, 0.05) !important;
+    clip-path: inset(0 -40px -40px -40px) !important;
+    /* Reduce inner padding so the content area lines up with the header
+       content area (the 8px padding is what was making the inset content
+       look "too wide" relative to the pill above). */
+    padding: 6px !important;
+  }
+  body.template--index .menu-drawer,
+  body.template--custom-made .menu-drawer {
+    top: 92px !important;
+  }
+
+  /* When the mobile menu is open, flatten the header's bottom corners AND
+     remove its bottom drop-shadow so the header + drawer merge into a
+     single seamless white surface with no visible seam line. */
+  sticky-header:has(header-drawer > details[open]) header.header,
+  .header-wrapper:has(header-drawer > details[open]) header.header,
+  header.header:has(> header-drawer > details[open]) {
+    border-radius: 0 !important;
+    /* Keep the TOP shadow (nothing above to catch it) and kill the bottom
+       glow so there's no dark line at the seam with the drawer. */
+    box-shadow: none !important;
+  }
+  /* Focus/active outline around the hamburger + close <summary> creates a
+     visible box in the drawer. Drop the 2px outline to none — the icon
+     colour change already communicates focus. */
+  header.header > header-drawer > details > summary {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  header.header > header-drawer > details > summary:focus,
+  header.header > header-drawer > details > summary:focus-visible,
+  header.header > header-drawer > details > summary:active {
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  /* Subtle localization pill at the drawer footer — since the drawer is now
+     fully opaque white, drop the translucent fill and tighten the border so
+     it reads as a quiet control, not a heavy tile. */
+  .menu-drawer localization-selector .localization-label {
+    background: transparent !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Menu content fix (mobile):
+     The theme's mobile nav uses `.mobile-navigation { position: absolute; height: 100% }`
+     so multiple menu panels can stack and slide via Alpine.js transitions. For
+     `height: 100%` to resolve, the containing block (`.relative`) needs an
+     explicit height — but in our inset floating drawer its natural height is 0
+     (children are absolutely positioned), so the panel collapses and menu
+     items render outside the drawer box. Give the drawer a comfortable inset
+     height and stretch the inner containers so `h-full` resolves properly. */
+  .js .menu-drawer,
+  .menu-drawer {
+    height: calc(100vh - 104px) !important;  /* 44 bar + 48 pill + 12 bottom gutter */
+    max-height: calc(100vh - 104px) !important;
+  }
+  .menu-drawer .menu-drawer__inner-container {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+  .menu-drawer .menu-drawer__navigation-container {
+    height: 100% !important;
+    min-height: 0 !important;
+    grid-template-rows: 1fr auto !important;  /* nav fills, utility row hugs */
+  }
+  .menu-drawer .menu-drawer__navigation-container > .relative {
+    min-height: 360px;  /* ensures abs-positioned panel has room */
+    height: 100%;
+    display: block;
+  }
+  /* Remove the extra top padding the theme injects (!pt-[40px]) since the
+     drawer now sits flush against the header pill with no gap. */
+  .menu-drawer.\!pt-\[40px\],
+  .menu-drawer[class*="!pt-"] {
+    padding-top: 6px !important;
+  }
+  /* Mobile nav panel padding — theme uses py-[64px] px-[32px] which is huge
+     inside our inset drawer. Trim it so nav items sit closer to the top
+     and the inner content lines up with the header pill's horizontal rhythm. */
+  .menu-drawer .mobile-menu__panel {
+    padding: 20px 18px !important;
+  }
+  /* Kill any rounded corners on the inner navigation panels so they fill
+     the drawer edge-to-edge — the drawer provides the only radius. */
+  .menu-drawer .mobile-navigation {
+    border-radius: 0 0 6px 6px !important;
+  }
+}
+
+/* ==========================================================================
+   V2 mobile menu — content-sized drawer overrides
+   --------------------------------------------------------------------------
+   The block above sizes the drawer to calc(100vh - 104px) so the OLD abs-
+   positioned nav panels have room. The v2 menu flows naturally — the root
+   panel is position:relative and the drawer should hug its content. We use
+   :has(.mobile-menu--v2) to scope these rules so only v2 menus collapse to
+   content height; the legacy drawer keeps its full-height behaviour.
+
+   Result: drawer ≈ root list + locale footer (+ radius), with the rounded
+   bottom corners visible above the page, matching the desktop dropdown.
+   ========================================================================== */
+@media screen and (max-width: 989px) {
+  .js .menu-drawer:has(.mobile-menu--v2),
+  .menu-drawer:has(.mobile-menu--v2) {
+    height: auto !important;
+    max-height: calc(100vh - 180px) !important;  /* leaves ~180px below for visible rounded corners */
+    min-height: 0 !important;
+  }
+  .menu-drawer:has(.mobile-menu--v2) .menu-drawer__inner-container,
+  .menu-drawer:has(.mobile-menu--v2) .menu-drawer__navigation-container {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .menu-drawer:has(.mobile-menu--v2) .menu-drawer__navigation-container > .relative {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  /* Kill the panel padding override too — v2 root panel manages its own
+     spacing and we want the body flush against the drawer chrome. */
+  .menu-drawer:has(.mobile-menu--v2) .mobile-menu__panel {
+    padding: 0 !important;
+  }
+  /* Hide the stock drawer footer (social icons + localization-selector).
+     The v2 menu renders its own locale pill inside the root panel, so the
+     utility-links row would be a duplicate "EN" selector sitting below the
+     v2 content. */
+  .menu-drawer:has(.mobile-menu--v2) .menu-drawer__utility-links {
+    display: none !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     Sub / sub-sub panel active → lock the drawer to the viewport.
+     --------------------------------------------------------------------
+     The v3 drawer goes straight into the sub panel (root is gone). We
+     want the drawer to be *exactly* the viewport height (minus the pill
+     + announcement bar) with NO native scroll — the sub panel handles
+     its own scroll internally so the Shop-category CTA can stay pinned
+     at the bottom while the cards scroll.
+
+     Chain: fixed-height drawer → 100% inner → 100% nav → 100% mobile-menu
+     (which is the .relative containing block for the absolute sub panel).
+     With the chain in place, the sub panel's top:0/bottom:0 resolves
+     against the full drawer height, giving the inner flex layout the
+     concrete height it needs for `flex: 1; min-height: 0; overflow-y:
+     auto` on the card list to actually produce an internal scroll. */
+  .menu-drawer:has(.mobile-menu--v2-sub-active),
+  .menu-drawer:has(.mobile-menu--v2-subsub-active),
+  .js .menu-drawer:has(.mobile-menu--v2-sub-active),
+  .js .menu-drawer:has(.mobile-menu--v2-subsub-active) {
+    /* Drawer stretches from the bottom of the pill (y:92) to the bottom
+       of the small viewport (svh excludes Safari's URL/tab bar). With
+       only 92px subtracted, the drawer's white surface now reaches the
+       visible bottom edge of the screen — the white continues past the
+       Shop-all-products CTA to cover the rest of the viewport below it.
+       Safe-area padding on the CTA wrap lifts the pill above the iOS
+       home indicator without introducing a gap in the white surface.
+       Fallback (100vh - 172px) keeps older browsers from overflowing
+       into Safari's chrome. */
+    height: calc(100vh - 172px) !important;
+    max-height: calc(100vh - 172px) !important;
+    height: calc(100svh - 92px) !important;
+    max-height: calc(100svh - 92px) !important;
+    overflow: hidden !important;  /* panel manages its own scroll */
+  }
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__inner-container,
+  .menu-drawer:has(.mobile-menu--v2-subsub-active) .menu-drawer__inner-container,
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container,
+  .menu-drawer:has(.mobile-menu--v2-subsub-active) .menu-drawer__navigation-container {
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container > .relative,
+  .menu-drawer:has(.mobile-menu--v2-subsub-active) .menu-drawer__navigation-container > .relative {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+  /* Legacy root-panel collapse rule — harmless now that root is removed
+     from the markup; kept in case any cached template ships the old
+     DOM. */
+  .mobile-menu--v2-sub-active .mobile-menu__panel--root,
+  .mobile-menu--v2-subsub-active .mobile-menu__panel--root {
+    max-height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+  }
+  /* Sub / sub-sub panel fills the drawer. Previously forced to
+     `position: relative; height: auto` so the drawer grew to content;
+     that path made the whole drawer scroll natively and the CTA scrolled
+     off with it. Now the panel stretches to the drawer via absolute
+     top:0/bottom:0 and the inner flex body handles scroll + pinned CTA. */
+  .mobile-menu--v2-sub-active .mobile-menu__panel--sub[x-show],
+  .mobile-menu--v2-subsub-active .mobile-menu__panel--subsub[x-show] {
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  /* When the user descends into a sub-sub menu, the sub panel gets out
+     of the way — the sub-sub replaces it visually (not stacks). The
+     overlay effect is close enough for the "slide in covering" feel
+     the user asked for, and it lets the drawer size to sub-sub height
+     instead of the taller sub grid. */
+  .mobile-menu--v2-subsub-active .mobile-menu__panel--sub[x-show] {
+    display: none !important;
+  }
+
+  /* Horizontal overflow on the panel wrapper still needs hiding so the
+     sub / subsub slide-in animations don't leak past the drawer edge. */
+  .mobile-menu--v2-sub-active,
+  .mobile-menu--v2-subsub-active {
+    overflow-x: hidden;
+  }
+}
+
+/* Backdrop when drawer open — soft dim, not the theme's default hard dark.
+   Must stack above the announcement bar (z-index 50) but below the drawer
+   itself (z-index 60) so the dim covers the whole viewport and the drawer
+   sits on top of the dim. */
+.js menu-drawer > details[open] > summary::before,
+menu-drawer > details[open] > summary::before {
+  background: rgba(0, 0, 0, 0.25) !important;
+  z-index: 55 !important;
+}
+
+/* ==========================================================================
+   Icon sizing & spacing
+   ========================================================================== */
+
+.header__icon--cart .icon { width: 2rem; height: 2rem; }
+.header__icon--cart { margin-right: 4px; }
+.header__icon { padding: 8px 10px; }
+.header__icons { gap: 2px; overflow: visible; }
+
+/* ==========================================================================
+   Drawer close / back buttons in the page header
+   --------------------------------------------------------------------------
+   The mobile v3 drawer consolidates close + back affordances into the
+   page header itself (the old "X below the header bar" is gone).
+
+   * When the drawer is open, the <summary> toggle on the left is
+     restyled as a round white pill — the same look as the old
+     .mobile-menu__close-floating button the user liked.
+   * When the user descends into a sub-sub menu (childMenu > 0 →
+     body.drawer-subsub-active), a back arrow appears on the right in
+     the slot normally occupied by cart/search/account, and those icons
+     hide. Clicking it fires `drawer:back`, which the Alpine scope in
+     menu-mobile.liquid handles by zeroing childMenu.
+   ========================================================================== */
+
+/* --- Header close pill (round white circle when drawer is open) ---
+   header-drawer carries `margin-left: -12px` to align the closed-state
+   hamburger flush with the header edge. We cancel that while the drawer
+   is open so the pill has the same 12.5px breathing room from the edge
+   that the right-side icons get from the header's 12.5px right padding. */
+header-drawer:has(details#Details-menu-drawer-container[open]) {
+  margin-left: 0 !important;
+}
+details#Details-menu-drawer-container[open] > summary.header__icon--menu {
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  background: #ffffff !important;
+  border: 1px solid #E5E5E5 !important;
+  border-radius: 999px !important;
+  color: #111111 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+details#Details-menu-drawer-container[open] > summary.header__icon--menu:hover {
+  background: #F5F2ED !important;
+  border-color: #D5D5D5 !important;
+}
+/* Shrink the stock close svg (18×17) down to fit the 36×36 pill. */
+details#Details-menu-drawer-container[open] > summary.header__icon--menu .icon-close {
+  width: 12px !important;
+  height: 12px !important;
+}
+/* The hidden hamburger still lives inside the summary for the
+   closed-state swap; make sure it doesn't push the pill wider. */
+details#Details-menu-drawer-container[open] > summary.header__icon--menu .icon-hamburger {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* --- Sticky floating X (legacy, now removed from markup) --- */
+.mobile-menu__close-floating { display: none !important; }
+
+/* --- Header back arrow (visible only in sub-sub state) ---
+   Specificity note: base.css has `.header__icon:not(.header__icon--summary)`
+   (0,2,0) setting display:flex. Our button carries both .header__icon and
+   .header__icon--drawer-back classes, so we match specificity with the
+   stacked-class selector below and rely on source order (this file loads
+   after base.css) to win. */
+.header__icon.header__icon--drawer-back {
   display: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: #ffffff;
+  border: 1px solid #E5E5E5;
+  border-radius: 999px;
+  color: #111111;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  box-sizing: border-box;
 }
+.header__icon.header__icon--drawer-back:hover {
+  background: #F5F2ED;
+  border-color: #D5D5D5;
+}
+body.drawer-subsub-active .header__icon.header__icon--drawer-back {
+  display: inline-flex;
+}
+/* When back is showing, hide the other right-side header icons so the
+   slot reads as just the back button. Scoped to children of
+   .header__icons so the logo and left-side <header-drawer> are not
+   affected. */
+body.drawer-subsub-active .header__icons > *:not(.header__icon--drawer-back) {
+  display: none !important;
+}
+
+/* The stock header rule
+     `header.header.absolute .header__icon svg path { fill: #000 !important }`
+   wins over any single-class override because of the compounded
+   header.header.absolute prefix (specificity 0,3,3). We match that
+   specificity by stacking `.header__icon.header__icon--drawer-back` and
+   covering every header state variant (.absolute / .sticky-navbar) so
+   the stroke-only chevron renders as a clean thin "<" instead of a
+   filled triangle. */
+header.header .header__icon.header__icon--drawer-back svg path,
+header.header.absolute .header__icon.header__icon--drawer-back svg path,
+header.header.sticky-navbar .header__icon.header__icon--drawer-back svg path {
+  fill: none !important;
+}
+
+/* ==========================================================================
+   Dropdown caret on nav items — desktop only
+   ========================================================================== */
+
+.menu-arrow-down { display: none; }
 
 @media screen and (min-width: 990px) {
   .menu-arrow-down {
@@ -104,3 +1620,1348 @@ header.header.sticky-navbar .menu-arrow-down {
     flex-shrink: 0;
   }
 }
+
+/* ==========================================================================
+   Mobile adjustments
+   ========================================================================== */
+
+@media screen and (max-width: 989px) {
+  /* In-flow mobile header — flush against announcement bar above,
+     same horizontal inset, bottom-rounded only.
+     NOTE: Do NOT set margin here. The base rule at the top of this file
+     already sets `left: 12px; right: 12px` for the fixed header. Adding
+     `margin: 0 12px` on top of that would double the inset (24px each side)
+     and make the header narrower than the announcement bar. */
+  header.header:not(.absolute) {
+    margin: 0 !important;
+    border-radius: 0;
+  }
+
+  /* Absolute mobile header (homepage) — same treatment.
+     CRITICAL: top must match the base rule (44px). Previous `top: 0` made
+     the header cover the notification bar at y=12-44 on mobile. */
+  header.header.absolute {
+    top: 44px !important;
+    left: 12px !important;
+    right: 12px !important;
+    margin: 0 !important;
+    border-radius: 0;
+  }
+
+  /* True-center the logo on mobile.
+     Right side (lang + search + cart) is wider than the left (hamburger),
+     so a natural flex layout shifts the logo left. Give both ends flex:1
+     so they share remaining space equally — logo lands exactly centered. */
+  header.header > header-drawer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  header.header > .header__icons {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  /* Prevent theme CSS from giving the heading flex:1 */
+  header.header > .header__heading,
+  header.header > a.header__heading-link {
+    flex: 0 0 auto;
+  }
+}
+
+/* ==========================================================================
+   HOMEPAGE-WIDE CORNER RADIUS — match EME's compact 8px / 7px system.
+   Applies to hero, media, product cards, buttons, and images across the
+   index and custom-made templates so the whole page reads as a unified
+   design language. Scoped to those templates to avoid affecting product
+   pages, collection pages, etc., which have their own established styling.
+   ========================================================================== */
+
+body.template--index,
+body.template--custom-made {
+  /* Expose the radius as a CSS variable so child sections can opt-in. */
+  --home-radius: 8px;
+  --home-radius-sm: 6px;
+}
+
+/* Hero banner / slideshow / image-banner / video hero — NO RADIUS.
+   The hero reaches the full viewport edges (square corners) so the
+   header pill reads as floating over an unbroken hero image. Image-with-text
+   further down the page keeps its own radius via the generic media rule. */
+body.template--index .slideshow,
+body.template--index .slideshow__slide,
+body.template--index .slideshow__media,
+body.template--index .banner,
+body.template--index .banner__media,
+body.template--index .video-section,
+body.template--index .video-section__media,
+body.template--index .image-banner,
+body.template--index .image-banner__media,
+body.template--custom-made .slideshow,
+body.template--custom-made .slideshow__slide,
+body.template--custom-made .slideshow__media,
+body.template--custom-made .banner,
+body.template--custom-made .banner__media,
+body.template--custom-made .image-banner,
+body.template--custom-made .image-banner__media {
+  border-radius: 0 !important;
+}
+/* Also null the radius on any inner media/img of these hero sections so the
+   theme's own rules can't reintroduce rounded corners. */
+body.template--index .slideshow .media,
+body.template--index .slideshow img,
+body.template--index .banner .media,
+body.template--index .banner img,
+body.template--index .image-banner .media,
+body.template--index .image-banner img,
+body.template--index .video-section .media,
+body.template--custom-made .slideshow .media,
+body.template--custom-made .slideshow img,
+body.template--custom-made .banner .media,
+body.template--custom-made .banner img {
+  border-radius: 0 !important;
+}
+
+/* Cards, tiles and collection items on the homepage.
+   overflow: hidden is critical so the child media/content stays clipped to
+   the rounded corners even on :hover when some themes switch overflow. */
+body.template--index .card,
+body.template--index .card-wrapper,
+body.template--index .card__media,
+body.template--index .card__inner,
+body.template--index .collection-list__item,
+body.template--index .collection__item,
+body.template--index .product-card,
+body.template--index .product-card-wrapper,
+body.template--index .grid__item .card,
+body.template--index .grid__item .card-wrapper,
+body.template--custom-made .card,
+body.template--custom-made .card-wrapper,
+body.template--custom-made .card__media {
+  border-radius: var(--home-radius) !important;
+  overflow: hidden !important;
+}
+
+/* Card bottom/content area — ensures the lower portion of the card (title,
+   price, "new" badge row) is also clipped by the same radius. Shopify's
+   .card__content sits BELOW .card__media; applying the same radius to the
+   wrapper is enough in most themes, but some render content outside the
+   clip so we set explicit bottom-radius on the content too. */
+body.template--index .card__content,
+body.template--index .card__information,
+body.template--index .card-wrapper .card__content,
+body.template--custom-made .card__content {
+  border-bottom-left-radius: var(--home-radius) !important;
+  border-bottom-right-radius: var(--home-radius) !important;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   PRODUCT CARDS — rounded bottom corners SITE-WIDE (not just homepage).
+   Applies to collection pages, search, related products, cross-sells, etc.
+   Uses an 8px radius by default so standalone pages match the homepage look.
+   ========================================================================== */
+.card-wrapper,
+.card,
+.product-card-wrapper,
+.product-card {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+.card-wrapper .card,
+.card-wrapper .card__inner,
+.card-wrapper .card__media,
+.product-card-wrapper .card__media,
+.card .media,
+.card-wrapper .media {
+  border-radius: 8px 8px 0 0 !important;
+  overflow: hidden !important;
+}
+.card__content,
+.card__information,
+.card-wrapper .card__content,
+.product-card__content,
+.product-card__info {
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  overflow: hidden;
+}
+.card-wrapper:hover,
+.card:hover,
+.card-wrapper:focus-within,
+.card:focus-within,
+.product-card-wrapper:hover,
+.product-card:hover {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+@media screen and (max-width: 989px) {
+  .card-wrapper,
+  .card,
+  .product-card-wrapper,
+  .product-card {
+    border-radius: 7px !important;
+  }
+  .card-wrapper .card,
+  .card-wrapper .card__inner,
+  .card-wrapper .card__media,
+  .product-card-wrapper .card__media,
+  .card .media,
+  .card-wrapper .media {
+    border-radius: 7px 7px 0 0 !important;
+  }
+  .card__content,
+  .card__information,
+  .card-wrapper .card__content,
+  .product-card__content,
+  .product-card__info {
+    border-bottom-left-radius: 7px !important;
+    border-bottom-right-radius: 7px !important;
+  }
+}
+
+/* Preserve radius on :hover / :focus-within — many themes add overflow:visible
+   on hover for zoom effects, which breaks the clip. Lock it down. */
+body.template--index .card:hover,
+body.template--index .card-wrapper:hover,
+body.template--index .card-wrapper:focus-within,
+body.template--index .card:focus-within,
+body.template--custom-made .card:hover,
+body.template--custom-made .card-wrapper:hover {
+  border-radius: var(--home-radius) !important;
+  overflow: hidden !important;
+}
+
+/* Media wrappers — images, ratio containers used throughout the homepage */
+body.template--index .media,
+body.template--index .media--transparent,
+body.template--index .media > img,
+body.template--index .media picture img,
+body.template--index .rich-text__image img,
+body.template--custom-made .media,
+body.template--custom-made .media > img {
+  border-radius: var(--home-radius) !important;
+}
+
+/* Buttons on the homepage — compact radius to match the pill/card radius.
+   Cover every visual layer (::before / ::after which some Shopify themes
+   use for bg fills) and every state (hover/focus/active) so the radius
+   never disappears under a theme style. */
+body.template--index .button,
+body.template--index .button--primary,
+body.template--index .button--secondary,
+body.template--index .button--tertiary,
+body.template--index button.button,
+body.template--index a.button,
+body.template--index .shopify-payment-button__button,
+body.template--index .btn,
+body.template--custom-made .button,
+body.template--custom-made a.button,
+body.template--custom-made .btn {
+  border-radius: var(--home-radius-sm) !important;
+  overflow: hidden;
+}
+body.template--index .button::before,
+body.template--index .button::after,
+body.template--index .btn::before,
+body.template--index .btn::after,
+body.template--custom-made .button::before,
+body.template--custom-made .button::after {
+  border-radius: var(--home-radius-sm) !important;
+}
+body.template--index .button:hover,
+body.template--index .button:focus,
+body.template--index .button:active,
+body.template--index a.button:hover,
+body.template--index .btn:hover,
+body.template--custom-made .button:hover,
+body.template--custom-made .btn:hover {
+  border-radius: var(--home-radius-sm) !important;
+}
+
+/* Newsletter / form inputs on the homepage */
+body.template--index .field__input,
+body.template--index .newsletter-form__field-wrapper,
+body.template--custom-made .field__input {
+  border-radius: var(--home-radius-sm) !important;
+}
+
+@media screen and (max-width: 989px) {
+  body.template--index,
+  body.template--custom-made {
+    --home-radius: 7px;
+    --home-radius-sm: 5px;
+  }
+}
+
+/* ==========================================================================
+   HERO BUTTONS — match the header pill glass effect exactly.
+   Hero/banner/slideshow CTAs ("top 8 - best sellers", "shop race essentials")
+   get the same translucent-white + wide blur + edge highlight + soft shadow
+   treatment so the whole above-the-fold assembly reads as one design system.
+   Scoped to hero contexts only — regular buttons elsewhere keep their
+   standard solid styling.
+   ========================================================================== */
+
+body.template--index .banner .button,
+body.template--index .banner__content .button,
+body.template--index .banner__buttons .button,
+body.template--index .slideshow .button,
+body.template--index .slideshow__content .button,
+body.template--index .slideshow__text .button,
+body.template--index .slideshow__buttons .button,
+body.template--index .image-banner .button,
+body.template--index .hero .button,
+body.template--index .hero__buttons .button,
+body.template--custom-made .banner .button,
+body.template--custom-made .slideshow .button {
+  /* Glassmorphism: frosted pane with inner white luminance */
+  isolation: isolate;
+  /* Radial gradient: brighter center fading out — mixes with backdrop blur */
+  background: radial-gradient(
+    ellipse at 50% 20%,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.08) 70%
+  ) !important;
+  background-color: transparent !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  border: none !important;
+  outline: none !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  /* Top edge highlight + right/bottom inner glow + bottom drop shadow */
+  box-shadow:
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.55),
+    inset -5px 0 14px rgba(255, 255, 255, 0.06),
+    inset 0 -5px 14px rgba(255, 255, 255, 0.06),
+    0 6px 22px rgba(0, 0, 0, 0.35),
+    0 2px 5px rgba(0, 0, 0, 0.18) !important;
+  border-radius: var(--home-radius-sm) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: background 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* ::after: hide base.css border pseudo-element */
+body.template--index .banner .button::after,
+body.template--index .slideshow .button::after,
+body.template--index .hero .button::after {
+  display: none !important;
+}
+
+/* ::before: gradient border — subtle at top/left, visible at right/bottom.
+   Mask punch-out: the 1px padding ring is the visible "border" area.
+   135° gradient means bottom-right corner gets the brightest value. */
+body.template--index .banner .button::before,
+body.template--index .slideshow .button::before,
+body.template--index .hero .button::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: -1px !important;
+  border-radius: calc(var(--home-radius-sm) + 1px) !important;
+  padding: 1px !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.10) 30%,
+    rgba(255, 255, 255, 0.32) 65%,
+    rgba(255, 255, 255, 0.50) 100%
+  ) !important;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  box-shadow: none !important;
+  border: none !important;
+  pointer-events: none;
+  z-index: 1 !important;
+}
+
+/* Hover: brighter glass — more opaque, stronger shadow */
+body.template--index .banner .button:hover,
+body.template--index .banner__buttons .button:hover,
+body.template--index .slideshow .button:hover,
+body.template--index .slideshow__content .button:hover,
+body.template--index .hero .button:hover,
+body.template--index .image-banner .button:hover,
+body.template--custom-made .banner .button:hover {
+  background: radial-gradient(
+    ellipse at 50% 20%,
+    rgba(255, 255, 255, 0.26) 0%,
+    rgba(255, 255, 255, 0.14) 70%
+  ) !important;
+  background-color: transparent !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  border: none !important;
+  box-shadow:
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.65),
+    inset -5px 0 14px rgba(255, 255, 255, 0.09),
+    inset 0 -5px 14px rgba(255, 255, 255, 0.09),
+    0 8px 26px rgba(0, 0, 0, 0.40),
+    0 3px 7px rgba(0, 0, 0, 0.22) !important;
+}
+
+/* White text on all nested layers (glass sits on a dark hero image) */
+body.template--index .banner .button,
+body.template--index .banner .button span,
+body.template--index .banner .button strong,
+body.template--index .slideshow .button,
+body.template--index .slideshow .button span,
+body.template--index .hero .button,
+body.template--index .hero .button span,
+body.template--index .image-banner .button,
+body.template--index .image-banner .button span {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-weight: 500;
+}
+
+/* ============================================================
+   CLOUDPILLO-STYLE MENU REDESIGN
+   Mobile drawer + desktop mega menu.
+   Scoped with .mobile-menu--v2 / .mega-menu-v2-* so v1 is untouched.
+   ============================================================ */
+
+/* x-cloak — hide elements until Alpine hydrates (prevents FOUC on panels) */
+[x-cloak] { display: none !important; }
+
+/* ------------------------------------------------------------
+   MOBILE DRAWER (v2)
+   ------------------------------------------------------------ */
+
+/* Override legacy panel padding (set elsewhere with !important) */
+.menu-drawer .mobile-menu--v2 .mobile-menu__panel,
+.mobile-menu--v2 .mobile-menu__panel {
+  padding: 0 !important;
+  background: #ffffff;
+}
+
+/* ----------------------------------------------------------------------
+   Menu sizing — content-first
+   ----------------------------------------------------------------------
+   The menu ends at its content (like the desktop mega panel) so the
+   drawer's rounded bottom corners are visible against the page.
+
+   Strategy:
+   - Root panel flows normally (position: relative) → contributes its
+     natural height to the drawer's auto height.
+   - Sub/sub-sub panels stay absolute so they slide over the root with
+     Alpine transitions (left: -100% → 0).
+   - Body has no min-height (no forced vertical fill). List is content-
+     sized; for very long menus it scrolls internally via its own
+     overflow-y.
+   Result: drawer sizes to root content, capped by drawer max-height. */
+.mobile-menu--v2 {
+  overflow: hidden;
+}
+
+.mobile-menu--v2 .mobile-menu__body {
+  background: #ffffff;
+}
+
+/* Root body: natural content height */
+.mobile-menu--v2 .mobile-menu__body--root {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+}
+
+/* ---- Topbar ---- */
+.mobile-menu--v2 .mobile-menu__topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #F0EEEA;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__topbar--root {
+  justify-content: center;
+  /* Root panel sits flush under the header pill which already shows the
+     wordmark — no need for a big branded bar. Shrink to just fit the
+     close-X button with a tight padding. */
+  min-height: 0;
+  padding: 10px 16px;
+}
+
+/* Hide the wordmark on root — the header pill above already has it. */
+.mobile-menu--v2 .mobile-menu__topbar--root .mobile-menu__wordmark {
+  display: none;
+}
+
+.mobile-menu--v2 .mobile-menu__topbar--sub {
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+
+.mobile-menu--v2 .mobile-menu__wordmark {
+  display: inline-flex;
+  align-items: center;
+  color: #111111;
+  text-decoration: none;
+}
+
+.mobile-menu--v2 .mobile-menu__wordmark-img {
+  display: block;
+  max-height: 28px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.mobile-menu--v2 .mobile-menu__wordmark-text {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+.mobile-menu--v2 .mobile-menu__title {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #111111;
+}
+
+.mobile-menu--v2 .mobile-menu__close-btn,
+.mobile-menu--v2 .mobile-menu__back-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: 1px solid #E5E5E5;
+  border-radius: 999px;
+  color: #111111;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__close-btn { right: 20px; }
+.mobile-menu--v2 .mobile-menu__back-btn { left: 20px; }
+
+.mobile-menu--v2 .mobile-menu__close-btn:hover,
+.mobile-menu--v2 .mobile-menu__back-btn:hover {
+  background: #F5F2ED;
+  border-color: #D5D5D5;
+}
+
+.mobile-menu--v2 .mobile-menu__topbar--sub .mobile-menu__back-btn,
+.mobile-menu--v2 .mobile-menu__topbar--sub .mobile-menu__close-btn {
+  position: absolute;
+}
+
+/* ---- Root menu list ----
+   Content-sized: takes only the height needed for the menu items. For
+   very long menus that exceed the drawer's max-height, the drawer
+   itself provides the scroll via its `overflow: hidden auto`. */
+.mobile-menu--v2 .mobile-menu__list--root {
+  list-style: none;
+  padding: 8px 24px 24px;
+  margin: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__item--root {
+  border-bottom: 1px solid #F0EEEA;
+}
+
+.mobile-menu--v2 .mobile-menu__item--root:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu--v2 .mobile-menu__item-link--root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 4px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: #111111;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__item-link--root:hover {
+  color: #0395F6;
+}
+
+.mobile-menu--v2 .mobile-menu__item-link--root.is-sale {
+  color: #E53935;
+}
+
+.mobile-menu--v2 .mobile-menu__chevron {
+  flex-shrink: 0;
+  color: #111111;
+  margin-left: 12px;
+}
+
+/* ---- Footer: reviews ribbon + locale ----
+   Positioned so the upward-opening locale dropdown has an absolute
+   containing block. padding-bottom respects iOS safe-area inset so the
+   language toggle always has breathing room above the home indicator. */
+.mobile-menu--v2 .mobile-menu__footer {
+  /* Tight vertical rhythm — reviews sits almost flush under the scrollable
+     card list, and the locale toggle meets the CTA pill below with only a
+     tiny gap between them. Horizontal padding (20px) matches the CTA wrap
+     so reviews ribbon, locale toggle, and Shop-all-products pill all share
+     the exact same visual width — three equal-width tiles stacked. */
+  padding: 6px 20px 0;
+  background: #ffffff;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Reviews.io ribbon — clean, transparent layout:
+   stars green, text + REVIEWS.io logo black, whole row centered
+   horizontally and vertically inside the ribbon.
+
+   Sizing note: padding-block 14px matches the locale toggle's vertical
+   padding so both tiles resolve to the same height. Horizontal padding
+   0 lets the ribbon span the full footer inner width (20px gutters are
+   provided by the footer itself) — same effective width as the locale
+   toggle below, which also fills the footer's inner box. margin-bottom
+   6px tucks it close to the locale toggle; the tight rhythm is what
+   Round C asked for. */
+.mobile-menu--v2 .mobile-menu__reviews-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 0;
+  background: transparent;
+  border-radius: 0;
+  text-decoration: none;
+  color: #111111;
+  margin-bottom: 6px;
+}
+
+.mobile-menu--v2 .mobile-menu__reviews-stars {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+  color: #00B67A;  /* green fills the stars via currentColor */
+}
+
+.mobile-menu--v2 .mobile-menu__reviews-star svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+/* Override the inline `fill="#fff"` on the star path so CSS color
+   (the green above via currentColor) paints the star. */
+.mobile-menu--v2 .mobile-menu__reviews-star svg path {
+  fill: currentColor;
+}
+
+.mobile-menu--v2 .mobile-menu__reviews-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111111;
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;  /* keep "2,410 reviews" on one line */
+}
+
+.mobile-menu--v2 .mobile-menu__reviews-text strong {
+  font-weight: 700;
+}
+
+/* Force the reviews.io logo to render pure black regardless of its
+   native color (their CDN SVG has a green star + dark text by default,
+   and we previously inverted it to white for the green bg). */
+.mobile-menu--v2 .mobile-menu__reviews-logo {
+  height: 16px;
+  width: auto;
+  display: block;
+  filter: brightness(0);
+  margin-left: 2px;
+}
+
+/* Locale switcher */
+.mobile-menu--v2 .mobile-menu__locale {
+  position: relative;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* 14px vertical padding matches the reviews ribbon and the reduced CTA
+     pill so all three rows sit at the same ~46px height. width:100% + the
+     footer's 20px horizontal gutters give this tile the same effective
+     width as the CTA wrap below. */
+  padding: 14px 16px;
+  width: 100%;
+  background: #F5F2ED;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111111;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-toggle:hover {
+  background: #ECE8E1;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-globe {
+  color: #111111;
+  flex-shrink: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-toggle span {
+  flex: 1;
+  text-align: left;
+  letter-spacing: 0.02em;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-chevron {
+  transition: transform 0.15s ease;
+  color: #111111;
+}
+
+.mobile-menu--v2 .mobile-menu__locale-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* Opens UPWARD and overlays content above the toggle. Absolute so it
+   doesn't push the footer taller (which would hide the dropdown past the
+   drawer's bottom edge). */
+.mobile-menu--v2 .mobile-menu__locale-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 8px);
+  z-index: 5;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08), 0 -2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.mobile-menu--v2 .mobile-menu__locale-list li { margin: 0; }
+
+.mobile-menu--v2 .mobile-locale-link {
+  display: block;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.12s ease;
+}
+
+.mobile-menu--v2 .mobile-locale-link:hover {
+  background: #F5F2ED;
+}
+
+.mobile-menu--v2 .mobile-locale-link.is-active {
+  background: #F0EEEA;
+  font-weight: 700;
+}
+
+/* ---- Root panel: flows in normal document order so drawer auto-sizes
+   to root content (tight fit, visible rounded bottom corners).
+   Override Tailwind's `absolute h-full` utility classes on the root panel
+   only — sub panels stay absolute for slide-in animations. */
+.mobile-menu--v2 .mobile-menu__panel--root.mobile-menu__panel--root {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  height: auto;
+  overflow: visible;
+}
+
+/* ---- Sub panel (scrollable cards + pinned Shop CTA) ---- */
+.mobile-menu--v2 .mobile-menu__panel--sub,
+.mobile-menu--v2 .mobile-menu__panel--subsub {
+  overflow: hidden;
+}
+
+/* Body is a flex column filling the (absolute) panel. The cards area
+   flex-grows and scrolls internally; the CTA is pushed to the very end
+   via `order: 99` so it always sits flush with the drawer's bottom
+   edge, regardless of how many items (reviews, locale) follow it in
+   the DOM. */
+.mobile-menu--v2 .mobile-menu__body--sub,
+.mobile-menu--v2 .mobile-menu__body--subsub {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+  padding: 0;
+  position: relative;
+}
+
+.mobile-menu--v2 .mobile-menu__cards {
+  list-style: none;
+  /* 12px top for a bit of breathing room below the header edge; 16px
+     bottom for clearance above the reviews/locale/CTA footer stack. */
+  padding: 12px 20px 16px;
+  margin: 0;
+  /* flex: 1 + min-height: 0 is the magic combo that lets this child
+     actually shrink below its content height and activate overflow-y
+     scrolling inside a flex column. Without min-height:0 the child
+     refuses to shrink and the whole panel gets pushed taller than the
+     drawer, breaking the pinned CTA. */
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Floating close X on sub-panels — no topbar above the cards, just a
+   subtle circle in the top-right corner to dismiss the drawer entirely.
+   Back-to-parent navigation is intentionally removed: reopening always
+   lands on the root panel (closeDrawer() resets activeMenu/childMenu).
+
+   Sticky positioning: the drawer scrolls internally when the sub panel
+   is tall (category grid). The close X sticks 12px from the top of the
+   drawer's viewport so users can always dismiss without scrolling back up.
+   margin-bottom:-60px collapses the space it would otherwise take in flow,
+   so the panel content starts at the top (not 48px below the sticky
+   button). align-self:flex-end pins it to the right edge inside the flex
+   column body. */
+.mobile-menu--v2 .mobile-menu__close-floating {
+  position: sticky;
+  top: 12px;
+  align-self: flex-end;
+  margin-right: 12px;
+  margin-top: 12px;
+  margin-bottom: -48px;
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #ffffff;
+  border: 1px solid #E5E5E5;
+  border-radius: 999px;
+  color: #111111;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__close-floating:hover {
+  background: #F5F2ED;
+  border-color: #D5D5D5;
+}
+
+.mobile-menu--v2 .mobile-menu__panel--sub,
+.mobile-menu--v2 .mobile-menu__panel--subsub {
+  position: absolute; /* keep for slide animation */
+  /* Cover the drawer exactly — not 100vh, which would extend past the
+     drawer's rounded bottom. top:0 + bottom:0 makes height match the
+     drawer (which is now sized to root content). `left`/`right` are
+     intentionally left to Tailwind's transition utilities (-left-full /
+     left-0), which drive the horizontal slide. */
+  top: 0;
+  bottom: 0;
+  height: auto;
+  width: 100%;
+}
+
+.mobile-menu--v2 .mobile-menu__body--sub,
+.mobile-menu--v2 .mobile-menu__body--subsub {
+  position: relative; /* containing block for floating back button */
+}
+
+.mobile-menu--v2 .mobile-menu__card-wrap {
+  margin-bottom: 12px;
+}
+
+.mobile-menu--v2 .mobile-menu__card-wrap:last-child {
+  margin-bottom: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  background: #F8F6F2;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #111111;
+  transition: background 0.15s ease;
+  position: relative;
+}
+
+.mobile-menu--v2 .mobile-menu__card:hover {
+  background: #F0EEEA;
+}
+
+.mobile-menu--v2 .mobile-menu__card-img {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  background: #ECE8E1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mobile-menu--v2 .mobile-menu__card-img-el,
+.mobile-menu--v2 .mobile-menu__card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.mobile-menu--v2 .mobile-menu__card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__card-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+  color: #111111;
+  margin-bottom: 6px;
+}
+
+.mobile-menu--v2 .mobile-menu__card-feature {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6B6B6B;
+  line-height: 1.3;
+}
+
+.mobile-menu--v2 .mobile-menu__card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #ECE8E1;
+  border-radius: 999px;
+  flex-shrink: 0;
+  color: #6B6B6B;
+}
+
+.mobile-menu--v2 .mobile-menu__card-icon-el,
+.mobile-menu--v2 .mobile-menu__card-icon img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  display: block;
+}
+
+.mobile-menu--v2 .mobile-menu__card-feature-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__card-chevron {
+  flex-shrink: 0;
+  color: #111111;
+  margin-left: 8px;
+}
+
+/* "Shop {category}" CTA — pinned at the bottom of the sub panel.
+   `order: 99` pushes it past the reviews/locale footer (which sits
+   after it in the DOM) so the CTA is always the very last item in the
+   flex column — flush with the drawer's bottom edge regardless of
+   how tall the cards list or footer get. No border-top: the footer
+   (reviews + locale) above is already on white bg and we want a
+   seamless transition into the CTA pill.
+
+   Padding-top 6px ties the CTA visually tight to the locale toggle
+   above (Round C — decrease spacing). Horizontal padding 20px matches
+   the footer's horizontal padding so the CTA pill, reviews ribbon, and
+   locale toggle all share the same left/right drawer margins (Round C
+   — align widths).
+
+   Bottom padding does the heavy lifting on the "white bg below the CTA
+   covers all screen" request: the drawer stretches to 100svh now, and
+   this generous bottom cushion keeps the black pill lifted well above
+   the iOS home-indicator safe-area while the white surface of the wrap
+   continues down to the drawer's rounded bottom edge. env(safe-area-
+   inset-bottom) adds the per-device iOS inset on top. */
+.mobile-menu--v2 .mobile-menu__cta-wrap {
+  position: static;
+  order: 99;
+  padding: 6px 20px calc(36px + env(safe-area-inset-bottom, 0px));
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+/* Reviews ribbon + locale footer — don't let them shrink; they sit
+   between the scrollable cards and the pinned CTA, always visible. */
+.mobile-menu--v2 .mobile-menu__footer {
+  flex-shrink: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* 14px vertical padding matches the reviews ribbon + locale toggle so
+     all three tiles render at the same height. 20px horizontal padding
+     is internal; the outer CTA-wrap's 20px horizontal padding gives the
+     pill its drawer-edge offset, which matches the footer's horizontal
+     padding so the three stacked rows read as one consistent width. */
+  padding: 14px 20px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background 0.15s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__cta:hover {
+  background: #000000;
+}
+
+/* ------------------------------------------------------------
+   DESKTOP MEGA MENU (v2)
+   Anchored below the floating pill; full viewport width panel.
+   ------------------------------------------------------------ */
+
+.mega-menu-v2-nav { position: relative; }
+
+.mega-menu-v2-nav .list-menu--inline { display: flex; flex-wrap: nowrap; }
+
+.mega-menu-v2-item-wrap {
+  position: static;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.mega-menu-v2-trigger {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 14px;
+  position: relative;
+}
+
+.mega-menu-v2-trigger-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  color: #3A3A3A;
+  transition: color 0.15s ease;
+}
+
+.mega-menu-v2-trigger-link.is-open,
+.mega-menu-v2-trigger-link:hover { color: #111111; }
+
+.mega-menu-v2-chevron {
+  transition: transform 0.15s ease;
+  color: currentColor;
+}
+
+.mega-menu-v2-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown panel — width + inset matches the floating pill so the two
+   surfaces read as one continuous shape. Flush top at the pill's bottom
+   edge (y=92) means no gap/shadow line between them. Flat top corners +
+   rounded bottom mirrors the pill's (flattened-when-open) shape. */
+.mega-menu-v2-panel {
+  position: fixed;
+  top: 92px;                 /* pill bottom = 44 (top) + 48 (height) */
+  left: 20px;                /* matches pill's left inset */
+  right: 20px;               /* matches pill's right inset */
+  width: auto;
+  background: #ffffff;       /* same white as pill — seamless flow */
+  border-top: none;
+  border-radius: 0 0 8px 8px; /* flat top, rounded bottom (mirrors pill) */
+  /* Soft outer shadow on sides + bottom. clip-path trims the top shadow
+     so there's no visible seam line where pill meets panel. */
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.05);
+  clip-path: inset(0 -40px -40px -40px);
+  z-index: 50;               /* above announcement bar (20), under modal layers */
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+}
+
+/* Alpine transitions */
+.mega-menu-v2-panel-enter {
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+.mega-menu-v2-panel-enter-start {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+.mega-menu-v2-panel-enter-end {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mega-menu-v2-panel-leave {
+  transition: opacity 120ms ease-in, transform 120ms ease-in;
+}
+.mega-menu-v2-panel-leave-start {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mega-menu-v2-panel-leave-end {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.mega-menu-v2-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 48px 48px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 48px;
+}
+
+/* ---- Sidebar ---- */
+.mega-menu-v2-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mega-menu-v2-cat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mega-menu-v2-cat-item { margin: 0; }
+
+.mega-menu-v2-cat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: #6B6B6B;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.12s ease, color 0.12s ease;
+  cursor: pointer;
+}
+
+.mega-menu-v2-cat:hover {
+  color: #111111;
+  background: #F8F6F2;
+}
+
+.mega-menu-v2-cat.is-active {
+  color: #111111;
+  background: #F5F2ED;
+}
+
+.mega-menu-v2-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 14px 24px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background 0.15s ease;
+}
+
+.mega-menu-v2-cta:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* ---- Grid (product cards) ---- */
+.mega-menu-v2-grid-wrap {
+  min-width: 0;
+  position: relative;
+}
+
+.mega-menu-v2-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.mega-menu-v2-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: #111111;
+  border-radius: 12px;
+  transition: transform 0.18s ease;
+}
+
+.mega-menu-v2-card:hover {
+  transform: translateY(-2px);
+}
+
+.mega-menu-v2-card-img {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  background: #F5F2ED;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 12px;
+  transition: background 0.15s ease;
+}
+
+.mega-menu-v2-card:hover .mega-menu-v2-card-img {
+  background: #ECE8E1;
+}
+
+.mega-menu-v2-card-img-el,
+.mega-menu-v2-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.mega-menu-v2-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+  color: #111111;
+  margin-bottom: 4px;
+}
+
+.mega-menu-v2-card-feature {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6B6B6B;
+  line-height: 1.3;
+}
+
+.mega-menu-v2-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #F5F2ED;
+  border-radius: 999px;
+  flex-shrink: 0;
+  color: #6B6B6B;
+}
+
+.mega-menu-v2-card-icon-el,
+.mega-menu-v2-card-icon img {
+  width: 12px;
+  height: 12px;
+  object-fit: contain;
+  display: block;
+}
+
+.mega-menu-v2-card-feature-text {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Single-feature card (when category has no grandchildren) spans full width */
+.mega-menu-v2-card--single {
+  grid-column: 1 / -1;
+  max-width: 320px;
+}
+
+/* Hide mega menu nav on narrow viewports */
+@media (max-width: 989px) {
+  .mega-menu-v2-nav { display: none; }
+  .mega-menu-v2-panel { display: none !important; }
+}
+
+/* Fine-tune for tighter desktop breakpoints */
+@media (min-width: 990px) and (max-width: 1199px) {
+  .mega-menu-v2-inner {
+    padding: 32px 32px 40px;
+    gap: 32px;
+    grid-template-columns: 200px 1fr;
+  }
+  .mega-menu-v2-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+/* When the desktop mega panel is open, flatten the pill's bottom corners
+   and drop its shadow so the pill + panel read as one continuous white
+   surface (no 8px corner notches, no seam shadow between them). */
+@media (min-width: 990px) {
+  sticky-header:has(.mega-menu-v2-panel:not([style*="display: none"])) header.header,
+  .header-wrapper:has(.mega-menu-v2-panel:not([style*="display: none"])) header.header,
+  header.header:has(.mega-menu-v2-panel:not([style*="display: none"])) {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Mobile drawer: drop the drawer's internal 6px inset when the v2 menu is
+   inside so the wordmark topbar + menu content sit flush with the drawer
+   edges (which already align with the pill's horizontal inset). Also
+   flatten drawer's own TOP corners so top meets pill bottom flat-to-flat. */
+@media (max-width: 989px) {
+  .js .menu-drawer:has(.mobile-menu--v2),
+  .menu-drawer:has(.mobile-menu--v2) {
+    padding: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+  }
+}
+
