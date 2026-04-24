@@ -1965,8 +1965,7 @@ body.template--custom-made .banner .button:hover {
     0 3px 10px rgba(0, 0, 0, 0.28) !important;
 }
 
-/* Black button text across every nested layer (Shopify sometimes wraps the
-   label in span/strong/em) */
+/* White text on all nested layers (glass sits on a dark hero image) */
 body.template--index .banner .button,
 body.template--index .banner .button span,
 body.template--index .banner .button strong,
@@ -1976,7 +1975,7 @@ body.template--index .hero .button,
 body.template--index .hero .button span,
 body.template--index .image-banner .button,
 body.template--index .image-banner .button span {
-  color: #000 !important;
+  color: rgba(255, 255, 255, 0.95) !important;
   font-weight: 500;
 }
 
