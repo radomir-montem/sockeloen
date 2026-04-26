@@ -1513,12 +1513,12 @@ body.template--custom-made .menu-drawer {
 
 @media screen and (max-width: 989px) {
   /* Suppress Dawn's built-in dark scrim (summary::before with 50% black fill).
-     We use our own blur+opacity effect on #MainContent instead. */
-  .js menu-drawer > details > summary::before,
-  .js menu-drawer > details[open]:not(.menu-opening) > summary::before,
-  menu-drawer > details[open] > summary::before {
+     Target the specific details element by ID to avoid selector mismatch
+     between header-drawer (HTML) vs menu-drawer (CSS selector). */
+  #Details-menu-drawer-container > summary::before {
     opacity: 0 !important;
     visibility: hidden !important;
+    background: transparent !important;
   }
 
   body.menu-is-open {
