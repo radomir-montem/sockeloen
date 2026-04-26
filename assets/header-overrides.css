@@ -1502,14 +1502,27 @@ body.template--custom-made .menu-drawer {
   }
 }
 
-/* Backdrop when drawer open — soft dim, not the theme's default hard dark.
-   Must stack above the announcement bar (z-index 50) but below the drawer
-   itself (z-index 60) so the dim covers the whole viewport and the drawer
-   sits on top of the dim. */
-.js menu-drawer > details[open] > summary::before,
-menu-drawer > details[open] > summary::before {
-  background: rgba(0, 0, 0, 0.25) !important;
-  z-index: 55 !important;
+/* -----------------------------------------------------------------------
+   MOBILE MENU — full-viewport dim + blur overlay
+   Covers the page below the header pill when the drawer is open.
+   The original Dawn rule targets "menu-drawer > details" which doesn't
+   match this theme's DOM ("header-drawer > details"), so we use
+   body:has() + ::before instead — no extra DOM nodes needed.
+   ----------------------------------------------------------------------- */
+@media screen and (max-width: 989px) {
+  body:has(#Details-menu-drawer-container[open])::before {
+    content: '';
+    position: fixed;
+    top: 92px;    /* flush below the header pill; header stays uncovered */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 58;  /* above header section (50), below drawer (60) */
+    pointer-events: none;
+  }
 }
 
 /* ==========================================================================
