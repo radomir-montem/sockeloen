@@ -95,6 +95,19 @@
                       </li>
                     {%- endfor -%}
                   </ul>
+                  <div class="mega-menu-v2-reviews" role="img" aria-label="Rated 5 stars on REVIEWS.io">
+                    <span class="mega-menu-v2-reviews__stars" aria-hidden="true">
+                      {% for i in (1..5) %}
+                        <span class="mega-menu-v2-reviews__star">
+                          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        </span>
+                      {% endfor %}
+                    </span>
+                    <span class="mega-menu-v2-reviews__text"><strong>5,074</strong> reviews</span>
+                    <img class="mega-menu-v2-reviews__logo"
+                      src="https://assets.reviews.io/img/all-global-assets/logo/reviewsio-logo.svg"
+                      alt="REVIEWS.io" width="60" height="14" loading="lazy">
+                  </div>
                 </aside>
 
                 {%- comment -%} Grid: one per category {%- endcomment -%}

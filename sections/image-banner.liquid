@@ -188,19 +188,26 @@
               {%- endif -%}
 
             </div>
-            <div class="banner-reviews-ribbon" role="img" aria-label="Rated 5 stars — 5,074 reviews on REVIEWS.io">
-              <span class="banner-reviews-stars" aria-hidden="true">
-                {%- for i in (1..5) -%}
-                  <svg class="banner-reviews-star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                  </svg>
-                {%- endfor -%}
-              </span>
-              <span class="banner-reviews-text"><strong>5,074</strong> reviews</span>
-              <img class="banner-reviews-logo"
-                src="https://assets.reviews.io/img/all-global-assets/logo/reviewsio-logo.svg"
-                alt="REVIEWS.io"
-                width="72" height="16" loading="lazy">
+            <div class="banner-social-proof">
+              <div class="product-v2__social-proof-inner">
+                <div class="product-v2__sp-avatars">
+                  {%- assign bsp_av1 = 'Scherm_afbeelding_2026-03-21_om_23.30.36.png' | file_img_url: '80x80', crop: 'center' -%}
+                  {%- assign bsp_av3 = 'Scherm_afbeelding_2026-03-21_om_23.31.47.png' | file_img_url: '80x80', crop: 'center' -%}
+                  {%- assign bsp_av2 = 'Scherm_afbeelding_2026-03-21_om_23.31.03.png' | file_img_url: '80x80', crop: 'center' -%}
+                  <div class="product-v2__sp-avatar product-v2__sp-avatar--1"><img src="{{ bsp_av1 }}" alt="" width="40" height="40" loading="lazy"></div>
+                  <div class="product-v2__sp-avatar product-v2__sp-avatar--2"><img src="{{ bsp_av3 }}" alt="" width="40" height="40" loading="lazy"></div>
+                  <div class="product-v2__sp-avatar product-v2__sp-avatar--3"><img src="{{ bsp_av2 }}" alt="" width="40" height="40" loading="lazy"></div>
+                </div>
+                <p class="product-v2__sp-text banner-social-proof__text">
+                  <strong>Riejanne Markus</strong>
+                  <span class="product-v2__sp-verified" aria-label="Verified">
+                    <svg width="16" height="16" viewBox="0 0 40 40" fill="rgb(0, 149, 246)" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"/>
+                    </svg>
+                  </span>
+                  &nbsp;{{ 'products.v2.social_proof_text_html' | t: count: '78.342', brand: 'Sockeloen' }}
+                </p>
+              </div>
             </div>
         {%- endcase -%}
       {%- endfor -%}
