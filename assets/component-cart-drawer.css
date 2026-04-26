@@ -447,10 +447,12 @@ cart-drawer-items::-webkit-scrollbar-thumb {
 
 .cart-drawer-item__options {
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.4;
   color: #555;
   margin: 0;
+  text-transform: lowercase;
+  letter-spacing: 0;
 }
 
 .cart-drawer-item__price {
@@ -752,7 +754,8 @@ cart-drawer-items::-webkit-scrollbar-thumb {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
+  text-transform: lowercase;
 }
 
 .cross-sell-card__title:hover {
