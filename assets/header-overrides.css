@@ -3396,16 +3396,9 @@ body.template--index .image-banner .button span {
   width: 100%;
 }
 
-.banner-reviews-stars {
-  display: inline-flex;
-  gap: 3px;
-  align-items: center;
-  color: #00B67A;
-}
-
-.banner-reviews-star {
-  width: 16px;
-  height: 16px;
+.banner-reviews-stars-img {
+  height: 18px;
+  width: auto;
   display: block;
   flex-shrink: 0;
 }
