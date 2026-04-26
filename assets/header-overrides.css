@@ -1505,28 +1505,28 @@ body.template--custom-made .menu-drawer {
    z-index 19: below announcement bar (20) and header section (50), so the
    drawer and header pill always paint above the overlay.
    ----------------------------------------------------------------------- */
+/* Full-viewport frosted-glass overlay shown when mobile menu opens.
+   The div is injected by header.liquid JS and toggled via .is-visible.
+   backdrop-filter blurs everything in the viewport behind the overlay;
+   the white tint makes dark page content (hero images, etc.) read as light.
+   z-index 59: local to #shopify-section-header stacking context (global ~15),
+   so it sits above page content but below the drawer (local 60) and pill. */
 #mobile-menu-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  /* z-index 59: local to #shopify-section-header's stacking context (global 15).
-     Sits above page content (global 0) but below the drawer (local 60) and
-     the header pill (#tw-header at local 65). No backdrop-filter needed —
-     the drawer's own blur(70px) provides the glass effect behind it. */
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 59;
   pointer-events: none;
 }
-
-
-/* Blur the page content when the mobile menu is open.
-   Uses a body class toggled by JS so the blur is applied via CSS filter
-   on the main content — full-width, no overlay element needed. */
 @media screen and (max-width: 989px) {
+  #mobile-menu-overlay.is-visible {
+    display: block;
+  }
   body.menu-is-open #MainContent {
-    filter: blur(6px) brightness(1.5);
     pointer-events: none;
-    transition: filter 0.2s ease;
   }
 }
 
