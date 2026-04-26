@@ -549,6 +549,13 @@ header.header.sticky-navbar {
   transition: none !important;
 }
 
+/* Mega-menu trigger spans: restore smooth color transition and inherit color
+   from the link element (overrides the blanket rules above) */
+.mega-menu-v2-trigger-link span {
+  color: inherit !important;
+  transition: color 0.15s ease !important;
+}
+
 /* Nav text: always black */
 header.header .header__menu-item span,
 header.header .header__menu-item.link-only span,

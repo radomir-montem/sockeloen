@@ -31,11 +31,9 @@
       },
       scheduleClose() {
         var self = this;
-        /* Short bridge: panel is flush against the pill (no visual gap to
-           cross), so the delay only needs to cover a brief cursor stutter
-           at the trigger → panel boundary. 150ms felt like the hover state
-           was stuck after leaving; 50ms reads as immediate. */
-        this.closeTimer = setTimeout(function() { self.activeMenu = -1; }, 50);
+        /* 200ms covers diagonal mouse movement from trigger to far panel edge —
+           feels immediate but survives slow/diagonal traversal. */
+        this.closeTimer = setTimeout(function() { self.activeMenu = -1; }, 200);
       },
       cancelClose() {
         clearTimeout(this.closeTimer);
@@ -53,7 +51,8 @@
                href="{{ link.url }}"
                aria-haspopup="true"
                :aria-expanded="isActive({{ forloop.index }}) ? 'true' : 'false'"
-               aria-controls="mega-menu-panel-{{ forloop.index }}">
+               aria-controls="mega-menu-panel-{{ forloop.index }}"
+               @mouseenter="cancelClose()">
               <span>{{ link.title }}</span>
               <svg class="menu-arrow-down mega-menu-v2-chevron"
                    :class="isActive({{ forloop.index }}) ? 'is-open' : ''"
