@@ -1500,32 +1500,23 @@ body.template--custom-made .menu-drawer {
 }
 
 /* -----------------------------------------------------------------------
-   MOBILE MENU — full-viewport dim + blur overlay
-   Overlay injected inside #shopify-section-header at z-index 59 (below the
-   drawer at 60 and pill at 65). position:fixed so it covers the full
-   viewport. No backdrop-filter — that would blur the drawer above it on
-   iOS Safari. Instead, the white semi-opaque fill lightens the blurred
-   #MainContent beneath, hiding the dark-hero effect.
+   MOBILE MENU — blur + fade behind the menu card
+   filter:blur on #MainContent (sibling of the header, so the menu card
+   inside the header is 100% unaffected). opacity:0.08 makes the blurred
+   content nearly transparent so the white body background dominates —
+   even a very dark hero image appears almost white at 8% opacity.
+   No overlay div needed; no z-index juggling.
    ----------------------------------------------------------------------- */
 #mobile-menu-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 59;
-  background: rgba(255, 255, 255, 0.85);
   display: none;
-  pointer-events: none;
-}
-#mobile-menu-overlay.is-visible {
-  display: block;
 }
 
-/* When mobile menu opens: blur the page content behind the overlay.
-   The overlay's white fill makes it look light — no brightness hack needed. */
 @media screen and (max-width: 989px) {
   body.menu-is-open #MainContent {
     filter: blur(5px);
+    opacity: 0.08;
     pointer-events: none;
-    transition: filter 0.2s ease;
+    transition: filter 0.2s ease, opacity 0.2s ease;
   }
 }
 
