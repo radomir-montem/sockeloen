@@ -1513,14 +1513,17 @@ body.template--custom-made .menu-drawer {
   body:has(#Details-menu-drawer-container[open])::before {
     content: '';
     position: fixed;
-    top: 92px;    /* flush below the header pill; header stays uncovered */
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    z-index: 58;  /* above header section (50), below drawer (60) */
+    /* z-index MUST be below the header section wrapper (z-index 50) so the
+       drawer, header pill and announcement bar all paint above the overlay.
+       The drawer's z-index:60 lives inside the header's stacking context, so
+       from the root it resolves at the header's z-index (50). An overlay at
+       z-index:19 sits below all of that while still being above regular page
+       content (z-index:0). */
+    z-index: 19;
     pointer-events: none;
   }
 }
