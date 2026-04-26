@@ -31,11 +31,10 @@
       },
       scheduleClose() {
         var self = this;
-        /* Short bridge: panel is flush against the pill (no visual gap to
-           cross), so the delay only needs to cover a brief cursor stutter
-           at the trigger → panel boundary. 150ms felt like the hover state
-           was stuck after leaving; 50ms reads as immediate. */
-        this.closeTimer = setTimeout(function() { self.activeMenu = -1; }, 50);
+        /* 120ms covers the 1-2px seam between trigger bottom and panel top —
+           fast enough to feel immediate, long enough that the mouse never
+           triggers a close while crossing between the two elements. */
+        this.closeTimer = setTimeout(function() { self.activeMenu = -1; }, 120);
       },
       cancelClose() {
         clearTimeout(this.closeTimer);

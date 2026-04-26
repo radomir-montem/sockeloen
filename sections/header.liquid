@@ -671,6 +671,7 @@
 <div id="mobile-menu-overlay" aria-hidden="true"></div>
 <script>
   (function() {
+    // Mobile menu overlay: show/hide when drawer opens/closes
     var overlay = document.getElementById('mobile-menu-overlay');
     var details = document.getElementById('Details-menu-drawer-container');
     if (overlay && details && !details.dataset.overlayWired) {
@@ -678,6 +679,21 @@
       details.addEventListener('toggle', function() {
         overlay.classList.toggle('is-visible', details.open);
       });
+    }
+
+    // Desktop language selector: open on hover, close on hover-out
+    var langSel = document.querySelector('localization-selector.small-hide');
+    if (langSel) {
+      var langList = langSel.querySelector('.localization-list');
+      if (langList) {
+        var langTimer;
+        function langShow() { clearTimeout(langTimer); langList.classList.remove('hidden'); }
+        function langHide() { langTimer = setTimeout(function() { langList.classList.add('hidden'); }, 120); }
+        langSel.addEventListener('mouseenter', langShow);
+        langSel.addEventListener('mouseleave', langHide);
+        langList.addEventListener('mouseenter', function() { clearTimeout(langTimer); });
+        langList.addEventListener('mouseleave', langHide);
+      }
     }
   })();
 </script>

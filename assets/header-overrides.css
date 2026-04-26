@@ -2285,6 +2285,7 @@ body.template--index .image-banner .button span {
 /* Locale switcher */
 .mobile-menu--v2 .mobile-menu__locale {
   position: relative;
+  margin-bottom: 12px;
 }
 
 .mobile-menu--v2 .mobile-menu__locale-toggle {
@@ -2966,6 +2967,18 @@ body.template--index .image-banner .button span {
   height: 100%;
   padding: 0 14px;
   position: relative;
+  /* Transparent bridge below trigger extends the hover zone to the panel.
+     Without this, a 1-2px seam at y=92 can cause mouseleave to fire on the
+     trigger before the panel mouseenter fires, closing the menu mid-traverse. */
+}
+
+.mega-menu-v2-trigger::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  right: -20px;
+  height: 24px;
 }
 
 .mega-menu-v2-trigger-link {
