@@ -949,14 +949,28 @@ facets-open-button{
 }
 
 .collection-tags .tag-button {
-    text-transform: lowercase;
-    font-size: 12px;
-    transition: 0.3s;
-    opacity: 0.7;
-    padding: 0;
+    text-transform: lowercase !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    color: #6B6B6B !important;
+    background: transparent !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    transition: background 0.12s ease, color 0.12s ease !important;
+    opacity: 1 !important;
+    text-decoration: none !important;
+    display: inline-block;
 }
 
-.collection-tags .tag-button:hover,
+.collection-tags .tag-button:hover {
+    color: #111111 !important;
+    background: #F8F6F2 !important;
+    opacity: 1 !important;
+}
+
 .collection-tags .tag-button.active {
-    opacity: 1;
+    color: #111111 !important;
+    background: #F5F2ED !important;
+    opacity: 1 !important;
 }
