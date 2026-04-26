@@ -72,13 +72,16 @@
     <div class="mobile-menu__tab-bar" role="tablist">
       {%- for link in menu.links -%}
         {%- if link.links.size > 0 -%}
-          <button class="mobile-menu__tab"
-                  role="tab"
-                  :aria-selected="activeMenu == {{ forloop.index }} ? 'true' : 'false'"
-                  :class="{ 'is-active': activeMenu == {{ forloop.index }} }"
-                  @click.stop="activeMenu = {{ forloop.index }}; closeSubMenu()">
+          <div class="mobile-menu__tab"
+               role="tab"
+               tabindex="0"
+               :aria-selected="activeMenu == {{ forloop.index }} ? 'true' : 'false'"
+               :class="{ 'is-active': activeMenu == {{ forloop.index }} }"
+               @click="activeMenu = {{ forloop.index }}; closeSubMenu()"
+               @keydown.enter.prevent="activeMenu = {{ forloop.index }}; closeSubMenu()"
+               @keydown.space.prevent="activeMenu = {{ forloop.index }}; closeSubMenu()">
             {{ link.title }}
-          </button>
+          </div>
         {%- endif -%}
       {%- endfor -%}
     </div>
@@ -226,9 +229,6 @@
           <div class="mobile-menu__panel mobile-menu__panel--submenu"
                x-show="activeSubMenu == {{ forloop.index }}"
                x-cloak>
-            <div class="mobile-menu__submenu-header">
-              <span class="mobile-menu__submenu-cat-name">{{ sub_link.title }}</span>
-            </div>
             <div class="mobile-menu__submenu-body">
               {%- for product in mob2_coll.products limit: 9 -%}
                 <a class="mobile-menu__submenu-row" href="{{ product.url }}">
@@ -246,9 +246,6 @@
                     {%- endif -%}
                   </div>
                   <span class="mobile-menu__submenu-title">{{ product.title | escape }}</span>
-                  <svg class="mobile-menu__submenu-chevron" width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M1 1L6 6L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
                 </a>
               {%- endfor -%}
               <a class="mobile-menu__submenu-row mobile-menu__submenu-row--shop-all" href="{{ mob2_coll.url }}">
@@ -258,9 +255,6 @@
                   </svg>
                 </div>
                 <span class="mobile-menu__submenu-title mobile-menu__submenu-title--shop-all">Shop all {{ sub_link.title }}</span>
-                <svg class="mobile-menu__submenu-chevron" width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M1 1L6 6L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
               </a>
             </div>
           </div>

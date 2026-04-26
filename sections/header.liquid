@@ -687,6 +687,7 @@
       details.dataset.overlayWired = '1';
       details.addEventListener('toggle', function() {
         overlay.classList.toggle('is-visible', details.open);
+        document.body.classList.toggle('menu-is-open', details.open);
       });
     }
 
