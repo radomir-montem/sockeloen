@@ -3422,6 +3422,8 @@ body.template--index .image-banner .button span {
 
 /* ============================================================
    Banner social proof widget (replaces reviews ribbon)
+   section-main-product-v2.css is not loaded on the homepage,
+   so we replicate the avatar/layout styles here scoped to the banner.
    ============================================================ */
 .banner-social-proof {
   display: flex;
@@ -3429,8 +3431,45 @@ body.template--index .image-banner .button span {
   margin-top: 16px;
   width: 100%;
 }
-.banner-social-proof__text {
+.banner-social-proof .product-v2__social-proof-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.banner-social-proof .product-v2__sp-avatars {
+  display: flex;
+  flex-shrink: 0;
+}
+.banner-social-proof .product-v2__sp-avatar {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px #fff;
+}
+.banner-social-proof .product-v2__sp-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+.banner-social-proof .product-v2__sp-avatar--2,
+.banner-social-proof .product-v2__sp-avatar--3 {
+  margin-left: -10px;
+}
+.banner-social-proof .product-v2__sp-text {
+  font-size: 13px;
+  line-height: 1.35;
+  margin: 0;
   color: #fff !important;
+}
+.banner-social-proof .product-v2__sp-verified {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: text-bottom;
 }
 .banner-social-proof .product-v2__sp-name-link {
   color: #fff !important;
