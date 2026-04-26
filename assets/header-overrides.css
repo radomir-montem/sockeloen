@@ -2241,9 +2241,10 @@ body.template--index .image-banner .button span {
   padding: 14px 0;
   background: transparent;
   border-radius: 0;
-  text-decoration: none;
   color: #111111;
   margin-bottom: 6px;
+  cursor: default;
+  user-select: none;
 }
 
 .mobile-menu--v2 .mobile-menu__reviews-stars {
