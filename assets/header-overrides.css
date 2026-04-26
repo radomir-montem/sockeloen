@@ -3428,7 +3428,7 @@ body.template--index .image-banner .button span {
 .banner-social-proof {
   display: flex;
   justify-content: center;
-  margin-top: 48px !important;
+  margin-top: 24px !important;
   width: 100%;
 }
 .banner-social-proof .product-v2__social-proof-inner {
