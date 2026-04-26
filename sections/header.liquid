@@ -668,13 +668,17 @@
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
 {%- endif -%}
 
-<div id="mobile-menu-overlay" aria-hidden="true"></div>
 <script>
   (function() {
-    // Mobile menu overlay: show/hide when drawer opens/closes
-    var overlay = document.getElementById('mobile-menu-overlay');
+    // Mobile menu overlay: inject directly at body level so position:fixed
+    // covers the full viewport regardless of header stacking context.
+    var overlay = document.createElement('div');
+    overlay.id = 'mobile-menu-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(overlay);
+
     var details = document.getElementById('Details-menu-drawer-container');
-    if (overlay && details && !details.dataset.overlayWired) {
+    if (details && !details.dataset.overlayWired) {
       details.dataset.overlayWired = '1';
       details.addEventListener('toggle', function() {
         overlay.classList.toggle('is-visible', details.open);

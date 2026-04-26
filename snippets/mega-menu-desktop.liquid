@@ -52,7 +52,8 @@
                href="{{ link.url }}"
                aria-haspopup="true"
                :aria-expanded="isActive({{ forloop.index }}) ? 'true' : 'false'"
-               aria-controls="mega-menu-panel-{{ forloop.index }}">
+               aria-controls="mega-menu-panel-{{ forloop.index }}"
+               @mouseenter="cancelClose()">
               <span>{{ link.title }}</span>
               <svg class="menu-arrow-down mega-menu-v2-chevron"
                    :class="isActive({{ forloop.index }}) ? 'is-open' : ''"
