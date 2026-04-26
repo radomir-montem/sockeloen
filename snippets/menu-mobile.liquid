@@ -76,7 +76,7 @@
                   role="tab"
                   :aria-selected="activeMenu == {{ forloop.index }} ? 'true' : 'false'"
                   :class="{ 'is-active': activeMenu == {{ forloop.index }} }"
-                  @click="activeMenu = {{ forloop.index }}; closeSubMenu()">
+                  @click.stop="activeMenu = {{ forloop.index }}; closeSubMenu()">
             {{ link.title }}
           </button>
         {%- endif -%}
@@ -90,13 +90,7 @@
 
       {%- comment -%} ---- MAIN CATEGORY PANEL ---- {%- endcomment -%}
       <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--sub w-full bg-white absolute top-0 z-30"
-        x-show="(isActive == {{ forloop.index }}) && activeSubMenu < 0"
-        x-transition:enter-end="left-0"
-        x-transition:enter-start="-left-full"
-        x-transition:enter="transition-all ease-out duration-200"
-        x-transition:leave-end="-left-full"
-        x-transition:leave-start="left-0"
-        x-transition:leave="transition-all ease-in duration-200">
+        x-show="(isActive == {{ forloop.index }}) && activeSubMenu < 0">
 
         <div class="mobile-menu__body mobile-menu__body--sub flex flex-col">
 

@@ -1523,20 +1523,8 @@ body.template--custom-made .menu-drawer {
   pointer-events: none;
 }
 
-/* Raise the header pill above the overlay so the close X and cart/search
-   icons remain tappable while the mobile menu is open. */
-@media screen and (max-width: 989px) {
-  #tw-header {
-    position: relative;
-    z-index: 65;
-  }
-}
 
-@media screen and (max-width: 989px) {
-  #mobile-menu-overlay.is-visible {
-    display: block;
-  }
-}
+/* Overlay intentionally not shown on mobile — menu stays white */
 
 /* ==========================================================================
    Icon sizing & spacing
@@ -2718,7 +2706,7 @@ body.template--index .image-banner .button span {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 20px;
+  padding: 12px 20px;
   cursor: pointer;
   color: #111111;
   text-decoration: none;
@@ -2736,10 +2724,10 @@ body.template--index .image-banner .button span {
 }
 
 .mobile-menu--v2 .mobile-menu__cat-name {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.4;
   color: #111111;
   transition: color 0.15s ease;
 }
@@ -2869,10 +2857,11 @@ body.template--index .image-banner .button span {
     min-height: 0 !important;
   }
 
-  /* Cat-list: don't grow to fill; scroll internally when menu is very long */
+  /* Cat-list: don't grow to fill; scroll internally when menu is very long.
+     150px = footer/reviews (~110px) + tab bar (~40px). */
   .mobile-menu--v2 .mobile-menu__cat-list {
     flex: 0 0 auto !important;
-    max-height: calc(80svh - 92px - 110px); /* 110px ≈ footer + reviews */
+    max-height: calc(80svh - 92px - 150px);
     overflow-y: auto;
   }
 
