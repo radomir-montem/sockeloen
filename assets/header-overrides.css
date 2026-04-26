@@ -3420,6 +3420,16 @@ body.template--index .image-banner .button span {
   filter: brightness(0) invert(1);
 }
 
+/* Push hero banner content group (title, subtitle, buttons, social proof) downward */
+body.template--index .banner__content {
+  padding-top: 15%;
+}
+@media screen and (max-width: 749px) {
+  body.template--index .banner__content {
+    padding-top: 10%;
+  }
+}
+
 /* ============================================================
    Banner social proof widget (replaces reviews ribbon)
    section-main-product-v2.css is not loaded on the homepage,
