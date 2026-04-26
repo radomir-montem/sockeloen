@@ -188,6 +188,20 @@
               {%- endif -%}
 
             </div>
+            <div class="banner-reviews-ribbon" role="img" aria-label="Rated 5 stars — 5,074 reviews on REVIEWS.io">
+              <span class="banner-reviews-stars" aria-hidden="true">
+                {%- for i in (1..5) -%}
+                  <svg class="banner-reviews-star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2.5l2.9 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 2.8 1.1-6.4L2.7 9.2l6.4-.9L12 2.5z"/>
+                  </svg>
+                {%- endfor -%}
+              </span>
+              <span class="banner-reviews-text"><strong>5,074</strong> reviews</span>
+              <img class="banner-reviews-logo"
+                src="https://assets.reviews.io/img/all-global-assets/logo/reviewsio-logo.svg"
+                alt="REVIEWS.io"
+                width="72" height="16" loading="lazy">
+            </div>
         {%- endcase -%}
       {%- endfor -%}
     </div>

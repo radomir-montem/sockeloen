@@ -3036,6 +3036,21 @@ body.template--index .image-banner .button span {
 .mega-menu-v2-trigger-link.is-open,
 .mega-menu-v2-trigger-link:hover { color: #111111; }
 
+/* Last nav item (Shop all) — permanent black pill */
+.mega-menu-v2-item-wrap:last-child .mega-menu-v2-trigger-link {
+  background: #111111;
+  color: #ffffff !important;
+  border-radius: 6px;
+  padding: 4px 12px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mega-menu-v2-item-wrap:last-child .mega-menu-v2-trigger-link:hover,
+.mega-menu-v2-item-wrap:last-child .mega-menu-v2-trigger-link.is-open {
+  background: #333333;
+  color: #ffffff !important;
+}
+
 .mega-menu-v2-chevron {
   transition: transform 0.15s ease;
   color: currentColor;
@@ -3364,6 +3379,44 @@ body.template--index .image-banner .button span {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 16px 12px;
   }
+}
+
+/* ============================================================
+   Hero banner reviews ribbon
+   ============================================================ */
+.banner-reviews-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  cursor: default;
+  user-select: none;
+}
+
+.banner-reviews-stars {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+  color: #00B67A;
+}
+
+.banner-reviews-star {
+  width: 16px;
+  height: 16px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.banner-reviews-text {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.banner-reviews-logo {
+  height: 16px;
+  width: auto;
+  filter: brightness(0) invert(1);
 }
 
 /* ============================================================
