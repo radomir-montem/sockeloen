@@ -84,9 +84,10 @@
                 <aside class="mega-menu-v2-sidebar">
                   <ul class="mega-menu-v2-cat-list" role="list">
                     {%- for sub_link in link.links -%}
+                      {%- assign sub_link_lower = sub_link.title | downcase -%}
                       <li class="mega-menu-v2-cat-item">
                         <a href="{{ sub_link.url }}"
-                           class="mega-menu-v2-cat"
+                           class="mega-menu-v2-cat{% if sub_link_lower contains 'shop all' %} mega-menu-v2-cat--shop-all{% endif %}"
                            :class="isCategory({{ forloop.index }}) ? 'is-active' : ''"
                            @mouseenter="activeCategory = {{ forloop.index }}">
                           {{ sub_link.title }}

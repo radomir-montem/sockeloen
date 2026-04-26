@@ -3036,18 +3036,19 @@ body.template--index .image-banner .button span {
 .mega-menu-v2-trigger-link.is-open,
 .mega-menu-v2-trigger-link:hover { color: #111111; }
 
-/* Last nav item (Shop all) — permanent black pill */
-.mega-menu-v2-item-wrap:last-child .mega-menu-v2-trigger-link {
-  background: #111111;
+/* Sidebar "Shop all" category items — permanent black tile */
+.mega-menu-v2-cat--shop-all {
+  background: #111111 !important;
   color: #ffffff !important;
-  border-radius: 6px;
-  padding: 4px 12px;
-  transition: background 0.15s ease, color 0.15s ease;
 }
 
-.mega-menu-v2-item-wrap:last-child .mega-menu-v2-trigger-link:hover,
-.mega-menu-v2-item-wrap:last-child .mega-menu-v2-trigger-link.is-open {
-  background: #333333;
+.mega-menu-v2-cat--shop-all:hover {
+  background: #333333 !important;
+  color: #ffffff !important;
+}
+
+.mega-menu-v2-cat--shop-all.is-active {
+  background: #333333 !important;
   color: #ffffff !important;
 }
 
