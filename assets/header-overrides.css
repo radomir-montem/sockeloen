@@ -2888,7 +2888,7 @@ body.template--index .image-banner .button span {
     -webkit-overflow-scrolling: touch;
   }
   .mobile-menu--v2 .mobile-menu__submenu-body {
-    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
   }
 }
 
