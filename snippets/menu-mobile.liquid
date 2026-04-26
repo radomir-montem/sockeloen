@@ -89,11 +89,12 @@
 
   {%- comment -%} ============ PANELS ============ {%- endcomment -%}
   {%- for link in menu.links -%}
+    {%- assign outer_loop_i = forloop.index -%}
     {%- if link.links.size > 0 -%}
 
       {%- comment -%} ---- MAIN CATEGORY PANEL ---- {%- endcomment -%}
       <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--sub w-full bg-white absolute top-0 z-30"
-        x-show="(isActive == {{ forloop.index }}) && activeSubMenu < 0">
+        x-show="(isActive == {{ outer_loop_i }}) && activeSubMenu < 0">
 
         <div class="mobile-menu__body mobile-menu__body--sub flex flex-col">
 
@@ -121,12 +122,13 @@
                 {%- endif -%}
               {%- endif -%}
 
+              {%- assign sub_uid = outer_loop_i | times: 100 | plus: forloop.index -%}
               <li class="mobile-menu__cat-item">
                 {%- if mob_has_coll -%}
                   <div class="mobile-menu__cat-row"
-                       @click="openSubMenu({{ forloop.index }})"
-                       @keydown.enter.prevent="openSubMenu({{ forloop.index }})"
-                       @keydown.space.prevent="openSubMenu({{ forloop.index }})"
+                       @click="openSubMenu({{ sub_uid }})"
+                       @keydown.enter.prevent="openSubMenu({{ sub_uid }})"
+                       @keydown.space.prevent="openSubMenu({{ sub_uid }})"
                        role="button"
                        tabindex="0"
                        aria-haspopup="true">
@@ -225,9 +227,10 @@
           {%- endif -%}
         {%- endif -%}
 
+        {%- assign sub_uid = outer_loop_i | times: 100 | plus: forloop.index -%}
         {%- if mob2_has_coll -%}
           <div class="mobile-menu__panel mobile-menu__panel--submenu"
-               x-show="activeSubMenu == {{ forloop.index }}"
+               x-show="activeMenu == {{ outer_loop_i }} && activeSubMenu == {{ sub_uid }}"
                x-cloak>
             <div class="mobile-menu__submenu-body">
               {%- for product in mob2_coll.products limit: 9 -%}

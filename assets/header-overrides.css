@@ -1282,7 +1282,7 @@ body.template--custom-made .menu-drawer {
     box-shadow:
       0 8px 20px rgba(0, 0, 0, 0.10),
       0 2px 6px rgba(0, 0, 0, 0.05) !important;
-    clip-path: inset(0 -40px -40px -40px) !important;
+    clip-path: inset(0 -20px 0 -20px) !important;
     /* Reduce inner padding so the content area lines up with the header
        content area (the 8px padding is what was making the inset content
        look "too wide" relative to the pill above). */
@@ -2680,6 +2680,7 @@ body.template--index .image-banner .button span {
   margin-bottom: -1px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  text-align: center;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
