@@ -2829,11 +2829,11 @@ body.template--index .image-banner .button span {
    to content instead of forcing full-screen height.
    ------------------------------------------------------------ */
 @media screen and (max-width: 989px) {
-  /* Cap the drawer at 80% of viewport — 20% gap below */
+  /* Cap the drawer at 90% of viewport — 10% gap below */
   .menu-drawer:has(.mobile-menu--v2-sub-active),
   .js .menu-drawer:has(.mobile-menu--v2-sub-active) {
     height: auto !important;
-    max-height: calc(80svh - 92px) !important;
+    max-height: calc(90svh - 92px) !important;
     overflow: hidden !important;
   }
 
@@ -2868,7 +2868,7 @@ body.template--index .image-banner .button span {
      150px = footer/reviews (~110px) + tab bar (~40px). */
   .mobile-menu--v2 .mobile-menu__cat-list {
     flex: 0 0 auto !important;
-    max-height: calc(80svh - 92px - 150px);
+    max-height: calc(90svh - 92px - 150px);
     overflow-y: auto;
   }
 
@@ -2878,12 +2878,12 @@ body.template--index .image-banner .button span {
   }
 
   /* Sub-menu panel: flows in document (not absolutely positioned) so the
-     drawer auto-sizes to it. Max-height keeps it within the 80svh cap. */
+     drawer auto-sizes to it. Max-height keeps it within the 90svh cap. */
   .mobile-menu--v2 .mobile-menu__panel--submenu {
     position: relative;
     width: 100%;
     background: #ffffff;
-    max-height: calc(80svh - 92px);
+    max-height: calc(90svh - 92px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
