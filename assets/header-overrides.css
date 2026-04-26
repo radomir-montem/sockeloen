@@ -1268,6 +1268,8 @@ body.template--custom-made .menu-drawer {
     right: 12px !important;
     max-width: none !important;
     width: calc(100vw - 24px) !important;
+    /* Above the full-viewport overlay (z-59) so the drawer paints on top */
+    z-index: 60 !important;
     /* Flat top, rounded bottom — merges with the header's flattened bottom */
     border-radius: 0 0 8px 8px !important;
     /* Opaque white — matches header pill exactly. Drop the blur + translucency
