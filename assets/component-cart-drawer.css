@@ -449,7 +449,7 @@ cart-drawer-items::-webkit-scrollbar-thumb {
   font-size: 13px;
   font-weight: 500;
   line-height: 1.4;
-  color: #555;
+  color: #8c8c8c;
   margin: 0;
   text-transform: lowercase;
   letter-spacing: 0;
@@ -461,7 +461,7 @@ cart-drawer-items::-webkit-scrollbar-thumb {
 }
 
 .cart-drawer-item__price .cart-item__price-wrapper {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #1a1a1a;
 }
