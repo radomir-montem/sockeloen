@@ -274,9 +274,9 @@
   }
 }
 
-/* Cart count bubble — orange */
+/* Cart count bubble — matches cart drawer qty badge blue */
 .cart-count-bubble {
-  background-color: #F76503;
+  background-color: #0395F6;
 }
 
 /* ==========================================================================
