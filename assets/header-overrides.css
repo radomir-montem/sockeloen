@@ -3365,6 +3365,68 @@ body.template--index .image-banner .button span {
   }
 }
 
+/* ============================================================
+   Desktop locale switcher — matches nav item text style
+   ============================================================ */
+@media screen and (min-width: 990px) {
+  localization-selector.small-hide .localization-label {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    color: #3A3A3A !important;
+    transition: color 0.15s ease !important;
+    padding: 0 8px;
+  }
+
+  localization-selector.small-hide .localization-label:hover {
+    color: #111111 !important;
+  }
+
+  localization-selector.small-hide .localization-label span {
+    text-transform: lowercase;
+  }
+
+  .locale-chevron-icon {
+    transition: transform 0.15s ease;
+    color: currentColor;
+  }
+
+  localization-selector:has(.localization-list:not(.hidden)) .locale-chevron-icon {
+    transform: rotate(180deg);
+  }
+
+  localization-selector.small-hide .localization-list {
+    background: #ffffff !important;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
+    clip-path: inset(0 -40px -40px -40px);
+    width: 80px !important;
+    padding: 6px !important;
+    left: 50% !important;
+    top: 100% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  localization-selector.small-hide .localization-item { margin: 0; }
+
+  localization-selector.small-hide .localization-item a {
+    font-size: 13px;
+    font-weight: 500;
+    color: #3A3A3A;
+    text-decoration: none;
+    text-transform: lowercase;
+    display: block;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+
+  localization-selector.small-hide .localization-item a:hover {
+    background: #F5F2ED;
+    color: #111111;
+  }
+}
+
 /* When the desktop mega panel is open, flatten the pill's bottom corners
    and drop its shadow so the pill + panel read as one continuous white
    surface (no 8px corner notches, no seam shadow between them). */
