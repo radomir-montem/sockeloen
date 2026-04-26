@@ -668,6 +668,46 @@
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
 {%- endif -%}
 
+<script>
+  (function() {
+    // Mobile menu overlay: inject directly at body level so position:fixed
+    // covers the full viewport regardless of header stacking context.
+    var overlay = document.createElement('div');
+    overlay.id = 'mobile-menu-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    // Inject inside the header section so the overlay participates in the
+    // header's stacking context (global z-index 15). This lets the overlay
+    // sit at local z-index 59 — above page content but below the drawer (60)
+    // and the header pill (#tw-header at local 65).
+    var headerSection = document.getElementById('shopify-section-header') || document.body;
+    headerSection.appendChild(overlay);
+
+    var details = document.getElementById('Details-menu-drawer-container');
+    if (details && !details.dataset.overlayWired) {
+      details.dataset.overlayWired = '1';
+      details.addEventListener('toggle', function() {
+        overlay.classList.toggle('is-visible', details.open);
+        document.body.classList.toggle('menu-is-open', details.open);
+      });
+    }
+
+    // Desktop language selector: open on hover, close on hover-out
+    var langSel = document.querySelector('localization-selector.small-hide');
+    if (langSel) {
+      var langList = langSel.querySelector('.localization-list');
+      if (langList) {
+        var langTimer;
+        function langShow() { clearTimeout(langTimer); langList.classList.remove('hidden'); }
+        function langHide() { langTimer = setTimeout(function() { langList.classList.add('hidden'); }, 120); }
+        langSel.addEventListener('mouseenter', langShow);
+        langSel.addEventListener('mouseleave', langHide);
+        langList.addEventListener('mouseenter', function() { clearTimeout(langTimer); });
+        langList.addEventListener('mouseleave', langHide);
+      }
+    }
+  })();
+</script>
+
 {% javascript %}
   class StickyHeader extends HTMLElement {
     constructor() {

@@ -1268,6 +1268,8 @@ body.template--custom-made .menu-drawer {
     right: 12px !important;
     max-width: none !important;
     width: calc(100vw - 24px) !important;
+    /* Above the full-viewport overlay (z-59) so the drawer paints on top */
+    z-index: 60 !important;
     /* Flat top, rounded bottom — merges with the header's flattened bottom */
     border-radius: 0 0 8px 8px !important;
     /* Opaque white — matches header pill exactly. Drop the blur + translucency
@@ -1276,13 +1278,8 @@ body.template--custom-made .menu-drawer {
     background-color: #ffffff !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    /* Borderless — outer shadow ONLY below/sides. Clip the top so the
-       shadow doesn't bleed up over the seam with the header pill (which
-       would read as a thin grey band at y=92 where they meet). */
-    box-shadow:
-      0 8px 20px rgba(0, 0, 0, 0.10),
-      0 2px 6px rgba(0, 0, 0, 0.05) !important;
-    clip-path: inset(0 -40px -40px -40px) !important;
+    box-shadow: none !important;
+    clip-path: none !important;
     /* Reduce inner padding so the content area lines up with the header
        content area (the 8px padding is what was making the inset content
        look "too wide" relative to the pill above). */
@@ -1502,14 +1499,37 @@ body.template--custom-made .menu-drawer {
   }
 }
 
-/* Backdrop when drawer open — soft dim, not the theme's default hard dark.
-   Must stack above the announcement bar (z-index 50) but below the drawer
-   itself (z-index 60) so the dim covers the whole viewport and the drawer
-   sits on top of the dim. */
-.js menu-drawer > details[open] > summary::before,
-menu-drawer > details[open] > summary::before {
-  background: rgba(0, 0, 0, 0.25) !important;
-  z-index: 55 !important;
+/* -----------------------------------------------------------------------
+   MOBILE MENU — blur + fade behind the menu card
+   filter:blur on #MainContent (sibling of the header, so the menu card
+   inside the header is 100% unaffected). opacity:0.08 makes the blurred
+   content nearly transparent so the white body background dominates —
+   even a very dark hero image appears almost white at 8% opacity.
+   No overlay div needed; no z-index juggling.
+   ----------------------------------------------------------------------- */
+#mobile-menu-overlay {
+  display: none;
+}
+
+@media screen and (max-width: 989px) {
+  /* Suppress Dawn's built-in dark scrim (summary::before with 50% black fill).
+     Target the specific details element by ID to avoid selector mismatch
+     between header-drawer (HTML) vs menu-drawer (CSS selector). */
+  #Details-menu-drawer-container > summary::before {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    background: transparent !important;
+  }
+
+  body.menu-is-open {
+    background-color: #ffffff !important;
+  }
+  body.menu-is-open #MainContent {
+    filter: blur(8px);
+    opacity: 0.40;
+    pointer-events: none;
+    transition: filter 0.2s ease, opacity 0.2s ease;
+  }
 }
 
 /* ==========================================================================
@@ -2270,6 +2290,7 @@ body.template--index .image-banner .button span {
 /* Locale switcher */
 .mobile-menu--v2 .mobile-menu__locale {
   position: relative;
+  margin-bottom: 20px;
 }
 
 .mobile-menu--v2 .mobile-menu__locale-toggle {
@@ -2627,6 +2648,344 @@ body.template--index .image-banner .button span {
 }
 
 /* ------------------------------------------------------------
+   MOBILE MENU ACCORDION — category rows + product grid
+   Replaces the old image-card list. Category names are plain
+   text rows with a > chevron; tapping expands a 3-column
+   product grid inline below.
+   ------------------------------------------------------------ */
+
+/* ---- Tab bar: top-level category switcher ----
+   Horizontal nav strip at the top of the drawer. Tabs map 1:1 to
+   top-level nav items that have sub-links. Clicking a tab sets
+   activeMenu and resets any open sub-menu. */
+.mobile-menu--v2 .mobile-menu__tab-bar {
+  display: flex;
+  background: #ffffff;
+  border-bottom: 1px solid #F0EEEA;
+  flex-shrink: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__tab {
+  flex: 1;
+  padding: 13px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #888888;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  text-align: center;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__tab.is-active {
+  color: #111111;
+  border-bottom-color: #111111;
+  font-weight: 700;
+}
+
+/* Category list — inherits the scrollable flex child role
+   that .mobile-menu__cards previously held */
+.mobile-menu--v2 .mobile-menu__cat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Each category + its product grid lives in one <li> */
+.mobile-menu--v2 .mobile-menu__cat-item {
+  border-bottom: 1px solid #F0EEEA;
+}
+
+.mobile-menu--v2 .mobile-menu__cat-item:last-child {
+  border-bottom: none;
+}
+
+/* Tappable category row */
+.mobile-menu--v2 .mobile-menu__cat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  cursor: pointer;
+  color: #111111;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.mobile-menu--v2 .mobile-menu__cat-row--link {
+  text-decoration: none;
+}
+
+.mobile-menu--v2 .mobile-menu__cat-row:hover .mobile-menu__cat-name,
+.mobile-menu--v2 .mobile-menu__cat-row:focus .mobile-menu__cat-name {
+  color: #111111;
+}
+
+.mobile-menu--v2 .mobile-menu__cat-name {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.4;
+  color: #111111;
+  transition: color 0.15s ease;
+}
+
+/* Chevron: points right at rest, rotates 90° when expanded */
+.mobile-menu--v2 .mobile-menu__cat-chevron {
+  flex-shrink: 0;
+  color: #111111;
+  transition: transform 0.2s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__cat-chevron.is-open {
+  transform: rotate(90deg);
+}
+
+/* 3-column product grid, expands below the category row */
+.mobile-menu--v2 .mobile-menu__products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 4px 20px 20px;
+}
+
+/* Individual product card: image above, title below */
+.mobile-menu--v2 .mobile-menu__product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #111111;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-menu--v2 .mobile-menu__product-card:hover .mobile-menu__product-title {
+  color: #111111;
+}
+
+/* Square image container — same warm background as desktop cards */
+.mobile-menu--v2 .mobile-menu__product-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #F5F2ED;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu--v2 .mobile-menu__product-img-el {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Product title: small, centered, 2-line clamp */
+.mobile-menu--v2 .mobile-menu__product-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: #111111;
+  text-align: center;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  transition: color 0.15s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* "Shop all" tile — dark background with arrow icon */
+.mobile-menu--v2 .mobile-menu__product-img--shop-all {
+  background: #111111;
+  color: #ffffff;
+}
+
+.mobile-menu--v2 .mobile-menu__product-card--shop-all .mobile-menu__product-title {
+  color: #111111;
+  font-weight: 700;
+}
+
+.mobile-menu--v2 .mobile-menu__product-card--shop-all:hover .mobile-menu__product-img--shop-all {
+  background: #333333;
+}
+
+/* ------------------------------------------------------------
+   MOBILE MENU — height + spacing overrides (mobile only)
+   Drawer ends at 80vh, leaving ~20% of the screen visible
+   below. Sub panel flows in-document so drawer auto-sizes
+   to content instead of forcing full-screen height.
+   ------------------------------------------------------------ */
+@media screen and (max-width: 989px) {
+  /* Cap the drawer at 80% of viewport — 20% gap below */
+  .menu-drawer:has(.mobile-menu--v2-sub-active),
+  .js .menu-drawer:has(.mobile-menu--v2-sub-active) {
+    height: auto !important;
+    max-height: calc(80svh - 92px) !important;
+    overflow: hidden !important;
+  }
+
+  /* Inner containers: auto height so the drawer shrinks to content */
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__inner-container,
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    grid-template-rows: auto !important;
+  }
+  .menu-drawer:has(.mobile-menu--v2-sub-active) .menu-drawer__navigation-container > .relative {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  /* Sub panel: relative flow so the parent height drives the drawer size */
+  .mobile-menu--v2-sub-active .mobile-menu__panel--sub[x-show] {
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    height: auto !important;
+  }
+
+  /* Body: no forced fill height */
+  .mobile-menu--v2 .mobile-menu__body--sub {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  /* Cat-list: don't grow to fill; scroll internally when menu is very long.
+     150px = footer/reviews (~110px) + tab bar (~40px). */
+  .mobile-menu--v2 .mobile-menu__cat-list {
+    flex: 0 0 auto !important;
+    max-height: calc(80svh - 92px - 150px);
+    overflow-y: auto;
+  }
+
+  /* Footer: small breathing room at the very bottom */
+  .mobile-menu--v2 .mobile-menu__footer {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Sub-menu panel: flows in document (not absolutely positioned) so the
+     drawer auto-sizes to it. Max-height keeps it within the 80svh cap. */
+  .mobile-menu--v2 .mobile-menu__panel--submenu {
+    position: relative;
+    width: 100%;
+    background: #ffffff;
+    max-height: calc(80svh - 92px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-menu--v2 .mobile-menu__submenu-body {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ------------------------------------------------------------
+   MOBILE MENU SUB-MENU PANELS — vertical product list
+   Shown when user taps a category row; overlays the main panel.
+   ------------------------------------------------------------ */
+
+/* Category name label at top of sub-panel */
+.mobile-menu--v2 .mobile-menu__submenu-header {
+  padding: 14px 20px 12px;
+  border-bottom: 1px solid #F0EEEA;
+}
+
+.mobile-menu--v2 .mobile-menu__submenu-cat-name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7D7D7D;
+}
+
+/* Product row — grey card containing image + title, no separator, no chevron */
+.mobile-menu--v2 .mobile-menu__submenu-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #F5F2ED;
+  border-bottom: none;
+  text-decoration: none;
+  color: #111111;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.12s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__submenu-row:hover,
+.mobile-menu--v2 .mobile-menu__submenu-row:focus {
+  background: #ECE8E1;
+}
+
+/* Thumbnail — no separate background (card provides it) */
+.mobile-menu--v2 .mobile-menu__submenu-img {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  background: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu--v2 .mobile-menu__submenu-img-el {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Product title — matches main menu text size */
+.mobile-menu--v2 .mobile-menu__submenu-title {
+  flex: 1 1 auto;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #111111;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Shop all row — dark card */
+.mobile-menu--v2 .mobile-menu__submenu-row--shop-all {
+  background: #111111;
+  color: #ffffff;
+}
+
+.mobile-menu--v2 .mobile-menu__submenu-row--shop-all .mobile-menu__submenu-img--shop-all {
+  color: #ffffff;
+}
+
+.mobile-menu--v2 .mobile-menu__submenu-title--shop-all {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.mobile-menu--v2 .mobile-menu__submenu-row--shop-all:hover,
+.mobile-menu--v2 .mobile-menu__submenu-row--shop-all:focus {
+  background: #333333;
+}
+
+/* ------------------------------------------------------------
    DESKTOP MEGA MENU (v2)
    Anchored below the floating pill; full viewport width panel.
    ------------------------------------------------------------ */
@@ -2648,6 +3007,18 @@ body.template--index .image-banner .button span {
   height: 100%;
   padding: 0 14px;
   position: relative;
+  /* Transparent bridge below trigger extends the hover zone to the panel.
+     Without this, a 1-2px seam at y=92 can cause mouseleave to fire on the
+     trigger before the panel mouseenter fires, closing the menu mid-traverse. */
+}
+
+.mega-menu-v2-trigger::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  right: -20px;
+  height: 24px;
 }
 
 .mega-menu-v2-trigger-link {

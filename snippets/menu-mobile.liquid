@@ -1,48 +1,43 @@
 {%- comment -%}
-  Mobile drawer — Cloudpillo-style redesign (v3: root-skipped)
+  Mobile drawer — category-row → sub-panel navigation (v5)
   Accepts:
     menu        — linklist (required)
-    logo        — image (optional, used as the sub-panel wordmark fallback only)
-    logo_width  — number (optional)
 
-  Structure (root panel was removed — SHOP is no longer a navigation step):
-    Sub panel (ALWAYS shown on drawer open): card grid → locale/reviews footer
-    Sub-sub panel: replaces sub via overlay when user taps a card with children
+  Structure:
+    Category panel (shown on drawer open):
+      - Plain text category rows with > chevron
+      - Tap a row → sub-panel slides in showing up to 9 products vertically
+      - Footer: reviews ribbon, locale switcher
 
-  Close / back affordances live in the page header (see sections/header.liquid
-  and the overrides in assets/header-overrides.css):
-    - Close X on left: the stock <summary> hamburger, restyled as a round
-      white pill only while the drawer is open. Clicking it toggles the
-      <details> and closes the drawer.
-    - Back arrow on right: shown only when childMenu > 0, replaces the
-      cart/search icons. Clicking it dispatches a `drawer:back` CustomEvent
-      which this Alpine scope handles.
+    Sub-panel (per category):
+      - Category name label at top
+      - Up to 9 product rows: 56px thumbnail left, title right, > chevron
+      - "Shop all" row at bottom
+      - Back arrow in page header navigates back (body.drawer-subsub-active)
 
-  Cards auto-enrich from section.blocks matched by link.title (or per-locale
-  title). Links without a matched block fall back to title-only.
+  Products follow the collection's default sort order. For best-selling
+  products in the menu, set each collection's default sort to "Best selling"
+  in Shopify admin (Products → Collections → [collection] → Sort).
+
+  Close X and back arrow live in sections/header.liquid.
 {%- endcomment -%}
 
 <div class="relative mobile-menu mobile-menu--v2"
      :class="{
-       'mobile-menu--v2-sub-active': activeMenu > 0 && childMenu == 0,
-       'mobile-menu--v2-subsub-active': childMenu > 0
+       'mobile-menu--v2-sub-active': activeMenu > 0,
+       'mobile-menu--v2-subsub-active': activeSubMenu >= 0,
      }"
      x-data="{
-      /* Panel state:
-           activeMenu = N  → sub panel for menu.links[N-1] (forloop.index is 1-based)
-           childMenu  = N  → sub-sub panel for sub_link N (nested inside the active sub)
-           childMenu  = 0  → no sub-sub shown, user is browsing the sub cards
-         Default activeMenu = 1 because root panel is gone — sub is the entry point. */
       activeMenu: 1,
-      childMenu: 0,
+      activeSubMenu: -1,
       get isActive() { return this.activeMenu },
-      get isChild() { return this.childMenu },
-      setActive(_sel) { this.activeMenu = _sel == this.activeMenu ? 0 : _sel },
-      setChild(_sel) {
-        this.childMenu = _sel == this.childMenu ? 0 : _sel;
-        /* Keep the body class in lockstep so the page header can swap
-           cart/search for the back arrow without a flash. */
-        document.body.classList.toggle('drawer-subsub-active', this.childMenu > 0);
+      openSubMenu(_i) {
+        this.activeSubMenu = _i;
+        document.body.classList.add('drawer-subsub-active');
+      },
+      closeSubMenu() {
+        this.activeSubMenu = -1;
+        document.body.classList.remove('drawer-subsub-active');
       },
       closeDrawer() {
         var d = document.querySelector('#Details-menu-drawer-container');
@@ -50,142 +45,110 @@
         document.body.classList.remove('noscroll');
         document.body.classList.remove('menu-opening');
         document.body.classList.remove('drawer-subsub-active');
-        /* Always land on the sub entry point next time. */
         this.activeMenu = 1;
-        this.childMenu = 0;
+        this.activeSubMenu = -1;
       },
       init() {
-        /* The stock drawer can close via the header's <summary> toggle
-           (clicking the hamburger/X while open). We never get a hook into
-           that through Alpine, so mirror the <details> toggle event and
-           reset nested state when the drawer closes. */
         var details = document.querySelector('#Details-menu-drawer-container');
         if (details) {
           var self = this;
           details.addEventListener('toggle', function() {
             if (!details.open) {
               self.activeMenu = 1;
-              self.childMenu = 0;
+              self.activeSubMenu = -1;
               document.body.classList.remove('drawer-subsub-active');
             }
           });
         }
       },
     }"
-    @drawer:back.window="setChild(0)"
+    @drawer:back.window="closeSubMenu()"
     x-transition.scale>
 
-  {%- comment -%} ============ SUBMENU PANELS (entry point — no root anymore) ============ {%- endcomment -%}
+  {%- comment -%} ============ TAB BAR ============ {%- endcomment -%}
+  {%- assign tab_count = 0 -%}
+  {%- for link in menu.links -%}{%- if link.links.size > 0 -%}{%- assign tab_count = tab_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+  {%- if tab_count > 1 -%}
+    <div class="mobile-menu__tab-bar" role="tablist">
+      {%- for link in menu.links -%}
+        {%- if link.links.size > 0 -%}
+          <div class="mobile-menu__tab"
+               role="tab"
+               tabindex="0"
+               :aria-selected="activeMenu == {{ forloop.index }} ? 'true' : 'false'"
+               :class="{ 'is-active': activeMenu == {{ forloop.index }} }"
+               @click="activeMenu = {{ forloop.index }}; closeSubMenu()"
+               @keydown.enter.prevent="activeMenu = {{ forloop.index }}; closeSubMenu()"
+               @keydown.space.prevent="activeMenu = {{ forloop.index }}; closeSubMenu()">
+            {{ link.title }}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ============ PANELS ============ {%- endcomment -%}
   {%- for link in menu.links -%}
+    {%- assign outer_loop_i = forloop.index -%}
     {%- if link.links.size > 0 -%}
+
+      {%- comment -%} ---- MAIN CATEGORY PANEL ---- {%- endcomment -%}
       <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--sub w-full bg-white absolute top-0 z-30"
-        x-show="(isActive == {{ forloop.index }})"
-        x-transition:enter-end="left-0"
-        x-transition:enter-start="-left-full"
-        x-transition:enter="transition-all ease-out duration-200"
-        x-transition:leave-end="-left-full"
-        x-transition:leave-start="left-0"
-        x-transition:leave="transition-all ease-in duration-200">
+        x-show="(isActive == {{ outer_loop_i }}) && activeSubMenu < 0">
 
         <div class="mobile-menu__body mobile-menu__body--sub flex flex-col">
 
-          {%- comment -%} Scrollable card list {%- endcomment -%}
-          <ul class="mobile-menu__cards">
+          <ul class="mobile-menu__cat-list">
             {%- for sub_link in link.links -%}
-              {% assign has_childlinks = false %}
-              {% assign sub_link_url = sub_link.url %}
-              {%- if sub_link.links.size > 0 -%}
-                {% assign has_childlinks = true %}
-                {% assign sub_link_url = '#' %}
+
+              {%- comment -%} Resolve collection from sub_link {%- endcomment -%}
+              {%- assign mob_coll = blank -%}
+              {%- assign mob_has_coll = false -%}
+              {%- if sub_link.type == 'collection_link' and sub_link.object.products.size > 0 -%}
+                {%- assign mob_coll = sub_link.object -%}
+                {%- assign mob_has_coll = true -%}
+              {%- endif -%}
+              {%- if mob_has_coll == false and sub_link.url contains '/collections/' -%}
+                {%- assign mob_handle = sub_link.url | split: '/collections/' | last -%}
+                {%- assign mob_handle = mob_handle | split: '?' | first -%}
+                {%- assign mob_handle = mob_handle | split: '#' | first -%}
+                {%- assign mob_handle = mob_handle | split: '/' | first -%}
+                {%- if mob_handle != blank -%}
+                  {%- assign mob_candidate = collections[mob_handle] -%}
+                  {%- if mob_candidate.products.size > 0 -%}
+                    {%- assign mob_coll = mob_candidate -%}
+                    {%- assign mob_has_coll = true -%}
+                  {%- endif -%}
+                {%- endif -%}
               {%- endif -%}
 
-              {%- comment -%} Find matching block by link.title (handles all 4 locale titles) {%- endcomment -%}
-              {% assign matched_block = nil %}
-              {% for b in section.blocks %}
-                {% if sub_link.title == b.settings.title
-                   or sub_link.title == b.settings.title_translate
-                   or sub_link.title == b.settings.title_translate_german
-                   or sub_link.title == b.settings.title_translate_french %}
-                  {% assign matched_block = b %}
-                {% endif %}
-              {% endfor %}
-
-              {%- comment -%} Resolve localized feature text {%- endcomment -%}
-              {% assign feat_text = blank %}
-              {% if matched_block %}
-                {% assign feat_text = matched_block.settings.feature_text %}
-                {% if localization.language.iso_code == 'nl' and matched_block.settings.feature_text_nl != blank %}{% assign feat_text = matched_block.settings.feature_text_nl %}{% endif %}
-                {% if localization.language.iso_code == 'de' and matched_block.settings.feature_text_de != blank %}{% assign feat_text = matched_block.settings.feature_text_de %}{% endif %}
-                {% if localization.language.iso_code == 'fr' and matched_block.settings.feature_text_fr != blank %}{% assign feat_text = matched_block.settings.feature_text_fr %}{% endif %}
-              {% endif %}
-
-              <li class="mobile-menu__card-wrap">
-                <a class="mobile-menu__card{% if has_childlinks %} mobile-menu__card--has-children{% endif %}"
-                   href="{{ sub_link_url }}"
-                   {% if has_childlinks %}@click.prevent="setChild({{ forloop.index }})"{% endif %}>
-                  <div class="mobile-menu__card-img">
-                    {% if matched_block.settings.image_item != blank %}
-                      {%- render 'c-image-element',
-                        image: matched_block.settings.image_item,
-                        lazy: true,
-                        class: "mobile-menu__card-img-el"
-                      -%}
-                    {% endif %}
-                  </div>
-                  <div class="mobile-menu__card-body">
-                    <div class="mobile-menu__card-title">{{ sub_link.title }}</div>
-                    {% if feat_text != blank %}
-                      <div class="mobile-menu__card-feature">
-                        {% if matched_block.settings.feature_icon != blank %}
-                          <span class="mobile-menu__card-icon">
-                            {%- render 'c-image-element',
-                              image: matched_block.settings.feature_icon,
-                              lazy: true,
-                              class: "mobile-menu__card-icon-el"
-                            -%}
-                          </span>
-                        {% endif %}
-                        <span class="mobile-menu__card-feature-text">{{ feat_text }}</span>
-                      </div>
-                    {% endif %}
-                  </div>
-                  {% if has_childlinks %}
-                    <svg class="mobile-menu__card-chevron" width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {%- assign sub_uid = outer_loop_i | times: 100 | plus: forloop.index -%}
+              <li class="mobile-menu__cat-item">
+                {%- if mob_has_coll -%}
+                  <div class="mobile-menu__cat-row"
+                       @click="openSubMenu({{ sub_uid }})"
+                       @keydown.enter.prevent="openSubMenu({{ sub_uid }})"
+                       @keydown.space.prevent="openSubMenu({{ sub_uid }})"
+                       role="button"
+                       tabindex="0"
+                       aria-haspopup="true">
+                    <span class="mobile-menu__cat-name">{{ sub_link.title }}</span>
+                    <svg class="mobile-menu__cat-chevron"
+                         width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path d="M1 1L6 6L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                  {% endif %}
-                </a>
+                  </div>
+                {%- else -%}
+                  <a class="mobile-menu__cat-row mobile-menu__cat-row--link" href="{{ sub_link.url }}">
+                    <span class="mobile-menu__cat-name">{{ sub_link.title }}</span>
+                    <svg class="mobile-menu__cat-chevron" width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M1 1L6 6L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                {%- endif -%}
               </li>
-            {% endfor %}
+            {%- endfor -%}
           </ul>
-
-          {%- comment -%}
-            Sub panel footer: "Shop all" CTA, reviews ribbon, locale pill.
-            These used to live in the (now-removed) root panel. We moved
-            them into the sub panel so they're still reachable since sub
-            is the new entry point.
-          {%- endcomment -%}
-          {%- comment -%}
-            CTA label + URL: when the parent link is the generic "shop"
-            top-level menu, "Shop {{ link.title }}" produces the awkward
-            "Shop shop". For that one case, show "Shop all products" and
-            point at the storefront-wide /collections/all instead of the
-            merchant-configured link URL (which may be a landing page).
-            Every other top-level link (e.g. "accessories") keeps the
-            normal "Shop {title}" + link.url pattern.
-          {%- endcomment -%}
-          <div class="mobile-menu__cta-wrap">
-            {% assign link_title_lower = link.title | downcase | strip %}
-            {% if link_title_lower == 'shop' %}
-              <a class="mobile-menu__cta" href="{{ routes.collections_url }}/all">
-                Shop all products
-              </a>
-            {% else %}
-              <a class="mobile-menu__cta" href="{{ link.url }}">
-                Shop {{ link.title }}
-              </a>
-            {% endif %}
-          </div>
 
           <div class="mobile-menu__footer">
             <a class="mobile-menu__reviews-ribbon"
@@ -208,16 +171,6 @@
             </a>
 
             <div class="mobile-menu__locale" x-data="{ localeOpen: false }">
-              {%- comment -%}
-                Intentionally a <div role="button"> instead of <button>. The
-                theme's MenuDrawer custom element (global.js) binds
-                  `this.querySelectorAll('button').forEach(b => b.addEventListener('click', this.onCloseButtonClick.bind(this)))`
-                on construction — any <button> inside the drawer would be
-                treated as a submenu-close trigger, which closes the whole
-                drawer ~400ms after toggling localeOpen. Using a div keeps
-                the selector-miss. Keyboard support is restored via
-                @keydown.enter / @keydown.space.
-              {%- endcomment -%}
               <div @click="localeOpen = !localeOpen"
                    @keydown.enter.prevent="localeOpen = !localeOpen"
                    @keydown.space.prevent="localeOpen = !localeOpen"
@@ -251,95 +204,67 @@
         </div>
       </div>
 
-      {%- comment -%}
-        ============ SUB-SUBMENU PANELS (level 3) ============
-        Rendered as SIBLINGS of the sub panel (not nested inside its
-        body) so we can hide the sub panel via display:none when
-        childMenu > 0 without also hiding the subsub that should take
-        its place. The subsub panel is absolute-positioned inside the
-        wrap (matches .mobile-menu__panel--sub's layout), and when
-        subsub-active our CSS flips it to position:relative so it
-        contributes height and sizes the drawer.
-      {%- endcomment -%}
-      {% for sub_link in link.links %}
-        {% if sub_link.links.size > 0 %}
-          {%- comment -%}
-            x-transition intentionally omitted. The Tailwind class-swap
-            transition used on the sub panel (-left-full → left-0) stalled
-            for the subsub — Alpine would add enter-start + enter classes
-            but never advance to enter-end, leaving the panel locked at
-            `left: -100%`. Dropping the transition makes the overlay flip
-            instantly, which matches the "replace" feel the user asked
-            for anyway. We still use `left: 0` from `left-0` so the panel
-            is positioned correctly when visible.
-          {%- endcomment -%}
-          <div class="mobile-navigation mobile-menu__panel mobile-menu__panel--subsub w-full bg-white absolute top-0 left-0 z-30"
-               x-show="childMenu == {{ forloop.index }}"
+      {%- comment -%} ---- SUB-MENU PANELS (one per category with a resolved collection) ---- {%- endcomment -%}
+      {%- for sub_link in link.links -%}
+
+        {%- assign mob2_coll = blank -%}
+        {%- assign mob2_has_coll = false -%}
+        {%- if sub_link.type == 'collection_link' and sub_link.object.products.size > 0 -%}
+          {%- assign mob2_coll = sub_link.object -%}
+          {%- assign mob2_has_coll = true -%}
+        {%- endif -%}
+        {%- if mob2_has_coll == false and sub_link.url contains '/collections/' -%}
+          {%- assign mob2_handle = sub_link.url | split: '/collections/' | last -%}
+          {%- assign mob2_handle = mob2_handle | split: '?' | first -%}
+          {%- assign mob2_handle = mob2_handle | split: '#' | first -%}
+          {%- assign mob2_handle = mob2_handle | split: '/' | first -%}
+          {%- if mob2_handle != blank -%}
+            {%- assign mob2_candidate = collections[mob2_handle] -%}
+            {%- if mob2_candidate.products.size > 0 -%}
+              {%- assign mob2_coll = mob2_candidate -%}
+              {%- assign mob2_has_coll = true -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- assign sub_uid = outer_loop_i | times: 100 | plus: forloop.index -%}
+        {%- if mob2_has_coll -%}
+          <div class="mobile-menu__panel mobile-menu__panel--submenu"
+               x-show="activeMenu == {{ outer_loop_i }} && activeSubMenu == {{ sub_uid }}"
                x-cloak>
-
-            <div class="mobile-menu__body mobile-menu__body--subsub flex flex-col">
-              <ul class="mobile-menu__cards">
-                {%- for grandchild in sub_link.links -%}
-                  {% assign g_block = nil %}
-                  {% for b in section.blocks %}
-                    {% if grandchild.title == b.settings.title
-                       or grandchild.title == b.settings.title_translate
-                       or grandchild.title == b.settings.title_translate_german
-                       or grandchild.title == b.settings.title_translate_french %}
-                      {% assign g_block = b %}
-                    {% endif %}
-                  {% endfor %}
-
-                  {% assign g_feat = blank %}
-                  {% if g_block %}
-                    {% assign g_feat = g_block.settings.feature_text %}
-                    {% if localization.language.iso_code == 'nl' and g_block.settings.feature_text_nl != blank %}{% assign g_feat = g_block.settings.feature_text_nl %}{% endif %}
-                    {% if localization.language.iso_code == 'de' and g_block.settings.feature_text_de != blank %}{% assign g_feat = g_block.settings.feature_text_de %}{% endif %}
-                    {% if localization.language.iso_code == 'fr' and g_block.settings.feature_text_fr != blank %}{% assign g_feat = g_block.settings.feature_text_fr %}{% endif %}
-                  {% endif %}
-
-                  <li class="mobile-menu__card-wrap">
-                    <a class="mobile-menu__card" href="{{ grandchild.url }}">
-                      <div class="mobile-menu__card-img">
-                        {% if g_block.settings.image_item != blank %}
-                          {%- render 'c-image-element',
-                            image: g_block.settings.image_item,
-                            lazy: true,
-                            class: "mobile-menu__card-img-el"
-                          -%}
-                        {% endif %}
-                      </div>
-                      <div class="mobile-menu__card-body">
-                        <div class="mobile-menu__card-title">{{ grandchild.title }}</div>
-                        {% if g_feat != blank %}
-                          <div class="mobile-menu__card-feature">
-                            {% if g_block.settings.feature_icon != blank %}
-                              <span class="mobile-menu__card-icon">
-                                {%- render 'c-image-element',
-                                  image: g_block.settings.feature_icon,
-                                  lazy: true,
-                                  class: "mobile-menu__card-icon-el"
-                                -%}
-                              </span>
-                            {% endif %}
-                            <span class="mobile-menu__card-feature-text">{{ g_feat }}</span>
-                          </div>
-                        {% endif %}
-                      </div>
-                    </a>
-                  </li>
-                {%- endfor -%}
-              </ul>
-
-              <div class="mobile-menu__cta-wrap">
-                <a class="mobile-menu__cta" href="{{ sub_link.url }}">
-                  Shop {{ sub_link.title }}
+            <div class="mobile-menu__submenu-body">
+              {%- for product in mob2_coll.products limit: 9 -%}
+                <a class="mobile-menu__submenu-row" href="{{ product.url }}">
+                  <div class="mobile-menu__submenu-img">
+                    {%- if product.featured_image != blank -%}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 160 }}"
+                        srcset="{{ product.featured_image | image_url: width: 112 }} 112w, {{ product.featured_image | image_url: width: 160 }} 160w"
+                        sizes="56px"
+                        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                        loading="lazy"
+                        class="mobile-menu__submenu-img-el"
+                        width="{{ product.featured_image.width }}"
+                        height="{{ product.featured_image.height }}">
+                    {%- endif -%}
+                  </div>
+                  <span class="mobile-menu__submenu-title">{{ product.title | escape }}</span>
                 </a>
-              </div>
+              {%- endfor -%}
+              <a class="mobile-menu__submenu-row mobile-menu__submenu-row--shop-all" href="{{ mob2_coll.url }}">
+                <div class="mobile-menu__submenu-img mobile-menu__submenu-img--shop-all">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <path d="M6 14h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span class="mobile-menu__submenu-title mobile-menu__submenu-title--shop-all">Shop all {{ sub_link.title }}</span>
+              </a>
             </div>
           </div>
-        {% endif %}
-      {% endfor %}
+        {%- endif -%}
+
+      {%- endfor -%}
+
     {%- endif -%}
   {%- endfor -%}
 </div>
