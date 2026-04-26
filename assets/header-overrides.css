@@ -562,10 +562,6 @@ header.header.absolute .header__icons .header__menu-item span {
   text-transform: lowercase;
   display: inline-block;
 }
-.header__menu-item span::first-letter,
-.header__menu-item.link-only span::first-letter {
-  text-transform: uppercase;
-}
 
 /* Icon container: color cascades into fill="currentColor" child SVGs.
    NOTE: theme targets .icon directly with `color: #fff` on the homepage
