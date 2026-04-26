@@ -3405,8 +3405,13 @@ body.template--index .image-banner .button span {
 
 .banner-reviews-text {
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0;
+  color: #fff;
+  text-align: center;
+}
+.banner-reviews-text strong {
+  font-weight: 500;
 }
 
 .banner-reviews-logo {

@@ -847,13 +847,29 @@ a.product-v2__sp-avatar {
   transition: opacity 0.2s ease;
 }
 
-/* Remove hover arrow */
+/* Remove hover arrow pseudo-elements */
 .product-v2 .product-form__submit::after,
 .product-v2 button[name="add"]::after,
 .product-v2 .product-form__submit::before,
 .product-v2 button[name="add"]::before {
   display: none !important;
   content: none !important;
+}
+
+/* Cart SVG icon injected by global.js — make fill/stroke match button bg so it's invisible */
+.product-v2 .product-form__submit span svg,
+.product-v2 button[name="add"] span svg,
+.product-v2 .product-form__submit span svg path,
+.product-v2 button[name="add"] span svg path {
+  fill: #0395F6 !important;
+  stroke: #0395F6 !important;
+}
+.product-v2 .product-form__submit:not([disabled]):hover span svg,
+.product-v2 button[name="add"]:not([disabled]):hover span svg,
+.product-v2 .product-form__submit:not([disabled]):hover span svg path,
+.product-v2 button[name="add"]:not([disabled]):hover span svg path {
+  fill: #F76503 !important;
+  stroke: #F76503 !important;
 }
 
 .product-v2 .product-form__submit:hover,
@@ -1349,6 +1365,7 @@ sticky-atc-v2.hidden {
   cursor: pointer;
   white-space: nowrap;
   background-color: #0395F6 !important;
+  background-image: none !important;
   border: none !important;
   border-radius: 6px !important;
   color: #fff !important;
@@ -1358,6 +1375,8 @@ sticky-atc-v2.hidden {
 
 .product-v2-sticky-bar__atc-btn:hover {
   background-color: #F76503 !important;
+  background-image: none !important;
+  padding-right: 40px !important;
 }
 
 /* ---------- Size Confirmation Modal ---------- */
