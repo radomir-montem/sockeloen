@@ -3428,13 +3428,18 @@ body.template--index .image-banner .button span {
 .banner-social-proof {
   display: flex;
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 48px !important;
   width: 100%;
 }
 .banner-social-proof .product-v2__social-proof-inner {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+@media screen and (max-width: 749px) {
+  .banner-social-proof {
+    justify-content: flex-start;
+  }
 }
 .banner-social-proof .product-v2__sp-avatars {
   display: flex;
