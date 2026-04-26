@@ -3422,11 +3422,11 @@ body.template--index .image-banner .button span {
 
 /* Push hero banner content group (title, subtitle, buttons, social proof) downward */
 body.template--index .banner__box {
-  transform: translateY(80px);
+  transform: translateY(55px);
 }
 @media screen and (max-width: 749px) {
   body.template--index .banner__box {
-    transform: translateY(50px);
+    transform: translateY(35px);
   }
 }
 
