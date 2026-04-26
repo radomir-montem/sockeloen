@@ -1499,28 +1499,31 @@ body.template--custom-made .menu-drawer {
 
 /* -----------------------------------------------------------------------
    MOBILE MENU — full-viewport dim + blur overlay
-   A real DOM <div id="mobile-menu-overlay"> is injected at body level by
-   header.liquid, and toggled via the details[toggle] event. Using a real
-   element (vs body::before) avoids iOS Safari pseudo-element + has() bugs.
-   z-index 19: below announcement bar (20) and header section (50), so the
-   drawer and header pill always paint above the overlay.
+   Overlay injected inside #shopify-section-header at z-index 59 (below the
+   drawer at 60 and pill at 65). position:fixed so it covers the full
+   viewport. No backdrop-filter — that would blur the drawer above it on
+   iOS Safari. Instead, the white semi-opaque fill lightens the blurred
+   #MainContent beneath, hiding the dark-hero effect.
    ----------------------------------------------------------------------- */
-/* Keep overlay hidden — blur is handled via filter on #MainContent below */
 #mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  background: rgba(255, 255, 255, 0.85);
   display: none;
+  pointer-events: none;
+}
+#mobile-menu-overlay.is-visible {
+  display: block;
 }
 
-/* When mobile menu opens: blur and fade the page content behind the menu.
-   filter:blur is applied to #MainContent (NOT the header/menu, which is a
-   sibling element and therefore unaffected). opacity:0.35 makes the blurred
-   content semi-transparent so the white body background bleeds through,
-   preventing the dark-hero-image effect the user saw. */
+/* When mobile menu opens: blur the page content behind the overlay.
+   The overlay's white fill makes it look light — no brightness hack needed. */
 @media screen and (max-width: 989px) {
   body.menu-is-open #MainContent {
-    filter: blur(4px) brightness(3);
-    opacity: 0.3;
+    filter: blur(5px);
     pointer-events: none;
-    transition: filter 0.2s ease, opacity 0.2s ease;
+    transition: filter 0.2s ease;
   }
 }
 
