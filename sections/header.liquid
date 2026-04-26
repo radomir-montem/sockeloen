@@ -668,6 +668,20 @@
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
 {%- endif -%}
 
+<div id="mobile-menu-overlay" aria-hidden="true"></div>
+<script>
+  (function() {
+    var overlay = document.getElementById('mobile-menu-overlay');
+    var details = document.getElementById('Details-menu-drawer-container');
+    if (overlay && details && !details.dataset.overlayWired) {
+      details.dataset.overlayWired = '1';
+      details.addEventListener('toggle', function() {
+        overlay.classList.toggle('is-visible', details.open);
+      });
+    }
+  })();
+</script>
+
 {% javascript %}
   class StickyHeader extends HTMLElement {
     constructor() {

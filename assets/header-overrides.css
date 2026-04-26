@@ -1504,27 +1504,26 @@ body.template--custom-made .menu-drawer {
 
 /* -----------------------------------------------------------------------
    MOBILE MENU — full-viewport dim + blur overlay
-   Covers the page below the header pill when the drawer is open.
-   The original Dawn rule targets "menu-drawer > details" which doesn't
-   match this theme's DOM ("header-drawer > details"), so we use
-   body:has() + ::before instead — no extra DOM nodes needed.
+   A real DOM <div id="mobile-menu-overlay"> is injected at body level by
+   header.liquid, and toggled via the details[toggle] event. Using a real
+   element (vs body::before) avoids iOS Safari pseudo-element + has() bugs.
+   z-index 19: below announcement bar (20) and header section (50), so the
+   drawer and header pill always paint above the overlay.
    ----------------------------------------------------------------------- */
+#mobile-menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 19;
+  pointer-events: none;
+}
+
 @media screen and (max-width: 989px) {
-  body:has(#Details-menu-drawer-container[open])::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    /* z-index MUST be below the header section wrapper (z-index 50) so the
-       drawer, header pill and announcement bar all paint above the overlay.
-       The drawer's z-index:60 lives inside the header's stacking context, so
-       from the root it resolves at the header's z-index (50). An overlay at
-       z-index:19 sits below all of that while still being above regular page
-       content (z-index:0). */
-    z-index: 19;
-    pointer-events: none;
+  #mobile-menu-overlay.is-visible {
+    display: block;
   }
 }
 
