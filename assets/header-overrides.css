@@ -1525,8 +1525,8 @@ body.template--custom-made .menu-drawer {
     background-color: #ffffff !important;
   }
   body.menu-is-open #MainContent {
-    filter: blur(5px);
-    opacity: 0.08;
+    filter: blur(8px);
+    opacity: 0.40;
     pointer-events: none;
     transition: filter 0.2s ease, opacity 0.2s ease;
   }
