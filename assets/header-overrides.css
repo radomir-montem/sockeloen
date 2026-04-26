@@ -1517,8 +1517,8 @@ body.template--custom-made .menu-drawer {
    preventing the dark-hero-image effect the user saw. */
 @media screen and (max-width: 989px) {
   body.menu-is-open #MainContent {
-    filter: blur(5px);
-    opacity: 0.35;
+    filter: blur(4px) brightness(3);
+    opacity: 0.3;
     pointer-events: none;
     transition: filter 0.2s ease, opacity 0.2s ease;
   }
