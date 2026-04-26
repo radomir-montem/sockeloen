@@ -1515,10 +1515,21 @@ body.template--custom-made .menu-drawer {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 10;
+  /* z-index 59: local to #shopify-section-header's stacking context (global 15).
+     Sits above page content (global 0) but below the drawer (local 60) and
+     the header pill (#tw-header at local 65). No backdrop-filter needed —
+     the drawer's own blur(70px) provides the glass effect behind it. */
+  z-index: 59;
   pointer-events: none;
+}
+
+/* Raise the header pill above the overlay so the close X and cart/search
+   icons remain tappable while the mobile menu is open. */
+@media screen and (max-width: 989px) {
+  #tw-header {
+    position: relative;
+    z-index: 65;
+  }
 }
 
 @media screen and (max-width: 989px) {
@@ -2285,7 +2296,7 @@ body.template--index .image-banner .button span {
 /* Locale switcher */
 .mobile-menu--v2 .mobile-menu__locale {
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 .mobile-menu--v2 .mobile-menu__locale-toggle {
@@ -2648,6 +2659,38 @@ body.template--index .image-banner .button span {
    text rows with a > chevron; tapping expands a 3-column
    product grid inline below.
    ------------------------------------------------------------ */
+
+/* ---- Tab bar: top-level category switcher ----
+   Horizontal nav strip at the top of the drawer. Tabs map 1:1 to
+   top-level nav items that have sub-links. Clicking a tab sets
+   activeMenu and resets any open sub-menu. */
+.mobile-menu--v2 .mobile-menu__tab-bar {
+  display: flex;
+  background: #ffffff;
+  border-bottom: 1px solid #F0EEEA;
+  flex-shrink: 0;
+}
+
+.mobile-menu--v2 .mobile-menu__tab {
+  flex: 1;
+  padding: 13px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #888888;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.mobile-menu--v2 .mobile-menu__tab.is-active {
+  color: #111111;
+  border-bottom-color: #111111;
+  font-weight: 700;
+}
 
 /* Category list — inherits the scrollable flex child role
    that .mobile-menu__cards previously held */

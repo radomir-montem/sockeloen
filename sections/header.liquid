@@ -675,7 +675,12 @@
     var overlay = document.createElement('div');
     overlay.id = 'mobile-menu-overlay';
     overlay.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(overlay);
+    // Inject inside the header section so the overlay participates in the
+    // header's stacking context (global z-index 15). This lets the overlay
+    // sit at local z-index 59 — above page content but below the drawer (60)
+    // and the header pill (#tw-header at local 65).
+    var headerSection = document.getElementById('shopify-section-header') || document.body;
+    headerSection.appendChild(overlay);
 
     var details = document.getElementById('Details-menu-drawer-container');
     if (details && !details.dataset.overlayWired) {

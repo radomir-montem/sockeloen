@@ -65,6 +65,25 @@
     @drawer:back.window="closeSubMenu()"
     x-transition.scale>
 
+  {%- comment -%} ============ TAB BAR ============ {%- endcomment -%}
+  {%- assign tab_count = 0 -%}
+  {%- for link in menu.links -%}{%- if link.links.size > 0 -%}{%- assign tab_count = tab_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+  {%- if tab_count > 1 -%}
+    <div class="mobile-menu__tab-bar" role="tablist">
+      {%- for link in menu.links -%}
+        {%- if link.links.size > 0 -%}
+          <button class="mobile-menu__tab"
+                  role="tab"
+                  :aria-selected="activeMenu == {{ forloop.index }} ? 'true' : 'false'"
+                  :class="{ 'is-active': activeMenu == {{ forloop.index }} }"
+                  @click="activeMenu = {{ forloop.index }}; closeSubMenu()">
+            {{ link.title }}
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
   {%- comment -%} ============ PANELS ============ {%- endcomment -%}
   {%- for link in menu.links -%}
     {%- if link.links.size > 0 -%}
