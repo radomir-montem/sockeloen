@@ -104,6 +104,7 @@
         "text_CebXkd",
         "button_TzWjb9"
       ],
+      "disabled": true,
       "name": "t:sections.rich-text.presets.name",
       "settings": {
         "desktop_content_position": "center",
