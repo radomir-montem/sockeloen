@@ -118,50 +118,66 @@
                          x-cloak>
                       {%- if sub_link.links.size > 0 -%}
                         {%- for grandchild in sub_link.links -%}
-                          {% assign card_block = nil %}
-                          {% for b in section.blocks %}
-                            {% if grandchild.title == b.settings.title
-                               or grandchild.title == b.settings.title_translate
-                               or grandchild.title == b.settings.title_translate_german
-                               or grandchild.title == b.settings.title_translate_french %}
-                              {% assign card_block = b %}
-                            {% endif %}
-                          {% endfor %}
+                          {%- assign is_direct_link = false -%}
+                          {%- if grandchild.type != 'product_link' and grandchild.type != 'collection_link' -%}
+                            {%- assign is_direct_link = true -%}
+                          {%- endif -%}
 
-                          {% assign card_feat = blank %}
-                          {% if card_block %}
-                            {% assign card_feat = card_block.settings.feature_text %}
-                            {% if localization.language.iso_code == 'nl' and card_block.settings.feature_text_nl != blank %}{% assign card_feat = card_block.settings.feature_text_nl %}{% endif %}
-                            {% if localization.language.iso_code == 'de' and card_block.settings.feature_text_de != blank %}{% assign card_feat = card_block.settings.feature_text_de %}{% endif %}
-                            {% if localization.language.iso_code == 'fr' and card_block.settings.feature_text_fr != blank %}{% assign card_feat = card_block.settings.feature_text_fr %}{% endif %}
-                          {% endif %}
-
-                          <a class="mega-menu-v2-card" href="{{ grandchild.url }}">
-                            <div class="mega-menu-v2-card-img">
-                              {% if card_block.settings.image_item != blank %}
-                                {%- render 'c-image-element',
-                                  image: card_block.settings.image_item,
-                                  lazy: true,
-                                  class: "mega-menu-v2-card-img-el"
-                                -%}
-                              {% endif %}
-                            </div>
-                            <div class="mega-menu-v2-card-title">{{ grandchild.title }}</div>
-                            {% if card_feat != blank %}
-                              <div class="mega-menu-v2-card-feature">
-                                {% if card_block.settings.feature_icon != blank %}
-                                  <span class="mega-menu-v2-card-icon">
-                                    {%- render 'c-image-element',
-                                      image: card_block.settings.feature_icon,
-                                      lazy: true,
-                                      class: "mega-menu-v2-card-icon-el"
-                                    -%}
-                                  </span>
-                                {% endif %}
-                                <span class="mega-menu-v2-card-feature-text">{{ card_feat }}</span>
+                          {%- if is_direct_link -%}
+                            <a class="mega-menu-v2-card mega-menu-v2-card--shop-all" href="{{ grandchild.url }}">
+                              <div class="mega-menu-v2-card-img mega-menu-v2-card-img--shop-all">
+                                <svg class="mega-menu-v2-card-shop-all-arrow" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                  <path d="M6 14h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                               </div>
+                              <div class="mega-menu-v2-card-title">{{ grandchild.title }}</div>
+                            </a>
+                          {%- else -%}
+                            {% assign card_block = nil %}
+                            {% for b in section.blocks %}
+                              {% if grandchild.title == b.settings.title
+                                 or grandchild.title == b.settings.title_translate
+                                 or grandchild.title == b.settings.title_translate_german
+                                 or grandchild.title == b.settings.title_translate_french %}
+                                {% assign card_block = b %}
+                              {% endif %}
+                            {% endfor %}
+
+                            {% assign card_feat = blank %}
+                            {% if card_block %}
+                              {% assign card_feat = card_block.settings.feature_text %}
+                              {% if localization.language.iso_code == 'nl' and card_block.settings.feature_text_nl != blank %}{% assign card_feat = card_block.settings.feature_text_nl %}{% endif %}
+                              {% if localization.language.iso_code == 'de' and card_block.settings.feature_text_de != blank %}{% assign card_feat = card_block.settings.feature_text_de %}{% endif %}
+                              {% if localization.language.iso_code == 'fr' and card_block.settings.feature_text_fr != blank %}{% assign card_feat = card_block.settings.feature_text_fr %}{% endif %}
                             {% endif %}
-                          </a>
+
+                            <a class="mega-menu-v2-card" href="{{ grandchild.url }}">
+                              <div class="mega-menu-v2-card-img">
+                                {% if card_block.settings.image_item != blank %}
+                                  {%- render 'c-image-element',
+                                    image: card_block.settings.image_item,
+                                    lazy: true,
+                                    class: "mega-menu-v2-card-img-el"
+                                  -%}
+                                {% endif %}
+                              </div>
+                              <div class="mega-menu-v2-card-title">{{ grandchild.title }}</div>
+                              {% if card_feat != blank %}
+                                <div class="mega-menu-v2-card-feature">
+                                  {% if card_block.settings.feature_icon != blank %}
+                                    <span class="mega-menu-v2-card-icon">
+                                      {%- render 'c-image-element',
+                                        image: card_block.settings.feature_icon,
+                                        lazy: true,
+                                        class: "mega-menu-v2-card-icon-el"
+                                      -%}
+                                    </span>
+                                  {% endif %}
+                                  <span class="mega-menu-v2-card-feature-text">{{ card_feat }}</span>
+                                </div>
+                              {% endif %}
+                            </a>
+                          {%- endif -%}
                         {%- endfor -%}
                       {%- else -%}
                         {%- comment -%}
