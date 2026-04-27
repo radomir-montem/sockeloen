@@ -254,6 +254,16 @@
                             </div>
                             <div class="mega-menu-v2-card-title">Shop all {{ sub_link.title | escape }}</div>
                           </a>
+                        {%- elsif sub_link.type != 'product_link' and sub_link.type != 'collection_link' -%}
+                          {%- comment -%} Direct page/external link — render arrow card like "shop all" {%- endcomment -%}
+                          <a class="mega-menu-v2-card mega-menu-v2-card--shop-all" href="{{ sub_link.url }}">
+                            <div class="mega-menu-v2-card-img mega-menu-v2-card-img--shop-all">
+                              <svg class="mega-menu-v2-card-shop-all-arrow" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <path d="M6 14h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                            </div>
+                            <div class="mega-menu-v2-card-title">{{ sub_link.title }}</div>
+                          </a>
                         {%- else -%}
                           {%- comment -%} Couldn't resolve a collection — fall back to original single feature card {%- endcomment -%}
                           {% assign fallback_block = nil %}
