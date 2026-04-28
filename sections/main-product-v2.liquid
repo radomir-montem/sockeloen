@@ -971,7 +971,10 @@
                             setTimeout(function() {
                               var variant = variantRadios.currentVariant;
                               if (variant && variant.featured_media) {
-                                updateMediaByAlt(variant.featured_media.alt);
+                                var slideId = 'Slide-{{ section.id }}-' + variant.featured_media.id;
+                                var slide = document.getElementById(slideId);
+                                var targetAlt = slide ? slide.getAttribute('data-variant-alt') : variant.featured_media.alt;
+                                updateMediaByAlt(targetAlt);
                               }
                             }, 0);
                           });
