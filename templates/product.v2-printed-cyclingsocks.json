@@ -12,6 +12,25 @@
     "main": {
       "type": "main-product-v2",
       "blocks": {
+        "usps_8gwUq7": {
+          "type": "usps",
+          "settings": {
+            "usp1_text": "",
+            "usp2_text": "",
+            "usp3_text": "",
+            "usp4_text": ""
+          }
+        },
+        "collapsible_tab_7gPUjj": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Collapsible row",
+            "icon": "check_mark",
+            "content": "",
+            "page": "",
+            "logos_size": 26
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -58,6 +77,8 @@
         }
       },
       "block_order": [
+        "usps_8gwUq7",
+        "collapsible_tab_7gPUjj",
         "variant_picker",
         "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
@@ -259,6 +280,18 @@
         "padding_bottom": 60
       }
     },
+    "custom_liquid_RmH67A": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "heading": "",
+        "heading_size": 16,
+        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\" data-filter-type=\"product\" data-filter-id=\"{{product.id}}\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
+        "color_scheme": "background-1",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
     "satisfaction_guarantee_6fcj3K": {
       "type": "satisfaction-guarantee",
       "name": "Satisfaction Guarantee",
@@ -411,18 +444,6 @@
         "background_color": "#ffffff",
         "padding_top": 20,
         "padding_bottom": 0
-      }
-    },
-    "custom_liquid_RmH67A": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "heading": "",
-        "heading_size": 16,
-        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\" data-filter-type=\"product\" data-filter-id=\"{{product.id}}\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
-        "color_scheme": "background-1",
-        "padding_top": 20,
-        "padding_bottom": 20
       }
     }
   },

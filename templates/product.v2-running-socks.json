@@ -129,8 +129,8 @@
             "video_url": "",
             "image": "shopify://shop_images/Sockeloen_-04_octobre_2025-61_1.jpg",
             "heading": "Worn by",
-            "heading_italic": "World Champions",
-            "description": "<p>Some of the best male and female riders in the world choose Sockeloen, because of the materials, because of the wind tunnel test results, but often simply because they think they look great.</p>"
+            "heading_italic": "Top Runners",
+            "description": "<p>From the track to the marathon — some very good runners choose Sockeloen. Because every step counts, and the right sock makes the difference.</p>"
           }
         },
         "benefit_BKLxKT": {
@@ -257,6 +257,18 @@
         "accent_color": "#f76503",
         "padding_top": 60,
         "padding_bottom": 60
+      }
+    },
+    "custom_liquid_RmH67A": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "heading": "",
+        "heading_size": 16,
+        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\" data-filter-type=\"product\" data-filter-id=\"{{product.id}}\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
+        "color_scheme": "background-1",
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
     "satisfaction_guarantee_6fcj3K": {
@@ -411,18 +423,6 @@
         "background_color": "#ffffff",
         "padding_top": 20,
         "padding_bottom": 0
-      }
-    },
-    "custom_liquid_RmH67A": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "heading": "",
-        "heading_size": 16,
-        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\" data-filter-type=\"product\" data-filter-id=\"{{product.id}}\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
-        "color_scheme": "background-1",
-        "padding_top": 20,
-        "padding_bottom": 20
       }
     }
   },
