@@ -340,7 +340,7 @@
           "type": "faq",
           "settings": {
             "question": "What material are Sockeloen socks made of?",
-            "answer": "<p>These cycling socks are made from a premium blend of [metafield], polypropylene, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>",
+            "answer": "<p>These cycling socks are made from a premium blend of [metafield], polypropylene, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long runs.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-Skin"
           }
@@ -348,7 +348,7 @@
         "faq_YhiEwH": {
           "type": "faq",
           "settings": {
-            "question": "How should I wash my cycling socks?",
+            "question": "How should I wash my running socks?",
             "answer": "<p>Machine wash at 30°C inside out. Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry — air dry for best results. This keeps the fibers intact and your socks performing at their best.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
