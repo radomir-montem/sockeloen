@@ -175,7 +175,7 @@
             "hotspot_x": 44,
             "hotspot_y": 21,
             "heading": "Sockeloen Cuff",
-            "description": "<p><strong>The Ultra Elastic super cuff  is [metafield] high</strong> and makes sure this sock is always exactly on the right spott and won't fall down. We created this by sourcing the best elastane of Europe and mixed it into this sock.</p>",
+            "description": "<p>Extra long cuff for optimal aerodynamic fit around your wrist, eliminating any gap between glove and sleeve.</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
@@ -218,8 +218,8 @@
           "settings": {
             "hotspot_x": 29,
             "hotspot_y": 74,
-            "heading": "Sockeloen Seemless Toe",
-            "description": "<p>To avoid irritating, or high pressure points inside your cycling shoe we work with a <strong>seemless toe </strong>without any area's that could irritate your toes while riding.</p>",
+            "heading": "Sockeloen Fit",
+            "description": "<p>A second-skin fit that moves with your hand, approved by an Amstel Gold Race winner.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
