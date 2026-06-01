@@ -169,17 +169,6 @@
     "product_exploder_4gMj38": {
       "type": "product-exploder",
       "blocks": {
-        "hotspot_DcBjXY": {
-          "type": "hotspot",
-          "settings": {
-            "hotspot_x": 44,
-            "hotspot_y": 21,
-            "heading": "Sockeloen anti-slip strip",
-            "description": "<p>The elastic stretch fit and anti-slip strip keep the overshoe locked in place all ride long — no sliding, no sagging, no distractions.<br/><br/></p>",
-            "metafield_key": "custom.height",
-            "metafield_fallback": "19cm"
-          }
-        },
         "hotspot_QEDVDk": {
           "type": "hotspot",
           "settings": {
@@ -226,7 +215,6 @@
         }
       },
       "block_order": [
-        "hotspot_DcBjXY",
         "hotspot_QEDVDk",
         "hotspot_cKCjnr",
         "hotspot_YfjpGW",
