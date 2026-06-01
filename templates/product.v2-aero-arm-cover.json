@@ -197,7 +197,7 @@
             "hotspot_x": 71,
             "hotspot_y": 57,
             "heading": "Sockeloen Mesh",
-            "description": "<p>Breathable mesh panels keep your hands comfortable during long efforts without sacrificing aerodynamics.</p>",
+            "description": "<p>Breathable mesh panels keep your arms comfortable during long efforts without sacrificing aerodynamics.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -318,8 +318,8 @@
         "faq_9RzfCj": {
           "type": "faq",
           "settings": {
-            "question": "What material are the Aero Gloves made of?",
-            "answer": "<p>The gloves are made of the fastest aero material for this position, tested in Eindhoven and Silverstone for maximum speed gains.</p>",
+            "question": "What material are the Arm Warmers made of?",
+            "answer": "<p>The arm warmers are made of the fastest aero material for this position, tested in Eindhoven and Silverstone for maximum speed gains.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
