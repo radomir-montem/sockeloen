@@ -309,7 +309,7 @@
         "faq_Y8JLka": {
           "type": "faq",
           "settings": {
-            "question": "How do I find the right size for the Aero Gloves?",
+            "question": "How do I find the right size for the  Arm Covers?",
             "answer": "<p>Our gloves are available in S, M, L and XL. If you're between sizes, we recommend sizing up for a more comfortable fit.</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
@@ -318,8 +318,8 @@
         "faq_9RzfCj": {
           "type": "faq",
           "settings": {
-            "question": "What material are the Arm Warmers made of?",
-            "answer": "<p>The arm warmers are made of the fastest aero material for this position, tested in Eindhoven and Silverstone for maximum speed gains.</p>",
+            "question": "What material are the  Arm Covers made of?",
+            "answer": "<p>The  Arm Covers are made of the fastest aero material for this position, tested in Eindhoven and Silverstone for maximum speed gains.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
