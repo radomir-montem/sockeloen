@@ -315,8 +315,8 @@
         "faq_7idmHH": {
           "type": "faq",
           "settings": {
-            "question": "What material are Sockeloen socks made of?",
-            "answer": "<p>These cycling socks are made from a premium blend of [metafield], polypropylene, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>",
+            "question": "What material are Sockeloen baselayer made of?",
+            "answer": "<p>Our baselayers are made of a lightweight fabric that efficiently wicks away moisture and quickly releases heat, keeping your body dry and maintaining a stable core temperature, even during high-intensity efforts.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-Skin"
           }
