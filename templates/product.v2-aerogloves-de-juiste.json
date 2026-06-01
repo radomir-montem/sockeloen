@@ -371,15 +371,6 @@
             "metafield_key": "",
             "metafield_fallback": ""
           }
-        },
-        "faq_JgMmFK": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I use these socks for other sports?",
-            "answer": "<p>Absolutely! While designed for cycling, our socks perform great for running, hiking, and everyday wear. The moisture-wicking properties and comfortable fit make them versatile for any activity.</p>",
-            "metafield_key": "",
-            "metafield_fallback": ""
-          }
         }
       },
       "block_order": [
@@ -388,8 +379,7 @@
         "faq_7idmHH",
         "faq_YhiEwH",
         "faq_NLxUKi",
-        "faq_wRWWf3",
-        "faq_JgMmFK"
+        "faq_wRWWf3"
       ],
       "name": "Product FAQ",
       "settings": {
