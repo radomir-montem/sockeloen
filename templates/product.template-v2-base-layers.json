@@ -185,8 +185,8 @@
           "settings": {
             "hotspot_x": 54,
             "hotspot_y": 37,
-            "heading": "Sockeloen Mesh",
-            "description": "<p><strong>The [metafield] knitting structure combines: </strong>flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>",
+            "heading": "Sockeloen lightweight fabric",
+            "description": "<p>The lightweight fabric efficiently wicks away moisture and quickly releases heat, keeping your body dry and maintaining a stable core temperature, even during high-intensity efforts.</p>",
             "metafield_key": "custom.knit_structure",
             "metafield_fallback": "O-Mesh"
           }
