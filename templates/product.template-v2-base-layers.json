@@ -342,17 +342,8 @@
         "faq_wRWWf3": {
           "type": "faq",
           "settings": {
-            "question": "Why are cycling socks longer than regular socks?",
-            "answer": "<p>The taller cuff make  your legs look better and stronger on the bike. Our aero sock material is faster then your skin, so the higher this sock the more aero gains. Most pro cyclists prefer a cuff height between 17 to 21cm depending on their leg length.</p>",
-            "metafield_key": "",
-            "metafield_fallback": ""
-          }
-        },
-        "faq_JgMmFK": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I use these socks for other sports?",
-            "answer": "<p>Absolutely! While designed for cycling, our socks perform great for running, hiking, and everyday wear. The moisture-wicking properties and comfortable fit make them versatile for any activity.</p>",
+            "question": "Why do i need a baselayer?",
+            "answer": "<p>The aerodynamic sleeves reduce drag, helping you go faster, while the built-in front pockets act as a chest fairing — the more you fill them with a bidon, gels, or a radio, the greater the aerodynamic advantage you gain.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -364,8 +355,7 @@
         "faq_7idmHH",
         "faq_YhiEwH",
         "faq_NLxUKi",
-        "faq_wRWWf3",
-        "faq_JgMmFK"
+        "faq_wRWWf3"
       ],
       "name": "Product FAQ",
       "settings": {
