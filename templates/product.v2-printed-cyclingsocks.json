@@ -12,6 +12,13 @@
     "main": {
       "type": "main-product-v2",
       "blocks": {
+        "variant_picker_4RtETm": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "color_swatch_style": "colors"
+          }
+        },
         "usps_8gwUq7": {
           "type": "usps",
           "settings": {
@@ -29,13 +36,6 @@
             "content": "",
             "page": "",
             "logos_size": 26
-          }
-        },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button",
-            "color_swatch_style": "images"
           }
         },
         "aov_ai_bundle_offer_volume_RqqnNt": {
@@ -77,9 +77,9 @@
         }
       },
       "block_order": [
+        "variant_picker_4RtETm",
         "usps_8gwUq7",
         "collapsible_tab_7gPUjj",
-        "variant_picker",
         "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
         "size_guide_irnJtn",
