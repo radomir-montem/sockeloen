@@ -327,8 +327,8 @@
         "faq_7idmHH": {
           "type": "faq",
           "settings": {
-            "question": "How do I wash my Arm Warmers?",
-            "answer": "<p>We recommend washing your Arm Warmers at 30°C on a gentle cycle. Do not tumble dry.</p>",
+            "question": "How do I wash my  Arm Covers?",
+            "answer": "<p>We recommend washing your Arm Covers at 30°C on a gentle cycle. Do not tumble dry.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-Skin"
           }
