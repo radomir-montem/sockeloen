@@ -202,24 +202,13 @@
             "metafield_fallback": ""
           }
         },
-        "hotspot_YfjpGW": {
-          "type": "hotspot",
-          "settings": {
-            "hotspot_x": 56,
-            "hotspot_y": 63,
-            "heading": "Sockeloen Grip",
-            "description": "<p>Precision grip zones give you full control of the bars, even in wet conditions.</p>",
-            "metafield_key": "custom.materials",
-            "metafield_fallback": "Q-skin"
-          }
-        },
         "hotspot_bBQhNX": {
           "type": "hotspot",
           "settings": {
             "hotspot_x": 29,
             "hotspot_y": 74,
             "heading": "Sockeloen Fit",
-            "description": "<p>A second-skin fit that moves with your hand, approved by an Amstel Gold Race winner.</p>",
+            "description": "<p>A second-skin fit that moves with your arm, approved by an Amstel Gold Race winner.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -229,13 +218,12 @@
         "hotspot_DcBjXY",
         "hotspot_QEDVDk",
         "hotspot_cKCjnr",
-        "hotspot_YfjpGW",
         "hotspot_bBQhNX"
       ],
       "name": "Product Exploder",
       "settings": {
         "heading": "Let's take a look",
-        "heading_italic": "inside the Gloves",
+        "heading_italic": "inside the Arm Warmers",
         "subtitle": "<p>Discover what makes our gloves truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
         "background_color": "#ffffff",
         "text_color": "#000000",
