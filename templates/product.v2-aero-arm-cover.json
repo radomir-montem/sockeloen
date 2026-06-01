@@ -327,8 +327,8 @@
         "faq_7idmHH": {
           "type": "faq",
           "settings": {
-            "question": "How do I wash my Aero Gloves?",
-            "answer": "<p>We recommend washing your gloves at 30°C on a gentle cycle. Do not tumble dry.</p>",
+            "question": "How do I wash my Arm Warmers?",
+            "answer": "<p>We recommend washing your Arm Warmers at 30°C on a gentle cycle. Do not tumble dry.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-Skin"
           }
@@ -336,7 +336,7 @@
         "faq_YhiEwH": {
           "type": "faq",
           "settings": {
-            "question": "Why do the gloves have such a long cuff?",
+            "question": "Why do the Arms Warmers have such a long cuff?",
             "answer": "<p>The extra long cuff eliminates any gap between your glove and sleeve, improving your aerodynamic profile and helping you go faster.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
@@ -345,7 +345,7 @@
         "faq_NLxUKi": {
           "type": "faq",
           "settings": {
-            "question": "How long do Sockeloen gloves last?",
+            "question": "How long do Sockeloen Arm Warmers last?",
             "answer": "<p>With proper care, our gloves typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
@@ -354,8 +354,8 @@
         "faq_wRWWf3": {
           "type": "faq",
           "settings": {
-            "question": "Are these gloves approved by pro riders?",
-            "answer": "<p>Yes, the Aero Race 2.0 Gloves are approved by an Amstel Gold Race winner and tested at the highest level of cycling.</p>",
+            "question": "Are these Arm Warmers approved by pro riders?",
+            "answer": "<p>Yes, the Aero Arm Warmers are approved by an Amstel Gold Race winner and tested at the highest level of cycling.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
