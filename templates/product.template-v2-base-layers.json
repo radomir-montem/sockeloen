@@ -169,17 +169,6 @@
     "product_exploder_4gMj38": {
       "type": "product-exploder",
       "blocks": {
-        "hotspot_QEDVDk": {
-          "type": "hotspot",
-          "settings": {
-            "hotspot_x": 54,
-            "hotspot_y": 37,
-            "heading": "Sockeloen lightweight fabric",
-            "description": "<p>The lightweight fabric efficiently wicks away moisture and quickly releases heat, keeping your body dry and maintaining a stable core temperature, even during high-intensity efforts.</p>",
-            "metafield_key": "custom.knit_structure",
-            "metafield_fallback": "O-Mesh"
-          }
-        },
         "hotspot_DcBjXY": {
           "type": "hotspot",
           "settings": {
@@ -189,6 +178,17 @@
             "description": "<p>The built-in front pockets act as a chest fairing, filling the void between your chest and jersey to actively reduce air resistance and improve your aerodynamic profile during races</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
+          }
+        },
+        "hotspot_QEDVDk": {
+          "type": "hotspot",
+          "settings": {
+            "hotspot_x": 54,
+            "hotspot_y": 37,
+            "heading": "Sockeloen lightweight fabric",
+            "description": "<p>The lightweight fabric efficiently wicks away moisture and quickly releases heat, keeping your body dry and maintaining a stable core temperature, even during high-intensity efforts.</p>",
+            "metafield_key": "custom.knit_structure",
+            "metafield_fallback": "O-Mesh"
           }
         },
         "hotspot_cKCjnr": {
@@ -204,8 +204,8 @@
         }
       },
       "block_order": [
-        "hotspot_QEDVDk",
         "hotspot_DcBjXY",
+        "hotspot_QEDVDk",
         "hotspot_cKCjnr"
       ],
       "name": "Product Exploder",
