@@ -140,7 +140,7 @@
             "image": "shopify://shop_images/WhatsApp_Image_2026-06-01_at_19.16.05.jpg",
             "heading": "Make your faster",
             "heading_italic": "And saver.",
-            "description": "<p>The reason Sockeloen made aero arm warmers. Most arm warmers add bulk and slow you down. Loose fabric, poor fit, unnecessary drag. A nightmare. We developed an arm warmer that fits like a second skin, reducing air resistance and keeping you fast. Make your arms the weapons they really are.</p>"
+            "description": "<p>The reason Sockeloen made aero Arm Covers. Most arm warmers add bulk and slow you down. Loose fabric, poor fit, unnecessary drag. A nightmare. We developed an arm warmer that fits like a second skin, reducing air resistance and keeping you fast. Make your arms the weapons they really are.</p>"
           }
         },
         "benefit_igt7xh": {
@@ -150,7 +150,7 @@
             "image": "shopify://shop_images/260202_SOCKELOEN_Aero_Essentials_Angus_Fraser_0278.jpg",
             "heading": "Windtunnel",
             "heading_italic": "Proven.",
-            "description": "<p>Sockeloen is more than just socks. After intensive aero testing in Eindhoven and Silverstone, we developed the Aero Arm Warmer — approved by an Amstel Gold Race winner. With the fastest aero material for this position and an extra long fit around your arms, you'll cut through the air like never before. When you want to ride fast, without unwanted drag: Sockeloen Aero Arm Warmers are what you need</p>"
+            "description": "<p>Sockeloen is more than just socks. After intensive aero testing in Eindhoven and Silverstone, we developed the Aero  Arm Covers — approved by an Amstel Gold Race winner. With the fastest aero material for this position and an extra long fit around your arms, you'll cut through the air like never before. When you want to ride fast, without unwanted drag: Sockeloen Aero Arm Warmers are what you need</p>"
           }
         }
       },
@@ -175,7 +175,7 @@
             "hotspot_x": 44,
             "hotspot_y": 21,
             "heading": "Sockeloen Cuff",
-            "description": "<p>Extra long cuff for optimal aerodynamic fit around your wrist, eliminating any gap between glove and sleeve.</p>",
+            "description": "<p>Extra long cuff for optimal aerodynamic fit around your arms, eliminating any gap between glove and sleeve.</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
@@ -223,8 +223,8 @@
       "name": "Product Exploder",
       "settings": {
         "heading": "Let's take a look",
-        "heading_italic": "inside the Arm Warmers",
-        "subtitle": "<p>Discover what makes our arm warmers truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
+        "heading_italic": "inside the  Arm Covers",
+        "subtitle": "<p>Discover what makes our  Arm Covers truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
         "background_color": "#ffffff",
         "text_color": "#000000",
         "accent_color": "#f76503",
