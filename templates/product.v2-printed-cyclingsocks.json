@@ -12,7 +12,7 @@
     "main": {
       "type": "main-product-v2",
       "blocks": {
-        "variant_picker_4RtETm": {
+        "variant_picker_zY3Bwx": {
           "type": "variant_picker",
           "settings": {
             "picker_type": "button",
@@ -77,7 +77,7 @@
         }
       },
       "block_order": [
-        "variant_picker_4RtETm",
+        "variant_picker_zY3Bwx",
         "usps_8gwUq7",
         "collapsible_tab_7gPUjj",
         "aov_ai_bundle_offer_volume_RqqnNt",
