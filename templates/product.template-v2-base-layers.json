@@ -297,8 +297,8 @@
         "faq_Y8JLka": {
           "type": "faq",
           "settings": {
-            "question": "Which sockheight are these socks?",
-            "answer": "<p><strong>This sock is [metafield] high. </strong>We optimized our fitt for the perfect looking sockheight on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
+            "question": "How do i use the front pockets?",
+            "answer": "<p>The front pockets act as a chest fairing, filling the void between your chest and jersey to reduce air resistance. The more you fill them — with a bidon, gels, or a radio — the more aerodynamic advantage you gain, as a fuller pocket creates a smoother surface for air to flow over</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
@@ -306,8 +306,8 @@
         "faq_9RzfCj": {
           "type": "faq",
           "settings": {
-            "question": "What if I am between sizes of the cycling socks?",
-            "answer": "<p>Our socks come in 36-42 and 43-48 or one size(39-46). If you're between sizes, we recommend sizing up for a more comfortable fit. Check our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>size guide</strong></span></a> for detailed measurements.</p>",
+            "question": "What if I am between sizes of the cycling the baselayer?",
+            "answer": "<p>Our baselayers are available in XS, S, M, L, XL and XXL. If you're between sizes, we recommend sizing up for a more comfortable fit.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
