@@ -309,8 +309,8 @@
         "faq_Y8JLka": {
           "type": "faq",
           "settings": {
-            "question": "Which height are these overshoes?",
-            "answer": "<p><strong>This overshoes are 17, 19 and 21cm high. </strong>We optimized our fitt for the perfect looking height on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
+            "question": "Which glove should I choose — Winblock, Winter or Lobster?",
+            "answer": "<p>It depends on the temperature. The Winblock is perfect for cool, dry days when you just need wind protection. The Winter glove is your go-to for rides under 10°C. The Lobster is built for the coldest conditions below 5°C — when warmth matters most.</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
@@ -318,8 +318,8 @@
         "faq_9RzfCj": {
           "type": "faq",
           "settings": {
-            "question": "Is this overshoe waterproof?",
-            "answer": "<p>Yes, these overshoes are<strong> fully waterproof, </strong>built for any weather condition and extremely easy to clean.</p>",
+            "question": "Are the Sockeloen gloves waterproof?",
+            "answer": "<p>The Winter and Lobster gloves are both wind and waterproof, keeping your hands dry and warm in wet conditions. The Winblock is windproof and water-resistant — ideal for drier, cooler rides.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
