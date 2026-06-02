@@ -327,8 +327,8 @@
         "faq_7idmHH": {
           "type": "faq",
           "settings": {
-            "question": "What material are Sockeloen overshoes made of?",
-            "answer": "<p><strong>These overshoes are made from a premium blend of waterproof fabrics</strong>. This provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>",
+            "question": "What material are the Sockeloen gloves made of?",
+            "answer": "<p>Each glove uses a different combination of materials tailored to its purpose — windproof fabrics, water-resistant outer layers and warm inner linings — all engineered for maximum protection without losing feel on the bars.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-Skin"
           }
