@@ -137,7 +137,7 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/251028_SOCKELOEN_RUNNING_ANGUS_FRASER_STUDIO_0265.jpg",
+            "image": "shopify://shop_images/DSC08628.jpg",
             "heading": "Make your style speak",
             "heading_italic": "for itself.",
             "description": "<p>The reason Sockeloen went beyond the bike. Most casual socks lack any real thought — wrong height, wrong fit, and yes, they fall down to your ankles. A nightmare. So our casual socks couldn't be left behind. We developed a very stretchable casual sock, with the perfect height, that stays exactly where it should. Make every step count, on and off the bike.</p>"
@@ -330,7 +330,7 @@
         "faq_9RzfCj": {
           "type": "faq",
           "settings": {
-            "question": "What if I am between sizes of the cycling socks?",
+            "question": "What if I am between sizes of the socks?",
             "answer": "<p>Our socks come in 36-42 and 43-48 or one size(39-46). If you're between sizes, we recommend sizing up for a more comfortable fit. Check our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>size guide</strong></span></a> for detailed measurements.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
@@ -363,15 +363,6 @@
             "metafield_fallback": ""
           }
         },
-        "faq_wRWWf3": {
-          "type": "faq",
-          "settings": {
-            "question": "Why are running socks longer than regular socks?",
-            "answer": "<p>The taller cuff make  your legs look better and stronger on the road. Our aero sock material is faster then your skin, so the higher this sock the more aero gains. We prefer prefer a cuff height between 17 to 21cm depending on their leg length.</p>",
-            "metafield_key": "",
-            "metafield_fallback": ""
-          }
-        },
         "faq_JgMmFK": {
           "type": "faq",
           "settings": {
@@ -388,7 +379,6 @@
         "faq_7idmHH",
         "faq_YhiEwH",
         "faq_NLxUKi",
-        "faq_wRWWf3",
         "faq_JgMmFK"
       ],
       "name": "Product FAQ",
