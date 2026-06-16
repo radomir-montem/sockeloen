@@ -194,6 +194,16 @@
       "filter_selected_accessibility": "{{ type }} ({{ count }} Filter ausgewählt)",
       "show_more": "Mehr anzeigen",
       "show_less": "Weniger anzeigen"
+    },
+    "v2": {
+      "usp_1_heading": "Kostenloser Versand",
+      "usp_1_body_html": "<p>Wir bieten kostenlosen Versand auf alle Bestellungen über €75. Bestellungen, die vor 15:00 Uhr MEZ an Werktagen aufgegeben werden, werden noch am selben Tag versandt. Lieferung dauert 1–3 Werktage innerhalb der EU.</p>",
+      "usp_2_heading": "100% Zufriedenheitsgarantie",
+      "usp_2_body_html": "<p>Nicht zufrieden? Wir bieten eine problemlose Rückgabe innerhalb von 30 Tagen nach dem Kauf. Keine Fragen gestellt. Deine Zufriedenheit hat für uns höchste Priorität.</p>",
+      "usp_3_heading": "Born in the peloton",
+      "usp_3_body_html": "<p>Sockeloen Socken wurden von Radfahrern für Radfahrer entworfen und getestet. Entwickelt für Höchstleistungen mit Premium-Materialien, die deine Füße auf jeder Fahrt komfortabel halten.</p>",
+      "usp_4_heading": "Der Kunde ist König",
+      "usp_4_body_html": "<p>Wir gehen für unsere Kunden über das Erwartete hinaus. Von persönlichem Support bis zur schnellen Lieferung – wir sorgen dafür, dass du die beste Erfahrung machst.</p>"
     }
   },
   "templates": {
