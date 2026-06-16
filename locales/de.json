@@ -203,7 +203,19 @@
       "usp_3_heading": "Born in the peloton",
       "usp_3_body_html": "<p>Sockeloen Socken wurden von Radfahrern für Radfahrer entworfen und getestet. Entwickelt für Höchstleistungen mit Premium-Materialien, die deine Füße auf jeder Fahrt komfortabel halten.</p>",
       "usp_4_heading": "Der Kunde ist König",
-      "usp_4_body_html": "<p>Wir gehen für unsere Kunden über das Erwartete hinaus. Von persönlichem Support bis zur schnellen Lieferung – wir sorgen dafür, dass du die beste Erfahrung machst.</p>"
+      "usp_4_body_html": "<p>Wir gehen für unsere Kunden über das Erwartete hinaus. Von persönlichem Support bis zur schnellen Lieferung – wir sorgen dafür, dass du die beste Erfahrung machst.</p>",
+      "sticky_usp_1": "Kostenloser Versand",
+      "sticky_usp_2": "100% Zufriedenheitsgarantie",
+      "sticky_usp_3": "Born in the peloton",
+      "default_benefit_1": "Getragen von Weltmeistern.",
+      "default_benefit_2": "Keine brennenden Füße mehr auf dem Rad.",
+      "default_benefit_3": "Lass deine Waden so aussehen wie die Waffen, die sie wirklich sind.",
+      "size_modal_heading": "Bist du sicher, dass du die richtige Größe hast?",
+      "size_modal_confirm": "Ja, in den Warenkorb legen",
+      "size_modal_change": "Nein, Größe ändern",
+      "low_stock_singular": "Geringer Bestand — nur noch 1 Artikel verfügbar",
+      "low_stock_plural": "Geringer Bestand — nur noch {{ qty }} Artikel verfügbar",
+      "notify_me": "Benachrichtige mich, wenn verfügbar"
     }
   },
   "templates": {
