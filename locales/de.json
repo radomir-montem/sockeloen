@@ -215,7 +215,18 @@
       "size_modal_change": "Nein, Größe ändern",
       "low_stock_singular": "Geringer Bestand — nur noch 1 Artikel verfügbar",
       "low_stock_plural": "Geringer Bestand — nur noch {{ qty }} Artikel verfügbar",
-      "notify_me": "Benachrichtige mich, wenn verfügbar"
+      "notify_me": "Benachrichtige mich, wenn verfügbar",
+      "size_guide_title": "Größentabelle",
+      "size_guide_link": "Nicht sicher bei der Größe?",
+      "size_guide_full_link": "Vollständige Größentabelle ansehen",
+      "size_guide_socks_intro": "Finde deine Sockengröße anhand deiner Schuhgröße.",
+      "size_guide_gloves_intro": "Miss die Breite deines Zeigefingers, um deine Handschuhgröße zu finden.",
+      "size_guide_baselayer_intro": "Alle Größen in Zentimetern (cm).",
+      "size_guide_overshoes_intro": "Wähle deine Überschuhgröße anhand deiner Schuhgröße (EU).",
+      "size_guide_eu_shoe_size": "EU-Schuhgröße",
+      "size_guide_sock_size": "Sockengröße",
+      "size_guide_measurement": "Maße",
+      "social_proof_text_html": "und <strong>+{{ count }}</strong> weitere Athleten fahren in {{ brand }}."
     }
   },
   "templates": {
