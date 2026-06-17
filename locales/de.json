@@ -48,8 +48,8 @@
       "search": "Suchen"
     },
     "cart": {
-      "view": "Meinen Warenkorb ({{ count }}) anzeigen",
-      "item_added": "Artikel wurde in den Warenkorb gelegt"
+      "view": "Warenkorb ansehen ({{ count }})",
+      "item_added": "Artikel zum Warenkorb hinzugefügt"
     },
     "share": {
       "copy_to_clipboard": "Link kopieren",
@@ -284,10 +284,10 @@
       "checkout": "Zur Kasse",
       "empty": "Dein Warenkorb ist leer",
       "cart_error": "Beim Aktualisieren deines Warenkorbs ist ein Fehler aufgetreten. Bitte versuche es erneut.",
-      "cart_quantity_error_html": "Du kannst deinem Warenkorb nur {{ quantity }} Stück dieses Artikels hinzufügen.",
+      "cart_quantity_error_html": "Du kannst nur {{ quantity }} von diesem Artikel in deinen Warenkorb legen.",
       "taxes_and_shipping_policy_at_checkout_html": "Steuern und <a href=\"{{ link }}\">Versandkosten</a> werden beim Checkout berechnet",
-      "taxes_included_but_shipping_at_checkout": "Inklusive Steuern, Versand wird beim Checkout berechnet",
-      "taxes_included_and_shipping_policy_html": "Inklusive Steuern. <a href=\"{{ link }}\">Versand </a> wird beim Checkout berechnet",
+      "taxes_included_but_shipping_at_checkout": "MwSt. enthalten, Versandkosten werden beim Checkout berechnet",
+      "taxes_included_and_shipping_policy_html": "Inkl. MwSt. <a href=\"{{ link }}\">Versandkosten</a> werden beim Checkout berechnet",
       "taxes_and_shipping_at_checkout": "Steuern und Versandkosten werden beim Checkout berechnet",
       "headings": {
         "product": "Produkt",
@@ -299,7 +299,7 @@
       "update": "Aktualisieren",
       "login": {
         "title": "Hast du ein Konto?",
-        "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Logge dich ein</a>, damit es beim Checkout schneller geht."
+        "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Anmelden</a> für schnelleres Bezahlen."
       },
       "view_cart": "Warenkorb ansehen",
       "select_size": "Größe wählen",
@@ -485,6 +485,9 @@
       "payment_errors": {
         "payment_method_not_applicable": "Diese Zahlungsmethode ist nicht anwendbar. Verwenden Sie eine andere Zahlungsmethode."
       }
+    },
+    "page_titles": {
+      "shopping_cart": "Dein Warenkorb"
     }
   }
 }
