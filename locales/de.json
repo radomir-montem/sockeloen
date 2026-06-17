@@ -320,16 +320,16 @@
       "onboarding_content": "Verschaffe deinen Kunden eine Übersicht über deinen Blog-Beitrag"
     },
     "featured_collection": {
-      "view_all": "Alle anzeigen",
+      "view_all": "Alle ansehen",
       "view_all_label": "Alle Produkte in der Kategorie {{ collection_name }} anzeigen"
     },
     "collection_list": {
-      "view_all": "Alle anzeigen"
+      "view_all": "Alle ansehen"
     },
     "collection_template": {
-      "title": "Kategorie",
+      "title": "Kollektion",
       "empty": "Keine Produkte gefunden",
-      "use_fewer_filters_html": "Verwende weniger Filter oder <a class=\"{{ class }}\" href=\"{{ link }}\">entferne alle</a>"
+      "use_fewer_filters_html": "Weniger Filter verwenden oder <a class=\"{{ class }}\" href=\"{{ link }}\">alle entfernen</a>"
     },
     "video": {
       "load_video": "Video laden: {{ description }}"
