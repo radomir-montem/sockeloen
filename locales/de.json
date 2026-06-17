@@ -116,7 +116,7 @@
     "product": {
       "add_to_cart": "In den Warenkorb legen",
       "description": "Beschreibung",
-      "on_sale": "Sale",
+      "on_sale": "SALE",
       "product_variants": "Produktvarianten",
       "quantity": {
         "label": "Anzahl",
@@ -125,9 +125,9 @@
         "decrease": "Verringere die Menge für {{ product }}"
       },
       "price": {
-        "from_price_html": "Von {{ price }}",
+        "from_price_html": "Ab {{ price }}",
         "regular_price": "Normaler Preis",
-        "sale_price": "Verkaufspreis",
+        "sale_price": "Angebotspreis",
         "unit_price": "Grundpreis"
       },
       "share": "Dieses Produkt teilen",
