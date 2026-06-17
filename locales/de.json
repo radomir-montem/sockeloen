@@ -489,5 +489,12 @@
     "page_titles": {
       "shopping_cart": "Dein Warenkorb"
     }
+  },
+  "customer_accounts": {
+    "announcement_bar": {
+      "close_label": "Ankündigungsleiste schließen",
+      "collapse_label": "Ankündigungsleiste einklappen",
+      "expand_label": "Ankündigungsleiste ausklappen"
+    }
   }
 }
