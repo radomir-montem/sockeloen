@@ -140,7 +140,7 @@
             "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1.png",
             "heading": "Make your calves look ",
             "heading_italic": "like Weapons.",
-            "description": "<p>The reason Sockeloen was founded. Most cycling socks didn't have the right sokheight. And mayb even worse, some tend to fall dow to your ankles. A nightmare. We developed a very stretchable sock, with the perfect sockheight, that never falls down. Make your legs look like the weapons they really are.</p>"
+            "description": "<p>The reason Sockeloen was founded; most cycling socks didn't have the right sockheight. And maybe even worse, some tend to fall down to your ankles. A nightmare. We developed a very stretchable sock with the perfect sockheight, that never falls down. Make your legs look like the weapons they really are.</p>"
           }
         },
         "benefit_igt7xh": {
@@ -186,7 +186,7 @@
             "hotspot_x": 54,
             "hotspot_y": 37,
             "heading": "Sockeloen Mesh",
-            "description": "<p><strong>The [metafield] knitting structure combines: </strong>flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>",
+            "description": "<p><strong>The [metafield] knitting structure combines: </strong>flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fit and perfect ventilation.</p>",
             "metafield_key": "custom.knit_structure",
             "metafield_fallback": "O-Mesh"
           }
@@ -197,7 +197,7 @@
             "hotspot_x": 71,
             "hotspot_y": 57,
             "heading": "Sockeloen Heels and Toes",
-            "description": "<p>To ensure a long lifetime of these high performance cycling socks we reinforced the heels and toes with<strong> a specific extra Polyamide yarn.</strong></p>",
+            "description": "<p>To ensure a long lifetime of these high performance cycling socks we reinforced the heels and toes with<strong> a specific extra polyamide yarn.</strong></p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -219,7 +219,7 @@
             "hotspot_x": 29,
             "hotspot_y": 74,
             "heading": "Sockeloen Seemless Toe",
-            "description": "<p>To avoid irritating, or high pressure points inside your cycling shoe we work with a <strong>seemless toe </strong>without any area's that could irritate your toes while riding.</p>",
+            "description": "<p>To avoid irritating, or high pressure points inside your cycling shoe we work with a <strong>seamless toe</strong>, eliminating frays that could irritate your feet while riding.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -257,6 +257,18 @@
         "accent_color": "#f76503",
         "padding_top": 60,
         "padding_bottom": 60
+      }
+    },
+    "custom_liquid_RmH67A": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "heading": "",
+        "heading_size": 16,
+        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\" data-filter-type=\"product\" data-filter-id=\"{{product.id}}\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
+        "color_scheme": "background-1",
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
     "satisfaction_guarantee_6fcj3K": {
@@ -411,18 +423,6 @@
         "background_color": "#ffffff",
         "padding_top": 20,
         "padding_bottom": 0
-      }
-    },
-    "custom_liquid_RmH67A": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "heading": "",
-        "heading_size": 16,
-        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\" data-filter-type=\"product\" data-filter-id=\"{{product.id}}\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
-        "color_scheme": "background-1",
-        "padding_top": 20,
-        "padding_bottom": 20
       }
     }
   },
