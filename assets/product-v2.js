@@ -146,19 +146,29 @@ if (!customElements.get('sticky-atc-v2')) {
   });
 }
 
-/* Avada Volume Discount enhancements: strip € symbol + inject product image stack */
+/* Avada Volume Discount enhancements: fix prices + inject product image stack */
 (function() {
-  function stripEuro(root) {
-    (root || document).querySelectorAll(
-      '.product-v2 .AOV-Offer__DiscountPrice, .product-v2 .AOV-Offer__BasePrice, .product-v2 .Avada-Offer__PriceDiscount, .product-v2 .Avada-Offer__PriceDefault'
+  /**
+   * Single function to fix all Avada price formatting:
+   * 1. Strip € symbol
+   * 2. Replace decimal period with comma (EU format: 12,34 instead of 12.34)
+   * Runs on all Avada price elements + our injected savings lines.
+   */
+  function fixAvadaPrices() {
+    document.querySelectorAll(
+      '.product-v2 .AOV-Offer__DiscountPrice, .product-v2 .AOV-Offer__BasePrice, .product-v2 .Avada-Offer__PriceDiscount, .product-v2 .Avada-Offer__PriceDefault, .product-v2 .avada-savings-line strong'
     ).forEach(function(el) {
       el.childNodes.forEach(function(node) {
-        if (node.nodeType === 3 && node.textContent.includes('€')) {
-          node.textContent = node.textContent.replace(/€/g, '');
+        if (node.nodeType === 3) {
+          var t = node.textContent;
+          var fixed = t.replace(/€\s*/g, '').replace(/(\d+)\.(\d{2})/g, '$1,$2');
+          if (fixed !== t) node.textContent = fixed;
         }
       });
-      if (el.children.length === 0 && el.textContent.includes('€')) {
-        el.textContent = el.textContent.replace(/€/g, '');
+      /* Mark as fixed so CSS can reveal it */
+      if (!el.closest('.avada-prices-ready')) {
+        var body = el.closest('.Avada-Volume__Body, .AOV-Offer__Body');
+        if (body) body.classList.add('avada-prices-ready');
       }
     });
   }
@@ -284,11 +294,26 @@ if (!customElements.get('sticky-atc-v2')) {
       var qty = qtyMatch ? parseInt(qtyMatch[1], 10) : 1;
 
       if (qty === 1) {
-        // 1 Pair — Standard price
-        if (discountTextEl && discountTextEl.textContent.trim() !== (isNl ? '— Standaardprijs' : '— Standard price')) {
-          discountTextEl.textContent = isNl ? '— Standaardprijs' : '— Standard price';
-          discountTextEl.style.color = '#888';
-          discountTextEl.style.fontSize = '12px';
+        if (discountTextEl && discountPrice && originalPrice) {
+          var dp1 = parseFloat(discountPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+          var op1 = parseFloat(originalPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+          if (op1 > dp1) {
+            var saved1 = (op1 - dp1).toFixed(2).replace('.', ',');
+            var saleText = isNl ? '— Bespaar €' + saved1 : '— Save €' + saved1;
+            if (discountTextEl.textContent.trim() !== saleText) {
+              discountTextEl.textContent = saleText;
+              discountTextEl.style.color = '#e45b30';
+              discountTextEl.style.fontSize = '12px';
+            }
+            originalPrice.style.setProperty('display', 'block', 'important');
+          } else {
+            var stdText = isNl ? '— Standaardprijs' : '— Standard price';
+            if (discountTextEl.textContent.trim() !== stdText) {
+              discountTextEl.textContent = stdText;
+              discountTextEl.style.color = '#888';
+              discountTextEl.style.fontSize = '12px';
+            }
+          }
         }
       } else if (qty > 1 && discountPrice) {
         // Multi-pair: add /pair label via UnitPriceLabel span (survives Avada re-renders)
@@ -299,11 +324,15 @@ if (!customElements.get('sticky-atc-v2')) {
           unitLabel.className += ' avada-per-pair';
         }
 
-        // Calculate and show savings (only inject once)
-        if (originalPrice && !item.querySelector('.avada-savings-line')) {
+        if (originalPrice) {
+          originalPrice.style.setProperty('display', 'block', 'important');
+        }
+
+        // Calculate and show savings inside the price column (only inject once)
+        if (originalPrice && !priceArea.querySelector('.avada-savings-line')) {
           var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
           var op = parseFloat(originalPrice.textContent.replace(',', '.'));
-          var totalSaved = ((op - dp) * qty);
+          var totalSaved = (op - dp);
           if (totalSaved > 0) {
             var savingsEl = document.createElement('div');
             savingsEl.className = 'avada-savings-line';
@@ -311,10 +340,7 @@ if (!customElements.get('sticky-atc-v2')) {
             savingsEl.innerHTML = isNl
               ? 'Je bespaart <strong>€' + savingsFormatted + '</strong>'
               : 'You save <strong>€' + savingsFormatted + '</strong>';
-            // Insert savings after the price area
-            if (priceArea && priceArea.parentNode) {
-              priceArea.parentNode.insertBefore(savingsEl, priceArea.nextSibling);
-            }
+            priceArea.appendChild(savingsEl);
           }
         }
       }
@@ -322,25 +348,48 @@ if (!customElements.get('sticky-atc-v2')) {
   }
 
   function enhance() {
-    stripEuro();
+    fixAvadaPrices();
     injectRadioDots();
     injectImageStacks();
     fixBadgeText();
     enhanceTierLabels();
   }
 
+  function needsEnhancement() {
+    var items = document.querySelectorAll('.product-v2 .Avada-Volume__Item');
+    if (!items.length) return false;
+    // Check if any item is missing our injections
+    for (var i = 0; i < items.length; i++) {
+      if (!items[i].querySelector('.avada-radio-dot')) return true;
+    }
+    return false;
+  }
+
   function init() {
     enhance();
     var container = document.querySelector('.product-v2');
     if (!container) return;
-    new MutationObserver(function() { enhance(); })
-      .observe(container, { childList: true, subtree: true, characterData: true });
 
-    /* Update upsell thumbnails when variant changes */
+    /*
+     * Poll instead of MutationObserver to avoid infinite loop.
+     * Avada's own MutationObserver re-renders its tiles when we inject
+     * elements, which would trigger our observer → enhance() → Avada
+     * re-renders → observer → enhance() → infinite loop.
+     * Polling every 800ms is safe and still feels responsive.
+     */
+    setInterval(function() {
+      if (needsEnhancement()) enhance();
+    }, 800);
+
+    /* On variant change: fix Avada prices immediately + staggered delays to catch re-renders */
     var variantRadios = container.querySelector('variant-radios');
     if (variantRadios) {
       variantRadios.addEventListener('change', function() {
-        setTimeout(function() { updateImageStacks(); }, 10);
+        fixAvadaPrices();
+        setTimeout(function() { fixAvadaPrices(); updateImageStacks(); }, 50);
+        setTimeout(fixAvadaPrices, 150);
+        setTimeout(fixAvadaPrices, 300);
+        setTimeout(fixAvadaPrices, 600);
       });
     }
   }
