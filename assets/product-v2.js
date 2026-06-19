@@ -294,11 +294,26 @@ if (!customElements.get('sticky-atc-v2')) {
       var qty = qtyMatch ? parseInt(qtyMatch[1], 10) : 1;
 
       if (qty === 1) {
-        // 1 Pair — Standard price
-        if (discountTextEl && discountTextEl.textContent.trim() !== (isNl ? '— Standaardprijs' : '— Standard price')) {
-          discountTextEl.textContent = isNl ? '— Standaardprijs' : '— Standard price';
-          discountTextEl.style.color = '#888';
-          discountTextEl.style.fontSize = '12px';
+        if (discountTextEl && discountPrice && originalPrice) {
+          var dp1 = parseFloat(discountPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+          var op1 = parseFloat(originalPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+          if (op1 > dp1) {
+            var saved1 = (op1 - dp1).toFixed(2).replace('.', ',');
+            var saleText = isNl ? '— Bespaar €' + saved1 : '— Save €' + saved1;
+            if (discountTextEl.textContent.trim() !== saleText) {
+              discountTextEl.textContent = saleText;
+              discountTextEl.style.color = '#e45b30';
+              discountTextEl.style.fontSize = '12px';
+            }
+            originalPrice.style.setProperty('display', 'block', 'important');
+          } else {
+            var stdText = isNl ? '— Standaardprijs' : '— Standard price';
+            if (discountTextEl.textContent.trim() !== stdText) {
+              discountTextEl.textContent = stdText;
+              discountTextEl.style.color = '#888';
+              discountTextEl.style.fontSize = '12px';
+            }
+          }
         }
       } else if (qty > 1 && discountPrice) {
         // Multi-pair: add /pair label via UnitPriceLabel span (survives Avada re-renders)
@@ -309,11 +324,15 @@ if (!customElements.get('sticky-atc-v2')) {
           unitLabel.className += ' avada-per-pair';
         }
 
+        if (originalPrice) {
+          originalPrice.style.setProperty('display', 'block', 'important');
+        }
+
         // Calculate and show savings inside the price column (only inject once)
         if (originalPrice && !priceArea.querySelector('.avada-savings-line')) {
           var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
           var op = parseFloat(originalPrice.textContent.replace(',', '.'));
-          var totalSaved = ((op - dp) * qty);
+          var totalSaved = (op - dp);
           if (totalSaved > 0) {
             var savingsEl = document.createElement('div');
             savingsEl.className = 'avada-savings-line';
