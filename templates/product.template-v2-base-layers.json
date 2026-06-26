@@ -12,6 +12,10 @@
     "main": {
       "type": "main-product-v2",
       "blocks": {
+        "aov_ai_bundle_offer_upsell_xAAY8Q": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-upsell/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -58,6 +62,7 @@
         }
       },
       "block_order": [
+        "aov_ai_bundle_offer_upsell_xAAY8Q",
         "variant_picker",
         "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
