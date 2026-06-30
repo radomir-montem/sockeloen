@@ -16,8 +16,8 @@
           "type": "shopify://apps/upsell-com-ex-reconvert/blocks/banner/72c64c30-2f7c-4a71-ae4c-efd1d5d1d2e2",
           "settings": {}
         },
-        "aov_ai_bundle_offer_upsell_9Jd9mT": {
-          "type": "shopify://apps/aov-ai-bundle/blocks/offer-upsell/0335d423-143c-4ad7-b224-99a1db74a9ee",
+        "aov_ai_free_gift_bxgy_avada_promotion_card_C4yUMf": {
+          "type": "shopify://apps/aov-ai-free-gift-bxgy/blocks/avada-promotion-card/de98edfe-90fa-4145-8a57-1055e0058723",
           "settings": {}
         },
         "variant_picker": {
@@ -67,7 +67,7 @@
       },
       "block_order": [
         "upsell_com_ex_reconvert_banner_7dbicK",
-        "aov_ai_bundle_offer_upsell_9Jd9mT",
+        "aov_ai_free_gift_bxgy_avada_promotion_card_C4yUMf",
         "variant_picker",
         "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
