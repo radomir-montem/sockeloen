@@ -12,8 +12,8 @@
     "main": {
       "type": "main-product-v2",
       "blocks": {
-        "aov_ai_bundle_offer_upsell_xAAY8Q": {
-          "type": "shopify://apps/aov-ai-bundle/blocks/offer-upsell/0335d423-143c-4ad7-b224-99a1db74a9ee",
+        "upsell_com_ex_reconvert_banner_7dbicK": {
+          "type": "shopify://apps/upsell-com-ex-reconvert/blocks/banner/72c64c30-2f7c-4a71-ae4c-efd1d5d1d2e2",
           "settings": {}
         },
         "variant_picker": {
@@ -62,7 +62,7 @@
         }
       },
       "block_order": [
-        "aov_ai_bundle_offer_upsell_xAAY8Q",
+        "upsell_com_ex_reconvert_banner_7dbicK",
         "variant_picker",
         "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
@@ -395,6 +395,21 @@
         "padding_top": 20,
         "padding_bottom": 0
       }
+    },
+    "1782821928fdd76e75": {
+      "type": "apps",
+      "blocks": {
+        "aov_ai_bundle_offer_upsell_KpFFNN": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-upsell/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "aov_ai_bundle_offer_upsell_KpFFNN"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -408,6 +423,7 @@
     "bought_often_together_txwAy7",
     "recommendations",
     "product_faq_NDDGQE",
-    "bought_often_together_M9V6Ya"
+    "bought_often_together_M9V6Ya",
+    "1782821928fdd76e75"
   ]
 }
