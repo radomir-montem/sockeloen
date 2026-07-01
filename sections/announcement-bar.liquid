@@ -17,26 +17,118 @@
   </style>
 {% endif %}
 
+{% if section.settings.sale_mode %}
+  <style>
+    .announcement-bar--sale {
+      background-color: #1a1a1a !important;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .announcement-bar--sale .announcement-bar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 10px 0;
+    }
+
+    .uci-stripes {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      width: 22px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .uci-stripes span {
+      display: block;
+      height: 25%;
+      width: 100%;
+    }
+
+    .uci-stripes .stripe-blue { background: #0081C8; }
+    .uci-stripes .stripe-red { background: #EE334E; }
+    .uci-stripes .stripe-black { background: #000000; }
+    .uci-stripes .stripe-yellow { background: #FCB131; }
+    .uci-stripes .stripe-green { background: #00A651; }
+
+    .announcement-bar--sale .announcement-bar__message {
+      color: #ffffff !important;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 0;
+      margin: 0;
+    }
+
+    .announcement-bar--sale .announcement-bar__close path {
+      fill: #ffffff !important;
+    }
+
+    @media (max-width: 749px) {
+      .announcement-bar--sale .announcement-bar__message {
+        font-size: 10px;
+      }
+      .uci-stripes {
+        width: 16px;
+        height: 12px;
+      }
+    }
+  </style>
+{% endif %}
+
 <div id="announcement-bar">
   {%- for block in section.blocks -%}
     {%- case block.type -%}
       {%- when 'announcement' -%}
-        <div style="background-color: {{block.settings.bg_color}};" class="announcement-bar gradient{% unless forloop.first %} hidden{% endunless %}" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
+        <div style="{% unless section.settings.sale_mode %}background-color: {{block.settings.bg_color}};{% endunless %}" class="announcement-bar{% if section.settings.sale_mode %} announcement-bar--sale{% endif %} gradient{% unless forloop.first %} hidden{% endunless %}" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
           {%- if block.settings.text != blank -%}
             {%- if block.settings.link != blank -%}
               <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
             {%- endif -%}
                 <div class="page-width">
-                  <p style="color: {{block.settings.font_color}};" class="announcement-bar__message {{ block.settings.text_alignment }} h5">
-                    {% if localization.country.iso_code == 'US' %}
-                      {{ block.settings.usd_text | escape }}
-                    {% else %}
-                      {{ block.settings.text | escape }}
-                    {% endif %}
-                    {%- if block.settings.link != blank -%}
-                      {% render 'icon-arrow' %}
-                    {%- endif -%}
-                  </p>
+                  {% if section.settings.sale_mode %}
+                    <div class="announcement-bar__inner">
+                      <div class="uci-stripes">
+                        <span class="stripe-blue"></span>
+                        <span class="stripe-red"></span>
+                        <span class="stripe-black"></span>
+                        <span class="stripe-yellow"></span>
+                        <span class="stripe-green"></span>
+                      </div>
+                      <p class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+                        {% if localization.country.iso_code == 'US' %}
+                          {{ block.settings.usd_text | escape }}
+                        {% else %}
+                          {{ block.settings.text | escape }}
+                        {% endif %}
+                        {%- if block.settings.link != blank -%}
+                          {% render 'icon-arrow' %}
+                        {%- endif -%}
+                      </p>
+                      <div class="uci-stripes">
+                        <span class="stripe-blue"></span>
+                        <span class="stripe-red"></span>
+                        <span class="stripe-black"></span>
+                        <span class="stripe-yellow"></span>
+                        <span class="stripe-green"></span>
+                      </div>
+                    </div>
+                  {% else %}
+                    <p style="color: {{block.settings.font_color}};" class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+                      {% if localization.country.iso_code == 'US' %}
+                        {{ block.settings.usd_text | escape }}
+                      {% else %}
+                        {{ block.settings.text | escape }}
+                      {% endif %}
+                      {%- if block.settings.link != blank -%}
+                        {% render 'icon-arrow' %}
+                      {%- endif -%}
+                    </p>
+                  {% endif %}
                 </div>
             {%- if block.settings.link != blank -%}
               </a>
@@ -75,108 +167,6 @@
     });
   });
 
-  /* Marquee effect — when the message is wider than the pill, duplicate it
-     into a flex track and scroll it continuously so the text stays readable
-     within the fixed pill width. Falls back to ellipsis (set by CSS) when
-     the text fits. */
-  (function initAnnouncementMarquee(){
-    var WRAPPER_CLASS = 'announcement-bar__marquee-track';
-    var SPEED_PX_PER_SEC = 55;  /* marquee speed; lower = slower */
-
-    function reset(bar) {
-      var track = bar.querySelector('.' + WRAPPER_CLASS);
-      if (!track) return;
-      var pageWidth = bar.querySelector('.page-width');
-      if (!pageWidth) return;
-      var original = track.querySelector('.announcement-bar__message:not([data-marquee-clone])');
-      if (original && pageWidth) {
-        pageWidth.innerHTML = '';
-        pageWidth.appendChild(original);
-      }
-      bar.classList.remove('is-marquee');
-    }
-
-    function apply(bar) {
-      var pageWidth = bar.querySelector('.page-width');
-      var msg = bar.querySelector('.announcement-bar__message');
-      if (!pageWidth || !msg) return;
-
-      reset(bar);
-
-      /* Measure — need bar to be visible to get real widths. */
-      var wasHidden = bar.classList.contains('hidden');
-      var prevDisplay, prevVisibility, prevPosition;
-      if (wasHidden) {
-        prevDisplay = bar.style.display;
-        prevVisibility = bar.style.visibility;
-        prevPosition = bar.style.position;
-        bar.style.display = 'flex';
-        bar.style.visibility = 'hidden';
-        bar.style.position = 'absolute';
-        bar.classList.remove('hidden');
-      }
-
-      /* Force nowrap to measure the un-ellipsed text width. */
-      var prevWhitespace = msg.style.whiteSpace;
-      var prevOverflow = msg.style.overflow;
-      var prevTextOverflow = msg.style.textOverflow;
-      msg.style.whiteSpace = 'nowrap';
-      msg.style.overflow = 'visible';
-      msg.style.textOverflow = 'clip';
-      var textWidth = msg.scrollWidth;
-      var containerWidth = pageWidth.clientWidth;
-      msg.style.whiteSpace = prevWhitespace;
-      msg.style.overflow = prevOverflow;
-      msg.style.textOverflow = prevTextOverflow;
-
-      if (wasHidden) {
-        bar.classList.add('hidden');
-        bar.style.display = prevDisplay;
-        bar.style.visibility = prevVisibility;
-        bar.style.position = prevPosition;
-      }
-
-      /* Tolerance — avoid flicker on 1-2px sub-pixel measurement noise. */
-      if (textWidth <= containerWidth + 4) return;
-
-      /* Build the marquee track: [msg][clone]. CSS handles the -50% shift. */
-      var track = document.createElement('div');
-      track.className = WRAPPER_CLASS;
-      msg.parentElement.removeChild(msg);
-      track.appendChild(msg);
-      var clone = msg.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      clone.setAttribute('data-marquee-clone', '');
-      track.appendChild(clone);
-      pageWidth.appendChild(track);
-
-      /* Duration scales with text length so very long messages don't whip by
-         too fast. +60 for the padding-right gap inside the track. */
-      var duration = Math.max(12, (textWidth + 60) / SPEED_PX_PER_SEC);
-      track.style.setProperty('--marquee-duration', duration.toFixed(1) + 's');
-      bar.classList.add('is-marquee');
-    }
-
-    function applyAll() {
-      document.querySelectorAll('#announcement-bar .announcement-bar').forEach(apply);
-    }
-
-    /* Initial pass, then re-measure on resize (debounced) and when fonts load. */
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', applyAll);
-    } else {
-      applyAll();
-    }
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(applyAll);
-    }
-    var resizeTimer;
-    window.addEventListener('resize', function(){
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(applyAll, 180);
-    });
-  })();
-
 </script>
 
 {% schema %}
@@ -184,6 +174,13 @@
   "name": "t:sections.announcement-bar.name",
   "max_blocks": 12,
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "sale_mode",
+      "label": "UCI Warehouse Sale mode",
+      "default": false,
+      "info": "Enables black background with UCI rainbow stripes"
+    },
     {
       "type": "range",
       "id": "autoplay_speed",
