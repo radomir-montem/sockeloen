@@ -57,11 +57,15 @@
     .announcement-bar--sale .announcement-bar__message {
       color: #ffffff !important;
       font-size: 12px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      font-weight: 500;
       padding: 0;
       margin: 0;
+    }
+
+    .announcement-bar--sale .announcement-bar__message::first-letter {
+      text-transform: uppercase;
     }
 
     .announcement-bar--sale .announcement-bar__close path {
