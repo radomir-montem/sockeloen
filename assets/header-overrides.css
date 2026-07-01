@@ -3062,22 +3062,20 @@ body.template--index .image-banner .button span {
 .mega-menu-v2-trigger-link.is-open,
 .mega-menu-v2-trigger-link:hover { color: #111111; }
 
-/* Sidebar "Shop all" category items — permanent white tile (inverted from
-   the light-panel version so it still reads as a distinct accent on the
-   dark glass panel). */
+/* Sidebar "Shop all" category items — permanent black tile */
 .mega-menu-v2-cat--shop-all {
-  background: #ffffff !important;
-  color: #111111 !important;
+  background: #111111 !important;
+  color: #ffffff !important;
 }
 
 .mega-menu-v2-cat--shop-all:hover {
-  background: rgba(255, 255, 255, 0.85) !important;
-  color: #111111 !important;
+  background: #333333 !important;
+  color: #ffffff !important;
 }
 
 .mega-menu-v2-cat--shop-all.is-active {
-  background: rgba(255, 255, 255, 0.85) !important;
-  color: #111111 !important;
+  background: #333333 !important;
+  color: #ffffff !important;
 }
 
 .mega-menu-v2-chevron {
@@ -3109,12 +3107,12 @@ body.template--index .image-banner .button span {
   left: 0;
   right: 0;
   width: auto;
-  /* Same dark glass as the notification bar / language-switcher fold-over
-     (rgba(0,0,0,0.55) + blur(21px)) — one consistent overlay language
-     across the whole header, matching the EME Studios reference. */
-  background: rgba(0, 0, 0, 0.55) !important;
-  background-color: rgba(0, 0, 0, 0.55) !important;
-  background-image: none !important;
+  /* Matches header.header's own background/blur exactly (the EME Studios
+     reference values) so the pill and the panel read as one continuous
+     glass surface, rather than the panel switching to a different (dark)
+     overlay style. */
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.45), rgba(255,255,255,0.08), transparent) !important;
+  background-color: transparent !important;
   backdrop-filter: blur(21px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
   border-top: none !important;
@@ -3122,7 +3120,7 @@ body.template--index .image-banner .button span {
   border-right: 1px solid rgba(255,255,255,0.1);
   border-bottom: 1px solid rgba(255,255,255,0.1);
   border-radius: 0 0 8px 8px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  box-shadow: 0 2px 2px rgba(0,0,0,0.1);
   clip-path: none;
   z-index: 50;
   max-height: calc(100vh - 112px);
@@ -3192,7 +3190,7 @@ body.template--index .image-banner .button span {
   font-weight: 400;
   letter-spacing: 0;
   text-transform: capitalize !important;
-  color: rgba(255, 255, 255, 0.75);
+  color: #4A4A4A;
   text-decoration: none;
   border-radius: 8px;
   transition: background 0.12s ease, color 0.12s ease;
@@ -3200,13 +3198,13 @@ body.template--index .image-banner .button span {
 }
 
 .mega-menu-v2-cat:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
+  color: #111111;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .mega-menu-v2-cat.is-active {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
+  color: #111111;
+  background: rgba(255, 255, 255, 0.55);
 }
 
 .mega-menu-v2-cta {
@@ -3215,8 +3213,8 @@ body.template--index .image-banner .button span {
   justify-content: center;
   align-self: flex-start;
   padding: 14px 24px;
-  background: #ffffff;
-  color: #111111;
+  background: #111111;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0;
@@ -3226,8 +3224,8 @@ body.template--index .image-banner .button span {
 }
 
 .mega-menu-v2-cta:hover {
-  background: rgba(255, 255, 255, 0.85);
-  color: #111111;
+  background: #000000;
+  color: #ffffff;
 }
 
 /* ---- Grid (product cards) ---- */
@@ -3246,7 +3244,7 @@ body.template--index .image-banner .button span {
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  color: #ffffff;
+  color: #111111;
   border-radius: 12px;
   transition: transform 0.18s ease;
 }
@@ -3258,10 +3256,7 @@ body.template--index .image-banner .button span {
 .mega-menu-v2-card-img {
   aspect-ratio: 1 / 1;
   width: 100%;
-  /* Product photography is shot on white — keep the tile itself light even
-     on the dark panel so photos render correctly, only the surrounding
-     panel/text goes dark. */
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -3272,7 +3267,7 @@ body.template--index .image-banner .button span {
 }
 
 .mega-menu-v2-card:hover .mega-menu-v2-card-img {
-  background: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .mega-menu-v2-card-img-el,
@@ -3288,7 +3283,7 @@ body.template--index .image-banner .button span {
   font-weight: 700;
   letter-spacing: -0.005em;
   line-height: 1.25;
-  color: #ffffff;
+  color: #111111;
   margin-bottom: 4px;
 }
 
@@ -3298,7 +3293,7 @@ body.template--index .image-banner .button span {
   gap: 6px;
   font-size: 12px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.6);
+  color: #4A4A4A;
   line-height: 1.3;
 }
 
@@ -3308,10 +3303,10 @@ body.template--index .image-banner .button span {
   justify-content: center;
   width: 20px;
   height: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 999px;
   flex-shrink: 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: #4A4A4A;
 }
 
 .mega-menu-v2-card-icon-el,
@@ -3370,7 +3365,7 @@ body.template--index .image-banner .button span {
   line-height: 15px;
   letter-spacing: 0.01em;
   text-transform: capitalize;
-  color: #ffffff;
+  color: #111111;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3378,12 +3373,11 @@ body.template--index .image-banner .button span {
 }
 
 /* ---- "Shop all <category>" tile ----
-   Visually distinct from product tiles: on the dark panel this becomes a
-   translucent white tile with a white arrow glyph, keeping the same
-   aspect-ratio / dimensions as product cards so the 5x2 grid stays
-   perfectly aligned. */
+   Visually distinct from product tiles: filled dark-grey image area with a
+   white arrow glyph, keeping the same aspect-ratio / dimensions as product
+   cards so the 5x2 grid stays perfectly aligned. */
 .mega-menu-v2-card-img.mega-menu-v2-card-img--shop-all {
-  background: rgba(255, 255, 255, 0.1);
+  background: #3a3a3a;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -3391,7 +3385,7 @@ body.template--index .image-banner .button span {
   transition: background 0.15s ease;
 }
 .mega-menu-v2-card--shop-all:hover .mega-menu-v2-card-img--shop-all {
-  background: rgba(255, 255, 255, 0.18);
+  background: #2a2a2a;
 }
 .mega-menu-v2-card-shop-all-arrow {
   width: 28px;
@@ -3547,7 +3541,7 @@ body.template--index .banner__box {
   gap: 6px;
   padding: 10px 12px 0;
   margin-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(0,0,0,0.08);
   user-select: none;
 }
 .mega-menu-v2-reviews__stars {
@@ -3563,22 +3557,19 @@ body.template--index .banner__box {
 .mega-menu-v2-reviews__text {
   font-size: 12px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.6);
+  color: #555;
   white-space: nowrap;
   flex-shrink: 0;
 }
 .mega-menu-v2-reviews__text strong {
   font-weight: 500;
-  color: #ffffff;
+  color: #333;
 }
 .mega-menu-v2-reviews__logo {
   height: 12px;
   width: auto;
   flex-shrink: 0;
-  opacity: 0.9;
-  /* Reviews.io logo asset is dark-on-transparent — flip it to white so it
-     reads on the dark glass panel. */
-  filter: brightness(0) invert(1);
+  opacity: 0.7;
 }
 
 /* ============================================================
