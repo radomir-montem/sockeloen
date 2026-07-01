@@ -198,17 +198,28 @@
 
 <script>
   var announcementBarInterval = undefined;
-  if(document.querySelectorAll('.announcement-bar').length > 1) {
-    let count = 1, barCount = document.querySelectorAll('.announcement-bar').length;
-    announcementBarInterval = setInterval(function(){
-      document.querySelectorAll('.announcement-bar').forEach((bar, index) => {
-        if(count == index) bar.classList.remove('hidden');
-        else bar.classList.add('hidden');
-      });
-      count++;
-      if(count >= barCount) count = 0;
-    }, Number('{{ section.settings.autoplay_speed | times: 1000 }}'));
-  }
+  {%- comment -%}
+    Sale mode renders the same fixed UCI marquee on every block (block
+    settings.text is ignored in that branch), so cycling between blocks
+    just shows identical content — and toggling display:none on the
+    inactive bar resets its CSS animation, making the marquee visibly
+    "jump" back to the start every autoplay_speed seconds. Skip the
+    cycling entirely in sale mode: the first bar stays permanently
+    visible and its marquee scrolls without ever being interrupted.
+  {%- endcomment -%}
+  {%- unless section.settings.sale_mode -%}
+    if(document.querySelectorAll('.announcement-bar').length > 1) {
+      let count = 1, barCount = document.querySelectorAll('.announcement-bar').length;
+      announcementBarInterval = setInterval(function(){
+        document.querySelectorAll('.announcement-bar').forEach((bar, index) => {
+          if(count == index) bar.classList.remove('hidden');
+          else bar.classList.add('hidden');
+        });
+        count++;
+        if(count >= barCount) count = 0;
+      }, Number('{{ section.settings.autoplay_speed | times: 1000 }}'));
+    }
+  {%- endunless -%}
 
   document.querySelectorAll('.announcement-bar__close').forEach(btn => {
     btn.addEventListener('click', function(){

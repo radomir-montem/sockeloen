@@ -1285,29 +1285,43 @@ body.template--custom-made .menu-drawer {
 }
 
 @media screen and (max-width: 989px) {
-  /* Drawer sits FLUSH against the header pill (y:92 = header bottom) so the
-     two merge into one continuous white surface. Same horizontal inset as the
-     header (12px each side) so widths align exactly. Flat top + rounded
-     bottom mirrors the header's rounded bottom being flattened (below), so
-     the pair reads as one big rounded-bottom rectangle. */
+  /* Drawer sits FLUSH against the header pill (header bottom) so the two
+     merge into one continuous surface. Flat top + rounded bottom mirrors
+     the header's rounded bottom being flattened (below), so the pair
+     reads as one big rounded-bottom rectangle.
+     IMPORTANT: header.header has backdrop-filter, which makes it a new
+     containing block for position:fixed descendants (same bug fixed on
+     the desktop mega panel). .menu-drawer is nested inside header.header
+     via <header-drawer>/<details>, so "left/right: 12px" was resolving
+     against the HEADER's own box (itself inset 12px from the viewport) —
+     compounding to a ~24px inset and a ~13px rightward shift versus the
+     header/notification bar above it. Fix: left/right: 0 (flush with the
+     header's own edges, which already sit at the correct viewport
+     position) and top: 100% (flush with the header's own bottom edge)
+     instead of viewport-relative pixel values. */
   .js .menu-drawer,
   .menu-drawer {
-    top: 92px !important;  /* header bottom — NO gap */
-    left: 12px !important;
-    right: 12px !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
     max-width: none !important;
-    width: calc(100vw - 24px) !important;
+    width: auto !important;
     /* Above the full-viewport overlay (z-59) so the drawer paints on top */
     z-index: 60 !important;
     /* Flat top, rounded bottom — merges with the header's flattened bottom */
     border-radius: 0 0 8px 8px !important;
-    /* Opaque white — matches header pill exactly. Drop the blur + translucency
-       because the two surfaces must read as one uniform shape. */
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: none !important;
+    /* Same light glass as the header pill / desktop mega panel (the EME
+       Studios reference). Real blur DOES work here — .menu-drawer is a
+       direct child of header-drawer > details, not nested inside another
+       backdrop-filter layer beyond header.header itself, and the
+       containing-block fix above already resolves the position bug; the
+       remaining "opaque white, no blur" rule was a workaround for the
+       positioning bug being mistaken for a blur bug. */
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.45), rgba(255,255,255,0.08), transparent) !important;
+    background-color: transparent !important;
+    backdrop-filter: blur(21px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.1) !important;
     clip-path: none !important;
     /* Reduce inner padding so the content area lines up with the header
        content area (the 8px padding is what was making the inset content
