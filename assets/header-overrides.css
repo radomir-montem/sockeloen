@@ -58,6 +58,14 @@
   overflow: hidden;
   box-sizing: border-box;
 }
+#announcement-bar .announcement-bar.announcement-bar--sale,
+#announcement-bar .announcement-bar.announcement-bar--sale.gradient {
+  background: #1a1a1a !important;
+  background-color: #1a1a1a !important;
+  border-radius: 0 !important;
+  height: auto;
+}
+
 /* Force visible state for the active bar (first, or the one made active by JS).
    Scoped via :not(.hidden) so hidden bars correctly stay display:none. */
 #announcement-bar .announcement-bar:not(.hidden) {
@@ -274,9 +282,9 @@
   }
 }
 
-/* Cart count bubble — orange */
+/* Cart count bubble — matches cart drawer qty badge blue */
 .cart-count-bubble {
-  background-color: #F76503;
+  background-color: #0395F6;
 }
 
 /* ==========================================================================
@@ -547,6 +555,13 @@ header.header.sticky-navbar {
 .header__menu-item span,
 .localization-label {
   transition: none !important;
+}
+
+/* Mega-menu trigger spans: restore smooth color transition and inherit color
+   from the link element (overrides the blanket rules above) */
+.mega-menu-v2-trigger-link span {
+  color: inherit !important;
+  transition: color 0.15s ease !important;
 }
 
 /* Nav text: always black */
@@ -2234,9 +2249,10 @@ body.template--index .image-banner .button span {
   padding: 14px 0;
   background: transparent;
   border-radius: 0;
-  text-decoration: none;
   color: #111111;
   margin-bottom: 6px;
+  cursor: default;
+  user-select: none;
 }
 
 .mobile-menu--v2 .mobile-menu__reviews-stars {
@@ -2293,20 +2309,17 @@ body.template--index .image-banner .button span {
   display: flex;
   align-items: center;
   gap: 8px;
-  /* 14px vertical padding matches the reviews ribbon and the reduced CTA
-     pill so all three rows sit at the same ~46px height. width:100% + the
-     footer's 20px horizontal gutters give this tile the same effective
-     width as the CTA wrap below. */
   padding: 14px 16px;
   width: 100%;
   background: #F5F2ED;
   border: none;
   border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
   color: #111111;
   cursor: pointer;
   transition: background 0.15s ease;
+  text-transform: lowercase;
 }
 
 .mobile-menu--v2 .mobile-menu__locale-toggle:hover {
@@ -2321,7 +2334,7 @@ body.template--index .image-banner .button span {
 .mobile-menu--v2 .mobile-menu__locale-toggle span {
   flex: 1;
   text-align: left;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
 .mobile-menu--v2 .mobile-menu__locale-chevron {
@@ -3022,11 +3035,30 @@ body.template--index .image-banner .button span {
   align-items: center;
   gap: 6px;
   color: #3A3A3A;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
   transition: color 0.15s ease;
 }
 
 .mega-menu-v2-trigger-link.is-open,
 .mega-menu-v2-trigger-link:hover { color: #111111; }
+
+/* Sidebar "Shop all" category items — permanent black tile */
+.mega-menu-v2-cat--shop-all {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.mega-menu-v2-cat--shop-all:hover {
+  background: #333333 !important;
+  color: #ffffff !important;
+}
+
+.mega-menu-v2-cat--shop-all.is-active {
+  background: #333333 !important;
+  color: #ffffff !important;
+}
 
 .mega-menu-v2-chevron {
   transition: transform 0.15s ease;
@@ -3120,9 +3152,10 @@ body.template--index .image-banner .button span {
   align-items: center;
   justify-content: space-between;
   padding: 10px 12px;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
   letter-spacing: 0;
+  text-transform: lowercase;
   color: #6B6B6B;
   text-decoration: none;
   border-radius: 8px;
@@ -3212,7 +3245,7 @@ body.template--index .image-banner .button span {
 }
 
 .mega-menu-v2-card-title {
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: -0.005em;
   line-height: 1.25;
@@ -3293,9 +3326,9 @@ body.template--index .image-banner .button span {
 .mega-menu-v2-grid--products .mega-menu-v2-card-title,
 .mega-menu-v2-grid--bestsellers .mega-menu-v2-card-title {
   font-family: 'Roboto', sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
-  line-height: 18px;
+  line-height: 15px;
   letter-spacing: 0.01em;
   text-transform: lowercase;
   color: #111111;
@@ -3354,6 +3387,216 @@ body.template--index .image-banner .button span {
   .mega-menu-v2-grid.mega-menu-v2-grid--products {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 16px 12px;
+  }
+}
+
+/* ============================================================
+   Hero banner reviews ribbon
+   ============================================================ */
+.banner-reviews-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+  cursor: default;
+  user-select: none;
+  width: 100%;
+}
+
+.banner-reviews-stars-img {
+  height: 30px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+.banner-reviews-text {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: #fff;
+  text-align: center;
+}
+.banner-reviews-text strong {
+  font-weight: 500;
+}
+
+.banner-reviews-logo {
+  height: 16px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+/* Push hero banner content group (title, subtitle, buttons, social proof) downward */
+body.template--index .banner__box {
+  transform: translateY(55px);
+}
+@media screen and (max-width: 749px) {
+  body.template--index .banner__box {
+    transform: translateY(35px);
+  }
+}
+
+/* ============================================================
+   Banner social proof widget (replaces reviews ribbon)
+   section-main-product-v2.css is not loaded on the homepage,
+   so we replicate the avatar/layout styles here scoped to the banner.
+   ============================================================ */
+.banner-social-proof {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px !important;
+  width: 100%;
+}
+.banner-social-proof .product-v2__social-proof-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+@media screen and (max-width: 749px) {
+  .banner-social-proof {
+    justify-content: flex-start;
+  }
+}
+.banner-social-proof .product-v2__sp-avatars {
+  display: flex;
+  flex-shrink: 0;
+}
+.banner-social-proof .product-v2__sp-avatar {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.banner-social-proof .product-v2__sp-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+.banner-social-proof .product-v2__sp-avatar--2,
+.banner-social-proof .product-v2__sp-avatar--3 {
+  margin-left: -10px;
+}
+.banner-social-proof .product-v2__sp-text {
+  font-size: 13px;
+  line-height: 1.35;
+  margin: 0;
+  color: #fff !important;
+  text-align: left;
+}
+.banner-social-proof .product-v2__sp-verified {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: text-bottom;
+}
+.banner-social-proof .product-v2__sp-name-link {
+  color: #fff !important;
+}
+
+/* ============================================================
+   Mega-menu sidebar reviews ribbon
+   ============================================================ */
+.mega-menu-v2-reviews {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px 0;
+  margin-top: 10px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  user-select: none;
+}
+.mega-menu-v2-reviews__stars {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+  color: #00B67A;
+}
+.mega-menu-v2-reviews__star svg {
+  width: 11px;
+  height: 11px;
+}
+.mega-menu-v2-reviews__text {
+  font-size: 12px;
+  font-weight: 400;
+  color: #555;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.mega-menu-v2-reviews__text strong {
+  font-weight: 500;
+  color: #333;
+}
+.mega-menu-v2-reviews__logo {
+  height: 12px;
+  width: auto;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   Desktop locale switcher — matches nav item text style
+   ============================================================ */
+@media screen and (min-width: 990px) {
+  localization-selector.small-hide .localization-label {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    color: #3A3A3A !important;
+    transition: color 0.15s ease !important;
+    padding: 0 8px;
+  }
+
+  localization-selector.small-hide .localization-label:hover {
+    color: #111111 !important;
+  }
+
+  localization-selector.small-hide .localization-label span {
+    text-transform: lowercase;
+  }
+
+  .locale-chevron-icon {
+    transition: transform 0.15s ease;
+    color: currentColor;
+  }
+
+  localization-selector:has(.localization-list:not(.hidden)) .locale-chevron-icon {
+    transform: rotate(180deg);
+  }
+
+  localization-selector.small-hide .localization-list {
+    background: #ffffff !important;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
+    clip-path: inset(0 -40px -40px -40px);
+    width: 80px !important;
+    padding: 6px !important;
+    left: 50% !important;
+    top: 100% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  localization-selector.small-hide .localization-item { margin: 0; }
+
+  localization-selector.small-hide .localization-item a {
+    font-size: 13px;
+    font-weight: 500;
+    color: #3A3A3A;
+    text-decoration: none;
+    text-transform: lowercase;
+    display: block;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+
+  localization-selector.small-hide .localization-item a:hover {
+    background: #F5F2ED;
+    color: #111111;
   }
 }
 
