@@ -54,7 +54,11 @@
       flex-wrap: nowrap;
       align-items: center;
       width: max-content;
-      animation: uci-marquee-scroll 65s linear infinite;
+      /* Duration is tuned against the actual track width (half the total,
+         since the track is two identical copies) so the on-screen speed
+         stays constant regardless of how many tiles are repeated — px/s
+         is what matters for "feels slow", not the raw seconds value. */
+      animation: uci-marquee-scroll 85s linear infinite;
       will-change: transform;
     }
     .announcement-bar--sale:hover .uci-marquee__track,
@@ -153,12 +157,12 @@
                   {% if section.settings.sale_mode %}
                     <div class="uci-marquee">
                       <div class="uci-marquee__track">
-                        {%- for i in (1..16) -%}
+                        {%- for i in (1..8) -%}
                           {%- render 'uci-warehouse-tile', size: 'sm' -%}
                           <span class="uci-tile__sep">Sale + 1 free</span>
                           <span class="uci-tile__sep uci-tile__sep--brand">Sockeloen</span>
                         {%- endfor -%}
-                        {%- for i in (1..16) -%}
+                        {%- for i in (1..8) -%}
                           {%- render 'uci-warehouse-tile', size: 'sm' -%}
                           <span class="uci-tile__sep">Sale + 1 free</span>
                           <span class="uci-tile__sep uci-tile__sep--brand">Sockeloen</span>
