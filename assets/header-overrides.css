@@ -565,7 +565,7 @@ header.header.sticky-navbar .header__menu-item.link-only span,
 header.header .header__icons .header__menu-item span,
 header.header.absolute .header__icons .header__menu-item span {
   color: #000 !important;
-  text-transform: capitalize;
+  text-transform: capitalize !important;
   display: inline-block;
 }
 
@@ -698,7 +698,7 @@ header.header.sticky-navbar .header__heading-logo,
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  text-transform: uppercase !important;
   cursor: pointer;
   white-space: nowrap;
   padding: 4px 10px !important;
@@ -710,6 +710,12 @@ header.header.sticky-navbar .header__heading-logo,
   line-height: 1;
   color: #000 !important;
   transition: background 0.15s ease, color 0.15s ease !important;
+}
+/* base.css has a blanket `.header * { text-transform: lowercase }` rule
+   that wins over inheritance from .localization-label since it targets
+   the <span> element directly — must override on the span too. */
+.localization-label span {
+  text-transform: uppercase !important;
 }
 localization-selector:hover .localization-label,
 localization-selector:has(.localization-list:not(.hidden)) .localization-label {
@@ -3183,7 +3189,7 @@ body.template--index .image-banner .button span {
   font-size: 13px;
   font-weight: 400;
   letter-spacing: 0;
-  text-transform: capitalize;
+  text-transform: capitalize !important;
   color: #4A4A4A;
   text-decoration: none;
   border-radius: 8px;
