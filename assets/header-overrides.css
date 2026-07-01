@@ -3255,7 +3255,12 @@ body.template--index .image-banner .button span {
 .mega-menu-v2-card-img {
   aspect-ratio: 1 / 1;
   width: 100%;
-  background: rgba(255, 255, 255, 0.6);
+  /* Near-opaque — now that the panel's own backdrop-filter genuinely blurs
+     (post x-teleport fix), a translucent tile lets that blur bleed through
+     and turns product photos into unrecognisable grey blobs. Product
+     tiles need to read as solid white regardless of what's blurring
+     behind the panel. */
+  background: rgba(255, 255, 255, 0.96);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -3266,7 +3271,7 @@ body.template--index .image-banner .button span {
 }
 
 .mega-menu-v2-card:hover .mega-menu-v2-card-img {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 1);
 }
 
 .mega-menu-v2-card-img-el,
