@@ -158,10 +158,9 @@
         "blocks": {
           "announcement_6R9may": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
-              "text": "end of winter sale >",
-              "usd_text": "FREE SHIPPING > $150 // BORN IN THE PELOTON // 100% SATISFACTION // CUSTOMER IS KING //",
+              "text": "FREE SHIPPING > €75,-",
+              "usd_text": "FREE SHIPPING > $150",
               "text_alignment": "center",
               "bg_color": "#000000",
               "font_color": "#ffffff",
