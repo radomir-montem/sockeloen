@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "new race essentials",
+            "heading": "get ready for summer",
             "heading_size": "h2",
             "use_h1_tag": false
           }
@@ -23,7 +23,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "make the difference with our new items.",
+            "text": "make your legs look like weapons",
             "text_style": "subtitle"
           }
         },
@@ -33,8 +33,8 @@
             "button_label_1": "top 8 - best sellers",
             "button_link_1": "shopify://collections/best-sellers-1",
             "button_style_secondary_1": true,
-            "button_label_2": "shop race essentials",
-            "button_link_2": "shopify://collections/race-essentials",
+            "button_label_2": "shop cycling socks",
+            "button_link_2": "shopify://collections/cycling-socks",
             "button_style_secondary_2": false
           }
         }
@@ -46,8 +46,8 @@
       ],
       "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/1200x600_RACE_essentials_webbanner2_jpg.jpg",
-        "image_mobile": "shopify://shop_images/aero-mobile-banner.png",
+        "image": "shopify://shop_images/CUSTOM.SOCKS.banner.png",
+        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_6fe30e01-0264-44da-bac7-870afc3655ba.png",
         "image_overlay_opacity": 30,
         "banner_image_height": 700,
         "image_height_mobile": 650,
@@ -155,9 +155,22 @@
         "6d8ba610-7a14-4d56-aec7-aab43b31460b",
         "70fc3b03-a6c3-48e5-b2b0-9eb9da4cb5d6"
       ],
+      "disabled": true,
       "custom_css": [],
       "settings": {
         "font_size": 22
+      }
+    },
+    "custom_liquid_rMhgeN": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "heading": "",
+        "heading_size": 26,
+        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
+        "color_scheme": "background-1",
+        "padding_top": 20,
+        "padding_bottom": 0
       }
     },
     "rich_text_aqpE7M": {
@@ -186,6 +199,49 @@
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 52
+      }
+    },
+    "dd2f8929-ca91-4a21-8114-9128c971c079": {
+      "type": "column-image-and-section",
+      "blocks": {
+        "richtext_63ArA6": {
+          "type": "richtext",
+          "settings": {
+            "title": "SOCKELOEN",
+            "description": "<p>high performance cycling socks</p>",
+            "button_label": "",
+            "button_url": "",
+            "text_align": "center"
+          }
+        },
+        "4904019c-ebe9-48ae-adae-d8c50c33e729": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/FSTOP_webbanner32_39f0910d-28ef-42e7-999b-46cc9d4e7501.png",
+            "opacity": 10,
+            "title": "FSOTP",
+            "button_label": "SHOP NOW",
+            "button_url": "shopify://collections/fsotp"
+          }
+        },
+        "86de9b6b-4b96-465d-89c3-3525b1066c20": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/FSTOP_webbanner.png",
+            "opacity": 10,
+            "title": "KNWU",
+            "button_label": "SHOP NOW",
+            "button_url": "shopify://collections/sockeloen-x-knwu"
+          }
+        }
+      },
+      "block_order": [
+        "richtext_63ArA6",
+        "4904019c-ebe9-48ae-adae-d8c50c33e729",
+        "86de9b6b-4b96-465d-89c3-3525b1066c20"
+      ],
+      "settings": {
+        "font_size": 22
       }
     },
     "usp_HBx6Vd": {
@@ -262,18 +318,6 @@
       "disabled": true,
       "settings": {}
     },
-    "custom_liquid_rMhgeN": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "heading": "",
-        "heading_size": 26,
-        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
-        "color_scheme": "background-1",
-        "padding_top": 20,
-        "padding_bottom": 0
-      }
-    },
     "de9aa240-54a4-4bba-bc14-853948711e79": {
       "type": "reviews-carousel",
       "custom_css": [
@@ -284,48 +328,55 @@
         "vertical_padding": 70
       }
     },
-    "dd2f8929-ca91-4a21-8114-9128c971c079": {
-      "type": "column-image-and-section",
+    "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5": {
+      "type": "image-banner",
       "blocks": {
-        "4904019c-ebe9-48ae-adae-d8c50c33e729": {
-          "type": "image",
+        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0": {
+          "type": "heading",
           "settings": {
-            "image": "shopify://shop_images/FSTOP_webbanner32_39f0910d-28ef-42e7-999b-46cc9d4e7501.png",
-            "opacity": 10,
-            "title": "FSOTP",
-            "button_label": "SHOP NOW",
-            "button_url": "shopify://collections/fsotp"
+            "heading": "CUSTOM MADE SOCKS",
+            "heading_size": "h0",
+            "use_h1_tag": true
           }
         },
-        "86de9b6b-4b96-465d-89c3-3525b1066c20": {
-          "type": "image",
+        "a8a72217-bd02-490a-b90f-0b812e1cec08": {
+          "type": "text",
           "settings": {
-            "image": "shopify://shop_images/FSTOP_webbanner.png",
-            "opacity": 10,
-            "title": "KNWU",
-            "button_label": "SHOP NOW",
-            "button_url": "shopify://collections/sockeloen-x-knwu"
+            "text": "",
+            "text_style": "subtitle"
           }
         },
-        "fd0f966c-3c50-4673-9dbf-aa8e6aedd6f8": {
-          "type": "richtext",
+        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2": {
+          "type": "buttons",
           "settings": {
-            "title": "SALE",
-            "description": "<p>Explore our last chance products here. </p><p>Special prices. Minimum waste.</p><p></p><p></p><p></p><p></p><p></p>",
-            "button_label": "SHOP NOW",
-            "button_url": "shopify://collections/sale",
-            "text_align": "center"
+            "button_label_1": "",
+            "button_link_1": "https://custom.sockeloen.nl/en-custom-design-checkout/",
+            "button_style_secondary_1": true,
+            "button_label_2": "EXPLORE CUSTOM SOCKS",
+            "button_link_2": "shopify://collections/custom-socks",
+            "button_style_secondary_2": false
           }
         }
       },
       "block_order": [
-        "4904019c-ebe9-48ae-adae-d8c50c33e729",
-        "86de9b6b-4b96-465d-89c3-3525b1066c20",
-        "fd0f966c-3c50-4673-9dbf-aa8e6aedd6f8"
+        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0",
+        "a8a72217-bd02-490a-b90f-0b812e1cec08",
+        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2"
       ],
-      "disabled": true,
       "settings": {
-        "font_size": 22
+        "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1_f2234b29-35ac-49bb-94c7-d87c0f5c7949.png",
+        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
+        "image_overlay_opacity": 20,
+        "banner_image_height": 600,
+        "image_height_mobile": 450,
+        "adapt_height_first_image": true,
+        "desktop_content_position": "middle-left",
+        "show_text_box": false,
+        "desktop_content_alignment": "left",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "left",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
       }
     },
     "d87b5960-1f92-48c4-8223-cc52b7b532cf": {
@@ -371,59 +422,6 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951"
       ],
       "settings": {}
-    },
-    "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5": {
-      "type": "image-banner",
-      "blocks": {
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "heading": "CUSTOM MADE SOCKS",
-            "heading_size": "h0",
-            "use_h1_tag": true
-          }
-        },
-        "a8a72217-bd02-490a-b90f-0b812e1cec08": {
-          "type": "text",
-          "settings": {
-            "text": "",
-            "text_style": "subtitle"
-          }
-        },
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "ASK A QUOTE",
-            "button_link_1": "https://custom.sockeloen.nl/en-custom-design-checkout/",
-            "button_style_secondary_1": true,
-            "button_label_2": "EXPLORE CUSTOM SOCKS",
-            "button_link_2": "shopify://collections/custom-socks",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0",
-        "a8a72217-bd02-490a-b90f-0b812e1cec08",
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2"
-      ],
-      "disabled": true,
-      "settings": {
-        "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1_f2234b29-35ac-49bb-94c7-d87c0f5c7949.png",
-        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
-        "image_overlay_opacity": 20,
-        "banner_image_height": 600,
-        "image_height_mobile": 450,
-        "adapt_height_first_image": true,
-        "desktop_content_position": "middle-left",
-        "show_text_box": false,
-        "desktop_content_alignment": "left",
-        "color_scheme": "background-1",
-        "mobile_content_alignment": "left",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
     },
     "image_banner_PTNcRi": {
       "type": "image-banner",
@@ -704,14 +702,14 @@
     "featured_collection",
     "rich_text_BAQBfh",
     "8b0b527a-f477-4927-970f-cc63855e24be",
+    "custom_liquid_rMhgeN",
     "rich_text_aqpE7M",
+    "dd2f8929-ca91-4a21-8114-9128c971c079",
     "usp_HBx6Vd",
     "c279238b-8499-4eaf-81d5-673521b38c4a",
-    "custom_liquid_rMhgeN",
     "de9aa240-54a4-4bba-bc14-853948711e79",
-    "dd2f8929-ca91-4a21-8114-9128c971c079",
-    "d87b5960-1f92-48c4-8223-cc52b7b532cf",
     "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5",
+    "d87b5960-1f92-48c4-8223-cc52b7b532cf",
     "image_banner_PTNcRi",
     "two_cols_swap_n6jVTM",
     "image_text",

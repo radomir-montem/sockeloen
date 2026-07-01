@@ -8,25 +8,9 @@
  * ------------------------------------------------------------
  */
 {
-  "parent": "index.json",
+  "parent": "product.gravel-ain-t-ready.json",
   "context": {
     "market": "nl"
   },
-  "sections": {
-    "image_banner": {
-      "settings": {},
-      "blocks": {
-        "heading": {
-          "settings": {
-            "heading": "get ready for summer"
-          }
-        },
-        "text": {
-          "settings": {
-            "text": "make your legs look like weapons"
-          }
-        }
-      }
-    }
-  }
+  "sections": {}
 }
