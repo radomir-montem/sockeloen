@@ -183,8 +183,8 @@
           "announcement-bar-0": {
             "type": "announcement",
             "settings": {
-              "text": "free shipping on all orders above 75",
-              "usd_text": "free shipping on all orders above 100",
+              "text": "UCI WAREHOUSE SALE  --  SALE + 1 FREE  --  SALE + 1 FREE  --  SALE + 1 FREE",
+              "usd_text": "UCI WAREHOUSE SALE  --  SALE + 1 FREE  --  SALE + 1 FREE  --  SALE + 1 FREE",
               "text_alignment": "center",
               "bg_color": "#000000",
               "font_color": "#ffffff",
