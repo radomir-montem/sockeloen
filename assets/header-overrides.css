@@ -3107,14 +3107,17 @@ body.template--index .image-banner .button span {
   left: 0;
   right: 0;
   width: auto;
-  /* Matches header.header's own background/blur exactly (the EME Studios
-     reference values) so the pill and the panel read as one continuous
-     glass surface, rather than the panel switching to a different (dark)
-     overlay style. */
+  /* Matches header.header's own background/blur values (the EME Studios
+     reference) — but the blur radius here is intentionally higher than the
+     header's 21px. The panel is DOM-nested inside header.header, which
+     itself has backdrop-filter; Chromium renders nested backdrop-filters
+     weaker than the CSS value alone would suggest, so 21px here visibly
+     under-blurs compared to the pill. Compensating with a larger radius
+     until the two read as equally blurred. */
   background: linear-gradient(to bottom right, rgba(255,255,255,0.45), rgba(255,255,255,0.08), transparent) !important;
   background-color: transparent !important;
-  backdrop-filter: blur(21px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+  backdrop-filter: blur(55px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(55px) saturate(180%) !important;
   border-top: none !important;
   border-left: 1px solid rgba(255,255,255,0.1);
   border-right: 1px solid rgba(255,255,255,0.1);
