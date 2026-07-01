@@ -83,7 +83,7 @@
   {%- for block in section.blocks -%}
     {%- case block.type -%}
       {%- when 'announcement' -%}
-        <div style="{% unless section.settings.sale_mode %}background-color: {{block.settings.bg_color}};{% endunless %}" class="announcement-bar{% if section.settings.sale_mode %} announcement-bar--sale{% endif %} gradient{% unless forloop.first %} hidden{% endunless %}" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
+        <div style="background-color: {% if section.settings.sale_mode %}#1a1a1a{% else %}{{block.settings.bg_color}}{% endif %};" class="announcement-bar{% if section.settings.sale_mode %} announcement-bar--sale{% endif %} gradient{% unless forloop.first %} hidden{% endunless %}" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
           {%- if block.settings.text != blank -%}
             {%- if block.settings.link != blank -%}
               <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
