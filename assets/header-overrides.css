@@ -2069,7 +2069,10 @@ body.template--index .image-banner .button span {
 .menu-drawer .mobile-menu--v2 .mobile-menu__panel,
 .mobile-menu--v2 .mobile-menu__panel {
   padding: 0 !important;
-  background: #ffffff;
+  /* Transparent — lets the drawer's own glass gradient/blur (matching the
+     header pill and desktop mega panel) show through instead of a solid
+     opaque block covering everything below the top of the panel. */
+  background: transparent;
 }
 
 /* ----------------------------------------------------------------------
@@ -2092,7 +2095,7 @@ body.template--index .image-banner .button span {
 }
 
 .mobile-menu--v2 .mobile-menu__body {
-  background: #ffffff;
+  background: transparent;
 }
 
 /* Root body: natural content height */
@@ -2110,8 +2113,8 @@ body.template--index .image-banner .button span {
   justify-content: center;
   min-height: 72px;
   padding: 16px 20px;
-  border-bottom: 1px solid #F0EEEA;
-  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: transparent;
   flex-shrink: 0;
 }
 
@@ -2257,7 +2260,7 @@ body.template--index .image-banner .button span {
      so reviews ribbon, locale toggle, and Shop-all-products pill all share
      the exact same visual width — three equal-width tiles stacked. */
   padding: 6px 20px 0;
-  background: #ffffff;
+  background: transparent;
   flex-shrink: 0;
   position: relative;
 }
@@ -2653,7 +2656,7 @@ body.template--index .image-banner .button span {
   position: static;
   order: 99;
   padding: 6px 20px calc(36px + env(safe-area-inset-bottom, 0px));
-  background: #ffffff;
+  background: transparent;
   flex-shrink: 0;
 }
 
@@ -2701,8 +2704,8 @@ body.template--index .image-banner .button span {
    activeMenu and resets any open sub-menu. */
 .mobile-menu--v2 .mobile-menu__tab-bar {
   display: flex;
-  background: #ffffff;
-  border-bottom: 1px solid #F0EEEA;
+  background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   flex-shrink: 0;
 }
 
