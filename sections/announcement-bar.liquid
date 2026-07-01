@@ -38,7 +38,7 @@
       flex-direction: column;
       gap: 0;
       width: 22px;
-      height: 16px;
+      height: 14px;
       flex-shrink: 0;
     }
 
@@ -48,11 +48,10 @@
       width: 100%;
     }
 
-    .uci-stripes .stripe-blue { background: #0081C8; }
-    .uci-stripes .stripe-red { background: #EE334E; }
-    .uci-stripes .stripe-black { background: #000000; }
-    .uci-stripes .stripe-yellow { background: #FCB131; }
-    .uci-stripes .stripe-green { background: #00A651; }
+    .uci-stripes .stripe-1 { background: #0057B8; }
+    .uci-stripes .stripe-2 { background: #E63329; }
+    .uci-stripes .stripe-3 { background: #F5C518; }
+    .uci-stripes .stripe-4 { background: #00843D; }
 
     .announcement-bar--sale .announcement-bar__message {
       color: #ffffff !important;
@@ -93,11 +92,10 @@
                   {% if section.settings.sale_mode %}
                     <div class="announcement-bar__inner">
                       <div class="uci-stripes">
-                        <span class="stripe-blue"></span>
-                        <span class="stripe-red"></span>
-                        <span class="stripe-black"></span>
-                        <span class="stripe-yellow"></span>
-                        <span class="stripe-green"></span>
+                        <span class="stripe-1"></span>
+                        <span class="stripe-2"></span>
+                        <span class="stripe-3"></span>
+                        <span class="stripe-4"></span>
                       </div>
                       <p class="announcement-bar__message {{ block.settings.text_alignment }} h5">
                         {% if localization.country.iso_code == 'US' %}
@@ -110,11 +108,10 @@
                         {%- endif -%}
                       </p>
                       <div class="uci-stripes">
-                        <span class="stripe-blue"></span>
-                        <span class="stripe-red"></span>
-                        <span class="stripe-black"></span>
-                        <span class="stripe-yellow"></span>
-                        <span class="stripe-green"></span>
+                        <span class="stripe-1"></span>
+                        <span class="stripe-2"></span>
+                        <span class="stripe-3"></span>
+                        <span class="stripe-4"></span>
                       </div>
                     </div>
                   {% else %}
