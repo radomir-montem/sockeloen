@@ -565,7 +565,7 @@ header.header.sticky-navbar .header__menu-item.link-only span,
 header.header .header__icons .header__menu-item span,
 header.header.absolute .header__icons .header__menu-item span {
   color: #000 !important;
-  text-transform: lowercase;
+  text-transform: capitalize;
   display: inline-block;
 }
 
@@ -618,11 +618,11 @@ header.header.sticky-navbar .header__icon--cart .icon path {
   stroke-width: 0 !important;
 }
 
-/* Language label: always black */
+/* Language label: white on dark glass pill */
 header.header .localization-label,
 header.header.absolute .localization-label,
 header.header.sticky-navbar .localization-label {
-  color: #000 !important;
+  color: #fff !important;
 }
 
 /* Dropdown carets on nav items */
@@ -685,22 +685,24 @@ header.header.sticky-navbar .header__heading-logo,
   display: flex;
   align-items: center;
   gap: 6px;
-  /* Bumped from 13px → 15px so the text weight matches the 20px icons
-     next to it (cart, search, account). Chevron caret also scales up. */
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: 0.03em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
   white-space: nowrap;
-  padding: 0 !important;
-  background: transparent !important;
+  padding: 4px 10px !important;
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
   border: none !important;
-  border-radius: 0 !important;
+  border-radius: 6px !important;
   line-height: 1;
+  color: #fff !important;
 }
 .localization-label:hover {
-  background: transparent !important;
-  opacity: 0.6;
+  background: rgba(0, 0, 0, 0.7) !important;
+  opacity: 1;
 }
 
 /* Give the desktop selector container the same padding as .header__icon so
@@ -719,7 +721,7 @@ header.header.sticky-navbar .header__heading-logo,
   display: inline-block;
   width: 10px;
   height: 6px;
-  background-image: url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L4 4L7 1' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L4 4L7 1' stroke='%23fff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: contain;
   opacity: 0.8;
@@ -2310,7 +2312,7 @@ body.template--index .image-banner .button span {
   color: #111111;
   cursor: pointer;
   transition: background 0.15s ease;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 
 .mobile-menu--v2 .mobile-menu__locale-toggle:hover {
@@ -3070,11 +3072,11 @@ body.template--index .image-banner .button span {
   left: 20px;
   right: 20px;
   width: auto;
-  background: linear-gradient(to bottom right, rgba(255,255,255,0.5), rgba(255,255,255,0.15), rgba(255,255,255,0.05)) !important;
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.45), rgba(255,255,255,0.08), transparent) !important;
   background-color: transparent !important;
   backdrop-filter: blur(21px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
-  border-top: none;
+  border-top: none !important;
   border-left: 1px solid rgba(255,255,255,0.1);
   border-right: 1px solid rgba(255,255,255,0.1);
   border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -3148,7 +3150,7 @@ body.template--index .image-banner .button span {
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0;
-  text-transform: lowercase;
+  text-transform: capitalize;
   color: #6B6B6B;
   text-decoration: none;
   border-radius: 8px;
@@ -3323,7 +3325,7 @@ body.template--index .image-banner .button span {
   font-weight: 500;
   line-height: 15px;
   letter-spacing: 0.01em;
-  text-transform: lowercase;
+  text-transform: capitalize;
   color: #111111;
   white-space: nowrap;
   overflow: hidden;
@@ -3549,7 +3551,7 @@ body.template--index .banner__box {
   }
 
   localization-selector.small-hide .localization-label span {
-    text-transform: lowercase;
+    text-transform: uppercase;
   }
 
   .locale-chevron-icon {
@@ -3580,7 +3582,7 @@ body.template--index .banner__box {
     font-weight: 500;
     color: #3A3A3A;
     text-decoration: none;
-    text-transform: lowercase;
+    text-transform: uppercase;
     display: block;
     padding: 6px 8px;
     border-radius: 4px;
