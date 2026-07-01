@@ -3091,33 +3091,29 @@ body.template--index .image-banner .button span {
    surfaces read as one continuous shape. Flush top at the pill's bottom
    edge means no gap/shadow line between them. Flat top corners +
    rounded bottom mirrors the pill's (flattened-when-open) shape.
-   IMPORTANT: header.header has backdrop-filter, which makes it a new
-   containing block for any position:fixed descendant (CSS spec behaviour).
-   Since .mega-menu-v2-panel lives inside header.header, "left/right: 20px"
-   was resolving against the HEADER's own box (already inset 20px from the
-   viewport) — compounding to a 40px inset and a narrower panel than the
-   pill/notification bar above it. Fix: left/right: 0 (flush with the
-   header's own edges, which already align with the notification bar), and
-   top: 100% (flush with the header's own bottom edge) instead of a
-   viewport-relative pixel value that breaks when the containing block
-   changes. */
+   IMPORTANT: header.header has backdrop-filter, which (a) makes it a new
+   containing block for position:fixed descendants, AND (b) causes Chromium
+   to render any NESTED backdrop-filter as a no-op (confirmed by testing
+   blur(150px) with zero visible change). Both bugs stem from the panel
+   being DOM-nested inside the filtered header — fixed by teleporting the
+   panel to <body> via Alpine's x-teleport (see mega-menu-desktop.liquid).
+   Once teleported, position:fixed is viewport-relative again, exactly like
+   header.header itself, so we mirror its literal pixel values here:
+   top: 44px (announcement bar) + 48px (pill height) = 92px, left/right:
+   20px desktop / 12px mobile (matching header.header's own breakpoints). */
 .mega-menu-v2-panel {
   position: fixed;
-  top: 100%;
-  left: 0;
-  right: 0;
+  top: 92px;
+  left: 20px;
+  right: 20px;
   width: auto;
-  /* Matches header.header's own background/blur values (the EME Studios
-     reference) — but the blur radius here is intentionally higher than the
-     header's 21px. The panel is DOM-nested inside header.header, which
-     itself has backdrop-filter; Chromium renders nested backdrop-filters
-     weaker than the CSS value alone would suggest, so 21px here visibly
-     under-blurs compared to the pill. Compensating with a larger radius
-     until the two read as equally blurred. */
+  /* Matches header.header's own background/blur values exactly (the EME
+     Studios reference) — now that real backdrop-filter works again post
+     teleport, no compensation is needed. */
   background: linear-gradient(to bottom right, rgba(255,255,255,0.45), rgba(255,255,255,0.08), transparent) !important;
   background-color: transparent !important;
-  backdrop-filter: blur(55px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(55px) saturate(180%) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
   border-top: none !important;
   border-left: 1px solid rgba(255,255,255,0.1);
   border-right: 1px solid rgba(255,255,255,0.1);
@@ -3594,11 +3590,13 @@ body.template--index .banner__box {
 
 /* When the desktop mega panel is open, flatten the pill's bottom corners
    and drop its shadow so the pill + panel read as one continuous white
-   surface (no 8px corner notches, no seam shadow between them). */
+   surface (no 8px corner notches, no seam shadow between them).
+   The panel is teleported to <body> (see mega-menu-desktop.liquid) so it's
+   no longer a descendant of header.header — :has() is scoped from body
+   instead, which still correctly detects an open panel anywhere in the
+   teleported DOM and flattens the header regardless. */
 @media (min-width: 990px) {
-  sticky-header:has(.mega-menu-v2-panel:not([style*="display: none"])) header.header,
-  .header-wrapper:has(.mega-menu-v2-panel:not([style*="display: none"])) header.header,
-  header.header:has(.mega-menu-v2-panel:not([style*="display: none"])) {
+  body:has(.mega-menu-v2-panel:not([style*="display: none"])) header.header {
     border-radius: 0 !important;
     box-shadow: none !important;
     border-bottom: none !important;
