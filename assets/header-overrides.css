@@ -3618,37 +3618,6 @@ body.template--index .banner__box {
   }
 }
 
-/* ==========================================================================
-   Hero banner buttons — glass effect
-   ========================================================================== */
-[id^="Banner-"] .banner__buttons .button,
-[id^="Banner-"] .banner__buttons .button--primary,
-[id^="Banner-"] .banner__buttons .button--secondary,
-[id^="Banner-"] .button.button--secondary,
-[id^="Banner-"] .button.button--primary {
-  background: rgba(255, 255, 255, 0.2) !important;
-  background-color: rgba(255, 255, 255, 0.2) !important;
-  backdrop-filter: blur(21px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  color: #fff !important;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
-  transition: background 0.2s ease, border-color 0.2s ease !important;
-}
-[id^="Banner-"] .banner__buttons .button:hover,
-[id^="Banner-"] .banner__buttons .button--primary:hover,
-[id^="Banner-"] .banner__buttons .button--secondary:hover,
-[id^="Banner-"] .button.button--secondary:hover,
-[id^="Banner-"] .button.button--primary:hover {
-  background: rgba(255, 255, 255, 0.35) !important;
-  background-color: rgba(255, 255, 255, 0.35) !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  color: #fff !important;
-}
-[id^="Banner-"] .banner__buttons .button:before,
-[id^="Banner-"] .banner__buttons .button:after,
-[id^="Banner-"] .button.button--secondary:before,
-[id^="Banner-"] .button.button--secondary:after {
-  display: none !important;
-}
+/* Hero banner button glass effect is in image-banner.liquid inline styles
+   (needs #Banner-{id} specificity to win) */
 
