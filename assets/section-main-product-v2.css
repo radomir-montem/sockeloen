@@ -903,100 +903,81 @@ a.product-v2__sp-avatar {
   margin-bottom: 20px;
 }
 
-/* ---------- UCI Warehouse Sale banner ---------- */
-.product-v2__uci-sale-banner {
+/* ---------- UCI Warehouse Sale banner ----------
+   Compact single row — replaces the AOV "Get More Save More" app block
+   1:1 (same slot, same rough footprint), not stacked above/below it.
+   Uses the shared uci-warehouse-tile snippet (size: 'lg' here) so the
+   flag + wordmark match the notification bar's branding exactly. */
+.product-v2__uci-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
   background: #1a1a1a;
   border-radius: 10px;
-  padding: 16px 20px;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #fff;
+  padding: 12px 16px;
+  margin-bottom: 16px;
 }
-.product-v2__uci-sale-banner .uci-stripes {
+.product-v2__uci-banner .uci-tile {
   display: inline-flex;
-  flex-direction: row;
-  gap: 2px;
-  height: 16px;
+  align-items: center;
+  gap: 8px;
+}
+.product-v2__uci-banner .uci-tile__flag {
+  width: 18px;
+  height: 14px;
   flex-shrink: 0;
-  vertical-align: middle;
 }
-.product-v2__uci-sale-banner .uci-stripes span {
-  display: block;
-  width: 4px;
-  height: 100%;
-  border-radius: 1px;
+.product-v2__uci-banner .uci-tile__word {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
 }
-.product-v2__uci-sale-banner .stripe-1 { background: #E63329; }
-.product-v2__uci-sale-banner .stripe-2 { background: #0057B8; }
-.product-v2__uci-sale-banner .stripe-3 { background: #1a1a1a; border: 1px solid #333; }
-.product-v2__uci-sale-banner .stripe-4 { background: #F5C518; }
-.product-v2__uci-sale-banner .stripe-5 { background: #00843D; }
-.uci-sale-banner__top {
+.product-v2__uci-banner .uci-tile__uci {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.product-v2__uci-banner .uci-tile__clearance {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+}
+.uci-banner__offer {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.uci-banner__timer {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  gap: 8px;
+  white-space: nowrap;
 }
-.uci-sale-banner__title {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #fff;
-}
-.uci-sale-banner__subtitle {
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  margin-top: 4px;
-  color: #fff;
-}
-.uci-sale-banner__timer {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255,255,255,0.15);
-}
-.uci-timer__label {
-  font-size: 9px;
+.uci-banner__timer-label {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 6px;
 }
-.uci-timer__digits {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
-.uci-timer__block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 40px;
-}
-.uci-timer__number {
-  font-size: 22px;
-  font-weight: 800;
+.uci-banner__timer-digits {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
-  line-height: 1;
-  color: #fff;
+  letter-spacing: 0.02em;
 }
-.uci-timer__unit {
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  margin-top: 2px;
-}
-.uci-timer__sep {
-  font-size: 20px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.4);
-  line-height: 1;
-  margin-bottom: 14px;
+@media (max-width: 480px) {
+  .product-v2__uci-banner {
+    justify-content: center;
+    text-align: center;
+  }
+  .uci-banner__offer { display: none; }
 }
 
 /* ---------- Variant Pickers — Shared ---------- */

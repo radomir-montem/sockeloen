@@ -25,61 +25,117 @@
       overflow: hidden;
     }
 
-    .announcement-bar--sale .announcement-bar__inner {
+    /* Full-bleed, no centering — the marquee track handles its own layout
+       and needs the full bar width to scroll edge-to-edge. */
+    .announcement-bar--sale .announcement-bar__link {
+      justify-content: flex-start !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+    }
+    .announcement-bar--sale .page-width {
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+      display: block !important;
+      text-align: left !important;
+    }
+
+    /* ---- Endless marquee — repeating UCI flag + wordmark tile ---- */
+    .uci-marquee {
+      width: 100%;
+      height: 32px;
+      overflow: hidden;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 10px 0;
+    }
+    .uci-marquee__track {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      width: max-content;
+      animation: uci-marquee-scroll 28s linear infinite;
+      will-change: transform;
+    }
+    .announcement-bar--sale:hover .uci-marquee__track,
+    .announcement-bar--sale:focus-within .uci-marquee__track {
+      animation-play-state: paused;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .uci-marquee__track {
+        animation: none !important;
+      }
+    }
+    @keyframes uci-marquee-scroll {
+      from { transform: translateX(0); }
+      /* Exactly -50% because the track is two identical halves — loops
+         seamlessly regardless of viewport width or item count. */
+      to   { transform: translateX(-50%); }
     }
 
-    .uci-stripes {
-      display: flex;
-      flex-direction: row;
-      gap: 2px;
-      height: 18px;
+    .uci-tile {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       flex-shrink: 0;
     }
-
-    .uci-stripes span {
-      display: block;
-      width: 4px;
-      height: 100%;
-      border-radius: 1px;
+    .uci-tile__flag {
+      width: 14px;
+      height: 11px;
+      flex-shrink: 0;
     }
-
-    .uci-stripes .stripe-1 { background: #E63329; }
-    .uci-stripes .stripe-2 { background: #0057B8; }
-    .uci-stripes .stripe-3 { background: #1a1a1a; }
-    .uci-stripes .stripe-4 { background: #F5C518; }
-    .uci-stripes .stripe-5 { background: #00843D; }
-
-    .announcement-bar--sale .announcement-bar__message {
-      color: #ffffff !important;
+    .uci-tile__word {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    .uci-tile__uci {
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .uci-tile__clearance {
+      color: #ffffff;
       font-size: 12px;
-      letter-spacing: 0.06em;
-      text-transform: lowercase;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    .uci-tile__sep {
+      display: inline-flex;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 11px;
       font-weight: 500;
-      padding: 0;
-      margin: 0;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      margin: 0 22px;
+    }
+    .uci-tile__sep--brand {
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 700;
     }
 
-    .announcement-bar--sale .announcement-bar__message::first-letter {
-      text-transform: uppercase;
+    @media (max-width: 749px) {
+      .uci-tile__flag {
+        width: 12px;
+        height: 9px;
+      }
+      .uci-tile__uci {
+        font-size: 12px;
+      }
+      .uci-tile__clearance {
+        font-size: 11px;
+      }
+      .uci-tile__sep {
+        font-size: 10px;
+        margin: 0 16px;
+      }
     }
 
     .announcement-bar--sale .announcement-bar__close path {
       fill: #ffffff !important;
-    }
-
-    @media (max-width: 749px) {
-      .announcement-bar--sale .announcement-bar__message {
-        font-size: 10px;
-      }
-      .uci-stripes {
-        width: 16px;
-        height: 12px;
-      }
     }
   </style>
 {% endif %}
@@ -95,27 +151,18 @@
             {%- endif -%}
                 <div class="page-width">
                   {% if section.settings.sale_mode %}
-                    <div class="announcement-bar__inner">
-                      <div class="uci-stripes">
-                        <span class="stripe-1"></span>
-                        <span class="stripe-2"></span>
-                        <span class="stripe-3"></span>
-                        <span class="stripe-4"></span>
-                        <span class="stripe-5"></span>
-                      </div>
-                      <p class="announcement-bar__message {{ block.settings.text_alignment }} h5">
-                        {% if localization.country.iso_code == 'US' %}
-                          {{ block.settings.usd_text | escape }}
-                        {% else %}
-                          {{ block.settings.text | escape }}
-                        {% endif %}
-                      </p>
-                      <div class="uci-stripes">
-                        <span class="stripe-1"></span>
-                        <span class="stripe-2"></span>
-                        <span class="stripe-3"></span>
-                        <span class="stripe-4"></span>
-                        <span class="stripe-5"></span>
+                    <div class="uci-marquee">
+                      <div class="uci-marquee__track">
+                        {%- for i in (1..16) -%}
+                          {%- render 'uci-warehouse-tile', size: 'sm' -%}
+                          <span class="uci-tile__sep">Sale + 1 free</span>
+                          <span class="uci-tile__sep uci-tile__sep--brand">Sockeloen</span>
+                        {%- endfor -%}
+                        {%- for i in (1..16) -%}
+                          {%- render 'uci-warehouse-tile', size: 'sm' -%}
+                          <span class="uci-tile__sep">Sale + 1 free</span>
+                          <span class="uci-tile__sep uci-tile__sep--brand">Sockeloen</span>
+                        {%- endfor -%}
                       </div>
                     </div>
                   {% else %}

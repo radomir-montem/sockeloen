@@ -1,0 +1,23 @@
+{%- comment -%}
+  UCI Warehouse Clearance tile — flag icon + wordmark lockup.
+  Reused in the notification bar marquee and the product page sale banner
+  so the visual language stays identical across both placements.
+  Accepts: size ('sm' default for the notification bar, 'lg' for the
+  product page banner).
+{%- endcomment -%}
+{%- liquid
+  assign tile_size = size | default: 'sm'
+-%}
+<span class="uci-tile uci-tile--{{ tile_size }}">
+  <svg class="uci-tile__flag" viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="0" y="0" width="3" height="16" rx="1" fill="#E63329"/>
+    <rect x="4.5" y="0" width="3" height="16" rx="1" fill="#0057B8"/>
+    <rect x="9" y="0" width="3" height="16" rx="1" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="0.5"/>
+    <rect x="13.5" y="0" width="3" height="16" rx="1" fill="#F5C518"/>
+    <rect x="17" y="0" width="3" height="16" rx="1" fill="#00843D"/>
+  </svg>
+  <span class="uci-tile__word">
+    <strong class="uci-tile__uci">UCI</strong>
+    <span class="uci-tile__clearance">Warehouse Clearance</span>
+  </span>
+</span>
