@@ -3066,20 +3066,22 @@ body.template--index .image-banner .button span {
    rounded bottom mirrors the pill's (flattened-when-open) shape. */
 .mega-menu-v2-panel {
   position: fixed;
-  top: 92px;                 /* pill bottom = 44 (top) + 48 (height) */
-  left: 20px;                /* matches pill's left inset */
-  right: 20px;               /* matches pill's right inset */
+  top: 92px;
+  left: 20px;
+  right: 20px;
   width: auto;
-  background: #ffffff;       /* same white as pill — seamless flow */
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.5), rgba(255,255,255,0.15), rgba(255,255,255,0.05)) !important;
+  background-color: transparent !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
   border-top: none;
-  border-radius: 0 0 8px 8px; /* flat top, rounded bottom (mirrors pill) */
-  /* Soft outer shadow on sides + bottom. clip-path trims the top shadow
-     so there's no visible seam line where pill meets panel. */
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.08),
-    0 2px 6px rgba(0, 0, 0, 0.05);
-  clip-path: inset(0 -40px -40px -40px);
-  z-index: 50;               /* above announcement bar (20), under modal layers */
+  border-left: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+  clip-path: none;
+  z-index: 50;
   max-height: calc(100vh - 112px);
   overflow-y: auto;
 }
@@ -3600,6 +3602,7 @@ body.template--index .banner__box {
   header.header:has(.mega-menu-v2-panel:not([style*="display: none"])) {
     border-radius: 0 !important;
     box-shadow: none !important;
+    border-bottom: none !important;
   }
 }
 
@@ -3613,5 +3616,33 @@ body.template--index .banner__box {
     padding: 0 !important;
     border-radius: 0 0 8px 8px !important;
   }
+}
+
+/* ==========================================================================
+   Hero banner buttons — glass effect
+   ========================================================================== */
+.banner__buttons .button,
+.banner__buttons .button--primary,
+.banner__buttons .button--secondary {
+  background: rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
+  transition: background 0.2s ease, border-color 0.2s ease !important;
+}
+.banner__buttons .button:hover,
+.banner__buttons .button--primary:hover,
+.banner__buttons .button--secondary:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+  background-color: rgba(255, 255, 255, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #fff !important;
+}
+.banner__buttons .button:before,
+.banner__buttons .button:after {
+  display: none !important;
 }
 
