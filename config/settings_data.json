@@ -186,7 +186,7 @@
               "text": "free shipping on all orders above 75",
               "usd_text": "free shipping on all orders above 100",
               "text_alignment": "center",
-              "bg_color": "#f76503",
+              "bg_color": "#000000",
               "font_color": "#ffffff",
               "link": "shopify://policies/shipping-policy"
             }
@@ -198,6 +198,7 @@
           "announcement-bar-0"
         ],
         "settings": {
+          "sale_mode": true,
           "autoplay_speed": 7,
           "enable_sticky": true
         }
@@ -211,7 +212,11 @@
               "title": "",
               "title_translate": "",
               "title_translate_german": "",
-              "title_translate_french": ""
+              "title_translate_french": "",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "b1013b07-0068-4c3b-93e4-5affe5867e98": {
@@ -221,7 +226,11 @@
               "title_translate": "Alle custom sokken",
               "title_translate_german": "Alle custom socke",
               "title_translate_french": "Toute les chaussutes custom",
-              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "text_LPgrzm": {
@@ -231,7 +240,11 @@
               "title_translate": "Boek een call",
               "title_translate_german": "Termin buchen",
               "title_translate_french": "Réserver un appel",
-              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "text_LEUhgW": {
@@ -241,7 +254,11 @@
               "title_translate": "Vraag gratis design",
               "title_translate_german": "Kostenloses Design anfordern",
               "title_translate_french": "Demander un design gratuit",
-              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "text_qQqJQ7": {
@@ -251,7 +268,11 @@
               "title_translate": "Alle producten",
               "title_translate_german": "Alle Produkte",
               "title_translate_french": "Tous les produits",
-              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_ALL.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "e57893bb-9bd9-4643-ba27-55705f4639c0": {
@@ -261,7 +282,11 @@
               "title_translate": "Nieuwste producten",
               "title_translate_german": "Neueste Produkte",
               "title_translate_french": "Derniers produits",
-              "image_item": "shopify://shop_images/MENU_BLOCK_LATEST.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_LATEST.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "134d6ef9-c639-4b7d-9751-ce8b307614a6": {
@@ -271,7 +296,11 @@
               "title_translate": "Beste verkopers",
               "title_translate_german": "Bestsellers",
               "title_translate_french": "Meilleures ventes",
-              "image_item": "shopify://shop_images/MENU_BLOCK_BEST.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_BEST.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "7c608162-18ea-4086-b1e3-7d58c02c3d71": {
@@ -281,7 +310,11 @@
               "title_translate": "Bundles",
               "title_translate_german": "Bündel",
               "title_translate_french": "Forfaits",
-              "image_item": "shopify://shop_images/MENU_BLOCK_BUNDLE_b5cc4bdd-118b-4b56-a234-4782add2f354.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_BUNDLE_b5cc4bdd-118b-4b56-a234-4782add2f354.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "1c9bd5df-b3b4-4bd3-aeb7-d723e9b966df": {
@@ -291,7 +324,11 @@
               "title_translate": "SALE",
               "title_translate_german": "SALE",
               "title_translate_french": "SOLDES",
-              "image_item": "shopify://shop_images/MENU_BLOCK_SALE.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_SALE.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "51f8e2ce-0435-4378-a496-eaabd004ad09": {
@@ -301,7 +338,11 @@
               "title_translate": "Alle sokken",
               "title_translate_german": "Alle Socken",
               "title_translate_french": "Toutes les chaussettes",
-              "image_item": "shopify://shop_images/MENU_BLOCK_ALL_2.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_ALL_2.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "5cd9bfaa-61ec-42ff-a41b-bf91f595a144": {
@@ -311,7 +352,11 @@
               "title_translate": "Hardloop sokken",
               "title_translate_german": "Laufsocken",
               "title_translate_french": "Chaussettes running",
-              "image_item": "shopify://shop_images/Img_1-_1.png"
+              "image_item": "shopify://shop_images/Img_1-_1.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "text_qfbq4L": {
@@ -321,7 +366,11 @@
               "title_translate": "Hardloop",
               "title_translate_german": "Running",
               "title_translate_french": "Running",
-              "image_item": "shopify://shop_images/Img_1-_1.png"
+              "image_item": "shopify://shop_images/Img_1-_1.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "text_daPbnD": {
@@ -331,7 +380,11 @@
               "title_translate": "Fietssokken",
               "title_translate_german": "Radsocken",
               "title_translate_french": "Chaussettes de cyclisme",
-              "image_item": "shopify://shop_images/Img_1.png"
+              "image_item": "shopify://shop_images/Img_1.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "9e8aa072-3265-4d04-950b-df3d8c82f1da": {
@@ -341,7 +394,11 @@
               "title_translate": "Aero sokken",
               "title_translate_german": "Aero-Socken",
               "title_translate_french": "Chaussettes aéro",
-              "image_item": "shopify://shop_images/MENU_BLOCK_FSOTP_SOCKS.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_FSOTP_SOCKS.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "0b48bb84-8fc0-412a-9006-582fcc9758a7": {
@@ -351,7 +408,11 @@
               "title_translate": "Casual sokken",
               "title_translate_german": "Freizeitsocken",
               "title_translate_french": "Chaussettes décontractées",
-              "image_item": "shopify://shop_images/MENU_BLOCK_CASUAL_SOCKS.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CASUAL_SOCKS.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "b71aba7c-f8e0-4c39-a57e-f9233f4ff521": {
@@ -361,7 +422,11 @@
               "title_translate": "COMPRESSIEKOUSEN",
               "title_translate_german": "Kompressionssocken",
               "title_translate_french": "Chaussettes de contention",
-              "image_item": "shopify://shop_images/Sockeloen-Race-mode-black-low-compression-socks_1_OUTSIDE_3D.png"
+              "image_item": "shopify://shop_images/Sockeloen-Race-mode-black-low-compression-socks_1_OUTSIDE_3D.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "2a38c836-e963-433b-aa46-ea845863580c": {
@@ -371,7 +436,11 @@
               "title_translate": "Bedrukte sokken",
               "title_translate_german": "Bedruckte Socken",
               "title_translate_french": "Chaussettes imprimées",
-              "image_item": "shopify://shop_images/MENU_BLOCK_2_PRINTED_SOCKS.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_2_PRINTED_SOCKS.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "8a85390c-533f-419f-af4e-dc86c14a8c9f": {
@@ -381,7 +450,11 @@
               "title_translate": "Custom bedrukte sokken > 1 Paar",
               "title_translate_german": "Custom bedruckte Socken > 1 Paar",
               "title_translate_french": "Chaussettes imprimées personnalisées > 1 paire",
-              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_PRINTED_SOCKS.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_PRINTED_SOCKS.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "1a5c69a5-62b0-4869-8c95-6e04a6cd4094": {
@@ -391,7 +464,11 @@
               "title_translate": "Custom verweven sokken > 50 Paar",
               "title_translate_german": "Custom gestrickte Socken > 50 Paar",
               "title_translate_french": "Chaussettes tricotées sur mesure > 50 paires",
-              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "f224b581-b3e0-4a92-acc1-5b3071db8347": {
@@ -401,7 +478,11 @@
               "title_translate": "Custom Sokken",
               "title_translate_german": "Custom Socken",
               "title_translate_french": "Chaussettes personnalisées",
-              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "a9fa6cbe-f983-4cd8-ab86-d4ad2593ea3c": {
@@ -411,7 +492,11 @@
               "title_translate": "Alle Custom Sokken",
               "title_translate_german": "Alle Custom Socken",
               "title_translate_french": "Toutes les chaussettes personnalisées",
-              "image_item": "shopify://shop_images/2MENU_BLOCK_CUSTOM_KNITTED_SOCKS_805f7b44-4859-41d8-a82c-47682aca9a6c.png"
+              "image_item": "shopify://shop_images/2MENU_BLOCK_CUSTOM_KNITTED_SOCKS_805f7b44-4859-41d8-a82c-47682aca9a6c.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "3be6738c-3970-4997-b960-df503e4d6177": {
@@ -421,7 +506,11 @@
               "title_translate": "Bedrukte sokken > 1 Paar",
               "title_translate_german": "bedruckte Socken > 1 Paar",
               "title_translate_french": "Chaussettes imprimées personnalisées > 1 paire",
-              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_PRINTED_SOCKS.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_PRINTED_SOCKS.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "e76e46ad-5639-42fc-a658-9c7de3ce3aca": {
@@ -431,7 +520,11 @@
               "title_translate": "Verweven Sokken > 50 Paar",
               "title_translate_german": "gestrickte Socken > 50 Paar",
               "title_translate_french": "Chaussettes tricotées sur mesure > 50 paires",
-              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_9327f542-b8c4-42ed-85ce-cc814e44475f.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "b0810af8-fff5-4ba2-af54-2a6155ae8b7a": {
@@ -441,7 +534,11 @@
               "title_translate": "Custom Sok Voorbeelden",
               "title_translate_german": "Beispiele für individuelle Socken",
               "title_translate_french": "Exemples de chaussettes personnalisées",
-              "image_item": "shopify://shop_images/EXAMPLE.2MENU_BLOCK_CUSTOM_KNITTED_SOCKS_805f7b44-4859-41d8-a82c-47682aca9a6c.png"
+              "image_item": "shopify://shop_images/EXAMPLE.2MENU_BLOCK_CUSTOM_KNITTED_SOCKS_805f7b44-4859-41d8-a82c-47682aca9a6c.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           },
           "text_wRnFtX": {
@@ -451,7 +548,11 @@
               "title_translate": "Pre Bestellingen",
               "title_translate_german": "Vorbestellungen",
               "title_translate_french": "Précommandes",
-              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_0e7e9651-14cc-4901-892b-7cd90fbd0183.png"
+              "image_item": "shopify://shop_images/MENU_BLOCK_CUSTOM_KNITTED_SOCKS_0e7e9651-14cc-4901-892b-7cd90fbd0183.png",
+              "feature_text": "",
+              "feature_text_nl": "",
+              "feature_text_de": "",
+              "feature_text_fr": ""
             }
           }
         },
