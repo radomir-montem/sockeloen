@@ -847,13 +847,29 @@ a.product-v2__sp-avatar {
   transition: opacity 0.2s ease;
 }
 
-/* Remove hover arrow */
+/* Remove hover arrow pseudo-elements */
 .product-v2 .product-form__submit::after,
 .product-v2 button[name="add"]::after,
 .product-v2 .product-form__submit::before,
 .product-v2 button[name="add"]::before {
   display: none !important;
   content: none !important;
+}
+
+/* Cart SVG icon injected by global.js — make fill/stroke match button bg so it's invisible */
+.product-v2 .product-form__submit span svg,
+.product-v2 button[name="add"] span svg,
+.product-v2 .product-form__submit span svg path,
+.product-v2 button[name="add"] span svg path {
+  fill: #0395F6 !important;
+  stroke: #0395F6 !important;
+}
+.product-v2 .product-form__submit:not([disabled]):hover span svg,
+.product-v2 button[name="add"]:not([disabled]):hover span svg,
+.product-v2 .product-form__submit:not([disabled]):hover span svg path,
+.product-v2 button[name="add"]:not([disabled]):hover span svg path {
+  fill: #F76503 !important;
+  stroke: #F76503 !important;
 }
 
 .product-v2 .product-form__submit:hover,
@@ -885,6 +901,102 @@ a.product-v2__sp-avatar {
   letter-spacing: 0.03em;
   border-radius: 10px;
   margin-bottom: 20px;
+}
+
+/* ---------- UCI Warehouse Sale banner ---------- */
+.product-v2__uci-sale-banner {
+  background: #1a1a1a;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #fff;
+}
+.product-v2__uci-sale-banner .uci-stripes {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 2px;
+  height: 16px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.product-v2__uci-sale-banner .uci-stripes span {
+  display: block;
+  width: 4px;
+  height: 100%;
+  border-radius: 1px;
+}
+.product-v2__uci-sale-banner .stripe-1 { background: #E63329; }
+.product-v2__uci-sale-banner .stripe-2 { background: #0057B8; }
+.product-v2__uci-sale-banner .stripe-3 { background: #1a1a1a; border: 1px solid #333; }
+.product-v2__uci-sale-banner .stripe-4 { background: #F5C518; }
+.product-v2__uci-sale-banner .stripe-5 { background: #00843D; }
+.uci-sale-banner__top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.uci-sale-banner__title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.uci-sale-banner__subtitle {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+  color: #fff;
+}
+.uci-sale-banner__timer {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+.uci-timer__label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 6px;
+}
+.uci-timer__digits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.uci-timer__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 40px;
+}
+.uci-timer__number {
+  font-size: 22px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: #fff;
+}
+.uci-timer__unit {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-top: 2px;
+}
+.uci-timer__sep {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  line-height: 1;
+  margin-bottom: 14px;
 }
 
 /* ---------- Variant Pickers — Shared ---------- */
@@ -1349,6 +1461,7 @@ sticky-atc-v2.hidden {
   cursor: pointer;
   white-space: nowrap;
   background-color: #0395F6 !important;
+  background-image: none !important;
   border: none !important;
   border-radius: 6px !important;
   color: #fff !important;
@@ -1358,6 +1471,8 @@ sticky-atc-v2.hidden {
 
 .product-v2-sticky-bar__atc-btn:hover {
   background-color: #F76503 !important;
+  background-image: none !important;
+  padding-right: 40px !important;
 }
 
 /* ---------- Size Confirmation Modal ---------- */

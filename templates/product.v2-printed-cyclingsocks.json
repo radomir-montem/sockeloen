@@ -12,11 +12,30 @@
     "main": {
       "type": "main-product-v2",
       "blocks": {
-        "variant_picker": {
+        "variant_picker_zY3Bwx": {
           "type": "variant_picker",
           "settings": {
             "picker_type": "button",
-            "color_swatch_style": "images"
+            "color_swatch_style": "colors"
+          }
+        },
+        "usps_8gwUq7": {
+          "type": "usps",
+          "settings": {
+            "usp1_text": "",
+            "usp2_text": "",
+            "usp3_text": "",
+            "usp4_text": ""
+          }
+        },
+        "collapsible_tab_7gPUjj": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Collapsible row",
+            "icon": "check_mark",
+            "content": "",
+            "page": "",
+            "logos_size": 26
           }
         },
         "aov_ai_bundle_offer_volume_RqqnNt": {
@@ -58,7 +77,9 @@
         }
       },
       "block_order": [
-        "variant_picker",
+        "variant_picker_zY3Bwx",
+        "usps_8gwUq7",
+        "collapsible_tab_7gPUjj",
         "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
         "size_guide_irnJtn",
@@ -127,30 +148,30 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/Sockeloen_-04_octobre_2025-61_1.jpg",
-            "heading": "Worn by",
-            "heading_italic": "World Champions",
-            "description": "<p>Some of the best male and female riders in the world choose Sockeloen, because of the materials, because of the wind tunnel test results, but often simply because they think they look great.</p>"
+            "image": "shopify://shop_images/CUSTOM_PRINTED_CARTOON_BOY_SOCK.png",
+            "heading": "Design your",
+            "heading_italic": "Own sock",
+            "description": "<p>At Sockeloen, you can design your own printed socks. Everything is possible: logos, names, flags, and more. Create exactly what you want.</p>"
           }
         },
         "benefit_BKLxKT": {
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-01_at_19.16.05.jpg",
-            "heading": "Make your faster",
-            "heading_italic": "And saver.",
-            "description": "<p>The reason Sockeloen made aero gloves. Most cycling gloves slow you down. Bulky seams, poor fit, unnecessary drag. A nightmare. We developed a glove that fits like a second skin, reducing air resistance and keeping you fast. Make your hands the weapons they really are.</p>"
+            "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1.png",
+            "heading": "Make your calves look ",
+            "heading_italic": "like Weapons.",
+            "description": "<p>The reason Sockeloen was founded. Most cycling socks didn't have the right sokheight. And mayb even worse, some tend to fall dow to your ankles. A nightmare. We developed a very stretchable sock, with the perfect sockheight, that never falls down. Make your legs look like the weapons they really are.</p>"
           }
         },
         "benefit_igt7xh": {
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/260202_SOCKELOEN_Aero_Essentials_Angus_Fraser_0278.jpg",
-            "heading": "Windtunnel",
-            "heading_italic": "Proven.",
-            "description": "<p>Sockeloen is more than just socks. After intensive aero testing in Eindhoven and Silverstone, we developed the Aero Glove — approved by an Amstel Gold Race winner. With the fastest aero material for this position and an extra long fit around fingers and wrist, you'll cut through the air like never before. When you want to ride fast, without unwanted drag: Sockeloen Aero Gloves are what you need.</p>"
+            "image": "shopify://shop_images/Tour_home_banner.png",
+            "heading": "No sweaty, stinky feet.",
+            "heading_italic": "Never again.",
+            "description": "<p>Sockeloen is more than just socks for the Mathieu van der Poels and Demi Vollerings of this planet. Our range includes countless socks for town-sign-sprinters, good-weather cyclists, the adventurers and even for the couch potatoes among us.When you want to ride comfortable, without pressure points, sweety or painfull feet: Sockeloen cycling socks are what you need.</p>"
           }
         }
       },
@@ -175,7 +196,7 @@
             "hotspot_x": 44,
             "hotspot_y": 21,
             "heading": "Sockeloen Cuff",
-            "description": "<p>Extra long cuff for optimal aerodynamic fit around your wrist, eliminating any gap between glove and sleeve.</p>",
+            "description": "<p><strong>The Ultra Elastic super cuff  is [metafield] high</strong> and makes sure this sock is always exactly on the right spott and won't fall down. We created this by sourcing the best elastane of Europe and mixed it into this sock.</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
@@ -185,8 +206,8 @@
           "settings": {
             "hotspot_x": 54,
             "hotspot_y": 37,
-            "heading": "Sockeloen Aero Material",
-            "description": "<p>Fastest aero material for this position, tested in Eindhoven and Silverstone for maximum speed gains.</p>",
+            "heading": "Sockeloen Mesh",
+            "description": "<p><strong>The [metafield] knitting structure combines: </strong>flexibility, breathability and style into one high performance knit. It ensures good moisture wicking, tight fitt and perfect ventilation.</p>",
             "metafield_key": "custom.knit_structure",
             "metafield_fallback": "O-Mesh"
           }
@@ -196,8 +217,8 @@
           "settings": {
             "hotspot_x": 71,
             "hotspot_y": 57,
-            "heading": "Sockeloen Mesh",
-            "description": "<p>Breathable mesh panels keep your hands comfortable during long efforts without sacrificing aerodynamics.</p>",
+            "heading": "Sockeloen Heels and Toes",
+            "description": "<p>To ensure a long lifetime of these high performance cycling socks we reinforced the heels and toes with<strong> a specific extra Polyamide yarn.</strong></p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -207,8 +228,8 @@
           "settings": {
             "hotspot_x": 56,
             "hotspot_y": 63,
-            "heading": "Sockeloen Grip",
-            "description": "<p>Precision grip zones give you full control of the bars, even in wet conditions.</p>",
+            "heading": "Sockeloen Yarns",
+            "description": "<p><strong>Through the whole sock we used [metafield] yarns</strong>, blended with polyamide and elastane to create the perfect yarn blend.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-skin"
           }
@@ -218,8 +239,8 @@
           "settings": {
             "hotspot_x": 29,
             "hotspot_y": 74,
-            "heading": "Sockeloen Fit",
-            "description": "<p>A second-skin fit that moves with your hand, approved by an Amstel Gold Race winner.</p>",
+            "heading": "Sockeloen Seemless Toe",
+            "description": "<p>To avoid irritating, or high pressure points inside your cycling shoe we work with a <strong>seemless toe </strong>without any area's that could irritate your toes while riding.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -235,8 +256,8 @@
       "name": "Product Exploder",
       "settings": {
         "heading": "Let's take a look",
-        "heading_italic": "inside the Gloves",
-        "subtitle": "<p>Discover what makes our gloves truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
+        "heading_italic": "inside the sock",
+        "subtitle": "<p>Discover what makes our socks truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
         "background_color": "#ffffff",
         "text_color": "#000000",
         "accent_color": "#f76503",
@@ -321,8 +342,8 @@
         "faq_Y8JLka": {
           "type": "faq",
           "settings": {
-            "question": "How do I find the right size for the Aero Gloves?",
-            "answer": "<p>Our gloves are available in S, M, L and XL. If you're between sizes, we recommend sizing up for a more comfortable fit.</p>",
+            "question": "Which sockheight are these socks?",
+            "answer": "<p><strong>This sock is [metafield] high. </strong>We optimized our fitt for the perfect looking sockheight on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
@@ -330,8 +351,8 @@
         "faq_9RzfCj": {
           "type": "faq",
           "settings": {
-            "question": "What material are the Aero Gloves made of?",
-            "answer": "<p>The gloves are made of the fastest aero material for this position, tested in Eindhoven and Silverstone for maximum speed gains.</p>",
+            "question": "What if I am between sizes of the cycling socks?",
+            "answer": "<p>Our socks come in 36-42 and 43-48 or one size(39-46). If you're between sizes, we recommend sizing up for a more comfortable fit. Check our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>size guide</strong></span></a> for detailed measurements.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -339,8 +360,8 @@
         "faq_7idmHH": {
           "type": "faq",
           "settings": {
-            "question": "How do I wash my Aero Gloves?",
-            "answer": "<p>We recommend washing your gloves at 30°C on a gentle cycle. Do not tumble dry.</p>",
+            "question": "What material are Sockeloen socks made of?",
+            "answer": "<p>These cycling socks are made from a premium blend of [metafield], polypropylene, and elastane. This combination provides excellent moisture-wicking, durability, and a perfect fit that stays in place during long rides.</p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-Skin"
           }
@@ -348,8 +369,8 @@
         "faq_YhiEwH": {
           "type": "faq",
           "settings": {
-            "question": "Why do the gloves have such a long cuff?",
-            "answer": "<p>The extra long cuff eliminates any gap between your glove and sleeve, improving your aerodynamic profile and helping you go faster.</p>",
+            "question": "How should I wash my cycling socks?",
+            "answer": "<p>Machine wash at 30°C inside out. Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry — air dry for best results. This keeps the fibers intact and your socks performing at their best.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -357,8 +378,8 @@
         "faq_NLxUKi": {
           "type": "faq",
           "settings": {
-            "question": "How long do Sockeloen gloves last?",
-            "answer": "<p>With proper care, our gloves typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>",
+            "question": "How long do Sockeloen socks last?",
+            "answer": "<p>With proper care, our socks typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -366,8 +387,17 @@
         "faq_wRWWf3": {
           "type": "faq",
           "settings": {
-            "question": "Are these gloves approved by pro riders?",
-            "answer": "<p>Yes, the Aero Race 2.0 Gloves are approved by an Amstel Gold Race winner and tested at the highest level of cycling.</p>",
+            "question": "Why are cycling socks longer than regular socks?",
+            "answer": "<p>The taller cuff make  your legs look better and stronger on the bike. Our aero sock material is faster then your skin, so the higher this sock the more aero gains. Most pro cyclists prefer a cuff height between 17 to 21cm depending on their leg length.</p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        },
+        "faq_JgMmFK": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use these socks for other sports?",
+            "answer": "<p>Absolutely! While designed for cycling, our socks perform great for running, hiking, and everyday wear. The moisture-wicking properties and comfortable fit make them versatile for any activity.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -379,7 +409,8 @@
         "faq_7idmHH",
         "faq_YhiEwH",
         "faq_NLxUKi",
-        "faq_wRWWf3"
+        "faq_wRWWf3",
+        "faq_JgMmFK"
       ],
       "name": "Product FAQ",
       "settings": {

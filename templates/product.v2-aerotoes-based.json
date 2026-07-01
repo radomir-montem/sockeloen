@@ -137,20 +137,20 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-01_at_19.16.05.jpg",
-            "heading": "Make your faster",
-            "heading_italic": "And saver.",
-            "description": "<p>The reason Sockeloen made aero gloves. Most cycling gloves slow you down. Bulky seams, poor fit, unnecessary drag. A nightmare. We developed a glove that fits like a second skin, reducing air resistance and keeping you fast. Make your hands the weapons they really are.</p>"
+            "image": "shopify://shop_images/SOCKELOEN_2024_30_JANUARI_V2-51_2.jpg",
+            "heading": "This is why",
+            "heading_italic": "this Aero Toes makes you better",
+            "description": "<p>Save watts, go faster, ride longer. Built to last through every ride, every condition, every season. </p>"
           }
         },
         "benefit_igt7xh": {
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/260202_SOCKELOEN_Aero_Essentials_Angus_Fraser_0278.jpg",
-            "heading": "Windtunnel",
-            "heading_italic": "Proven.",
-            "description": "<p>Sockeloen is more than just socks. After intensive aero testing in Eindhoven and Silverstone, we developed the Aero Glove — approved by an Amstel Gold Race winner. With the fastest aero material for this position and an extra long fit around fingers and wrist, you'll cut through the air like never before. When you want to ride fast, without unwanted drag: Sockeloen Aero Gloves are what you need.</p>"
+            "image": "shopify://shop_images/SOCKELOEN_2024_30_JANUARI_V2-50_1.jpg",
+            "heading": "Wind tunnel",
+            "heading_italic": "proven",
+            "description": "<p>Thoroughly tested and refined. The updated version features extra reinforced velcro — because details make the difference. More secure, more reliable and more aerodynamic than ever. Built to cut through the wind and handle everything the road throws at you.</p>"
           }
         }
       },
@@ -169,24 +169,13 @@
     "product_exploder_4gMj38": {
       "type": "product-exploder",
       "blocks": {
-        "hotspot_DcBjXY": {
-          "type": "hotspot",
-          "settings": {
-            "hotspot_x": 44,
-            "hotspot_y": 21,
-            "heading": "Sockeloen Cuff",
-            "description": "<p>Extra long cuff for optimal aerodynamic fit around your wrist, eliminating any gap between glove and sleeve.</p>",
-            "metafield_key": "custom.height",
-            "metafield_fallback": "19cm"
-          }
-        },
         "hotspot_QEDVDk": {
           "type": "hotspot",
           "settings": {
             "hotspot_x": 54,
             "hotspot_y": 37,
-            "heading": "Sockeloen Aero Material",
-            "description": "<p>Fastest aero material for this position, tested in Eindhoven and Silverstone for maximum speed gains.</p>",
+            "heading": "Sockeloen Aero fabric",
+            "description": "<p>Meet the Sockeloen Aero fabric. Developed and tested to do one thing: make you faster. The moment you put these overshoes on, you feel the difference — a sleek, tight fit that works with the wind, not against it.</p>",
             "metafield_key": "custom.knit_structure",
             "metafield_fallback": "O-Mesh"
           }
@@ -196,8 +185,8 @@
           "settings": {
             "hotspot_x": 71,
             "hotspot_y": 57,
-            "heading": "Sockeloen Mesh",
-            "description": "<p>Breathable mesh panels keep your hands comfortable during long efforts without sacrificing aerodynamics.</p>",
+            "heading": "Fully waterproof footbed",
+            "description": "<p>The footbed is fully waterproof — keeping your feet dry no matter what the weather throws at you. And thanks to the Sockeloen Aero fabric, it's built to be as fast as possible. Dry feet, zero drag, maximum speed.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -207,8 +196,8 @@
           "settings": {
             "hotspot_x": 56,
             "hotspot_y": 63,
-            "heading": "Sockeloen Grip",
-            "description": "<p>Precision grip zones give you full control of the bars, even in wet conditions.</p>",
+            "heading": "Sockeloen velcro",
+            "description": "<p>The Sockeloen extra reinforced velcro keeps the overshoe locked in place — no matter how hard you ride. </p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-skin"
           }
@@ -218,15 +207,14 @@
           "settings": {
             "hotspot_x": 29,
             "hotspot_y": 74,
-            "heading": "Sockeloen Fit",
-            "description": "<p>A second-skin fit that moves with your hand, approved by an Amstel Gold Race winner.</p>",
+            "heading": "Sockeloen toe",
+            "description": "<p>The toe box is designed to wrap seamlessly around your shoe — a precise, aerodynamic fit<br/><br/></p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
         }
       },
       "block_order": [
-        "hotspot_DcBjXY",
         "hotspot_QEDVDk",
         "hotspot_cKCjnr",
         "hotspot_YfjpGW",
@@ -235,8 +223,8 @@
       "name": "Product Exploder",
       "settings": {
         "heading": "Let's take a look",
-        "heading_italic": "inside the Gloves",
-        "subtitle": "<p>Discover what makes our gloves truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
+        "heading_italic": "inside the Aero Toe Cover",
+        "subtitle": "<p>Discover what makes our overshoes truly special. From the premium materials we select to the Italian craftsmanship knitted into every pair.</p>",
         "background_color": "#ffffff",
         "text_color": "#000000",
         "accent_color": "#f76503",
@@ -257,18 +245,6 @@
         "accent_color": "#f76503",
         "padding_top": 60,
         "padding_bottom": 60
-      }
-    },
-    "custom_liquid_RmH67A": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "heading": "",
-        "heading_size": 16,
-        "custom_liquid": "<div class=\"taggbox\" style=\"width:100%;height:100%;overflow:auto;\" data-widget-id=\"22635\" website=\"1\" data-filter-type=\"product\" data-filter-id=\"{{product.id}}\"></div><script src=\"https://widget.taggbox.com/embed.min.js\" type=\"text/javascript\"></script>",
-        "color_scheme": "background-1",
-        "padding_top": 20,
-        "padding_bottom": 20
       }
     },
     "satisfaction_guarantee_6fcj3K": {
@@ -318,11 +294,20 @@
     "product_faq_NDDGQE": {
       "type": "product-faq",
       "blocks": {
+        "faq_K9rdEH": {
+          "type": "faq",
+          "settings": {
+            "question": "How much watts can I save with sockeloen aero overshoes?",
+            "answer": "<p>The watt saving you can achieve compared to normal socks can<strong>be between 5 and 15 watts</strong>, depending on speed, jaw angle, body shape and total cda. In our research we normally measure total cda and the % of change on your total cda.</p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        },
         "faq_Y8JLka": {
           "type": "faq",
           "settings": {
-            "question": "How do I find the right size for the Aero Gloves?",
-            "answer": "<p>Our gloves are available in S, M, L and XL. If you're between sizes, we recommend sizing up for a more comfortable fit.</p>",
+            "question": "Which height are these overshoes?",
+            "answer": "<p><strong>This overshoe s aere 17cm - 19cm - 21cm high. </strong>We optimized our fitt for the perfect looking height on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
@@ -330,8 +315,8 @@
         "faq_9RzfCj": {
           "type": "faq",
           "settings": {
-            "question": "What material are the Aero Gloves made of?",
-            "answer": "<p>The gloves are made of the fastest aero material for this position, tested in Eindhoven and Silverstone for maximum speed gains.</p>",
+            "question": "Is this overshoe waterproof?",
+            "answer": "<p>No, these overshoes are not fully waterproof, only the feet part is watterproof.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -339,8 +324,8 @@
         "faq_7idmHH": {
           "type": "faq",
           "settings": {
-            "question": "How do I wash my Aero Gloves?",
-            "answer": "<p>We recommend washing your gloves at 30°C on a gentle cycle. Do not tumble dry.</p>",
+            "question": "What material are Sockeloen overshoes made of?",
+            "answer": "<p>These overshoes made from classic Sockeloen aero material — the same fabric trusted by world-class athletes to save watts and go faster.<br/><br/></p>",
             "metafield_key": "custom.materials",
             "metafield_fallback": "Q-Skin"
           }
@@ -348,8 +333,8 @@
         "faq_YhiEwH": {
           "type": "faq",
           "settings": {
-            "question": "Why do the gloves have such a long cuff?",
-            "answer": "<p>The extra long cuff eliminates any gap between your glove and sleeve, improving your aerodynamic profile and helping you go faster.</p>",
+            "question": "How should I wash my overhoes?",
+            "answer": "<p>Machine wash at 30°C. Avoid fabric softener as it reduces moisture-wicking performance. Do not tumble dry — air dry for best results. This keeps the fibers intact and your overshoes performing at their best. (<br/>Close the velcro before washing to prevent it from sticking to other garments.)</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -357,29 +342,41 @@
         "faq_NLxUKi": {
           "type": "faq",
           "settings": {
-            "question": "How long do Sockeloen gloves last?",
-            "answer": "<p>With proper care, our gloves typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>",
+            "question": "How long do Sockeloen overshoes last?",
+            "answer": "<p>With proper care, our socks typically last 1-2 years of regular use. The reinforced heel and toe areas are designed for extra durability. If you experience any quality issues within 6 months, contact us for our satisfaction guarantee.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
         },
         "faq_wRWWf3": {
           "type": "faq",
+          "disabled": true,
           "settings": {
-            "question": "Are these gloves approved by pro riders?",
-            "answer": "<p>Yes, the Aero Race 2.0 Gloves are approved by an Amstel Gold Race winner and tested at the highest level of cycling.</p>",
+            "question": "Why are cycling socks longer than regular socks?",
+            "answer": "<p>The taller cuff make  your legs look better and stronger on the bike. Our aero sock material is faster then your skin, so the higher this sock the more aero gains. Most pro cyclists prefer a cuff height between 17 to 21cm depending on their leg length.</p>",
+            "metafield_key": "",
+            "metafield_fallback": ""
+          }
+        },
+        "faq_JgMmFK": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I use these overshoes for road and off-road?",
+            "answer": "<p>These overshoes are primarily developed for road cycling, but can also be used with cross pedals.</p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
         }
       },
       "block_order": [
+        "faq_K9rdEH",
         "faq_Y8JLka",
         "faq_9RzfCj",
         "faq_7idmHH",
         "faq_YhiEwH",
         "faq_NLxUKi",
-        "faq_wRWWf3"
+        "faq_wRWWf3",
+        "faq_JgMmFK"
       ],
       "name": "Product FAQ",
       "settings": {
@@ -422,7 +419,6 @@
     "benefits",
     "product_exploder_4gMj38",
     "reviews_masonry_NwNWHh",
-    "custom_liquid_RmH67A",
     "satisfaction_guarantee_6fcj3K",
     "bought_often_together_txwAy7",
     "recommendations",

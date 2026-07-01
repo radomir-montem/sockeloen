@@ -85,7 +85,7 @@
         "default_benefit_1": "No more soaked, sweaty socks during riding.",
         "default_benefit_2": "No burning feet or pressure points, thanks to the uniquely thin footbed.",
         "default_benefit_3": "Stay up. Sit at the perfect height. All ride long.",
-        "show_sale_banner": false,
+        "show_sale_banner": true,
         "sale_banner_text": "",
         "sale_banner_bg_color": "#abcc15",
         "sale_banner_text_color": "#000000",
