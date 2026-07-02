@@ -8,6 +8,12 @@
  * ------------------------------------------------------------
  */
 {
+  "uci_sale": {
+    "uci": "UCI",
+    "warehouse_clearance": "Magazijnopruiming",
+    "sale_plus_free": "Sale + 1 gratis",
+    "badge_text": "UCI Magazijnopruiming - + 1 gratis"
+  },
   "general": {
     "password_page": {
       "login_form_heading": "Ga winkel in met wachtwoord:",

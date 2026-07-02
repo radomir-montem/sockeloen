@@ -282,7 +282,12 @@ if (!customElements.get('sticky-atc-v2')) {
     document.querySelectorAll('.product-v2 .Avada-VolumeBoxBadge').forEach(function(badge) {
       if (badge.dataset.enhanced) return;
       badge.dataset.enhanced = '1';
-      badge.textContent = 'UCI Warehouse Clearance - + 1 free';
+      /* Text comes from the section's data-uci-badge-text attribute,
+         rendered via Liquid's `| t` filter (locales/*.json, "uci_sale.
+         badge_text") so it's correctly translated per storefront
+         language instead of hardcoded English. */
+      var section = badge.closest('[data-uci-badge-text]');
+      badge.textContent = (section && section.dataset.uciBadgeText) || 'UCI Warehouse Clearance - + 1 free';
     });
   }
 
