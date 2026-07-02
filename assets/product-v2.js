@@ -186,6 +186,24 @@ if (!customElements.get('sticky-atc-v2')) {
     return src;
   }
 
+  /**
+   * Derive the single-unit price to use as a reference for computing tier
+   * quantities from price math (see injectImageStacks below). Uses the
+   * tier with the lowest discount price, which is normally the plain
+   * "1 pair" tier — that price IS the true per-unit price regardless of
+   * locale, since numbers don't need translation the way text labels do.
+   */
+  function getUnitPrice(items) {
+    var lowest = null;
+    items.forEach(function(item) {
+      var priceEl = item.querySelector('.Avada-Offer__PriceDiscount');
+      if (!priceEl) return;
+      var price = parseFloat(priceEl.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+      if (!isNaN(price) && (lowest === null || price < lowest)) lowest = price;
+    });
+    return lowest;
+  }
+
   function injectImageStacks(root) {
     var items = (root || document).querySelectorAll('.product-v2 .Avada-Volume__Item');
     if (!items.length) return;
@@ -193,26 +211,48 @@ if (!customElements.get('sticky-atc-v2')) {
     var imgSrc = getActiveImageSrc();
     if (!imgSrc) return;
 
+    var unitPrice = getUnitPrice(items);
+
     items.forEach(function(item) {
       // Skip if already injected
       if (item.querySelector('.avada-img-stack')) return;
 
-      // Determine how many images to show based on tier quantity. Tiers
-      // phrased as "3 + 1 free" need TWO counts (3 bought + 1 free) shown
-      // as two separate groups with a "+" between them, matching the
-      // text exactly — a plain digit match would only see the "3" and
-      // miss the free item entirely.
+      // Determine how many images to show. Tiers phrased as "3 + 1 free"
+      // need TWO counts (3 bought + 1 free) shown as two separate groups
+      // with a "+" between them.
+      //
+      // Primary method: derive both counts from the PRICES, which are
+      // numeric and locale-independent — unlike the AOV app's own tier
+      // label text, which for this offer's non-English translations
+      // (confirmed live: German renders "+ 1 gratis" with the leading "3"
+      // missing entirely, upstream of any theme code) can't be trusted to
+      // contain a parseable "X + Y" pattern in every language. Falls back
+      // to text parsing only if the price math isn't available/sane.
       var qtyEl = item.querySelector('.Avada-Volume__Info--TriggerQty');
       var qtyText = qtyEl ? qtyEl.textContent.trim() : '';
-      var plusMatch = qtyText.match(/(\d+)\s*\+\s*(\d+)/);
       var buyCount, freeCount;
-      if (plusMatch) {
-        buyCount = Math.min(parseInt(plusMatch[1], 10), 5);
-        freeCount = Math.min(parseInt(plusMatch[2], 10), 5);
+      var originalPriceEl = item.querySelector('.Avada-Offer__PriceDefault');
+      var discountPriceEl = item.querySelector('.Avada-Offer__PriceDiscount');
+      var totalQty = null, paidQty = null;
+      if (unitPrice && originalPriceEl && discountPriceEl) {
+        var originalPrice = parseFloat(originalPriceEl.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+        var discountPrice = parseFloat(discountPriceEl.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+        if (!isNaN(originalPrice) && originalPrice > 0) totalQty = Math.round(originalPrice / unitPrice);
+        if (!isNaN(discountPrice) && discountPrice > 0) paidQty = Math.round(discountPrice / unitPrice);
+      }
+      if (totalQty && paidQty && totalQty > paidQty && paidQty >= 1) {
+        buyCount = Math.min(paidQty, 5);
+        freeCount = Math.min(totalQty - paidQty, 5);
       } else {
-        var singleMatch = qtyText.match(/(\d+)/);
-        buyCount = singleMatch ? Math.min(parseInt(singleMatch[1], 10), 5) : 1;
-        freeCount = 0;
+        var plusMatch = qtyText.match(/(\d+)\s*\+\s*(\d+)/);
+        if (plusMatch) {
+          buyCount = Math.min(parseInt(plusMatch[1], 10), 5);
+          freeCount = Math.min(parseInt(plusMatch[2], 10), 5);
+        } else {
+          var singleMatch = qtyText.match(/(\d+)/);
+          buyCount = singleMatch ? Math.min(parseInt(singleMatch[1], 10), 5) : 1;
+          freeCount = 0;
+        }
       }
 
       function makeImg(overlap) {
@@ -302,6 +342,8 @@ if (!customElements.get('sticky-atc-v2')) {
     var items = document.querySelectorAll('.product-v2 .Avada-Volume__Item');
     if (!items.length) return;
 
+    var unitPrice = getUnitPrice(items);
+
     items.forEach(function(item) {
       var qtyEl = item.querySelector('.Avada-Volume__Info--TriggerQty');
       var discountTextEl = item.querySelector('.Avada-Volume__DiscountText');
@@ -311,8 +353,23 @@ if (!customElements.get('sticky-atc-v2')) {
 
       if (!qtyEl) return;
       var qtyText = qtyEl.textContent.trim();
-      var qtyMatch = qtyText.match(/(\d+)/);
-      var qty = qtyMatch ? parseInt(qtyMatch[1], 10) : 1;
+      /* Prefer price math over text parsing for the same reason as
+         injectImageStacks() — the AOV app's own tier label text can be
+         missing its leading quantity number in non-English locales
+         (confirmed: German renders "+ 1 gratis" with no "3"), which would
+         otherwise misclassify a multi-pair bundle tier as qty===1 and
+         apply the wrong (single-item) label logic below. */
+      var qty = 1;
+      if (unitPrice && discountPrice) {
+        var dpForQty = parseFloat(discountPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+        if (!isNaN(dpForQty) && dpForQty > 0) {
+          var derivedQty = Math.round(dpForQty / unitPrice);
+          if (derivedQty >= 1) qty = derivedQty;
+        }
+      } else {
+        var qtyMatch = qtyText.match(/(\d+)/);
+        qty = qtyMatch ? parseInt(qtyMatch[1], 10) : 1;
+      }
 
       if (qty === 1) {
         if (discountTextEl && discountPrice && originalPrice) {
