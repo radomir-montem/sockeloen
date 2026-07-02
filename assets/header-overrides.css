@@ -1766,9 +1766,12 @@ header.header.sticky-navbar .header__icon.header__icon--drawer-back svg path {
 
 body.template--index,
 body.template--custom-made {
-  /* Expose the radius as a CSS variable so child sections can opt-in. */
+  /* Expose the radius as a CSS variable so child sections can opt-in.
+     Both values now match header.header's own 8px radius exactly, so
+     every button/media element on the homepage reads as one consistent
+     design system with the header pill. */
   --home-radius: 8px;
-  --home-radius-sm: 6px;
+  --home-radius-sm: 8px;
 }
 
 /* Hero banner / slideshow / image-banner / video hero — NO RADIUS.
@@ -1971,8 +1974,12 @@ body.template--custom-made .field__input {
 @media screen and (max-width: 989px) {
   body.template--index,
   body.template--custom-made {
-    --home-radius: 7px;
-    --home-radius-sm: 5px;
+    /* header.header keeps 8px on mobile too (no mobile-specific downgrade
+       anywhere in its own rules) — match that exactly instead of the
+       previous 7px/5px, which made mobile buttons subtly inconsistent
+       with the header pill. */
+    --home-radius: 8px;
+    --home-radius-sm: 8px;
   }
 }
 
@@ -1997,16 +2004,22 @@ body.template--index .hero .button,
 body.template--index .hero__buttons .button,
 body.template--custom-made .banner .button,
 body.template--custom-made .slideshow .button {
-  background: #ffffff !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border: 2px solid #e5e5e5 !important;
+  /* Same recipe as the hero buttons (previously only applied via the
+     higher-specificity #Banner-{id} inline style in image-banner.liquid,
+     which is why "shop now" / "explore custom socks" etc. stayed solid
+     white while the hero's own buttons looked glassy). Radius matches
+     header.header's own 8px exactly, per the "match the header bar"
+     brief — was 10px, inconsistent with the header pill. */
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
   outline: none !important;
-  color: #1a1a1a !important;
-  box-shadow: none !important;
-  border-radius: 10px !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 8px !important;
   text-shadow: none !important;
-  transition: border-color 0.2s ease, background-color 0.2s ease !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 /* ::after: hide base.css border pseudo-element */
@@ -2023,7 +2036,7 @@ body.template--index .hero .button::before {
   display: none !important;
 }
 
-/* Hover: darken border like the product tiles */
+/* Hover: same lightening effect as the hero buttons */
 body.template--index .banner .button:hover,
 body.template--index .banner__buttons .button:hover,
 body.template--index .slideshow .button:hover,
@@ -2031,14 +2044,15 @@ body.template--index .slideshow__content .button:hover,
 body.template--index .hero .button:hover,
 body.template--index .image-banner .button:hover,
 body.template--custom-made .banner .button:hover {
-  background: #ffffff !important;
-  border-color: #bbb !important;
-  border-radius: 10px !important;
-  box-shadow: none !important;
-  color: #1a1a1a !important;
+  background: rgba(255, 255, 255, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
+  color: #ffffff !important;
 }
 
-/* Dark text on all nested layers */
+/* White text on all nested layers (glass buttons sit on photography, dark
+   text would disappear against darker parts of the image) */
 body.template--index .banner .button,
 body.template--index .banner .button span,
 body.template--index .banner .button strong,
@@ -2048,8 +2062,29 @@ body.template--index .hero .button,
 body.template--index .hero .button span,
 body.template--index .image-banner .button,
 body.template--index .image-banner .button span {
-  color: #1a1a1a !important;
+  color: #ffffff !important;
   font-weight: 500;
+}
+
+/* "SHOP NOW" buttons in the column-image-and-section / column-img split
+   banners (FSOTP, KNWU) — these don't use the theme's .button class at
+   all (raw Tailwind utilities: bg-white text-black border-none), so they
+   need their own override to match the hero button glass style. Scoped
+   via the section's own [class*="sales-"] wrapper. */
+body.template--index [class*="sales-"] a.bg-white {
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 8px !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease !important;
+}
+body.template--index [class*="sales-"] a.bg-white:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
 }
 
 /* ============================================================
@@ -3515,7 +3550,16 @@ body.template--index .banner__box {
   align-items: center;
   gap: 10px;
 }
+/* Left-aligned banners (e.g. "Custom Made Socks") need the social proof
+   left-aligned too, matching the theme's own .banner__box text-align
+   convention — otherwise justify-content:center above shifts the avatars
+   right of the heading/button even though those sit flush left. Centered
+   banners (e.g. the homepage hero) keep the default center alignment. */
+.banner--content-align-left .banner-social-proof {
+  justify-content: flex-start;
+}
 @media screen and (max-width: 749px) {
+  .banner--content-align-mobile-left .banner-social-proof,
   .banner-social-proof {
     justify-content: flex-start;
   }
