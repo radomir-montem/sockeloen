@@ -1158,17 +1158,10 @@
                           value="{{ product.selected_or_first_available_variant.id }}"
                           disabled
                         >
-                        {%- comment -%}
-                          Low stock warning — shows when inventory <= threshold.
-                          Also forced permanently visible (with generic, no-quantity
-                          text) whenever the AOV "Buy More Save More" widget is
-                          active on this product, regardless of real stock level —
-                          see forceStockBadgeForAov() in product-v2.js.
-                        {%- endcomment -%}
+                        {%- comment -%} Low stock warning — shows when inventory <= threshold {%- endcomment -%}
                         <div class="product-v2__low-stock" style="display:none;" id="low-stock-{{ section.id }}"
                           data-low-stock-singular="{{ 'products.v2.low_stock_singular' | t | escape }}"
-                          data-low-stock-plural="{{ 'products.v2.low_stock_plural' | t: qty: '[qty]' | escape }}"
-                          data-low-stock-generic="{{ 'products.v2.low_stock_generic' | t | escape }}">
+                          data-low-stock-plural="{{ 'products.v2.low_stock_plural' | t: qty: '[qty]' | escape }}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <circle cx="8" cy="8" r="7" stroke="#F76503" stroke-width="1.5"/>
                             <path d="M8 4.5V9" stroke="#F76503" stroke-width="1.5" stroke-linecap="round"/>

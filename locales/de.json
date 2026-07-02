@@ -221,7 +221,6 @@
       "size_modal_change": "Nein, Größe ändern",
       "low_stock_singular": "Geringer Bestand — nur noch 1 Artikel verfügbar",
       "low_stock_plural": "Geringer Bestand — nur noch {{ qty }} Artikel verfügbar",
-      "low_stock_generic": "Geringer Bestand",
       "notify_me": "Benachrichtige mich, wenn verfügbar",
       "size_guide_title": "Größentabelle",
       "size_guide_link": "Nicht sicher bei der Größe?",
