@@ -8,6 +8,12 @@
  * ------------------------------------------------------------
  */
 {
+  "uci_sale": {
+    "uci": "UCI",
+    "warehouse_clearance": "Déstockage",
+    "sale_plus_free": "Sale + 1 gratuit",
+    "badge_text": "UCI Déstockage - + 1 gratuit"
+  },
   "general": {
     "password_page": {
       "login_form_heading": "Accéder à la boutique à l'aide d'un mot de passe :",
