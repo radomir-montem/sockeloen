@@ -3690,3 +3690,84 @@ body.template--index .banner__box {
 /* Hero banner button glass effect is in image-banner.liquid inline styles
    (needs #Banner-{id} specificity to win) */
 
+/* ==========================================================================
+   AOV / Avada "Buy More Save More" volume offer — restyled to match the
+   UCI Warehouse Sale branding (dark #1a1a1a card, white text, 8px radius
+   matching header.header, same countdown-timer treatment as the UCI sale
+   banner elsewhere on the PDP). The app renders its own markup via a
+   script tag — these overrides target its stable class names directly
+   since there is no theme template to edit.
+   ========================================================================== */
+.Avada-Bundle-Volume__Container {
+  background: #1a1a1a !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  border: none !important;
+}
+
+.Avada-Volume__Header {
+  margin-bottom: 4px !important;
+}
+.Avada-Volume__HeaderTitle-Text {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+.Avada-Volume__WrapContent {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Tiles */
+.Avada-Volume__Item {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 8px !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+.Avada-Volume__Item--Selected {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+.Avada-Volume__Info--TriggerQty,
+.Avada-Volume__Info {
+  color: #ffffff !important;
+}
+.Avada-Offer__Price,
+.Avada-Offer__PriceDiscount,
+.AOV-Offer__DiscountPrice {
+  color: #ffffff !important;
+}
+.Avada-Offer__PriceDefault {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* "Most popular" badge — flag-red accent instead of the app's default
+   purple, echoing the UCI stripe palette used across the sale campaign */
+.Avada-VolumeBoxBadge {
+  background: #E63329 !important;
+  border-radius: 999px !important;
+}
+.Avada-BadgeText {
+  color: #ffffff !important;
+}
+
+/* Countdown timer — identical box treatment to .uci-banner__timer /
+   .uci-timer-* elsewhere on the PDP, so both countdowns read as the same
+   component even though one is theme-native and one is app-rendered. */
+.Avada-Volume__CountDown-Wrapper {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.Avada-Volume__CountDown-Box {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 6px !important;
+}
+.Avada-Volume__CountDown-Value {
+  color: #ffffff !important;
+  font-variant-numeric: tabular-nums;
+}
+.Avada-Volume__CountDown-Label {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.Avada-Volume__CountDown-Separator {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
