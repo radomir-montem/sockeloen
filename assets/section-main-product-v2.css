@@ -513,6 +513,11 @@ a.product-v2__sp-avatar {
 .product-v2 .Avada-Bundle-Volume__Container {
   margin: 24px 0 24px !important;
   gap: 12px !important;
+  /* Blend into the page instead of floating as its own white/tinted card —
+     the sale campaign is toggled on/off entirely from within the AOV app
+     itself, so the widget should read as part of the page, not a bolted-on
+     box. #F4F4F1 matches body.template--product's own background. */
+  background: transparent !important;
 }
 
 /* Desktop: reduce spacing before/after the "Fresh socks" header */
@@ -522,12 +527,12 @@ a.product-v2__sp-avatar {
   }
 }
 
-/* Header — Cloudpillo-style sales banner */
+/* Header — plain text on the page background, no separate colored strip */
 .product-v2 .Avada-Volume__Header {
-  background-color: #e8f0c4 !important;
+  background-color: transparent !important;
   border: none !important;
-  border-radius: 10px !important;
-  padding: 14px 20px !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
   text-align: left !important;
   margin-bottom: 12px !important;
 }
@@ -536,7 +541,6 @@ a.product-v2__sp-avatar {
 @media screen and (min-width: 990px) {
   .product-v2 .Avada-Volume__Header {
     margin-bottom: 8px !important;
-    padding: 10px 20px !important;
   }
 }
 
@@ -607,14 +611,69 @@ a.product-v2__sp-avatar {
   border-color: #bbb !important;
 }
 
-/* Selected tier */
+/* Selected tier — UCI Warehouse Clearance dark tile. The sale is toggled
+   entirely from within the AOV app's own offer settings, so only the
+   highlighted/"most popular" tile carries the UCI branding; the plain
+   "pair" tile stays in the app's default light style. */
 .product-v2 .Avada-Volume__Item--Selected {
-  border-color: #0395F6 !important;
-  background: #ffffff !important;
+  border-color: #1a1a1a !important;
+  background: #1a1a1a !important;
 }
 
 .product-v2 .Avada-Volume__Item--Selected:hover {
-  border-color: #0395F6 !important;
+  border-color: #1a1a1a !important;
+}
+
+/* UCI replica flag — small 5-stripe rainbow (red/blue/black/yellow/green)
+   matching the notification bar + mega menu branding, placed before the
+   quantity label inside the dark tile. */
+.product-v2 .Avada-Volume__Item--Selected .Avada-Volume__Info--TriggerQty {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+.product-v2 .Avada-Volume__Item--Selected .Avada-Volume__Info--TriggerQty::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 11px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 16'%3E%3Crect x='0' y='0' width='3' height='16' rx='1' fill='%23E63329'/%3E%3Crect x='4.5' y='0' width='3' height='16' rx='1' fill='%230057B8'/%3E%3Crect x='9' y='0' width='3' height='16' rx='1' fill='%23ffffff'/%3E%3Crect x='13.5' y='0' width='3' height='16' rx='1' fill='%23F5C518'/%3E%3Crect x='17' y='0' width='3' height='16' rx='1' fill='%2300843D'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* Text inside the dark tile needs to flip to white/light for contrast */
+.product-v2 .Avada-Volume__Item--Selected .Avada-Volume__Info--TriggerQty,
+.product-v2 .Avada-Volume__Item--Selected .Avada-Volume__DiscountText,
+.product-v2 .Avada-Volume__Item--Selected .Avada-Offer__PriceDiscount {
+  color: #ffffff !important;
+}
+.product-v2 .Avada-Volume__Item--Selected .Avada-Offer__PriceDefault {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+.product-v2 .Avada-Volume__Item--Selected .avada-per-pair {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+.product-v2 .Avada-Volume__Item--Selected .avada-savings-line {
+  color: #ffffff !important;
+}
+.product-v2 .Avada-Volume__Item--Selected .avada-radio-dot {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+.product-v2 .Avada-Volume__Item--Selected .avada-radio-dot::after {
+  background: #ffffff !important;
+}
+.product-v2 .Avada-Volume__Item--Selected .avada-img-stack__img {
+  border-color: #1a1a1a !important;
+}
+
+/* Badge — white-on-dark chip instead of the app's default lime pill, so
+   it pops against the now-dark tile the same way the "Shop All" tiles do
+   elsewhere in the header. */
+.product-v2 .Avada-Volume__Item--Selected .Avada-VolumeBoxBadge {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
 }
 
 /* Avada-ItemTier — make it a flex row */
