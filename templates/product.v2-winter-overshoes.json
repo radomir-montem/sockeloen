@@ -51,10 +51,15 @@
             "page": "",
             "logos_size": 26
           }
+        },
+        "aov_ai_bundle_offer_volume_RqqnNt": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
         }
       },
       "block_order": [
         "variant_picker",
+        "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
         "size_guide_irnJtn",
         "shipping_info",

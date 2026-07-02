@@ -225,6 +225,10 @@
         "selleasy_lb_upsell_widget_pac_hPJQEw": {
           "type": "shopify://apps/selleasy/blocks/lb-upsell-widget-pac/790c1a03-a71f-4bc1-9869-00dad526d3c2",
           "settings": {}
+        },
+        "aov_bundle_upsell_offer_volume_GnqccC": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
         }
       },
       "block_order": [
@@ -234,6 +238,7 @@
         "price",
         "inventory_status_qrtERa",
         "variant_picker",
+        "aov_bundle_upsell_offer_volume_GnqccC",
         "custom_button_iFjaR9",
         "custom_liquid_jrCLVk",
         "quantity_selector",
