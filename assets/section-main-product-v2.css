@@ -667,6 +667,9 @@ a.product-v2__sp-avatar {
 .product-v2 .Avada-Volume__Item--Selected .avada-img-stack__img {
   border-color: #1a1a1a !important;
 }
+.product-v2 .Avada-Volume__Item--Selected .Avada-ToggleText {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
 
 /* Badge — white-on-dark chip instead of the app's default lime pill, so
    it pops against the now-dark tile the same way the "Shop All" tiles do
