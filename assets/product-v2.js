@@ -197,25 +197,50 @@ if (!customElements.get('sticky-atc-v2')) {
       // Skip if already injected
       if (item.querySelector('.avada-img-stack')) return;
 
-      // Determine how many images to show based on tier quantity
+      // Determine how many images to show based on tier quantity. Tiers
+      // phrased as "3 + 1 free" need TWO counts (3 bought + 1 free) shown
+      // as two separate groups with a "+" between them, matching the
+      // text exactly — a plain digit match would only see the "3" and
+      // miss the free item entirely.
       var qtyEl = item.querySelector('.Avada-Volume__Info--TriggerQty');
       var qtyText = qtyEl ? qtyEl.textContent.trim() : '';
-      var count = 1;
-      var match = qtyText.match(/(\d+)/);
-      if (match) count = Math.min(parseInt(match[1], 10), 5);
+      var plusMatch = qtyText.match(/(\d+)\s*\+\s*(\d+)/);
+      var buyCount, freeCount;
+      if (plusMatch) {
+        buyCount = Math.min(parseInt(plusMatch[1], 10), 5);
+        freeCount = Math.min(parseInt(plusMatch[2], 10), 5);
+      } else {
+        var singleMatch = qtyText.match(/(\d+)/);
+        buyCount = singleMatch ? Math.min(parseInt(singleMatch[1], 10), 5) : 1;
+        freeCount = 0;
+      }
 
-      // Create the image stack container
-      var stack = document.createElement('div');
-      stack.className = 'avada-img-stack';
-
-      for (var i = 0; i < count; i++) {
+      function makeImg(overlap) {
         var img = document.createElement('img');
         img.src = imgSrc;
         img.alt = '';
         img.loading = 'lazy';
         img.className = 'avada-img-stack__img';
-        if (i > 0) img.style.marginLeft = '-10px';
-        stack.appendChild(img);
+        if (overlap) img.style.marginLeft = '-10px';
+        return img;
+      }
+
+      // Create the image stack container
+      var stack = document.createElement('div');
+      stack.className = 'avada-img-stack';
+
+      for (var i = 0; i < buyCount; i++) {
+        stack.appendChild(makeImg(i > 0));
+      }
+
+      if (freeCount > 0) {
+        var plusSign = document.createElement('span');
+        plusSign.className = 'avada-img-stack__plus';
+        plusSign.textContent = '+';
+        stack.appendChild(plusSign);
+        for (var j = 0; j < freeCount; j++) {
+          stack.appendChild(makeImg(j > 0));
+        }
       }
 
       // Insert after the info section, before the price

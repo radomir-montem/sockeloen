@@ -527,12 +527,16 @@ a.product-v2__sp-avatar {
   }
 }
 
-/* Header — plain text on the page background, no separate colored strip */
+/* Header — same dark glass recipe as the notification bar
+   (rgba(0,0,0,0.55) + blur(21px) saturate(180%)) so the two read as the
+   exact same material, not an approximated grey. */
 .product-v2 .Avada-Volume__Header {
-  background-color: transparent !important;
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
   border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
   text-align: left !important;
   margin-bottom: 12px !important;
 }
@@ -547,12 +551,12 @@ a.product-v2__sp-avatar {
 .product-v2 .Avada-Volume__HeaderTitle-Text {
   font-size: 15px !important;
   font-weight: 700 !important;
-  color: #1a1a1a !important;
+  color: #ffffff !important;
 }
 
 .product-v2 .Avada-Volume__HeaderDescription {
   font-size: 13px !important;
-  color: #444 !important;
+  color: rgba(255, 255, 255, 0.7) !important;
   margin-top: 2px !important;
 }
 
@@ -611,72 +615,24 @@ a.product-v2__sp-avatar {
   border-color: #bbb !important;
 }
 
-/* Selected tier — UCI Warehouse Clearance dark tile. The sale is toggled
-   entirely from within the AOV app's own offer settings, so only the
-   highlighted/"most popular" tile carries the UCI branding; the plain
-   "pair" tile stays in the app's default light style. */
+/* Selected tier — stays the app's original white tile. Only the "Most
+   Popular" badge carries the UCI branding (see below); the tile itself
+   is unchanged from before the sale styling pass. */
 .product-v2 .Avada-Volume__Item--Selected {
-  border-color: #1a1a1a !important;
-  background: #1a1a1a !important;
+  border-color: #0395F6 !important;
+  background: #ffffff !important;
 }
 
 .product-v2 .Avada-Volume__Item--Selected:hover {
-  border-color: #1a1a1a !important;
+  border-color: #0395F6 !important;
 }
 
-/* UCI replica flag — small 5-stripe rainbow (red/blue/black/yellow/green)
-   matching the notification bar + mega menu branding, placed before the
-   quantity label inside the dark tile. */
-.product-v2 .Avada-Volume__Item--Selected .Avada-Volume__Info--TriggerQty {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-}
-.product-v2 .Avada-Volume__Item--Selected .Avada-Volume__Info--TriggerQty::before {
-  content: '';
-  display: inline-block;
-  width: 14px;
-  height: 11px;
-  flex-shrink: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 16'%3E%3Crect x='0' y='0' width='3' height='16' rx='1' fill='%23E63329'/%3E%3Crect x='4.5' y='0' width='3' height='16' rx='1' fill='%230057B8'/%3E%3Crect x='9' y='0' width='3' height='16' rx='1' fill='%23ffffff'/%3E%3Crect x='13.5' y='0' width='3' height='16' rx='1' fill='%23F5C518'/%3E%3Crect x='17' y='0' width='3' height='16' rx='1' fill='%2300843D'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-/* Text inside the dark tile needs to flip to white/light for contrast */
-.product-v2 .Avada-Volume__Item--Selected .Avada-Volume__Info--TriggerQty,
-.product-v2 .Avada-Volume__Item--Selected .Avada-Volume__DiscountText,
-.product-v2 .Avada-Volume__Item--Selected .Avada-Offer__PriceDiscount {
-  color: #ffffff !important;
-}
-.product-v2 .Avada-Volume__Item--Selected .Avada-Offer__PriceDefault {
-  color: rgba(255, 255, 255, 0.45) !important;
-}
-.product-v2 .Avada-Volume__Item--Selected .avada-per-pair {
-  color: rgba(255, 255, 255, 0.55) !important;
-}
-.product-v2 .Avada-Volume__Item--Selected .avada-savings-line {
-  color: #ffffff !important;
-}
-.product-v2 .Avada-Volume__Item--Selected .avada-radio-dot {
-  border-color: rgba(255, 255, 255, 0.5) !important;
-}
-.product-v2 .Avada-Volume__Item--Selected .avada-radio-dot::after {
-  background: #ffffff !important;
-}
-.product-v2 .Avada-Volume__Item--Selected .avada-img-stack__img {
-  border-color: #1a1a1a !important;
-}
-.product-v2 .Avada-Volume__Item--Selected .Avada-ToggleText {
-  color: rgba(255, 255, 255, 0.55) !important;
-}
-
-/* Badge — white-on-dark chip instead of the app's default lime pill, so
-   it pops against the now-dark tile the same way the "Shop All" tiles do
-   elsewhere in the header. */
-.product-v2 .Avada-Volume__Item--Selected .Avada-VolumeBoxBadge {
-  background: #ffffff !important;
-  color: #1a1a1a !important;
+/* "See more" toggle + the variant rows it expands are all hidden
+   elsewhere (.Avada-VariantSelection etc.) — hide the whole wrapper so
+   there's no dead space / pointless toggle left at the bottom of the
+   tile, which also tightens up the vertical spacing. */
+.product-v2 .Avada-Volume__Products {
+  display: none !important;
 }
 
 /* Avada-ItemTier — make it a flex row */
@@ -758,7 +714,10 @@ a.product-v2__sp-avatar {
   display: none !important;
 }
 
-/* Badge ("Most Popular") — positioned crossing top border, centered on card */
+/* Badge ("Most Popular") — positioned crossing top border, centered on
+   card. Black chip with the UCI replica flag (red/blue/black/yellow/
+   green stripes) ahead of the text, instead of the app's default lime
+   pill. */
 .product-v2 .Avada-VolumeBoxBadge {
   position: absolute !important;
   top: -11px !important;
@@ -767,9 +726,12 @@ a.product-v2__sp-avatar {
   margin: 0 auto !important;
   width: fit-content !important;
   transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
   text-align: center !important;
-  background: #abcc15 !important;
-  color: #000 !important;
+  background: #1a1a1a !important;
+  color: #ffffff !important;
   font-size: 10px !important;
   font-weight: 700 !important;
   text-transform: none !important;
@@ -779,6 +741,16 @@ a.product-v2__sp-avatar {
   line-height: 1.4 !important;
   z-index: 1 !important;
   white-space: nowrap !important;
+}
+.product-v2 .Avada-VolumeBoxBadge::before {
+  content: '';
+  display: inline-block;
+  width: 11px;
+  height: 9px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 16'%3E%3Crect x='0' y='0' width='3' height='16' rx='1' fill='%23E63329'/%3E%3Crect x='4.5' y='0' width='3' height='16' rx='1' fill='%230057B8'/%3E%3Crect x='9' y='0' width='3' height='16' rx='1' fill='%23ffffff'/%3E%3Crect x='13.5' y='0' width='3' height='16' rx='1' fill='%23F5C518'/%3E%3Crect x='17' y='0' width='3' height='16' rx='1' fill='%2300843D'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Shipping date — bold black for date, orange for countdown */
@@ -869,6 +841,16 @@ a.product-v2__sp-avatar {
   background: #f5f5f5;
   flex-shrink: 0;
   position: relative;
+}
+
+/* "+" divider between the bought thumbnails and the free one(s), for
+   tiers phrased as "3 + 1 free" */
+.product-v2 .avada-img-stack__plus {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 4px;
+  flex-shrink: 0;
 }
 
 /* Hide #1 / #2 / #3 product numbers and product rows in bundle tiers */
