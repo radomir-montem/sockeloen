@@ -182,6 +182,7 @@
       "size_modal_change": "Nee, laat me wijzigen",
       "low_stock_singular": "Lage voorraad — nog maar 1 item over",
       "low_stock_plural": "Lage voorraad — nog maar {{ qty }} items over",
+      "low_stock_generic": "Beperkte voorraad",
       "notify_me": "Laat me weten wanneer beschikbaar",
       "size_guide_title": "Maattabel",
       "size_guide_link": "Twijfel je over je maat?",

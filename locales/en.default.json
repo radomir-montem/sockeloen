@@ -183,6 +183,7 @@
       "size_modal_change": "No, let me change",
       "low_stock_singular": "Low stock — only 1 item left",
       "low_stock_plural": "Low stock — only {{ qty }} items left",
+      "low_stock_generic": "Low stock",
       "notify_me": "Notify me when available",
       "size_guide_title": "Size guide",
       "size_guide_link": "Not sure about your size?",

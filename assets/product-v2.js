@@ -357,12 +357,32 @@ if (!customElements.get('sticky-atc-v2')) {
     });
   }
 
+  /**
+   * Force the "low stock" badge to always show (with generic, no-quantity
+   * text) whenever the AOV "Buy More Save More" widget is active on this
+   * product — regardless of real inventory level. The inline updateStock()
+   * script in main-product-v2.liquid re-hides the badge on every variant
+   * change when the real stock isn't low, so this must re-run AFTER that
+   * script on every variant change too, not just once on load.
+   */
+  function forceStockBadgeForAov() {
+    var aovActive = !!document.querySelector('.product-v2 .Avada-Volume__Item');
+    if (!aovActive) return;
+    var badge = document.querySelector('.product-v2 .product-v2__low-stock');
+    if (!badge) return;
+    var textEl = badge.querySelector('span[id^="low-stock-text-"]') || badge.querySelector('span');
+    var genericText = badge.getAttribute('data-low-stock-generic');
+    if (textEl && genericText) textEl.textContent = genericText;
+    badge.style.display = 'flex';
+  }
+
   function enhance() {
     fixAvadaPrices();
     injectRadioDots();
     injectImageStacks();
     fixBadgeText();
     enhanceTierLabels();
+    forceStockBadgeForAov();
   }
 
   function needsEnhancement() {
@@ -391,14 +411,18 @@ if (!customElements.get('sticky-atc-v2')) {
       if (needsEnhancement()) enhance();
     }, 800);
 
-    /* On variant change: fix Avada prices immediately + staggered delays to catch re-renders */
+    /* On variant change: fix Avada prices immediately + staggered delays to catch re-renders.
+       forceStockBadgeForAov() runs on the same staggered delays, AFTER the
+       inline updateStock() script in main-product-v2.liquid (which re-hides
+       the badge for variants that aren't genuinely low-stock) so the forced
+       generic text always wins the race, on every variant change. */
     var variantRadios = container.querySelector('variant-radios');
     if (variantRadios) {
       variantRadios.addEventListener('change', function() {
         fixAvadaPrices();
-        setTimeout(function() { fixAvadaPrices(); updateImageStacks(); }, 50);
+        setTimeout(function() { fixAvadaPrices(); updateImageStacks(); forceStockBadgeForAov(); }, 50);
         setTimeout(fixAvadaPrices, 150);
-        setTimeout(fixAvadaPrices, 300);
+        setTimeout(function() { fixAvadaPrices(); forceStockBadgeForAov(); }, 300);
         setTimeout(fixAvadaPrices, 600);
       });
     }

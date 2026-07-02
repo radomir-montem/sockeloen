@@ -48,8 +48,8 @@
       "search": "Suchen"
     },
     "cart": {
-      "view": "Meinen Warenkorb ({{ count }}) anzeigen",
-      "item_added": "Artikel wurde in den Warenkorb gelegt"
+      "view": "Warenkorb ansehen ({{ count }})",
+      "item_added": "Artikel zum Warenkorb hinzugefügt"
     },
     "share": {
       "copy_to_clipboard": "Link kopieren",
@@ -116,7 +116,7 @@
     "product": {
       "add_to_cart": "In den Warenkorb legen",
       "description": "Beschreibung",
-      "on_sale": "Sale",
+      "on_sale": "SALE",
       "product_variants": "Produktvarianten",
       "quantity": {
         "label": "Anzahl",
@@ -125,9 +125,9 @@
         "decrease": "Verringere die Menge für {{ product }}"
       },
       "price": {
-        "from_price_html": "Von {{ price }}",
+        "from_price_html": "Ab {{ price }}",
         "regular_price": "Normaler Preis",
-        "sale_price": "Verkaufspreis",
+        "sale_price": "Angebotspreis",
         "unit_price": "Grundpreis"
       },
       "share": "Dieses Produkt teilen",
@@ -194,6 +194,40 @@
       "filter_selected_accessibility": "{{ type }} ({{ count }} Filter ausgewählt)",
       "show_more": "Mehr anzeigen",
       "show_less": "Weniger anzeigen"
+    },
+    "v2": {
+      "usp_1_heading": "Kostenloser Versand",
+      "usp_1_body_html": "<p>Wir bieten kostenlosen Versand auf alle Bestellungen über €75. Bestellungen, die vor 15:00 Uhr MEZ an Werktagen aufgegeben werden, werden noch am selben Tag versandt. Lieferung dauert 1–3 Werktage innerhalb der EU.</p>",
+      "usp_2_heading": "100% Zufriedenheitsgarantie",
+      "usp_2_body_html": "<p>Nicht zufrieden? Wir bieten eine problemlose Rückgabe innerhalb von 30 Tagen nach dem Kauf. Keine Fragen gestellt. Deine Zufriedenheit hat für uns höchste Priorität.</p>",
+      "usp_3_heading": "Born in the peloton",
+      "usp_3_body_html": "<p>Sockeloen Socken wurden von Radfahrern für Radfahrer entworfen und getestet. Entwickelt für Höchstleistungen mit Premium-Materialien, die deine Füße auf jeder Fahrt komfortabel halten.</p>",
+      "usp_4_heading": "Der Kunde ist König",
+      "usp_4_body_html": "<p>Wir gehen für unsere Kunden über das Erwartete hinaus. Von persönlichem Support bis zur schnellen Lieferung – wir sorgen dafür, dass du die beste Erfahrung machst.</p>",
+      "sticky_usp_1": "Kostenloser Versand",
+      "sticky_usp_2": "100% Zufriedenheitsgarantie",
+      "sticky_usp_3": "Born in the peloton",
+      "default_benefit_1": "Getragen von Weltmeistern.",
+      "default_benefit_2": "Keine brennenden Füße mehr auf dem Rad.",
+      "default_benefit_3": "Lass deine Waden so aussehen wie die Waffen, die sie wirklich sind.",
+      "size_modal_heading": "Bist du sicher, dass du die richtige Größe hast?",
+      "size_modal_confirm": "Ja, in den Warenkorb legen",
+      "size_modal_change": "Nein, Größe ändern",
+      "low_stock_singular": "Geringer Bestand — nur noch 1 Artikel verfügbar",
+      "low_stock_plural": "Geringer Bestand — nur noch {{ qty }} Artikel verfügbar",
+      "low_stock_generic": "Geringer Bestand",
+      "notify_me": "Benachrichtige mich, wenn verfügbar",
+      "size_guide_title": "Größentabelle",
+      "size_guide_link": "Nicht sicher bei der Größe?",
+      "size_guide_full_link": "Vollständige Größentabelle ansehen",
+      "size_guide_socks_intro": "Finde deine Sockengröße anhand deiner Schuhgröße.",
+      "size_guide_gloves_intro": "Miss die Breite deines Zeigefingers, um deine Handschuhgröße zu finden.",
+      "size_guide_baselayer_intro": "Alle Größen in Zentimetern (cm).",
+      "size_guide_overshoes_intro": "Wähle deine Überschuhgröße anhand deiner Schuhgröße (EU).",
+      "size_guide_eu_shoe_size": "EU-Schuhgröße",
+      "size_guide_sock_size": "Sockengröße",
+      "size_guide_measurement": "Maße",
+      "social_proof_text_html": "und <strong>+{{ count }}</strong> weitere Athleten fahren in {{ brand }}."
     }
   },
   "templates": {
@@ -247,27 +281,36 @@
       "remove_title": "{{ title }} entfernen",
       "subtotal": "Zwischensumme",
       "new_subtotal": "Neue Zwischensumme",
-      "note": "Spezielle Bestellanweisungen",
-      "checkout": "Auschecken",
+      "note": "Besondere Anweisungen zur Bestellung",
+      "checkout": "Zur Kasse",
       "empty": "Dein Warenkorb ist leer",
       "cart_error": "Beim Aktualisieren deines Warenkorbs ist ein Fehler aufgetreten. Bitte versuche es erneut.",
-      "cart_quantity_error_html": "Du kannst deinem Warenkorb nur {{ quantity }} Stück dieses Artikels hinzufügen.",
-      "taxes_and_shipping_policy_at_checkout_html": "Steuern und <a href=\"{{ link }}\">Versand</a> werden beim Checkout berechnet",
-      "taxes_included_but_shipping_at_checkout": "Inklusive Steuern, Versand wird beim Checkout berechnet",
-      "taxes_included_and_shipping_policy_html": "Inklusive Steuern. <a href=\"{{ link }}\">Versand </a> wird beim Checkout berechnet",
-      "taxes_and_shipping_at_checkout": "Steuern und Versand werden beim Checkout berechnet",
+      "cart_quantity_error_html": "Du kannst nur {{ quantity }} von diesem Artikel in deinen Warenkorb legen.",
+      "taxes_and_shipping_policy_at_checkout_html": "Steuern und <a href=\"{{ link }}\">Versandkosten</a> werden beim Checkout berechnet",
+      "taxes_included_but_shipping_at_checkout": "MwSt. enthalten, Versandkosten werden beim Checkout berechnet",
+      "taxes_included_and_shipping_policy_html": "Inkl. MwSt. <a href=\"{{ link }}\">Versandkosten</a> werden beim Checkout berechnet",
+      "taxes_and_shipping_at_checkout": "Steuern und Versandkosten werden beim Checkout berechnet",
       "headings": {
         "product": "Produkt",
         "price": "Preis",
-        "total": "Gesamtsumme",
+        "total": "Gesamt",
         "quantity": "Anzahl",
         "image": "Produktbild"
       },
       "update": "Aktualisieren",
       "login": {
         "title": "Hast du ein Konto?",
-        "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Logge dich ein</a>, damit es beim Checkout schneller geht."
-      }
+        "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Anmelden</a> für schnelleres Bezahlen."
+      },
+      "view_cart": "Warenkorb ansehen",
+      "select_size": "Größe wählen",
+      "add": "Hinzufügen",
+      "shipping": "Versand",
+      "shipping_free": "Gratis",
+      "free_shipping_away_html": "Noch <strong>{{ amount }}</strong> bis zur <strong>GRATIS LIEFERUNG!</strong>",
+      "free_shipping_reached": "Deine Bestellung qualifiziert sich für kostenlosen Versand!",
+      "complete_your_kit": "Vervollständige dein Kit",
+      "best_seller": "Bestseller"
     },
     "footer": {
       "payment": "Zahlungsmethoden"
@@ -278,16 +321,16 @@
       "onboarding_content": "Verschaffe deinen Kunden eine Übersicht über deinen Blog-Beitrag"
     },
     "featured_collection": {
-      "view_all": "Alle anzeigen",
+      "view_all": "Alle ansehen",
       "view_all_label": "Alle Produkte in der Kategorie {{ collection_name }} anzeigen"
     },
     "collection_list": {
-      "view_all": "Alle anzeigen"
+      "view_all": "Alle ansehen"
     },
     "collection_template": {
-      "title": "Kategorie",
+      "title": "Kollektion",
       "empty": "Keine Produkte gefunden",
-      "use_fewer_filters_html": "Verwende weniger Filter oder <a class=\"{{ class }}\" href=\"{{ link }}\">entferne alle</a>"
+      "use_fewer_filters_html": "Weniger Filter verwenden oder <a class=\"{{ class }}\" href=\"{{ link }}\">alle entfernen</a>"
     },
     "video": {
       "load_video": "Video laden: {{ description }}"
@@ -443,6 +486,16 @@
       "payment_errors": {
         "payment_method_not_applicable": "Diese Zahlungsmethode ist nicht anwendbar. Verwenden Sie eine andere Zahlungsmethode."
       }
+    },
+    "page_titles": {
+      "shopping_cart": "Dein Warenkorb"
+    }
+  },
+  "customer_accounts": {
+    "announcement_bar": {
+      "close_label": "Ankündigungsleiste schließen",
+      "collapse_label": "Ankündigungsleiste einklappen",
+      "expand_label": "Ankündigungsleiste ausklappen"
     }
   }
 }
