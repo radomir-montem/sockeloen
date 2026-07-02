@@ -292,7 +292,13 @@ if (!customElements.get('sticky-atc-v2')) {
   }
 
   function enhanceTierLabels() {
-    var isNl = window.location.pathname.indexOf('/nl') !== -1;
+    /* document.documentElement.lang reflects Shopify's actual active
+       locale (set via request.locale.iso_code in theme.liquid) — more
+       reliable than matching against the URL path, which breaks for
+       markets that don't use a /xx/ prefix. */
+    var lang = (document.documentElement.lang || 'en').toLowerCase();
+    var isNl = lang.indexOf('nl') === 0;
+    var isDe = lang.indexOf('de') === 0;
     var items = document.querySelectorAll('.product-v2 .Avada-Volume__Item');
     if (!items.length) return;
 
@@ -314,7 +320,7 @@ if (!customElements.get('sticky-atc-v2')) {
           var op1 = parseFloat(originalPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
           if (op1 > dp1) {
             var saved1 = (op1 - dp1).toFixed(2).replace('.', ',');
-            var saleText = isNl ? '— Bespaar €' + saved1 : '— Save €' + saved1;
+            var saleText = isNl ? '— Bespaar €' + saved1 : isDe ? '— Spare €' + saved1 : '— Save €' + saved1;
             if (discountTextEl.textContent.trim() !== saleText) {
               discountTextEl.textContent = saleText;
               discountTextEl.style.color = '#e45b30';
@@ -322,7 +328,7 @@ if (!customElements.get('sticky-atc-v2')) {
             }
             originalPrice.style.setProperty('display', 'block', 'important');
           } else {
-            var stdText = isNl ? '— Standaardprijs' : '— Standard price';
+            var stdText = isNl ? '— Standaardprijs' : isDe ? '— Standardpreis' : '— Standard price';
             if (discountTextEl.textContent.trim() !== stdText) {
               discountTextEl.textContent = stdText;
               discountTextEl.style.color = '#888';
@@ -333,7 +339,7 @@ if (!customElements.get('sticky-atc-v2')) {
       } else if (qty > 1 && discountPrice) {
         // Multi-pair: add /pair label via UnitPriceLabel span (survives Avada re-renders)
         var unitLabel = discountPrice.querySelector('.AOV-Offer__UnitPriceLabel');
-        var pairText = isNl ? ' /paar' : ' /pair';
+        var pairText = isNl ? ' /paar' : isDe ? ' /Paar' : ' /pair';
         if (unitLabel && unitLabel.textContent !== pairText) {
           unitLabel.textContent = pairText;
           unitLabel.className += ' avada-per-pair';
@@ -354,6 +360,8 @@ if (!customElements.get('sticky-atc-v2')) {
             var savingsFormatted = totalSaved.toFixed(2).replace('.', ',');
             savingsEl.innerHTML = isNl
               ? 'Je bespaart <strong>€' + savingsFormatted + '</strong>'
+              : isDe
+              ? 'Du sparst <strong>€' + savingsFormatted + '</strong>'
               : 'You save <strong>€' + savingsFormatted + '</strong>';
             priceArea.appendChild(savingsEl);
           }
