@@ -282,22 +282,7 @@ if (!customElements.get('sticky-atc-v2')) {
     document.querySelectorAll('.product-v2 .Avada-VolumeBoxBadge').forEach(function(badge) {
       if (badge.dataset.enhanced) return;
       badge.dataset.enhanced = '1';
-      // Find the tier's quantity to calculate discount %
-      var item = badge.closest('.Avada-Volume__Item');
-      if (!item) return;
-      var discountPrice = item.querySelector('.Avada-Offer__PriceDiscount');
-      var originalPrice = item.querySelector('.Avada-Offer__PriceDefault');
-      var pct = '';
-      if (discountPrice && originalPrice) {
-        var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
-        var op = parseFloat(originalPrice.textContent.replace(',', '.'));
-        if (op > 0 && dp < op) {
-          pct = Math.round((1 - dp / op) * 100);
-        }
-      }
-      var text = 'Most Popular';
-      if (pct) text += ' — Save ' + pct + '%';
-      badge.textContent = text;
+      badge.textContent = 'UCI Warehouse Clearance - + 1 free';
     });
   }
 
