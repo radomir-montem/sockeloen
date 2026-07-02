@@ -584,85 +584,13 @@
         {%- endif -%}
 
         {%- comment -%} 6. Sale banner {%- endcomment -%}
-        {%- assign global_sale_mode = false -%}
-        {%- for s in sections -%}
-          {%- if s.settings.sale_mode -%}
-            {%- assign global_sale_mode = true -%}
-          {%- endif -%}
-        {%- endfor -%}
-        {%- if section.settings.show_sale_banner -%}
-          {%- if section.settings.uci_sale_mode -%}
-            <div class="product-v2__uci-sale-banner">
-              <div class="uci-sale-banner__top">
-                <div class="uci-stripes">
-                  <span class="stripe-1"></span>
-                  <span class="stripe-2"></span>
-                  <span class="stripe-3"></span>
-                  <span class="stripe-4"></span>
-                  <span class="stripe-5"></span>
-                </div>
-                <span class="uci-sale-banner__title">UCI WAREHOUSE SALE</span>
-                <div class="uci-stripes">
-                  <span class="stripe-1"></span>
-                  <span class="stripe-2"></span>
-                  <span class="stripe-3"></span>
-                  <span class="stripe-4"></span>
-                  <span class="stripe-5"></span>
-                </div>
-              </div>
-              <div class="uci-sale-banner__subtitle">SALE + 1 FREE</div>
-              <div class="uci-sale-banner__timer" id="uci-countdown-{{ section.id }}">
-                <div class="uci-timer__label">offer ends in</div>
-                <div class="uci-timer__digits">
-                  <div class="uci-timer__block">
-                    <span class="uci-timer__number" data-hours>00</span>
-                    <span class="uci-timer__unit">hrs</span>
-                  </div>
-                  <span class="uci-timer__sep">:</span>
-                  <div class="uci-timer__block">
-                    <span class="uci-timer__number" data-minutes>00</span>
-                    <span class="uci-timer__unit">min</span>
-                  </div>
-                  <span class="uci-timer__sep">:</span>
-                  <div class="uci-timer__block">
-                    <span class="uci-timer__number" data-seconds>00</span>
-                    <span class="uci-timer__unit">sec</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <script>
-              (function() {
-                var container = document.getElementById('uci-countdown-{{ section.id }}');
-                if (!container) return;
-                var hEl = container.querySelector('[data-hours]');
-                var mEl = container.querySelector('[data-minutes]');
-                var sEl = container.querySelector('[data-seconds]');
-                function pad(n) { return n < 10 ? '0' + n : '' + n; }
-                function tick() {
-                  var now = new Date();
-                  var midnight = new Date(now);
-                  midnight.setHours(24, 0, 0, 0);
-                  var diff = Math.max(0, Math.floor((midnight - now) / 1000));
-                  var h = Math.floor(diff / 3600);
-                  var m = Math.floor((diff % 3600) / 60);
-                  var s = diff % 60;
-                  hEl.textContent = pad(h);
-                  mEl.textContent = pad(m);
-                  sEl.textContent = pad(s);
-                }
-                tick();
-                setInterval(tick, 1000);
-              })();
-            </script>
-          {%- elsif section.settings.sale_banner_text != blank -%}
-            <div
-              class="product-v2__sale-banner"
-              style="background-color: {{ section.settings.sale_banner_bg_color }}; color: {{ section.settings.sale_banner_text_color }};"
-            >
-              {{ section.settings.sale_banner_text }}
-            </div>
-          {%- endif -%}
+        {%- if section.settings.show_sale_banner and section.settings.sale_banner_text != blank -%}
+          <div
+            class="product-v2__sale-banner"
+            style="background-color: {{ section.settings.sale_banner_bg_color }}; color: {{ section.settings.sale_banner_text_color }};"
+          >
+            {{ section.settings.sale_banner_text }}
+          </div>
         {%- endif -%}
 
         {%- comment -%} 7. Blocks: variant picker, quantity, buy buttons, collapsible tabs, USPs, etc. {%- endcomment -%}
@@ -2223,16 +2151,9 @@
       "label": "Show sale banner"
     },
     {
-      "type": "checkbox",
-      "id": "uci_sale_mode",
-      "default": false,
-      "label": "UCI Warehouse Sale mode",
-      "info": "Shows UCI-styled sale banner with rainbow stripes and countdown timer"
-    },
-    {
       "type": "text",
       "id": "sale_banner_text",
-      "label": "Sale banner text (non-UCI mode)",
+      "label": "Sale banner text",
       "default": "30% korting - Sale"
     },
     {
