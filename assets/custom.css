@@ -999,3 +999,16 @@ facets-open-button{
     border-color: rgba(255, 255, 255, 0.2) !important;
     transform: none !important;
 }
+
+/* Product image badges (sold out, sale, custom, quantity — collection
+   cards and the product page gallery) — glass pill matching the
+   notification bar's background exactly, radius matching the header
+   bar's 8px. Overrides base.css's forced-transparent background on
+   collection cards and each badge's own inline background-color. */
+.badge.badge--bottom-left {
+    background: rgba(0, 0, 0, 0.55) !important;
+    backdrop-filter: blur(21px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+}
