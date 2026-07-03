@@ -1002,13 +1002,26 @@ facets-open-button{
 
 /* Product image badges (sold out, sale, custom, quantity — collection
    cards and the product page gallery) — glass pill matching the
-   notification bar's background exactly, radius matching the header
-   bar's 8px. Overrides base.css's forced-transparent background on
-   collection cards and each badge's own inline background-color. */
+   notification bar's background exactly. Squared corners (no radius) and
+   more breathing room, both inside the badge and between the badge and
+   the photo edge. Overrides base.css's forced-transparent background on
+   collection cards, each badge's own inline background-color, and the
+   inline top/left offset utility classes baked into the liquid markup. */
 .badge.badge--bottom-left {
     background: rgba(0, 0, 0, 0.55) !important;
     backdrop-filter: blur(21px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
-    border-radius: 8px !important;
+    border-radius: 0 !important;
     color: #ffffff !important;
+    padding: 10px 16px !important;
+}
+
+.card-badge {
+    top: 20px !important;
+    left: 18px !important;
+}
+
+.card-bottom-badge {
+    bottom: 20px !important;
+    left: 18px !important;
 }
