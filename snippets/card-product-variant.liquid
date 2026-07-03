@@ -192,14 +192,13 @@
                     break
                   endif
                 endfor
-                assign current_color = color | strip
               -%}
               {% if color_option_index > -1 %}
                 <div class="card-color-swatches">
                   {% assign swatch_colorlist = '' %}
                   {% for swatch_variant in product.variants %}
                     {% assign swatch_color = swatch_variant.options[color_option_index] | strip %}
-                    {% unless swatch_colorlist contains swatch_color or swatch_color == current_color %}
+                    {% unless swatch_colorlist contains swatch_color %}
                       {% if shop.metafields.soldout_variants.enable or swatch_variant.available or coming_soon %}
                         {%- comment -%}
                           A real <a> can't be used here — it would nest inside
