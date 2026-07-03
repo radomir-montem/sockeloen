@@ -199,7 +199,8 @@
         ],
         "settings": {
           "autoplay_speed": 7,
-          "enable_sticky": true
+          "enable_sticky": true,
+          "sale_mode": true
         }
       },
       "header": {
