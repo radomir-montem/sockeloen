@@ -170,7 +170,7 @@
    bottom edge but below where the sock graphic typically ends. */
 .card-color-swatches {
   align-items: center;
-  bottom: 14%;
+  bottom: 6%;
   display: flex;
   gap: 6px;
   justify-content: center;
