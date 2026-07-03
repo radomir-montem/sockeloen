@@ -164,10 +164,10 @@
   width: 100%;
 }
 
-/* Color swatch thumbnails shown over the product photo when
-   "Show one card per product with color swatches" is enabled in
-   Theme settings > Collection cards. Positioned above the photo's
-   bottom edge but below where the sock graphic typically ends. */
+/* Color swatch thumbnails shown over the product photo when the current
+   collection's "show_color_swatches" metafield is enabled. Positioned
+   above the photo's bottom edge but below where the sock graphic
+   typically ends. */
 .card-color-swatches {
   align-items: center;
   bottom: 6%;
@@ -183,14 +183,14 @@
 .card-color-swatch {
   background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 50%;
+  border-radius: 6px;
   cursor: pointer;
   display: block;
   flex-shrink: 0;
-  height: 28px;
+  height: 32px;
   overflow: hidden;
   transition: transform 0.15s ease, border-color 0.15s ease;
-  width: 28px;
+  width: 22px;
 }
 
 .card-color-swatch:focus-visible {

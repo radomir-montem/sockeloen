@@ -159,6 +159,7 @@
               data-id="{{ section.id }}"
               class="grid grid-cols-2 md:grid-cols-4"
             >
+              {% assign show_color_swatches_for_collection = collection.metafields.custom.show_color_swatches | default: false %}
               {%- for product in collection.products -%}
                 {% assign lazy_load = false %}
                 {% assign coming_soon = product.metafields.custom.coming_soon | default: false %}
@@ -223,10 +224,10 @@
                               show_quick_add: section.settings.enable_quick_add,
                               section_id: section.id,
                               atLeastOneAvailable: atLeastOneAvailable,
-                              show_color_swatches: settings.collection_card_single_variant_with_swatches
+                              show_color_swatches: show_color_swatches_for_collection
                             %}
                           </li>
-                          {% if settings.collection_card_single_variant_with_swatches %}
+                          {% if show_color_swatches_for_collection %}
                             {% break %}
                           {% endif %}
                         {% endif %}

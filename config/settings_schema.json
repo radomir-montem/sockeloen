@@ -679,13 +679,6 @@
     "name": "t:settings_schema.collection_cards.name",
     "settings": [
       {
-        "type": "checkbox",
-        "id": "collection_card_single_variant_with_swatches",
-        "default": false,
-        "label": "Show one card per product with color swatches",
-        "info": "Instead of a separate card per color, shows only the first color with small clickable thumbnails of the other colors over the product photo."
-      },
-      {
         "type": "select",
         "id": "collection_card_style",
         "options": [
