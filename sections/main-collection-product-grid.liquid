@@ -159,7 +159,18 @@
               data-id="{{ section.id }}"
               class="grid grid-cols-2 md:grid-cols-4"
             >
-              {% assign show_color_swatches_for_collection = collection.metafields.custom.show_color_swatches | default: false %}
+              {%- comment -%}
+                On by default everywhere. Set the collection's
+                custom.show_color_swatches metafield to false to opt a
+                specific collection OUT — can't use the `default` filter
+                here since Liquid's `default` also replaces an explicit
+                `false` with the fallback, which would make "turn it off"
+                impossible.
+              {%- endcomment -%}
+              {% assign show_color_swatches_for_collection = true %}
+              {% if collection.metafields.custom.show_color_swatches == false %}
+                {% assign show_color_swatches_for_collection = false %}
+              {% endif %}
               {%- for product in collection.products -%}
                 {% assign lazy_load = false %}
                 {% assign coming_soon = product.metafields.custom.coming_soon | default: false %}
