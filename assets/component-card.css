@@ -164,6 +164,53 @@
   width: 100%;
 }
 
+/* Color swatch thumbnails shown over the product photo when the current
+   collection's "show_color_swatches" metafield is enabled. Positioned
+   above the photo's bottom edge but below where the sock graphic
+   typically ends. */
+.card-color-swatches {
+  align-items: center;
+  bottom: 6%;
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.card-color-swatch {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  cursor: pointer;
+  display: block;
+  flex-shrink: 0;
+  height: 32px;
+  overflow: hidden;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  width: 22px;
+}
+
+.card-color-swatch:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.6);
+  outline-offset: 2px;
+}
+
+.card-color-swatch:hover,
+.card-color-swatch:focus-visible {
+  border-color: rgba(0, 0, 0, 0.25);
+  transform: scale(1.12);
+}
+
+.card-color-swatch img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  width: 100%;
+}
+
 .card__inner:not(.ratio) > .card__content {
   height: 100%;
 }

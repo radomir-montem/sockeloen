@@ -1,4 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
+  "uci_sale": {
+    "uci": "UCI",
+    "warehouse_clearance": "Déstockage",
+    "sale_plus_free": "Sale + 1 gratuit",
+    "badge_text": "Vente d'entrepôt UCI"
+  },
   "general": {
     "password_page": {
       "login_form_heading": "Accéder à la boutique à l'aide d'un mot de passe :",

@@ -36,7 +36,7 @@
     <div class="collection-tags">
       {% for link in section.settings.navigation.links %}
         <div class="whitespace-nowrap">
-          <a class="tag-button bg-white text-black uppercase {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+          <a class="tag-button bg-white text-black {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
         </div>
       {% endfor %}
     </div>
@@ -159,6 +159,7 @@
               data-id="{{ section.id }}"
               class="grid grid-cols-2 md:grid-cols-4"
             >
+              {% assign show_color_swatches_for_collection = collection.metafields.custom.show_color_swatches | default: false %}
               {%- for product in collection.products -%}
                 {% assign lazy_load = false %}
                 {% assign coming_soon = product.metafields.custom.coming_soon | default: false %}
@@ -222,9 +223,13 @@
                               lazy_load: lazy_load,
                               show_quick_add: section.settings.enable_quick_add,
                               section_id: section.id,
-                              atLeastOneAvailable: atLeastOneAvailable
+                              atLeastOneAvailable: atLeastOneAvailable,
+                              show_color_swatches: show_color_swatches_for_collection
                             %}
                           </li>
+                          {% if show_color_swatches_for_collection %}
+                            {% break %}
+                          {% endif %}
                         {% endif %}
                         {% capture tempList %}
                         {{ colorlist | append: color | append: " " }}
