@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "parent": "collection.cycling-socks.json",
   "context": {
@@ -9,7 +18,7 @@
       "blocks": {
         "template--19260743450948__d37a2506-ed61-40de-8072-52e5bffc33fa-168908251176e79b95-1": {
           "settings": {
-            "text": "<p>Discover our premium collection of long cycling socks – meticulously crafted to enhance your performance on the road. Designed with cyclists in mind, our socks blend cutting-edge technology with superior comfort to provide the ultimate riding experience.<\/p>"
+            "text": "<p>Discover our premium collection of long cycling socks – meticulously crafted to enhance your performance on the road. Designed with cyclists in mind, our socks blend cutting-edge technology with superior comfort to provide the ultimate riding experience.</p>"
           }
         }
       }

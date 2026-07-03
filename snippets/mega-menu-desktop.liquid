@@ -62,6 +62,7 @@
             </a>
 
             {%- comment -%} ====== Full-width mega panel ====== {%- endcomment -%}
+            <template x-teleport="body">
             <div id="mega-menu-panel-{{ forloop.index }}"
                  class="mega-menu-v2-panel"
                  role="region"
@@ -312,6 +313,7 @@
 
               </div>
             </div>
+            </template>
           </div>
         {%- else -%}
           {%- comment -%}
@@ -373,6 +375,7 @@
                 </svg>
               </a>
 
+              <template x-teleport="body">
               <div id="mega-menu-panel-{{ forloop.index }}"
                    class="mega-menu-v2-panel"
                    role="region"
@@ -412,6 +415,7 @@
                   </div>
                 </div>
               </div>
+              </template>
             </div>
           {%- else -%}
             {%- comment -%} Not a collection link (or collection has no products) — plain anchor {%- endcomment -%}

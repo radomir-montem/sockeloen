@@ -186,6 +186,24 @@ if (!customElements.get('sticky-atc-v2')) {
     return src;
   }
 
+  /**
+   * Derive the single-unit price to use as a reference for computing tier
+   * quantities from price math (see injectImageStacks below). Uses the
+   * tier with the lowest discount price, which is normally the plain
+   * "1 pair" tier — that price IS the true per-unit price regardless of
+   * locale, since numbers don't need translation the way text labels do.
+   */
+  function getUnitPrice(items) {
+    var lowest = null;
+    items.forEach(function(item) {
+      var priceEl = item.querySelector('.Avada-Offer__PriceDiscount');
+      if (!priceEl) return;
+      var price = parseFloat(priceEl.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+      if (!isNaN(price) && (lowest === null || price < lowest)) lowest = price;
+    });
+    return lowest;
+  }
+
   function injectImageStacks(root) {
     var items = (root || document).querySelectorAll('.product-v2 .Avada-Volume__Item');
     if (!items.length) return;
@@ -193,29 +211,76 @@ if (!customElements.get('sticky-atc-v2')) {
     var imgSrc = getActiveImageSrc();
     if (!imgSrc) return;
 
+    var unitPrice = getUnitPrice(items);
+
     items.forEach(function(item) {
       // Skip if already injected
       if (item.querySelector('.avada-img-stack')) return;
 
-      // Determine how many images to show based on tier quantity
+      // Determine how many images to show. Tiers phrased as "3 + 1 free"
+      // need TWO counts (3 bought + 1 free) shown as two separate groups
+      // with a "+" between them.
+      //
+      // Primary method: derive both counts from the PRICES, which are
+      // numeric and locale-independent — unlike the AOV app's own tier
+      // label text, which for this offer's non-English translations
+      // (confirmed live: German renders "+ 1 gratis" with the leading "3"
+      // missing entirely, upstream of any theme code) can't be trusted to
+      // contain a parseable "X + Y" pattern in every language. Falls back
+      // to text parsing only if the price math isn't available/sane.
       var qtyEl = item.querySelector('.Avada-Volume__Info--TriggerQty');
       var qtyText = qtyEl ? qtyEl.textContent.trim() : '';
-      var count = 1;
-      var match = qtyText.match(/(\d+)/);
-      if (match) count = Math.min(parseInt(match[1], 10), 5);
+      var buyCount, freeCount;
+      var originalPriceEl = item.querySelector('.Avada-Offer__PriceDefault');
+      var discountPriceEl = item.querySelector('.Avada-Offer__PriceDiscount');
+      var totalQty = null, paidQty = null;
+      if (unitPrice && originalPriceEl && discountPriceEl) {
+        var originalPrice = parseFloat(originalPriceEl.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+        var discountPrice = parseFloat(discountPriceEl.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+        if (!isNaN(originalPrice) && originalPrice > 0) totalQty = Math.round(originalPrice / unitPrice);
+        if (!isNaN(discountPrice) && discountPrice > 0) paidQty = Math.round(discountPrice / unitPrice);
+      }
+      if (totalQty && paidQty && totalQty > paidQty && paidQty >= 1) {
+        buyCount = Math.min(paidQty, 5);
+        freeCount = Math.min(totalQty - paidQty, 5);
+      } else {
+        var plusMatch = qtyText.match(/(\d+)\s*\+\s*(\d+)/);
+        if (plusMatch) {
+          buyCount = Math.min(parseInt(plusMatch[1], 10), 5);
+          freeCount = Math.min(parseInt(plusMatch[2], 10), 5);
+        } else {
+          var singleMatch = qtyText.match(/(\d+)/);
+          buyCount = singleMatch ? Math.min(parseInt(singleMatch[1], 10), 5) : 1;
+          freeCount = 0;
+        }
+      }
 
-      // Create the image stack container
-      var stack = document.createElement('div');
-      stack.className = 'avada-img-stack';
-
-      for (var i = 0; i < count; i++) {
+      function makeImg(overlap) {
         var img = document.createElement('img');
         img.src = imgSrc;
         img.alt = '';
         img.loading = 'lazy';
         img.className = 'avada-img-stack__img';
-        if (i > 0) img.style.marginLeft = '-10px';
-        stack.appendChild(img);
+        if (overlap) img.style.marginLeft = '-10px';
+        return img;
+      }
+
+      // Create the image stack container
+      var stack = document.createElement('div');
+      stack.className = 'avada-img-stack';
+
+      for (var i = 0; i < buyCount; i++) {
+        stack.appendChild(makeImg(i > 0));
+      }
+
+      if (freeCount > 0) {
+        var plusSign = document.createElement('span');
+        plusSign.className = 'avada-img-stack__plus';
+        plusSign.textContent = '+';
+        stack.appendChild(plusSign);
+        for (var j = 0; j < freeCount; j++) {
+          stack.appendChild(makeImg(j > 0));
+        }
       }
 
       // Insert after the info section, before the price
@@ -257,29 +322,27 @@ if (!customElements.get('sticky-atc-v2')) {
     document.querySelectorAll('.product-v2 .Avada-VolumeBoxBadge').forEach(function(badge) {
       if (badge.dataset.enhanced) return;
       badge.dataset.enhanced = '1';
-      // Find the tier's quantity to calculate discount %
-      var item = badge.closest('.Avada-Volume__Item');
-      if (!item) return;
-      var discountPrice = item.querySelector('.Avada-Offer__PriceDiscount');
-      var originalPrice = item.querySelector('.Avada-Offer__PriceDefault');
-      var pct = '';
-      if (discountPrice && originalPrice) {
-        var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
-        var op = parseFloat(originalPrice.textContent.replace(',', '.'));
-        if (op > 0 && dp < op) {
-          pct = Math.round((1 - dp / op) * 100);
-        }
-      }
-      var text = 'Most Popular';
-      if (pct) text += ' — Save ' + pct + '%';
-      badge.textContent = text;
+      /* Text comes from the section's data-uci-badge-text attribute,
+         rendered via Liquid's `| t` filter (locales/*.json, "uci_sale.
+         badge_text") so it's correctly translated per storefront
+         language instead of hardcoded English. */
+      var section = badge.closest('[data-uci-badge-text]');
+      badge.textContent = (section && section.dataset.uciBadgeText) || 'UCI Warehouse Clearance - + 1 free';
     });
   }
 
   function enhanceTierLabels() {
-    var isNl = window.location.pathname.indexOf('/nl') !== -1;
+    /* document.documentElement.lang reflects Shopify's actual active
+       locale (set via request.locale.iso_code in theme.liquid) — more
+       reliable than matching against the URL path, which breaks for
+       markets that don't use a /xx/ prefix. */
+    var lang = (document.documentElement.lang || 'en').toLowerCase();
+    var isNl = lang.indexOf('nl') === 0;
+    var isDe = lang.indexOf('de') === 0;
     var items = document.querySelectorAll('.product-v2 .Avada-Volume__Item');
     if (!items.length) return;
+
+    var unitPrice = getUnitPrice(items);
 
     items.forEach(function(item) {
       var qtyEl = item.querySelector('.Avada-Volume__Info--TriggerQty');
@@ -290,8 +353,23 @@ if (!customElements.get('sticky-atc-v2')) {
 
       if (!qtyEl) return;
       var qtyText = qtyEl.textContent.trim();
-      var qtyMatch = qtyText.match(/(\d+)/);
-      var qty = qtyMatch ? parseInt(qtyMatch[1], 10) : 1;
+      /* Prefer price math over text parsing for the same reason as
+         injectImageStacks() — the AOV app's own tier label text can be
+         missing its leading quantity number in non-English locales
+         (confirmed: German renders "+ 1 gratis" with no "3"), which would
+         otherwise misclassify a multi-pair bundle tier as qty===1 and
+         apply the wrong (single-item) label logic below. */
+      var qty = 1;
+      if (unitPrice && discountPrice) {
+        var dpForQty = parseFloat(discountPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+        if (!isNaN(dpForQty) && dpForQty > 0) {
+          var derivedQty = Math.round(dpForQty / unitPrice);
+          if (derivedQty >= 1) qty = derivedQty;
+        }
+      } else {
+        var qtyMatch = qtyText.match(/(\d+)/);
+        qty = qtyMatch ? parseInt(qtyMatch[1], 10) : 1;
+      }
 
       if (qty === 1) {
         if (discountTextEl && discountPrice && originalPrice) {
@@ -299,7 +377,7 @@ if (!customElements.get('sticky-atc-v2')) {
           var op1 = parseFloat(originalPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
           if (op1 > dp1) {
             var saved1 = (op1 - dp1).toFixed(2).replace('.', ',');
-            var saleText = isNl ? '— Bespaar €' + saved1 : '— Save €' + saved1;
+            var saleText = isNl ? '— Bespaar €' + saved1 : isDe ? '— Spare €' + saved1 : '— Save €' + saved1;
             if (discountTextEl.textContent.trim() !== saleText) {
               discountTextEl.textContent = saleText;
               discountTextEl.style.color = '#e45b30';
@@ -307,7 +385,7 @@ if (!customElements.get('sticky-atc-v2')) {
             }
             originalPrice.style.setProperty('display', 'block', 'important');
           } else {
-            var stdText = isNl ? '— Standaardprijs' : '— Standard price';
+            var stdText = isNl ? '— Standaardprijs' : isDe ? '— Standardpreis' : '— Standard price';
             if (discountTextEl.textContent.trim() !== stdText) {
               discountTextEl.textContent = stdText;
               discountTextEl.style.color = '#888';
@@ -318,7 +396,7 @@ if (!customElements.get('sticky-atc-v2')) {
       } else if (qty > 1 && discountPrice) {
         // Multi-pair: add /pair label via UnitPriceLabel span (survives Avada re-renders)
         var unitLabel = discountPrice.querySelector('.AOV-Offer__UnitPriceLabel');
-        var pairText = isNl ? ' /paar' : ' /pair';
+        var pairText = isNl ? ' /paar' : isDe ? ' /Paar' : ' /pair';
         if (unitLabel && unitLabel.textContent !== pairText) {
           unitLabel.textContent = pairText;
           unitLabel.className += ' avada-per-pair';
@@ -339,6 +417,8 @@ if (!customElements.get('sticky-atc-v2')) {
             var savingsFormatted = totalSaved.toFixed(2).replace('.', ',');
             savingsEl.innerHTML = isNl
               ? 'Je bespaart <strong>€' + savingsFormatted + '</strong>'
+              : isDe
+              ? 'Du sparst <strong>€' + savingsFormatted + '</strong>'
               : 'You save <strong>€' + savingsFormatted + '</strong>';
             priceArea.appendChild(savingsEl);
           }

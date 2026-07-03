@@ -4,6 +4,7 @@
   id="MainProduct-{{ section.id }}"
   class="page-width section-{{ section.id }}-padding product-section"
   data-section="{{ section.id }}"
+  data-uci-badge-text="{{ 'uci_sale.badge_text' | t | escape }}"
 >
   {{ 'section-main-product-v2.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}

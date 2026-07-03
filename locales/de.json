@@ -8,6 +8,12 @@
  * ------------------------------------------------------------
  */
 {
+  "uci_sale": {
+    "uci": "UCI",
+    "warehouse_clearance": "Lagerräumung",
+    "sale_plus_free": "Sale + 1 gratis",
+    "badge_text": "UCI Lagerräumung - + 1 gratis"
+  },
   "general": {
     "password_page": {
       "login_form_heading": "Shop mit Passwort betreten:",

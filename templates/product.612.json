@@ -272,20 +272,11 @@
     },
     "765d516d-8ae3-4a32-a2a0-20a43cc7fdc0": {
       "type": "bought-often-together",
-      "settings": {
-        "title": "often bought together"
-      }
+      "settings": {}
     },
     "product-recommendations": {
       "type": "product-recommendations",
-      "settings": {
-        "heading": "You may also like",
-        "products_to_show": 10,
-        "image_ratio": "adapt",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false
-      }
+      "settings": {}
     },
     "8537c4d9-9c10-488a-bbd4-2c87e8b7e0a6": {
       "type": "usp",
