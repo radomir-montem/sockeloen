@@ -210,7 +210,7 @@
           "announcement-bar-0"
         ],
         "settings": {
-          "sale_mode": false,
+          "sale_mode": true,
           "autoplay_speed": 7,
           "enable_sticky": true
         }
