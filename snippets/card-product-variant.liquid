@@ -201,11 +201,23 @@
                     {% assign swatch_color = swatch_variant.options[color_option_index] | strip %}
                     {% unless swatch_colorlist contains swatch_color or swatch_color == current_color %}
                       {% if shop.metafields.soldout_variants.enable or swatch_variant.available or coming_soon %}
-                        <a
-                          href="{{ swatch_variant.url }}"
+                        {%- comment -%}
+                          A real <a> can't be used here — it would nest inside
+                          the card's own outer <a href="{{ card_product.url }}">
+                          wrapper, which is invalid HTML and makes browsers
+                          auto-close the outer link early, breaking the whole
+                          card's layout. A <span> with a click/keydown handler
+                          gets the same "click to go to that color" behavior
+                          without nesting links.
+                        {%- endcomment -%}
+                        <span
                           class="card-color-swatch"
+                          role="link"
+                          tabindex="0"
                           aria-label="{{ swatch_color | escape }}"
                           title="{{ swatch_color | escape }}"
+                          onclick="event.preventDefault(); event.stopPropagation(); window.location.href='{{ swatch_variant.url }}';"
+                          onkeydown="if(event.key==='Enter'){event.preventDefault(); event.stopPropagation(); window.location.href='{{ swatch_variant.url }}';}"
                         >
                           {%- if swatch_variant.featured_image -%}
                             <img
@@ -216,7 +228,7 @@
                               loading="lazy"
                             >
                           {%- endif -%}
-                        </a>
+                        </span>
                         {% capture swatch_colorlist %}{{ swatch_colorlist }}{{ swatch_color }} {% endcapture %}
                       {% endif %}
                     {% endunless %}
