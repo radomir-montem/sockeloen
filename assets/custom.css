@@ -949,14 +949,41 @@ facets-open-button{
 }
 
 .collection-tags .tag-button {
-    text-transform: lowercase;
-    font-size: 12px;
-    transition: 0.3s;
-    opacity: 0.7;
-    padding: 0;
+    text-transform: lowercase !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    color: #6B6B6B !important;
+    background: #F5F2ED !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease !important;
+    opacity: 1 !important;
+    text-decoration: none !important;
+    display: inline-block;
 }
 
-.collection-tags .tag-button:hover,
+/* Sentence case ("All products", not "ALL PRODUCTS" or "all products") that
+   works regardless of how the merchant capitalized the menu link title. */
+.collection-tags .tag-button::first-letter {
+    text-transform: uppercase !important;
+}
+
+.collection-tags .tag-button:hover {
+    color: #111111 !important;
+    background: #EDE7DB !important;
+    transform: translateY(-1px) !important;
+    opacity: 1 !important;
+}
+
 .collection-tags .tag-button.active {
-    opacity: 1;
+    color: #ffffff !important;
+    background: #111111 !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+}
+
+.collection-tags .tag-button.active:hover {
+    background: #111111 !important;
+    transform: none !important;
 }
