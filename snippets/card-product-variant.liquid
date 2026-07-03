@@ -13,6 +13,7 @@
   - section_id: {String} The ID of the section that contains this card.
   - horizontal_class: {Boolean} Add a card--horizontal class if set to true. Default: false
   - title: product.title
+  - show_color_swatches: {Boolean} Show clickable color thumbnails for the product's other colors over the image. Default: false (optional)
   Usage:
   {% render 'card-product-variant', show_vendor: section.settings.show_vendor %}
 {% endcomment %}
@@ -182,6 +183,47 @@
                 {% endcomment %}
             </div>
             {%- endif -%}
+            {% if show_color_swatches %}
+              {%- liquid
+                assign color_option_index = -1
+                for option in product.options
+                  if option == 'Color' or option == 'Kleur'
+                    assign color_option_index = forloop.index0
+                    break
+                  endif
+                endfor
+                assign current_color = color | strip
+              -%}
+              {% if color_option_index > -1 %}
+                <div class="card-color-swatches">
+                  {% assign swatch_colorlist = '' %}
+                  {% for swatch_variant in product.variants %}
+                    {% assign swatch_color = swatch_variant.options[color_option_index] | strip %}
+                    {% unless swatch_colorlist contains swatch_color or swatch_color == current_color %}
+                      {% if shop.metafields.soldout_variants.enable or swatch_variant.available or coming_soon %}
+                        <a
+                          href="{{ swatch_variant.url }}"
+                          class="card-color-swatch"
+                          aria-label="{{ swatch_color | escape }}"
+                          title="{{ swatch_color | escape }}"
+                        >
+                          {%- if swatch_variant.featured_image -%}
+                            <img
+                              src="{{ swatch_variant.featured_image | image_url: width: 64 }}"
+                              alt="{{ swatch_color | escape }}"
+                              width="32"
+                              height="32"
+                              loading="lazy"
+                            >
+                          {%- endif -%}
+                        </a>
+                        {% capture swatch_colorlist %}{{ swatch_colorlist }}{{ swatch_color }} {% endcapture %}
+                      {% endif %}
+                    {% endunless %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endif %}
             {% if product.metafields.custom.quantity_badge != blank %}
               <div class="absolute bottom-[15px] left-[12px] card-bottom-badge">
                 <span

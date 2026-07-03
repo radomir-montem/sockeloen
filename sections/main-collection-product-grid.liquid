@@ -222,9 +222,13 @@
                               lazy_load: lazy_load,
                               show_quick_add: section.settings.enable_quick_add,
                               section_id: section.id,
-                              atLeastOneAvailable: atLeastOneAvailable
+                              atLeastOneAvailable: atLeastOneAvailable,
+                              show_color_swatches: settings.collection_card_single_variant_with_swatches
                             %}
                           </li>
+                          {% if settings.collection_card_single_variant_with_swatches %}
+                            {% break %}
+                          {% endif %}
                         {% endif %}
                         {% capture tempList %}
                         {{ colorlist | append: color | append: " " }}
