@@ -44,8 +44,8 @@
       "disabled": true,
       "settings": {
         "image_overlay_opacity": 0,
-        "banner_image_height": 550,
-        "image_height_mobile": 450,
+        "banner_image_height": 750,
+        "image_height_mobile": 600,
         "adapt_height_first_image": false,
         "show_description": false,
         "desktop_content_position": "middle-center",

@@ -38,8 +38,8 @@
       "custom_css": [],
       "settings": {
         "image_overlay_opacity": 0,
-        "banner_image_height": 300,
-        "image_height_mobile": 200,
+        "banner_image_height": 500,
+        "image_height_mobile": 350,
         "adapt_height_first_image": false,
         "show_description": false,
         "desktop_content_position": "bottom-center",
