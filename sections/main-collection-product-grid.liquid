@@ -33,6 +33,15 @@
 
 <div class="section-{{ section.id }}-padding bg-background">
   {% if section.settings.navigation != blank %}
+    {%- comment -%}
+      Sits directly on top of the collection banner above (negative
+      margin, see .collection-tags-wrapper in custom.css) instead of in
+      its own white strip below it — the pills' backdrop-filter now
+      blurs the real banner photo through natural visual overlap, no
+      simulated backdrop image needed. main-collection-banner's own
+      height setting is bumped by this menu's height (~72px) so the
+      overlap doesn't eat into the photo's visible area.
+    {%- endcomment -%}
     <div class="collection-tags-wrapper" id="CollectionTagsWrapper-{{ section.id }}">
       <button
         type="button"
@@ -47,7 +56,10 @@
       <div class="collection-tags" id="CollectionTags-{{ section.id }}">
         {% for link in section.settings.navigation.links %}
           <div class="whitespace-nowrap">
-            <a class="tag-button bg-white text-black {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+            <a
+              class="tag-button bg-white text-black {% if link.active %}active{% endif %}{% if link.title contains 'UCI' %} tag-button--preserve-case{% endif %}"
+              href="{{ link.url }}"
+            >{{ link.title }}</a>
           </div>
         {% endfor %}
       </div>
