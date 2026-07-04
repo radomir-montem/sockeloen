@@ -33,13 +33,63 @@
 
 <div class="section-{{ section.id }}-padding bg-background">
   {% if section.settings.navigation != blank %}
-    <div class="collection-tags">
-      {% for link in section.settings.navigation.links %}
-        <div class="whitespace-nowrap">
-          <a class="tag-button bg-white text-black {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
-        </div>
-      {% endfor %}
+    <div class="collection-tags-wrapper" id="CollectionTagsWrapper-{{ section.id }}">
+      <button
+        type="button"
+        class="collection-tags-nav collection-tags-nav--prev"
+        aria-label="{{ 'general.slider.previous_slide' | t }}"
+        aria-controls="CollectionTags-{{ section.id }}"
+      >
+        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 1L1 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="collection-tags" id="CollectionTags-{{ section.id }}">
+        {% for link in section.settings.navigation.links %}
+          <div class="whitespace-nowrap">
+            <a class="tag-button bg-white text-black {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+          </div>
+        {% endfor %}
+      </div>
+      <button
+        type="button"
+        class="collection-tags-nav collection-tags-nav--next"
+        aria-label="{{ 'general.slider.next_slide' | t }}"
+        aria-controls="CollectionTags-{{ section.id }}"
+      >
+        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
+    <script>
+      (function() {
+        var wrapper = document.getElementById('CollectionTagsWrapper-{{ section.id }}');
+        if (!wrapper) return;
+        var track = wrapper.querySelector('.collection-tags');
+        var prevBtn = wrapper.querySelector('.collection-tags-nav--prev');
+        var nextBtn = wrapper.querySelector('.collection-tags-nav--next');
+
+        function updateNavVisibility() {
+          var maxScroll = track.scrollWidth - track.clientWidth;
+          var atStart = track.scrollLeft <= 1;
+          var atEnd = track.scrollLeft >= maxScroll - 1;
+          wrapper.classList.toggle('is-scrollable', maxScroll > 1);
+          prevBtn.disabled = atStart;
+          nextBtn.disabled = atEnd || maxScroll <= 1;
+        }
+
+        prevBtn.addEventListener('click', function() {
+          track.scrollBy({ left: -160, behavior: 'smooth' });
+        });
+        nextBtn.addEventListener('click', function() {
+          track.scrollBy({ left: 160, behavior: 'smooth' });
+        });
+        track.addEventListener('scroll', updateNavVisibility);
+        window.addEventListener('resize', updateNavVisibility);
+        updateNavVisibility();
+      })();
+    </script>
   {% endif %}
   {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
   {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
