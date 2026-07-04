@@ -37,25 +37,10 @@ body[class*="template--v2"] {
 }
 
 /* ---------- Breadcrumb Overlay ---------- */
+/* Hidden on the product page's media — it sat close enough to the
+   custom badge above the image to visually collide with it. */
 .breadcrumb-overlay {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  background: none;
-  color: #000;
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: capitalize;
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  border-radius: 0;
-  line-height: 1;
-  text-shadow: none;
+  display: none;
 }
 
 .breadcrumb-overlay:hover {
@@ -513,6 +498,11 @@ a.product-v2__sp-avatar {
 .product-v2 .Avada-Bundle-Volume__Container {
   margin: 24px 0 24px !important;
   gap: 12px !important;
+  /* Blend into the page instead of floating as its own white/tinted card —
+     the sale campaign is toggled on/off entirely from within the AOV app
+     itself, so the widget should read as part of the page, not a bolted-on
+     box. #F4F4F1 matches body.template--product's own background. */
+  background: transparent !important;
 }
 
 /* Desktop: reduce spacing before/after the "Fresh socks" header */
@@ -522,12 +512,16 @@ a.product-v2__sp-avatar {
   }
 }
 
-/* Header — Cloudpillo-style sales banner */
+/* Header — same dark glass recipe as the notification bar
+   (rgba(0,0,0,0.55) + blur(21px) saturate(180%)) so the two read as the
+   exact same material, not an approximated grey. */
 .product-v2 .Avada-Volume__Header {
-  background-color: #e8f0c4 !important;
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
   border: none !important;
-  border-radius: 10px !important;
-  padding: 14px 20px !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
   text-align: left !important;
   margin-bottom: 12px !important;
 }
@@ -536,19 +530,31 @@ a.product-v2__sp-avatar {
 @media screen and (min-width: 990px) {
   .product-v2 .Avada-Volume__Header {
     margin-bottom: 8px !important;
-    padding: 10px 20px !important;
   }
 }
 
 .product-v2 .Avada-Volume__HeaderTitle-Text {
   font-size: 15px !important;
   font-weight: 700 !important;
-  color: #1a1a1a !important;
+  color: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+.product-v2 .Avada-Volume__HeaderTitle-Text::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 9px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 16'%3E%3Crect x='0' y='0' width='3' height='16' rx='1' fill='%23E63329'/%3E%3Crect x='4.5' y='0' width='3' height='16' rx='1' fill='%230057B8'/%3E%3Crect x='9' y='0' width='3' height='16' rx='1' fill='%23ffffff'/%3E%3Crect x='13.5' y='0' width='3' height='16' rx='1' fill='%23F5C518'/%3E%3Crect x='17' y='0' width='3' height='16' rx='1' fill='%2300843D'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .product-v2 .Avada-Volume__HeaderDescription {
   font-size: 13px !important;
-  color: #444 !important;
+  color: rgba(255, 255, 255, 0.7) !important;
   margin-top: 2px !important;
 }
 
@@ -607,7 +613,9 @@ a.product-v2__sp-avatar {
   border-color: #bbb !important;
 }
 
-/* Selected tier */
+/* Selected tier — stays the app's original white tile. Only the "Most
+   Popular" badge carries the UCI branding (see below); the tile itself
+   is unchanged from before the sale styling pass. */
 .product-v2 .Avada-Volume__Item--Selected {
   border-color: #0395F6 !important;
   background: #ffffff !important;
@@ -615,6 +623,14 @@ a.product-v2__sp-avatar {
 
 .product-v2 .Avada-Volume__Item--Selected:hover {
   border-color: #0395F6 !important;
+}
+
+/* "See more" toggle + the variant rows it expands are all hidden
+   elsewhere (.Avada-VariantSelection etc.) — hide the whole wrapper so
+   there's no dead space / pointless toggle left at the bottom of the
+   tile, which also tightens up the vertical spacing. */
+.product-v2 .Avada-Volume__Products {
+  display: none !important;
 }
 
 /* Avada-ItemTier — make it a flex row */
@@ -696,7 +712,11 @@ a.product-v2__sp-avatar {
   display: none !important;
 }
 
-/* Badge ("Most Popular") — positioned crossing top border, centered on card */
+/* Badge ("Most Popular") — positioned crossing top border, centered on
+   card. Same dark glass recipe as the notification bar / header/tile
+   above (rgba(0,0,0,0.55) + blur(21px)) with the UCI replica flag
+   (red/blue/black/yellow/green stripes) ahead of the text, instead of
+   the app's default lime pill. */
 .product-v2 .Avada-VolumeBoxBadge {
   position: absolute !important;
   top: -11px !important;
@@ -705,9 +725,14 @@ a.product-v2__sp-avatar {
   margin: 0 auto !important;
   width: fit-content !important;
   transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
   text-align: center !important;
-  background: #abcc15 !important;
-  color: #000 !important;
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+  color: #ffffff !important;
   font-size: 10px !important;
   font-weight: 700 !important;
   text-transform: none !important;
@@ -717,6 +742,16 @@ a.product-v2__sp-avatar {
   line-height: 1.4 !important;
   z-index: 1 !important;
   white-space: nowrap !important;
+}
+.product-v2 .Avada-VolumeBoxBadge::before {
+  content: '';
+  display: inline-block;
+  width: 11px;
+  height: 9px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 16'%3E%3Crect x='0' y='0' width='3' height='16' rx='1' fill='%23E63329'/%3E%3Crect x='4.5' y='0' width='3' height='16' rx='1' fill='%230057B8'/%3E%3Crect x='9' y='0' width='3' height='16' rx='1' fill='%23ffffff'/%3E%3Crect x='13.5' y='0' width='3' height='16' rx='1' fill='%23F5C518'/%3E%3Crect x='17' y='0' width='3' height='16' rx='1' fill='%2300843D'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Shipping date — bold black for date, orange for countdown */
@@ -807,6 +842,16 @@ a.product-v2__sp-avatar {
   background: #f5f5f5;
   flex-shrink: 0;
   position: relative;
+}
+
+/* "+" divider between the bought thumbnails and the free one(s), for
+   tiers phrased as "3 + 1 free" */
+.product-v2 .avada-img-stack__plus {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 4px;
+  flex-shrink: 0;
 }
 
 /* Hide #1 / #2 / #3 product numbers and product rows in bundle tiers */
@@ -901,6 +946,83 @@ a.product-v2__sp-avatar {
   letter-spacing: 0.03em;
   border-radius: 10px;
   margin-bottom: 20px;
+}
+
+/* ---------- UCI Warehouse Sale banner ----------
+   Compact single row — replaces the AOV "Get More Save More" app block
+   1:1 (same slot, same rough footprint), not stacked above/below it.
+   Uses the shared uci-warehouse-tile snippet (size: 'lg' here) so the
+   flag + wordmark match the notification bar's branding exactly. */
+.product-v2__uci-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  background: #1a1a1a;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.product-v2__uci-banner .uci-tile {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.product-v2__uci-banner .uci-tile__flag {
+  width: 18px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.product-v2__uci-banner .uci-tile__word {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+.product-v2__uci-banner .uci-tile__uci {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.product-v2__uci-banner .uci-tile__clearance {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+}
+.uci-banner__offer {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.uci-banner__timer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.uci-banner__timer-label {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.uci-banner__timer-digits {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+@media (max-width: 480px) {
+  .product-v2__uci-banner {
+    justify-content: center;
+    text-align: center;
+  }
+  .uci-banner__offer { display: none; }
 }
 
 /* ---------- Variant Pickers — Shared ---------- */

@@ -1102,12 +1102,28 @@ facets-open-button{
    collection cards, each badge's own inline background-color, and the
    inline top/left offset utility classes baked into the liquid markup. */
 .badge.badge--bottom-left {
-    background: rgba(0, 0, 0, 0.55) !important;
-    backdrop-filter: blur(21px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+    background: #ffffff !important;
     border-radius: 0 !important;
-    color: #ffffff !important;
+    color: #000000 !important;
     padding: 5px 8px !important;
+}
+
+/* UCI flag icon + forced "UCI" text inserted at the front of any custom
+   badge whose value starts with "uci" (any case) — e.g. product.
+   metafields.custom.badge = "UCI SALE -30%". Matches the notification
+   bar's own treatment: the flag icon, then "UCI" set apart from the
+   rest of the text. */
+.badge-uci-flag {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 9px;
+    margin-right: 4px;
+    vertical-align: middle;
+    width: 11px;
+}
+
+.badge-uci-text {
+    font-weight: 700;
 }
 
 .card-badge {
