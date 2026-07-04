@@ -255,6 +255,15 @@
             {%- endif -%}
           </div>
         {%- endif -%}
+        {%- liquid
+          assign has_uci_badge = false
+          for badge in card_product.metafields.custom.badge.value
+            assign badge_prefix_check = badge | slice: 0, 3 | downcase
+            if badge_prefix_check == 'uci'
+              assign has_uci_badge = true
+            endif
+          endfor
+        -%}
         <div class="absolute top-[15px] left-[12px] card-badge">
           {%- if soldout == false -%}
             {% assign renderComingSoon = card_product.metafields.custom.coming_soon | default: false %}
@@ -280,7 +289,8 @@
             {% endfor %}
           {%- endif -%}
           {% for badge in card_product.metafields.custom.badge.value %}
-            {% unless badge contains '-' and badge contains '%' %}
+            {%- assign badge_prefix = badge | slice: 0, 3 | downcase -%}
+            {% unless badge_prefix != 'uci' and badge contains '-' and badge contains '%' %}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left uppercase mr-[6px]"
@@ -294,13 +304,8 @@
                   style="background-color: {{ settings.sold_out_badge_color }};"
                 {% endif %}
               >
-                {%- liquid
-                  assign badge_prefix = badge | slice: 0, 3 | downcase
-                  if badge_prefix == 'uci'
-                    assign badge_rest = badge | slice: 3, 999
-                  endif
-                -%}
                 {%- if badge_prefix == 'uci' -%}
+                  {%- assign badge_rest = badge | slice: 3, 999 -%}
                   <svg class="badge-uci-flag" viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <rect x="0" y="0" width="3" height="16" rx="1" fill="#E63329"/>
                     <rect x="4.5" y="0" width="3" height="16" rx="1" fill="#0057B8"/>
@@ -315,7 +320,7 @@
               </span>
             {% endunless %}
           {% endfor %}
-          {% if card_product.compare_at_price > card_product.price and card_product.metafields.custom.show_from_text == blank %}
+          {% if card_product.compare_at_price > card_product.price and card_product.metafields.custom.show_from_text == blank and has_uci_badge == false %}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left uppercase mr-[6px]"
