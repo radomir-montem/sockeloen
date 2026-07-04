@@ -56,7 +56,10 @@
       <div class="collection-tags" id="CollectionTags-{{ section.id }}">
         {% for link in section.settings.navigation.links %}
           <div class="whitespace-nowrap">
-            <a class="tag-button bg-white text-black {% if link.active %}active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+            <a
+              class="tag-button bg-white text-black {% if link.active %}active{% endif %}{% if link.title contains 'UCI' %} tag-button--preserve-case{% endif %}"
+              href="{{ link.url }}"
+            >{{ link.title }}</a>
           </div>
         {% endfor %}
       </div>
