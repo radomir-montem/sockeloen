@@ -37,25 +37,10 @@ body[class*="template--v2"] {
 }
 
 /* ---------- Breadcrumb Overlay ---------- */
+/* Hidden on the product page's media — it sat close enough to the
+   custom badge above the image to visually collide with it. */
 .breadcrumb-overlay {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  background: none;
-  color: #000;
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: capitalize;
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  border-radius: 0;
-  line-height: 1;
-  text-shadow: none;
+  display: none;
 }
 
 .breadcrumb-overlay:hover {
