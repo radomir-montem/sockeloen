@@ -33,7 +33,19 @@
 
 <div class="section-{{ section.id }}-padding bg-background">
   {% if section.settings.navigation != blank %}
-    <div class="collection-tags-wrapper" id="CollectionTagsWrapper-{{ section.id }}">
+    {%- comment -%}
+      Continues the collection banner image behind the tile row (blurred,
+      via the ::before in custom.css) so the glass pills have real
+      photography to blur, and the banner visually flows into the menu
+      instead of cutting off sharply into flat white.
+    {%- endcomment -%}
+    <div
+      class="collection-tags-wrapper"
+      id="CollectionTagsWrapper-{{ section.id }}"
+      {% if collection.image %}
+        style="--collection-tags-backdrop-image: url('{{ collection.image | image_url: width: 1500 }}');"
+      {% endif %}
+    >
       <button
         type="button"
         class="collection-tags-nav collection-tags-nav--prev"

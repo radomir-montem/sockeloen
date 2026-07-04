@@ -940,28 +940,37 @@ facets-open-button{
 
 /* Single-line carousel: was flex-wrap so a long link list spilled onto a
    second row. Now it's a horizontally-scrolling track (native touch drag
-   on mobile, nav arrows for mouse/trackpad) that always stays one line. */
+   on mobile, nav arrows for mouse/trackpad) that always stays one line.
+   Extra top padding gives the blurred banner continuation (::before,
+   below) room to actually read as a continuation instead of a sliver. */
 .collection-tags-wrapper {
     background-color: #fff;
     overflow: hidden;
-    padding: 1.25rem 0 0.75rem;
+    padding: 2rem 0 1rem;
     position: relative;
 }
 
-/* Soft blurred color field behind the pills, so their backdrop-filter has
-   something to actually blur on this plain white section (backdrop-filter
-   can only blur what's behind an element — without this the glass pills
-   just looked like flat semi-transparent boxes). Brand-neutral: a faint
-   sweep of the accent blue and near-black already used elsewhere in the
-   theme's color settings, not new colors.
+/* Blurred continuation of the collection's own banner image, so the
+   pills' backdrop-filter has real photography to blur (it can only blur
+   what's actually behind an element — flat white gave it nothing to
+   work with) and the banner visually flows into the menu rather than
+   cutting off sharply. --collection-tags-backdrop-image is set inline
+   per-section from collection.image; the gradient is a brand-neutral
+   tint (same blue/near-black used elsewhere in the theme's color
+   settings) that keeps pill text legible over any photo, and is all
+   that shows on collections without an image.
    A ::before pseudo-element, not a real empty <div> — base.css has a
    sitewide `div:empty { display: none }` accessibility rule that would
    hide an actual empty element used purely for decoration like this. */
 .collection-tags-wrapper::before {
-    background: linear-gradient(115deg, rgba(3, 149, 246, 0.18) 0%, rgba(18, 18, 18, 0.12) 45%, rgba(3, 149, 246, 0.15) 100%);
+    background:
+        linear-gradient(115deg, rgba(3, 149, 246, 0.28) 0%, rgba(18, 18, 18, 0.4) 45%, rgba(3, 149, 246, 0.3) 100%),
+        var(--collection-tags-backdrop-image, none);
+    background-size: cover;
+    background-position: center top;
     content: '';
     filter: blur(32px);
-    inset: -30px 8% -30px 8%;
+    inset: -60px 8% -30px 8%;
     pointer-events: none;
     position: absolute;
     z-index: 0;
@@ -970,12 +979,20 @@ facets-open-button{
 .collection-tags {
     display: flex;
     gap: 10px;
+    justify-content: center;
     overflow-x: auto;
     padding: 0 5px;
     position: relative;
     scroll-behavior: smooth;
     scrollbar-width: none;
     z-index: 1;
+}
+
+/* Once there are too many tiles for one line, centering fights the
+   scroll — the row would start scrolled into its own centered offset.
+   Left-align instead so it always starts at the first tile. */
+.collection-tags-wrapper.is-scrollable .collection-tags {
+    justify-content: flex-start;
 }
 
 .collection-tags > div {
