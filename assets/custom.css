@@ -938,14 +938,90 @@ facets-open-button{
 }
 
 
-.collection-tags {
-    padding: 0 5px;
+/* Single-line carousel: was flex-wrap so a long link list spilled onto a
+   second row. Now it's a horizontally-scrolling track (native touch drag
+   on mobile, nav arrows for mouse/trackpad) that always stays one line. */
+.collection-tags-wrapper {
     background-color: #fff;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    overflow: hidden;
     padding: 1.25rem 0 0.75rem;
+    position: relative;
+}
+
+/* Soft blurred color field behind the pills — see the comment in
+   main-collection-product-grid.liquid for why this needs to exist at
+   all. Brand-neutral: a faint sweep of the accent blue and near-black
+   used elsewhere in the theme's own color settings, not new colors. */
+.collection-tags-backdrop {
+    background: linear-gradient(115deg, rgba(3, 149, 246, 0.18) 0%, rgba(18, 18, 18, 0.12) 45%, rgba(3, 149, 246, 0.15) 100%);
+    filter: blur(32px);
+    inset: -30px 8% -30px 8%;
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
+}
+
+.collection-tags {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 0 5px;
+    position: relative;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    z-index: 1;
+}
+
+.collection-tags > div {
+    flex-shrink: 0;
+}
+
+.collection-tags::-webkit-scrollbar {
+    display: none;
+}
+
+.collection-tags-nav {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(21px) saturate(180%);
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #111111;
+    cursor: pointer;
+    display: none;
+    flex-shrink: 0;
+    height: 28px;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.15s ease;
+    width: 28px;
+    z-index: 2;
+}
+
+.collection-tags-wrapper.is-scrollable .collection-tags-nav {
+    display: flex;
+}
+
+.collection-tags-nav:disabled {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.collection-tags-nav--prev {
+    left: 4px;
+}
+
+.collection-tags-nav--next {
+    right: 4px;
+}
+
+.collection-tags-wrapper.is-scrollable .collection-tags {
+    padding-left: 36px;
+    padding-right: 36px;
 }
 
 /* Exact glass recipe as header.header (header-overrides.css line ~337) —
