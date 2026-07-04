@@ -36,11 +36,34 @@ body[class*="template--v2"] {
   max-width: 100%;
 }
 
-/* ---------- Breadcrumb Overlay ---------- */
-/* Hidden on the product page's media — it sat close enough to the
-   custom badge above the image to visually collide with it. */
-.breadcrumb-overlay {
+/* ---------- Custom badge over the product image ---------- */
+/* Hidden on the product page only (scoped to the media wrapper here so
+   collection cards, which reuse the same .card-badge class, keep
+   showing it). The breadcrumb overlay stays visible. */
+.product-v2__media-wrapper .card-badge {
   display: none;
+}
+
+/* ---------- Breadcrumb Overlay ---------- */
+.breadcrumb-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: none;
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: capitalize;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  border-radius: 0;
+  line-height: 1;
+  text-shadow: none;
 }
 
 .breadcrumb-overlay:hover {
