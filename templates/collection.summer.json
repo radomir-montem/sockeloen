@@ -13,8 +13,8 @@
       "type": "main-collection-banner",
       "settings": {
         "image_overlay_opacity": 0,
-        "banner_image_height": 300,
-        "image_height_mobile": 200,
+        "banner_image_height": 400,
+        "image_height_mobile": 300,
         "adapt_height_first_image": false,
         "show_description": true,
         "desktop_content_position": "middle-center",
