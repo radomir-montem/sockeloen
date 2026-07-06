@@ -529,8 +529,7 @@
       </button>
       {% if section.settings.language_selector %}
         <localization-selector class="relative flex justify-center items-center small-hide medium-hide">
-          <label class="localization-label flex justify-center items-center text-black cursor-pointer">
-            
+          <label class="localization-label flex justify-center items-center gap-[6px] text-black cursor-pointer">
             <span>
               {%- if localization.country.iso_code == 'US' -%}
                 {%- if localization.language.iso_code == 'fr' -%}Can{%- else -%}USA{%- endif -%}
@@ -538,8 +537,11 @@
                 {{ localization.language.iso_code | upcase }}
               {%- endif -%}
             </span>
+            <svg class="locale-chevron-icon" xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true">
+              <path d="M1 1L4 4L7 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </label>
-          <ul class="localization-list hidden px-4 py-4 bg-white text-black absolute top-full left-1/2 -translate-x-1/2 w-48 text-center">
+          <ul class="localization-list hidden text-black absolute top-full left-1/2 -translate-x-1/2 text-center">
             <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="en">EN</a></li>
             <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="NL" data-language="nl">NL</a></li>
             <li class="localization-item cursor-pointer py-2"><a href="#" data-country-code="DE" data-language="de">DE</a></li>
