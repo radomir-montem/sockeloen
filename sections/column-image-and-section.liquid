@@ -14,7 +14,7 @@
                   >{{block.settings.title}} {{block.order}}</h4>
               {% endif %}
               {% if block.settings.button_label != blank %}
-                  <a href="{{block.settings.button_url}}" class="inline-flex py-5 px-12 border-none uppercase font-medium !shadow-none bg-white text-black border-white">{{block.settings.button_label}}</a>
+                  <a href="{{block.settings.button_url}}" class="inline-flex py-5 px-12 border-none font-medium !shadow-none bg-white text-black border-white">{{block.settings.button_label}}</a>
               {% endif %}
             </div>
         </div>
@@ -74,7 +74,7 @@
       
             {% if block.settings.button_label != blank and block.settings.button_url != blank %}
               <div class="lg:absolute lg:bottom-16 my-4 lg:my-0 button_alignment">
-                <a href="{{block.settings.button_url}}" class="inline-flex py-5 px-12 border-none uppercase font-medium !shadow-none bg-white text-black border-white">{{block.settings.button_label}}</a>
+                <a href="{{block.settings.button_url}}" class="inline-flex py-5 px-12 border-none font-medium !shadow-none bg-white text-black border-white">{{block.settings.button_label}}</a>
               </div>
             {% endif %}
           </div>
