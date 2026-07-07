@@ -1226,6 +1226,8 @@ cart-drawer .add-to-cart.submit_button:hover {
 }
 
 .progressive_bar_shipping_price {
+  /* base.css has a global `div:empty { display: none }` reset that otherwise hides this content-less fill bar */
+  display: block !important;
   height: 100%;
   width: 0;
   border-radius: 4px;
