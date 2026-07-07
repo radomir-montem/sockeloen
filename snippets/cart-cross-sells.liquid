@@ -3,6 +3,11 @@
   1. Manual metafield: my_fields.cart_cross_sells (list of product refs)
   2. Shopify Recommendations API (loaded via JS)
   3. Global fallback: settings.global_upsells collection
+
+  Accepts an optional `force_collection` param — when set, tiers 1 & 2 are
+  skipped entirely and the products shown are always this fixed collection
+  (e.g. the desktop upsell bar is pinned to a curated Best Sellers collection
+  rather than per-visitor personalized recommendations).
 {% endcomment %}
 
 {% assign cross_sell_products = '' %}
@@ -17,37 +22,49 @@
   {% assign cart_product_ids = cart_product_ids | append: ',' | append: item.product.id %}
 {% endfor %}
 
-{%- comment -%} Tier 1: Manual metafield per product in cart {%- endcomment -%}
-{% assign manual_products = '' %}
 {% assign manual_count = 0 %}
 
-{% for item in cart.items %}
-  {% assign meta_cross = item.product.metafields.custom.cart_cross_sells.value %}
-  {% if meta_cross != blank %}
-    {% for ref_product in meta_cross %}
-      {% unless cart_handles contains ref_product.handle or cross_sell_handles contains ref_product.handle %}
-        {% if ref_product.available and manual_count < max_cross_sells %}
-          {% assign cross_sell_handles = cross_sell_handles | append: ',' | append: ref_product.handle %}
-          {% assign manual_count = manual_count | plus: 1 %}
+{% if force_collection != blank %}
+  {%- comment -%} Fixed mode: always this collection, no personalization {%- endcomment -%}
+  {% assign fixed_count = 0 %}
+  {% for gp in force_collection.products %}
+    {% unless cart_handles contains gp.handle %}
+      {% if gp.available and fixed_count < max_cross_sells %}
+        {% assign cross_sell_handles = cross_sell_handles | append: ',' | append: gp.handle %}
+        {% assign fixed_count = fixed_count | plus: 1 %}
+      {% endif %}
+    {% endunless %}
+  {% endfor %}
+{% else %}
+  {%- comment -%} Tier 1: Manual metafield per product in cart {%- endcomment -%}
+  {% for item in cart.items %}
+    {% assign meta_cross = item.product.metafields.custom.cart_cross_sells.value %}
+    {% if meta_cross != blank %}
+      {% for ref_product in meta_cross %}
+        {% unless cart_handles contains ref_product.handle or cross_sell_handles contains ref_product.handle %}
+          {% if ref_product.available and manual_count < max_cross_sells %}
+            {% assign cross_sell_handles = cross_sell_handles | append: ',' | append: ref_product.handle %}
+            {% assign manual_count = manual_count | plus: 1 %}
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+
+  {%- comment -%} Tier 3: Global fallback (fills remaining slots) {%- endcomment -%}
+  {% assign global_products = settings.global_upsells %}
+  {% assign fallback_count = manual_count %}
+
+  {% if fallback_count < max_cross_sells and global_products != blank %}
+    {% for gp in global_products.products %}
+      {% unless cart_handles contains gp.handle or cross_sell_handles contains gp.handle %}
+        {% if gp.available and fallback_count < max_cross_sells %}
+          {% assign cross_sell_handles = cross_sell_handles | append: ',' | append: gp.handle %}
+          {% assign fallback_count = fallback_count | plus: 1 %}
         {% endif %}
       {% endunless %}
     {% endfor %}
   {% endif %}
-{% endfor %}
-
-{%- comment -%} Tier 3: Global fallback (fills remaining slots) {%- endcomment -%}
-{% assign global_products = settings.global_upsells %}
-{% assign fallback_count = manual_count %}
-
-{% if fallback_count < max_cross_sells and global_products != blank %}
-  {% for gp in global_products.products %}
-    {% unless cart_handles contains gp.handle or cross_sell_handles contains gp.handle %}
-      {% if gp.available and fallback_count < max_cross_sells %}
-        {% assign cross_sell_handles = cross_sell_handles | append: ',' | append: gp.handle %}
-        {% assign fallback_count = fallback_count | plus: 1 %}
-      {% endif %}
-    {% endunless %}
-  {% endfor %}
 {% endif %}
 
 {% assign handle_list = cross_sell_handles | split: ',' %}
@@ -84,6 +101,7 @@
   </div>
 </div>
 
+{% if force_collection == blank %}
 <script>
   {%- comment -%} Tier 2: Shopify Recommendations API {%- endcomment -%}
   (function() {
@@ -140,3 +158,4 @@
       .catch(function(e) { console.log('Recommendations API error:', e); });
   })();
 </script>
+{% endif %}

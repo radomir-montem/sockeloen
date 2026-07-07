@@ -1557,6 +1557,12 @@
         "label": "Default Global Upsells"
       },
       {
+        "type": "collection",
+        "id": "desktop_upsell_collection",
+        "label": "Desktop Cart Upsell Collection",
+        "info": "Pins the desktop cart drawer's upsell bar to always show products from this collection, instead of the personalized cart-based recommendations. Leave blank to use the same personalized logic as mobile."
+      },
+      {
         "type": "select",
         "id": "cart_type",
         "options": [
