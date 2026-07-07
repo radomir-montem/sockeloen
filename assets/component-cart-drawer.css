@@ -1517,7 +1517,6 @@ cart-drawer .add-to-cart.submit_button:hover {
   margin-left: 6px;
   font-size: 10px;
   font-weight: 700;
-  text-transform: uppercase;
-  color: #0395F6;
+  color: #1a9e46;
   vertical-align: middle;
 }
