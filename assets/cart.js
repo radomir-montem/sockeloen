@@ -134,7 +134,7 @@ class CartItems extends HTMLElement {
         )
         const errors =
           document.getElementById('cart-errors') || document.getElementById('CartDrawer-CartErrors')
-        errors.textContent = window.cartStrings.error
+        if (errors) errors.textContent = window.cartStrings.error
         this.disableLoading()
       })
   }
@@ -191,16 +191,27 @@ class CartItems extends HTMLElement {
       const quantityElement =
         document.getElementById(`Quantity-${line}`) ||
         document.getElementById(`Drawer-quantity-${line}`)
-      lineItemError.querySelector('.cart-item__error-text').innerHTML =
-        window.cartStrings.quantityError.replace('[quantity]', quantityElement.value)
+      if (lineItemError && quantityElement) {
+        lineItemError.querySelector('.cart-item__error-text').innerHTML =
+          window.cartStrings.quantityError.replace('[quantity]', quantityElement.value)
+      }
     }
 
     this.currentItemCount = itemCount
-    this.lineItemStatusElement.setAttribute('aria-hidden', true)
+
+    // Re-query instead of using the cached reference: when the cart transitions
+    // to empty, the section re-render has already replaced the drawer contents
+    // (including these live-region elements) by the time this runs.
+    const lineItemStatus =
+      this.lineItemStatusElement ||
+      document.getElementById('shopping-cart-line-item-status') ||
+      document.getElementById('CartDrawer-LineItemStatus')
+    if (lineItemStatus && lineItemStatus.isConnected) lineItemStatus.setAttribute('aria-hidden', true)
 
     const cartStatus =
       document.getElementById('cart-live-region-text') ||
       document.getElementById('CartDrawer-LiveRegionText')
+    if (!cartStatus) return
     cartStatus.setAttribute('aria-hidden', false)
 
     setTimeout(() => {
@@ -215,7 +226,7 @@ class CartItems extends HTMLElement {
   enableLoading(line) {
     const mainCartItems =
       document.getElementById('main-cart-items') || document.getElementById('CartDrawer-CartItems')
-    mainCartItems.classList.add('cart__items--disabled')
+    if (mainCartItems) mainCartItems.classList.add('cart__items--disabled')
 
     const cartItemElements = this.querySelectorAll(`#CartItem-${line} .loading-overlay`)
     const cartDrawerItemElements = this.querySelectorAll(
@@ -227,13 +238,13 @@ class CartItems extends HTMLElement {
     )
 
     document.activeElement.blur()
-    this.lineItemStatusElement.setAttribute('aria-hidden', false)
+    if (this.lineItemStatusElement) this.lineItemStatusElement.setAttribute('aria-hidden', false)
   }
 
   disableLoading() {
     const mainCartItems =
       document.getElementById('main-cart-items') || document.getElementById('CartDrawer-CartItems')
-    mainCartItems.classList.remove('cart__items--disabled')
+    if (mainCartItems) mainCartItems.classList.remove('cart__items--disabled')
   }
 }
 
