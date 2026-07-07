@@ -13,17 +13,24 @@
   comment
     Two-segment scale: €0-bar_baseline maps into a small "low_zone" sliver of
     the bar (so low cart values are still visible), and bar_baseline-bar_max
-    maps into the remaining width, keeping visual focus on the zone where
-    the average order value (~€68) actually sits.
+    maps into the remaining width up to bar_top_percent, keeping visual focus
+    on the zone where the average order value (~€68) actually sits.
+    The last overshoot_percent of the bar is left as headroom past the gift
+    threshold, so the bar visibly has "more room to grow" beyond €110.
   endcomment
   assign bar_baseline = 5000
   assign bar_range = bar_max | minus: bar_baseline
   assign low_zone_percent = 15
-  assign high_zone_percent = 100 | minus: low_zone_percent
+  assign overshoot_percent = 10
+  assign overshoot_amount = 3000
+  assign bar_top_percent = 100 | minus: overshoot_percent
+  assign high_zone_percent = bar_top_percent | minus: low_zone_percent
 
   assign percent = cart.total_price | times: 1.0 | divided_by: bar_baseline | times: low_zone_percent
-  if cart.total_price > bar_baseline
+  if cart.total_price > bar_baseline and cart.total_price <= bar_max
     assign percent = cart.total_price | minus: bar_baseline | times: 1.0 | divided_by: bar_range | times: high_zone_percent | plus: low_zone_percent
+  elsif cart.total_price > bar_max
+    assign percent = cart.total_price | minus: bar_max | times: 1.0 | divided_by: overshoot_amount | times: overshoot_percent | plus: bar_top_percent
   endif
   assign percent = percent | at_least: 0 | at_most: 100
 
@@ -63,7 +70,7 @@
   data-both-reached-text="{{ 'sections.cart.free_shipping_and_gift_reached' | t | escape }}">
   <h4 class="progress_bar_headline text-[14px] leading-6 tracking-wider font-light text-base-text mb-3 {{ classes }}">
     {% if gift_reached %}
-      <span class="free_shipping_text ml-0">🎉 {{ 'sections.cart.free_shipping_and_gift_reached' | t }}</span>
+      <span class="free_shipping_text ml-0">{{ 'sections.cart.free_shipping_and_gift_reached' | t }}</span>
     {% elsif shipping_reached and has_free_gift %}
       <span class="free_shipping_prev_text">{{ 'sections.cart.free_gift_away_html' | t: amount: '' | split: '<strong>' | first }}</span>
       <span data-limit="{{ settings.free_gift_threshold }}" class="free_shipping free_gift_amount font-bold text-black">€{{ gift_remaining }}</span>
@@ -84,7 +91,7 @@
           {% render 'icon-milestone-check' %}
         </span>
       </span>
-      <span class="progress_bar_milestone progress_bar_milestone--gift{% if gift_reached %} is-reached{% endif %}" style="left: 100%;" title="{{ 'sections.cart.free_gift_reached' | t }}">
+      <span class="progress_bar_milestone progress_bar_milestone--gift{% if gift_reached %} is-reached{% endif %}" style="left: {{ bar_top_percent }}%;" title="{{ 'sections.cart.free_gift_reached' | t }}">
         <span class="progress_bar_milestone__badge">
           {% render 'icon-milestone-check' %}
         </span>
@@ -97,7 +104,7 @@
         <span class="progress_bar_label__amount">€{{ settings.free_shipping | times: 100 | money_without_currency }}</span>
         <span class="progress_bar_label__name">{{ 'sections.cart.free_shipping_label' | t }}</span>
       </span>
-      <span class="progress_bar_label progress_bar_label--gift{% if gift_reached %} is-reached{% endif %}" style="left: 100%;">
+      <span class="progress_bar_label progress_bar_label--gift{% if gift_reached %} is-reached{% endif %}" style="left: {{ bar_top_percent }}%;">
         <span class="progress_bar_label__amount">€{{ settings.free_gift_threshold | times: 100 | money_without_currency }}</span>
         <span class="progress_bar_label__name">{{ 'sections.cart.free_gift_label' | t }}</span>
       </span>
