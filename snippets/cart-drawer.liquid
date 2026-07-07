@@ -321,7 +321,11 @@
 
             <div class="cart-drawer__buttons hide-when-container-is-empty">
               <a href="/checkout/" class="cart-drawer__checkout-btn">
-                {{- settings.cart_drawer_button_1_cta -}}
+                {%- if settings.cart_drawer_button_1_cta != blank -%}
+                  {{- settings.cart_drawer_button_1_cta -}}
+                {%- else -%}
+                  {{- 'sections.cart.checkout_securely' | t -}}
+                {%- endif -%}
               </a>
               <div class="cart-drawer__payment-icons">
                 {% assign payMethods = 'shop_pay,visa,mastercard,apple_pay,google_pay,amex' | split: ',' %}

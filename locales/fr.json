@@ -309,7 +309,8 @@
       "shipping_free": "Gratuit",
       "select_size": "Choisissez la taille",
       "add": "Ajouter",
-      "view_cart": "Voir le panier"
+      "view_cart": "Voir le panier",
+      "checkout_securely": "Paiement sécurisé"
     },
     "footer": {
       "payment": "Moyens de paiement"

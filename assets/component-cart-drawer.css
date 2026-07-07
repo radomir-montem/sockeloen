@@ -1363,7 +1363,6 @@ cart-drawer .add-to-cart.submit_button:hover {
 
 .progress_bar_label__name {
   font-size: 10px;
-  text-transform: uppercase;
   letter-spacing: 0.02em;
   color: #6b6b6b;
 }
@@ -1452,6 +1451,8 @@ cart-drawer .add-to-cart.submit_button:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  /* match the lowercase styling of cart item titles below the widget */
+  text-transform: lowercase;
 }
 
 .free_gift_widget__price {
@@ -1497,9 +1498,9 @@ cart-drawer .add-to-cart.submit_button:hover {
   gap: 1px;
   padding: 5px 12px;
   line-height: 1.2;
-  border-color: #e08a8a;
-  color: #c8433f;
-  opacity: 0.55;
+  border-color: #c9c9c9;
+  color: #8c8c8c;
+  opacity: 0.7;
 }
 
 .free_gift_widget__add-btn--sold-out {

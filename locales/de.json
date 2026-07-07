@@ -312,6 +312,7 @@
       "add": "Hinzufügen",
       "shipping": "Versand",
       "shipping_free": "Gratis",
+      "checkout_securely": "Sicher bezahlen",
       "free_shipping_away_html": "Noch <strong>{{ amount }}</strong> bis zum <strong>Gratis Versand!</strong>",
       "free_shipping_away_suffix_html": "bis zum <span class='font-bold text-black'>Gratis Versand!</span>",
       "free_shipping_label": "Gratis Versand",
