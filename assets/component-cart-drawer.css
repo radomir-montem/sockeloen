@@ -380,20 +380,29 @@ cart-drawer.is-empty .drawer__header {
   flex-grow: 1;
 }
 
-cart-drawer-items {
+/* Single scroll container: shipping bar + gift widget + items all scroll
+   together, starting directly below the drawer header and ending just
+   above the footer's top border. */
+.drawer__scrollable {
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   flex: 1;
   min-height: 0; /* critical: allow flex child to shrink below content size so overflow:auto works */
-  padding: 0 1.5rem;
 }
 
-cart-drawer-items::-webkit-scrollbar {
+.drawer__scrollable::-webkit-scrollbar {
   width: 3px;
 }
 
-cart-drawer-items::-webkit-scrollbar-thumb {
+.drawer__scrollable::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.15);
   border-radius: 100px;
+}
+
+cart-drawer-items {
+  flex: 1;
+  padding: 0 1.5rem;
 }
 
 @media screen and (max-height: 650px) {
@@ -1364,7 +1373,6 @@ cart-drawer .add-to-cart.submit_button:hover {
   margin: 12px 0 20px;
   padding: 12px;
   background: #fff;
-  border: 1px solid #e5e5e5;
   border-radius: 8px;
 }
 

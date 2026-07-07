@@ -91,6 +91,9 @@
         </button>
       </div>
 
+      {%- comment -%} ===== SCROLLABLE AREA: shipping bar + gift widget + items ===== {%- endcomment -%}
+      <div class="drawer__scrollable">
+
       {%- comment -%} ===== FREE SHIPPING BAR ===== {%- endcomment -%}
       {% if cart != empty %}
         <div class="hide-when-container-is-empty drawer__shipping-bar" x-show="showShippingDetails">
@@ -282,6 +285,8 @@
         </div>
       </cart-drawer-items>
 
+      </div>{%- comment -%} close .drawer__scrollable {%- endcomment -%}
+
       {% if cart != empty %}
 
         {%- comment -%} ===== FOOTER (sticky on mobile) ===== {%- endcomment -%}
@@ -337,7 +342,7 @@
         {%- comment -%} ===== RIGHT COLUMN: CROSS-SELLS (desktop only) ===== {%- endcomment -%}
         <div class="drawer__body-right upsells_container--desktop">
           <div class="upsells_container" style="padding:0;">
-            {% render 'cart-cross-sells' %}
+            {% render 'cart-cross-sells', force_collection: settings.desktop_upsell_collection %}
           </div>
         </div>
 
