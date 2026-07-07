@@ -9,8 +9,8 @@
   if has_free_gift
     assign bar_max = free_gift
   endif
-  assign percent = cart.total_price | times: 1.0 | divided_by: bar_max | times: 100
-  assign shipping_marker_percent = free_shipping | times: 1.0 | divided_by: bar_max | times: 100
+  assign percent = cart.total_price | times: 1.0 | divided_by: bar_max | times: 100 | at_most: 100
+  assign shipping_marker_percent = free_shipping | times: 1.0 | divided_by: bar_max | times: 100 | at_most: 100
   assign shipping_reached = false
   assign gift_reached = false
   if cart.total_price >= free_shipping
@@ -19,6 +19,7 @@
   if has_free_gift and cart.total_price >= free_gift
     assign gift_reached = true
   endif
+  assign gift_remaining = free_gift | minus: cart.total_price | money_without_currency
 %}
 <div class="mb-8 free_shipping_container{% if has_free_gift %} has-free-gift{% endif %}"
   data-total="{{ cart.total_price }}"
@@ -35,18 +36,18 @@
       <span class="free_shipping_text ml-0">{{ 'sections.cart.free_shipping_and_gift_reached' | t }}</span>
     {% elsif shipping_reached and has_free_gift %}
       <span class="free_shipping_prev_text">{{ 'sections.cart.free_gift_away_html' | t: amount: '' | split: '<strong>' | first }}</span>
-      <span data-limit="{{ settings.free_gift_threshold }}" class="free_shipping free_gift_amount font-bold text-black">{{ free_gift | minus: cart.total_price | money_without_currency }}</span>
-      <span class="free_shipping_text">{{ 'sections.cart.free_gift_away_suffix' | t }}</span>
+      <span data-limit="{{ settings.free_gift_threshold }}" class="free_shipping free_gift_amount font-bold text-black">{{ gift_remaining }}</span>
+      <span class="free_shipping_text">{{ 'sections.cart.free_gift_away_suffix_html' | t }}</span>
     {% elsif shipping_reached %}
       <span class="free_shipping_text ml-0">{{ 'sections.cart.free_shipping_reached' | t }}</span>
     {% else %}
       <span class="free_shipping_prev_text">{{ 'sections.cart.free_shipping_away_html' | t: amount: '' | split: '<strong>' | first }}</span>
       <span data-limit="{{ settings.free_shipping }}" class="free_shipping font-bold text-black">{{ free_shipping | minus: cart.total_price | money_without_currency }}</span>
-      <span class="free_shipping_text">{{ 'sections.cart.free_shipping_away_suffix' | t }}</span>
+      <span class="free_shipping_text">{{ 'sections.cart.free_shipping_away_suffix_html' | t }}</span>
     {% endif %}
   </h4>
-  <div class="w-full h-[8px] bg-[#D9D9D9] rounded-[4px] flex relative progress_bar_track">
-    <div class="w-0 h-full !inline-block rounded-[4px] progressive_bar_shipping_price {% if gift_reached %}bg-[#0395F6]{% elsif shipping_reached %}bg-[#0395F6]{% else %}bg-[#F76503]{% endif %}" style="width: {{ percent }}%"></div>
+  <div class="w-full h-[12px] bg-[#D9D9D9] rounded-[6px] flex relative progress_bar_track">
+    <div class="w-0 h-full !inline-block rounded-[6px] progressive_bar_shipping_price {% if gift_reached %}bg-[#0395F6]{% elsif shipping_reached %}bg-[#0395F6]{% else %}bg-[#F76503]{% endif %}" style="width: {{ percent }}%"></div>
     {% if has_free_gift %}
       <span class="progress_bar_milestone progress_bar_milestone--shipping{% if shipping_reached %} is-reached{% endif %}" style="left: {{ shipping_marker_percent }}%;" title="{{ 'sections.cart.free_shipping_reached' | t }}">
         {% render 'icon-truck' %}
@@ -56,7 +57,19 @@
       </span>
     {% endif %}
   </div>
+  {% if has_free_gift %}
+    <div class="progress_bar_labels">
+      <span class="progress_bar_label progress_bar_label--shipping{% if shipping_reached %} is-reached{% endif %}" style="left: {{ shipping_marker_percent }}%;">
+        <span class="progress_bar_label__amount">{{ settings.free_shipping | times: 100 | money }}</span>
+        <span class="progress_bar_label__name">{{ 'sections.cart.free_shipping_label' | t }}</span>
+      </span>
+      <span class="progress_bar_label progress_bar_label--gift{% if gift_reached %} is-reached{% endif %}" style="left: 100%;">
+        <span class="progress_bar_label__amount">{{ settings.free_gift_threshold | times: 100 | money }}</span>
+        <span class="progress_bar_label__name">{{ 'sections.cart.free_gift_label' | t }}</span>
+      </span>
+    </div>
+  {% endif %}
 </div>
 {% if has_free_gift %}
-  {% render 'free-gift-widget', gift_reached: gift_reached %}
+  {% render 'free-gift-widget', gift_reached: gift_reached, gift_remaining: gift_remaining %}
 {% endif %}

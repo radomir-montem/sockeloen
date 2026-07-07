@@ -1225,16 +1225,17 @@ cart-drawer .add-to-cart.submit_button:hover {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid #D9D9D9;
+  background: #D9D9D9;
+  border: 3px solid #F4F4F1;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #9a9a9a;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  color: #fff;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  z-index: 1;
 }
 
 .progress_bar_milestone--gift {
@@ -1242,8 +1243,8 @@ cart-drawer .add-to-cart.submit_button:hover {
 }
 
 .progress_bar_milestone.is-reached {
-  border-color: #0395F6;
-  color: #0395F6;
+  background: #0395F6;
+  color: #fff;
 }
 
 .progress_bar_milestone__icon--reached {
@@ -1258,6 +1259,47 @@ cart-drawer .add-to-cart.submit_button:hover {
   display: block;
 }
 
+/* ---------- Progress bar threshold labels ---------- */
+.progress_bar_labels {
+  position: relative;
+  height: 30px;
+  margin-top: 6px;
+}
+
+.progress_bar_label {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  white-space: nowrap;
+}
+
+.progress_bar_label--gift {
+  transform: translateX(-100%);
+  align-items: flex-end;
+}
+
+.progress_bar_label__amount {
+  font-size: 12px;
+  font-weight: 700;
+  color: #9a9a9a;
+}
+
+.progress_bar_label__name {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #9a9a9a;
+}
+
+.progress_bar_label.is-reached .progress_bar_label__amount,
+.progress_bar_label.is-reached .progress_bar_label__name {
+  color: #0395F6;
+}
+
 /* ---------- Free gift widget ---------- */
 .free_gift_widget {
   margin: 12px 0 20px;
@@ -1265,10 +1307,6 @@ cart-drawer .add-to-cart.submit_button:hover {
   background: #fff;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
-}
-
-.free_gift_widget.hidden {
-  display: none;
 }
 
 .free_gift_widget__title {

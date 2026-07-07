@@ -13,8 +13,14 @@
   endfor
 %}
 {% if gift_products.size > 0 %}
-  <div class="free_gift_widget{% unless gift_reached %} hidden{% endunless %}" data-free-gift-widget>
-    <p class="free_gift_widget__title">{{ 'sections.cart.free_gift_widget_title' | t }}</p>
+  <div class="free_gift_widget" data-free-gift-widget data-gift-reached="{{ gift_reached }}">
+    <p class="free_gift_widget__title">
+      {% if gift_reached %}
+        {{ 'sections.cart.free_gift_widget_title' | t }}
+      {% else %}
+        {{ 'sections.cart.free_gift_add_amount_html' | t: amount: gift_remaining }}
+      {% endif %}
+    </p>
     <p class="free_gift_widget__removed_notice hidden" data-free-gift-removed-notice>{{ 'sections.cart.free_gift_removed_notice' | t }}</p>
     <div class="free_gift_widget__products">
       {% for product in gift_products %}
@@ -44,7 +50,7 @@
             class="free_gift_widget__add-btn"
             data-free-gift-add
             data-variant-id="{{ variant.id }}"
-            {% if variant.available == false %}disabled{% endif %}
+            {% if variant.available == false or gift_reached == false %}disabled{% endif %}
           >
             {% if variant.available == false %}
               {{ 'sections.cart.free_gift_sold_out' | t }}
