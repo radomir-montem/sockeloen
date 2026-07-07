@@ -1,14 +1,16 @@
 {% comment %}
-  Renders up to 2 selectable free-socks products once the second tier
-  threshold is reached. Selection is optional — checking out without
-  picking is always allowed.
+  Renders up to 2 selectable free-socks VARIANTS once the second tier
+  threshold is reached. Tiles are concrete variants (not products): the
+  shopper sees exactly what gets added — variant image and print color —
+  with a single click, no variant picker. If one product has multiple
+  color variants, they can appear as separate tiles.
+  Selection is optional — checking out without picking is always allowed.
   Once a pick is in the cart the widget collapses to a compact
   confirmation row; "Change" expands the picker again (handled in
   free-gift.js via [data-free-gift-expand]).
 {% endcomment %}
 {% liquid
   assign gift_collection = settings.free_gift_collection
-  assign gift_products_count = gift_collection.products.size | at_most: 2
   assign current_gift_variant_ids = ','
   assign chosen_gift_item = blank
   for item in cart.items
@@ -22,7 +24,7 @@
     assign is_collapsed = true
   endif
 %}
-{% if gift_products_count > 0 %}
+{% if gift_collection.products.size > 0 %}
   <div class="free_gift_widget{% if is_collapsed %} free_gift_widget--collapsed{% endif %}" data-free-gift-widget data-gift-reached="{{ gift_reached }}">
     {% if chosen_gift_item != blank %}
       <div class="free_gift_widget__chosen">
@@ -48,46 +50,57 @@
     </p>
     <p class="free_gift_widget__removed_notice hidden" data-free-gift-removed-notice>{{ 'sections.cart.free_gift_removed_notice' | t }}</p>
     <div class="free_gift_widget__products">
-      {% for product in gift_collection.products limit: 2 %}
-        {% liquid
-          assign variant = product.selected_or_first_available_variant
-          assign variant_id_marker = ',' | append: variant.id | append: ','
-          assign is_current_gift = false
-          if current_gift_variant_ids contains variant_id_marker
-            assign is_current_gift = true
-          endif
-        %}
-        <div class="free_gift_widget__product{% if is_current_gift %} is-selected{% endif %}" data-free-gift-product data-variant-id="{{ variant.id }}">
-          <div class="free_gift_widget__image">
-            {% if product.featured_image %}
-              <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="60" height="60">
-            {% endif %}
-          </div>
-          <div class="free_gift_widget__info">
-            <span class="free_gift_widget__name">{{ product.title }}</span>
-            <span class="free_gift_widget__price">
-              <s>{{ variant.price | money_without_currency }}</s>
-              <span class="free_gift_widget__free_tag">{{ 'sections.cart.free_gift_free_tag' | t }}</span>
-            </span>
-          </div>
-          <button
-            type="button"
-            class="free_gift_widget__add-btn{% if variant.available == false %} free_gift_widget__add-btn--sold-out{% elsif gift_reached == false %} free_gift_widget__add-btn--locked{% endif %}"
-            data-free-gift-add
-            data-variant-id="{{ variant.id }}"
-            {% if variant.available == false or gift_reached == false %}disabled{% endif %}
-          >
-            {% if variant.available == false %}
-              {{ 'sections.cart.free_gift_sold_out' | t }}
-            {% elsif is_current_gift %}
-              {{ 'sections.cart.free_gift_added' | t }}
-            {% elsif gift_reached == false %}
-              {{ 'sections.cart.free_gift_add_locked_html' | t: amount: gift_remaining }}
-            {% else %}
-              {{ 'sections.cart.free_gift_add' | t }}
-            {% endif %}
-          </button>
-        </div>
+      {% liquid
+        assign shown_variants = 0
+      %}
+      {% for product in gift_collection.products %}
+        {% if shown_variants >= 2 %}{% break %}{% endif %}
+        {% for variant in product.variants %}
+          {% if shown_variants >= 2 %}{% break %}{% endif %}
+          {% if variant.available %}
+            {% liquid
+              assign shown_variants = shown_variants | plus: 1
+              assign variant_id_marker = ',' | append: variant.id | append: ','
+              assign is_current_gift = false
+              if current_gift_variant_ids contains variant_id_marker
+                assign is_current_gift = true
+              endif
+              assign tile_image = variant.featured_image | default: product.featured_image
+            %}
+            <div class="free_gift_widget__product{% if is_current_gift %} is-selected{% endif %}" data-free-gift-product data-variant-id="{{ variant.id }}">
+              <div class="free_gift_widget__image">
+                {% if tile_image %}
+                  <img src="{{ tile_image | image_url: width: 120 }}" alt="{{ tile_image.alt | escape }}" loading="lazy" width="60" height="60">
+                {% endif %}
+              </div>
+              <div class="free_gift_widget__info">
+                <span class="free_gift_widget__name">{{ product.title }}</span>
+                {% unless product.has_only_default_variant %}
+                  <span class="free_gift_widget__variant">{{ variant.title }}</span>
+                {% endunless %}
+                <span class="free_gift_widget__price">
+                  <s>{{ variant.price | money_without_currency }}</s>
+                  <span class="free_gift_widget__free_tag">{{ 'sections.cart.free_gift_free_tag' | t }}</span>
+                </span>
+              </div>
+              <button
+                type="button"
+                class="free_gift_widget__add-btn{% if gift_reached == false %} free_gift_widget__add-btn--locked{% endif %}"
+                data-free-gift-add
+                data-variant-id="{{ variant.id }}"
+                {% if gift_reached == false %}disabled{% endif %}
+              >
+                {% if is_current_gift %}
+                  {{ 'sections.cart.free_gift_added' | t }}
+                {% elsif gift_reached == false %}
+                  {{ 'sections.cart.free_gift_add_locked_html' | t: amount: gift_remaining }}
+                {% else %}
+                  {{ 'sections.cart.free_gift_add' | t }}
+                {% endif %}
+              </button>
+            </div>
+          {% endif %}
+        {% endfor %}
       {% endfor %}
     </div>
   </div>
