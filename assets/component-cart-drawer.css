@@ -12,7 +12,11 @@
   height: 100%;
   display: flex;
   justify-content: flex-end;
-  background-color: rgba(var(--color-foreground), 0.5);
+  /* Same glass recipe as header.header / hero buttons: frosted, not dark-dimmed. */
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.45), rgba(255,255,255,0.08), transparent);
+  background-color: transparent;
+  backdrop-filter: blur(21px) saturate(180%);
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
   transition: visibility var(--duration-default) ease;
 }
 
