@@ -322,7 +322,7 @@
       "free_gift_label": "Gratisgeschenk",
       "free_shipping_and_gift_reached": "Du hast kostenlosen Versand und ein Gratisgeschenk freigeschaltet!",
       "free_gift_widget_title": "Wähle dein Gratisgeschenk",
-      "free_gift_add_amount_html": "Noch <strong>{{ amount }}</strong> bis zu einem Gratisgeschenk",
+      "free_gift_add_amount_html": "Noch <strong>€{{ amount }}</strong> bis zu einem <strong>Gratisgeschenk</strong>",
       "free_gift_free_tag": "GRATIS",
       "free_gift_add": "Hinzufügen — gratis",
       "free_gift_added": "Hinzugefügt ✓",

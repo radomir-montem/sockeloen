@@ -319,7 +319,7 @@
       "free_gift_label": "Gratis cadeau",
       "free_shipping_and_gift_reached": "Je hebt gratis verzending én een gratis cadeau ontgrendeld!",
       "free_gift_widget_title": "Kies je gratis cadeau",
-      "free_gift_add_amount_html": "Nog <strong>{{ amount }}</strong> voor een gratis cadeau",
+      "free_gift_add_amount_html": "Nog <strong>€{{ amount }}</strong> voor een <strong>gratis cadeau</strong>",
       "free_gift_free_tag": "GRATIS",
       "free_gift_add": "Toevoegen — gratis",
       "free_gift_added": "Toegevoegd ✓",

@@ -320,7 +320,7 @@
       "free_gift_label": "Free Gift",
       "free_shipping_and_gift_reached": "You've unlocked free shipping and a free gift!",
       "free_gift_widget_title": "Pick your free gift",
-      "free_gift_add_amount_html": "Add <strong>{{ amount }}</strong> to get a free gift",
+      "free_gift_add_amount_html": "Add <strong>€{{ amount }}</strong> to get a <strong>free gift</strong>",
       "free_gift_free_tag": "FREE",
       "free_gift_add": "Add — it's free",
       "free_gift_added": "Added ✓",

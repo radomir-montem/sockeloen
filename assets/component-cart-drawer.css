@@ -303,23 +303,22 @@ cart-drawer.is-empty .drawer__header {
 .drawer__shipping-bar .free_shipping_container {
   background-color: #e8f0c4;
   border-radius: 10px;
-  padding: 10px 16px;
+  padding: 14px 16px 16px;
   margin-bottom: 0;
 }
 
 .drawer__shipping-bar .free_shipping_container h4 {
-  margin-bottom: 8px !important;
+  margin-bottom: 10px !important;
   font-size: 13px !important;
   line-height: 1.4 !important;
 }
 
-.drawer__shipping-bar .free_shipping_container .progressive_bar_shipping_price {
-  background-color: #4a7c10 !important;
+.drawer__shipping-bar .free_shipping_container .progress_bar_track {
+  background-color: rgba(74, 124, 16, 0.2);
 }
 
-/* Override progress bar track inside shipping badge */
-.drawer__shipping-bar .free_shipping_container > div:last-child {
-  background-color: rgba(74, 124, 16, 0.2);
+.drawer__shipping-bar .free_shipping_container .progressive_bar_shipping_price {
+  background: linear-gradient(90deg, #6fae1c, #4a7c10);
 }
 
 /* ---------- Cart items ---------- */
@@ -1216,17 +1215,44 @@ cart-drawer .add-to-cart.submit_button:hover {
   background-color: #F76503 !important;
 }
 
-/* ---------- Two-tier progress bar milestones ---------- */
+/* ---------- Two-tier progress bar ---------- */
 .progress_bar_track {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background-color: #D9D9D9;
   overflow: visible;
+}
+
+.progressive_bar_shipping_price {
+  position: relative;
+  height: 100%;
+  width: 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #4593e0, #0374cc);
+  overflow: hidden;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progressive_bar_shipping_price.is-reached {
+  background: linear-gradient(90deg, #45c26b, #1a9e46);
+}
+
+.progressive_bar_shipping_price::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+  border-radius: inherit;
 }
 
 .progress_bar_milestone {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: #D9D9D9;
   border: 3px solid #F4F4F1;
@@ -1243,7 +1269,7 @@ cart-drawer .add-to-cart.submit_button:hover {
 }
 
 .progress_bar_milestone.is-reached {
-  background: #0395F6;
+  background: #1a9e46;
   color: #fff;
 }
 
@@ -1262,8 +1288,8 @@ cart-drawer .add-to-cart.submit_button:hover {
 /* ---------- Progress bar threshold labels ---------- */
 .progress_bar_labels {
   position: relative;
-  height: 30px;
-  margin-top: 6px;
+  height: 28px;
+  margin-top: 14px;
 }
 
 .progress_bar_label {
@@ -1285,19 +1311,19 @@ cart-drawer .add-to-cart.submit_button:hover {
 .progress_bar_label__amount {
   font-size: 12px;
   font-weight: 700;
-  color: #9a9a9a;
+  color: #6b6b6b;
 }
 
 .progress_bar_label__name {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: #9a9a9a;
+  color: #6b6b6b;
 }
 
 .progress_bar_label.is-reached .progress_bar_label__amount,
 .progress_bar_label.is-reached .progress_bar_label__name {
-  color: #0395F6;
+  color: #1a9e46;
 }
 
 /* ---------- Free gift widget ---------- */
@@ -1310,12 +1336,15 @@ cart-drawer .add-to-cart.submit_button:hover {
 }
 
 .free_gift_widget__title {
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: normal;
   margin: 0 0 10px;
   color: #000;
+}
+
+.free_gift_widget__title strong {
+  font-weight: 700;
 }
 
 .free_gift_widget__removed_notice {
