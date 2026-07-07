@@ -1,9 +1,4 @@
 ;(function () {
-  window.__freeGiftDebug = { ran: true, log: [] }
-  function debugLog() {
-    window.__freeGiftDebug.log.push(Array.prototype.slice.call(arguments))
-  }
-
   function getRewardContainer() {
     return document.querySelector('.free_shipping_container[data-has-free-gift="true"]')
   }
@@ -16,25 +11,6 @@
     return !!document.getElementById('main-cart-items')
   }
 
-  function refreshCartDrawer(onDone) {
-    if (isStandaloneCartPage()) {
-      window.location.reload()
-      return
-    }
-
-    const cartDrawer = document.querySelector('cart-drawer')
-    if (!cartDrawer) return
-    const sections = cartDrawer.getSectionsToRender().map(section => section.id)
-
-    fetch(`${window.routes.cart_url}.js?sections=${sections.join(',')}`)
-      .then(res => res.json())
-      .then(response => {
-        cartDrawer.renderContents(response)
-        if (typeof onDone === 'function') onDone()
-      })
-      .catch(err => console.error(err))
-  }
-
   function showRemovedNotice() {
     document.querySelectorAll('[data-free-gift-removed-notice]').forEach(el => {
       el.classList.remove('hidden')
@@ -42,34 +18,42 @@
   }
 
   function autoRemoveIfBelowThreshold() {
-    debugLog('autoRemoveIfBelowThreshold called')
     const container = getRewardContainer()
-    debugLog('container', !!container)
     if (!container) return
 
     const total = parseInt(container.dataset.total, 10)
     const giftLimit = parseInt(container.dataset.giftLimit, 10) * 100
-    debugLog('total', total, 'giftLimit', giftLimit)
     if (isNaN(total) || isNaN(giftLimit) || total >= giftLimit) return
 
     const giftLine = findGiftLine()
-    debugLog('giftLine', !!giftLine)
     if (!giftLine) return
 
     const line = giftLine.dataset.line
     if (!line) return
 
-    debugLog('removing line', line)
+    if (isStandaloneCartPage()) {
+      fetch(`${window.routes.cart_change_url}`, {
+        ...fetchConfig(),
+        body: JSON.stringify({ line, quantity: 0 }),
+      })
+        .then(() => window.location.reload())
+        .catch(err => console.error(err))
+      return
+    }
+
+    const cartDrawer = document.querySelector('cart-drawer')
+    const sections = cartDrawer ? cartDrawer.getSectionsToRender().map(section => section.id) : []
+
     fetch(`${window.routes.cart_change_url}`, {
       ...fetchConfig(),
-      body: JSON.stringify({ line, quantity: 0 }),
+      body: JSON.stringify({ line, quantity: 0, sections: sections.join(',') }),
     })
       .then(res => res.json())
-      .then(() => {
-        debugLog('removed, refreshing')
-        refreshCartDrawer(showRemovedNotice)
+      .then(response => {
+        if (cartDrawer) cartDrawer.renderContents(response)
+        showRemovedNotice()
       })
-      .catch(err => debugLog('ERROR', String(err)))
+      .catch(err => console.error(err))
   }
 
   function addGift(variantId, button) {
@@ -132,13 +116,11 @@
   })
 
   const observerTarget = document.getElementById('CartDrawer')
-  debugLog('observerTarget', !!observerTarget)
   if (observerTarget && window.MutationObserver) {
     let debounceTimer
     const observer = new MutationObserver(() => {
-      debugLog('mutation observed')
       clearTimeout(debounceTimer)
-      debounceTimer = setTimeout(autoRemoveIfBelowThreshold, 200)
+      debounceTimer = setTimeout(autoRemoveIfBelowThreshold, 150)
     })
     observer.observe(observerTarget, { childList: true, subtree: true })
     autoRemoveIfBelowThreshold()
