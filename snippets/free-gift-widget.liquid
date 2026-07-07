@@ -4,7 +4,7 @@
 {% endcomment %}
 {% liquid
   assign gift_collection = settings.free_gift_collection
-  assign gift_products = gift_collection.products | slice: 0, 3
+  assign gift_products_count = gift_collection.products.size | at_most: 3
   assign current_gift_variant_ids = ','
   for item in cart.items
     if item.properties['_free_gift'] == 'true'
@@ -12,8 +12,7 @@
     endif
   endfor
 %}
-<!-- DEBUG: title={{ gift_collection.title }} | products_all={{ gift_collection.products.size }} | products_sliced={{ gift_products.size }} | first_title={{ gift_collection.products.first.title }} | loop=[{% for p in gift_products %}({{ forloop.index }}:{{ p.title }}:{{ p.selected_or_first_available_variant.id }}){% endfor %}] -->
-{% if gift_products.size > 0 %}
+{% if gift_products_count > 0 %}
   <div class="free_gift_widget" data-free-gift-widget data-gift-reached="{{ gift_reached }}">
     <p class="free_gift_widget__title">
       {% if gift_reached %}
@@ -24,7 +23,7 @@
     </p>
     <p class="free_gift_widget__removed_notice hidden" data-free-gift-removed-notice>{{ 'sections.cart.free_gift_removed_notice' | t }}</p>
     <div class="free_gift_widget__products">
-      {% for product in gift_products %}
+      {% for product in gift_collection.products limit: 3 %}
         {% liquid
           assign variant = product.selected_or_first_available_variant
           assign variant_id_marker = ',' | append: variant.id | append: ','
