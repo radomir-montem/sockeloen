@@ -12,7 +12,7 @@
     endif
   endfor
 %}
-<!-- DEBUG: title={{ gift_collection.title }} | products_all={{ gift_collection.products.size }} | products_sliced={{ gift_products.size }} | first_title={{ gift_collection.products.first.title }} -->
+<!-- DEBUG: title={{ gift_collection.title }} | products_all={{ gift_collection.products.size }} | products_sliced={{ gift_products.size }} | first_title={{ gift_collection.products.first.title }} | loop=[{% for p in gift_products %}({{ forloop.index }}:{{ p.title }}:{{ p.selected_or_first_available_variant.id }}){% endfor %}] -->
 {% if gift_products.size > 0 %}
   <div class="free_gift_widget" data-free-gift-widget data-gift-reached="{{ gift_reached }}">
     <p class="free_gift_widget__title">
