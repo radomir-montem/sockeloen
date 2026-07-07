@@ -134,6 +134,7 @@
     "currency_code_enabled": false,
     "free_shipping": 75,
     "free_gift_threshold": 110,
+    "free_gift_collection": "casual-socks",
     "global_upsells": "best-sellers-1",
     "cart_type": "drawer",
     "show_vendor": false,
