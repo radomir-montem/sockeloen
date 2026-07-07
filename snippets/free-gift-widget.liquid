@@ -47,7 +47,7 @@
           </div>
           <button
             type="button"
-            class="free_gift_widget__add-btn"
+            class="free_gift_widget__add-btn{% if variant.available == false %} free_gift_widget__add-btn--sold-out{% elsif gift_reached == false %} free_gift_widget__add-btn--locked{% endif %}"
             data-free-gift-add
             data-variant-id="{{ variant.id }}"
             {% if variant.available == false or gift_reached == false %}disabled{% endif %}
@@ -56,6 +56,8 @@
               {{ 'sections.cart.free_gift_sold_out' | t }}
             {% elsif is_current_gift %}
               {{ 'sections.cart.free_gift_added' | t }}
+            {% elsif gift_reached == false %}
+              {{ 'sections.cart.free_gift_add_locked_html' | t: amount: gift_remaining }}
             {% else %}
               {{ 'sections.cart.free_gift_add' | t }}
             {% endif %}
