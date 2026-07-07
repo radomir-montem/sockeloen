@@ -1226,52 +1226,11 @@ cart-drawer .add-to-cart.submit_button:hover {
 }
 
 .progressive_bar_shipping_price {
-  position: relative;
   height: 100%;
   width: 0;
   border-radius: 4px;
-  background: linear-gradient(90deg, #4593e0, #0374cc);
-  overflow: hidden;
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.progressive_bar_shipping_price.is-reached {
-  background: linear-gradient(90deg, #45c26b, #1a9e46);
-}
-
-.progressive_bar_shipping_price::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
-  border-radius: inherit;
-}
-
-.progress_bar_current {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  transform: translateX(-50%);
-  margin-bottom: 10px;
-  background: #1a1a1a;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 5px;
-  white-space: nowrap;
-  z-index: 2;
-  transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.progress_bar_current::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 4px solid transparent;
-  border-top-color: #1a1a1a;
+  background-color: #1a9e46;
+  transition: width 0.4s ease;
 }
 
 .progress_bar_milestone {
@@ -1286,7 +1245,7 @@ cart-drawer .add-to-cart.submit_button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #9a9a9a;
   transition: background-color 0.2s ease, color 0.2s ease;
   z-index: 1;
 }
@@ -1298,18 +1257,6 @@ cart-drawer .add-to-cart.submit_button:hover {
 .progress_bar_milestone.is-reached {
   background: #1a9e46;
   color: #fff;
-}
-
-.progress_bar_milestone__icon--reached {
-  display: none;
-}
-
-.progress_bar_milestone.is-reached .progress_bar_milestone__icon--default {
-  display: none;
-}
-
-.progress_bar_milestone.is-reached .progress_bar_milestone__icon--reached {
-  display: block;
 }
 
 /* ---------- Progress bar threshold labels ---------- */

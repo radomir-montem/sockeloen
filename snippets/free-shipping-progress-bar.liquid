@@ -58,15 +58,12 @@
   </h4>
   <div class="progress_bar_track">
     <div class="progressive_bar_shipping_price{% if shipping_reached %} is-reached{% endif %}" style="width: {{ percent }}%"></div>
-    {% if cart.total_price > 0 %}
-      <span class="progress_bar_current" style="left: clamp(20px, {{ percent }}%, calc(100% - 20px));">€{{ cart.total_price | money_without_currency }}</span>
-    {% endif %}
     {% if has_free_gift %}
       <span class="progress_bar_milestone progress_bar_milestone--shipping{% if shipping_reached %} is-reached{% endif %}" style="left: {{ shipping_marker_percent }}%;" title="{{ 'sections.cart.free_shipping_reached' | t }}">
-        {% render 'icon-milestone-arrow' %}
+        {% render 'icon-milestone-check' %}
       </span>
       <span class="progress_bar_milestone progress_bar_milestone--gift{% if gift_reached %} is-reached{% endif %}" style="left: 100%;" title="{{ 'sections.cart.free_gift_reached' | t }}">
-        {% render 'icon-milestone-arrow' %}
+        {% render 'icon-milestone-check' %}
       </span>
     {% endif %}
   </div>
