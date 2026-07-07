@@ -1,22 +1,45 @@
 {% liquid
   assign free_shipping = settings.free_shipping | times: 100
-  assign free_gift = settings.free_gift_threshold | times: 100
-  assign has_free_gift = false
-  if free_gift > 0 and settings.free_gift_collection != blank
-    assign has_free_gift = true
+  assign second_tier_type = settings.second_tier_type | default: 'gift'
+  assign second_tier = settings.second_tier_threshold | times: 100
+
+  assign has_second_tier = false
+  if second_tier_type == 'express_shipping' and settings.second_tier_threshold > 0
+    assign has_second_tier = true
+  elsif second_tier_type == 'gift' and settings.second_tier_threshold > 0 and settings.free_gift_collection != blank
+    assign has_second_tier = true
   endif
+
+  comment
+    Translation keys differ depending on whether the second tier is a
+    Free Gift or Free Express Shipping, so the store can offer either
+    reward per market without duplicating this whole template.
+  endcomment
+  assign second_tier_reached_key = 'sections.cart.free_gift_reached'
+  assign second_tier_away_prefix_key = 'sections.cart.free_gift_away_html'
+  assign second_tier_away_suffix_key = 'sections.cart.free_gift_away_suffix_html'
+  assign second_tier_label_key = 'sections.cart.free_gift_label'
+  assign both_reached_key = 'sections.cart.free_shipping_and_gift_reached'
+  if second_tier_type == 'express_shipping'
+    assign second_tier_reached_key = 'sections.cart.free_express_shipping_reached'
+    assign second_tier_away_prefix_key = 'sections.cart.free_express_shipping_away_html'
+    assign second_tier_away_suffix_key = 'sections.cart.free_express_shipping_away_suffix_html'
+    assign second_tier_label_key = 'sections.cart.free_express_shipping_label'
+    assign both_reached_key = 'sections.cart.free_shipping_and_express_reached'
+  endif
+
   assign bar_max = free_shipping
-  if has_free_gift
-    assign bar_max = free_gift
+  if has_second_tier
+    assign bar_max = second_tier
   endif
 
   comment
     Two-segment scale: €0-bar_baseline maps into a small "low_zone" sliver of
     the bar (so low cart values are still visible), and bar_baseline-bar_max
     maps into the remaining width up to bar_top_percent, keeping visual focus
-    on the zone where the average order value (~€68) actually sits.
-    The last overshoot_percent of the bar is left as headroom past the gift
-    threshold, so the bar visibly has "more room to grow" beyond €110.
+    on the zone where the average order value actually sits.
+    The last overshoot_percent of the bar is left as headroom past the second
+    tier threshold, so the bar visibly has "more room to grow" beyond it.
   endcomment
   assign bar_baseline = 5000
   assign bar_range = bar_max | minus: bar_baseline
@@ -41,40 +64,40 @@
   assign shipping_marker_percent = shipping_marker_percent | at_least: 0 | at_most: 100
 
   assign shipping_reached = false
-  assign gift_reached = false
+  assign second_tier_reached = false
   if cart.total_price >= free_shipping
     assign shipping_reached = true
   endif
-  if has_free_gift and cart.total_price >= free_gift
-    assign gift_reached = true
+  if has_second_tier and cart.total_price >= second_tier
+    assign second_tier_reached = true
   endif
-  assign gift_remaining = free_gift | minus: cart.total_price | money_without_currency
+  assign second_tier_remaining = second_tier | minus: cart.total_price | money_without_currency
 
   assign reward_state = 'none'
   if shipping_reached
     assign reward_state = 'shipping'
   endif
-  if gift_reached
+  if second_tier_reached
     assign reward_state = 'gift'
   endif
 %}
-<div class="mb-8 free_shipping_container reward-state--{{ reward_state }}{% if has_free_gift %} has-free-gift{% endif %}"
+<div class="mb-8 free_shipping_container reward-state--{{ reward_state }}{% if has_second_tier %} has-free-gift{% endif %}"
   data-total="{{ cart.total_price }}"
   data-shipping-limit="{{ settings.free_shipping }}"
-  data-gift-limit="{{ settings.free_gift_threshold }}"
-  data-has-free-gift="{{ has_free_gift }}"
+  data-gift-limit="{{ settings.second_tier_threshold }}"
+  data-has-free-gift="{{ has_second_tier }}"
   data-reached-text="{{ 'sections.cart.free_shipping_reached' | t | escape }}"
   data-away-text="{{ 'sections.cart.free_shipping_away_html' | t: amount: '__AMOUNT__' | escape }}"
-  data-gift-reached-text="{{ 'sections.cart.free_gift_reached' | t | escape }}"
-  data-gift-away-text="{{ 'sections.cart.free_gift_away_html' | t: amount: '__AMOUNT__' | escape }}"
-  data-both-reached-text="{{ 'sections.cart.free_shipping_and_gift_reached' | t | escape }}">
+  data-gift-reached-text="{{ second_tier_reached_key | t | escape }}"
+  data-gift-away-text="{{ second_tier_away_prefix_key | t: amount: '__AMOUNT__' | escape }}"
+  data-both-reached-text="{{ both_reached_key | t | escape }}">
   <h4 class="progress_bar_headline text-[14px] leading-6 tracking-wider font-light text-base-text mb-3 {{ classes }}">
-    {% if gift_reached %}
-      <span class="free_shipping_text ml-0">{{ 'sections.cart.free_shipping_and_gift_reached' | t }}</span>
-    {% elsif shipping_reached and has_free_gift %}
-      <span class="free_shipping_prev_text">{{ 'sections.cart.free_gift_away_html' | t: amount: '' | split: '<strong>' | first }}</span>
-      <span data-limit="{{ settings.free_gift_threshold }}" class="free_shipping free_gift_amount font-bold text-black">€{{ gift_remaining }}</span>
-      <span class="free_shipping_text">{{ 'sections.cart.free_gift_away_suffix_html' | t }}</span>
+    {% if second_tier_reached %}
+      <span class="free_shipping_text ml-0">{{ both_reached_key | t }}</span>
+    {% elsif shipping_reached and has_second_tier %}
+      <span class="free_shipping_prev_text">{{ second_tier_away_prefix_key | t: amount: '' | split: '<strong>' | first }}</span>
+      <span data-limit="{{ settings.second_tier_threshold }}" class="free_shipping free_gift_amount font-bold text-black">€{{ second_tier_remaining }}</span>
+      <span class="free_shipping_text">{{ second_tier_away_suffix_key | t }}</span>
     {% elsif shipping_reached %}
       <span class="free_shipping_text ml-0">✓ {{ 'sections.cart.free_shipping_reached' | t }}</span>
     {% else %}
@@ -85,32 +108,32 @@
   </h4>
   <div class="progress_bar_track">
     <div class="progressive_bar_shipping_price{% if shipping_reached %} is-reached{% endif %}" style="width: {{ percent }}%"></div>
-    {% if has_free_gift %}
+    {% if has_second_tier %}
       <span class="progress_bar_milestone progress_bar_milestone--shipping{% if shipping_reached %} is-reached{% endif %}" style="left: {{ shipping_marker_percent }}%;" title="{{ 'sections.cart.free_shipping_reached' | t }}">
         <span class="progress_bar_milestone__badge">
           {% render 'icon-milestone-check' %}
         </span>
       </span>
-      <span class="progress_bar_milestone progress_bar_milestone--gift{% if gift_reached %} is-reached{% endif %}" style="left: {{ bar_top_percent }}%;" title="{{ 'sections.cart.free_gift_reached' | t }}">
+      <span class="progress_bar_milestone progress_bar_milestone--gift{% if second_tier_reached %} is-reached{% endif %}" style="left: {{ bar_top_percent }}%;" title="{{ second_tier_reached_key | t }}">
         <span class="progress_bar_milestone__badge">
           {% render 'icon-milestone-check' %}
         </span>
       </span>
     {% endif %}
   </div>
-  {% if has_free_gift %}
+  {% if has_second_tier %}
     <div class="progress_bar_labels">
       <span class="progress_bar_label progress_bar_label--shipping{% if shipping_reached %} is-reached{% endif %}" style="left: {{ shipping_marker_percent }}%;">
         <span class="progress_bar_label__amount">€{{ settings.free_shipping | times: 100 | money_without_currency }}</span>
         <span class="progress_bar_label__name">{{ 'sections.cart.free_shipping_label' | t }}</span>
       </span>
-      <span class="progress_bar_label progress_bar_label--gift{% if gift_reached %} is-reached{% endif %}" style="left: {{ bar_top_percent }}%;">
-        <span class="progress_bar_label__amount">€{{ settings.free_gift_threshold | times: 100 | money_without_currency }}</span>
-        <span class="progress_bar_label__name">{{ 'sections.cart.free_gift_label' | t }}</span>
+      <span class="progress_bar_label progress_bar_label--gift{% if second_tier_reached %} is-reached{% endif %}" style="left: {{ bar_top_percent }}%;">
+        <span class="progress_bar_label__amount">€{{ settings.second_tier_threshold | times: 100 | money_without_currency }}</span>
+        <span class="progress_bar_label__name">{{ second_tier_label_key | t }}</span>
       </span>
     </div>
   {% endif %}
 </div>
-{% if has_free_gift %}
-  {% render 'free-gift-widget', gift_reached: gift_reached, gift_remaining: gift_remaining %}
+{% if has_second_tier and second_tier_type == 'gift' %}
+  {% render 'free-gift-widget', gift_reached: second_tier_reached, gift_remaining: second_tier_remaining %}
 {% endif %}

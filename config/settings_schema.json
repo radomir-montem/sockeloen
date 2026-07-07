@@ -1490,23 +1490,39 @@
         "type": "number",
         "id": "free_shipping",
         "label": "Free Shipping",
+        "info": "Should match the free shipping threshold configured in Settings > Shipping and delivery for this market — this value is only used to render the progress bar, it does not control actual shipping rates. This setting can be set to a different value per market via the market switcher at the top of the theme editor.",
         "default": 60
       },
       {
         "type": "header",
-        "content": "Free Gift"
+        "content": "Second Reward Tier"
+      },
+      {
+        "type": "paragraph",
+        "content": "The second tier can be a Free Gift or Free Express Shipping, and can be configured differently per market via the market switcher at the top of the theme editor."
+      },
+      {
+        "type": "select",
+        "id": "second_tier_type",
+        "label": "Second Tier Type",
+        "options": [
+          { "value": "none", "label": "None (single free shipping tier only)" },
+          { "value": "gift", "label": "Free Gift (customer picks a product)" },
+          { "value": "express_shipping", "label": "Free Express Shipping" }
+        ],
+        "default": "gift"
       },
       {
         "type": "number",
-        "id": "free_gift_threshold",
-        "label": "Free Gift Threshold",
+        "id": "second_tier_threshold",
+        "label": "Second Tier Threshold",
         "default": 110
       },
       {
         "type": "collection",
         "id": "free_gift_collection",
         "label": "Free Gift Collection",
-        "info": "Customers choose one free product from this collection once the threshold is reached. Only the first 3 products in the collection are shown."
+        "info": "Only used when Second Tier Type is 'Free Gift'. Customers choose one free product from this collection once the threshold is reached. Only the first 3 products in the collection are shown."
       },
       {
         "type": "number",
