@@ -11,5 +11,8 @@
   "context": {
     "market": "north-america"
   },
-  "current": {}
+  "current": {
+    "second_tier_type": "express_shipping",
+    "second_tier_threshold": 150
+  }
 }
