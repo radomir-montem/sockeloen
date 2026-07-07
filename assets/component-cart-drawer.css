@@ -344,6 +344,14 @@ cart-drawer.is-empty .drawer__header {
   overflow: hidden;
 }
 
+/* <strong> inside the font-light (300) headline only computes to 400 via the
+   browser's relative "bolder" — match the 700 weight + black used by the
+   font-bold amount spans in the not-yet-unlocked states. */
+.progress_bar_headline strong {
+  font-weight: 700;
+  color: #000;
+}
+
 @media screen and (max-width: 480px) {
   .reward-state--gift .progress_bar_headline {
     font-size: 12px !important;
