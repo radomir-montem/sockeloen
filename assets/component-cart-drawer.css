@@ -321,6 +321,66 @@ cart-drawer.is-empty .drawer__header {
   background: linear-gradient(90deg, #6fae1c, #4a7c10);
 }
 
+/* ---------- Reward states: extra visual confirmation per threshold reached ---------- */
+.free_shipping_container {
+  transition: box-shadow 0.4s ease, background-color 0.4s ease;
+}
+
+.free_shipping_container.reward-state--shipping,
+.free_shipping_container.reward-state--gift {
+  box-shadow: 0 0 0 1px rgba(26, 158, 70, 0.25), 0 6px 16px rgba(26, 158, 70, 0.18);
+}
+
+.free_shipping_container.reward-state--gift {
+  background-color: #d9f0c9;
+  box-shadow: 0 0 0 1px rgba(26, 158, 70, 0.35), 0 6px 18px rgba(26, 158, 70, 0.28);
+  animation: tile-celebrate 0.6s ease-out 1;
+}
+
+@keyframes tile-celebrate {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.015);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.progress_bar_headline,
+.progress_bar_headline * {
+  transition: color 0.3s ease;
+}
+
+.reward-state--shipping .progress_bar_headline,
+.reward-state--shipping .progress_bar_headline * {
+  color: #1a7a37 !important;
+}
+
+.reward-state--gift .progress_bar_headline,
+.reward-state--gift .progress_bar_headline * {
+  color: #146b2e !important;
+  font-weight: 600;
+}
+
+.progress_bar_label.is-reached .progress_bar_label__amount,
+.progress_bar_label.is-reached .progress_bar_label__name {
+  animation: label-pop 0.4s ease-out 1;
+}
+
+@keyframes label-pop {
+  0% {
+    transform: translateY(2px);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* ---------- Cart items ---------- */
 .cart-drawer__form {
   flex-grow: 1;
@@ -1232,13 +1292,25 @@ cart-drawer .add-to-cart.submit_button:hover {
   width: 0;
   border-radius: 4px;
   background-color: #1a9e46;
-  transition: width 0.4s ease;
+  transition: width 0.4s ease, box-shadow 0.3s ease;
+}
+
+.progressive_bar_shipping_price.is-reached {
+  box-shadow: 0 0 8px 1px rgba(26, 158, 70, 0.55);
 }
 
 .progress_bar_milestone {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.progress_bar_milestone--gift {
+  transform: translate(-100%, -50%);
+}
+
+.progress_bar_milestone__badge {
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -1249,16 +1321,36 @@ cart-drawer .add-to-cart.submit_button:hover {
   justify-content: center;
   color: #9a9a9a;
   transition: background-color 0.2s ease, color 0.2s ease;
-  z-index: 1;
 }
 
-.progress_bar_milestone--gift {
-  transform: translate(-100%, -50%);
-}
-
-.progress_bar_milestone.is-reached {
+.progress_bar_milestone.is-reached .progress_bar_milestone__badge {
   background: #1a9e46;
   color: #fff;
+  animation: milestone-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), milestone-glow 1.1s ease-out 1;
+}
+
+@keyframes milestone-pop {
+  0% {
+    transform: scale(0.5);
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes milestone-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(26, 158, 70, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(26, 158, 70, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(26, 158, 70, 0);
+  }
 }
 
 /* ---------- Progress bar threshold labels ---------- */
