@@ -326,12 +326,8 @@ cart-drawer.is-empty .drawer__header {
   transition: background-color 0.4s ease;
 }
 
-.free_shipping_container.reward-state--shipping {
-  background-color: #e8f0c4;
-}
-
 .free_shipping_container.reward-state--gift {
-  background-color: #d9f0c9;
+  background-color: #e8f0c4;
   animation: tile-celebrate 0.6s ease-out 1;
 }
 
@@ -345,22 +341,6 @@ cart-drawer.is-empty .drawer__header {
   100% {
     transform: scale(1);
   }
-}
-
-.progress_bar_headline,
-.progress_bar_headline * {
-  transition: color 0.3s ease;
-}
-
-.reward-state--shipping .progress_bar_headline,
-.reward-state--shipping .progress_bar_headline * {
-  color: #1a7a37 !important;
-}
-
-.reward-state--gift .progress_bar_headline,
-.reward-state--gift .progress_bar_headline * {
-  color: #146b2e !important;
-  font-weight: 600;
 }
 
 .progress_bar_label.is-reached .progress_bar_label__amount,
@@ -1369,11 +1349,6 @@ cart-drawer .add-to-cart.submit_button:hover {
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: #6b6b6b;
-}
-
-.progress_bar_label.is-reached .progress_bar_label__amount,
-.progress_bar_label.is-reached .progress_bar_label__name {
-  color: #1a9e46;
 }
 
 /* ---------- Free gift widget ---------- */
