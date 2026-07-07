@@ -1493,6 +1493,22 @@
         "default": 60
       },
       {
+        "type": "header",
+        "content": "Free Gift"
+      },
+      {
+        "type": "number",
+        "id": "free_gift_threshold",
+        "label": "Free Gift Threshold",
+        "default": 110
+      },
+      {
+        "type": "collection",
+        "id": "free_gift_collection",
+        "label": "Free Gift Collection",
+        "info": "Customers choose one free product from this collection once the threshold is reached. Only the first 3 products in the collection are shown."
+      },
+      {
         "type": "number",
         "id": "shipping_netherlands_belgium",
         "label": "Shipping value (Netherlands + Belgium)",

@@ -133,6 +133,7 @@
     "favicon": "shopify://shop_images/sockeloen-bike-socks-fietssokken.png",
     "currency_code_enabled": false,
     "free_shipping": 75,
+    "free_gift_threshold": 110,
     "global_upsells": "best-sellers-1",
     "cart_type": "drawer",
     "show_vendor": false,
