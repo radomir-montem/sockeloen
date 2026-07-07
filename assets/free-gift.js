@@ -1,4 +1,9 @@
 ;(function () {
+  window.__freeGiftDebug = { ran: true, log: [] }
+  function debugLog() {
+    window.__freeGiftDebug.log.push(Array.prototype.slice.call(arguments))
+  }
+
   function getRewardContainer() {
     return document.querySelector('.free_shipping_container[data-has-free-gift="true"]')
   }
@@ -37,34 +42,34 @@
   }
 
   function autoRemoveIfBelowThreshold() {
-    console.log('[free-gift-debug] autoRemoveIfBelowThreshold called')
+    debugLog('autoRemoveIfBelowThreshold called')
     const container = getRewardContainer()
-    console.log('[free-gift-debug] container', container)
+    debugLog('container', !!container)
     if (!container) return
 
     const total = parseInt(container.dataset.total, 10)
     const giftLimit = parseInt(container.dataset.giftLimit, 10) * 100
-    console.log('[free-gift-debug] total', total, 'giftLimit', giftLimit)
+    debugLog('total', total, 'giftLimit', giftLimit)
     if (isNaN(total) || isNaN(giftLimit) || total >= giftLimit) return
 
     const giftLine = findGiftLine()
-    console.log('[free-gift-debug] giftLine', giftLine)
+    debugLog('giftLine', !!giftLine)
     if (!giftLine) return
 
     const line = giftLine.dataset.line
     if (!line) return
 
-    console.log('[free-gift-debug] removing line', line)
+    debugLog('removing line', line)
     fetch(`${window.routes.cart_change_url}`, {
       ...fetchConfig(),
       body: JSON.stringify({ line, quantity: 0 }),
     })
       .then(res => res.json())
       .then(() => {
-        console.log('[free-gift-debug] removed, refreshing')
+        debugLog('removed, refreshing')
         refreshCartDrawer(showRemovedNotice)
       })
-      .catch(err => console.error('[free-gift-debug] error', err))
+      .catch(err => debugLog('ERROR', String(err)))
   }
 
   function addGift(variantId, button) {
@@ -127,11 +132,11 @@
   })
 
   const observerTarget = document.getElementById('CartDrawer')
-  console.log('[free-gift-debug] observerTarget', observerTarget)
+  debugLog('observerTarget', !!observerTarget)
   if (observerTarget && window.MutationObserver) {
     let debounceTimer
     const observer = new MutationObserver(() => {
-      console.log('[free-gift-debug] mutation observed')
+      debugLog('mutation observed')
       clearTimeout(debounceTimer)
       debounceTimer = setTimeout(autoRemoveIfBelowThreshold, 200)
     })
