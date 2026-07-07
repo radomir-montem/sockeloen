@@ -1,19 +1,44 @@
 {% comment %}
-  Renders up to 3 selectable free-gift products once settings.free_gift_threshold is reached.
-  Selection is optional — checking out without picking a gift is always allowed.
+  Renders up to 2 selectable free-socks products once the second tier
+  threshold is reached. Selection is optional — checking out without
+  picking is always allowed.
+  Once a pick is in the cart the widget collapses to a compact
+  confirmation row; "Change" expands the picker again (handled in
+  free-gift.js via [data-free-gift-expand]).
 {% endcomment %}
 {% liquid
   assign gift_collection = settings.free_gift_collection
-  assign gift_products_count = gift_collection.products.size | at_most: 3
+  assign gift_products_count = gift_collection.products.size | at_most: 2
   assign current_gift_variant_ids = ','
+  assign chosen_gift_item = blank
   for item in cart.items
     if item.properties['_free_gift'] == 'true'
       assign current_gift_variant_ids = current_gift_variant_ids | append: item.variant_id | append: ','
+      assign chosen_gift_item = item
     endif
   endfor
+  assign is_collapsed = false
+  if gift_reached and chosen_gift_item != blank
+    assign is_collapsed = true
+  endif
 %}
 {% if gift_products_count > 0 %}
-  <div class="free_gift_widget" data-free-gift-widget data-gift-reached="{{ gift_reached }}">
+  <div class="free_gift_widget{% if is_collapsed %} free_gift_widget--collapsed{% endif %}" data-free-gift-widget data-gift-reached="{{ gift_reached }}">
+    {% if chosen_gift_item != blank %}
+      <div class="free_gift_widget__chosen">
+        <div class="free_gift_widget__chosen-image">
+          {% if chosen_gift_item.image %}
+            <img src="{{ chosen_gift_item.image | image_url: width: 72 }}" alt="{{ chosen_gift_item.image.alt | escape }}" loading="lazy" width="36" height="36">
+          {% endif %}
+        </div>
+        <span class="free_gift_widget__chosen-text">
+          {{ 'sections.cart.free_gift_chosen' | t }} <strong>{{ chosen_gift_item.product.title }}</strong> <span class="free_gift_widget__chosen-check">&#10003;</span>
+        </span>
+        <button type="button" class="free_gift_widget__change-btn" data-free-gift-expand>
+          {{ 'sections.cart.free_gift_change' | t }}
+        </button>
+      </div>
+    {% endif %}
     <p class="free_gift_widget__title">
       {% if gift_reached %}
         {{ 'sections.cart.free_gift_widget_title' | t }}
@@ -23,7 +48,7 @@
     </p>
     <p class="free_gift_widget__removed_notice hidden" data-free-gift-removed-notice>{{ 'sections.cart.free_gift_removed_notice' | t }}</p>
     <div class="free_gift_widget__products">
-      {% for product in gift_collection.products limit: 3 %}
+      {% for product in gift_collection.products limit: 2 %}
         {% liquid
           assign variant = product.selected_or_first_available_variant
           assign variant_id_marker = ',' | append: variant.id | append: ','

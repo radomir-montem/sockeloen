@@ -109,6 +109,14 @@
   }
 
   document.addEventListener('click', event => {
+    const expandBtn = event.target.closest('[data-free-gift-expand]')
+    if (expandBtn) {
+      event.preventDefault()
+      const widget = expandBtn.closest('[data-free-gift-widget]')
+      if (widget) widget.classList.remove('free_gift_widget--collapsed')
+      return
+    }
+
     const addBtn = event.target.closest('[data-free-gift-add]')
     if (!addBtn || addBtn.disabled) return
     event.preventDefault()

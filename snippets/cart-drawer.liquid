@@ -53,6 +53,10 @@
                 </svg>
               </button>
             </div>
+            {%- comment -%} Progress bar on empty cart: motivates from the first interaction {%- endcomment -%}
+            <div class="drawer__shipping-bar">
+              {% render 'free-shipping-progress-bar', hide_gift_widget: true %}
+            </div>
             <div class="cart-drawer__empty-body">
               <p class="cart-drawer__empty-text">{{ 'sections.cart.empty' | t }}</p>
               <button type="button" class="cart-drawer__checkout-btn" onclick="this.closest('cart-drawer').close()">

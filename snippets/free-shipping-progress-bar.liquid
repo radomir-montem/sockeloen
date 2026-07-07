@@ -19,13 +19,13 @@
   assign second_tier_away_prefix_key = 'sections.cart.free_gift_away_html'
   assign second_tier_away_suffix_key = 'sections.cart.free_gift_away_suffix_html'
   assign second_tier_label_key = 'sections.cart.free_gift_label'
-  assign both_reached_key = 'sections.cart.free_shipping_and_gift_reached'
+  assign both_reached_key = 'sections.cart.free_shipping_and_gift_reached_html'
   if second_tier_type == 'express_shipping'
     assign second_tier_reached_key = 'sections.cart.free_express_shipping_reached'
     assign second_tier_away_prefix_key = 'sections.cart.free_express_shipping_away_html'
     assign second_tier_away_suffix_key = 'sections.cart.free_express_shipping_away_suffix_html'
     assign second_tier_label_key = 'sections.cart.free_express_shipping_label'
-    assign both_reached_key = 'sections.cart.free_shipping_and_express_reached'
+    assign both_reached_key = 'sections.cart.free_shipping_and_express_reached_html'
   endif
 
   assign bar_max = free_shipping
@@ -83,14 +83,8 @@
 %}
 <div class="mb-8 free_shipping_container reward-state--{{ reward_state }}{% if has_second_tier %} has-free-gift{% endif %}"
   data-total="{{ cart.total_price }}"
-  data-shipping-limit="{{ settings.free_shipping }}"
   data-gift-limit="{{ settings.second_tier_threshold }}"
-  data-has-free-gift="{{ has_second_tier }}"
-  data-reached-text="{{ 'sections.cart.free_shipping_reached' | t | escape }}"
-  data-away-text="{{ 'sections.cart.free_shipping_away_html' | t: amount: '__AMOUNT__' | escape }}"
-  data-gift-reached-text="{{ second_tier_reached_key | t | escape }}"
-  data-gift-away-text="{{ second_tier_away_prefix_key | t: amount: '__AMOUNT__' | escape }}"
-  data-both-reached-text="{{ both_reached_key | t | escape }}">
+  data-has-free-gift="{{ has_second_tier }}">
   <h4 class="progress_bar_headline text-[14px] leading-6 tracking-wider font-light text-base-text mb-3 {{ classes }}">
     {% if second_tier_reached %}
       <span class="free_shipping_text ml-0">{{ both_reached_key | t }}</span>
@@ -134,6 +128,6 @@
     </div>
   {% endif %}
 </div>
-{% if has_second_tier and second_tier_type == 'gift' %}
+{% if has_second_tier and second_tier_type == 'gift' and hide_gift_widget != true %}
   {% render 'free-gift-widget', gift_reached: second_tier_reached, gift_remaining: second_tier_remaining %}
 {% endif %}

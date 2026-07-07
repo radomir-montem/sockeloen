@@ -1522,7 +1522,7 @@
         "type": "collection",
         "id": "free_gift_collection",
         "label": "Free Gift Collection",
-        "info": "Only used when Second Tier Type is 'Free Gift'. Customers choose one free product from this collection once the threshold is reached. Only the first 3 products in the collection are shown."
+        "info": "Only used when Second Tier Type is 'Free Gift'. Customers choose one free product from this collection once the threshold is reached. Only the first 2 products in the collection are shown."
       },
       {
         "type": "number",

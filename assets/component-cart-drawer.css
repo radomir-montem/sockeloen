@@ -335,6 +335,21 @@ cart-drawer.is-empty .drawer__header {
   animation: tile-celebrate 0.6s ease-out 1;
 }
 
+/* The "everything unlocked" headline must stay on one line, also on mobile.
+   Translations are kept short; letter-spacing is tightened and the font
+   steps down slightly on narrow screens as a safety net. */
+.reward-state--gift .progress_bar_headline {
+  white-space: nowrap;
+  letter-spacing: normal !important;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 480px) {
+  .reward-state--gift .progress_bar_headline {
+    font-size: 12px !important;
+  }
+}
+
 @keyframes tile-celebrate {
   0% {
     transform: scale(1);
@@ -1297,9 +1312,8 @@ cart-drawer .add-to-cart.submit_button:hover {
   z-index: 1;
 }
 
-.progress_bar_milestone--gift {
-  transform: translate(-100%, -50%);
-}
+/* Gift/second-tier milestone: centered on its position (same as shipping),
+   so the label below can center-align exactly under the checkmark. */
 
 .progress_bar_milestone__badge {
   width: 22px;
@@ -1350,10 +1364,6 @@ cart-drawer .add-to-cart.submit_button:hover {
   white-space: nowrap;
 }
 
-.progress_bar_label--gift {
-  transform: translateX(-100%);
-  align-items: flex-end;
-}
 
 .progress_bar_label__amount {
   font-size: 12px;
@@ -1373,6 +1383,77 @@ cart-drawer .add-to-cart.submit_button:hover {
   padding: 12px;
   background: #fff;
   border-radius: 8px;
+}
+
+/* Collapsed state: once socks are chosen, show a compact confirmation row
+   instead of the full picker; "Change" expands the picker again. */
+.free_gift_widget__chosen {
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.free_gift_widget--collapsed .free_gift_widget__chosen {
+  display: flex;
+}
+
+.free_gift_widget--collapsed .free_gift_widget__title,
+.free_gift_widget--collapsed .free_gift_widget__products {
+  display: none;
+}
+
+.free_gift_widget__chosen-image {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f4f4f1;
+}
+
+.free_gift_widget__chosen-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.free_gift_widget__chosen-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 300;
+  color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.free_gift_widget__chosen-text strong {
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.free_gift_widget__chosen-check {
+  color: #1a9e46;
+  font-weight: 700;
+}
+
+.free_gift_widget__change-btn {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #0395F6;
+  background: #fff;
+  color: #0395F6;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.free_gift_widget__change-btn:hover {
+  background: #0395F6;
+  color: #fff;
 }
 
 .free_gift_widget__title {
