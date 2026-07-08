@@ -8,21 +8,11 @@
  * ------------------------------------------------------------
  */
 {
-  "markets": {
-    "nl": {
-      "parent": "@default"
-    },
-    "eu": {
-      "parent": "@default"
-    },
-    "international": {
-      "parent": "@default"
-    },
-    "deliver-duties-unpaid-358421ce-6a19-4c25-b50c-82167cd6e81e": {
-      "parent": "international"
-    },
-    "north-america": {
-      "parent": "@default"
-    }
+  "context": {
+    "market": "north-america"
+  },
+  "current": {
+    "second_tier_type": "express_shipping",
+    "second_tier_threshold": 150
   }
 }
