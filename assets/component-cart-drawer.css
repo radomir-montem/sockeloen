@@ -12,7 +12,11 @@
   height: 100%;
   display: flex;
   justify-content: flex-end;
-  background-color: rgba(var(--color-foreground), 0.5);
+  /* Same glass recipe as header.header / hero buttons: frosted, not dark-dimmed. */
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.45), rgba(255,255,255,0.08), transparent);
+  background-color: transparent;
+  backdrop-filter: blur(21px) saturate(180%);
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
   transition: visibility var(--duration-default) ease;
 }
 
@@ -301,25 +305,85 @@ cart-drawer.is-empty .drawer__header {
 }
 
 .drawer__shipping-bar .free_shipping_container {
-  background-color: #e8f0c4;
+  background-color: #ffffff;
   border-radius: 10px;
-  padding: 10px 16px;
+  padding: 14px 16px 16px;
   margin-bottom: 0;
 }
 
 .drawer__shipping-bar .free_shipping_container h4 {
-  margin-bottom: 8px !important;
+  margin-bottom: 10px !important;
   font-size: 13px !important;
   line-height: 1.4 !important;
 }
 
-.drawer__shipping-bar .free_shipping_container .progressive_bar_shipping_price {
-  background-color: #4a7c10 !important;
+.drawer__shipping-bar .free_shipping_container .progress_bar_track {
+  background-color: rgba(74, 124, 16, 0.2);
 }
 
-/* Override progress bar track inside shipping badge */
-.drawer__shipping-bar .free_shipping_container > div:last-child {
-  background-color: rgba(74, 124, 16, 0.2);
+.drawer__shipping-bar .free_shipping_container .progressive_bar_shipping_price {
+  background: linear-gradient(90deg, #6fae1c, #4a7c10);
+}
+
+/* ---------- Reward states: background color reflects the current phase ---------- */
+.free_shipping_container {
+  transition: background-color 0.4s ease;
+}
+
+.free_shipping_container.reward-state--gift {
+  background-color: #e8f0c4;
+  animation: tile-celebrate 0.6s ease-out 1;
+}
+
+/* The "everything unlocked" headline must stay on one line, also on mobile.
+   Translations are kept short; letter-spacing is tightened and the font
+   steps down slightly on narrow screens as a safety net. */
+.reward-state--gift .progress_bar_headline {
+  white-space: nowrap;
+  letter-spacing: normal !important;
+  overflow: hidden;
+}
+
+/* <strong> inside the font-light (300) headline only computes to 400 via the
+   browser's relative "bolder" — match the 700 weight + black used by the
+   font-bold amount spans in the not-yet-unlocked states. */
+.progress_bar_headline strong {
+  font-weight: 700;
+  color: #000;
+}
+
+@media screen and (max-width: 480px) {
+  .reward-state--gift .progress_bar_headline {
+    font-size: 12px !important;
+  }
+}
+
+@keyframes tile-celebrate {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.015);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.progress_bar_label.is-reached .progress_bar_label__amount,
+.progress_bar_label.is-reached .progress_bar_label__name {
+  animation: label-pop 0.4s ease-out 1;
+}
+
+@keyframes label-pop {
+  0% {
+    transform: translateY(2px);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* ---------- Cart items ---------- */
@@ -339,20 +403,29 @@ cart-drawer.is-empty .drawer__header {
   flex-grow: 1;
 }
 
-cart-drawer-items {
+/* Single scroll container: shipping bar + gift widget + items all scroll
+   together, starting directly below the drawer header and ending just
+   above the footer's top border. */
+.drawer__scrollable {
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   flex: 1;
   min-height: 0; /* critical: allow flex child to shrink below content size so overflow:auto works */
-  padding: 0 1.5rem;
 }
 
-cart-drawer-items::-webkit-scrollbar {
+.drawer__scrollable::-webkit-scrollbar {
   width: 3px;
 }
 
-cart-drawer-items::-webkit-scrollbar-thumb {
+.drawer__scrollable::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.15);
   border-radius: 100px;
+}
+
+cart-drawer-items {
+  flex: 1;
+  padding: 0 1.5rem;
 }
 
 @media screen and (max-height: 650px) {
@@ -846,6 +919,10 @@ cart-drawer-items::-webkit-scrollbar-thumb {
   margin-bottom: 0;
 }
 
+#its_free {
+  color: #1a9e46;
+}
+
 .cart-drawer__total-label {
   font-size: 15px;
   font-weight: 600;
@@ -1214,4 +1291,348 @@ cart-drawer .add-to-cart.submit_button {
 
 cart-drawer .add-to-cart.submit_button:hover {
   background-color: #F76503 !important;
+}
+
+/* ---------- Two-tier progress bar ---------- */
+.progress_bar_track {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background-color: #D9D9D9;
+  overflow: visible;
+}
+
+.progressive_bar_shipping_price {
+  /* base.css has a global `div:empty { display: none }` reset that otherwise hides this content-less fill bar */
+  display: block !important;
+  height: 100%;
+  width: 0;
+  border-radius: 4px;
+  background-color: #1a9e46;
+  transition: width 0.4s ease;
+}
+
+.progress_bar_milestone {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+/* Gift/second-tier milestone: centered on its position (same as shipping),
+   so the label below can center-align exactly under the checkmark. */
+
+.progress_bar_milestone__badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #D9D9D9;
+  border: 3px solid #F4F4F1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9a9a9a;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.progress_bar_milestone.is-reached .progress_bar_milestone__badge {
+  background: #1a9e46;
+  color: #fff;
+  animation: milestone-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes milestone-pop {
+  0% {
+    transform: scale(0.5);
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ---------- Progress bar threshold labels ---------- */
+.progress_bar_labels {
+  position: relative;
+  height: 28px;
+  margin-top: 14px;
+}
+
+.progress_bar_label {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  white-space: nowrap;
+}
+
+
+.progress_bar_label__amount {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b6b6b;
+}
+
+.progress_bar_label__name {
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: #6b6b6b;
+}
+
+/* ---------- Free gift widget ---------- */
+.free_gift_widget {
+  margin: 12px 0 20px;
+  padding: 12px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+/* Collapsed state: once socks are chosen, show a compact confirmation row
+   instead of the full picker; "Change" expands the picker again. */
+.free_gift_widget__chosen {
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.free_gift_widget--collapsed .free_gift_widget__chosen {
+  display: flex;
+}
+
+.free_gift_widget--collapsed .free_gift_widget__title,
+.free_gift_widget--collapsed .free_gift_widget__products {
+  display: none;
+}
+
+.free_gift_widget__chosen-image {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f4f4f1;
+}
+
+.free_gift_widget__chosen-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.free_gift_widget__chosen-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 300;
+  color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.free_gift_widget__chosen-text strong {
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.free_gift_widget__chosen-check {
+  color: #1a9e46;
+  font-weight: 700;
+}
+
+.free_gift_widget__change-btn {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #0395F6;
+  background: #fff;
+  color: #0395F6;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.free_gift_widget__change-btn:hover {
+  background: #0395F6;
+  color: #fff;
+}
+
+.free_gift_widget__title {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: normal;
+  margin: 0 0 10px;
+  color: #000;
+}
+
+.free_gift_widget__title strong {
+  font-weight: 700;
+}
+
+.free_gift_widget__removed_notice {
+  font-size: 12px;
+  color: #c0392b;
+  background: #fdecea;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin: 0 0 10px;
+}
+
+.free_gift_widget__removed_notice.hidden {
+  display: none;
+}
+
+.free_gift_widget__products {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.free_gift_widget__product {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.free_gift_widget__product.is-selected {
+  border-color: #0395F6;
+  background-color: rgba(3, 149, 246, 0.06);
+}
+
+.free_gift_widget__image {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f4f4f1;
+}
+
+.free_gift_widget__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.free_gift_widget__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.free_gift_widget__name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* match the lowercase styling of cart item titles below the widget */
+  text-transform: lowercase;
+}
+
+/* Variant line (print color / size) — styled like the cart items'
+   variant text so the shopper sees exactly which variant gets added. */
+.free_gift_widget__variant {
+  font-size: 11px;
+  font-weight: 500;
+  color: #8c8c8c;
+  text-transform: lowercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.free_gift_widget__price {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+.free_gift_widget__free_tag {
+  color: #1a9e46;
+  font-weight: 700;
+}
+
+.free_gift_widget__add-btn {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #0395F6;
+  background: #fff;
+  color: #0395F6;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.free_gift_widget__add-btn:hover:not(:disabled) {
+  background: #0395F6;
+  color: #fff;
+}
+
+.free_gift_widget__add-btn:disabled {
+  cursor: not-allowed;
+}
+
+.free_gift_widget__add-btn--locked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 5px 12px;
+  line-height: 1.2;
+  border-color: #c9c9c9;
+  color: #8c8c8c;
+  opacity: 0.7;
+}
+
+.free_gift_widget__add-btn--sold-out {
+  border-color: #d9d9d9;
+  color: #9a9a9a;
+  opacity: 0.55;
+}
+
+.free_gift_widget__remaining {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.free_gift_widget__add-btn.loading {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.cart-drawer-item--free-gift {
+  background-color: rgba(3, 149, 246, 0.04);
+}
+
+.cart-drawer-item__gift-tag {
+  /* Flush-left on its own line, aligned with the title and variant text
+     (the title anchor is display:block, so any left margin here reads as
+     misalignment). */
+  display: block;
+  margin: 2px 0 0;
+  font-size: 10px;
+  font-weight: 700;
+  color: #1a9e46;
 }

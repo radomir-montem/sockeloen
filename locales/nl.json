@@ -22,7 +22,7 @@
       "login_form_password_placeholder": "Je wachtwoord",
       "login_form_error": "Wachtwoord is onjuist!",
       "login_form_submit": "Invoeren",
-      "admin_link_html": "Ben je de winkeleigenaar? <a href=\"\/admin\" class=\"link underlined-link\">Log hier in<\/a>",
+      "admin_link_html": "Ben je de winkeleigenaar? <a href=\"/admin\" class=\"link underlined-link\">Log hier in</a>",
       "powered_by_shopify_html": "This shop will be powered by {{ shopify }}"
     },
     "social": {
@@ -147,8 +147,8 @@
         "view_store_info": "Winkelgegevens bekijken",
         "check_other_stores": "Controleer de beschikbaarheid bij andere winkels",
         "pick_up_available": "Afhalen is beschikbaar",
-        "pick_up_available_at_html": "<meta charset=\"utf-8\">Afhalen is beschikbaar bij <span class=\"color-foreground\">{{ location_name }}<\/span>",
-        "pick_up_unavailable_at_html": "Afhalen is momenteel niet beschikbaar bij <span class=\"color-foreground\">{{ location_name }}<\/span>",
+        "pick_up_available_at_html": "<meta charset=\"utf-8\">Afhalen is beschikbaar bij <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_unavailable_at_html": "Afhalen is momenteel niet beschikbaar bij <span class=\"color-foreground\">{{ location_name }}</span>",
         "unavailable": "Kan beschikbaarheid voor afhalen niet laden",
         "refresh": "Vernieuwen"
       },
@@ -164,19 +164,19 @@
       },
       "view_full_details": "Alle details bekijken",
       "include_taxes": "Inclusief btw.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Verzendkosten<\/a> worden berekend bij de checkout.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Verzendkosten</a> worden berekend bij de checkout.",
       "choose_options": "Opties kiezen",
       "choose_product_options": "Opties kiezen voor {{ product_name }}"
     },
     "v2": {
       "usp_1_heading": "Gratis verzending",
-      "usp_1_body_html": "<p>Wij bieden gratis verzending op alle bestellingen boven €75. Bestellingen geplaatst vóór 15:00 CET op werkdagen worden dezelfde dag verzonden. Levering duurt 1-3 werkdagen binnen de EU.<\/p>",
+      "usp_1_body_html": "<p>Wij bieden gratis verzending op alle bestellingen boven €75. Bestellingen geplaatst vóór 15:00 CET op werkdagen worden dezelfde dag verzonden. Levering duurt 1-3 werkdagen binnen de EU.</p>",
       "usp_2_heading": "100% Tevredenheidsgarantie",
-      "usp_2_body_html": "<p>Niet tevreden? Wij bieden een probleemloze retour binnen 30 dagen na aankoop. Geen vragen gesteld. Jouw tevredenheid is onze prioriteit.<\/p>",
+      "usp_2_body_html": "<p>Niet tevreden? Wij bieden een probleemloze retour binnen 30 dagen na aankoop. Geen vragen gesteld. Jouw tevredenheid is onze prioriteit.</p>",
       "usp_3_heading": "Born in the peloton",
-      "usp_3_body_html": "<p>Sockeloen sokken zijn ontworpen en getest door wielrenners, voor wielrenners. Ontwikkeld voor prestaties met premium materialen die je voeten comfortabel houden op elke rit.<\/p>",
+      "usp_3_body_html": "<p>Sockeloen sokken zijn ontworpen en getest door wielrenners, voor wielrenners. Ontwikkeld voor prestaties met premium materialen die je voeten comfortabel houden op elke rit.</p>",
       "usp_4_heading": "De klant is koning",
-      "usp_4_body_html": "<p>Wij gaan verder dan verwacht voor onze klanten. Van persoonlijke ondersteuning tot snelle levering, wij zorgen ervoor dat je de beste ervaring hebt.<\/p>",
+      "usp_4_body_html": "<p>Wij gaan verder dan verwacht voor onze klanten. Van persoonlijke ondersteuning tot snelle levering, wij zorgen ervoor dat je de beste ervaring hebt.</p>",
       "sticky_usp_1": "Gratis verzending",
       "sticky_usp_2": "100% tevredenheidsgarantie",
       "sticky_usp_3": "Born in the peloton",
@@ -291,9 +291,9 @@
       "empty": "Je winkelwagen is leeg",
       "cart_error": "Er is een fout opgetreden bij het bijwerken van je winkelwagen. Probeer het opnieuw.",
       "cart_quantity_error_html": "Je kunt maar {{ quantity }} van dit artikel toevoegen aan je winkelwagen.",
-      "taxes_and_shipping_policy_at_checkout_html": "Belastingen en <a href=\"{{ link }}\">verzendkosten<\/a> worden berekend&nbsp;tijdens de checkout",
+      "taxes_and_shipping_policy_at_checkout_html": "Belastingen en <a href=\"{{ link }}\">verzendkosten</a> worden berekend&nbsp;tijdens de checkout",
       "taxes_included_but_shipping_at_checkout": "Belasting inbegrepen en verzendkosten worden berekend tijdens de checkout",
-      "taxes_included_and_shipping_policy_html": "Inclusief btw. <a href=\"{{ link }}\">Verzendkosten<\/a> worden berekend tijdens&nbsp;de checkout.",
+      "taxes_included_and_shipping_policy_html": "Inclusief btw. <a href=\"{{ link }}\">Verzendkosten</a> worden berekend tijdens&nbsp;de checkout.",
       "taxes_and_shipping_at_checkout": "Belastingen en verzendkosten worden berekend tijdens de checkout",
       "headings": {
         "product": "Product",
@@ -305,17 +305,40 @@
       "update": "Bijwerken",
       "login": {
         "title": "Heb je een account?",
-        "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Log in<\/a> om sneller af te rekenen."
+        "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Log in</a> om sneller af te rekenen."
       },
       "complete_your_kit": "Maak je kit compleet",
       "best_seller": "Bestseller",
-      "free_shipping_reached": "Je bestelling komt in aanmerking voor gratis verzending!",
-      "free_shipping_away_html": "Nog <strong>{{ amount }}</strong> voor <strong>GRATIS VERZENDING!</strong>",
+      "free_shipping_reached": "Je bestelling komt in aanmerking voor Gratis Verzending!",
+      "free_shipping_away_html": "Nog <strong>{{ amount }}</strong> voor <strong>Gratis Verzending!</strong>",
+      "free_shipping_away_suffix_html": "voor <span class='font-bold text-black'>Gratis Verzending!</span>",
+      "free_shipping_label": "Gratis Verzending",
+      "free_gift_reached": "Je hebt Gratis Sokken ontgrendeld!",
+      "free_gift_away_html": "Nog <strong>{{ amount }}</strong> voor <strong>Gratis Sokken!</strong>",
+      "free_gift_away_suffix_html": "voor <span class='font-bold text-black'>Gratis Sokken!</span>",
+      "free_gift_label": "Gratis Sokken",
+      "free_express_shipping_reached": "Je hebt Gratis Expresverzending ontgrendeld!",
+      "free_express_shipping_away_html": "Nog <strong>{{ amount }}</strong> voor <strong>Gratis Expresverzending!</strong>",
+      "free_express_shipping_away_suffix_html": "voor <span class='font-bold text-black'>Gratis Expresverzending!</span>",
+      "free_express_shipping_label": "Gratis Expresverzending",
+      "free_gift_widget_title": "Kies je Gratis Sokken",
+      "free_gift_add_amount_html": "Nog <strong>€{{ amount }}</strong> voor <strong>Gratis Sokken</strong>",
+      "free_gift_free_tag": "Gratis",
+      "free_gift_add": "Toevoegen — gratis",
+      "free_gift_add_locked_html": "Toevoegen — gratis<span class=\"free_gift_widget__remaining\">nog €{{ amount }}</span>",
+      "free_gift_added": "Toegevoegd ✓",
+      "free_gift_sold_out": "Uitverkocht",
+      "free_gift_removed_notice": "Je Gratis Sokken zijn verwijderd omdat je bestelling onder de drempel voor Gratis Sokken is gezakt.",
       "shipping": "Verzending",
       "shipping_free": "Gratis",
+      "checkout_securely": "Veilig afrekenen",
       "select_size": "Kies maat",
       "add": "Toevoegen",
-      "view_cart": "Bekijk winkelwagen"
+      "view_cart": "Bekijk winkelwagen",
+      "free_shipping_and_gift_reached_html": "<strong>Gratis Verzending</strong> + <strong>Gratis Sokken</strong> ontgrendeld!",
+      "free_shipping_and_express_reached_html": "<strong>Gratis Expresverzending</strong> ontgrendeld!",
+      "free_gift_chosen": "Je Gratis Sokken:",
+      "free_gift_change": "Wijzig"
     },
     "footer": {
       "payment": "Betaalmethoden"
@@ -335,7 +358,7 @@
     "collection_template": {
       "title": "Collectie",
       "empty": "Geen producten gevonden",
-      "use_fewer_filters_html": "Minder filters gebruiken of <a class=\"{{ class }}\" href=\"{{ link }}\">alles verwijderen<\/a>"
+      "use_fewer_filters_html": "Minder filters gebruiken of <a class=\"{{ class }}\" href=\"{{ link }}\">alles verwijderen</a>"
     },
     "video": {
       "load_video": "Video laden: {{ description }}"
@@ -354,10 +377,10 @@
     }
   },
   "localization": {
-    "country_label": "Land\/regio",
+    "country_label": "Land/regio",
     "language_label": "Taal",
     "update_language": "Taal bijwerken",
-    "update_country": "Land\/regio bijwerken"
+    "update_country": "Land/regio bijwerken"
   },
   "customer": {
     "account": {
@@ -386,7 +409,7 @@
       "address1": "Adres 1",
       "address2": "Adres 2",
       "city": "Plaats",
-      "country": "Land\/regio",
+      "country": "Land/regio",
       "province": "Provincie",
       "zip": "Postcode",
       "phone": "Telefoonnummer",

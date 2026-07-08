@@ -22,7 +22,7 @@
       "login_form_password_placeholder": "Your password",
       "login_form_error": "Wrong password!",
       "login_form_submit": "Enter",
-      "admin_link_html": "Are you the store owner? <a href=\"\/admin\" class=\"link underlined-link\">Log in here<\/a>",
+      "admin_link_html": "Are you the store owner? <a href=\"/admin\" class=\"link underlined-link\">Log in here</a>",
       "powered_by_shopify_html": "This shop will be powered by {{ shopify }}"
     },
     "social": {
@@ -146,8 +146,8 @@
         "view_store_info": "View store information",
         "check_other_stores": "Check availability at other stores",
         "pick_up_available": "Pickup available",
-        "pick_up_available_at_html": "Pickup available at <span class=\"color-foreground\">{{ location_name }}<\/span>",
-        "pick_up_unavailable_at_html": "Pickup currently unavailable at <span class=\"color-foreground\">{{ location_name }}<\/span>",
+        "pick_up_available_at_html": "Pickup available at <span class=\"color-foreground\">{{ location_name }}</span>",
+        "pick_up_unavailable_at_html": "Pickup currently unavailable at <span class=\"color-foreground\">{{ location_name }}</span>",
         "unavailable": "Couldn't load pickup availability",
         "refresh": "Refresh"
       },
@@ -167,17 +167,17 @@
       "xr_button": "View in your space",
       "xr_button_label": "View in your space, loads item in augmented reality window",
       "include_taxes": "Tax included.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping<\/a> calculated at checkout."
+      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout."
     },
     "v2": {
       "usp_1_heading": "Free shipping",
-      "usp_1_body_html": "<p>We offer free shipping on all orders above €75. Orders placed before 15:00 CET on working days are shipped the same day. Delivery takes 1-3 business days within the EU.<\/p>",
+      "usp_1_body_html": "<p>We offer free shipping on all orders above €75. Orders placed before 15:00 CET on working days are shipped the same day. Delivery takes 1-3 business days within the EU.</p>",
       "usp_2_heading": "100% Satisfaction guarantee",
-      "usp_2_body_html": "<p>Not satisfied? We offer hassle-free returns within 30 days of purchase. No questions asked. Your satisfaction is our priority.<\/p>",
+      "usp_2_body_html": "<p>Not satisfied? We offer hassle-free returns within 30 days of purchase. No questions asked. Your satisfaction is our priority.</p>",
       "usp_3_heading": "Born in the peloton",
-      "usp_3_body_html": "<p>Sockeloen socks are designed and tested by cyclists, for cyclists. Engineered for performance with premium materials that keep your feet comfortable on every ride.<\/p>",
+      "usp_3_body_html": "<p>Sockeloen socks are designed and tested by cyclists, for cyclists. Engineered for performance with premium materials that keep your feet comfortable on every ride.</p>",
       "usp_4_heading": "Customer is king",
-      "usp_4_body_html": "<p>We go above and beyond for our customers. From personal support to fast delivery, we make sure you have the best experience possible.<\/p>",
+      "usp_4_body_html": "<p>We go above and beyond for our customers. From personal support to fast delivery, we make sure you have the best experience possible.</p>",
       "sticky_usp_1": "Free shipping",
       "sticky_usp_2": "100% satisfaction guarantee",
       "sticky_usp_3": "Born in the peloton",
@@ -292,9 +292,9 @@
       "empty": "Your cart is empty",
       "cart_error": "There was an error while updating your cart. Please try again.",
       "cart_quantity_error_html": "You can only add {{ quantity }} of this item to your cart.",
-      "taxes_and_shipping_policy_at_checkout_html": "Taxes and <a href=\"{{ link }}\">shipping<\/a> calculated at checkout",
+      "taxes_and_shipping_policy_at_checkout_html": "Taxes and <a href=\"{{ link }}\">shipping</a> calculated at checkout",
       "taxes_included_but_shipping_at_checkout": "Tax included and shipping calculated at checkout",
-      "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping<\/a> calculated at checkout.",
+      "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
       "taxes_and_shipping_at_checkout": "Taxes and shipping calculated at checkout",
       "headings": {
         "product": "Product",
@@ -306,17 +306,40 @@
       "update": "Update",
       "login": {
         "title": "Have an account?",
-        "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Log in<\/a> to check out faster."
+        "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Log in</a> to check out faster."
       },
       "complete_your_kit": "Complete your kit",
       "best_seller": "Best seller",
-      "free_shipping_reached": "Your order qualifies for free shipping!",
-      "free_shipping_away_html": "You're <strong>{{ amount }}</strong> away from <strong>FREE SHIPPING!</strong>",
+      "free_shipping_reached": "Your order qualifies for Free Shipping!",
+      "free_shipping_away_html": "You're <strong>{{ amount }}</strong> away from <strong>Free Shipping!</strong>",
+      "free_shipping_away_suffix_html": "away from <span class='font-bold text-black'>Free Shipping!</span>",
+      "free_shipping_label": "Free Shipping",
+      "free_gift_reached": "You've unlocked Free Socks!",
+      "free_gift_away_html": "You're <strong>{{ amount }}</strong> away from <strong>Free Socks!</strong>",
+      "free_gift_away_suffix_html": "away from <span class='font-bold text-black'>Free Socks!</span>",
+      "free_gift_label": "Free Socks",
+      "free_express_shipping_reached": "You've unlocked Free Express Shipping!",
+      "free_express_shipping_away_html": "You're <strong>{{ amount }}</strong> away from <strong>Free Express Shipping!</strong>",
+      "free_express_shipping_away_suffix_html": "away from <span class='font-bold text-black'>Free Express Shipping!</span>",
+      "free_express_shipping_label": "Free Express Shipping",
+      "free_gift_widget_title": "Pick your Free Socks",
+      "free_gift_add_amount_html": "Add <strong>€{{ amount }}</strong> to get <strong>Free Socks</strong>",
+      "free_gift_free_tag": "Free",
+      "free_gift_add": "Add — it's free",
+      "free_gift_add_locked_html": "Add — it's free<span class=\"free_gift_widget__remaining\">€{{ amount }} to go</span>",
+      "free_gift_added": "Added ✓",
+      "free_gift_sold_out": "Sold out",
+      "free_gift_removed_notice": "Your Free Socks were removed because your order dropped below the Free Socks threshold.",
       "shipping": "Shipping",
       "shipping_free": "Free",
+      "checkout_securely": "Checkout Securely",
       "select_size": "Select size",
       "add": "Add",
-      "view_cart": "View cart"
+      "view_cart": "View cart",
+      "free_shipping_and_gift_reached_html": "<strong>Free Shipping</strong> + <strong>Free Socks</strong> unlocked!",
+      "free_shipping_and_express_reached_html": "<strong>Free Express Shipping</strong> unlocked!",
+      "free_gift_chosen": "Your Free Socks:",
+      "free_gift_change": "Change"
     },
     "footer": {
       "payment": "Payment methods"
@@ -336,7 +359,7 @@
     "collection_template": {
       "empty": "No products found",
       "title": "Collection",
-      "use_fewer_filters_html": "Use fewer filters or <a class=\"{{ class }}\" href=\"{{ link }}\">remove all<\/a>"
+      "use_fewer_filters_html": "Use fewer filters or <a class=\"{{ class }}\" href=\"{{ link }}\">remove all</a>"
     },
     "video": {
       "load_video": "Load video: {{ description }}"
@@ -355,10 +378,10 @@
     }
   },
   "localization": {
-    "country_label": "Country\/region",
+    "country_label": "Country/region",
     "language_label": "Language",
     "update_language": "Update language",
-    "update_country": "Update country\/region"
+    "update_country": "Update country/region"
   },
   "customer": {
     "account": {
@@ -387,9 +410,9 @@
       "address1": "Address 1",
       "address2": "Address 2",
       "city": "City",
-      "country": "Country\/region",
+      "country": "Country/region",
       "province": "Province",
-      "zip": "Postal\/ZIP code",
+      "zip": "Postal/ZIP code",
       "phone": "Phone",
       "set_default": "Set as default address",
       "add": "Add address",

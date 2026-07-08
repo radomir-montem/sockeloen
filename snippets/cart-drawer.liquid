@@ -4,6 +4,7 @@
 {% endcomment %}
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'free-gift.js' | asset_url }}" defer="defer"></script>
 
 <style>
   .drawer {
@@ -52,6 +53,10 @@
                 </svg>
               </button>
             </div>
+            {%- comment -%} Progress bar on empty cart: motivates from the first interaction {%- endcomment -%}
+            <div class="drawer__shipping-bar">
+              {% render 'free-shipping-progress-bar', hide_gift_widget: true %}
+            </div>
             <div class="cart-drawer__empty-body">
               <p class="cart-drawer__empty-text">{{ 'sections.cart.empty' | t }}</p>
               <button type="button" class="cart-drawer__checkout-btn" onclick="this.closest('cart-drawer').close()">
@@ -65,7 +70,7 @@
           </div>
           {%- comment -%} Desktop cross-sells column (hidden on mobile) {%- endcomment -%}
           <div class="cart-drawer__empty-cross-sells cart-drawer__empty-cross-sells--desktop">
-            {% render 'cart-cross-sells' %}
+            {% render 'cart-cross-sells', force_collection: settings.desktop_upsell_collection %}
           </div>
         </div>
       {%- endif -%}
@@ -89,6 +94,9 @@
           </svg>
         </button>
       </div>
+
+      {%- comment -%} ===== SCROLLABLE AREA: shipping bar + gift widget + items ===== {%- endcomment -%}
+      <div class="drawer__scrollable">
 
       {%- comment -%} ===== FREE SHIPPING BAR ===== {%- endcomment -%}
       {% if cart != empty %}
@@ -114,8 +122,13 @@
                   <div
                     id="CartDrawer-Item-{{ item.index | plus: 1 }}"
                     cart-item-id="{{ item.id }}"
-                    class="cart-drawer-item"
+                    class="cart-drawer-item{% if item.properties['_free_gift'] == 'true' %} cart-drawer-item--free-gift{% endif %}"
                     x-ref="main_container"
+                    {% if item.properties['_free_gift'] == 'true' %}
+                      data-free-gift-line="true"
+                      data-line="{{ item.index | plus: 1 }}"
+                      data-variant-id="{{ item.variant_id }}"
+                    {% endif %}
                   >
                     {%- comment -%} Product Image with quantity badge {%- endcomment -%}
                     <div class="cart-drawer-item__image">
@@ -140,6 +153,9 @@
                           <a href="{{ item.url }}" class="cart-drawer-item__title">
                             {{- item.product.title | escape -}}
                           </a>
+                          {%- if item.properties['_free_gift'] == 'true' -%}
+                            <span class="cart-drawer-item__gift-tag">{{ 'sections.cart.free_gift_free_tag' | t }}</span>
+                          {%- endif -%}
                           {%- if item.product.has_only_default_variant == false -%}
                             <p class="cart-drawer-item__options">
                               {%- for option in item.options_with_values -%}
@@ -273,6 +289,8 @@
         </div>
       </cart-drawer-items>
 
+      </div>{%- comment -%} close .drawer__scrollable {%- endcomment -%}
+
       {% if cart != empty %}
 
         {%- comment -%} ===== FOOTER (sticky on mobile) ===== {%- endcomment -%}
@@ -307,7 +325,11 @@
 
             <div class="cart-drawer__buttons hide-when-container-is-empty">
               <a href="/checkout/" class="cart-drawer__checkout-btn">
-                {{- settings.cart_drawer_button_1_cta -}}
+                {%- if settings.cart_drawer_button_1_cta != blank -%}
+                  {{- settings.cart_drawer_button_1_cta -}}
+                {%- else -%}
+                  {{- 'sections.cart.checkout_securely' | t -}}
+                {%- endif -%}
               </a>
               <div class="cart-drawer__payment-icons">
                 {% assign payMethods = 'shop_pay,visa,mastercard,apple_pay,google_pay,amex' | split: ',' %}
@@ -328,7 +350,7 @@
         {%- comment -%} ===== RIGHT COLUMN: CROSS-SELLS (desktop only) ===== {%- endcomment -%}
         <div class="drawer__body-right upsells_container--desktop">
           <div class="upsells_container" style="padding:0;">
-            {% render 'cart-cross-sells' %}
+            {% render 'cart-cross-sells', force_collection: settings.desktop_upsell_collection %}
           </div>
         </div>
 

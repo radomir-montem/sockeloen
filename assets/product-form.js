@@ -46,7 +46,6 @@ if (!customElements.get('product-form')) {
         fetch(`${routes.cart_add_url}`, config)
           .then(response => response.json())
           .then(response => {
-            // this.getFinalPrice()
             if (response.status) {
               this.handleErrorMessage(response.description)
 
@@ -95,61 +94,6 @@ if (!customElements.get('product-form')) {
               this.querySelector('.loading-overlay__spinner').classList.add('hidden')
             }
           })
-      }
-
-      getFinalPrice() {
-        fetch('/cart.json')
-          .then(res => res.json())
-          .then(res => {
-            this.updateProgressBar(res.total_price)
-          })
-          .catch(err => console.error(err))
-      }
-      updateProgressBar(finalPrice) {
-        const freeShipContainer = document.querySelectorAll('.free_shipping_container')
-
-        if (freeShipContainer) {
-          freeShipContainer.forEach(container => {
-            const freeShipping = container.querySelector('.free_shipping')
-            const limit_price = freeShipping.dataset.limit
-            const progressBar = container.querySelector('.progressive_bar_shipping_price')
-            const free_prev_text = container.querySelector('.free_shipping_prev_text')
-            const free_text = container.querySelector('.free_shipping_text')
-            const its_free = document.querySelector('#its_free')
-            const span_free = its_free.parentElement.querySelector('.money')
-            if (finalPrice >= limit_price * 100) {
-              span_free.classList.add('!line-through')
-              its_free.classList.remove('hidden')
-              // freeShipping.classList.add('!hidden')
-              free_prev_text.classList.add('hidden')
-              free_text.classList.add('ml-0')
-              free_text.textContent = 'Your order is ready for free shipping!'
-              progressBar.classList.remove('bg-[#c0533f]')
-              progressBar.classList.add('bg-green')
-              progressBar.style.width = `${(finalPrice / (limit_price * 100)) * 100}%`
-              // freeShipping.innerHTML = formatMoney(limit_price*100 - finalPrice, )
-              freeShipping.innerHTML = ''
-            } else {
-              span_free.classList.remove('!line-through')
-              its_free.classList.add('hidden')
-              free_prev_text.classList.remove('hidden')
-              free_text.classList.remove('ml-0')
-              freeShipping.classList.remove('!hidden')
-              free_text.innerHTML =
-                "away from <span class='font-bold text-black uppercase'>free shipping!</span>"
-              container.querySelector('.progressive_bar_shipping_price').style.width = `${
-                (finalPrice / (limit_price * 100)) * 100
-              }%`
-              freeShipping.innerHTML = ((limit_price * 100 - finalPrice) / 100).toLocaleString(
-                'nl-NL',
-                {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-                },
-              )
-            }
-          })
-        }
       }
 
       handleErrorMessage(errorMessage = false) {

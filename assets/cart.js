@@ -124,7 +124,6 @@ class CartItems extends HTMLElement {
         } else if (document.querySelector('.cart-item') && cartDrawerWrapper) {
           trapFocus(cartDrawerWrapper, document.querySelector('.cart-item__name'))
         }
-        // this.updateProgressBar(parsedState.total_price)
         this.disableLoading()
       })
       .catch(err => {
@@ -134,53 +133,9 @@ class CartItems extends HTMLElement {
         )
         const errors =
           document.getElementById('cart-errors') || document.getElementById('CartDrawer-CartErrors')
-        errors.textContent = window.cartStrings.error
+        if (errors) errors.textContent = window.cartStrings.error
         this.disableLoading()
       })
-  }
-
-  updateProgressBar(finalPrice) {
-    const freeShipContainer = document.querySelectorAll('.free_shipping_container')
-
-    if (freeShipContainer) {
-      freeShipContainer.forEach(container => {
-        const freeShipping = container.querySelector('.free_shipping')
-        if (!freeShipping) return
-        const limit_price = freeShipping.dataset.limit
-        const free_text = container.querySelector('.free_shipping_text')
-        const progressBar = container.querySelector('.progressive_bar_shipping_price')
-        const its_free = document.querySelector('#its_free')
-        const span_free = its_free ? its_free.parentElement.querySelector('.money') : null
-        const reachedText = container.getAttribute('data-reached-text') || 'Your order qualifies for free shipping!'
-        const awayTemplate = container.getAttribute('data-away-text') || "You're <strong>__AMOUNT__</strong> away from <strong>FREE SHIPPING!</strong>"
-        const percent = Math.min((finalPrice / (limit_price * 100)) * 100, 100)
-
-        if (finalPrice >= limit_price * 100) {
-          if (span_free) span_free.classList.add('!line-through')
-          if (its_free) its_free.classList.remove('hidden')
-          if (free_text) free_text.innerHTML = reachedText
-          progressBar.classList.remove('bg-[#F76503]')
-          progressBar.classList.remove('bg-[#c0533f]')
-          progressBar.classList.add('bg-[#0395F6]')
-          progressBar.style.width = percent + '%'
-          freeShipping.innerHTML = ''
-        } else {
-          if (span_free) span_free.classList.remove('!line-through')
-          if (its_free) its_free.classList.add('hidden')
-          progressBar.classList.remove('bg-[#0395F6]')
-          progressBar.classList.remove('bg-green')
-          progressBar.classList.remove('bg-[#c0533f]')
-          progressBar.classList.add('bg-[#F76503]')
-          progressBar.style.width = percent + '%'
-          const remaining = ((limit_price * 100 - finalPrice) / 100).toLocaleString('nl-NL', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-          if (free_text) free_text.innerHTML = awayTemplate.replace('__AMOUNT__', remaining)
-          freeShipping.innerHTML = remaining
-        }
-      })
-    }
   }
 
   updateLiveRegions(line, itemCount) {
@@ -191,16 +146,27 @@ class CartItems extends HTMLElement {
       const quantityElement =
         document.getElementById(`Quantity-${line}`) ||
         document.getElementById(`Drawer-quantity-${line}`)
-      lineItemError.querySelector('.cart-item__error-text').innerHTML =
-        window.cartStrings.quantityError.replace('[quantity]', quantityElement.value)
+      if (lineItemError && quantityElement) {
+        lineItemError.querySelector('.cart-item__error-text').innerHTML =
+          window.cartStrings.quantityError.replace('[quantity]', quantityElement.value)
+      }
     }
 
     this.currentItemCount = itemCount
-    this.lineItemStatusElement.setAttribute('aria-hidden', true)
+
+    // Re-query instead of using the cached reference: when the cart transitions
+    // to empty, the section re-render has already replaced the drawer contents
+    // (including these live-region elements) by the time this runs.
+    const lineItemStatus =
+      this.lineItemStatusElement ||
+      document.getElementById('shopping-cart-line-item-status') ||
+      document.getElementById('CartDrawer-LineItemStatus')
+    if (lineItemStatus && lineItemStatus.isConnected) lineItemStatus.setAttribute('aria-hidden', true)
 
     const cartStatus =
       document.getElementById('cart-live-region-text') ||
       document.getElementById('CartDrawer-LiveRegionText')
+    if (!cartStatus) return
     cartStatus.setAttribute('aria-hidden', false)
 
     setTimeout(() => {
@@ -215,7 +181,7 @@ class CartItems extends HTMLElement {
   enableLoading(line) {
     const mainCartItems =
       document.getElementById('main-cart-items') || document.getElementById('CartDrawer-CartItems')
-    mainCartItems.classList.add('cart__items--disabled')
+    if (mainCartItems) mainCartItems.classList.add('cart__items--disabled')
 
     const cartItemElements = this.querySelectorAll(`#CartItem-${line} .loading-overlay`)
     const cartDrawerItemElements = this.querySelectorAll(
@@ -227,13 +193,13 @@ class CartItems extends HTMLElement {
     )
 
     document.activeElement.blur()
-    this.lineItemStatusElement.setAttribute('aria-hidden', false)
+    if (this.lineItemStatusElement) this.lineItemStatusElement.setAttribute('aria-hidden', false)
   }
 
   disableLoading() {
     const mainCartItems =
       document.getElementById('main-cart-items') || document.getElementById('CartDrawer-CartItems')
-    mainCartItems.classList.remove('cart__items--disabled')
+    if (mainCartItems) mainCartItems.classList.remove('cart__items--disabled')
   }
 }
 

@@ -138,7 +138,7 @@
     "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "best-sellers-1",
-    "cart_drawer_button_1_cta": "Checkout Securely",
+    "cart_drawer_button_1_cta": "",
     "cart_drawer_button_2_cta": "",
     "checkout_logo_image": "shopify://shop_images/sockeloen-bike-socks-fietssokken.png",
     "checkout_logo_position": "center",
@@ -738,7 +738,11 @@
         "disabled": false,
         "settings": {}
       }
-    }
+    },
+    "second_tier_type": "gift",
+    "second_tier_threshold": 110,
+    "free_gift_collection": "free-gift-at-checkout-collection",
+    "desktop_upsell_collection": "best-sellers-1"
   },
   "presets": {
     "Default": {
