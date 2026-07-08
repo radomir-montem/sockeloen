@@ -135,7 +135,7 @@
     "free_shipping": 75,
     "second_tier_type": "gift",
     "second_tier_threshold": 110,
-    "free_gift_collection": "casual-socks",
+    "free_gift_collection": "free-gift-at-checkout-collection",
     "global_upsells": "best-sellers-1",
     "desktop_upsell_collection": "best-sellers-1",
     "cart_type": "drawer",
