@@ -439,16 +439,12 @@
                     style="background-color: {{ settings.sold_out_badge_color }};"
                   {% endif %}
                 >
+                  {%- comment -%}
+                    "UCI" prefix stripped, flag removed — legal request
+                    from the UCI (2026-07); do not reintroduce.
+                  {%- endcomment -%}
                   {%- if badge_prefix == 'uci' -%}
-                    {%- assign badge_rest = badge | slice: 3, 999 -%}
-                    <svg class="badge-uci-flag" viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <rect x="0" y="0" width="3" height="16" rx="1" fill="#E63329"/>
-                      <rect x="4.5" y="0" width="3" height="16" rx="1" fill="#0057B8"/>
-                      <rect x="9" y="0" width="3" height="16" rx="1" fill="#1a1a1a"/>
-                      <rect x="13.5" y="0" width="3" height="16" rx="1" fill="#F5C518"/>
-                      <rect x="17" y="0" width="3" height="16" rx="1" fill="#00843D"/>
-                    </svg>
-                    <span class="badge-uci-text">UCI</span>{{ badge_rest }}
+                    {{ badge | slice: 3, 999 | lstrip }}
                   {%- else -%}
                     {{ badge }}
                   {%- endif -%}

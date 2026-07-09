@@ -327,7 +327,7 @@ if (!customElements.get('sticky-atc-v2')) {
          badge_text") so it's correctly translated per storefront
          language instead of hardcoded English. */
       var section = badge.closest('[data-uci-badge-text]');
-      badge.textContent = (section && section.dataset.uciBadgeText) || 'UCI Warehouse Clearance - + 1 free';
+      badge.textContent = (section && section.dataset.uciBadgeText) || 'Warehouse Clearance - + 1 free';
     });
   }
 

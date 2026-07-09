@@ -1108,23 +1108,8 @@ facets-open-button{
     padding: 5px 8px !important;
 }
 
-/* UCI flag icon + forced "UCI" text inserted at the front of any custom
-   badge whose value starts with "uci" (any case) — e.g. product.
-   metafields.custom.badge = "UCI SALE -30%". Matches the notification
-   bar's own treatment: the flag icon, then "UCI" set apart from the
-   rest of the text. */
-.badge-uci-flag {
-    display: inline-block;
-    flex-shrink: 0;
-    height: 9px;
-    margin-right: 4px;
-    vertical-align: middle;
-    width: 11px;
-}
-
-.badge-uci-text {
-    font-weight: 700;
-}
+/* UCI flag icon + "UCI" badge text removed on legal request from the
+   UCI (2026-07) — do not reintroduce. */
 
 .card-badge {
     top: 20px !important;
