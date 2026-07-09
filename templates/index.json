@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "UCI Warehouse Clearance",
+            "heading": "Warehouse Clearance",
             "heading_size": "h2",
             "use_h1_tag": false
           }
@@ -211,7 +211,8 @@
             "description": "<p>High Performance Cycling Socks</p>",
             "button_label": "Explore More",
             "button_url": "shopify://collections/all-products",
-            "text_align": "center"
+            "text_align": "center",
+            "background_color": "#a12d00"
           }
         },
         "4904019c-ebe9-48ae-adae-d8c50c33e729": {
@@ -682,7 +683,8 @@
             "description": "",
             "button_label": "",
             "button_url": "",
-            "text_align": "center"
+            "text_align": "center",
+            "background_color": "#a12d00"
           }
         }
       },
