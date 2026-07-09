@@ -11,6 +11,7 @@
   assign tile_size = size | default: 'sm'
 -%}
 <span class="uci-tile uci-tile--{{ tile_size }}">
+  <span class="uci-tile__flag" aria-hidden="true"></span>
   <span class="uci-tile__word">
     <span class="uci-tile__clearance">{{ 'uci_sale.warehouse_clearance' | t }}</span>
   </span>

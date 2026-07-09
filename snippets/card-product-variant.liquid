@@ -441,10 +441,11 @@
                 >
                   {%- comment -%}
                     "UCI" prefix stripped, flag removed — legal request
-                    from the UCI (2026-07); do not reintroduce.
+                    from the UCI (2026-07); do not reintroduce. A plain
+                    yellow label keeps the flag's footprint.
                   {%- endcomment -%}
                   {%- if badge_prefix == 'uci' -%}
-                    {{ badge | slice: 3, 999 | lstrip }}
+                    <span class="badge-uci-flag" aria-hidden="true"></span>{{ badge | slice: 3, 999 | lstrip }}
                   {%- else -%}
                     {{ badge }}
                   {%- endif -%}

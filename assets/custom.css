@@ -1109,7 +1109,18 @@ facets-open-button{
 }
 
 /* UCI flag icon + "UCI" badge text removed on legal request from the
-   UCI (2026-07) — do not reintroduce. */
+   UCI (2026-07) — do not reintroduce. A plain yellow label keeps the
+   flag's footprint at the front of the badge. */
+.badge-uci-flag {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 9px;
+    margin-right: 4px;
+    vertical-align: middle;
+    width: 11px;
+    background: #F5C518;
+    border-radius: 2px;
+}
 
 .card-badge {
     top: 20px !important;
