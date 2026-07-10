@@ -565,14 +565,14 @@ a.product-v2__sp-avatar {
   gap: 6px !important;
 }
 /* UCI flag mark removed on legal request from the UCI (2026-07) — do not
-   reintroduce it. A plain yellow label keeps the same footprint. */
+   reintroduce it. A plain red label keeps the same footprint. */
 .product-v2 .Avada-Volume__HeaderTitle-Text::before {
   content: '';
   display: inline-block;
   width: 12px;
   height: 9px;
   flex-shrink: 0;
-  background: #F5C518;
+  background: #A12D00;
   border-radius: 2px;
 }
 
@@ -768,14 +768,14 @@ a.product-v2__sp-avatar {
   white-space: nowrap !important;
 }
 /* UCI flag mark removed on legal request from the UCI (2026-07) — do not
-   reintroduce it. A plain yellow label keeps the same footprint. */
+   reintroduce it. A plain red label keeps the same footprint. */
 .product-v2 .Avada-VolumeBoxBadge::before {
   content: '';
   display: inline-block;
   width: 11px;
   height: 9px;
   flex-shrink: 0;
-  background: #F5C518;
+  background: #A12D00;
   border-radius: 2px;
 }
 
@@ -998,8 +998,8 @@ a.product-v2__sp-avatar {
   width: 18px;
   height: 14px;
   flex-shrink: 0;
-  /* Plain yellow label — replaces the removed UCI flag mark, same footprint */
-  background: #F5C518;
+  /* Plain red label — replaces the removed UCI flag mark, same footprint */
+  background: #A12D00;
   border-radius: 2px;
 }
 .product-v2__uci-banner .uci-tile__word {

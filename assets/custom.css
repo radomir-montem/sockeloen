@@ -1109,8 +1109,9 @@ facets-open-button{
 }
 
 /* UCI flag icon + "UCI" badge text removed on legal request from the
-   UCI (2026-07) — do not reintroduce. A plain yellow label keeps the
-   flag's footprint at the front of the badge. */
+   UCI (2026-07) — do not reintroduce. A plain red label keeps the
+   flag's footprint at the front of the badge, followed by the
+   "BANNED PRODUCTS" prefix text. */
 .badge-uci-flag {
     display: inline-block;
     flex-shrink: 0;
@@ -1118,8 +1119,12 @@ facets-open-button{
     margin-right: 4px;
     vertical-align: middle;
     width: 11px;
-    background: #F5C518;
+    background: #A12D00;
     border-radius: 2px;
+}
+
+.badge-uci-text {
+    font-weight: 700;
 }
 
 .card-badge {
