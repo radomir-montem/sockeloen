@@ -152,14 +152,15 @@
     {%- case block.type -%}
       {%- when 'announcement' -%}
         {%- comment -%}
-          Sale mode always links to the UCI sale collection, independent
-          of the block's own `link` setting — that setting is shared with
-          the block's normal (non-sale-mode) rendering, so hardcoding it
-          there would also redirect the regular announcement bar text.
+          Sale mode always links to the warehouse sale collection,
+          independent of the block's own `link` setting — that setting is
+          shared with the block's normal (non-sale-mode) rendering, so
+          hardcoding it there would also redirect the regular
+          announcement bar text.
         {%- endcomment -%}
         {%- assign effective_link = block.settings.link -%}
         {%- if section.settings.sale_mode -%}
-          {%- assign effective_link = 'https://sockeloen.com/collections/uci-sale' -%}
+          {%- assign effective_link = 'https://sockeloen.com/collections/warehouse-sale' -%}
         {%- endif -%}
         <div style="background-color: {% if section.settings.sale_mode %}#1a1a1a{% else %}{{block.settings.bg_color}}{% endif %};" class="announcement-bar{% if section.settings.sale_mode %} announcement-bar--sale{% endif %} gradient{% unless forloop.first %} hidden{% endunless %}" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
           {%- if block.settings.text != blank -%}
