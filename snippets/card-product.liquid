@@ -311,7 +311,7 @@
                   reintroduce. Yellow label keeps the flag footprint.
                 {%- endcomment -%}
                 {%- if badge_prefix == 'uci' -%}
-                  <span class="badge-uci-flag" aria-hidden="true"></span><span class="badge-uci-text">BANNED PRODUCTS</span> {{ badge | slice: 3, 999 | lstrip }}
+                  <span class="badge-uci-flag" aria-hidden="true"></span>{{ badge | slice: 3, 999 | lstrip }}
                 {%- else -%}
                   {{ badge }}
                 {%- endif -%}
