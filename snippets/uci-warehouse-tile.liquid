@@ -1,11 +1,13 @@
 {%- comment -%}
-  Warehouse Clearance tile — wordmark only.
+  BANNED PRODUCTS Warehouse Clearance tile — red label + wordmark lockup.
   Reused in the notification bar marquee and the product page sale banner
   so the visual language stays identical across both placements.
   Accepts: size ('sm' default for the notification bar, 'lg' for the
   product page banner).
   NOTE: the UCI flag icon and "UCI" wordmark were removed on legal
-  request from the UCI (2026-07) — do not reintroduce them.
+  request from the UCI (2026-07) — do not reintroduce them. Rebranded
+  to "BANNED PRODUCTS" (brand-style, not translated) at the merchant's
+  request.
 {%- endcomment -%}
 {%- liquid
   assign tile_size = size | default: 'sm'
@@ -13,6 +15,7 @@
 <span class="uci-tile uci-tile--{{ tile_size }}">
   <span class="uci-tile__flag" aria-hidden="true"></span>
   <span class="uci-tile__word">
+    <strong class="uci-tile__uci">BANNED PRODUCTS</strong>
     <span class="uci-tile__clearance">{{ 'uci_sale.warehouse_clearance' | t }}</span>
   </span>
 </span>

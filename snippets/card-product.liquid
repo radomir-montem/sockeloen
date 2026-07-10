@@ -305,12 +305,13 @@
                 {% endif %}
               >
                 {%- comment -%}
-                  "UCI" prefix stripped, flag removed — legal request
-                  from the UCI (2026-07); do not reintroduce. A plain
-                  yellow label keeps the flag's footprint.
+                  "UCI" prefix in metafield values is replaced with
+                  "TDF" at render — the UCI name/flag were removed on
+                  legal request from the UCI (2026-07); do not
+                  reintroduce. Yellow label keeps the flag footprint.
                 {%- endcomment -%}
                 {%- if badge_prefix == 'uci' -%}
-                  <span class="badge-uci-flag" aria-hidden="true"></span>{{ badge | slice: 3, 999 | lstrip }}
+                  <span class="badge-uci-flag" aria-hidden="true"></span><span class="badge-uci-text">BANNED PRODUCTS</span> {{ badge | slice: 3, 999 | lstrip }}
                 {%- else -%}
                   {{ badge }}
                 {%- endif -%}
