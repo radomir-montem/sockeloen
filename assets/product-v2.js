@@ -327,17 +327,16 @@ if (!customElements.get('sticky-atc-v2')) {
          badge_text") so it's correctly translated per storefront
          language instead of hardcoded English. */
       var section = badge.closest('[data-uci-badge-text]');
-      badge.textContent = (section && section.dataset.uciBadgeText) || 'BANNED PRODUCTS Warehouse Clearance - + 1 free';
+      badge.textContent = (section && section.dataset.uciBadgeText) || 'Warehouse Clearance - + 1 free';
     });
 
     /* The AOV app's own header title is configured inside the Avada app
-       and may still contain "UCI" — rewrite it here as a safety net
-       until the app config itself is updated. Legal request from the
-       UCI (2026-07): the UCI name and flag may not be shown; campaign
-       rebranded to "BANNED PRODUCTS". */
+       and may still contain "UCI" — scrub it here as a safety net until
+       the app config itself is updated. Legal request from the UCI
+       (2026-07): the UCI name and flag may not be shown. */
     document.querySelectorAll('.product-v2 .Avada-Volume__HeaderTitle-Text').forEach(function(title) {
       if (title.textContent.indexOf('UCI') !== -1) {
-        title.textContent = title.textContent.replace(/\bUCI\b/g, 'BANNED PRODUCTS').trim();
+        title.textContent = title.textContent.replace(/\bUCI\s*/g, '').trim();
       }
     });
   }
