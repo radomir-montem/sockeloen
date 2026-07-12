@@ -412,6 +412,7 @@
               break
             endif
           endfor
+          assign metafield_badge_count = product.metafields.custom.badge.value | size | default: 0
         -%}
         <div class="absolute top-[15px] left-[12px] card-badge product-variant">
           {%- unless soldout -%}
@@ -460,13 +461,20 @@
                   {%- endcomment -%}
                   {%- if badge_prefix == 'uci' -%}
                     <span class="badge-uci-flag" aria-hidden="true"></span>{{ badge | slice: 3, 999 | lstrip }}
+                  {%- elsif in_warehouse_sale -%}
+                    {%- comment -%}
+                      Warehouse clearance products with their own (non-uci)
+                      badge metafield get the same sale styling: red label
+                      + "sale" prefix merged into one badge.
+                    {%- endcomment -%}
+                    <span class="badge-uci-flag" aria-hidden="true"></span>sale {{ badge }}
                   {%- else -%}
                     {{ badge }}
                   {%- endif -%}
                 </span>
             {% endunless %}
           {% endfor %}
-          {% if in_warehouse_sale and has_uci_badge == false %}
+          {% if in_warehouse_sale and has_uci_badge == false and metafield_badge_count == 0 %}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left uppercase mr-[6px]"
