@@ -50,16 +50,63 @@
     </p>
     <p class="free_gift_widget__removed_notice hidden" data-free-gift-removed-notice>{{ 'sections.cart.free_gift_removed_notice' | t }}</p>
     <div class="free_gift_widget__products">
+      {% comment %}
+        Slot selection: pinned variant IDs from settings.free_gift_pinned_variants
+        (comma-separated, in display order) fill the 2 slots first; any remaining
+        slots fall back to the first available variants in collection order.
+        Unavailable pinned variants are skipped automatically.
+      {% endcomment %}
       {% liquid
         assign shown_variants = 0
+        assign slot_ids = ','
+        assign pinned_raw = settings.free_gift_pinned_variants | default: ''
+        assign pinned = pinned_raw | remove: ' ' | split: ','
+        for pid in pinned
+          if shown_variants >= 2
+            break
+          endif
+          if pid == ''
+            continue
+          endif
+          for product in gift_collection.products
+            for variant in product.variants
+              assign vid = variant.id | append: ''
+              if vid == pid and variant.available
+                assign marker = ',' | append: variant.id | append: ','
+                unless slot_ids contains marker
+                  assign slot_ids = slot_ids | append: variant.id | append: ','
+                  assign shown_variants = shown_variants | plus: 1
+                endunless
+              endif
+            endfor
+          endfor
+        endfor
+        for product in gift_collection.products
+          if shown_variants >= 2
+            break
+          endif
+          for variant in product.variants
+            if shown_variants >= 2
+              break
+            endif
+            if variant.available
+              assign marker = ',' | append: variant.id | append: ','
+              unless slot_ids contains marker
+                assign slot_ids = slot_ids | append: variant.id | append: ','
+                assign shown_variants = shown_variants | plus: 1
+              endunless
+            endif
+          endfor
+        endfor
+        assign ordered_slots = slot_ids | split: ','
       %}
-      {% for product in gift_collection.products %}
-        {% if shown_variants >= 2 %}{% break %}{% endif %}
+      {% for sid in ordered_slots %}
+        {% if sid == '' %}{% continue %}{% endif %}
+        {% for product in gift_collection.products %}
         {% for variant in product.variants %}
-          {% if shown_variants >= 2 %}{% break %}{% endif %}
-          {% if variant.available %}
+          {% assign vid = variant.id | append: '' %}
+          {% if vid == sid %}
             {% liquid
-              assign shown_variants = shown_variants | plus: 1
               assign variant_id_marker = ',' | append: variant.id | append: ','
               assign is_current_gift = false
               if current_gift_variant_ids contains variant_id_marker
@@ -100,6 +147,7 @@
               </button>
             </div>
           {% endif %}
+        {% endfor %}
         {% endfor %}
       {% endfor %}
     </div>
