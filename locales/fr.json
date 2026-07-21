@@ -120,7 +120,13 @@
   },
   "products": {
     "v2": {
-      "notify_me": "Prévenez-moi quand disponible"
+      "notify_me": "Prévenez-moi dès le retour en stock",
+      "notify_me_sub": "Épuisé pour le moment — un seul e-mail dès son retour. Pas de spam.",
+      "bis_body": "Cet article est actuellement épuisé. Laissez votre e-mail et nous vous préviendrons dès son retour en stock.",
+      "bis_email_label": "Adresse e-mail",
+      "bis_button": "Prévenez-moi de son retour",
+      "bis_newsletter": "Tenez-moi aussi informé des nouveautés et promotions.",
+      "bis_success": "C'est noté ! Nous vous écrirons dès son retour en stock."
     },
     "product": {
       "add_to_cart": "Ajouter au panier",

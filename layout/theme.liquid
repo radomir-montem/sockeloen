@@ -554,28 +554,28 @@ if (window.location.href.indexOf("https://sockeloen.com/nl/products/custom-cycli
         platform: "shopify"
         
       });
-      klaviyo.enable("backinstock",{ 
+      klaviyo.enable("backinstock",{
       trigger: {
-        product_page_text: "Notify Me When Available",
+        product_page_text: {{ 'products.v2.notify_me' | t | json }},
         product_page_class: "btn",
         product_page_text_align: "center",
         product_page_margin: "0px",
         replace_anchor: false
       },
       modal: {
-    newsletter_subscribe_label: "Add me to your email list.",
+      newsletter_subscribe_label: {{ 'products.v2.bis_newsletter' | t | json }},
       headline: "{product_name}",
-      body_content: "Register to receive a notification when this item comes back in stock.",
-      email_field_label: "Email",
-      button_label: "Notify me when available",
-      subscription_success_label: "You're in! We'll let you know when it's back.",
+      body_content: {{ 'products.v2.bis_body' | t | json }},
+      email_field_label: {{ 'products.v2.bis_email_label' | t | json }},
+      button_label: {{ 'products.v2.bis_button' | t | json }},
+      subscription_success_label: {{ 'products.v2.bis_success' | t | json }},
       footer_content: '',
-      additional_styles: "@import url('https://fonts.googleapis.com/css?family=Helvetica+Neue');",
+      additional_styles: "#klaviyo-bis-modal #container { border-radius: 12px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 8px 6px; } #klaviyo-bis-modal .modal-title { font-weight: 700; font-size: 22px; } #klaviyo-bis-modal p { font-size: 15px; color: #444; } #klaviyo-bis-modal input[type='email'], #klaviyo-bis-modal input[type='text'] { border-radius: 6px; padding: 12px; font-size: 16px; border: 1px solid #ccc; } #klaviyo-bis-modal form .btn { border-radius: 6px; font-weight: 600; font-size: 16px; padding: 14px 16px; transition: background-color .2s ease; } #klaviyo-bis-modal form .btn:hover { background-color: #F76503 !important; } #klaviyo-bis-modal #newsletter_subscription label { font-size: 14px; color: #444; } #klaviyo-bis-modal .small-print { color: #999; }",
       drop_background_color: "#000",
       background_color: "#fff",
       text_color: "#222",
       button_text_color: "#fff",
-      button_background_color: "#121212",
+      button_background_color: "#0395F6",
       close_button_color: "#ccc",
       error_background_color: "#fcd6d7",
       error_text_color: "#C72E2F",
