@@ -113,7 +113,7 @@
                 endif
               -%}
               {%- if badge_prefix == 'uci' -%}
-                <span class="badge-uci-flag" aria-hidden="true"></span><span class="badge-uci-text">BANNED PRODUCTS</span> {{ badge_rest }}
+                <span class="badge-uci-flag" aria-hidden="true"></span>{{ badge_rest }}
               {%- else -%}
                 {{ badge }}
               {%- endif -%}
@@ -1236,6 +1236,11 @@
                           %}
                           <div class="o_original_{{ product.id }}">
                             {% assign renderComingSoon = product.metafields.custom.coming_soon | default: false %}
+                            {%- comment -%}
+                              When sold out (or coming soon) the add-to-cart button is hidden and
+                              the Klaviyo back-in-stock button takes its place as the single CTA.
+                              A MutationObserver below keeps this in sync on variant change.
+                            {%- endcomment -%}
                             <button
                               type="submit"
                               name="add"
@@ -1245,6 +1250,7 @@
                               class="product-form__submit bg-black font-medium tracking-[0.02em] uppercase button button--full-width button--primary"
                               {% if product.selected_or_first_available_variant.available == false or renderComingSoon %}
                                 disabled
+                                style="display: none;"
                               {% endif %}
                             >
                               <span>
@@ -1334,14 +1340,60 @@
                   </div>
                 {%- endif -%}
 
+                {%- comment -%}
+                  Klaviyo back-in-stock trigger. Klaviyo's onsite.js (loaded in
+                  theme.liquid) opens the signup modal on click and sends the
+                  notification email via the existing Klaviyo flow. Initial
+                  visibility is rendered server-side; global.js
+                  displayOutOfStockNotification() keeps it in sync on variant change.
+                {%- endcomment -%}
+                {%- assign bis_coming_soon = product.metafields.custom.coming_soon | default: false -%}
+                {%- assign bis_sold_out = false -%}
+                {%- if product.selected_or_first_available_variant.available == false or bis_coming_soon -%}
+                  {%- assign bis_sold_out = true -%}
+                {%- endif -%}
                 <a
-                  style="display: none;"
+                  style="{% if bis_sold_out %}display: flex;{% else %}display: none;{% endif %}"
                   id="out-of-stock"
                   class="klaviyo-bis-trigger bg-black font-medium tracking-[0.02em] uppercase button w-full button--primary !mb-0"
                   href="#"
                 >
-                  {{ 'products.v2.notify_me' | t }}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                  </svg>
+                  <span>{{ 'products.v2.notify_me' | t }}</span>
                 </a>
+                <div
+                  class="product-v2__notify-sub"
+                  id="notify-sub-{{ section.id }}"
+                  style="{% if bis_sold_out %}display: block;{% else %}display: none;{% endif %}"
+                >
+                  {{ 'products.v2.notify_me_sub' | t }}
+                </div>
+                <script>
+                  (function() {
+                    /* Keep the merged CTA in sync: when the back-in-stock button is
+                       visible (variant sold out), hide the add-to-cart button and
+                       show the microcopy — and vice versa. global.js toggles
+                       #out-of-stock on variant change; we observe that. */
+                    function syncSoldOutCta() {
+                      var notify = document.getElementById('out-of-stock');
+                      if (!notify) return;
+                      var soldOut = notify.style.display !== 'none';
+                      var form = document.getElementById('product-form-{{ section.id }}');
+                      var atc = form ? form.querySelector('button[name="add"]') : null;
+                      if (atc) atc.style.display = soldOut ? 'none' : '';
+                      var sub = document.getElementById('notify-sub-{{ section.id }}');
+                      if (sub) sub.style.display = soldOut ? 'block' : 'none';
+                    }
+                    var notify = document.getElementById('out-of-stock');
+                    if (notify) {
+                      new MutationObserver(syncSoldOutCta).observe(notify, { attributes: true, attributeFilter: ['style'] });
+                    }
+                    syncSoldOutCta();
+                  })();
+                </script>
 
               </div>
 
