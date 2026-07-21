@@ -1525,6 +1525,13 @@
         "info": "Only used when Second Tier Type is 'Free Gift'. Customers choose one free product from this collection once the threshold is reached. Only the first 2 products in the collection are shown."
       },
       {
+        "type": "text",
+        "id": "free_gift_pinned_variants",
+        "label": "Pinned Gift Variant IDs",
+        "info": "Optional: comma-separated variant IDs (in display order) to pin as the gift options, e.g. '49409823637828,49409823473988'. Variants must belong to products in the Free Gift Collection. Unavailable or empty entries fall back to the first available variants.",
+        "default": "49409823637828,49409823473988"
+      },
+      {
         "type": "number",
         "id": "shipping_netherlands_belgium",
         "label": "Shipping value (Netherlands + Belgium)",
