@@ -119,6 +119,9 @@
     "collection_title": "Le nom de votre collection"
   },
   "products": {
+    "v2": {
+      "notify_me": "Prévenez-moi quand disponible"
+    },
     "product": {
       "add_to_cart": "Ajouter au panier",
       "description": "Description",

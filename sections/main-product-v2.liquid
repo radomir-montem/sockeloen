@@ -1334,8 +1334,16 @@
                   </div>
                 {%- endif -%}
 
+                {%- comment -%}
+                  Klaviyo back-in-stock trigger. Klaviyo's onsite.js (loaded in
+                  theme.liquid) opens the signup modal on click and sends the
+                  notification email via the existing Klaviyo flow. Initial
+                  visibility is rendered server-side; global.js
+                  displayOutOfStockNotification() keeps it in sync on variant change.
+                {%- endcomment -%}
+                {%- assign bis_coming_soon = product.metafields.custom.coming_soon | default: false -%}
                 <a
-                  style="display: none;"
+                  style="{% if product.selected_or_first_available_variant.available and bis_coming_soon == false %}display: none;{% else %}display: flex;{% endif %}"
                   id="out-of-stock"
                   class="klaviyo-bis-trigger bg-black font-medium tracking-[0.02em] uppercase button w-full button--primary !mb-0"
                   href="#"
