@@ -19,6 +19,10 @@
             "color_swatch_style": "images"
           }
         },
+        "aov_ai_bundle_offer_volume_RqqnNt": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
@@ -51,10 +55,6 @@
             "page": "",
             "logos_size": 26
           }
-        },
-        "aov_ai_bundle_offer_volume_RqqnNt": {
-          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
-          "settings": {}
         }
       },
       "block_order": [
@@ -68,14 +68,14 @@
       ],
       "settings": {
         "social_proof_type": "athletes",
-        "sp_athlete_1_name": "Emiel Berghout",
-        "sp_avatar_1": "shopify://shop_images/channels4_profile.jpg",
+        "sp_athlete_1_name": "Annette Visser",
+        "sp_avatar_1": "shopify://shop_images/Scherm_afbeelding_2026-07-23_om_11.52.01.png",
         "sp_athlete_1_link": "",
-        "sp_athlete_2_name": "Riejanne Markus",
-        "sp_avatar_2": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.31.03.png",
+        "sp_athlete_2_name": "Friso Thuijs",
+        "sp_avatar_2": "shopify://shop_images/Scherm_afbeelding_2026-07-23_om_12.08.02.png",
         "sp_athlete_2_link": "",
-        "sp_athlete_3_name": "Emiel Berghout",
-        "sp_avatar_3": "shopify://shop_images/Scherm_afbeelding_2026-03-21_om_23.31.47.png",
+        "sp_athlete_3_name": "Tom Oosterdijk",
+        "sp_avatar_3": "shopify://shop_images/Scherm_afbeelding_2026-07-23_om_12.09.53.png",
         "sp_athlete_3_link": "",
         "sp_verified_badge": true,
         "sp_follower_count": "78.342",
@@ -127,17 +127,17 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/251028_SOCKELOEN_RUNNING_ANGUS_FRASER_STUDIO_0242.jpg",
+            "image": "shopify://shop_images/Scherm_afbeelding_2026-07-23_om_11.52.01.png",
             "heading": "Worn by",
-            "heading_italic": "Top Runners",
-            "description": "<p>From the track to the marathon — some very good runners choose Sockeloen. Because every step counts, and the right sock makes the difference.</p>"
+            "heading_italic": "Top Triathletes",
+            "description": "<p>From the Ironman to nationals, some of the best Triathletes choose Sockeloen. Because every watt counts, and the right sock makes a difference.</p>"
           }
         },
         "benefit_BKLxKT": {
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/251028_SOCKELOEN_RUNNING_ANGUS_FRASER_STUDIO_0265.jpg",
+            "image": "shopify://shop_images/IMG_0511.jpg",
             "heading": "Make your calves look ",
             "heading_italic": "like Weapons.",
             "description": "<p>The reason Sockeloen was founded. Most cycling socks didn't have the right sock height. And maybe even worse, some tend to fall down to your ankles. A nightmare. So our running socks couldn't be left behind. We developed a very stretchable running sock, with the perfect sock height, that never falls down. Make your legs look like the weapons they really are.</p>"
@@ -147,10 +147,10 @@
           "type": "benefit",
           "settings": {
             "video_url": "",
-            "image": "shopify://shop_images/251028_SOCKELOEN_RUNNING_ANGUS_FRASER_STUDIO_0293.jpg",
-            "heading": "This is",
-            "heading_italic": "what you need.",
-            "description": "<p>When you want to run comfortable, without pressure points, sweaty or painful feet: Sockeloen running socks are what you need.</p>"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-01_at_15.43.25.jpg",
+            "heading": "proven",
+            "heading_italic": "In the windtunnel",
+            "description": "<p>No marketing BS, real numbers, proven in the windtunnels of Silverstone and Eindhoven.</p>"
           }
         }
       },
