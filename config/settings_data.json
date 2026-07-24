@@ -741,6 +741,11 @@
         "type": "shopify://apps/aov-ai-free-gift-bxgy/blocks/app-embed-free-gift/de98edfe-90fa-4145-8a57-1055e0058723",
         "disabled": false,
         "settings": {}
+      },
+      "7002299155580658037": {
+        "type": "shopify://apps/reamaze-live-chat-helpdesk/blocks/reamaze-config/ef7a830c-d722-47c6-883b-11db06c95733",
+        "disabled": true,
+        "settings": {}
       }
     }
   },
