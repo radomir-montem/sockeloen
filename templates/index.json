@@ -46,9 +46,9 @@
       ],
       "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/CUSTOM.SOCKS.banner.png",
-        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_6fe30e01-0264-44da-bac7-870afc3655ba.png",
-        "image_overlay_opacity": 30,
+        "image": "shopify://shop_images/250514_SOCKELOEN_SS25_Angus_Fraser_Studio_000994.jpg",
+        "image_mobile": "shopify://shop_images/250514_SOCKELOEN_SS25_Angus_Fraser_Studio_001014.png",
+        "image_overlay_opacity": 50,
         "banner_image_height": 700,
         "image_height_mobile": 650,
         "adapt_height_first_image": false,
