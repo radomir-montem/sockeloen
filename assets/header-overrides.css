@@ -33,15 +33,17 @@
 
 #announcement-bar .announcement-bar,
 #announcement-bar .announcement-bar.gradient {
-  /* Solid dark (matches the warehouse-clearance sale bar) — solid, not
-     glass: backdrop-filter on this bar interacts badly with the fade
-     animations on the inner message on iOS Safari (the bar appears to
-     "disappear" after the first class-cycle tick). */
-  background: #1a1a1a !important;
-  background-color: #1a1a1a !important;
+  /* Dark glass: translucent black so the page reads through slightly.
+     The blur itself lives on the ::before layer below — putting
+     backdrop-filter directly on this element breaks the fade animations
+     on the inner message on iOS Safari (the bar appears to "disappear"
+     after the first class-cycle tick). */
+  background: rgba(26, 26, 26, 0.62) !important;
+  background-color: rgba(26, 26, 26, 0.62) !important;
   background-image: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  position: relative;
   /* Smaller, tighter radius — matches EME's compact corner style.
      Top corners rounded, bottom flush against the pill beneath. */
   border-radius: 8px 8px 0 0 !important;
@@ -56,6 +58,17 @@
   justify-content: center;
   overflow: hidden;
   box-sizing: border-box;
+}
+/* Blur layer for the dark glass — a non-animated pseudo-element, so the
+   iOS Safari fade-animation bug (see comment above) doesn't trigger. */
+#announcement-bar .announcement-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: blur(21px) saturate(180%);
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
+  border-radius: inherit;
 }
 #announcement-bar .announcement-bar.announcement-bar--sale,
 #announcement-bar .announcement-bar.announcement-bar--sale.gradient {
