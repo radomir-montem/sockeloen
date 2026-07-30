@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Warehouse Clearance",
+            "heading": "get ready for summer",
             "heading_size": "h2",
             "use_h1_tag": false
           }
@@ -23,18 +23,18 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "Only this Week: Buy 3 get 1 free",
+            "text": "make your legs look like weapons",
             "text_style": "subtitle"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "",
+            "button_label_1": "top 8 - best sellers",
             "button_link_1": "shopify://collections/best-sellers-1",
             "button_style_secondary_1": true,
-            "button_label_2": "Shop here",
-            "button_link_2": "shopify://collections/warehouse-sale",
+            "button_label_2": "",
+            "button_link_2": "shopify://collections/cycling-socks",
             "button_style_secondary_2": false
           }
         }
@@ -46,10 +46,10 @@
       ],
       "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/1200x800_UCI_Banners_3.jpg",
-        "image_mobile": "shopify://shop_images/1200x800_UCI_Banners_3.jpg",
-        "image_overlay_opacity": 50,
-        "banner_image_height": 800,
+        "image": "shopify://shop_images/CUSTOM.SOCKS.banner.png",
+        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_6fe30e01-0264-44da-bac7-870afc3655ba.png",
+        "image_overlay_opacity": 30,
+        "banner_image_height": 700,
         "image_height_mobile": 650,
         "adapt_height_first_image": false,
         "desktop_content_position": "bottom-center",

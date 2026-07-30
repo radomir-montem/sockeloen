@@ -565,16 +565,7 @@ a.product-v2__sp-avatar {
   gap: 6px !important;
 }
 /* UCI flag mark removed on legal request from the UCI (2026-07) — do not
-   reintroduce it. A plain red label keeps the same footprint. */
-.product-v2 .Avada-Volume__HeaderTitle-Text::before {
-  content: '';
-  display: inline-block;
-  width: 12px;
-  height: 9px;
-  flex-shrink: 0;
-  background: #A12D00;
-  border-radius: 2px;
-}
+   reintroduce it. Campaign over: no label before the widget title. */
 
 .product-v2 .Avada-Volume__HeaderDescription {
   font-size: 13px !important;
@@ -768,16 +759,7 @@ a.product-v2__sp-avatar {
   white-space: nowrap !important;
 }
 /* UCI flag mark removed on legal request from the UCI (2026-07) — do not
-   reintroduce it. A plain red label keeps the same footprint. */
-.product-v2 .Avada-VolumeBoxBadge::before {
-  content: '';
-  display: inline-block;
-  width: 11px;
-  height: 9px;
-  flex-shrink: 0;
-  background: #A12D00;
-  border-radius: 2px;
-}
+   reintroduce it. Campaign over: no label before the badge text. */
 
 /* Shipping date — bold black for date, orange for countdown */
 .product-v2 .shipping-text .ship-date {
