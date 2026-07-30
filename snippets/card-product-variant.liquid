@@ -391,29 +391,12 @@
             {%- endif -%}
           </div>
         {%- endif -%}
-        {%- liquid
-          assign has_uci_badge = false
-          for badge in product.metafields.custom.badge.value
-            assign badge_prefix_check = badge | slice: 0, 3 | downcase
-            if badge_prefix_check == 'uci'
-              assign has_uci_badge = true
-            endif
-          endfor
-
-          comment
-            Every product in the warehouse clearance collection gets the
-            red-label sale badge automatically, so the collection can be
-            curated in Admin without per-product badge metafields.
-          endcomment
-          assign in_warehouse_sale = false
-          for wc_collection in product.collections
-            if wc_collection.handle == 'warehouse-sale'
-              assign in_warehouse_sale = true
-              break
-            endif
-          endfor
-          assign metafield_badge_count = product.metafields.custom.badge.value | size | default: 0
-        -%}
+        {%- comment -%}
+          Campaign over: badges render normally again. Metafield badge
+          values starting with "uci" are permanently skipped — the UCI
+          name/flag were removed on legal request from the UCI (2026-07)
+          and the raw metafield texts must never resurface.
+        {%- endcomment -%}
         <div class="absolute top-[15px] left-[12px] card-badge product-variant">
           {%- unless soldout -%}
               <span
@@ -439,7 +422,8 @@
           {%- endunless -%}
           {% for badge in product.metafields.custom.badge.value %}
             {%- assign badge_prefix = badge | slice: 0, 3 | downcase -%}
-            {% unless badge_prefix != 'uci' and badge contains '-' and badge contains '%' %}
+            {%- if badge_prefix == 'uci' -%}{% continue %}{%- endif -%}
+            {% unless badge contains '-' and badge contains '%' %}
                 <span
                   id="Badge-{{ section_id }}-{{ card_product.id }}"
                   class="badge badge--bottom-left uppercase mr-[6px]"
@@ -453,37 +437,11 @@
                     style="background-color: {{ settings.sold_out_badge_color }};"
                   {% endif %}
                 >
-                  {%- comment -%}
-                    "UCI" prefix in metafield values is replaced with
-                    "TDF" at render — the UCI name/flag were removed on
-                    legal request from the UCI (2026-07); do not
-                    reintroduce. Yellow label keeps the flag footprint.
-                  {%- endcomment -%}
-                  {%- if badge_prefix == 'uci' -%}
-                    <span class="badge-uci-flag" aria-hidden="true"></span>{{ badge | slice: 3, 999 | lstrip }}
-                  {%- elsif in_warehouse_sale -%}
-                    {%- comment -%}
-                      Warehouse clearance products with their own (non-uci)
-                      badge metafield get the same sale styling: red label
-                      + "sale" prefix merged into one badge.
-                    {%- endcomment -%}
-                    <span class="badge-uci-flag" aria-hidden="true"></span>sale {{ badge }}
-                  {%- else -%}
-                    {{ badge }}
-                  {%- endif -%}
+                  {{ badge }}
                 </span>
             {% endunless %}
           {% endfor %}
-          {% if in_warehouse_sale and has_uci_badge == false and metafield_badge_count == 0 %}
-            <span
-              id="Badge-{{ section_id }}-{{ card_product.id }}"
-              class="badge badge--bottom-left uppercase mr-[6px]"
-              style="background-color: {{ settings.sold_out_badge_color }};"
-            >
-              <span class="badge-uci-flag" aria-hidden="true"></span>sale
-            </span>
-          {% endif %}
-          {% if product.compare_at_price > product.price and product.metafields.custom.show_from_text == blank and has_uci_badge == false and in_warehouse_sale == false %}
+          {% if product.compare_at_price > product.price and product.metafields.custom.show_from_text == blank %}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left uppercase mr-[6px]"

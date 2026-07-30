@@ -88,6 +88,14 @@
         {%- endif -%}
         {% if showOthersBadges %}
           {% for badge in product.metafields.custom.badge.value %}
+            {%- comment -%}
+              Badge values starting with "uci" are permanently skipped —
+              the UCI name/flag were removed on legal request from the
+              UCI (2026-07) and the raw metafield texts must never
+              resurface.
+            {%- endcomment -%}
+            {%- assign badge_prefix = badge | slice: 0, 3 | downcase -%}
+            {%- if badge_prefix == 'uci' -%}{% continue %}{%- endif -%}
             <span
               id="Badge-{{ section.id }}-{{ product.id }}"
               class="badge badge--bottom-left uppercase mr-[6px] z-50"
@@ -101,22 +109,7 @@
                 style="background-color: {{ settings.sold_out_badge_color }};"
               {% endif %}
             >
-              {%- liquid
-                comment
-                  "UCI" prefix in badge metafield values is stripped on
-                  legal request from the UCI (2026-07) — the flag icon
-                  and UCI wordmark may not be shown.
-                endcomment
-                assign badge_prefix = badge | slice: 0, 3 | downcase
-                if badge_prefix == 'uci'
-                  assign badge_rest = badge | slice: 3, 999 | lstrip
-                endif
-              -%}
-              {%- if badge_prefix == 'uci' -%}
-                <span class="badge-uci-flag" aria-hidden="true"></span>{{ badge_rest }}
-              {%- else -%}
-                {{ badge }}
-              {%- endif -%}
+              {{ badge }}
             </span>
           {% endfor %}
         {% endif %}
