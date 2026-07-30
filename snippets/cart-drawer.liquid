@@ -98,9 +98,14 @@
       {%- comment -%} ===== SCROLLABLE AREA: shipping bar + gift widget + items ===== {%- endcomment -%}
       <div class="drawer__scrollable">
 
-      {%- comment -%} ===== FREE SHIPPING BAR ===== {%- endcomment -%}
+      {%- comment -%} ===== FREE SHIPPING BAR =====
+        Always visible — deliberately NOT gated on the Alpine
+        showShippingDetails geolocation flag: that flag depends on an
+        insecure ipstack HTTP call that browsers block on HTTPS, which
+        made the bar disappear for most visitors.
+      {%- endcomment -%}
       {% if cart != empty %}
-        <div class="hide-when-container-is-empty drawer__shipping-bar" x-show="showShippingDetails">
+        <div class="hide-when-container-is-empty drawer__shipping-bar">
           {% render 'free-shipping-progress-bar' %}
         </div>
       {% endif %}

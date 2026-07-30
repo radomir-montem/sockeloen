@@ -62,8 +62,13 @@
       </button>
     </div>
   </div>
+  {%- comment -%}
+    Always visible — deliberately NOT gated on the Alpine
+    showShippingDetails geolocation flag (blocked ipstack HTTP call
+    hid the bar for most visitors).
+  {%- endcomment -%}
   {% if cart != empty %}
-    <div class="mt-0 mb-16 mx-auto max-w-[500px] shipping-details-container" x-show="showShippingDetails">
+    <div class="mt-0 mb-16 mx-auto max-w-[500px] shipping-details-container">
       {% render 'free-shipping-progress-bar', classes: 'text-center' %}
     </div>
   {% endif %}
