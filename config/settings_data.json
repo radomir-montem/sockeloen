@@ -160,17 +160,6 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
-          "announcement_tN3KHP": {
-            "type": "announcement",
-            "settings": {
-              "text": "Welcome to our store",
-              "usd_text": "FREE SHIPPING > $150 // BORN IN THE PELOTON // 100% SATISFACTION // CUSTOMER IS KING //",
-              "text_alignment": "center",
-              "bg_color": "#000000",
-              "font_color": "#ffffff",
-              "link": ""
-            }
-          },
           "announcement_6R9may": {
             "type": "announcement",
             "disabled": true,
@@ -178,7 +167,7 @@
               "text": "end of winter sale >",
               "usd_text": "FREE SHIPPING > $150 // BORN IN THE PELOTON // 100% SATISFACTION // CUSTOMER IS KING //",
               "text_alignment": "center",
-              "bg_color": "#000000",
+              "bg_color": "#1a1a1a",
               "font_color": "#ffffff",
               "link": "shopify://collections/all-weather-essentials"
             }
@@ -190,7 +179,7 @@
               "text": "born in the peloton // 100% satisfaction // customer = king  // free shipping on orders > 75,-",
               "usd_text": "born in the peloton // 100% satisfaction // customer = king",
               "text_alignment": "center",
-              "bg_color": "#f76503",
+              "bg_color": "#1a1a1a",
               "font_color": "#ffffff",
               "link": ""
             }
@@ -201,14 +190,13 @@
               "text": "free shipping on all orders above 75",
               "usd_text": "free shipping on all orders above 100",
               "text_alignment": "center",
-              "bg_color": "#f76503",
+              "bg_color": "#1a1a1a",
               "font_color": "#ffffff",
               "link": "shopify://policies/shipping-policy"
             }
           }
         },
         "block_order": [
-          "announcement_tN3KHP",
           "announcement_6R9may",
           "announcement_RXnatL",
           "announcement-bar-0"
