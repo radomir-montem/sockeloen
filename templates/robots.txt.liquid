@@ -1,0 +1,37 @@
+{%- comment -%}
+  Custom robots.txt: reproduces all of Shopify's default rules via
+  robots.default_groups, then adds explicitly named groups for OpenAI's
+  crawlers. Like Google's adsbot, OAI-AdsBot ignores robots.txt rules
+  unless its user-agent is specifically named — a wildcard group is not
+  enough for ad landing-page review (required for OpenAI ads approval;
+  no manual bypass exists). OAI-SearchBot is recommended for ChatGPT
+  search visibility.
+{%- endcomment -%}
+{%- for group in robots.default_groups -%}
+{{ group.user_agent }}
+{% for rule in group.rules -%}
+{{ rule }}
+{% endfor -%}
+{%- if group.sitemap != blank -%}
+{{ group.sitemap }}
+{% endif %}
+{% endfor -%}
+# OpenAI ads landing-page crawler — must be named explicitly
+User-agent: OAI-AdsBot
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /checkout
+Disallow: /checkouts/
+Disallow: /orders
+Disallow: /account
+
+# OpenAI search crawler (ChatGPT search visibility)
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /checkout
+Disallow: /checkouts/
+Disallow: /orders
+Disallow: /account
