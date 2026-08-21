@@ -1,5 +1,7 @@
 {% assign coming_soon = product.metafields.custom.coming_soon | default: false %}
 
+{% render 'product-structured-data', product: product %}
+
 <section
   id="MainProduct-{{ section.id }}"
   class="page-width section-{{ section.id }}-padding product-section"
