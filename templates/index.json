@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "get ready for summer",
+            "heading": "get ready for autumn",
             "heading_size": "h2",
             "use_h1_tag": false
           }
@@ -23,15 +23,15 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "explore our new summer socks",
+            "text": "stays alway white, keeps feet dry and seriously stylish",
             "text_style": "subtitle"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "top 8 - best sellers",
-            "button_link_1": "shopify://collections/best-sellers-1",
+            "button_label_1": "shop del crosso",
+            "button_link_1": "shopify://products/aero-shoe-cover-del-crosso",
             "button_style_secondary_1": true,
             "button_label_2": "",
             "button_link_2": "shopify://collections/cycling-socks",
@@ -47,7 +47,7 @@
       "custom_css": [],
       "settings": {
         "image": "shopify://shop_images/250514_SOCKELOEN_SS25_Angus_Fraser_Studio_000994.jpg",
-        "image_mobile": "shopify://shop_images/250514_SOCKELOEN_SS25_Angus_Fraser_Studio_001014.png",
+        "image_mobile": "shopify://shop_images/unnamed_6.jpg",
         "image_overlay_opacity": 50,
         "banner_image_height": 700,
         "image_height_mobile": 650,
