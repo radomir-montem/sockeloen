@@ -23,14 +23,14 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "stays alway white,, keeps feet dry and seriously stylish",
+            "text": "Keep your feet dry, clean and look stylish with the best shoecovers out there.",
             "text_style": "subtitle"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "del crosso overshoe",
+            "button_label_1": "",
             "button_link_1": "shopify://products/aero-shoe-cover-del-crosso",
             "button_style_secondary_1": true,
             "button_label_2": "shop all overshoes",
