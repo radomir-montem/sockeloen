@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "get ready for autumn",
+            "heading": "no more dirty and wet shoes",
             "heading_size": "h2",
             "use_h1_tag": false
           }
@@ -23,18 +23,18 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "stays alway white, keeps feet dry and seriously stylish",
+            "text": "stays alway white,, keeps feet dry and seriously stylish",
             "text_style": "subtitle"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "shop del crosso",
+            "button_label_1": "del crosso overshoe",
             "button_link_1": "shopify://products/aero-shoe-cover-del-crosso",
             "button_style_secondary_1": true,
-            "button_label_2": "top 8 - best sellers",
-            "button_link_2": "shopify://collections/best-sellers-1",
+            "button_label_2": "shop all overshoes",
+            "button_link_2": "shopify://collections/cycling-overshoes",
             "button_style_secondary_2": false
           }
         }
@@ -46,13 +46,13 @@
       ],
       "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/homepage_banner_1200x800_e4d6fe87-9ebc-4a6b-a50f-694c9a528e84.jpg",
-        "image_mobile": "shopify://shop_images/unnamed_6.jpg",
-        "image_overlay_opacity": 50,
+        "image": "shopify://shop_images/bg.delcrosso.png",
+        "image_mobile": "shopify://shop_images/bg.delcrosso.mobile.png",
+        "image_overlay_opacity": 20,
         "banner_image_height": 700,
         "image_height_mobile": 650,
         "adapt_height_first_image": false,
-        "desktop_content_position": "bottom-center",
+        "desktop_content_position": "middle-left",
         "show_text_box": false,
         "desktop_content_alignment": "center",
         "color_scheme": "accent-2",
