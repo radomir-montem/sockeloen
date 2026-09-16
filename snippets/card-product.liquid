@@ -306,19 +306,20 @@
               </span>
             {% endunless %}
           {% endfor %}
-          {% if card_product.compare_at_price > card_product.price and card_product.metafields.custom.show_from_text == blank %}
+          {% liquid
+            assign percent = 0
+            if card_product.compare_at_price > card_product.price and card_product.metafields.custom.show_from_text == blank
+              assign save_price = card_product.compare_at_price | minus: card_product.price
+              assign percent = save_price | times: 100.0 | divided_by: card_product.compare_at_price | ceil
+            endif
+          %}
+          {% comment %} Discount badge only from 10% up: small percentages signal little and clutter the tile. {% endcomment %}
+          {% if percent >= 10 %}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left uppercase mr-[6px]"
               style="background-color: #C0543F;"
-            >
-              {% liquid
-                assign save_price = card_product.compare_at_price | minus: card_product.price
-                assign percent = save_price | times: 100.0 | divided_by: card_product.compare_at_price | ceil 
-                assign text = '-' | append: percent | append: '%'
-                echo text
-              %}
-            </span>
+            >-{{ percent }}%</span>
           {% endif %}
         </div>
       </div>

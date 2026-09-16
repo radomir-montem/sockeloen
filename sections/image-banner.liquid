@@ -297,6 +297,20 @@
       }}
     </div>
   {%- endif -%}
+  {%- if section.settings.show_mobile_cats -%}
+    {%- comment -%} Ekster-style category bar, mobile only, sits just under the floating header {%- endcomment -%}
+    <nav class="banner-cats" aria-label="Categories">
+      {%- for i in (1..3) -%}
+        {%- assign lbl_key = 'cat_' | append: i | append: '_label' -%}
+        {%- assign url_key = 'cat_' | append: i | append: '_link' -%}
+        {%- assign lbl = section.settings[lbl_key] -%}
+        {%- assign url = section.settings[url_key] -%}
+        {%- if lbl != blank -%}
+          <a class="banner-cats__item" href="{{ url | default: '#' }}">{{ lbl | escape }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
   <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width">
     <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
       {%- for block in section.blocks -%}
@@ -581,6 +595,18 @@
       "default": true,
       "label": "t:sections.image-banner.settings.show_text_below.label"
     },
+    {
+      "type": "header",
+      "content": "Mobile category bar",
+      "info": "Three text links shown under the header on mobile only (Ekster style)."
+    },
+    { "type": "checkbox", "id": "show_mobile_cats", "label": "Show mobile category bar", "default": false },
+    { "type": "text", "id": "cat_1_label", "label": "Category 1 label", "default": "socks" },
+    { "type": "url", "id": "cat_1_link", "label": "Category 1 link" },
+    { "type": "text", "id": "cat_2_label", "label": "Category 2 label", "default": "overshoes" },
+    { "type": "url", "id": "cat_2_link", "label": "Category 2 link" },
+    { "type": "text", "id": "cat_3_label", "label": "Category 3 label", "default": "gloves" },
+    { "type": "url", "id": "cat_3_link", "label": "Category 3 link" },
     {
       "type": "header",
       "content": "Social proof",

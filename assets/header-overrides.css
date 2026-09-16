@@ -4091,3 +4091,181 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
 .mega-menu-v2-grid--products {
   gap: 12px !important;
 }
+
+/* ============================================================
+   HOMEPAGE BRAND SYSTEM (dev preview) — casing, buttons, radius, colour
+   ============================================================ */
+/* Casing: lowercase everything except wordmarks. Brand/acronym tiles in
+   column-image-and-section (SOCKELOEN / FSOTP / KNWU) are left alone. */
+header.header .header__menu-item,
+header.header .list-menu__item,
+.mega-menu-v2-panel .mega-menu-v2-cat,
+.mega-menu-v2-panel .mega-menu-v2-card-title,
+body.template--index #MainContent h1:not(.column-heading),
+body.template--index #MainContent h2:not(.column-heading),
+body.template--index #MainContent h3:not(.column-heading),
+body.template--index #MainContent .banner__heading,
+body.template--index #MainContent .banner__text,
+body.template--index #MainContent .fc-title__heading,
+body.template--index #MainContent .button,
+body.template--index #MainContent .regular-button,
+body.template--index #MainContent [class*="sales-"] a.inline-flex,
+body.template--index #MainContent .rich-text__heading,
+body.template--index #MainContent .csh__title,
+body.template--index #MainContent .banner-cats__item {
+  text-transform: lowercase !important;
+}
+
+/* Buttons: two styles only. Solid (black on light sections, white on dark)
+   for a section's primary action; glass on photography. 8px radius all. */
+body.template--index #MainContent .button,
+body.template--index #MainContent .regular-button,
+body.template--index #MainContent [class*="sales-"] a.inline-flex {
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  padding: 14px 24px !important;
+  line-height: 1.2 !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+/* solid black: rich-text CTAs on white */
+body.template--index #MainContent .rich-text .button,
+body.template--index #MainContent .rich-text .button--primary,
+body.template--index #MainContent .rich-text .button--secondary {
+  background: #111 !important;
+  color: #fff !important;
+  border: 1px solid #111 !important;
+  box-shadow: none !important;
+}
+/* solid white on the dark brand block (was orange) */
+body.template--index #MainContent [class*="sales-"] .text-alignment a.inline-flex {
+  background: #fff !important;
+  color: #111 !important;
+  border: 1px solid #fff !important;
+}
+/* glass on photography: grey block "shop here" button */
+body.template--index #MainContent .regular-button {
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Radius: 4px on category tiles (cards/badges already 4px above), 8px on
+   buttons and header, 0 on the hero. */
+body.template--index #MainContent .column-img-item,
+body.template--index #MainContent [class*="column-img"] .relative,
+body.template--index #MainContent [class*="column-img"] img,
+body.template--index #MainContent [class*="sales-"] > .relative,
+body.template--index #MainContent [class*="sales-"] > .relative img,
+body.template--index #MainContent [class*="two-cols-"],
+body.template--index #MainContent [class*="two-cols-"] img {
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+
+/* Mobile hero: no extra downward shift of the content box — it pushed the
+   button under the best sellers sheet on phones. */
+@media screen and (max-width: 749px) {
+  body.template--index .banner__box {
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   Mobile category bar (Ekster-style) — image banner
+   Three equal text links directly under the floating header pill:
+   header bottom 92px + 8px gap, same 12px inset as the pill.
+   ============================================================ */
+.banner-cats { display: none; }
+@media screen and (max-width: 749px) {
+  .banner-cats {
+    display: flex;
+    position: absolute;
+    top: 100px;
+    left: 12px;
+    right: 12px;
+    z-index: 3;
+    padding: 0 4px;
+  }
+  .banner-cats::after {
+    content: '';
+    position: absolute;
+    left: 4px; right: 4px; bottom: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .banner-cats__item {
+    flex: 1 1 0;
+    display: block;
+    text-align: center;
+    padding: 12px 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* ============================================================
+   Sticky title image block (custom socks) — emestudios "Back in Stock"
+   Section = 100svh with the image absolutely filling it; the title wrap
+   is position:sticky at 50svh so it pins mid-viewport while the image
+   scrolls, then leaves with the section. Type sizes/tracking/leading
+   copied from Eme's breakpoints (56 / 108 / 128 / 180 / 216 px).
+   ============================================================ */
+.csh {
+  position: relative;
+  width: 100%;
+  height: var(--csh-height, 100svh);
+  min-height: 420px;
+  background: #111;
+}
+.csh__link { display: block; height: 100%; color: inherit; text-decoration: none; }
+.csh__media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.csh__img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0 !important; }
+.csh__img--mobile { display: none; }
+@media screen and (max-width: 749px) {
+  .csh__img--desktop { display: none; }
+  .csh__img--mobile { display: block; }
+}
+.csh__title-wrap {
+  position: sticky;
+  top: 50svh;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 24px 0;
+}
+@media screen and (min-width: 640px) { .csh__title-wrap { padding: 40px 0; } }
+.csh__title {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-heading-family);
+  font-weight: 500;
+  text-align: center;
+  font-size: 56px;
+  line-height: 48px;
+  letter-spacing: -0.035em;
+}
+@media screen and (min-width: 768px)  { .csh__title { font-size: 108px; line-height: 96px; } }
+@media screen and (min-width: 1024px) { .csh__title { font-size: 128px; line-height: 112px; } }
+@media screen and (min-width: 1280px) { .csh__title { font-size: 180px; line-height: 156px; letter-spacing: -0.045em; } }
+@media screen and (min-width: 1536px) { .csh__title { font-size: 216px; line-height: 188px; letter-spacing: -0.046em; } }
+
+/* ============================================================
+   SEO text block at the bottom (rich-text section keyed "seo_text")
+   Quiet, left-aligned, small type: it is there for search engines and
+   the snippet, not as a hero.
+   ============================================================ */
+[id$="__seo_text"] .rich-text__wrapper { max-width: 760px; margin: 0; }
+[id$="__seo_text"] .rich-text__heading { font-size: 20px !important; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+[id$="__seo_text"] .rich-text__text { font-size: 13px; line-height: 1.6; color: rgba(18, 18, 18, 0.75); }
+[id$="__seo_text"] .rich-text__text a { text-decoration: underline; }
+[id$="__seo_text"] .rich-text__buttons { margin-top: 16px; }
