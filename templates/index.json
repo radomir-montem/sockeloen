@@ -870,11 +870,30 @@
       "settings": {
         "font_size": 26
       }
+    },
+    "featured_collection_knwu": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Sockeloen x KNWU",
+        "show_title": true,
+        "collection": "sockeloen-x-knwu",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "disable_padding": false,
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "variant_filter": "KNWU"
+      }
     }
   },
   "order": [
     "image_banner",
     "featured_collection",
+    "featured_collection_knwu",
     "rich_text_BAQBfh",
     "rich_text_aqpE7M",
     "d87b5960-1f92-48c4-8223-cc52b7b532cf",

@@ -30,16 +30,46 @@
     <div>
       <div class="grid grid-cols-2 md:grid-cols-4 contains-card--product{% if settings.card_style == 'standard' %} contains-card--standard{% endif %} grid--{{ section.settings.columns_desktop }}-col-desktop{% if section.settings.collection == blank %} grid--2-col-tablet-down{% else %} grid--{{ section.settings.columns_mobile }}-col-tablet-down{% endif %}">
         {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+          {%- liquid
+            # Variant filter: show the first variant whose title contains the
+            # configured text (e.g. "KNWU"); products without one fall back
+            # to their default card.
+            assign match_variant = nil
+            if section.settings.variant_filter != blank
+              assign needle = section.settings.variant_filter | downcase | strip
+              for v in product.variants
+                assign vt = v.title | downcase
+                if vt contains needle
+                  assign match_variant = v
+                  break
+                endif
+              endfor
+            endif
+          -%}
           <div>
-            {% render 'card-product',
-              card_product: product,
-              media_aspect_ratio: section.settings.image_ratio,
-              show_secondary_image: section.settings.show_secondary_image,
-              show_vendor: section.settings.show_vendor,
-              show_rating: section.settings.show_rating,
-              show_quick_add: section.settings.enable_quick_add,
-              section_id: section.id
-            %}
+            {%- if match_variant -%}
+              {% render 'card-product-variant',
+                card_product: match_variant,
+                product: product,
+                title: product.title,
+                media_aspect_ratio: section.settings.image_ratio,
+                show_secondary_image: section.settings.show_secondary_image,
+                show_vendor: section.settings.show_vendor,
+                show_rating: section.settings.show_rating,
+                show_quick_add: section.settings.enable_quick_add,
+                section_id: section.id
+              %}
+            {%- else -%}
+              {% render 'card-product',
+                card_product: product,
+                media_aspect_ratio: section.settings.image_ratio,
+                show_secondary_image: section.settings.show_secondary_image,
+                show_vendor: section.settings.show_vendor,
+                show_rating: section.settings.show_rating,
+                show_quick_add: section.settings.enable_quick_add,
+                section_id: section.id
+              %}
+            {%- endif -%}
           </div>
         {%- else -%}
           {%- for i in (1..4) -%}
@@ -76,6 +106,12 @@
       "type": "collection",
       "id": "collection",
       "label": "t:sections.featured-collection.settings.collection.label"
+    },
+    {
+      "type": "text",
+      "id": "variant_filter",
+      "label": "Show variant containing",
+      "info": "e.g. KNWU — each product shows its first variant whose colour/title contains this text (image, price and link). Products without one show their default."
     },
     {
       "type": "range",
