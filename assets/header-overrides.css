@@ -4527,3 +4527,28 @@ body.template--index #MainContent .collection { background: #fff !important; }
   }
   body.template--index .banner__buttons { width: 100% !important; }
 }
+/* Sticky banner label pill = hero glass button styling */
+body.template--index .tcs-eme__pill {
+  padding: 14px 24px !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+body.template--index .tcs-eme__item:hover .tcs-eme__pill {
+  background: rgba(255, 255, 255, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+body.template--index .tcs-eme__label {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.2 !important;
+}
+@media screen and (max-width: 749px) {
+  body.template--index .tcs-eme__overlay { padding: 0 12px; }
+  body.template--index .tcs-eme__pill { width: 100% !important; }
+}
