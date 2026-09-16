@@ -1,7 +1,7 @@
 {%- if section.settings.sticky_scroll -%}
   {%- comment -%} Eme-style: this block pins at the top and the next section slides over it as a rounded white sheet {%- endcomment -%}
   <style>
-    .shopify-section#shopify-section-{{ section.id }} { position: sticky; top: 0; overflow: hidden; }
+    .shopify-section#shopify-section-{{ section.id }} { position: sticky !important; top: 0 !important; overflow: hidden; }
     .shopify-section#shopify-section-{{ section.id }} + .shopify-section {
       position: relative; margin-top: 0 !important; background: #fff;
       border-radius: var(--sheet-radius, 12px) var(--sheet-radius, 12px) 0 0; overflow: hidden;
