@@ -4095,26 +4095,44 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
 /* ============================================================
    HOMEPAGE BRAND SYSTEM (dev preview) — casing, buttons, radius, colour
    ============================================================ */
-/* Casing: lowercase everything except wordmarks. Brand/acronym tiles in
-   column-image-and-section (SOCKELOEN / FSOTP / KNWU) are left alone. */
+/* Casing: SENTENCE CASE everywhere from the announcement bar to the
+   footer. Forced lowercase from base.css and older overrides is switched
+   off so text renders as typed, and block-level text gets an uppercase
+   first letter. Wordmarks (footer SOCKELOEN, brand block titles) keep
+   their typed uppercase. */
+#announcement-bar *,
+#shopify-section-footer *,
+.header *,
 header.header .header__menu-item,
-header.header .list-menu__item,
-.mega-menu-v2-panel .mega-menu-v2-cat,
 .mega-menu-v2-panel .mega-menu-v2-card-title,
-body.template--index #MainContent h1:not(.column-heading),
-body.template--index #MainContent h2:not(.column-heading),
-body.template--index #MainContent h3:not(.column-heading),
-body.template--index #MainContent .banner__heading,
-body.template--index #MainContent .banner__text,
-body.template--index #MainContent .fc-title__heading,
-body.template--index #MainContent .button,
-body.template--index #MainContent .regular-button,
-body.template--index #MainContent [class*="sales-"] a.inline-flex,
-body.template--index #MainContent .rich-text__heading,
-body.template--index #MainContent .csh__title,
-body.template--index #MainContent .banner-cats__item {
-  text-transform: lowercase !important;
+.menu-drawer *,
+.product-card-wrapper .badge,
+.product-card-wrapper .card__content *,
+body.template--index #MainContent :is(h1, h2, h3, h4, p, li, a, span, div, button) {
+  text-transform: none !important;
 }
+.mega-menu-v2-panel .mega-menu-v2-cat { text-transform: capitalize !important; }
+.announcement-bar__message::first-letter,
+#shopify-section-footer h3::first-letter,
+#shopify-section-footer li::first-letter,
+#shopify-section-footer p::first-letter,
+.menu-drawer li::first-letter,
+.menu-drawer [role="tab"]::first-letter,
+.product-card-wrapper .card-title::first-letter,
+.product-card-wrapper .badge::first-letter,
+.mega-menu-v2-card-title::first-letter,
+body.template--index #MainContent :is(h1, h2, h3, h4)::first-letter,
+body.template--index #MainContent .fc-title__heading::first-letter,
+body.template--index #MainContent .csh__title::first-letter,
+body.template--index #MainContent .banner-cats__item::first-letter,
+body.template--index #MainContent .rich-text__text p::first-letter,
+body.template--index #MainContent .banner__text::first-letter {
+  text-transform: uppercase !important;
+}
+/* ::first-letter only works on block containers */
+.product-card-wrapper .badge,
+.menu-drawer [role="tab"] { display: inline-block; }
+body.template--index #MainContent .banner__heading { display: block; }
 
 /* Buttons: two styles only. Solid (black on light sections, white on dark)
    for a section's primary action; glass on photography. 8px radius all. */
@@ -4363,3 +4381,20 @@ body.template--index #MainContent [class*="sales-"] .text-alignment :is(h1, h2, 
     margin-left: 0 !important;
   }
 }
+
+/* ============================================================
+   Announcement bar rotator (Ekster-style vertical slide)
+   ============================================================ */
+#announcement-bar.ann-rotator {
+  overflow: hidden;
+}
+#announcement-bar.ann-rotator .ann-rotator__track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+#announcement-bar.ann-rotator .announcement-bar {
+  flex: 0 0 auto;
+}
+#announcement-bar.ann-rotator .announcement-bar.hidden { display: block !important; }
+#announcement-bar.hidden { display: none !important; }

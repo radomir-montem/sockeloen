@@ -110,18 +110,18 @@
         "sp_align_desktop": "left",
         "sp_align_mobile": "left",
         "show_mobile_cats": true,
-        "cat_1_label": "socks",
+        "cat_1_label": "Socks",
         "cat_1_link": "shopify://collections/cycling-socks",
-        "cat_2_label": "overshoes",
+        "cat_2_label": "Overshoes",
         "cat_2_link": "shopify://collections/cycling-overshoes",
-        "cat_3_label": "gloves",
+        "cat_3_label": "Gloves",
         "cat_3_link": "shopify://collections/cycling-gloves"
       }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "best sellers",
+        "title": "Best sellers",
         "collection": "best-sellers-1",
         "products_to_show": 8,
         "columns_desktop": 4,
@@ -657,7 +657,7 @@
       "settings": {
         "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1_f2234b29-35ac-49bb-94c7-d87c0f5c7949.png",
         "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
-        "title": "custom socks",
+        "title": "Custom socks",
         "link": "shopify://collections/custom-socks",
         "height": 100
       }
@@ -668,20 +668,20 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<p>high performance cycling socks</p>",
+            "heading": "<p>High performance cycling socks</p>",
             "heading_size": "h2"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>sockeloen makes cycling socks, aero socks and shoecovers for riders who care about speed, comfort and style. designed in the netherlands, worn by pro teams and 78,000+ athletes. explore <a href=\"/collections/cycling-socks\">cycling socks</a>, <a href=\"/collections/aero-socks\">aero socks</a>, <a href=\"/collections/cycling-overshoes\">overshoes</a>, <a href=\"/collections/cycling-gloves\">gloves</a> or design your own <a href=\"/collections/custom-socks\">custom socks</a>.</p>"
+            "text": "<p>Sockeloen makes cycling socks, aero socks and shoecovers for riders who care about speed, comfort and style. Designed in the Netherlands, worn by pro teams and 78,000+ athletes. Explore <a href=\"/collections/cycling-socks\">cycling socks</a>, <a href=\"/collections/aero-socks\">aero socks</a>, <a href=\"/collections/cycling-overshoes\">overshoes</a>, <a href=\"/collections/cycling-gloves\">gloves</a> or design your own <a href=\"/collections/custom-socks\">custom socks</a>.</p>"
           }
         },
         "button": {
           "type": "button",
           "settings": {
-            "button_label": "shop all socks",
+            "button_label": "Shop all socks",
             "button_link": "shopify://collections/all-products",
             "button_style_secondary": false,
             "button_label_2": "",

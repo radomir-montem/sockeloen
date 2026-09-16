@@ -147,7 +147,8 @@
   </style>
 {% endif %}
 
-<div id="announcement-bar">
+<div id="announcement-bar"{% unless section.settings.sale_mode %} class="ann-rotator" data-delay="{{ section.settings.autoplay_speed | times: 1000 }}"{% endunless %}>
+  <div class="ann-rotator__track">
   {%- for block in section.blocks -%}
     {%- case block.type -%}
       {%- when 'announcement' -%}
@@ -208,6 +209,7 @@
         </div>
     {%- endcase -%}
   {%- endfor -%}
+  </div>
 </div>
 
 <script>
@@ -222,22 +224,41 @@
     visible and its marquee scrolls without ever being interrupted.
   {%- endcomment -%}
   {%- unless section.settings.sale_mode -%}
-    if(document.querySelectorAll('.announcement-bar').length > 1) {
-      let count = 1, barCount = document.querySelectorAll('.announcement-bar').length;
-      announcementBarInterval = setInterval(function(){
-        document.querySelectorAll('.announcement-bar').forEach((bar, index) => {
-          if(count == index) bar.classList.remove('hidden');
-          else bar.classList.add('hidden');
-        });
-        count++;
-        if(count >= barCount) count = 0;
-      }, Number('{{ section.settings.autoplay_speed | times: 1000 }}'));
-    }
+    (function(){
+      var root = document.getElementById('announcement-bar');
+      var track = root && root.querySelector('.ann-rotator__track');
+      var slides = track ? Array.prototype.slice.call(track.children) : [];
+      if (slides.length < 2) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+      /* vertical loop like Ekster's swiper: clone the first slide to the
+         end, slide up 1s per step, snap back to 0 invisibly after the clone */
+      var clone = slides[0].cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+      var i = 0, h = function(){ return slides[0].offsetHeight; };
+      var go = function(){
+        i++;
+        track.style.transition = 'transform 1000ms ease';
+        track.style.transform = 'translateY(-' + (i * h()) + 'px)';
+        if (i === slides.length) {
+          setTimeout(function(){
+            track.style.transition = 'none';
+            track.style.transform = 'translateY(0)';
+            i = 0;
+          }, 1000);
+        }
+      };
+      announcementBarInterval = setInterval(go, Number(root.getAttribute('data-delay')) || 3500);
+      window.addEventListener('resize', function(){ track.style.transition='none'; track.style.transform='translateY(-' + (i * h()) + 'px)'; });
+    })();
   {%- endunless -%}
 
   document.querySelectorAll('.announcement-bar__close').forEach(btn => {
     btn.addEventListener('click', function(){
       if(announcementBarInterval) clearInterval(announcementBarInterval);
+      var ab = document.getElementById('announcement-bar');
+      if (ab) ab.classList.add('hidden');
       document.querySelectorAll('.announcement-bar').forEach(bar => {
         bar.classList.add('hidden');
       });
@@ -262,10 +283,10 @@
       "type": "range",
       "id": "autoplay_speed",
       "label": "Autoplay speed",
-      "default": 5,
-      "min": 3,
+      "default": 3.5,
+      "min": 2,
       "max": 10,
-      "step": 1,
+      "step": 0.5,
       "unit": "s"
     },
     {
