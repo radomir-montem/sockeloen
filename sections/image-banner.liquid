@@ -1,5 +1,11 @@
   {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign banner_id = 'Banner-' | append: section.id
+  assign heading_block = section.blocks | where: 'type', 'heading' | first
+  assign text_block = section.blocks | where: 'type', 'text' | first
+  assign buttons_block = section.blocks | where: 'type', 'buttons' | first
+-%}
 
 {%- style -%}
 
@@ -13,7 +19,7 @@
   text-transform: none;
 }
 
-/* Algemene button styling */
+/* Algemene button styling (glass / transparant = standaard) */
 #Banner-{{ section.id }} .button {
   font-size: 12px;
   font-weight: 700;
@@ -30,6 +36,127 @@
   background: rgba(255, 255, 255, 0.35) !important;
   border-color: rgba(255, 255, 255, 0.4) !important;
 }
+
+/* ---------- Heading: typografie + uitlijning (theme editor) ---------- */
+{%- if heading_block -%}
+  {%- assign hs = heading_block.settings -%}
+  #Banner-{{ section.id }} .banner__heading {
+    {%- if hs.heading_font_weight != 'default' and hs.heading_font_weight != blank %} font-weight: {{ hs.heading_font_weight }};{% endif -%}
+    {%- if hs.heading_italic %} font-style: italic;{% endif -%}
+    {%- if hs.heading_color != blank %} color: {{ hs.heading_color }};{% endif -%}
+    {%- if hs.heading_letter_spacing != 0 %} letter-spacing: {{ hs.heading_letter_spacing }}px;{% endif -%}
+    {%- if hs.heading_text_transform != 'default' and hs.heading_text_transform != blank %} text-transform: {{ hs.heading_text_transform }};{% endif -%}
+  }
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }} .banner__heading {
+      {%- if hs.heading_font_size_desktop > 0 %} font-size: {{ hs.heading_font_size_desktop }}px;{% endif -%}
+      {%- if hs.heading_line_height_desktop > 0 %} line-height: {{ hs.heading_line_height_desktop }};{% endif -%}
+    }
+  }
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} .banner__heading {
+      {%- if hs.heading_font_size_mobile > 0 %} font-size: {{ hs.heading_font_size_mobile }}px;{% endif -%}
+      {%- if hs.heading_line_height_mobile > 0 %} line-height: {{ hs.heading_line_height_mobile }};{% endif -%}
+    }
+  }
+  {%- render 'banner-element-align', banner_id: banner_id, selector: '.banner__heading', kind: 'heading', align_desktop: hs.heading_align_desktop, align_mobile: hs.heading_align_mobile -%}
+{%- endif -%}
+
+/* ---------- Subtitle / text: typografie + uitlijning ---------- */
+{%- if text_block -%}
+  {%- assign ts = text_block.settings -%}
+  #Banner-{{ section.id }} .banner__text {
+    {%- if ts.text_max_width > 0 %} max-width: {{ ts.text_max_width }}px;{% endif -%}
+    {%- if ts.text_font_weight != 'default' and ts.text_font_weight != blank %} font-weight: {{ ts.text_font_weight }};{% endif -%}
+    {%- if ts.text_italic %} font-style: italic;{% endif -%}
+    {%- if ts.text_color != blank %} color: {{ ts.text_color }};{% endif -%}
+    {%- if ts.text_letter_spacing != 0 %} letter-spacing: {{ ts.text_letter_spacing }}px;{% endif -%}
+    {%- if ts.text_text_transform != 'default' and ts.text_text_transform != blank %} text-transform: {{ ts.text_text_transform }};{% endif -%}
+  }
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }} .banner__text {
+      {%- if ts.text_font_size_desktop > 0 %} font-size: {{ ts.text_font_size_desktop }}px;{% endif -%}
+      {%- if ts.text_line_height_desktop > 0 %} line-height: {{ ts.text_line_height_desktop }};{% endif -%}
+    }
+  }
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} .banner__text {
+      {%- if ts.text_font_size_mobile > 0 %} font-size: {{ ts.text_font_size_mobile }}px;{% endif -%}
+      {%- if ts.text_line_height_mobile > 0 %} line-height: {{ ts.text_line_height_mobile }};{% endif -%}
+    }
+  }
+  {%- render 'banner-element-align', banner_id: banner_id, selector: '.banner__text', kind: 'text', align_desktop: ts.text_align_desktop, align_mobile: ts.text_align_mobile -%}
+{%- endif -%}
+
+/* ---------- Buttons: stijl (glass / solid), tekst + uitlijning ---------- */
+{%- if buttons_block -%}
+  {%- assign bs = buttons_block.settings -%}
+  #Banner-{{ section.id }} .banner__buttons .button {
+    {%- if bs.button_font_weight != 'default' and bs.button_font_weight != blank %} font-weight: {{ bs.button_font_weight }};{% endif -%}
+    {%- if bs.button_letter_spacing != 0 %} letter-spacing: {{ bs.button_letter_spacing }}px;{% endif -%}
+    {%- if bs.button_text_transform != 'default' and bs.button_text_transform != blank %} text-transform: {{ bs.button_text_transform }};{% endif -%}
+  }
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }} .banner__buttons .button {
+      {%- if bs.button_font_size_desktop > 0 %} font-size: {{ bs.button_font_size_desktop }}px;{% endif -%}
+    }
+  }
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} .banner__buttons .button {
+      {%- if bs.button_font_size_mobile > 0 %} font-size: {{ bs.button_font_size_mobile }}px;{% endif -%}
+    }
+  }
+  {%- if bs.button_style == 'solid' -%}
+    {%- assign solid_bg = bs.button_bg_color | default: '#ffffff' -%}
+    {%- assign solid_text = bs.button_text_color | default: '#000000' -%}
+    /* Solid variant: achtergrond en tekstkleur omgewisseld t.o.v. glass.
+       !important + ID-scope zodat dit wint van de hero-glass overrides in
+       header-overrides.css (body.template--index .banner .button). */
+    #Banner-{{ section.id }} .banner__buttons--solid .button {
+      background: {{ solid_bg }} !important;
+      color: {{ solid_text }} !important;
+      border: 1px solid {{ solid_bg }} !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    #Banner-{{ section.id }} .banner__buttons--solid .button:hover {
+      background: {{ solid_bg | color_darken: 8 }} !important;
+      border-color: {{ solid_bg | color_darken: 8 }} !important;
+      color: {{ solid_text }} !important;
+    }
+  {%- endif -%}
+  {%- render 'banner-element-align', banner_id: banner_id, selector: '.banner__buttons', kind: 'buttons', align_desktop: bs.buttons_align_desktop, align_mobile: bs.buttons_align_mobile -%}
+{%- endif -%}
+
+/* ---------- Social proof ---------- */
+{%- if section.settings.show_social_proof -%}
+  #Banner-{{ section.id }} .banner-social-proof {
+    margin-top: {{ section.settings.sp_spacing_top }}px !important;
+  }
+  #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-avatar {
+    width: {{ section.settings.sp_avatar_size }}px;
+    height: {{ section.settings.sp_avatar_size }}px;
+  }
+  #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-text {
+    {%- if section.settings.sp_text_color != blank %} color: {{ section.settings.sp_text_color }} !important;{% endif -%}
+    {%- if section.settings.sp_line_height > 0 %} line-height: {{ section.settings.sp_line_height }};{% endif -%}
+    {%- if section.settings.sp_font_weight != 'default' and section.settings.sp_font_weight != blank %} font-weight: {{ section.settings.sp_font_weight }};{% endif -%}
+  }
+  #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-name-link {
+    {%- if section.settings.sp_text_color != blank %} color: {{ section.settings.sp_text_color }} !important;{% endif -%}
+  }
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-text {
+      {%- if section.settings.sp_font_size_desktop > 0 %} font-size: {{ section.settings.sp_font_size_desktop }}px;{% endif -%}
+    }
+  }
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-text {
+      {%- if section.settings.sp_font_size_mobile > 0 %} font-size: {{ section.settings.sp_font_size_mobile }}px;{% endif -%}
+    }
+  }
+  {%- render 'banner-element-align', banner_id: banner_id, selector: '.banner-social-proof', kind: 'social', align_desktop: section.settings.sp_align_desktop, align_mobile: section.settings.sp_align_mobile -%}
+{%- endif -%}
 
 /* Hoogte-instellingen */
 {%- if section.settings.adapt_height_first_image and section.settings.image != blank -%}
@@ -188,7 +315,7 @@
               <span>{{ block.settings.text | escape }}</span>
             </h2>
           {%- when 'buttons' -%}
-            <div class="banner__buttons w-full md:w-[unset]{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}" {{ block.shopify_attributes }}>
+            <div class="banner__buttons w-full md:w-[unset]{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}{% if block.settings.button_style == 'solid' %} banner__buttons--solid{% else %} banner__buttons--glass{% endif %}" {{ block.shopify_attributes }}>
               {%- if block.settings.button_label_1 != blank -%}
                 <a{% if block.settings.button_link_1 == blank %} role="link" aria-disabled="true"{% else %} href="{{ block.settings.button_link_1 }}"{% endif %} class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %} w-full sm:w-fit">{{ block.settings.button_label_1 | escape }}</a>
               {%- endif -%}
@@ -197,27 +324,59 @@
               {%- endif -%}
 
             </div>
-            <div class="banner-social-proof">
-              <div class="product-v2__social-proof-inner">
-                <div class="product-v2__sp-avatars">
-                  {%- assign bsp_av1 = 'Scherm_afbeelding_2026-03-21_om_23.30.36.png' | file_img_url: '80x80', crop: 'center' -%}
-                  {%- assign bsp_av3 = 'Scherm_afbeelding_2026-03-21_om_23.31.47.png' | file_img_url: '80x80', crop: 'center' -%}
-                  {%- assign bsp_av2 = 'Scherm_afbeelding_2026-03-21_om_23.31.03.png' | file_img_url: '80x80', crop: 'center' -%}
-                  <div class="product-v2__sp-avatar product-v2__sp-avatar--1"><img src="{{ bsp_av1 }}" alt="" width="40" height="40" loading="lazy"></div>
-                  <div class="product-v2__sp-avatar product-v2__sp-avatar--2"><img src="{{ bsp_av3 }}" alt="" width="40" height="40" loading="lazy"></div>
-                  <div class="product-v2__sp-avatar product-v2__sp-avatar--3"><img src="{{ bsp_av2 }}" alt="" width="40" height="40" loading="lazy"></div>
+            {%- if section.settings.show_social_proof -%}
+              {%- liquid
+                # Avatars: theme-editor uploads, falling back to the original hardcoded files.
+                if section.settings.sp_avatar_1 != blank
+                  assign bsp_av1 = section.settings.sp_avatar_1 | image_url: width: 80
+                else
+                  assign bsp_av1 = 'Scherm_afbeelding_2026-03-21_om_23.30.36.png' | file_img_url: '80x80', crop: 'center'
+                endif
+                if section.settings.sp_avatar_2 != blank
+                  assign bsp_av2 = section.settings.sp_avatar_2 | image_url: width: 80
+                else
+                  assign bsp_av2 = 'Scherm_afbeelding_2026-03-21_om_23.31.47.png' | file_img_url: '80x80', crop: 'center'
+                endif
+                if section.settings.sp_avatar_3 != blank
+                  assign bsp_av3 = section.settings.sp_avatar_3 | image_url: width: 80
+                else
+                  assign bsp_av3 = 'Scherm_afbeelding_2026-03-21_om_23.31.03.png' | file_img_url: '80x80', crop: 'center'
+                endif
+                assign sp_count = section.settings.sp_count | default: '78.342'
+                assign sp_brand = section.settings.sp_brand | default: 'Sockeloen'
+              -%}
+              <div class="banner-social-proof">
+                <div class="product-v2__social-proof-inner">
+                  <div class="product-v2__sp-avatars">
+                    <div class="product-v2__sp-avatar product-v2__sp-avatar--1"><img src="{{ bsp_av1 }}" alt="" width="40" height="40" loading="lazy"></div>
+                    <div class="product-v2__sp-avatar product-v2__sp-avatar--2"><img src="{{ bsp_av2 }}" alt="" width="40" height="40" loading="lazy"></div>
+                    <div class="product-v2__sp-avatar product-v2__sp-avatar--3"><img src="{{ bsp_av3 }}" alt="" width="40" height="40" loading="lazy"></div>
+                  </div>
+                  <p class="product-v2__sp-text banner-social-proof__text">
+                    {%- if section.settings.sp_name != blank -%}
+                      {%- if section.settings.sp_link != blank -%}
+                        <a href="{{ section.settings.sp_link }}" target="_blank" rel="noopener" class="product-v2__sp-name-link"><strong>{{ section.settings.sp_name | escape }}</strong></a>
+                      {%- else -%}
+                        <strong>{{ section.settings.sp_name | escape }}</strong>
+                      {%- endif -%}
+                      {%- if section.settings.sp_verified_badge -%}
+                        <span class="product-v2__sp-verified" aria-label="Verified">
+                          <svg width="16" height="16" viewBox="0 0 40 40" fill="rgb(0, 149, 246)" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"/>
+                          </svg>
+                        </span>
+                      {%- endif -%}
+                      &nbsp;
+                    {%- endif -%}
+                    {%- if section.settings.sp_custom_text != blank -%}
+                      {{ section.settings.sp_custom_text }}
+                    {%- else -%}
+                      {{ 'products.v2.social_proof_text_html' | t: count: sp_count, brand: sp_brand }}
+                    {%- endif -%}
+                  </p>
                 </div>
-                <p class="product-v2__sp-text banner-social-proof__text">
-                  <strong>Riejanne Markus</strong>
-                  <span class="product-v2__sp-verified" aria-label="Verified">
-                    <svg width="16" height="16" viewBox="0 0 40 40" fill="rgb(0, 149, 246)" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"/>
-                    </svg>
-                  </span>
-                  &nbsp;{{ 'products.v2.social_proof_text_html' | t: count: '78.342', brand: 'Sockeloen' }}
-                </p>
               </div>
-            </div>
+            {%- endif -%}
         {%- endcase -%}
       {%- endfor -%}
     </div>
@@ -279,6 +438,11 @@
       "default": false,
       "label": "t:sections.image-banner.settings.adapt_height_first_image.label",
       "info": "t:sections.image-banner.settings.adapt_height_first_image.info"
+    },
+    {
+      "type": "header",
+      "content": "Content block (desktop)",
+      "info": "Position places the whole block of title, subtitle, buttons and social proof. Alignment is the default for the elements inside it; each block can override this separately."
     },
     {
       "type": "select",
@@ -401,7 +565,8 @@
         }
       ],
       "default": "center",
-      "label": "t:sections.image-banner.settings.mobile_content_alignment.label"
+      "label": "t:sections.image-banner.settings.mobile_content_alignment.label",
+      "info": "Default alignment for all elements on mobile. Each block can override this."
     },
     {
       "type": "checkbox",
@@ -414,6 +579,161 @@
       "id": "show_text_below",
       "default": true,
       "label": "t:sections.image-banner.settings.show_text_below.label"
+    },
+    {
+      "type": "header",
+      "content": "Social proof",
+      "info": "Shown directly under the buttons block."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_proof",
+      "default": true,
+      "label": "Show social proof"
+    },
+    {
+      "type": "text",
+      "id": "sp_name",
+      "label": "Featured name",
+      "default": "Riejanne Markus"
+    },
+    {
+      "type": "url",
+      "id": "sp_link",
+      "label": "Featured name link"
+    },
+    {
+      "type": "checkbox",
+      "id": "sp_verified_badge",
+      "default": true,
+      "label": "Show verified badge next to name"
+    },
+    {
+      "type": "text",
+      "id": "sp_count",
+      "label": "Count in sentence",
+      "default": "78.342"
+    },
+    {
+      "type": "text",
+      "id": "sp_brand",
+      "label": "Brand name in sentence",
+      "default": "Sockeloen"
+    },
+    {
+      "type": "text",
+      "id": "sp_custom_text",
+      "label": "Custom sentence (optional)",
+      "info": "Replaces the translated default \"and +count other athletes ride in brand\". Basic HTML like <strong> is allowed."
+    },
+    {
+      "type": "image_picker",
+      "id": "sp_avatar_1",
+      "label": "Avatar 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "sp_avatar_2",
+      "label": "Avatar 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "sp_avatar_3",
+      "label": "Avatar 3 (featured, rightmost)"
+    },
+    {
+      "type": "range",
+      "id": "sp_avatar_size",
+      "min": 24,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "label": "Avatar size",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "sp_font_size_desktop",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size (desktop)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "sp_font_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "sp_line_height",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "label": "Line height",
+      "info": "0 = default (1.35)",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "sp_font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-bold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "color",
+      "id": "sp_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "sp_spacing_top",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Space above",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "sp_align_desktop",
+      "label": "Alignment (desktop)",
+      "options": [
+        { "value": "inherit", "label": "Follow section" },
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "select",
+      "id": "sp_align_mobile",
+      "label": "Alignment (mobile)",
+      "options": [
+        { "value": "inherit", "label": "Follow section" },
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
     }
   ],
   "blocks": [
@@ -453,6 +773,130 @@
           "id": "use_h1_tag",
           "label": "Enable H1 Tag",
           "default": false
+        },
+        {
+          "type": "header",
+          "content": "Alignment",
+          "info": "\"Follow section\" uses the section's desktop/mobile alignment."
+        },
+        {
+          "type": "select",
+          "id": "heading_align_desktop",
+          "label": "Alignment (desktop)",
+          "options": [
+            { "value": "inherit", "label": "Follow section" },
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "inherit"
+        },
+        {
+          "type": "select",
+          "id": "heading_align_mobile",
+          "label": "Alignment (mobile)",
+          "options": [
+            { "value": "inherit", "label": "Follow section" },
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "inherit"
+        },
+        {
+          "type": "header",
+          "content": "Typography",
+          "info": "0 = use the theme default (heading size above)."
+        },
+        {
+          "type": "range",
+          "id": "heading_font_size_desktop",
+          "min": 0,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "label": "Font size (desktop)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "heading_font_size_mobile",
+          "min": 0,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "label": "Font size (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "heading_line_height_desktop",
+          "min": 0,
+          "max": 2,
+          "step": 0.1,
+          "label": "Line height (desktop)",
+          "info": "0 = default (1.1)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "heading_line_height_mobile",
+          "min": 0,
+          "max": 2,
+          "step": 0.1,
+          "label": "Line height (mobile)",
+          "info": "0 = default (1.1)",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "heading_font_weight",
+          "label": "Font weight",
+          "options": [
+            { "value": "default", "label": "Default" },
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semi-bold (600)" },
+            { "value": "700", "label": "Bold (700)" },
+            { "value": "800", "label": "Extra-bold (800)" },
+            { "value": "900", "label": "Black (900)" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "checkbox",
+          "id": "heading_italic",
+          "label": "Italic",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Text color",
+          "info": "Leave empty to use the color scheme."
+        },
+        {
+          "type": "range",
+          "id": "heading_letter_spacing",
+          "min": -2,
+          "max": 10,
+          "step": 0.5,
+          "unit": "px",
+          "label": "Letter spacing",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "heading_text_transform",
+          "label": "Text case",
+          "options": [
+            { "value": "default", "label": "As typed" },
+            { "value": "uppercase", "label": "UPPERCASE" },
+            { "value": "lowercase", "label": "lowercase" },
+            { "value": "capitalize", "label": "Capitalize Each Word" }
+          ],
+          "default": "default"
         }
       ]
     },
@@ -486,6 +930,141 @@
           ],
           "default": "body",
           "label": "t:sections.image-banner.blocks.text.settings.text_style.label"
+        },
+        {
+          "type": "range",
+          "id": "text_max_width",
+          "min": 0,
+          "max": 1000,
+          "step": 10,
+          "unit": "px",
+          "label": "Max width",
+          "info": "0 = no limit",
+          "default": 440
+        },
+        {
+          "type": "header",
+          "content": "Alignment",
+          "info": "\"Follow section\" uses the section's desktop/mobile alignment."
+        },
+        {
+          "type": "select",
+          "id": "text_align_desktop",
+          "label": "Alignment (desktop)",
+          "options": [
+            { "value": "inherit", "label": "Follow section" },
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "inherit"
+        },
+        {
+          "type": "select",
+          "id": "text_align_mobile",
+          "label": "Alignment (mobile)",
+          "options": [
+            { "value": "inherit", "label": "Follow section" },
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "inherit"
+        },
+        {
+          "type": "header",
+          "content": "Typography",
+          "info": "0 = use the theme default (text style above)."
+        },
+        {
+          "type": "range",
+          "id": "text_font_size_desktop",
+          "min": 0,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (desktop)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "text_font_size_mobile",
+          "min": 0,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "text_line_height_desktop",
+          "min": 0,
+          "max": 2.5,
+          "step": 0.1,
+          "label": "Line height (desktop)",
+          "info": "0 = theme default",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "text_line_height_mobile",
+          "min": 0,
+          "max": 2.5,
+          "step": 0.1,
+          "label": "Line height (mobile)",
+          "info": "0 = theme default",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "text_font_weight",
+          "label": "Font weight",
+          "options": [
+            { "value": "default", "label": "Default" },
+            { "value": "300", "label": "Light (300)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semi-bold (600)" },
+            { "value": "700", "label": "Bold (700)" },
+            { "value": "800", "label": "Extra-bold (800)" },
+            { "value": "900", "label": "Black (900)" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "checkbox",
+          "id": "text_italic",
+          "label": "Italic",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "info": "Leave empty to use the color scheme."
+        },
+        {
+          "type": "range",
+          "id": "text_letter_spacing",
+          "min": -2,
+          "max": 10,
+          "step": 0.5,
+          "unit": "px",
+          "label": "Letter spacing",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "text_text_transform",
+          "label": "Text case",
+          "options": [
+            { "value": "default", "label": "As typed" },
+            { "value": "uppercase", "label": "UPPERCASE" },
+            { "value": "lowercase", "label": "lowercase" },
+            { "value": "capitalize", "label": "Capitalize Each Word" }
+          ],
+          "default": "default"
         }
       ]
     },
@@ -529,6 +1108,121 @@
           "id": "button_style_secondary_2",
           "default": false,
           "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_2.label"
+        },
+        {
+          "type": "header",
+          "content": "Button style"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Style",
+          "options": [
+            { "value": "glass", "label": "Transparent glass (default)" },
+            { "value": "solid", "label": "Solid (swap background and text color)" }
+          ],
+          "default": "glass"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Solid background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Solid text color",
+          "default": "#000000"
+        },
+        {
+          "type": "header",
+          "content": "Button text"
+        },
+        {
+          "type": "range",
+          "id": "button_font_size_desktop",
+          "min": 8,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (desktop)",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "button_font_size_mobile",
+          "min": 8,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (mobile)",
+          "default": 12
+        },
+        {
+          "type": "select",
+          "id": "button_font_weight",
+          "label": "Font weight",
+          "options": [
+            { "value": "default", "label": "Default (700)" },
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semi-bold (600)" },
+            { "value": "700", "label": "Bold (700)" },
+            { "value": "800", "label": "Extra-bold (800)" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "range",
+          "id": "button_letter_spacing",
+          "min": -1,
+          "max": 5,
+          "step": 0.5,
+          "unit": "px",
+          "label": "Letter spacing",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "button_text_transform",
+          "label": "Text case",
+          "options": [
+            { "value": "default", "label": "As typed" },
+            { "value": "uppercase", "label": "UPPERCASE" },
+            { "value": "lowercase", "label": "lowercase" },
+            { "value": "capitalize", "label": "Capitalize Each Word" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "header",
+          "content": "Alignment",
+          "info": "\"Follow section\" uses the section's desktop/mobile alignment."
+        },
+        {
+          "type": "select",
+          "id": "buttons_align_desktop",
+          "label": "Alignment (desktop)",
+          "options": [
+            { "value": "inherit", "label": "Follow section" },
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "inherit"
+        },
+        {
+          "type": "select",
+          "id": "buttons_align_mobile",
+          "label": "Alignment (mobile)",
+          "options": [
+            { "value": "inherit", "label": "Follow section" },
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "inherit"
         }
       ]
     }
@@ -551,4 +1245,3 @@
   ]
 }
 {% endschema %}
-              
