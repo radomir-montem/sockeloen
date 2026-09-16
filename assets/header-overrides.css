@@ -4351,3 +4351,15 @@ body.template--index #MainContent [class*="sales-"] .text-alignment :is(h1, h2, 
     max-height: calc(100vh - 132px) !important;
   }
 }
+@media screen and (max-width: 989px) {
+  /* close X at Eme's 14px (an ID-scoped theme rule was shrinking it) */
+  details#Details-menu-drawer-container[open] > summary.header__icon--menu .icon-close {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  /* same x-position for hamburger and close (no 11px jump on open) */
+  header.header > header-drawer,
+  header-drawer:has(details#Details-menu-drawer-container[open]) {
+    margin-left: 0 !important;
+  }
+}
