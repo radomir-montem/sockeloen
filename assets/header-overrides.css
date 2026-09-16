@@ -3182,7 +3182,15 @@ body.template--index .regular-button {
    20px desktop / 12px mobile (matching header.header's own breakpoints). */
 .mega-menu-v2-panel {
   position: fixed;
-  top: 92px;
+  /* ONE GLASS SURFACE (emestudios.com): the panel starts at the pill's
+     TOP edge (44px) and reserves the pill's 48px height as padding, so a
+     single gradient + blur spans header and menu. While the panel is open
+     the pill itself drops its own glass (see the body:has() rule further
+     down) and just paints its content on top. Previously both elements
+     restarted the same gradient, which made the tint differ and left a
+     visible seam at the 92px boundary. */
+  top: 44px;
+  padding-top: 48px;
   left: 20px;
   right: 20px;
   width: auto;
@@ -3201,7 +3209,7 @@ body.template--index .regular-button {
   box-shadow: 0 2px 2px rgba(0,0,0,0.1);
   clip-path: none;
   z-index: 50;
-  max-height: calc(100vh - 112px);
+  max-height: calc(100vh - 64px);
   overflow-y: auto;
 }
 
@@ -3708,9 +3716,21 @@ body.template--index .banner__box {
    teleported DOM and flattens the header regardless. */
 @media (min-width: 990px) {
   body:has(.mega-menu-v2-panel:not([style*="display: none"])) header.header {
+    /* the panel now provides the glass behind the pill (it starts at 44px,
+       the pill's top) — so the pill goes fully transparent: no second
+       gradient, no second blur, no borders, no shadow */
+    background: transparent !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    border-bottom: none !important;
+  }
+  /* the pill's content (nav, logo, icons) must paint above the panel's
+     glass: lift the header section over the panel's z-index 50 */
+  body:has(.mega-menu-v2-panel:not([style*="display: none"])) #shopify-section-header {
+    z-index: 51 !important;
   }
 }
 
