@@ -3872,3 +3872,40 @@ body.template--index .banner__box {
   letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
+
+/* ============================================================
+   Homepage: Eme-style sticky hero (emestudios.com)
+   The hero image banner pins to the top of the viewport and the
+   Best Sellers carousel (the next section) slides up over it as a
+   white sheet with 12px top corners. Hero corners stay square.
+   Mechanism mirrors Eme exactly: hero = position:sticky; top:0 with a
+   low z-index, following sections = relative, higher z-index, opaque
+   background. Nothing animates; the radius is a fixed 12px 12px 0 0.
+   ============================================================ */
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  border-radius: 0 !important;
+  overflow: hidden;
+}
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) ~ .shopify-section {
+  position: relative;
+  z-index: 1;
+  background-color: rgb(var(--color-background));
+}
+/* The carousel section: no gap to the hero (the gap would reveal the pinned
+   hero through it), spacing moves inside as padding, rounded top corners. */
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section {
+  margin-top: 0 !important;
+  padding-top: var(--spacing-sections-mobile);
+  border-radius: 12px 12px 0 0;
+}
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section > *:first-child {
+  border-radius: 12px 12px 0 0;
+}
+@media screen and (min-width: 750px) {
+  body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section {
+    padding-top: var(--spacing-sections-desktop);
+  }
+}
