@@ -3901,6 +3901,11 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
   padding-top: var(--spacing-sections-mobile);
   border-radius: 12px 12px 0 0;
   overflow: hidden; /* clip card images to the rounded corners */
+  background-color: #fff !important; /* pure white sheet, like Eme */
+}
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .bg-background,
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .gradient {
+  background: #fff !important;
 }
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section > *:first-child {
   border-radius: 12px 12px 0 0;
