@@ -4514,3 +4514,16 @@ body.template--index #MainContent .tcs-eme__label { text-transform: capitalize !
 /* all homepage product carousels on plain white */
 body.template--index #MainContent .isolate.bg-background,
 body.template--index #MainContent .collection { background: #fff !important; }
+
+/* Glass buttons on the homepage: always full width on phones */
+@media screen and (max-width: 749px) {
+  body.template--index .banner__buttons .button,
+  body.template--index .banner__buttons--glass .button,
+  body.template--index #MainContent [class*="sales-"] a.inline-flex {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+  body.template--index .banner__buttons { width: 100% !important; }
+}

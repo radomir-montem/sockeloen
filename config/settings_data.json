@@ -625,7 +625,8 @@
           "klaviyo_id": "UmGHP8",
           "footer_logo": "shopify://shop_images/Worn_by_champions_KNWU_export_white.png",
           "logo_width": 200,
-          "logo_width_monile": 200
+          "logo_width_monile": 200,
+          "show_newsletter": false
         }
       },
       "main-password-header": {

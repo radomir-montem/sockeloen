@@ -60,7 +60,7 @@
             "button_label_2": "Shop Shoecovers",
             "button_link_2": "shopify://collections/cycling-overshoes",
             "button_style_secondary_2": false,
-            "button_style": "solid",
+            "button_style": "glass",
             "button_bg_color": "#ffffff",
             "button_text_color": "#000000",
             "button_font_size_desktop": 12,

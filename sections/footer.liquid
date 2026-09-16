@@ -66,6 +66,7 @@
         </div>
       {% endfor %}
     </div>
+    {%- unless section.settings.show_newsletter -%}<style>#shopify-section-footer .footer-form { display: none !important; }</style>{%- endunless -%}
     <div class="mx-11 footer-form flex flex-col">
       <h3 class="text-base-footer bold-title mb-[16px]">
         {{section.settings.newsletter_text}}
@@ -210,6 +211,12 @@
       "default": "footer"
     },
     {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show newsletter signup",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "newsletter_text",
       "label": "Newsletter heading",
@@ -234,7 +241,7 @@
       "min": 100,
       "max": 500,
       "step": 50,
-      "unit": "px" 
+      "unit": "px"
     },
     {
       "type": "range",
@@ -244,7 +251,7 @@
       "min": 50,
       "max": 300,
       "step": 50,
-      "unit": "px" 
+      "unit": "px"
     }
   ]
 }
