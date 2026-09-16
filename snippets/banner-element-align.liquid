@@ -1,0 +1,59 @@
+{%- comment -%}
+  Emits ID-scoped alignment CSS for one hero banner element (heading, text,
+  buttons or social proof), separately for desktop (>=750px) and mobile.
+  "inherit" (or blank) emits nothing so the element follows the section's
+  own desktop/mobile content alignment.
+
+  Params:
+    banner_id      - e.g. "Banner-template--123__image_banner"
+    selector       - e.g. ".banner__heading"
+    kind           - heading | text | buttons | social
+    align_desktop  - inherit | left | center | right
+    align_mobile   - inherit | left | center | right
+{%- endcomment -%}
+{%- liquid
+  assign devices = 'desktop,mobile' | split: ','
+  for device in devices
+    if device == 'desktop'
+      assign a = align_desktop
+    else
+      assign a = align_mobile
+    endif
+    if a == blank or a == 'inherit'
+      continue
+    endif
+    case a
+      when 'left'
+        assign jc = 'flex-start'
+        assign mi = '0 auto'
+      when 'right'
+        assign jc = 'flex-end'
+        assign mi = 'auto 0'
+      else
+        assign jc = 'center'
+        assign mi = 'auto'
+    endcase
+    capture rule
+      echo '#' | append: banner_id | append: ' ' | append: selector | append: ' {'
+      case kind
+        when 'heading'
+          echo 'display:block;padding:0;text-align:' | append: a | append: ';'
+        when 'text'
+          echo 'text-align:' | append: a | append: ';margin-inline:' | append: mi | append: ';'
+        when 'buttons'
+          echo 'display:flex;width:100%;justify-content:' | append: jc | append: ';'
+        when 'social'
+          echo 'justify-content:' | append: jc | append: ' !important;'
+      endcase
+      echo '}'
+      if kind == 'buttons'
+        echo '#' | append: banner_id | append: ' ' | append: selector | append: ' > * {flex-grow:0;}'
+      endif
+    endcapture
+    if device == 'desktop'
+      echo '@media screen and (min-width: 750px) {' | append: rule | append: '}'
+    else
+      echo '@media screen and (max-width: 749px) {' | append: rule | append: '}'
+    endif
+  endfor
+-%}

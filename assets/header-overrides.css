@@ -3585,10 +3585,22 @@ body.template--index .banner__box {
 .banner--content-align-left .banner-social-proof {
   justify-content: flex-start;
 }
+.banner--content-align-right .banner-social-proof {
+  justify-content: flex-end;
+}
+/* Mobile: default left; "Follow section" in the theme editor picks up the
+   section's mobile alignment via these classes. An explicit per-element
+   alignment (emitted ID-scoped by sections/image-banner.liquid) wins. */
 @media screen and (max-width: 749px) {
-  .banner--content-align-mobile-left .banner-social-proof,
-  .banner-social-proof {
+  .banner-social-proof,
+  .banner--content-align-mobile-left .banner-social-proof {
     justify-content: flex-start;
+  }
+  .banner--content-align-mobile-center .banner-social-proof {
+    justify-content: center;
+  }
+  .banner--content-align-mobile-right .banner-social-proof {
+    justify-content: flex-end;
   }
 }
 .banner-social-proof .product-v2__sp-avatars {
