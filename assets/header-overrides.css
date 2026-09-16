@@ -4273,3 +4273,81 @@ body.template--index #MainContent [class*="two-cols-"] img {
 body.template--index #MainContent [class*="sales-"] .text-alignment :is(h1, h2, h3, h4) {
   text-transform: uppercase !important;
 }
+
+/* ============================================================
+   MOBILE MENU — match emestudios.com
+   1) Icons: 32x32 hit area, no padding; hamburger 16px (2 thin bars),
+      close 14px thin X, no white circle behind the close icon.
+   2) One glass surface: while the drawer is open the pill drops its own
+      glass and the drawer starts at the pill's top edge (44px) with the
+      pill height (48px) as padding — same trick as the desktop mega
+      panel. Pill contents are lifted above the drawer.
+   ============================================================ */
+@media screen and (max-width: 989px) {
+  header.header header-drawer summary.header__icon--menu {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #111 !important;
+  }
+  header.header header-drawer summary.header__icon--menu > span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+  header.header header-drawer summary.header__icon--menu .icon-hamburger { width: 16px !important; height: 16px !important; display: block !important; }
+  header.header header-drawer summary.header__icon--menu .icon-close { width: 14px !important; height: 14px !important; display: none !important; }
+  header.header header-drawer details[open] > summary.header__icon--menu .icon-hamburger { display: none !important; }
+  header.header header-drawer details[open] > summary.header__icon--menu .icon-close { display: block !important; }
+  details#Details-menu-drawer-container[open] > summary.header__icon--menu,
+  details#Details-menu-drawer-container[open] > summary.header__icon--menu:hover {
+    width: 32px !important;
+    height: 32px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* pill goes transparent while the drawer is open */
+  header.header:has(> header-drawer > details[open]) {
+    background: transparent !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  /* pill contents above the drawer glass */
+  header.header:has(> header-drawer > details[open]) > .header__heading,
+  header.header:has(> header-drawer > details[open]) > .header__icons,
+  header.header:has(> header-drawer > details[open]) > header-drawer,
+  header.header header-drawer details[open] > summary.header__icon--menu {
+    position: relative;
+    z-index: 61;
+  }
+  /* drawer becomes the single surface: pill top (44px) + pill height as
+     padding; no extra 40px band under the pill. The pill no longer has a
+     backdrop-filter while open, so position:fixed is viewport-relative. */
+  header.header header-drawer details[open] > .menu-drawer,
+  .js header.header header-drawer details[open] > .menu-drawer {
+    top: 44px !important;
+    left: 12px !important;
+    right: 12px !important;
+    padding-top: 48px !important;
+    border-radius: 0 0 8px 8px !important;
+    z-index: 60 !important;
+    max-height: calc(100vh - 132px) !important;
+  }
+}
