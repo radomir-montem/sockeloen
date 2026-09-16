@@ -4030,3 +4030,14 @@ body.template--index #MainContent .card-wrapper .badge {
   border-radius: 4px !important;
   box-shadow: none !important;
 }
+/* PREVIEW (cont.): same 5px horizontal spacing as between the cards on
+   the far left and right of the best sellers block; title aligns with
+   the card edge. */
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .grid {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .fc-title {
+  padding-left: 5px;
+  padding-right: 5px;
+}
