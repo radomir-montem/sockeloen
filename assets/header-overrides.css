@@ -3762,10 +3762,22 @@ body.template--index .banner__box {
   background: rgba(0, 0, 0, 0.55) !important;
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
-  display: flex !important;
+  display: flex; /* NOT !important: the app hides the wrapper with an inline
+                    display:none after consent; forcing it left an invisible
+                    full-screen layer that blocked every click on the page */
   align-items: center !important;
   justify-content: center !important;
   z-index: 2147483647;
+}
+/* Belt and braces: whenever the app marks the banner hidden, make sure the
+   wrapper can never intercept clicks. */
+#pandectes-banner.cc-window-wrapper.cc-invisible,
+#pandectes-banner.cc-window-wrapper[style*="display: none"],
+#pandectes-banner.cc-window-wrapper[style*="display:none"],
+#pandectes-banner.cc-window-wrapper:has(.cc-window.cc-invisible),
+#pandectes-banner.cc-window-wrapper[aria-hidden="true"] {
+  display: none !important;
+  pointer-events: none !important;
 }
 #pandectes-banner .cc-window {
   position: relative !important;
