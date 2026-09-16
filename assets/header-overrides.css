@@ -4030,12 +4030,20 @@ body.template--index #MainContent .card-wrapper .badge {
 /* PREVIEW (cont.): same 5px horizontal spacing as between the cards on
    the far left and right of the best sellers block; title aligns with
    the card edge. */
+/* Inner spacing equals the sheet's corner radius: nothing sits closer to
+   the top or the sides than the radius itself (12px). One variable drives
+   the radius, the title offset and the carousel side padding. */
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section {
+  --sheet-radius: 12px;
+  border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+}
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section > *:first-child {
+  border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+}
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .grid {
-  padding-left: 5px !important;
-  padding-right: 5px !important;
+  padding-left: var(--sheet-radius) !important;
+  padding-right: var(--sheet-radius) !important;
 }
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .fc-title {
-  /* minimal top spacing: with a 12px corner radius the arc only reaches
-     ~3px inward at x=5px, so the cap height of "best" stays clear */
-  padding: 4px 5px 0;
+  padding: var(--sheet-radius) var(--sheet-radius) 0;
 }
