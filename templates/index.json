@@ -33,7 +33,7 @@
             "button_label_1": "top 8 - best sellers",
             "button_link_1": "shopify://collections/best-sellers-1",
             "button_style_secondary_1": true,
-            "button_label_2": "shop cycling socks",
+            "button_label_2": "",
             "button_link_2": "shopify://collections/cycling-socks",
             "button_style_secondary_2": false
           }
@@ -64,7 +64,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Top 8 best selling products",
+        "title": "best sellers",
         "collection": "best-sellers-1",
         "products_to_show": 8,
         "columns_desktop": 4,
@@ -74,7 +74,8 @@
         "show_vendor": false,
         "show_rating": false,
         "enable_quick_add": false,
-        "columns_mobile": "2"
+        "columns_mobile": "2",
+        "show_title": true
       }
     },
     "rich_text_BAQBfh": {
@@ -83,9 +84,9 @@
         "button_agqc9Y": {
           "type": "button",
           "settings": {
-            "button_label": "shop more best sellers",
+            "button_label": "Shop more Best Sellers",
             "button_link": "shopify://collections/best-sellers-1",
-            "button_style_secondary": true,
+            "button_style_secondary": false,
             "button_label_2": "",
             "button_link_2": "",
             "button_style_secondary_2": false
@@ -179,9 +180,9 @@
         "button_LdY3xm": {
           "type": "button",
           "settings": {
-            "button_label": "explore more",
+            "button_label": "Explore More",
             "button_link": "shopify://collections/all-products",
-            "button_style_secondary": true,
+            "button_style_secondary": false,
             "button_label_2": "",
             "button_link_2": "",
             "button_style_secondary_2": false
@@ -208,10 +209,11 @@
           "type": "richtext",
           "settings": {
             "title": "SOCKELOEN",
-            "description": "<p>high performance cycling socks</p>",
-            "button_label": "",
-            "button_url": "",
-            "text_align": "center"
+            "description": "<p>High Performance Cycling Socks</p>",
+            "button_label": "Explore More",
+            "button_url": "shopify://collections/all-products",
+            "text_align": "center",
+            "background_color": "#a12d00"
           }
         },
         "4904019c-ebe9-48ae-adae-d8c50c33e729": {
@@ -220,7 +222,7 @@
             "image": "shopify://shop_images/FSTOP_webbanner32_39f0910d-28ef-42e7-999b-46cc9d4e7501.png",
             "opacity": 10,
             "title": "FSOTP",
-            "button_label": "SHOP NOW",
+            "button_label": "Shop Now",
             "button_url": "shopify://collections/fsotp"
           }
         },
@@ -230,7 +232,7 @@
             "image": "shopify://shop_images/FSTOP_webbanner.png",
             "opacity": 10,
             "title": "KNWU",
-            "button_label": "SHOP NOW",
+            "button_label": "Shop Now",
             "button_url": "shopify://collections/sockeloen-x-knwu"
           }
         }
@@ -352,7 +354,7 @@
             "button_label_1": "",
             "button_link_1": "https://custom.sockeloen.nl/en-custom-design-checkout/",
             "button_style_secondary_1": true,
-            "button_label_2": "EXPLORE CUSTOM SOCKS",
+            "button_label_2": "Explore Custom Socks",
             "button_link_2": "shopify://collections/custom-socks",
             "button_style_secondary_2": false
           }
@@ -394,7 +396,7 @@
             "vertical_pos": "justify-end",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
-            "button_text": "shop now",
+            "button_text": "Shop Here",
             "button_url": "shopify://collections/all-weather-essentials",
             "button_pos": "mt-0"
           }
@@ -682,7 +684,8 @@
             "description": "",
             "button_label": "",
             "button_url": "",
-            "text_align": "center"
+            "text_align": "center",
+            "background_color": "#a12d00"
           }
         }
       },
