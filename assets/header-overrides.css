@@ -3908,6 +3908,12 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) ~ .shopify-section {
   position: relative;
   z-index: 1;
+}
+/* Opaque fallback background so the pinned hero never shows through a
+   transparent section. Wrapped in :where() (zero specificity) so any
+   section's own background class (e.g. the reviews carousel's bg-black)
+   still wins. */
+:where(body.template--index #MainContent > .shopify-section:first-child:has(> .banner) ~ .shopify-section) {
   background-color: rgb(var(--color-background));
 }
 /* The carousel section: no gap to the hero (the gap would reveal the pinned
@@ -3959,4 +3965,27 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
   .fc-title__heading {
     font-size: 20px;
   }
+}
+
+/* ============================================================
+   PREVIEW: Eme-style 4px radius on homepage product cards + badges
+   (emestudios.com: image rounded-[0.4rem] = 4px, badge rounded 4px).
+   ID-scoped to outrank the site-wide "squared cards" !important rules.
+   ============================================================ */
+body.template--index #MainContent .card-wrapper,
+body.template--index #MainContent .card-wrapper .card,
+body.template--index #MainContent .card-wrapper .card__inner,
+body.template--index #MainContent .card-wrapper .card__media,
+body.template--index #MainContent .card-wrapper .card__media .media,
+body.template--index #MainContent .card-wrapper .card__media img {
+  border-radius: 4px !important;
+}
+body.template--index #MainContent .card-wrapper .card__content,
+body.template--index #MainContent .card-wrapper .card__information {
+  border-radius: 0 !important;
+}
+body.template--index #MainContent .card-wrapper .badge,
+body.template--index #MainContent .card-wrapper .card-badge .badge,
+body.template--index #MainContent .card-wrapper .card-bottom-badge .badge {
+  border-radius: 4px !important;
 }
