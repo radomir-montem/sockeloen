@@ -3845,8 +3845,10 @@ body.template--index .banner__box {
   font-weight: 600 !important;
   order: 0 !important;
 }
+/* Two options only, like Represent: Accept + Preferences. Declining is
+   still possible inside the Preferences modal. */
 #pandectes-banner .cc-compliance .cc-btn.cc-deny {
-  order: 1 !important;
+  display: none !important;
 }
 #pandectes-banner .cc-compliance .cc-btn.cc-settings {
   order: 2 !important;
