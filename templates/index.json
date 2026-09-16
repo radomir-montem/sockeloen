@@ -230,10 +230,10 @@
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "Shop Here",
-            "button_url": "shopify://collections/all-weather-essentials",
+            "button_url": "shopify://collections/cycling-gloves",
             "button_pos": "mt-0",
-            "mobile_collection": "cycling-gloves",
-            "mobile_collection_title": "Gloves",
+            "mobile_collection": "",
+            "mobile_collection_title": "",
             "mobile_collection_limit": 4
           }
         }
@@ -251,8 +251,8 @@
       "settings": {
         "title": "Sockeloen x KNWU",
         "show_title": true,
-        "collection": "sockeloen-x-knwu",
-        "variant_filter": "KNWU",
+        "collection": "cycling-gloves",
+        "variant_filter": "Gloves",
         "products_to_show": 4,
         "columns_desktop": 4,
         "disable_padding": false,
@@ -280,7 +280,7 @@
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "Shop Here",
-            "button_url": "shopify://collections/all-weather-essentials",
+            "button_url": "shopify://collections/knwu",
             "button_pos": "mt-0",
             "mobile_collection": "sockeloen-x-knwu",
             "mobile_collection_title": "KNWU x SOCKELOEN",
