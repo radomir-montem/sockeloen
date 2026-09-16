@@ -4415,3 +4415,8 @@ body.template--index #MainContent [class*="sales-"] .text-alignment :is(h1, h2, 
 #shopify-section-footer .bold-title::first-letter {
   text-transform: uppercase !important;
 }
+#announcement-bar.ann-rotator .announcement-bar .announcement-bar__message,
+#announcement-bar.ann-rotator .announcement-bar .announcement-bar__link {
+  opacity: 1 !important;
+  animation: none !important;
+}

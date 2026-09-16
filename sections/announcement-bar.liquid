@@ -233,6 +233,7 @@
       if (reduce) return;
       /* vertical loop like Ekster's swiper: clone the first slide to the
          end, slide up 1s per step, snap back to 0 invisibly after the clone */
+      slides.forEach(function(sl){ sl.classList.remove('hidden'); }); /* theme fades .hidden bars' text to 0 */
       var clone = slides[0].cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
       track.appendChild(clone);
