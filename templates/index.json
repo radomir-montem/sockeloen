@@ -249,10 +249,10 @@
     "featured_collection_knwu": {
       "type": "featured-collection",
       "settings": {
-        "title": "Sockeloen x KNWU",
+        "title": "Gloves",
         "show_title": true,
         "collection": "cycling-gloves",
-        "variant_filter": "Gloves",
+        "variant_filter": "",
         "products_to_show": 4,
         "columns_desktop": 4,
         "disable_padding": false,
