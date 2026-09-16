@@ -3735,3 +3735,126 @@ body.template--index .banner__box {
    restyle scoped under .product-v2; the UCI dark-theme pass edits that
    block in place rather than fighting it with competing rules here. */
 
+
+/* ============================================================
+   Cookie consent (Pandectes) — Represent-style overlay banner
+   Full-screen dimmed + blurred backdrop, no box, no logo/header,
+   small centered copy, stacked full-width buttons (Accept solid
+   white, Decline / Preferences outlined). Button radius 8px to
+   match the homepage hero buttons. The app's own extraCss lives in
+   snippets/pandectes-rules.liquid (auto-generated) — everything here
+   is ID-scoped so it wins without touching that file.
+   ============================================================ */
+#pandectes-banner.cc-window-wrapper {
+  position: fixed !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  transform: none !important; /* app centers the wrapper with translate(-50%,-50%) */
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: rgba(0, 0, 0, 0.55) !important;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 2147483647;
+}
+#pandectes-banner .cc-window {
+  position: relative !important;
+  inset: auto !important;
+  transform: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  max-width: 394px !important;
+  width: calc(100% - 32px) !important;
+  padding: 10px !important;
+  margin: auto !important;
+  gap: 22px;
+  display: flex !important;
+  flex-direction: column !important;
+  font-family: inherit !important;
+  color: #fff !important;
+}
+#pandectes-banner .cc-logo,
+#pandectes-banner .cc-banner-logo,
+#pandectes-banner .cc-header {
+  display: none !important;
+}
+#pandectes-banner .cc-message {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  color: #fff !important;
+  text-align: center !important;
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+}
+#pandectes-banner .cc-message .cc-link {
+  color: #fff !important;
+  opacity: 0.8;
+  text-decoration: underline;
+  padding: 0 !important;
+  font-size: inherit !important;
+}
+#pandectes-banner .cc-compliance {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 22px !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+#pandectes-banner .cc-compliance .cc-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 52px !important;
+  flex: 0 0 52px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  text-align: center !important;
+  background: transparent !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  transition: opacity 0.15s ease !important;
+  cursor: pointer;
+}
+#pandectes-banner .cc-compliance .cc-btn:hover {
+  opacity: 0.7;
+}
+#pandectes-banner .cc-compliance .cc-btn.cc-allow {
+  background: #fff !important;
+  color: #000 !important;
+  font-weight: 600 !important;
+  order: 0 !important;
+}
+#pandectes-banner .cc-compliance .cc-btn.cc-deny {
+  order: 1 !important;
+}
+#pandectes-banner .cc-compliance .cc-btn.cc-settings {
+  order: 2 !important;
+}
+/* Preferences modal buttons: same 8px radius as the banner buttons */
+#pd-cp-preferences .pd-cp-btn {
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  letter-spacing: normal !important;
+  text-transform: uppercase !important;
+}
