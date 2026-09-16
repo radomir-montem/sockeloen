@@ -4269,3 +4269,7 @@ body.template--index #MainContent [class*="two-cols-"] img {
 [id$="__seo_text"] .rich-text__text { font-size: 13px; line-height: 1.6; color: rgba(18, 18, 18, 0.75); }
 [id$="__seo_text"] .rich-text__text a { text-decoration: underline; }
 [id$="__seo_text"] .rich-text__buttons { margin-top: 16px; }
+/* Wordmark exception: the SOCKELOEN title in the brand block stays uppercase */
+body.template--index #MainContent [class*="sales-"] .text-alignment :is(h1, h2, h3, h4) {
+  text-transform: uppercase !important;
+}
