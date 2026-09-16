@@ -3908,6 +3908,12 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) ~ .shopify-section {
   position: relative;
   z-index: 1;
+}
+/* Opaque fallback background so the pinned hero never shows through a
+   transparent section. Wrapped in :where() (zero specificity) so any
+   section's own background class (e.g. the reviews carousel's bg-black)
+   still wins. */
+:where(body.template--index #MainContent > .shopify-section:first-child:has(> .banner) ~ .shopify-section) {
   background-color: rgb(var(--color-background));
 }
 /* The carousel section: no gap to the hero (the gap would reveal the pinned
