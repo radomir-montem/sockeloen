@@ -114,7 +114,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Top 8 best selling products",
+        "title": "best sellers",
         "collection": "best-sellers-1",
         "products_to_show": 8,
         "columns_desktop": 4,
@@ -124,7 +124,8 @@
         "show_vendor": false,
         "show_rating": false,
         "enable_quick_add": false,
-        "columns_mobile": "2"
+        "columns_mobile": "2",
+        "show_title": true
       }
     },
     "rich_text_BAQBfh": {
