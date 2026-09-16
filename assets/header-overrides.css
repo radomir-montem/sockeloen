@@ -3990,14 +3990,20 @@ body.template--index #MainContent .card-wrapper .card-bottom-badge .badge {
   border-radius: 4px !important;
 }
 
-/* PREVIEW (cont.): gradient runs to the bottom of the card — the content
-   area under the image is made transparent so the card's own grey
-   gradient shows behind title and price. */
-body.template--index #MainContent .card-wrapper .card__content,
-body.template--index #MainContent .card-wrapper .card__information,
-body.template--index #MainContent .card-wrapper .card-information,
-body.template--index #MainContent .card-wrapper .card__inner {
+/* PREVIEW (cont.): the grey gradient belongs to the image tile only, with
+   all four corners at 4px (Eme: rounded image, text on white below).
+   Before, the gradient sat on .card and the white content area cut it
+   off in a straight line, so the tile's bottom corners looked square. */
+body.template--index #MainContent .card-wrapper .card {
   background: transparent !important;
+}
+body.template--index #MainContent .card-wrapper .card__inner {
+  background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+body.template--index #MainContent .card-wrapper .card__content {
+  background: #fff !important;
 }
 /* PREVIEW (cont.): Eme badge styling — white 90%, black text, 11px/400,
    5px 8px padding, 4px radius, 8px from the top-left corner. */
