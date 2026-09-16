@@ -83,6 +83,7 @@
     #Banner-{{ section.id }} .banner__text {
       {%- if ts.text_font_size_mobile > 0 %} font-size: {{ ts.text_font_size_mobile }}px;{% endif -%}
       {%- if ts.text_line_height_mobile > 0 %} line-height: {{ ts.text_line_height_mobile }};{% endif -%}
+      {%- if ts.text_hide_mobile %} display: none !important;{% endif -%}
     }
   }
   {%- render 'banner-element-align', banner_id: banner_id, selector: '.banner__text', kind: 'text', align_desktop: ts.text_align_desktop, align_mobile: ts.text_align_mobile -%}
@@ -930,6 +931,12 @@
           ],
           "default": "body",
           "label": "t:sections.image-banner.blocks.text.settings.text_style.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "text_hide_mobile",
+          "label": "Hide on mobile",
+          "default": false
         },
         {
           "type": "range",
