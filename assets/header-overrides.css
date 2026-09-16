@@ -3889,6 +3889,22 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
   border-radius: 0 !important;
   overflow: hidden;
 }
+/* Square corners on every layer of the hero. ID-scoped so it beats the
+   generic rounded-image rules (which gave the hero <img> an 8px radius
+   even though .banner img was reset earlier). */
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner),
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) .banner,
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) .banner__media,
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) .banner__media img,
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) .banner img,
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) .banner .media,
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) .banner picture,
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) .banner video,
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) .banner::after,
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) .banner__media::after {
+  border-radius: 0 !important;
+  clip-path: none !important;
+}
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) ~ .shopify-section {
   position: relative;
   z-index: 1;
