@@ -4069,3 +4069,25 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .fc-title {
   padding: var(--sheet-radius) var(--sheet-radius) 0;
 }
+/* PREVIEW (cont.): mega-menu product cards match the homepage cards —
+   4px tile radius, same grey gradient tile, same 10px bold lowercase
+   title, same 12px gap. */
+.mega-menu-v2-card,
+.mega-menu-v2-card-img {
+  border-radius: 4px !important;
+}
+.mega-menu-v2-card-img {
+  background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
+  overflow: hidden !important;
+}
+.mega-menu-v2-card-title {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: lowercase !important;
+  letter-spacing: 0.2px !important;
+  line-height: 12px !important;
+  color: rgb(18, 18, 18) !important;
+}
+.mega-menu-v2-grid--products {
+  gap: 12px !important;
+}
