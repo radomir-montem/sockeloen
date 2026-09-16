@@ -93,13 +93,6 @@
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
         "show_text_below": false,
-        "show_mobile_cats": true,
-        "cat_1_label": "Socks",
-        "cat_1_link": "/collections/all-socks/1-pair",
-        "cat_2_label": "Overshoes",
-        "cat_2_link": "shopify://collections/cycling-overshoes",
-        "cat_3_label": "Gloves",
-        "cat_3_link": "shopify://collections/cycling-gloves",
         "show_social_proof": true,
         "sp_name": "Riejanne Markus",
         "sp_link": "",
@@ -115,7 +108,14 @@
         "sp_text_color": "#ffffff",
         "sp_spacing_top": 26,
         "sp_align_desktop": "left",
-        "sp_align_mobile": "left"
+        "sp_align_mobile": "left",
+        "show_mobile_cats": true,
+        "cat_1_label": "Socks",
+        "cat_1_link": "/collections/all-socks/1-pair",
+        "cat_2_label": "Overshoes",
+        "cat_2_link": "shopify://collections/cycling-overshoes",
+        "cat_3_label": "Gloves",
+        "cat_3_link": "shopify://collections/cycling-gloves"
       }
     },
     "featured_collection": {
@@ -235,7 +235,9 @@
         "ecaa607f-a456-4c64-8b1d-82c823de6917",
         "d3c61b13-8dbb-4c88-8c39-6529210ef951"
       ],
-      "settings": {}
+      "settings": {
+        "sticky_scroll": true
+      }
     },
     "featured_collection_8XmHNY": {
       "type": "featured-collection",
