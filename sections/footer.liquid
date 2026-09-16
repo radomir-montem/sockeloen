@@ -66,7 +66,7 @@
         </div>
       {% endfor %}
     </div>
-    {%- unless section.settings.show_newsletter -%}<style>#shopify-section-footer .footer-form { display: none !important; }</style>{%- endunless -%}
+    {%- unless section.settings.show_newsletter -%}<style>#shopify-section-footer .footer-form > h3, #shopify-section-footer .footer-form > form { display: none !important; }</style>{%- endunless -%}
     <div class="mx-11 footer-form flex flex-col">
       <h3 class="text-base-footer bold-title mb-[16px]">
         {{section.settings.newsletter_text}}
