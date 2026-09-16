@@ -210,7 +210,10 @@
             "button_disclaimer": "",
             "button_text": "Shop Here",
             "button_url": "shopify://collections/all-weather-essentials",
-            "button_pos": "mt-0"
+            "button_pos": "mt-0",
+            "mobile_collection": "cycling-gloves",
+            "mobile_collection_title": "Gloves",
+            "mobile_collection_limit": 4
           }
         },
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
@@ -236,7 +239,7 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951"
       ],
       "settings": {
-        "sticky_scroll": true
+        "eme_banners": true
       }
     },
     "featured_collection_8XmHNY": {

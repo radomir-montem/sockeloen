@@ -1,14 +1,44 @@
-{%- if section.settings.sticky_scroll -%}
-  {%- comment -%} Eme-style: this block pins at the top and the next section slides over it as a rounded white sheet {%- endcomment -%}
-  <style>
-    .shopify-section#shopify-section-{{ section.id }} { position: sticky !important; top: 0 !important; overflow: hidden; }
-    .shopify-section#shopify-section-{{ section.id }} + .shopify-section {
-      position: relative; margin-top: 0 !important; background: #fff;
-      border-radius: var(--sheet-radius, 12px) var(--sheet-radius, 12px) 0 0; overflow: hidden;
-    }
-    .shopify-section#shopify-section-{{ section.id }} + .shopify-section > *:first-child { border-radius: var(--sheet-radius, 12px) var(--sheet-radius, 12px) 0 0; }
-  </style>
-{%- endif -%}
+{%- if section.settings.eme_banners -%}
+{%- comment -%}
+  emestudios.com category banners: tall cover image, glass label pill that
+  sticks at 75svh while the banner scrolls through, whole banner is the link.
+  Optional per-block mobile-only product grid rendered right after the banner.
+{%- endcomment -%}
+<section class="tcs-eme">
+  {%- for block in section.blocks -%}
+    <a class="tcs-eme__item" {% if block.settings.button_url != blank %}href="{{ block.settings.button_url }}"{% else %}role="link" aria-disabled="true"{% endif %} {{ block.shopify_attributes }}>
+      <div class="tcs-eme__media">
+        {%- if block.settings.image != blank -%}
+          {% render 'c-image-element', image: block.settings.image, lazy: true, position: 'center', class: 'tcs-eme__img' %}
+        {%- else -%}
+          <div class="tcs-eme__img" style="background: {{ block.settings.color | default: '#111' }};"></div>
+        {%- endif -%}
+      </div>
+      {%- if block.settings.heading != blank -%}
+        <div class="tcs-eme__overlay">
+          <div class="tcs-eme__sticky">
+            <span class="tcs-eme__pill"><span class="tcs-eme__label">{{ block.settings.heading }}</span></span>
+          </div>
+        </div>
+      {%- endif -%}
+    </a>
+    {%- if block.settings.mobile_collection != blank -%}
+      <div class="tcs-eme__mobile-collection collection">
+        {%- if block.settings.mobile_collection_title != blank -%}
+          <div class="fc-title"><h2 class="fc-title__heading">{{ block.settings.mobile_collection_title | escape }}</h2></div>
+        {%- endif -%}
+        <div class="grid grid-cols-2 tcs-eme__grid">
+          {%- for product in block.settings.mobile_collection.products limit: block.settings.mobile_collection_limit -%}
+            <div>
+              {% render 'card-product', card_product: product, media_aspect_ratio: 'portrait', show_secondary_image: true, show_vendor: false, show_rating: false, show_quick_add: false, section_id: section.id %}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</section>
+{%- else -%}
 <section class="bg-[#E1E1E1]">
   <div id="shopify-section-{{ section.id }}" class="{% if template contains 'product' %} flex flex-col-reverse md:grid md:grid-cols-2 {% else %} grid grid-cols-1 md:grid-cols-2 {% endif %}">
     {% for block in section.blocks %}
@@ -78,6 +108,7 @@
     {% endfor %}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
@@ -195,6 +226,29 @@
             }
           ],
           "default": "mt-0"
+        },
+        {
+          "type": "header",
+          "content": "Mobile product grid (Eme banners only)"
+        },
+        {
+          "type": "collection",
+          "id": "mobile_collection",
+          "label": "Collection shown under this banner on mobile"
+        },
+        {
+          "type": "text",
+          "id": "mobile_collection_title",
+          "label": "Title"
+        },
+        {
+          "type": "range",
+          "id": "mobile_collection_limit",
+          "min": 2,
+          "max": 8,
+          "step": 2,
+          "default": 4,
+          "label": "Products"
         }
       ]
     }
@@ -207,8 +261,8 @@
   "settings": [
     {
       "type": "checkbox",
-      "id": "sticky_scroll",
-      "label": "Sticky scroll effect (next section slides over this block)",
+      "id": "eme_banners",
+      "label": "Eme-style category banners (tall image, sticky glass label)",
       "default": false
     }
   ]

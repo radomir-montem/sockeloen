@@ -4481,3 +4481,36 @@ body.template--index .taggbox .tb_rt_post_in {
 }
 body.template--index .taggbox .tb_rt_media_wrap,
 body.template--index .taggbox .tb_rt_image_wrap_ { border-radius: 4px !important; overflow: hidden !important; }
+
+/* ============================================================
+   Eme-style category banners (two-cols-swap "eme_banners")
+   ============================================================ */
+.tcs-eme { display: flex; flex-direction: column; background: #fff; }
+.tcs-eme__item { position: relative; display: block; width: 100%; height: 630px; overflow: visible; color: #fff; text-decoration: none; }
+.tcs-eme__media { position: absolute; inset: 0; overflow: hidden; }
+.tcs-eme__img, .tcs-eme__media img { width: 100% !important; height: 100% !important; object-fit: cover; display: block; border-radius: 0 !important; }
+.tcs-eme__overlay { position: absolute; inset: 0; z-index: 1; display: flex; width: 100%; justify-content: center; padding: 0 10px; pointer-events: none; }
+.tcs-eme__sticky { position: sticky; top: 75svh; display: flex; width: 100%; height: fit-content; justify-content: center; padding: 34px 0; }
+.tcs-eme__pill {
+  pointer-events: auto; display: flex; width: fit-content; align-items: center; justify-content: center;
+  padding: 24px; border-radius: 8px; text-align: center;
+  backdrop-filter: blur(21px); -webkit-backdrop-filter: blur(21px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.4), rgba(255,255,255,0.05), transparent);
+}
+.tcs-eme__label { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2; text-transform: lowercase !important; }
+.tcs-eme__label::first-letter { text-transform: uppercase !important; }
+body.template--index #MainContent .tcs-eme__label { text-transform: capitalize !important; }
+.tcs-eme__mobile-collection { display: block; background: #fff; padding-bottom: 12px; }
+@media screen and (min-width: 640px) {
+  .tcs-eme { flex-direction: row; flex-wrap: wrap; }
+  .tcs-eme__item { width: 50%; height: 695px; }
+  .tcs-eme__sticky { padding: 30px 0; }
+}
+@media screen and (min-width: 750px) {
+  .tcs-eme__mobile-collection { display: none; }
+}
+/* all homepage product carousels on plain white */
+body.template--index #MainContent .isolate.bg-background,
+body.template--index #MainContent .collection { background: #fff !important; }
