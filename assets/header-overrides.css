@@ -3900,6 +3900,7 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
   margin-top: 0 !important;
   padding-top: var(--spacing-sections-mobile);
   border-radius: 12px 12px 0 0;
+  overflow: hidden; /* clip card images to the rounded corners */
 }
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section > *:first-child {
   border-radius: 12px 12px 0 0;
