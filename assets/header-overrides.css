@@ -3989,3 +3989,38 @@ body.template--index #MainContent .card-wrapper .card-badge .badge,
 body.template--index #MainContent .card-wrapper .card-bottom-badge .badge {
   border-radius: 4px !important;
 }
+
+/* PREVIEW (cont.): gradient runs to the bottom of the card — the content
+   area under the image is made transparent so the card's own grey
+   gradient shows behind title and price. */
+body.template--index #MainContent .card-wrapper .card__content,
+body.template--index #MainContent .card-wrapper .card__information,
+body.template--index #MainContent .card-wrapper .card-information,
+body.template--index #MainContent .card-wrapper .card__inner {
+  background: transparent !important;
+}
+/* PREVIEW (cont.): Eme badge styling — white 90%, black text, 11px/400,
+   5px 8px padding, 4px radius, 8px from the top-left corner. */
+body.template--index #MainContent .card-wrapper .card-badge {
+  top: 8px !important;
+  left: 8px !important;
+  display: flex;
+  gap: 4px;
+}
+body.template--index #MainContent .card-wrapper .card-bottom-badge {
+  left: 8px !important;
+  bottom: 8px !important;
+}
+body.template--index #MainContent .card-wrapper .badge {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #000 !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.005em !important;
+  padding: 5px 8px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
