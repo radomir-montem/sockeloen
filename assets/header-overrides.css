@@ -4398,3 +4398,20 @@ body.template--index #MainContent [class*="sales-"] .text-alignment :is(h1, h2, 
 }
 #announcement-bar.ann-rotator .announcement-bar.hidden { display: block !important; }
 #announcement-bar.hidden { display: none !important; }
+/* rotator: the theme marks every bar after the first with .hidden (opacity
+   0 for its old fade cycle) — all slides must be fully visible in the track */
+#announcement-bar.ann-rotator .announcement-bar.hidden,
+#announcement-bar.ann-rotator .announcement-bar {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+/* Footer headings are typed in uppercase: render them in sentence case */
+#shopify-section-footer h3,
+#shopify-section-footer .bold-title {
+  text-transform: lowercase !important;
+}
+#shopify-section-footer h3::first-letter,
+#shopify-section-footer .bold-title::first-letter {
+  text-transform: uppercase !important;
+}
