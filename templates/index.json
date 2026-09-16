@@ -93,6 +93,13 @@
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
         "show_text_below": false,
+        "show_mobile_cats": true,
+        "cat_1_label": "Socks",
+        "cat_1_link": "/collections/all-socks/1-pair",
+        "cat_2_label": "Overshoes",
+        "cat_2_link": "shopify://collections/cycling-overshoes",
+        "cat_3_label": "Gloves",
+        "cat_3_link": "shopify://collections/cycling-gloves",
         "show_social_proof": true,
         "sp_name": "Riejanne Markus",
         "sp_link": "",
@@ -108,14 +115,7 @@
         "sp_text_color": "#ffffff",
         "sp_spacing_top": 26,
         "sp_align_desktop": "left",
-        "sp_align_mobile": "left",
-        "show_mobile_cats": true,
-        "cat_1_label": "Socks",
-        "cat_1_link": "/collections/all-socks/1-pair",
-        "cat_2_label": "Overshoes",
-        "cat_2_link": "shopify://collections/cycling-overshoes",
-        "cat_3_label": "Gloves",
-        "cat_3_link": "shopify://collections/cycling-gloves"
+        "sp_align_mobile": "left"
       }
     },
     "featured_collection": {
@@ -230,7 +230,10 @@
             "button_disclaimer": "",
             "button_text": "shop here",
             "button_url": "shopify://collections/running",
-            "button_pos": "mt-0"
+            "button_pos": "mt-0",
+            "mobile_collection": "",
+            "mobile_collection_title": "",
+            "mobile_collection_limit": 4
           }
         }
       },
@@ -257,6 +260,58 @@
         "show_rating": false,
         "enable_quick_add": false,
         "columns_mobile": "2"
+      }
+    },
+    "two_cols_swap_jgptyz": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "column_8d48KB": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/KNWU_SIDE_webbanner_f691e173-8f49-44d2-8a8f-455aff34f04b.png",
+            "color": "#0e112e",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "KNWU",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "Shop Here",
+            "button_url": "shopify://collections/all-weather-essentials",
+            "button_pos": "mt-0",
+            "mobile_collection": "sockeloen-x-knwu",
+            "mobile_collection_title": "Gloves",
+            "mobile_collection_limit": 4
+          }
+        },
+        "column_xrEcgn": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/WEB_Home_banner_desktop_V4.png",
+            "color": "",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "Overshoes",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "shop here",
+            "button_url": "shopify://collections/running",
+            "button_pos": "mt-0",
+            "mobile_collection": "",
+            "mobile_collection_title": "",
+            "mobile_collection_limit": 4
+          }
+        }
+      },
+      "block_order": [
+        "column_8d48KB",
+        "column_xrEcgn"
+      ],
+      "settings": {
+        "eme_banners": true
       }
     },
     "featured_collection_YRMqEF": {
@@ -402,6 +457,7 @@
         "a8a72217-bd02-490a-b90f-0b812e1cec08",
         "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2"
       ],
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1_f2234b29-35ac-49bb-94c7-d87c0f5c7949.png",
         "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
@@ -416,6 +472,13 @@
         "mobile_content_alignment": "left",
         "stack_images_on_mobile": false,
         "show_text_below": false,
+        "show_mobile_cats": false,
+        "cat_1_label": "socks",
+        "cat_1_link": "",
+        "cat_2_label": "overshoes",
+        "cat_2_link": "",
+        "cat_3_label": "gloves",
+        "cat_3_link": "",
         "show_social_proof": true,
         "sp_name": "Riejanne Markus",
         "sp_link": "",
@@ -436,11 +499,12 @@
     },
     "featured_collection_LFbjMC": {
       "type": "featured-collection",
+      "disabled": true,
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
-        "title": "custom made socks",
+        "title": "KNWU",
         "show_title": true,
-        "collection": "custom-knitted-socks",
+        "collection": "knwu",
         "products_to_show": 4,
         "columns_desktop": 4,
         "disable_padding": false,
@@ -454,6 +518,7 @@
     },
     "custom_liquid_rMhgeN": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "heading": "",
@@ -611,7 +676,10 @@
             "button_disclaimer": "",
             "button_text": "",
             "button_url": "#",
-            "button_pos": "mt-0"
+            "button_pos": "mt-0",
+            "mobile_collection": "",
+            "mobile_collection_title": "",
+            "mobile_collection_limit": 4
           }
         },
         "column_pYHJ3N": {
@@ -628,7 +696,10 @@
             "button_disclaimer": "",
             "button_text": "SHOP NO FEAR",
             "button_url": "https://sockeloen.com/collections/no-fear-collectie",
-            "button_pos": "mt-0"
+            "button_pos": "mt-0",
+            "mobile_collection": "",
+            "mobile_collection_title": "",
+            "mobile_collection_limit": 4
           }
         }
       },
@@ -637,7 +708,9 @@
         "column_pYHJ3N"
       ],
       "disabled": true,
-      "settings": {}
+      "settings": {
+        "eme_banners": false
+      }
     },
     "image_text": {
       "type": "image-text",
@@ -823,6 +896,7 @@
     "rich_text_aqpE7M",
     "d87b5960-1f92-48c4-8223-cc52b7b532cf",
     "featured_collection_8XmHNY",
+    "two_cols_swap_jgptyz",
     "featured_collection_YRMqEF",
     "8b0b527a-f477-4927-970f-cc63855e24be",
     "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5",
