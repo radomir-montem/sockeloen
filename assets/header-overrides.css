@@ -4043,6 +4043,8 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .grid {
   padding-left: var(--sheet-radius) !important;
   padding-right: var(--sheet-radius) !important;
+  column-gap: var(--sheet-radius) !important; /* card gap = same 12px rhythm */
+  row-gap: var(--sheet-radius) !important;
 }
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .fc-title {
   padding: var(--sheet-radius) var(--sheet-radius) 0;
