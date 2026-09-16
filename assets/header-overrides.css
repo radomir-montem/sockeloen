@@ -4035,6 +4035,7 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
   padding-right: 5px !important;
 }
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .fc-title {
-  padding-left: 5px;
-  padding-right: 5px;
+  /* minimal top spacing: with a 12px corner radius the arc only reaches
+     ~3px inward at x=5px, so the cap height of "best" stays clear */
+  padding: 4px 5px 0;
 }
