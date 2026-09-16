@@ -108,7 +108,14 @@
         "sp_text_color": "#ffffff",
         "sp_spacing_top": 26,
         "sp_align_desktop": "left",
-        "sp_align_mobile": "left"
+        "sp_align_mobile": "left",
+        "show_mobile_cats": true,
+        "cat_1_label": "socks",
+        "cat_1_link": "shopify://collections/cycling-socks",
+        "cat_2_label": "overshoes",
+        "cat_2_link": "shopify://collections/cycling-overshoes",
+        "cat_3_label": "gloves",
+        "cat_3_link": "shopify://collections/cycling-gloves"
       }
     },
     "featured_collection": {
@@ -263,7 +270,7 @@
             "button_label": "Explore More",
             "button_url": "shopify://collections/all-products",
             "text_align": "center",
-            "background_color": "#a12d00"
+            "background_color": "#000000"
           }
         },
         "4904019c-ebe9-48ae-adae-d8c50c33e729": {
@@ -380,107 +387,6 @@
         "vertical_padding": 70
       }
     },
-    "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5": {
-      "type": "image-banner",
-      "blocks": {
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0": {
-          "type": "heading",
-          "settings": {
-            "heading": "CUSTOM MADE SOCKS",
-            "heading_size": "h0",
-            "use_h1_tag": true,
-            "heading_align_desktop": "inherit",
-            "heading_align_mobile": "inherit",
-            "heading_font_size_desktop": 0,
-            "heading_font_size_mobile": 0,
-            "heading_line_height_desktop": 0,
-            "heading_line_height_mobile": 0,
-            "heading_font_weight": "default",
-            "heading_italic": false,
-            "heading_color": "",
-            "heading_letter_spacing": 0,
-            "heading_text_transform": "default"
-          }
-        },
-        "a8a72217-bd02-490a-b90f-0b812e1cec08": {
-          "type": "text",
-          "settings": {
-            "text": "",
-            "text_style": "subtitle",
-            "text_hide_mobile": false,
-            "text_max_width": 440,
-            "text_align_desktop": "inherit",
-            "text_align_mobile": "inherit",
-            "text_font_size_desktop": 0,
-            "text_font_size_mobile": 0,
-            "text_line_height_desktop": 0,
-            "text_line_height_mobile": 0,
-            "text_font_weight": "default",
-            "text_italic": false,
-            "text_color": "",
-            "text_letter_spacing": 0,
-            "text_text_transform": "default"
-          }
-        },
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "",
-            "button_link_1": "https://custom.sockeloen.nl/en-custom-design-checkout/",
-            "button_style_secondary_1": true,
-            "button_label_2": "Explore Custom Socks",
-            "button_link_2": "shopify://collections/custom-socks",
-            "button_style_secondary_2": false,
-            "button_style": "glass",
-            "button_bg_color": "#ffffff",
-            "button_text_color": "#000000",
-            "button_font_size_desktop": 12,
-            "button_font_size_mobile": 12,
-            "button_font_weight": "default",
-            "button_letter_spacing": 0,
-            "button_text_transform": "default",
-            "buttons_align_desktop": "inherit",
-            "buttons_align_mobile": "inherit"
-          }
-        }
-      },
-      "block_order": [
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-0",
-        "a8a72217-bd02-490a-b90f-0b812e1cec08",
-        "template--17826493464856__1bee97a8-4b6b-400a-b06f-c4a7cfa384a5-1675957273a2faf5d4-2"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1_f2234b29-35ac-49bb-94c7-d87c0f5c7949.png",
-        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
-        "image_overlay_opacity": 20,
-        "banner_image_height": 600,
-        "image_height_mobile": 450,
-        "adapt_height_first_image": true,
-        "desktop_content_position": "middle-left",
-        "show_text_box": false,
-        "desktop_content_alignment": "left",
-        "color_scheme": "background-1",
-        "mobile_content_alignment": "left",
-        "stack_images_on_mobile": false,
-        "show_text_below": false,
-        "show_social_proof": true,
-        "sp_name": "Riejanne Markus",
-        "sp_link": "",
-        "sp_verified_badge": true,
-        "sp_count": "78.342",
-        "sp_brand": "Sockeloen",
-        "sp_custom_text": "",
-        "sp_avatar_size": 36,
-        "sp_font_size_desktop": 13,
-        "sp_font_size_mobile": 13,
-        "sp_line_height": 0,
-        "sp_font_weight": "default",
-        "sp_text_color": "#ffffff",
-        "sp_spacing_top": 24,
-        "sp_align_desktop": "inherit",
-        "sp_align_mobile": "left"
-      }
-    },
     "d87b5960-1f92-48c4-8223-cc52b7b532cf": {
       "type": "two-cols-swap",
       "blocks": {
@@ -524,109 +430,6 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951"
       ],
       "settings": {}
-    },
-    "image_banner_PTNcRi": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_XaazFp": {
-          "type": "heading",
-          "settings": {
-            "heading": "high performance socks",
-            "heading_size": "h0",
-            "use_h1_tag": true,
-            "heading_align_desktop": "inherit",
-            "heading_align_mobile": "inherit",
-            "heading_font_size_desktop": 0,
-            "heading_font_size_mobile": 0,
-            "heading_line_height_desktop": 0,
-            "heading_line_height_mobile": 0,
-            "heading_font_weight": "default",
-            "heading_italic": false,
-            "heading_color": "",
-            "heading_letter_spacing": 0,
-            "heading_text_transform": "default"
-          }
-        },
-        "text_hfdXtU": {
-          "type": "text",
-          "settings": {
-            "text": "driven by performance",
-            "text_style": "subtitle",
-            "text_hide_mobile": false,
-            "text_max_width": 440,
-            "text_align_desktop": "inherit",
-            "text_align_mobile": "inherit",
-            "text_font_size_desktop": 0,
-            "text_font_size_mobile": 0,
-            "text_line_height_desktop": 0,
-            "text_line_height_mobile": 0,
-            "text_font_weight": "default",
-            "text_italic": false,
-            "text_color": "",
-            "text_letter_spacing": 0,
-            "text_text_transform": "default"
-          }
-        },
-        "buttons_xMFBV8": {
-          "type": "buttons",
-          "disabled": true,
-          "settings": {
-            "button_label_1": "shop by collection",
-            "button_link_1": "shopify://collections/all-socks",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "shopify://collections/fsotp",
-            "button_style_secondary_2": false,
-            "button_style": "glass",
-            "button_bg_color": "#ffffff",
-            "button_text_color": "#000000",
-            "button_font_size_desktop": 12,
-            "button_font_size_mobile": 12,
-            "button_font_weight": "default",
-            "button_letter_spacing": 0,
-            "button_text_transform": "default",
-            "buttons_align_desktop": "inherit",
-            "buttons_align_mobile": "inherit"
-          }
-        }
-      },
-      "block_order": [
-        "heading_XaazFp",
-        "text_hfdXtU",
-        "buttons_xMFBV8"
-      ],
-      "custom_css": [
-        "h1 {font-size: 36px;}"
-      ],
-      "settings": {
-        "image_overlay_opacity": 100,
-        "banner_image_height": 150,
-        "image_height_mobile": 150,
-        "adapt_height_first_image": false,
-        "desktop_content_position": "middle-center",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "inverse",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false,
-        "show_social_proof": true,
-        "sp_name": "Riejanne Markus",
-        "sp_link": "",
-        "sp_verified_badge": true,
-        "sp_count": "78.342",
-        "sp_brand": "Sockeloen",
-        "sp_custom_text": "",
-        "sp_avatar_size": 36,
-        "sp_font_size_desktop": 13,
-        "sp_font_size_mobile": 13,
-        "sp_line_height": 0,
-        "sp_font_weight": "default",
-        "sp_text_color": "#ffffff",
-        "sp_spacing_top": 24,
-        "sp_align_desktop": "inherit",
-        "sp_align_mobile": "left"
-      }
     },
     "two_cols_swap_n6jVTM": {
       "type": "two-cols-swap",
@@ -848,6 +651,58 @@
       "settings": {
         "font_size": 26
       }
+    },
+    "custom_socks_hero": {
+      "type": "custom-socks-hero",
+      "settings": {
+        "image": "shopify://shop_images/CUSTOM.SOCKS.banner_1_f2234b29-35ac-49bb-94c7-d87c0f5c7949.png",
+        "image_mobile": "shopify://shop_images/CUSTOM.SOCKS.banner.MOBILE_83d4dc12-e27d-40dd-a256-6abebe6d51f5.png",
+        "title": "custom socks",
+        "link": "shopify://collections/custom-socks",
+        "height": 100
+      }
+    },
+    "seo_text": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>high performance cycling socks</p>",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>sockeloen makes cycling socks, aero socks and shoecovers for riders who care about speed, comfort and style. designed in the netherlands, worn by pro teams and 78,000+ athletes. explore <a href=\"/collections/cycling-socks\">cycling socks</a>, <a href=\"/collections/aero-socks\">aero socks</a>, <a href=\"/collections/cycling-overshoes\">overshoes</a>, <a href=\"/collections/cycling-gloves\">gloves</a> or design your own <a href=\"/collections/custom-socks\">custom socks</a>.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "shop all socks",
+            "button_link": "shopify://collections/all-products",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "button"
+      ],
+      "settings": {
+        "desktop_content_position": "left",
+        "content_alignment": "left",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 48
+      }
     }
   },
   "order": [
@@ -861,9 +716,9 @@
     "usp_HBx6Vd",
     "c279238b-8499-4eaf-81d5-673521b38c4a",
     "de9aa240-54a4-4bba-bc14-853948711e79",
-    "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5",
+    "custom_socks_hero",
     "d87b5960-1f92-48c4-8223-cc52b7b532cf",
-    "image_banner_PTNcRi",
+    "seo_text",
     "two_cols_swap_n6jVTM",
     "image_text",
     "multicolumn",
