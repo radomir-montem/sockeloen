@@ -93,6 +93,13 @@
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
         "show_text_below": false,
+        "show_mobile_cats": true,
+        "cat_1_label": "Socks",
+        "cat_1_link": "/collections/all-socks/1-pair",
+        "cat_2_label": "Overshoes",
+        "cat_2_link": "shopify://collections/cycling-overshoes",
+        "cat_3_label": "Gloves",
+        "cat_3_link": "shopify://collections/cycling-gloves",
         "show_social_proof": true,
         "sp_name": "Riejanne Markus",
         "sp_link": "",
@@ -588,7 +595,7 @@
         "heading_XaazFp": {
           "type": "heading",
           "settings": {
-            "heading": "high performance socks",
+            "heading": "Built for speed. Made for the peloton.",
             "heading_size": "h0",
             "use_h1_tag": true,
             "heading_align_desktop": "inherit",
@@ -607,7 +614,7 @@
         "text_hfdXtU": {
           "type": "text",
           "settings": {
-            "text": "driven by performance",
+            "text": "High performance cycling socks, aero shoecovers and gloves. Designed in the Netherlands, raced by pro teams and worn by 78,000+ riders.",
             "text_style": "subtitle",
             "text_hide_mobile": false,
             "text_max_width": 440,

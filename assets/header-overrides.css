@@ -4420,3 +4420,64 @@ body.template--index #MainContent [class*="sales-"] .text-alignment :is(h1, h2, 
   opacity: 1 !important;
   animation: none !important;
 }
+
+/* ============================================================
+   Announcement rotator: only the TEXT moves. Glass + radius live on the
+   fixed container; slides are transparent.
+   ============================================================ */
+#announcement-bar.ann-rotator {
+  background: rgba(26, 26, 26, 0.62) !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+#announcement-bar.ann-rotator::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  backdrop-filter: blur(21px) saturate(180%);
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
+}
+#announcement-bar.ann-rotator .announcement-bar,
+#announcement-bar.ann-rotator .announcement-bar.gradient {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+#announcement-bar.ann-rotator .announcement-bar::before { display: none !important; }
+
+/* ============================================================
+   Product carousels: the best-sellers styling applies to EVERY featured
+   collection on the homepage — radius-driven inner spacing, 12px gaps.
+   ============================================================ */
+body.template--index #MainContent .collection {
+  --sheet-radius: 12px;
+}
+body.template--index #MainContent .collection .fc-title {
+  padding: var(--sheet-radius) var(--sheet-radius) 0;
+}
+body.template--index #MainContent .collection .grid {
+  padding-left: var(--sheet-radius) !important;
+  padding-right: var(--sheet-radius) !important;
+  column-gap: var(--sheet-radius) !important;
+  row-gap: var(--sheet-radius) !important;
+}
+body.template--index #MainContent .collection + * { margin-top: 0; }
+
+/* ============================================================
+   Social proof banner (Taggbox slider): same tile language as the
+   product carousels — 4px tiles, 12px gaps, 12px side inset.
+   ============================================================ */
+body.template--index .shopify-section:has(.taggbox) .page-width,
+body.template--index .shopify-section:has(.taggbox) .custom-liquid {
+  max-width: none !important;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+body.template--index .taggbox .tb_rt_post_wrapper { padding: 6px !important; }
+body.template--index .taggbox .tb_rt_post_in {
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+body.template--index .taggbox .tb_rt_media_wrap,
+body.template--index .taggbox .tb_rt_image_wrap_ { border-radius: 4px !important; overflow: hidden !important; }

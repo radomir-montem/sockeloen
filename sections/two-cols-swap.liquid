@@ -1,3 +1,14 @@
+{%- if section.settings.sticky_scroll -%}
+  {%- comment -%} Eme-style: this block pins at the top and the next section slides over it as a rounded white sheet {%- endcomment -%}
+  <style>
+    .shopify-section#shopify-section-{{ section.id }} { position: sticky; top: 0; overflow: hidden; }
+    .shopify-section#shopify-section-{{ section.id }} + .shopify-section {
+      position: relative; margin-top: 0 !important; background: #fff;
+      border-radius: var(--sheet-radius, 12px) var(--sheet-radius, 12px) 0 0; overflow: hidden;
+    }
+    .shopify-section#shopify-section-{{ section.id }} + .shopify-section > *:first-child { border-radius: var(--sheet-radius, 12px) var(--sheet-radius, 12px) 0 0; }
+  </style>
+{%- endif -%}
 <section class="bg-[#E1E1E1]">
   <div id="shopify-section-{{ section.id }}" class="{% if template contains 'product' %} flex flex-col-reverse md:grid md:grid-cols-2 {% else %} grid grid-cols-1 md:grid-cols-2 {% endif %}">
     {% for block in section.blocks %}
@@ -77,6 +88,8 @@
       "type": "column",
       "name": "Column",
       "settings": [
+    { "type": "checkbox", "id": "sticky_scroll", "label": "Sticky scroll effect (next section slides over this block)", "default": false },
+
         {
           "type": "image_picker",
           "id": "image",

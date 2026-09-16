@@ -4,6 +4,13 @@
 <div id="reviewsio-carousel-widget"></div>
 <script>
 
+/* Only reviews with photos: the widget reads its sort state from this
+   global; 'with_images' makes it request &with=images (falls back to
+   newest if fewer than min_reviews have photos). */
+window.reviewsioWidgetState = window.reviewsioWidgetState || {};
+window.reviewsioWidgetState.widgets = window.reviewsioWidgetState.widgets || {};
+window.reviewsioWidgetState.widgets['reviewsio-carousel-widget'] = Object.assign(window.reviewsioWidgetState.widgets['reviewsio-carousel-widget'] || {}, { sort: 'with_images' });
+
 new carouselInlineWidget('reviewsio-carousel-widget',{
       /*Your REVIEWS.io account ID:*/
       store: 'sockeloen-nl',
