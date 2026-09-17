@@ -5171,3 +5171,84 @@ body.template--product .product-v2 .thumbnail-list .thumbnail img {
   width: 100%;
   height: 100%;
 }
+
+/* ============================================================
+   Product page: colour tile = size chip. One row of 21px swatches
+   (21 + 2x12 padding + 2x2 border = 49px, the size chip's height); the
+   row scrolls sideways with an edge fade when there are many colours.
+   ============================================================ */
+body.template--product .product-v2 .product-form__input.color-input {
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  min-height: 49px;
+  padding: 12px 110px 12px 16px !important;
+  border-radius: 8px !important;
+  gap: 0 !important;
+}
+body.template--product .product-v2 .color-input__track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+          mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  padding-right: 24px;
+}
+body.template--product .product-v2 .color-input__track::-webkit-scrollbar { display: none; }
+body.template--product .product-v2 .color-input__track label { flex: 0 0 auto; }
+body.template--product .product-v2 .color-dot.color-dot--swatch {
+  width: 21px !important;
+  height: 21px !important;
+  min-width: 21px !important;
+  border-radius: 4px !important;
+}
+body.template--product .product-v2 .color-input__selected-name {
+  right: 16px !important;
+  font-size: 13px !important;
+  max-width: 88px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Benefit tags over the photo: card-badge styling, stacked bottom-left,
+   8px from the photo edge (the photo is 4:5 of the full width on phones). */
+.pdp-tags { display: none; }
+@media screen and (max-width: 749px) {
+  .pdp-tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    position: absolute;
+    left: 8px;
+    top: calc(100vw * 1.25 - 8px);
+    transform: translateY(-100%);
+    z-index: 2;
+    pointer-events: none;
+    max-width: 70%;
+  }
+  .pdp-tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+    padding: 5px 8px;
+    border-radius: 4px;
+    text-transform: lowercase;
+  }
+  .pdp-tag::first-letter { text-transform: uppercase; }
+}
+/* the merchandising badge sat at 44px, now under the header pill: move
+   it below the pill, right-aligned so it does not collide with the
+   breadcrumb on the left */
+body.template--product .product-v2__media-wrapper > .card-badge {
+  top: 104px !important;
+  left: auto !important;
+  right: 12px !important;
+}

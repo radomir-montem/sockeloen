@@ -63,6 +63,34 @@
       {% render 'breadcrumb-overlay' %}
 
       {%- comment -%}
+        Benefit tags over the photo (bottom-left, like a "model wears M"
+        note): the same three benefit metafields as the checklist in the
+        buy box, with the theme-editor fallbacks. Styled as the product
+        card badges. Phone widths only; on desktop the gallery is a grid.
+      {%- endcomment -%}
+      {%- liquid
+        assign tag1 = product.metafields.custom.custom_benefit_1.value | default: product.metafields.custom.custom_benefit_1
+        assign tag2 = product.metafields.custom.custom_benefit_2.value | default: product.metafields.custom.custom_benefit_2
+        assign tag3 = product.metafields.custom.custom_benefit_3.value | default: product.metafields.custom.custom_benefit_3
+        if tag1 == blank
+          assign tag1 = 'products.v2.default_benefit_1' | t
+        endif
+        if tag2 == blank
+          assign tag2 = 'products.v2.default_benefit_2' | t
+        endif
+        if tag3 == blank
+          assign tag3 = 'products.v2.default_benefit_3' | t
+        endif
+      -%}
+      {%- if tag1 != blank or tag2 != blank or tag3 != blank -%}
+        <div class="pdp-tags" aria-hidden="true">
+          {%- if tag1 != blank -%}<span class="pdp-tag">{{ tag1 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag2 != blank -%}<span class="pdp-tag">{{ tag2 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag3 != blank -%}<span class="pdp-tag">{{ tag3 | strip | remove: '.' }}</span>{%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%}
         Custom merchandising badges (product.metafields.custom.badge,
         e.g. "UCI SALE -30%") and the sold-out badge, both shown over the
         product image gallery. Restored after being removed along with
@@ -640,6 +668,7 @@
                       {%- if option.values.size > 1 -%}
                         <fieldset class="js product-form__input product-form__input--pill {% if is_color %}color-input{% else %}size-input{% endif %}">
                           <legend class="form__label">{{ option.name }}</legend>
+                          {% if is_color %}<div class="color-input__track">{% endif %}
                           {%- for value in option.values -%}
                             {%- liquid
                               assign variant_hidden = true
@@ -698,6 +727,7 @@
                               {% endif %}
                             </label>
                           {%- endfor -%}
+                          {% if is_color %}</div>{% endif %}
                           {%- if is_color -%}
                             <span class="color-input__selected-name">{{ option.selected_value | escape }}</span>
                           {%- endif -%}
