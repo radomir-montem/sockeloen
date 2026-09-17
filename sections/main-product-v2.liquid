@@ -108,8 +108,8 @@
               });
               var active = slides.findIndex(function (s) { return s.classList.contains('is-active'); });
               if (active < 0) active = 0;
-              var show = active % items.length;
-              items.forEach(function (t, i) { t.classList.toggle('is-visible', i === show); });
+              /* photo 1 > benefit 1, photo 2 > benefit 2, ...; later photos show none */
+              items.forEach(function (t, i) { t.classList.toggle('is-visible', i === active); });
             }
             new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
             update();
