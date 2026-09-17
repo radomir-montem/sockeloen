@@ -4684,3 +4684,15 @@ body.template--collection #product-grid {
 .rvi-swiper .swiper-wrapper {
   gap: 0 !important;
 }
+
+/* Badge text: sentence case, forced. Whatever is typed in the metafield
+   ("NEW", "PRINTED", "design online") renders as "New", "Printed",
+   "Design online". ::first-letter needs a block container, hence the
+   inline-block. */
+#MainContent .card-wrapper .badge {
+  text-transform: lowercase !important;
+  display: inline-block !important;
+}
+#MainContent .card-wrapper .badge::first-letter {
+  text-transform: uppercase !important;
+}
