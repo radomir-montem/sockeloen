@@ -5145,3 +5145,29 @@ body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
 body.template--product .product-v2__media-wrapper .breadcrumb-overlay {
   top: 60px !important;
 }
+/* Product gallery: the media box was 369x520 while the photos are 4:5,
+   so object-fit:cover cropped ~30px top and bottom and the product sat
+   low with its shadow cut. Box now follows the photo ratio (4:5) and the
+   image is contained, so nothing is cropped and it is centred. Thumbnails
+   go portrait (4:5) instead of square. */
+body.template--product .product-v2 .product__media-list .product__media,
+body.template--product .product-v2 .product__media-item .product__media {
+  aspect-ratio: 4 / 5 !important;
+  height: auto !important;
+  padding-bottom: 0 !important;
+}
+body.template--product .product-v2 .product__media img {
+  object-fit: contain !important;
+  object-position: center center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+body.template--product .product-v2 .thumbnail-list .thumbnail {
+  aspect-ratio: 4 / 5 !important;
+  height: auto !important;
+}
+body.template--product .product-v2 .thumbnail-list .thumbnail img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
