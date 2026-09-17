@@ -29,8 +29,25 @@
         {%- endif -%}
         <div class="grid grid-cols-2 tcs-eme__grid">
           {%- for product in block.settings.mobile_collection.products limit: block.settings.mobile_collection_limit -%}
+            {%- liquid
+              assign match_variant = nil
+              if block.settings.mobile_variant_filter != blank
+                assign needle = block.settings.mobile_variant_filter | downcase | strip
+                for v in product.variants
+                  assign vt = v.title | downcase
+                  if vt contains needle
+                    assign match_variant = v
+                    break
+                  endif
+                endfor
+              endif
+            -%}
             <div>
-              {% render 'card-product', card_product: product, media_aspect_ratio: 'portrait', show_secondary_image: true, show_vendor: false, show_rating: false, show_quick_add: false, section_id: section.id %}
+              {%- if match_variant -%}
+                {% render 'card-product-variant', card_product: match_variant, product: product, title: product.title, media_aspect_ratio: 'portrait', show_secondary_image: true, show_vendor: false, show_rating: false, show_quick_add: false, section_id: section.id %}
+              {%- else -%}
+                {% render 'card-product', card_product: product, media_aspect_ratio: 'portrait', show_secondary_image: true, show_vendor: false, show_rating: false, show_quick_add: false, section_id: section.id %}
+              {%- endif -%}
             </div>
           {%- endfor -%}
         </div>
@@ -249,6 +266,12 @@
           "step": 2,
           "default": 4,
           "label": "Products"
+        },
+        {
+          "type": "text",
+          "id": "mobile_variant_filter",
+          "label": "Show variant containing",
+          "info": "e.g. KNWU — products show their first variant whose title contains this text"
         }
       ]
     }

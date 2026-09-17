@@ -214,7 +214,8 @@
             "button_pos": "mt-0",
             "mobile_collection": "sockeloen-x-knwu",
             "mobile_collection_title": "KNWU x SOCKELOEN",
-            "mobile_collection_limit": 4
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": "KNWU"
           }
         },
         "ecaa607f-a456-4c64-8b1d-82c823de6917": {
