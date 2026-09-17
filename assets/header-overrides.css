@@ -3986,3 +3986,589 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
     font-size: 20px;
   }
 }
+
+/* ============================================================
+   PREVIEW: Eme-style 4px radius on homepage product cards + badges
+   (emestudios.com: image rounded-[0.4rem] = 4px, badge rounded 4px).
+   ID-scoped to outrank the site-wide "squared cards" !important rules.
+   ============================================================ */
+body.template--index #MainContent .card-wrapper,
+body.template--index #MainContent .card-wrapper .card,
+body.template--index #MainContent .card-wrapper .card__inner,
+body.template--index #MainContent .card-wrapper .card__media,
+body.template--index #MainContent .card-wrapper .card__media .media,
+body.template--index #MainContent .card-wrapper .card__media img {
+  border-radius: 4px !important;
+}
+body.template--index #MainContent .card-wrapper .card__content,
+body.template--index #MainContent .card-wrapper .card__information {
+  border-radius: 0 !important;
+}
+body.template--index #MainContent .card-wrapper .badge,
+body.template--index #MainContent .card-wrapper .card-badge .badge,
+body.template--index #MainContent .card-wrapper .card-bottom-badge .badge {
+  border-radius: 4px !important;
+}
+
+/* PREVIEW (cont.): the grey gradient belongs to the image tile only, with
+   all four corners at 4px (Eme: rounded image, text on white below).
+   Before, the gradient sat on .card and the white content area cut it
+   off in a straight line, so the tile's bottom corners looked square. */
+body.template--index #MainContent .card-wrapper .card {
+  background: transparent !important;
+}
+body.template--index #MainContent .card-wrapper .card__inner {
+  background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+body.template--index #MainContent .card-wrapper .card__content {
+  background: #fff !important;
+}
+/* PREVIEW (cont.): Eme badge styling — white 90%, black text, 11px/400,
+   5px 8px padding, 4px radius, 8px from the top-left corner. */
+body.template--index #MainContent .card-wrapper .card-badge {
+  top: 8px !important;
+  left: 8px !important;
+  display: flex;
+  gap: 4px;
+}
+body.template--index #MainContent .card-wrapper .card-bottom-badge {
+  left: 8px !important;
+  bottom: 8px !important;
+}
+body.template--index #MainContent .card-wrapper .badge {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #000 !important;
+  /* text styling (size, weight, case) stays the theme's own */
+  padding: 5px 8px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+/* PREVIEW (cont.): same 5px horizontal spacing as between the cards on
+   the far left and right of the best sellers block; title aligns with
+   the card edge. */
+/* Inner spacing equals the sheet's corner radius: nothing sits closer to
+   the top or the sides than the radius itself (12px). One variable drives
+   the radius, the title offset and the carousel side padding. */
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section {
+  --sheet-radius: 12px;
+  border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+}
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section > *:first-child {
+  border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+}
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .grid {
+  padding-left: var(--sheet-radius) !important;
+  padding-right: var(--sheet-radius) !important;
+  column-gap: var(--sheet-radius) !important; /* card gap = same 12px rhythm */
+  row-gap: var(--sheet-radius) !important;
+}
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section .fc-title {
+  padding: var(--sheet-radius) var(--sheet-radius) 0;
+}
+/* PREVIEW (cont.): mega-menu product cards match the homepage cards —
+   4px tile radius, same grey gradient tile, same 10px bold lowercase
+   title, same 12px gap. */
+.mega-menu-v2-card,
+.mega-menu-v2-card-img {
+  border-radius: 4px !important;
+}
+.mega-menu-v2-card-img {
+  background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
+  overflow: hidden !important;
+}
+.mega-menu-v2-card-title {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: lowercase !important;
+  letter-spacing: 0.2px !important;
+  line-height: 12px !important;
+  color: rgb(18, 18, 18) !important;
+}
+.mega-menu-v2-grid--products {
+  gap: 12px !important;
+}
+
+/* ============================================================
+   HOMEPAGE BRAND SYSTEM (dev preview) — casing, buttons, radius, colour
+   ============================================================ */
+/* Casing: SENTENCE CASE everywhere from the announcement bar to the
+   footer. Forced lowercase from base.css and older overrides is switched
+   off so text renders as typed, and block-level text gets an uppercase
+   first letter. Wordmarks (footer SOCKELOEN, brand block titles) keep
+   their typed uppercase. */
+#announcement-bar *,
+#shopify-section-footer *,
+.header *,
+header.header .header__menu-item,
+.mega-menu-v2-panel .mega-menu-v2-card-title,
+.menu-drawer *,
+.product-card-wrapper .badge,
+.product-card-wrapper .card__content *,
+body.template--index #MainContent :is(h1, h2, h3, h4, p, li, a, span, div, button) {
+  text-transform: none !important;
+}
+.mega-menu-v2-panel .mega-menu-v2-cat { text-transform: capitalize !important; }
+.announcement-bar__message::first-letter,
+#shopify-section-footer h3::first-letter,
+#shopify-section-footer li::first-letter,
+#shopify-section-footer p::first-letter,
+.menu-drawer li::first-letter,
+.menu-drawer [role="tab"]::first-letter,
+.product-card-wrapper .card-title::first-letter,
+.product-card-wrapper .badge::first-letter,
+.mega-menu-v2-card-title::first-letter,
+body.template--index #MainContent :is(h1, h2, h3, h4)::first-letter,
+body.template--index #MainContent .fc-title__heading::first-letter,
+body.template--index #MainContent .csh__title::first-letter,
+body.template--index #MainContent .banner-cats__item::first-letter,
+body.template--index #MainContent .rich-text__text p::first-letter,
+body.template--index #MainContent .banner__text::first-letter {
+  text-transform: uppercase !important;
+}
+/* ::first-letter only works on block containers */
+.product-card-wrapper .badge,
+.menu-drawer [role="tab"] { display: inline-block; }
+body.template--index #MainContent .banner__heading { display: block; }
+
+/* Buttons: two styles only. Solid (black on light sections, white on dark)
+   for a section's primary action; glass on photography. 8px radius all. */
+body.template--index #MainContent .button,
+body.template--index #MainContent .regular-button,
+body.template--index #MainContent [class*="sales-"] a.inline-flex {
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  padding: 14px 24px !important;
+  line-height: 1.2 !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+/* solid black: rich-text CTAs on white */
+body.template--index #MainContent .rich-text .button,
+body.template--index #MainContent .rich-text .button--primary,
+body.template--index #MainContent .rich-text .button--secondary {
+  background: #111 !important;
+  color: #fff !important;
+  border: 1px solid #111 !important;
+  box-shadow: none !important;
+}
+/* solid white on the dark brand block (was orange) */
+body.template--index #MainContent [class*="sales-"] .text-alignment a.inline-flex {
+  background: #fff !important;
+  color: #111 !important;
+  border: 1px solid #fff !important;
+}
+/* glass on photography: grey block "shop here" button */
+body.template--index #MainContent .regular-button {
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Radius: 4px on category tiles (cards/badges already 4px above), 8px on
+   buttons and header, 0 on the hero. */
+body.template--index #MainContent .column-img-item,
+body.template--index #MainContent [class*="column-img"] .relative,
+body.template--index #MainContent [class*="column-img"] img,
+body.template--index #MainContent [class*="sales-"] > .relative,
+body.template--index #MainContent [class*="sales-"] > .relative img,
+body.template--index #MainContent [class*="two-cols-"],
+body.template--index #MainContent [class*="two-cols-"] img {
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+
+/* Mobile hero: no extra downward shift of the content box — it pushed the
+   button under the best sellers sheet on phones. */
+@media screen and (max-width: 749px) {
+  body.template--index .banner__box {
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   Mobile category bar (Ekster-style) — image banner
+   Three equal text links directly under the floating header pill:
+   header bottom 92px + 8px gap, same 12px inset as the pill.
+   ============================================================ */
+.banner-cats { display: none; }
+@media screen and (max-width: 749px) {
+  .banner-cats {
+    display: flex;
+    position: absolute;
+    top: 100px;
+    left: 12px;
+    right: 12px;
+    z-index: 3;
+    padding: 0 4px;
+  }
+  .banner-cats::after {
+    content: '';
+    position: absolute;
+    left: 4px; right: 4px; bottom: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .banner-cats__item {
+    flex: 1 1 0;
+    display: block;
+    text-align: center;
+    padding: 12px 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* ============================================================
+   Sticky title image block (custom socks) — emestudios "Back in Stock"
+   Section = 100svh with the image absolutely filling it; the title wrap
+   is position:sticky at 50svh so it pins mid-viewport while the image
+   scrolls, then leaves with the section. Type sizes/tracking/leading
+   copied from Eme's breakpoints (56 / 108 / 128 / 180 / 216 px).
+   ============================================================ */
+.csh {
+  position: relative;
+  width: 100%;
+  height: var(--csh-height, 100svh);
+  min-height: 420px;
+  background: #111;
+}
+.csh__link { display: block; height: 100%; color: inherit; text-decoration: none; }
+.csh__media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.csh__img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0 !important; }
+.csh__img--mobile { display: none; }
+@media screen and (max-width: 749px) {
+  .csh__img--desktop { display: none; }
+  .csh__img--mobile { display: block; }
+}
+.csh__title-wrap {
+  position: sticky;
+  top: 50svh;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 24px 0;
+}
+@media screen and (min-width: 640px) { .csh__title-wrap { padding: 40px 0; } }
+.csh__title {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-heading-family);
+  font-weight: 500;
+  text-align: center;
+  font-size: 56px;
+  line-height: 48px;
+  letter-spacing: -0.035em;
+}
+@media screen and (min-width: 768px)  { .csh__title { font-size: 108px; line-height: 96px; } }
+@media screen and (min-width: 1024px) { .csh__title { font-size: 128px; line-height: 112px; } }
+@media screen and (min-width: 1280px) { .csh__title { font-size: 180px; line-height: 156px; letter-spacing: -0.045em; } }
+@media screen and (min-width: 1536px) { .csh__title { font-size: 216px; line-height: 188px; letter-spacing: -0.046em; } }
+
+/* ============================================================
+   SEO text block at the bottom (rich-text section keyed "seo_text")
+   Quiet, left-aligned, small type: it is there for search engines and
+   the snippet, not as a hero.
+   ============================================================ */
+[id$="__seo_text"] .rich-text__wrapper { max-width: 760px; margin: 0; }
+[id$="__seo_text"] .rich-text__heading { font-size: 20px !important; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+[id$="__seo_text"] .rich-text__text { font-size: 13px; line-height: 1.6; color: rgba(18, 18, 18, 0.75); }
+[id$="__seo_text"] .rich-text__text a { text-decoration: underline; }
+[id$="__seo_text"] .rich-text__buttons { margin-top: 16px; }
+/* Wordmark exception: the SOCKELOEN title in the brand block stays uppercase */
+body.template--index #MainContent [class*="sales-"] .text-alignment :is(h1, h2, h3, h4) {
+  text-transform: uppercase !important;
+}
+
+/* ============================================================
+   MOBILE MENU — match emestudios.com
+   1) Icons: 32x32 hit area, no padding; hamburger 16px (2 thin bars),
+      close 14px thin X, no white circle behind the close icon.
+   2) One glass surface: while the drawer is open the pill drops its own
+      glass and the drawer starts at the pill's top edge (44px) with the
+      pill height (48px) as padding — same trick as the desktop mega
+      panel. Pill contents are lifted above the drawer.
+   ============================================================ */
+@media screen and (max-width: 989px) {
+  header.header header-drawer summary.header__icon--menu {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #111 !important;
+  }
+  header.header header-drawer summary.header__icon--menu > span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+  header.header header-drawer summary.header__icon--menu .icon-hamburger { width: 16px !important; height: 16px !important; display: block !important; }
+  header.header header-drawer summary.header__icon--menu .icon-close { width: 14px !important; height: 14px !important; display: none !important; }
+  header.header header-drawer details[open] > summary.header__icon--menu .icon-hamburger { display: none !important; }
+  header.header header-drawer details[open] > summary.header__icon--menu .icon-close { display: block !important; }
+  details#Details-menu-drawer-container[open] > summary.header__icon--menu,
+  details#Details-menu-drawer-container[open] > summary.header__icon--menu:hover {
+    width: 32px !important;
+    height: 32px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* pill goes transparent while the drawer is open */
+  header.header:has(> header-drawer > details[open]) {
+    background: transparent !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  /* pill contents above the drawer glass */
+  header.header:has(> header-drawer > details[open]) > .header__heading,
+  header.header:has(> header-drawer > details[open]) > .header__icons,
+  header.header:has(> header-drawer > details[open]) > header-drawer,
+  header.header header-drawer details[open] > summary.header__icon--menu {
+    position: relative;
+    z-index: 61;
+  }
+  /* drawer becomes the single surface: pill top (44px) + pill height as
+     padding; no extra 40px band under the pill. The pill no longer has a
+     backdrop-filter while open, so position:fixed is viewport-relative. */
+  header.header header-drawer details[open] > .menu-drawer,
+  .js header.header header-drawer details[open] > .menu-drawer {
+    top: 44px !important;
+    left: 12px !important;
+    right: 12px !important;
+    padding-top: 48px !important;
+    border-radius: 0 0 8px 8px !important;
+    z-index: 60 !important;
+    max-height: calc(100vh - 132px) !important;
+  }
+}
+@media screen and (max-width: 989px) {
+  /* close X at Eme's 14px (an ID-scoped theme rule was shrinking it) */
+  details#Details-menu-drawer-container[open] > summary.header__icon--menu .icon-close {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  /* same x-position for hamburger and close (no 11px jump on open) */
+  header.header > header-drawer,
+  header-drawer:has(details#Details-menu-drawer-container[open]) {
+    margin-left: 0 !important;
+  }
+}
+
+/* ============================================================
+   Announcement bar rotator (Ekster-style vertical slide)
+   ============================================================ */
+#announcement-bar.ann-rotator {
+  overflow: hidden;
+}
+#announcement-bar.ann-rotator .ann-rotator__track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+#announcement-bar.ann-rotator .announcement-bar {
+  flex: 0 0 auto;
+}
+#announcement-bar.ann-rotator .announcement-bar.hidden { display: block !important; }
+#announcement-bar.hidden { display: none !important; }
+/* rotator: the theme marks every bar after the first with .hidden (opacity
+   0 for its old fade cycle) — all slides must be fully visible in the track */
+#announcement-bar.ann-rotator .announcement-bar.hidden,
+#announcement-bar.ann-rotator .announcement-bar {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+/* Footer headings are typed in uppercase: render them in sentence case */
+#shopify-section-footer h3,
+#shopify-section-footer .bold-title {
+  text-transform: lowercase !important;
+}
+#shopify-section-footer h3::first-letter,
+#shopify-section-footer .bold-title::first-letter {
+  text-transform: uppercase !important;
+}
+#announcement-bar.ann-rotator .announcement-bar .announcement-bar__message,
+#announcement-bar.ann-rotator .announcement-bar .announcement-bar__link {
+  opacity: 1 !important;
+  animation: none !important;
+}
+
+/* ============================================================
+   Announcement rotator: only the TEXT moves. Glass + radius live on the
+   fixed container; slides are transparent.
+   ============================================================ */
+#announcement-bar.ann-rotator {
+  background: rgba(26, 26, 26, 0.62) !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+#announcement-bar.ann-rotator::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  backdrop-filter: blur(21px) saturate(180%);
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
+}
+#announcement-bar.ann-rotator .announcement-bar,
+#announcement-bar.ann-rotator .announcement-bar.gradient {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+#announcement-bar.ann-rotator .announcement-bar::before { display: none !important; }
+
+/* ============================================================
+   Product carousels: the best-sellers styling applies to EVERY featured
+   collection on the homepage — radius-driven inner spacing, 12px gaps.
+   ============================================================ */
+body.template--index #MainContent .collection {
+  --sheet-radius: 12px;
+}
+body.template--index #MainContent .collection .fc-title {
+  padding: var(--sheet-radius) var(--sheet-radius) 0;
+}
+body.template--index #MainContent .collection .grid {
+  padding-left: var(--sheet-radius) !important;
+  padding-right: var(--sheet-radius) !important;
+  column-gap: var(--sheet-radius) !important;
+  row-gap: var(--sheet-radius) !important;
+}
+body.template--index #MainContent .collection + * { margin-top: 0; }
+
+/* ============================================================
+   Social proof banner (Taggbox slider): same tile language as the
+   product carousels — 4px tiles, 12px gaps, 12px side inset.
+   ============================================================ */
+body.template--index .shopify-section:has(.taggbox) .page-width,
+body.template--index .shopify-section:has(.taggbox) .custom-liquid {
+  max-width: none !important;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+body.template--index .taggbox .tb_rt_post_wrapper { padding: 6px !important; }
+body.template--index .taggbox .tb_rt_post_in {
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+body.template--index .taggbox .tb_rt_media_wrap,
+body.template--index .taggbox .tb_rt_image_wrap_ { border-radius: 4px !important; overflow: hidden !important; }
+
+/* ============================================================
+   Eme-style category banners (two-cols-swap "eme_banners")
+   ============================================================ */
+.tcs-eme { display: flex; flex-direction: column; background: #fff; }
+.tcs-eme__item { position: relative; display: block; width: 100%; height: 630px; overflow: visible; color: #fff; text-decoration: none; }
+.tcs-eme__media { position: absolute; inset: 0; overflow: hidden; }
+.tcs-eme__img, .tcs-eme__media img { width: 100% !important; height: 100% !important; object-fit: cover; display: block; border-radius: 0 !important; }
+.tcs-eme__overlay { position: absolute; inset: 0; z-index: 1; display: flex; width: 100%; justify-content: center; padding: 0 10px; pointer-events: none; }
+.tcs-eme__sticky { position: sticky; top: 75svh; display: flex; width: 100%; height: fit-content; justify-content: center; padding: 34px 0; }
+.tcs-eme__pill {
+  pointer-events: auto; display: flex; width: fit-content; align-items: center; justify-content: center;
+  padding: 24px; border-radius: 8px; text-align: center;
+  backdrop-filter: blur(21px); -webkit-backdrop-filter: blur(21px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.4), rgba(255,255,255,0.05), transparent);
+}
+.tcs-eme__label { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2; text-transform: lowercase !important; }
+.tcs-eme__label::first-letter { text-transform: uppercase !important; }
+body.template--index #MainContent .tcs-eme__label { text-transform: capitalize !important; }
+.tcs-eme__mobile-collection { display: block; background: #fff; padding-bottom: 12px; }
+@media screen and (min-width: 640px) {
+  .tcs-eme { flex-direction: row; flex-wrap: wrap; }
+  .tcs-eme__item { width: 50%; height: 695px; }
+  .tcs-eme__sticky { padding: 30px 0; }
+}
+@media screen and (min-width: 750px) {
+  .tcs-eme__mobile-collection { display: none; }
+}
+/* all homepage product carousels on plain white */
+body.template--index #MainContent .isolate.bg-background,
+body.template--index #MainContent .collection { background: #fff !important; }
+
+/* Glass buttons on the homepage: always full width on phones */
+@media screen and (max-width: 749px) {
+  body.template--index .banner__buttons .button,
+  body.template--index .banner__buttons--glass .button,
+  body.template--index #MainContent [class*="sales-"] a.inline-flex {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+  body.template--index .banner__buttons { width: 100% !important; }
+}
+/* Sticky banner label pill = hero glass button styling */
+body.template--index .tcs-eme__pill {
+  padding: 14px 24px !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+body.template--index .tcs-eme__item:hover .tcs-eme__pill {
+  background: rgba(255, 255, 255, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+body.template--index .tcs-eme__label {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.2 !important;
+}
+@media screen and (max-width: 749px) {
+  body.template--index .tcs-eme__overlay { padding: 0 12px; }
+  body.template--index .tcs-eme__pill { width: 100% !important; }
+}
+
+/* ============================================================
+   Collection pages: no grey band between banner and grid, product grid
+   on white with the same 12px inset/gaps as the homepage carousels.
+   ============================================================ */
+body.template--collection [class*="__product-grid-padding"],
+body.template--collection #ProductGridContainer,
+body.template--collection .product-grid-container {
+  background: #fff !important;
+}
+body.template--collection #ProductGridContainer,
+body.template--collection .product-grid-container.mt-16 {
+  margin-top: 0 !important;
+}
+body.template--collection #product-grid {
+  padding: 12px !important;
+  column-gap: 12px !important;
+  row-gap: 12px !important;
+  background: #fff !important;
+}

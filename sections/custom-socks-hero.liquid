@@ -1,0 +1,40 @@
+{%- comment -%}
+  Full-viewport image block with a big sticky title, modelled on the
+  emestudios.com "Back in Stock" block: the image scrolls, the title pins
+  at the vertical middle of the viewport, then leaves with the section.
+{%- endcomment -%}
+{%- liquid
+  assign img = section.settings.image
+  assign img_m = section.settings.image_mobile | default: section.settings.image
+-%}
+<div class="csh" id="csh-{{ section.id }}" style="--csh-height: {{ section.settings.height }}svh;">
+  {%- if section.settings.link != blank -%}<a class="csh__link" href="{{ section.settings.link }}" aria-label="{{ section.settings.title | escape }}">{%- else -%}<div class="csh__link">{%- endif -%}
+    <div class="csh__media">
+      {%- if img != blank -%}
+        {{ img | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '750, 1100, 1500, 1800, 2400', class: 'csh__img csh__img--desktop', alt: img.alt | escape }}
+      {%- endif -%}
+      {%- if img_m != blank -%}
+        {{ img_m | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '100vw', widths: '450, 750, 1000, 1200', class: 'csh__img csh__img--mobile', alt: img_m.alt | escape }}
+      {%- endif -%}
+    </div>
+    <div class="csh__title-wrap">
+      <p class="csh__title">{{ section.settings.title | escape }}</p>
+    </div>
+  {%- if section.settings.link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Sticky title image block",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image (desktop)" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Image (mobile)" },
+    { "type": "text", "id": "title", "label": "Title", "default": "custom socks" },
+    { "type": "url", "id": "link", "label": "Link (whole block)" },
+    { "type": "range", "id": "height", "min": 50, "max": 100, "step": 5, "unit": "%", "label": "Height (of viewport)", "default": 100 }
+  ],
+  "presets": [ { "name": "Sticky title image block" } ]
+}
+{% endschema %}

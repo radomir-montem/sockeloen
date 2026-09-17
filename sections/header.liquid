@@ -189,8 +189,9 @@
           <details id="Details-menu-drawer-container" class="menu-drawer-container">
             <summary class="header__icon header__icon--menu header__icon--summary link focus-inset" aria-label="{{ 'sections.header.menu' | t }}">
               <span>
-                {% render 'icon-hamburger' %}
-                {% render 'icon-close' %}
+                {%- comment -%} Icons copied from emestudios.com: 2-bar hamburger (12x5 viewBox, 16px) and thin X (12x12 viewBox, 14px) {%- endcomment -%}
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" class="icon icon-hamburger" fill="none" viewBox="0 0 12 5" width="16" height="16"><path d="M12 5H0V4.25H12V5ZM12 0.75H0V0H12V0.75Z" fill="currentColor"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" fill="none" viewBox="0 0 12 12" width="14" height="14"><path d="M0.673219 12L0 11.3268L5.32678 6L0 0.673219L0.673219 0L6 5.32678L11.3268 0L12 0.673219L6.67322 6L12 11.3268L11.3268 12L6 6.67322L0.673219 12Z" fill="currentColor"/></svg>
               </span>
             </summary>
             <div id="menu-drawer" class="gradient menu-drawer motion-reduce !pt-[40px]" tabindex="-1">

@@ -266,7 +266,34 @@
                     {% assign colorlist = '' %}
                     {% assign color = '' %}
                     {% assign atLeastOneAvailable = false %}
+                    {%- comment -%}
+                      "Variant first": when a rule matches this collection (section setting
+                      "handle:text" pairs, or the collection metafield custom.variant_first),
+                      the first colour card rendered for a multi-colour product is the
+                      variant whose title contains that text (e.g. KNWU). Pass 1 renders
+                      only that variant, pass 2 the remaining colours as before.
+                    {%- endcomment -%}
+                    {%- assign variant_first = collection.metafields.custom.variant_first | default: '' -%}
+                    {%- if variant_first == blank and section.settings.variant_first_rules != blank -%}
+                      {%- assign vf_rules = section.settings.variant_first_rules | split: ',' -%}
+                      {%- for rule in vf_rules -%}
+                        {%- assign parts = rule | split: ':' -%}
+                        {%- assign rule_handle = parts[0] | strip | downcase -%}
+                        {%- if rule_handle == collection.handle -%}
+                          {%- assign variant_first = parts[1] | strip -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+                    {%- assign vf_needle = variant_first | downcase | strip -%}
+                    {%- assign vf_done = false -%}
+                    {% for vf_pass in (1..2) %}
+                    {% if vf_done %}{% break %}{% endif %}
+                    {% if vf_pass == 1 and vf_needle == blank %}{% continue %}{% endif %}
                     {% for variant in product.variants %}
+                      {%- if vf_pass == 1 -%}
+                        {%- assign vf_title = variant.title | downcase -%}
+                        {%- unless vf_title contains vf_needle -%}{% continue %}{%- endunless -%}
+                      {%- endif -%}
                       {% if shop.metafields.soldout_variants.enable or variant.available or coming_soon %}
                         {% capture color %}
                           {{ variant.options[index] }}
@@ -301,6 +328,7 @@
                             %}
                           </li>
                           {% if show_color_swatches_for_collection %}
+                            {%- assign vf_done = true -%}
                             {% break %}
                           {% endif %}
                         {% endif %}
@@ -309,6 +337,11 @@
                       {% endcapture %}
                         {% assign colorlist = tempList %}
                       {% endunless %}
+                                          {%- if vf_pass == 1 and colorlist contains color and show_color_swatches_for_collection -%}
+                        {%- assign vf_done = true -%}
+                      {%- endif -%}
+                      {%- if vf_pass == 1 and colorlist contains color -%}{% break %}{%- endif -%}
+                    {% endfor %}
                     {% endfor %}
                   {% endif %}
                   {% break %}
@@ -361,6 +394,12 @@
       "step": 4,
       "default": 16,
       "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
+    },
+    {
+      "type": "text",
+      "id": "variant_first_rules",
+      "label": "Variant shown first per collection",
+      "info": "collection-handle:text pairs separated by commas, e.g. sockeloen-x-knwu:KNWU — products with several colours show the variant whose title contains the text first. A collection metafield custom.variant_first overrides this."
     },
     {
       "type": "header",
