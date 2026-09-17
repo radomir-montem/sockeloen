@@ -5099,3 +5099,21 @@ body.template--collection #MainContent > .shopify-section:has(.mobile-facets__di
 body.template--search #MainContent > .shopify-section:has(.mobile-facets__disclosure[open]) {
   z-index: 200 !important;
 }
+
+/* Product page: the grey of the gallery runs up behind the floating
+   header, like the hero on the homepage. The page offset that keeps
+   content clear of the header moves from #MainContent into the main
+   product section, which carries the grey background. */
+body.template--product #MainContent,
+body.template--product main,
+body.template--product main#MainContent {
+  padding-top: 0 !important;
+}
+body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
+  padding-top: 110px;
+}
+@media screen and (max-width: 989px) {
+  body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
+    padding-top: 108px;
+  }
+}
