@@ -4698,188 +4698,24 @@ body.template--collection #product-grid {
 }
 
 /* ============================================================
-   V2 PRODUCT TEMPLATE — homepage brand system
-   Colour: black accent instead of orange/blue. Buttons: solid black,
-   8px, 12px/700, sentence case. Headings: one scale (32px/700/-0.04em,
-   20px on phones), sentence case. Radius: 4px tiles, 8px buttons,
-   12px sheets. White page, 12px side inset.
+   V2 PRODUCT TEMPLATE — radius only.
+   Colours, typography, backgrounds and insets stay as the sections set
+   them; only corners follow the site system: 4px tiles, 8px buttons and
+   chips, 12px sheets.
    ============================================================ */
-
-/* --- colour: accent variables the sections read --- */
-body.template--product [class*="product-faq--"],
-body.template--product [class*="product-faq__"],
-body.template--product [class*="product-exploder--"],
-body.template--product [class*="product-exploder__"],
-body.template--product [class*="satisfaction-guarantee"],
-body.template--product .reviews-masonry,
-body.template--product .reviews-masonry > *,
-body.template--product [class*="reviews-masonry__"] {
-  --faq-accent: #111 !important;
-  --exploder-accent: #111 !important;
-  --satisfaction-accent: #111 !important;
-  --reviews-accent: #111 !important;
-}
-/* italic accent words in headings: keep the italic, drop the orange */
-body.template--product .product-benefit__heading em,
-body.template--product .bot-heading em,
-body.template--product .product-exploder__heading em,
-body.template--product .product-faq__heading em,
-body.template--product .reviews-masonry__heading em,
-body.template--product .satisfaction-guarantee__heading em {
-  color: inherit !important;
-}
-/* small orange/green accents in the buy box */
-body.template--product .product-v2 .shipping-text .ship-countdown {
-  color: #111 !important;
-}
-body.template--product .product-v2__benefit svg,
-body.template--product .product-v2-sticky-bar__usp svg {
-  color: #111 !important;
-}
-body.template--product .product-v2__benefit svg path,
-body.template--product .product-v2-sticky-bar__usp svg path {
-  fill: #111 !important;
-}
-body.template--product .product-v2__price .product-save-badge {
-  background: #111 !important;
-}
-
-/* --- page background: white, like the homepage sheet --- */
-body.template--product {
-  background: #fff !important;
-  background-color: #fff !important;
-}
-body.template--product .product-section,
-body.template--product .product-v2 {
-  background-color: #fff !important;
-}
-
-/* --- buttons: solid black, 8px, 12px/700, sentence case --- */
 body.template--product .product-v2 .product-form__submit,
 body.template--product .product-v2 button[name="add"],
 body.template--product .product-v2 .product-form__submit[disabled],
 body.template--product .product-v2 button[name="add"][disabled],
 body.template--product .product-v2-sticky-bar__atc-btn,
 body.template--product .product-v2-size-modal__confirm,
+body.template--product .product-v2-size-modal__change,
 body.template--product .satisfaction-guarantee__button,
 body.template--product .product-v2 .klaviyo-bis-trigger,
-body.template--product .product-v2 #out-of-stock {
-  background: #111 !important;
-  background-color: #111 !important;
-  background-image: none !important;
-  color: #fff !important;
-  border: 1px solid #111 !important;
-  border-radius: 8px !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.02em !important;
-  text-transform: none !important;
-  line-height: 1.2 !important;
-  padding: 14px 24px !important;
-  min-height: 0 !important;
-  height: auto !important;
-  box-shadow: none !important;
-}
-body.template--product .product-v2 .product-form__submit:hover,
-body.template--product .product-v2 button[name="add"]:hover,
-body.template--product .product-v2-sticky-bar__atc-btn:hover,
-body.template--product .product-v2-size-modal__confirm:hover,
-body.template--product .satisfaction-guarantee__button:hover,
-body.template--product .product-v2 .klaviyo-bis-trigger:hover,
-body.template--product .product-v2 #out-of-stock:hover {
-  background: #000 !important;
-  background-color: #000 !important;
-  border-color: #000 !important;
-  padding: 14px 24px !important;
-}
-body.template--product .product-v2 .product-form__submit::first-letter,
-body.template--product .product-v2-sticky-bar__atc-btn::first-letter,
-body.template--product .product-v2-size-modal__confirm::first-letter,
-body.template--product .product-v2-size-modal__change::first-letter,
-body.template--product .satisfaction-guarantee__button::first-letter {
-  text-transform: uppercase !important;
-}
-/* cart icon injected into the ATC: same colour as the button */
-body.template--product .product-v2 .product-form__submit span svg,
-body.template--product .product-v2 .product-form__submit span svg path,
-body.template--product .product-v2 .product-form__submit:not([disabled]):hover span svg,
-body.template--product .product-v2 .product-form__submit:not([disabled]):hover span svg path {
-  fill: #111 !important;
-  stroke: #111 !important;
-}
-/* secondary: outline black */
-body.template--product .product-v2-size-modal__change {
-  background: transparent !important;
-  color: #111 !important;
-  border: 1px solid #111 !important;
-  border-radius: 8px !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.02em !important;
-  text-transform: none !important;
-  padding: 14px 24px !important;
-}
-
-/* --- size chips: 8px, black selection --- */
+body.template--product .product-v2 #out-of-stock,
 body.template--product .product-v2 .product-form__input.size-input input[type='radio'] + label {
-  border: 1px solid #e5e5e5 !important;
   border-radius: 8px !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
 }
-body.template--product .product-v2 .product-form__input.size-input input[type='radio'] + label:hover {
-  border-color: #999 !important;
-}
-body.template--product .product-v2 .product-form__input.size-input input[type='radio']:checked + label {
-  border-color: #111 !important;
-  box-shadow: inset 0 0 0 1px #111 !important;
-}
-body.template--product .product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-dot {
-  box-shadow: 0 0 0 2px #111 !important;
-}
-
-/* --- headings: one scale, sentence case --- */
-body.template--product .product-v2__title {
-  font-size: 24px !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.02em !important;
-  line-height: 1.1 !important;
-  text-transform: none !important;
-}
-body.template--product .product-benefit__heading,
-body.template--product .product-exploder__heading,
-body.template--product .product-faq__heading,
-body.template--product .reviews-masonry__heading,
-body.template--product .satisfaction-guarantee__heading {
-  font-family: var(--font-heading-family) !important;
-  font-size: 32px !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.04em !important;
-  line-height: 1 !important;
-  text-transform: none !important;
-}
-body.template--product .product-benefit__heading::first-letter,
-body.template--product .product-exploder__heading::first-letter,
-body.template--product .product-faq__heading::first-letter,
-body.template--product .reviews-masonry__heading::first-letter,
-body.template--product .satisfaction-guarantee__heading::first-letter,
-body.template--product .product-v2__title::first-letter {
-  text-transform: uppercase !important;
-}
-@media screen and (max-width: 749px) {
-  body.template--product .product-v2__title {
-    font-size: 20px !important;
-  }
-  body.template--product .product-benefit__heading,
-  body.template--product .product-exploder__heading,
-  body.template--product .product-faq__heading,
-  body.template--product .reviews-masonry__heading,
-  body.template--product .satisfaction-guarantee__heading {
-    font-size: 20px !important;
-  }
-}
-
-/* --- radius: 4px tiles, 8px buttons, 12px sheets --- */
 body.template--product .product-benefit__media,
 body.template--product .product-benefit__media img,
 body.template--product .product-benefit__media video,
@@ -4899,16 +4735,6 @@ body.template--product .product-faq__item,
 body.template--product .product-faq__list,
 body.template--product .product-exploder__list {
   border-radius: 12px !important;
-}
-
-/* --- inset: 12px sides on every section --- */
-body.template--product .product-benefits-section,
-body.template--product [class*="product-exploder--"],
-body.template--product [class*="product-faq--"],
-body.template--product .reviews-masonry,
-body.template--product [class*="satisfaction-guarantee"]:not([class*="__"]) {
-  padding-left: 12px !important;
-  padding-right: 12px !important;
 }
 
 /* ============================================================
@@ -4973,30 +4799,6 @@ body.template--collection:has(.banner .banner__media) #ProductGridContainer {
   background: #fff !important;
   border-radius: 12px 12px 0 0 !important;
   overflow: hidden !important;
-}
-/* v2 product: white all the way (section wrapper, info column, benefits),
-   and 12px alignment for the buy box, benefits text, reviews and
-   guarantee sheet. Review cards get a hairline so they read on white. */
-body.template--product .shopify-section.bg-pdpbg,
-body.template--product .product-v2__info-wrapper,
-body.template--product .product-benefits-section,
-body.template--product .reviews-masonry {
-  background: #fff !important;
-  background-color: #fff !important;
-}
-body.template--product .product-v2__info-wrapper {
-  padding-left: 12px !important;
-  padding-right: 12px !important;
-}
-body.template--product .product-benefit__content,
-body.template--product .reviews-masonry__inner,
-body.template--product .satisfaction-guarantee {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-body.template--product .reviews-masonry__card {
-  border: 1px solid #e5e5e5 !important;
-  box-shadow: none !important;
 }
 /* filter drawer: custom.css lowercases everything inside the mobile form;
    switch to sentence case (typed text + uppercase first letter). */
@@ -5194,12 +4996,12 @@ body.template--collection .breadcrumbs {
   display: flex;
   align-items: center;
   gap: 5px;
-  /* title (12px line) > variant name (12px line) > 6px > swatches.
-     2px bottom padding keeps the selected ring inside the card's
-     overflow:hidden box. */
-  margin: 0 0 0 10px; /* same left inset as .card__information; the
-                         information row already leaves ~6px underneath */
-  padding: 2px 0 2px 2px;
+  /* Left edge on the title's text edge (card__information has 5px
+     padding). Vertically the row sits on the variant name's line box,
+     the same rhythm as title > variant name. The information block
+     carries 5px bottom padding, hence the negative margin. */
+  margin: -4px 0 0 5px;
+  padding: 0 0 2px 0;
   min-height: 12px;
 }
 .ccr__swatch {
@@ -5230,11 +5032,12 @@ body.template--collection .breadcrumbs {
 .ccr__swatch::after { inset: -8px; }
 .ccr__swatch:hover,
 .ccr__swatch:focus-visible {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px #999;
+  box-shadow: inset 0 0 0 1px #999, inset 0 0 0 2px #fff;
   outline: none;
 }
+/* selected: ring drawn inside the tile, so the swatch never grows */
 .ccr__swatch.is-selected {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px #111;
+  box-shadow: inset 0 0 0 1px #111, inset 0 0 0 2px #fff;
 }
 .ccr__more {
   font-size: 10px;
@@ -5256,4 +5059,32 @@ body.template--collection .breadcrumbs {
   grid-row-start: 3;
   grid-column: 1 / -1;
   align-self: start;
+}
+
+/* Product page colour picker: the same swatch as on the cards (16px
+   here, it is the primary control), 3px corners, hairline, inset ring
+   when selected. */
+.product-v2 .color-dot.color-dot--swatch {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  border-radius: 3px !important;
+  border: 0 !important;
+  background-color: #e9e9e9;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  padding: 0;
+}
+.product-v2 .color-dot--swatch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0 !important;
+}
+.product-v2 .product-form__input.color-input label:hover .color-dot--swatch {
+  box-shadow: inset 0 0 0 1px #999, inset 0 0 0 2px #fff;
+}
+.product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-dot--swatch {
+  box-shadow: inset 0 0 0 1px #111, inset 0 0 0 2px #fff !important;
 }
