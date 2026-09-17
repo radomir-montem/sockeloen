@@ -4572,3 +4572,79 @@ body.template--collection #product-grid {
   row-gap: 12px !important;
   background: #fff !important;
 }
+
+/* ============================================================
+   SITE-WIDE PRODUCT CARD SYSTEM — the homepage card is the guideline.
+   Every product grid and carousel that renders `card-product`
+   (collection pages, search, featured collections, product-page
+   "bought often together" / recommendations / recently viewed) gets
+   the same tile: 4px corners, grey gradient on the image tile only,
+   white text area below, Eme-style badges 8px from the corner.
+   ID-scoped like the homepage block so it outranks the older
+   "squared cards" !important rules; not template-scoped any more.
+   ============================================================ */
+#MainContent .card-wrapper,
+#MainContent .card-wrapper .card,
+#MainContent .card-wrapper .card__inner,
+#MainContent .card-wrapper .card__media,
+#MainContent .card-wrapper .card__media .media,
+#MainContent .card-wrapper .card__media img {
+  border-radius: 4px !important;
+}
+#MainContent .card-wrapper .card__content,
+#MainContent .card-wrapper .card__information {
+  border-radius: 0 !important;
+}
+#MainContent .card-wrapper .card {
+  background: transparent !important;
+}
+#MainContent .card-wrapper .card__inner {
+  background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+#MainContent .card-wrapper .card__content {
+  background: #fff !important;
+}
+/* Badges: white 90%, black text, 5px 8px, 4px radius, 8px from the
+   corner. Text size/weight/case stays the theme's own. */
+#MainContent .card-wrapper .card-badge {
+  top: 8px !important;
+  left: 8px !important;
+  display: flex;
+  gap: 4px;
+}
+#MainContent .card-wrapper .card-bottom-badge {
+  left: 8px !important;
+  bottom: 8px !important;
+}
+#MainContent .card-wrapper .badge,
+#MainContent .card-wrapper .card-badge .badge,
+#MainContent .card-wrapper .card-bottom-badge .badge {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #000 !important;
+  padding: 5px 8px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+/* Product-page carousels (bought often together, more from this
+   collection, recently viewed): the swipers have no slide gap, so the
+   12px rhythm comes from padding on the slides, with the container
+   pulled back out by the same amount so the edges stay flush. */
+.bot-swiper,
+.mfc-swiper,
+.yml-swiper,
+.rvi-swiper {
+  margin-left: -6px !important;
+  margin-right: -6px !important;
+}
+.bot-swiper .swiper-slide,
+.mfc-swiper .swiper-slide,
+.yml-swiper .swiper-slide,
+.rvi-swiper .swiper-slide {
+  padding: 0 6px !important;
+  box-sizing: border-box !important;
+}
