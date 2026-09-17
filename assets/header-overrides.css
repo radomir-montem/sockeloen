@@ -5136,3 +5136,12 @@ html:has(body.template--product) {
   background: #e7e7e7 !important;
   background-color: #e7e7e7 !important;
 }
+/* Test: the gallery starts where the announcement bar ends (44px), so the
+   glass header pill floats over the top of the photo. The breadcrumb
+   overlay moves down to stay clear of the pill (pill bottom 92px + 12px). */
+body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
+  padding-top: 44px !important;
+}
+body.template--product .product-v2__media-wrapper .breadcrumb-overlay {
+  top: 60px !important;
+}
