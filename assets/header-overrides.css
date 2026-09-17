@@ -5009,7 +5009,6 @@ body.template--product .reviews-masonry__card {
 #FacetFiltersFormMobile .button--primary,
 #FacetFiltersFormMobile .mobile-facets__summary > span,
 #FacetFiltersFormMobile .mobile-facets__label > span,
-#FacetFiltersFormMobile label,
 .mobile-facets__header h2,
 .mobile-facets__heading {
   display: inline-block;
@@ -5017,7 +5016,6 @@ body.template--product .reviews-masonry__card {
 #FacetFiltersFormMobile .button--primary::first-letter,
 #FacetFiltersFormMobile h2::first-letter,
 #FacetFiltersFormMobile .mobile-facets__summary > span::first-letter,
-#FacetFiltersFormMobile label::first-letter,
 .mobile-facets__header h2::first-letter,
 .mobile-facets__heading::first-letter {
   text-transform: uppercase !important;
