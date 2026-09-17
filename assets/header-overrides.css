@@ -5092,3 +5092,10 @@ body.template--collection .breadcrumbs {
 /* sampled colours (card-color-row.js) replace the photo crop */
 .ccr__swatch.is-sampled img,
 .product-v2 .color-dot--swatch.is-sampled img { display: none; }
+/* The grid section is its own stacking context (z-index 1), which kept
+   the fixed filter drawer under the floating header. While the drawer is
+   open, lift the section above everything. */
+body.template--collection #MainContent > .shopify-section:has(.mobile-facets__disclosure[open]),
+body.template--search #MainContent > .shopify-section:has(.mobile-facets__disclosure[open]) {
+  z-index: 200 !important;
+}
