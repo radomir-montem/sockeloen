@@ -5117,3 +5117,11 @@ body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
     padding-top: 108px;
   }
 }
+/* iOS paints the status bar strip and the overscroll area with the root
+   element's background, not with the first section's. Give the root the
+   same grey on product pages so the top reads as one surface. Body keeps
+   its own colour for the sections further down. */
+html:has(body.template--product) {
+  background: #f0f0f0 !important;
+  background-color: #f0f0f0 !important;
+}
