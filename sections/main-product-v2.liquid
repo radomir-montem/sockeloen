@@ -91,7 +91,12 @@
         <script>
           /* One benefit per photo: the tag shown follows the active slide
              (1st photo = 1st benefit, 2nd = 2nd, ... cycling). */
-          (function () {
+          (function init() {
+            /* the gallery is rendered after this script; wait for the DOM */
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', init);
+              return;
+            }
             var tags = document.getElementById('PdpTags-{{ section.id }}');
             var list = document.querySelector('.product-v2 .product__media-list');
             if (!tags || !list) return;
