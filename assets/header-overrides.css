@@ -4552,3 +4552,23 @@ body.template--index .tcs-eme__label {
   body.template--index .tcs-eme__overlay { padding: 0 12px; }
   body.template--index .tcs-eme__pill { width: 100% !important; }
 }
+
+/* ============================================================
+   Collection pages: no grey band between banner and grid, product grid
+   on white with the same 12px inset/gaps as the homepage carousels.
+   ============================================================ */
+body.template--collection [class*="__product-grid-padding"],
+body.template--collection #ProductGridContainer,
+body.template--collection .product-grid-container {
+  background: #fff !important;
+}
+body.template--collection #ProductGridContainer,
+body.template--collection .product-grid-container.mt-16 {
+  margin-top: 0 !important;
+}
+body.template--collection #product-grid {
+  padding: 12px !important;
+  column-gap: 12px !important;
+  row-gap: 12px !important;
+  background: #fff !important;
+}
