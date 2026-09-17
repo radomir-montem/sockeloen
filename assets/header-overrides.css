@@ -5252,3 +5252,9 @@ body.template--product .product-v2__media-wrapper > .card-badge {
   left: auto !important;
   right: 12px !important;
 }
+/* the single-row colour tile must not grow with its content */
+body.template--product .product-v2 .product-form__input.color-input {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
