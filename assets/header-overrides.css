@@ -5159,3 +5159,19 @@ body.template--collection:has(.banner .banner__media) #ProductGridContainer {
   -webkit-mask-image: none;
           mask-image: none;
 }
+/* The grid container and grid carry their own white background, which
+   filled the rounded corners again. Clip the whole sheet to the radius
+   (clip-path, so nothing else about overflow changes) and let the inner
+   layers be transparent on top of the white section. */
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section {
+  clip-path: inset(0 round 0);
+  transition: border-radius 0.25s ease, clip-path 0.25s ease;
+}
+html.is-scrolled body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section {
+  clip-path: inset(0 round 12px 12px 0 0);
+}
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section [class*="__product-grid-padding"],
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section #ProductGridContainer,
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section #product-grid {
+  background: transparent !important;
+}
