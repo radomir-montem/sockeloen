@@ -5240,11 +5240,11 @@ body.template--product .product-v2 .color-input__selected-name {
     text-overflow: ellipsis;
     background: rgba(255, 255, 255, 0.7);
     color: #666;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: 0;
-    padding: 5px 8px;
+    padding: 6px 10px;
     border-radius: 4px;
     text-transform: lowercase;
   }
@@ -5307,3 +5307,50 @@ body.template--product .product-v2 .product__media-item .product__media {
     top: 104px !important;
   }
 }
+
+/* Full-screen photo zoom (assets/pdp-gallery.js): same gradient as the
+   gallery, 8px close button in the site's badge style. */
+.pdp-zoom {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: linear-gradient(to right, #ECECEC, #E2E2E2);
+}
+.pdp-zoom.is-open { display: block; }
+.pdp-zoom__stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
+}
+.pdp-zoom__stage img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  transform-origin: center center;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.pdp-zoom__close {
+  position: absolute;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: 12px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  color: #111;
+  font-size: 26px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+html.pdp-zoom-open, html.pdp-zoom-open body { overflow: hidden; }
