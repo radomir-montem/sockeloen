@@ -5294,3 +5294,16 @@ body.template--product .product-v2 .product__media-item .product__media {
   max-height: none !important;
   min-height: 0 !important;
 }
+
+/* Desktop: the info column starts at 44px like the gallery, so its first
+   block (the social proof bar) sat behind the header pill. Push the
+   column's content below the pill (bottom 92px + 12px) and pin the sticky
+   buy box there too while scrolling. */
+@media screen and (min-width: 990px) {
+  body.template--product .product-v2 .product-v2__info-wrapper {
+    padding-top: 60px !important; /* 44 + 60 = 104 */
+  }
+  body.template--product .product-v2 .product-v2__info-container--sticky {
+    top: 104px !important;
+  }
+}
