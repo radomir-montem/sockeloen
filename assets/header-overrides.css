@@ -5193,16 +5193,20 @@ body.template--collection .breadcrumbs {
 .ccr {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin: 8px 0 0 10px; /* same left inset as .card__information */
-  min-height: 16px;
+  gap: 5px;
+  /* title (12px line) > variant name (12px line) > 6px > swatches.
+     2px bottom padding keeps the selected ring inside the card's
+     overflow:hidden box. */
+  margin: 6px 0 0 10px; /* same left inset as .card__information */
+  padding: 2px 0 2px 2px;
+  min-height: 12px;
 }
 .ccr__swatch {
   position: relative;
   flex: 0 0 auto;
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
   background: #e9e9e9;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
   overflow: hidden;
@@ -5222,6 +5226,7 @@ body.template--collection .breadcrumbs {
   object-fit: cover;
   object-position: center;
 }
+.ccr__swatch::after { inset: -8px; }
 .ccr__swatch:hover,
 .ccr__swatch:focus-visible {
   box-shadow: 0 0 0 1px #fff, 0 0 0 2px #999;
@@ -5231,11 +5236,17 @@ body.template--collection .breadcrumbs {
   box-shadow: 0 0 0 1px #fff, 0 0 0 2px #111;
 }
 .ccr__more {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   line-height: 1;
   color: #666;
-  margin-left: 2px;
+  margin-left: 1px;
+}
+/* the grid's spacer row under the information block must not eat the
+   colour row; let the content grow with it */
+#MainContent .card-wrapper .card__content {
+  height: auto !important;
+  min-height: 0 !important;
 }
 /* .card__content is a 3-row grid (spacer / information / spacer); the
    information block is pinned to row 2, so the colour row goes in row 3

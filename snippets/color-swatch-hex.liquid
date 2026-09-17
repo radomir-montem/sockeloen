@@ -6,11 +6,47 @@
   Usage: {% render 'color-swatch-hex', name: variant.option1 %}
 {%- endcomment -%}
 {%- liquid
-  assign n = name | downcase | replace: '_', ' ' | replace: '-', ' ' | strip
+  assign raw = name | downcase | strip
+  assign n = raw | replace: '_', ' ' | replace: '-', ' ' | strip
+  assign out = ''
+  assign custom_hit = false
+
+  comment
+    1. Shop metafield custom.swatch_colors (multi-line text) wins. One
+       colour per line: "name: #hex" or "name: #hex/#hex" for a split.
+       The name is matched case-insensitively against the option value.
+  endcomment
+  if shop.metafields.custom.swatch_colors != blank
+    assign lines = shop.metafields.custom.swatch_colors | newline_to_br | split: '<br />'
+    for line in lines
+      assign pair = line | strip | split: ':'
+      if pair.size < 2
+        continue
+      endif
+      assign key = pair[0] | downcase | strip
+      if key == raw or key == n
+        assign val = pair[1] | strip | replace: '|', '/'
+        assign out = val | split: '/' | join: '|'
+        assign custom_hit = true
+        break
+      endif
+    endfor
+  endif
+
+  comment
+    2. Built-in table. "logo" variants get a split swatch: the base colour
+       with its contrast (white logo = white/black, black logo = black/white).
+  endcomment
+  assign has_logo = false
+  if n contains 'logo' and n contains 'logowhite' == false
+    assign has_logo = true
+  endif
   assign n = n | replace: 'allwhite', 'white' | replace: 'allblack', 'black' | replace: 'all white', 'white' | replace: 'all black', 'black'
   assign n = n | replace: 'logo front', '' | replace: 'logowhite', 'white' | replace: 'logo', '' | replace: 'no velcro', '' | replace: 'v1', '' | replace: 'v2', '' | strip
   assign parts = n | split: '/'
-  assign out = ''
+  if custom_hit
+    assign parts = ''
+  endif
   for part in parts
     assign p = part | strip
     assign h = ''
@@ -68,6 +104,15 @@
       endif
     endif
   endfor
+  if custom_hit == false and has_logo and out != blank and out contains '|' == false
+    if out == '#f4f4f4'
+      assign out = '#f4f4f4|#151515'
+    elsif out == '#151515'
+      assign out = '#151515|#f4f4f4'
+    else
+      assign out = out | append: '|#f4f4f4'
+    endif
+  endif
   if out contains '|'
     assign two = out | split: '|'
     echo 'linear-gradient(135deg, ' | append: two[0] | append: ' 0 50%, ' | append: two[1] | append: ' 50% 100%)'
