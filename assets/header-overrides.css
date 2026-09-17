@@ -5125,3 +5125,14 @@ html:has(body.template--product) {
   background: #f0f0f0 !important;
   background-color: #f0f0f0 !important;
 }
+/* The gallery image carries the tile gradient (#ECECEC > #E2E2E2). The
+   strip above it (behind the header and the breadcrumb) gets the same
+   gradient so the top of the page reads as one surface. The root gets
+   the mid tone for the iOS status bar / overscroll area. */
+body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
+  background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
+}
+html:has(body.template--product) {
+  background: #e7e7e7 !important;
+  background-color: #e7e7e7 !important;
+}
