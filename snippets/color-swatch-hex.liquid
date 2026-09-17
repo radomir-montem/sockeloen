@@ -13,7 +13,7 @@
 
   comment
     1. Shop metafield custom.swatch_colors (multi-line text) wins. One
-       colour per line: "name: #hex" or "name: #hex/#hex" for a split.
+       colour per line: "name: #hex".
        The name is matched case-insensitively against the option value.
   endcomment
   if shop.metafields.custom.swatch_colors != blank
@@ -34,16 +34,9 @@
   endif
 
   comment
-    2. Built-in table. "logo" variants get a split swatch: the base colour
-       with its contrast (white logo = white/black, black logo = black/white).
+    2. Built-in table. "logo", "all", "front" and similar words are
+       stripped so "White-Logo front" and "AllWhite" both read as white.
   endcomment
-  assign has_logo = false
-  if n contains 'logo'
-    assign has_logo = true
-  endif
-  if n contains 'logowhite'
-    assign has_logo = false
-  endif
   assign n = n | replace: 'allwhite', 'white' | replace: 'allblack', 'black' | replace: 'all white', 'white' | replace: 'all black', 'black'
   assign n = n | replace: 'logo front', '' | replace: 'logowhite', 'white' | replace: 'logo', '' | replace: 'no velcro', '' | replace: 'v1', '' | replace: 'v2', '' | strip
   assign parts = n | split: '/'
@@ -107,26 +100,13 @@
       endif
     endif
   endfor
-  assign needs_split = false
-  if has_logo and custom_hit == false
-    assign needs_split = true
-  endif
-  if out == blank or out contains '|'
-    assign needs_split = false
-  endif
-  if needs_split
-    if out == '#f4f4f4'
-      assign out = '#f4f4f4|#151515'
-    elsif out == '#151515'
-      assign out = '#151515|#f4f4f4'
-    else
-      assign out = out | append: '|#f4f4f4'
-    endif
-  endif
+  comment
+    One colour per variant: logo variants take their base colour, and a
+    "#hex/#hex" metafield value uses the first colour only.
+  endcomment
   if out contains '|'
     assign two = out | split: '|'
-    echo 'linear-gradient(to right, ' | append: two[0] | append: ' 0 50%, ' | append: two[1] | append: ' 50% 100%)'
-  else
-    echo out
+    assign out = two[0]
   endif
+  echo out
 -%}
