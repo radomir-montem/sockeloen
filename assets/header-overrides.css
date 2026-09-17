@@ -5217,18 +5217,20 @@ body.template--product .product-v2 .color-input__selected-name {
    8px from the photo edge (the photo is 4:5 of the full width on phones). */
 .pdp-tags { display: none; }
 @media screen and (max-width: 749px) {
+  /* top-right under the header pill: the product sits low in the photos,
+     so the upper right corner is the emptiest spot */
   .pdp-tags {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 4px;
     position: absolute;
-    left: 8px;
-    top: calc(100vw * 1.25 - 8px);
-    transform: translateY(-100%);
+    right: 8px;
+    top: 60px; /* wrapper starts at 44px; pill bottom 92px + 12px */
     z-index: 2;
     pointer-events: none;
-    max-width: 70%;
+    max-width: 62%;
+    text-align: right;
   }
   .pdp-tag {
     display: inline-block;
@@ -5248,13 +5250,14 @@ body.template--product .product-v2 .color-input__selected-name {
    it below the pill, right-aligned so it does not collide with the
    breadcrumb on the left */
 body.template--product .product-v2__media-wrapper > .card-badge {
-  top: 104px !important;
-  left: auto !important;
-  right: 12px !important;
+  top: 140px !important; /* under the breadcrumb (104px + its height) */
+  left: 12px !important;
 }
 /* the single-row colour tile must not grow with its content */
 body.template--product .product-v2 .product-form__input.color-input {
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 0 !important;        /* fieldsets default to min-content */
+  min-inline-size: 0 !important;
   box-sizing: border-box !important;
 }
