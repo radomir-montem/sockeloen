@@ -125,7 +125,7 @@
   endif
   if out contains '|'
     assign two = out | split: '|'
-    echo 'linear-gradient(135deg, ' | append: two[0] | append: ' 0 50%, ' | append: two[1] | append: ' 50% 100%)'
+    echo 'linear-gradient(to right, ' | append: two[0] | append: ' 0 50%, ' | append: two[1] | append: ' 50% 100%)'
   else
     echo out
   endif

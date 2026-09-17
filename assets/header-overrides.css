@@ -4965,12 +4965,12 @@ body.template--collection:has(.banner .banner__media) #ProductGridContainer {
    filled the rounded corners again. Clip the whole sheet to the radius
    (clip-path, so nothing else about overflow changes) and let the inner
    layers be transparent on top of the white section. */
+/* overflow:hidden clips the inner grid layers to the corners but, unlike
+   clip-path, leaves position:fixed descendants alone, so the filter
+   drawer that lives inside this section is not cut off at the top. */
 body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section {
-  clip-path: inset(0 round 0);
-  transition: border-radius 0.25s ease, clip-path 0.25s ease;
-}
-html.is-scrolled body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section {
-  clip-path: inset(0 round 12px 12px 0 0);
+  overflow: hidden;
+  transition: border-radius 0.25s ease;
 }
 body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section [class*="__product-grid-padding"],
 body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section #ProductGridContainer,
@@ -5000,7 +5000,7 @@ body.template--collection .breadcrumbs {
      padding). Vertically the row sits on the variant name's line box,
      the same rhythm as title > variant name. The information block
      carries 5px bottom padding, hence the negative margin. */
-  margin: -4px 0 0 5px;
+  margin: -1px 0 0 5px;
   padding: 0 0 2px 0;
   min-height: 12px;
 }
@@ -5088,3 +5088,7 @@ body.template--collection .breadcrumbs {
 .product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-dot--swatch {
   box-shadow: inset 0 0 0 1px #111, inset 0 0 0 2px #fff !important;
 }
+
+/* sampled colours (card-color-row.js) replace the photo crop */
+.ccr__swatch.is-sampled img,
+.product-v2 .color-dot--swatch.is-sampled img { display: none; }
