@@ -200,20 +200,20 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/1080x1350_Running_Module_V12.jpg",
+            "image": "shopify://shop_images/Collection_banner_MOBILE_909e470e-6ce7-47b8-a476-745a72765356.jpg",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
-            "heading": "Running",
+            "heading": "KNWU x SOCKELOEN",
             "description": "",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "shop here",
-            "button_url": "shopify://collections/running",
+            "button_url": "shopify://collections/sockeloen-x-knwu",
             "button_pos": "mt-0",
-            "mobile_collection": "all-socks",
-            "mobile_collection_title": "Cycling Socks",
+            "mobile_collection": "sockeloen-x-knwu",
+            "mobile_collection_title": "KNWU x SOCKELOEN",
             "mobile_collection_limit": 4
           }
         },
@@ -270,27 +270,27 @@
         "column_8d48KB": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/KNWU_SIDE_webbanner_f691e173-8f49-44d2-8a8f-455aff34f04b.png",
+            "image": "shopify://shop_images/Cycling_Classic_Woman_7.png",
             "color": "#0e112e",
             "text_color": "#ffffff",
             "font_size": 40,
-            "heading": "KNWU x SOCKELOEN",
+            "heading": "Socks",
             "description": "",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "Shop Here",
-            "button_url": "shopify://collections/knwu",
+            "button_url": "shopify://collections/all-socks",
             "button_pos": "mt-0",
-            "mobile_collection": "sockeloen-x-knwu",
-            "mobile_collection_title": "KNWU x SOCKELOEN",
+            "mobile_collection": "all-socks",
+            "mobile_collection_title": "Socks",
             "mobile_collection_limit": 4
           }
         },
         "column_xrEcgn": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/WEB-Home-banner-mobile-V4.png",
+            "image": "shopify://shop_images/AWE_Email_banner_workfile_3.jpg",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
