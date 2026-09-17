@@ -4038,7 +4038,7 @@ body.template--index #MainContent .card-wrapper .card-bottom-badge {
   bottom: 8px !important;
 }
 body.template--index #MainContent .card-wrapper .badge {
-  background-color: rgba(255, 255, 255, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
   color: #000 !important;
   /* text styling (size, weight, case) stays the theme's own */
   padding: 5px 8px !important;
@@ -4621,7 +4621,7 @@ body.template--collection #product-grid {
 #MainContent .card-wrapper .badge,
 #MainContent .card-wrapper .card-badge .badge,
 #MainContent .card-wrapper .card-bottom-badge .badge {
-  background-color: rgba(255, 255, 255, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
   color: #000 !important;
   padding: 5px 8px !important;
   margin: 0 !important;
@@ -5217,29 +5217,29 @@ body.template--product .product-v2 .color-input__selected-name {
    8px from the photo edge (the photo is 4:5 of the full width on phones). */
 .pdp-tags { display: none; }
 @media screen and (max-width: 749px) {
-  /* top-right under the header pill: the product sits low in the photos,
-     so the upper right corner is the emptiest spot */
+  /* bottom-right of the photo (photo = full width, 4:5). One tag at a
+     time, following the active slide. */
   .pdp-tags {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 4px;
     position: absolute;
     right: 8px;
-    top: 60px; /* wrapper starts at 44px; pill bottom 92px + 12px */
+    top: calc(100vw * 1.25 - 8px);
+    transform: translateY(-100%);
     z-index: 2;
     pointer-events: none;
-    max-width: 62%;
+    max-width: 80%;
     text-align: right;
   }
   .pdp-tag {
-    display: inline-block;
+    display: none;
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
+    background: rgba(255, 255, 255, 0.7);
+    color: #666;
     font-size: 10px;
     font-weight: 700;
     line-height: 1.2;
@@ -5248,6 +5248,7 @@ body.template--product .product-v2 .color-input__selected-name {
     border-radius: 4px;
     text-transform: lowercase;
   }
+  .pdp-tag.is-visible { display: inline-block; }
   .pdp-tag::first-letter { text-transform: uppercase; }
 }
 /* the merchandising badge sat at 44px, now under the header pill: move
@@ -5264,4 +5265,25 @@ body.template--product .product-v2 .product-form__input.color-input {
   min-width: 0 !important;        /* fieldsets default to min-content */
   min-inline-size: 0 !important;
   box-sizing: border-box !important;
+}
+
+/* Product page: the media box is the full column width (it was 14px
+   short, leaving a strip of the section gradient at a different
+   position). Merchandising badge on the photo: same translucency and
+   shape as the card badges. */
+body.template--product .product-v2 .product__media-list .product__media,
+body.template--product .product-v2 .product__media-item .product__media,
+body.template--product .product-v2 .product__media-item {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+body.template--product .product-v2__media-wrapper > .card-badge .badge {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: #000 !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  padding: 5px 8px !important;
+  box-shadow: none !important;
 }

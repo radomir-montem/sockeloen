@@ -83,11 +83,33 @@
         endif
       -%}
       {%- if tag1 != blank or tag2 != blank or tag3 != blank -%}
-        <div class="pdp-tags" aria-hidden="true">
-          {%- if tag1 != blank -%}<span class="pdp-tag">{{ tag1 | strip | remove: '.' }}</span>{%- endif -%}
+        <div class="pdp-tags" aria-hidden="true" id="PdpTags-{{ section.id }}">
+          {%- if tag1 != blank -%}<span class="pdp-tag is-visible">{{ tag1 | strip | remove: '.' }}</span>{%- endif -%}
           {%- if tag2 != blank -%}<span class="pdp-tag">{{ tag2 | strip | remove: '.' }}</span>{%- endif -%}
           {%- if tag3 != blank -%}<span class="pdp-tag">{{ tag3 | strip | remove: '.' }}</span>{%- endif -%}
         </div>
+        <script>
+          /* One benefit per photo: the tag shown follows the active slide
+             (1st photo = 1st benefit, 2nd = 2nd, ... cycling). */
+          (function () {
+            var tags = document.getElementById('PdpTags-{{ section.id }}');
+            var list = document.querySelector('.product-v2 .product__media-list');
+            if (!tags || !list) return;
+            var items = Array.prototype.slice.call(tags.querySelectorAll('.pdp-tag'));
+            if (!items.length) return;
+            function update() {
+              var slides = Array.prototype.slice.call(list.querySelectorAll('.product__media-item')).filter(function (s) {
+                return s.style.display !== 'none';
+              });
+              var active = slides.findIndex(function (s) { return s.classList.contains('is-active'); });
+              if (active < 0) active = 0;
+              var show = active % items.length;
+              items.forEach(function (t, i) { t.classList.toggle('is-visible', i === show); });
+            }
+            new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+            update();
+          })();
+        </script>
       {%- endif -%}
 
       {%- comment -%}
