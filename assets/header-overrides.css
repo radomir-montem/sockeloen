@@ -5197,7 +5197,8 @@ body.template--collection .breadcrumbs {
   /* title (12px line) > variant name (12px line) > 6px > swatches.
      2px bottom padding keeps the selected ring inside the card's
      overflow:hidden box. */
-  margin: 6px 0 0 10px; /* same left inset as .card__information */
+  margin: 0 0 0 10px; /* same left inset as .card__information; the
+                         information row already leaves ~6px underneath */
   padding: 2px 0 2px 2px;
   min-height: 12px;
 }
