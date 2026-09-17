@@ -5287,3 +5287,10 @@ body.template--product .product-v2__media-wrapper > .card-badge .badge {
   padding: 5px 8px !important;
   box-shadow: none !important;
 }
+/* the theme caps the media box at 520px (max-height), which broke the
+   4:5 ratio on wider phones; the ratio rules the height */
+body.template--product .product-v2 .product__media-list .product__media,
+body.template--product .product-v2 .product__media-item .product__media {
+  max-height: none !important;
+  min-height: 0 !important;
+}
