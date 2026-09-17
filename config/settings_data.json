@@ -160,50 +160,60 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "blocks": {
-          "announcement_6R9may": {
+          "announcement_1": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
-              "text": "end of winter sale >",
-              "usd_text": "FREE SHIPPING > $150 // BORN IN THE PELOTON // 100% SATISFACTION // CUSTOMER IS KING //",
+              "text": "Free shipping on all orders above €75",
+              "usd_text": "Free shipping on all orders above $100",
               "text_alignment": "center",
               "bg_color": "#1a1a1a",
               "font_color": "#ffffff",
-              "link": "shopify://collections/all-weather-essentials"
+              "link": "shopify://policies/shipping-policy"
             }
           },
-          "announcement_RXnatL": {
+          "announcement_2": {
             "type": "announcement",
-            "disabled": true,
             "settings": {
-              "text": "born in the peloton // 100% satisfaction // customer = king  // free shipping on orders > 75,-",
-              "usd_text": "born in the peloton // 100% satisfaction // customer = king",
+              "text": "Born in the peloton",
+              "usd_text": "Born in the peloton",
               "text_alignment": "center",
               "bg_color": "#1a1a1a",
               "font_color": "#ffffff",
               "link": ""
             }
           },
-          "announcement-bar-0": {
+          "announcement_3": {
             "type": "announcement",
             "settings": {
-              "text": "free shipping on all orders above 75",
-              "usd_text": "free shipping on all orders above 100",
+              "text": "100% satisfaction guarantee",
+              "usd_text": "100% satisfaction guarantee",
               "text_alignment": "center",
               "bg_color": "#1a1a1a",
               "font_color": "#ffffff",
-              "link": "shopify://policies/shipping-policy"
+              "link": ""
+            }
+          },
+          "announcement_4": {
+            "type": "announcement",
+            "settings": {
+              "text": "Customer is king",
+              "usd_text": "Customer is king",
+              "text_alignment": "center",
+              "bg_color": "#1a1a1a",
+              "font_color": "#ffffff",
+              "link": ""
             }
           }
         },
         "block_order": [
-          "announcement_6R9may",
-          "announcement_RXnatL",
-          "announcement-bar-0"
+          "announcement_1",
+          "announcement_2",
+          "announcement_3",
+          "announcement_4"
         ],
         "settings": {
           "sale_mode": false,
-          "autoplay_speed": 7,
+          "autoplay_speed": 3.5,
           "enable_sticky": true
         }
       },
@@ -615,7 +625,8 @@
           "klaviyo_id": "UmGHP8",
           "footer_logo": "shopify://shop_images/Worn_by_champions_KNWU_export_white.png",
           "logo_width": 200,
-          "logo_width_monile": 200
+          "logo_width_monile": 200,
+          "show_newsletter": false
         }
       },
       "main-password-header": {
