@@ -200,7 +200,7 @@
         "d3c61b13-8dbb-4c88-8c39-6529210ef951": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Collection_banner_MOBILE_909e470e-6ce7-47b8-a476-745a72765356.jpg",
+            "image": "shopify://shop_images/tibor.banner.Collection_banner_MOBILE_909e470e-6ce7-47b8-a476-745a72765356.png",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
@@ -235,7 +235,8 @@
             "button_pos": "mt-0",
             "mobile_collection": "",
             "mobile_collection_title": "",
-            "mobile_collection_limit": 4
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": ""
           }
         }
       },
@@ -285,7 +286,8 @@
             "button_pos": "mt-0",
             "mobile_collection": "all-socks",
             "mobile_collection_title": "Socks",
-            "mobile_collection_limit": 4
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": ""
           }
         },
         "column_xrEcgn": {
@@ -305,7 +307,8 @@
             "button_pos": "mt-0",
             "mobile_collection": "",
             "mobile_collection_title": "",
-            "mobile_collection_limit": 4
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": ""
           }
         }
       },
@@ -684,7 +687,8 @@
             "button_pos": "mt-0",
             "mobile_collection": "",
             "mobile_collection_title": "",
-            "mobile_collection_limit": 4
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": ""
           }
         },
         "column_pYHJ3N": {
@@ -704,7 +708,8 @@
             "button_pos": "mt-0",
             "mobile_collection": "",
             "mobile_collection_title": "",
-            "mobile_collection_limit": 4
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": ""
           }
         }
       },
