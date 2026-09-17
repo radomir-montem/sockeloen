@@ -38,8 +38,11 @@
        with its contrast (white logo = white/black, black logo = black/white).
   endcomment
   assign has_logo = false
-  if n contains 'logo' and n contains 'logowhite' == false
+  if n contains 'logo'
     assign has_logo = true
+  endif
+  if n contains 'logowhite'
+    assign has_logo = false
   endif
   assign n = n | replace: 'allwhite', 'white' | replace: 'allblack', 'black' | replace: 'all white', 'white' | replace: 'all black', 'black'
   assign n = n | replace: 'logo front', '' | replace: 'logowhite', 'white' | replace: 'logo', '' | replace: 'no velcro', '' | replace: 'v1', '' | replace: 'v2', '' | strip
@@ -104,7 +107,14 @@
       endif
     endif
   endfor
-  if custom_hit == false and has_logo and out != blank and out contains '|' == false
+  assign needs_split = false
+  if has_logo and custom_hit == false
+    assign needs_split = true
+  endif
+  if out == blank or out contains '|'
+    assign needs_split = false
+  endif
+  if needs_split
     if out == '#f4f4f4'
       assign out = '#f4f4f4|#151515'
     elsif out == '#151515'
