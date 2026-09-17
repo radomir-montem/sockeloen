@@ -5175,3 +5175,9 @@ body.template--collection:has(.banner .banner__media) #MainContent > .shopify-se
 body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section #product-grid {
   background: transparent !important;
 }
+/* The breadcrumb strip used to sit hidden under the white grid container;
+   with the container transparent it showed through under the first cards.
+   The homepage system has no breadcrumbs, so hide it on collection pages. */
+body.template--collection .breadcrumbs {
+  display: none !important;
+}
