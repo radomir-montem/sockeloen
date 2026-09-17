@@ -4634,17 +4634,44 @@ body.template--collection #product-grid {
    collection, recently viewed): the swipers have no slide gap, so the
    12px rhythm comes from padding on the slides, with the container
    pulled back out by the same amount so the edges stay flush. */
-.bot-swiper,
 .mfc-swiper,
 .yml-swiper,
 .rvi-swiper {
   margin-left: -6px !important;
   margin-right: -6px !important;
 }
-.bot-swiper .swiper-slide,
 .mfc-swiper .swiper-slide,
 .yml-swiper .swiper-slide,
 .rvi-swiper .swiper-slide {
   padding: 0 6px !important;
   box-sizing: border-box !important;
+}
+/* "Bought often together" sets its own 12px slide gap (section JS). The
+   section gets the homepage rhythm: 12px side inset, title styled like
+   the homepage carousel titles (sentence case, left, 32px/20px), 12px
+   between title and cards. */
+[class*="bot-section-"] {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+[class*="bot-section-"] .bot-heading {
+  font-family: var(--font-heading-family) !important;
+  font-size: 32px !important;
+  line-height: 1 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.04em !important;
+  text-align: left !important;
+  text-transform: none !important;
+  padding: 0 0 12px !important;
+}
+[class*="bot-section-"] .bot-heading::first-letter {
+  text-transform: uppercase !important;
+}
+[class*="bot-section-"] .bot-heading em {
+  text-transform: lowercase !important;
+}
+@media screen and (max-width: 749px) {
+  [class*="bot-section-"] .bot-heading {
+    font-size: 20px !important;
+  }
 }
