@@ -5237,3 +5237,11 @@ body.template--collection .breadcrumbs {
   color: #666;
   margin-left: 2px;
 }
+/* .card__content is a 3-row grid (spacer / information / spacer); the
+   information block is pinned to row 2, so the colour row goes in row 3
+   to sit under the title and price. */
+.card__content > .ccr {
+  grid-row-start: 3;
+  grid-column: 1 / -1;
+  align-self: start;
+}
