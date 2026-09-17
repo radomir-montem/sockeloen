@@ -4675,3 +4675,12 @@ body.template--collection #product-grid {
     font-size: 20px !important;
   }
 }
+/* The theme's swiper wrapper carries a 5px flex gap on top of Swiper's
+   own margin-right, which made the gap 17px and pushed the last column
+   past the edge. Swiper's spaceBetween is the single source of the gap. */
+.bot-swiper .swiper-wrapper,
+.mfc-swiper .swiper-wrapper,
+.yml-swiper .swiper-wrapper,
+.rvi-swiper .swiper-wrapper {
+  gap: 0 !important;
+}
