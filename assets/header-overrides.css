@@ -4696,3 +4696,281 @@ body.template--collection #product-grid {
 #MainContent .card-wrapper .badge::first-letter {
   text-transform: uppercase !important;
 }
+
+/* ============================================================
+   V2 PRODUCT TEMPLATE — homepage brand system
+   Colour: black accent instead of orange/blue. Buttons: solid black,
+   8px, 12px/700, sentence case. Headings: one scale (32px/700/-0.04em,
+   20px on phones), sentence case. Radius: 4px tiles, 8px buttons,
+   12px sheets. White page, 12px side inset.
+   ============================================================ */
+
+/* --- colour: accent variables the sections read --- */
+body.template--product [class*="product-faq--"],
+body.template--product [class*="product-faq__"],
+body.template--product [class*="product-exploder--"],
+body.template--product [class*="product-exploder__"],
+body.template--product [class*="satisfaction-guarantee"],
+body.template--product .reviews-masonry,
+body.template--product .reviews-masonry > *,
+body.template--product [class*="reviews-masonry__"] {
+  --faq-accent: #111 !important;
+  --exploder-accent: #111 !important;
+  --satisfaction-accent: #111 !important;
+  --reviews-accent: #111 !important;
+}
+/* italic accent words in headings: keep the italic, drop the orange */
+body.template--product .product-benefit__heading em,
+body.template--product .bot-heading em,
+body.template--product .product-exploder__heading em,
+body.template--product .product-faq__heading em,
+body.template--product .reviews-masonry__heading em,
+body.template--product .satisfaction-guarantee__heading em {
+  color: inherit !important;
+}
+/* small orange/green accents in the buy box */
+body.template--product .product-v2 .shipping-text .ship-countdown {
+  color: #111 !important;
+}
+body.template--product .product-v2__benefit svg,
+body.template--product .product-v2-sticky-bar__usp svg {
+  color: #111 !important;
+}
+body.template--product .product-v2__benefit svg path,
+body.template--product .product-v2-sticky-bar__usp svg path {
+  fill: #111 !important;
+}
+body.template--product .product-v2__price .product-save-badge {
+  background: #111 !important;
+}
+
+/* --- page background: white, like the homepage sheet --- */
+body.template--product {
+  background: #fff !important;
+  background-color: #fff !important;
+}
+body.template--product .product-section,
+body.template--product .product-v2 {
+  background-color: #fff !important;
+}
+
+/* --- buttons: solid black, 8px, 12px/700, sentence case --- */
+body.template--product .product-v2 .product-form__submit,
+body.template--product .product-v2 button[name="add"],
+body.template--product .product-v2 .product-form__submit[disabled],
+body.template--product .product-v2 button[name="add"][disabled],
+body.template--product .product-v2-sticky-bar__atc-btn,
+body.template--product .product-v2-size-modal__confirm,
+body.template--product .satisfaction-guarantee__button,
+body.template--product .product-v2 .klaviyo-bis-trigger,
+body.template--product .product-v2 #out-of-stock {
+  background: #111 !important;
+  background-color: #111 !important;
+  background-image: none !important;
+  color: #fff !important;
+  border: 1px solid #111 !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  line-height: 1.2 !important;
+  padding: 14px 24px !important;
+  min-height: 0 !important;
+  height: auto !important;
+  box-shadow: none !important;
+}
+body.template--product .product-v2 .product-form__submit:hover,
+body.template--product .product-v2 button[name="add"]:hover,
+body.template--product .product-v2-sticky-bar__atc-btn:hover,
+body.template--product .product-v2-size-modal__confirm:hover,
+body.template--product .satisfaction-guarantee__button:hover,
+body.template--product .product-v2 .klaviyo-bis-trigger:hover,
+body.template--product .product-v2 #out-of-stock:hover {
+  background: #000 !important;
+  background-color: #000 !important;
+  border-color: #000 !important;
+  padding: 14px 24px !important;
+}
+body.template--product .product-v2 .product-form__submit::first-letter,
+body.template--product .product-v2-sticky-bar__atc-btn::first-letter,
+body.template--product .product-v2-size-modal__confirm::first-letter,
+body.template--product .product-v2-size-modal__change::first-letter,
+body.template--product .satisfaction-guarantee__button::first-letter {
+  text-transform: uppercase !important;
+}
+/* cart icon injected into the ATC: same colour as the button */
+body.template--product .product-v2 .product-form__submit span svg,
+body.template--product .product-v2 .product-form__submit span svg path,
+body.template--product .product-v2 .product-form__submit:not([disabled]):hover span svg,
+body.template--product .product-v2 .product-form__submit:not([disabled]):hover span svg path {
+  fill: #111 !important;
+  stroke: #111 !important;
+}
+/* secondary: outline black */
+body.template--product .product-v2-size-modal__change {
+  background: transparent !important;
+  color: #111 !important;
+  border: 1px solid #111 !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  padding: 14px 24px !important;
+}
+
+/* --- size chips: 8px, black selection --- */
+body.template--product .product-v2 .product-form__input.size-input input[type='radio'] + label {
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+body.template--product .product-v2 .product-form__input.size-input input[type='radio'] + label:hover {
+  border-color: #999 !important;
+}
+body.template--product .product-v2 .product-form__input.size-input input[type='radio']:checked + label {
+  border-color: #111 !important;
+  box-shadow: inset 0 0 0 1px #111 !important;
+}
+body.template--product .product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-dot {
+  box-shadow: 0 0 0 2px #111 !important;
+}
+
+/* --- headings: one scale, sentence case --- */
+body.template--product .product-v2__title {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.1 !important;
+  text-transform: none !important;
+}
+body.template--product .product-benefit__heading,
+body.template--product .product-exploder__heading,
+body.template--product .product-faq__heading,
+body.template--product .reviews-masonry__heading,
+body.template--product .satisfaction-guarantee__heading {
+  font-family: var(--font-heading-family) !important;
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1 !important;
+  text-transform: none !important;
+}
+body.template--product .product-benefit__heading::first-letter,
+body.template--product .product-exploder__heading::first-letter,
+body.template--product .product-faq__heading::first-letter,
+body.template--product .reviews-masonry__heading::first-letter,
+body.template--product .satisfaction-guarantee__heading::first-letter,
+body.template--product .product-v2__title::first-letter {
+  text-transform: uppercase !important;
+}
+@media screen and (max-width: 749px) {
+  body.template--product .product-v2__title {
+    font-size: 20px !important;
+  }
+  body.template--product .product-benefit__heading,
+  body.template--product .product-exploder__heading,
+  body.template--product .product-faq__heading,
+  body.template--product .reviews-masonry__heading,
+  body.template--product .satisfaction-guarantee__heading {
+    font-size: 20px !important;
+  }
+}
+
+/* --- radius: 4px tiles, 8px buttons, 12px sheets --- */
+body.template--product .product-benefit__media,
+body.template--product .product-benefit__media img,
+body.template--product .product-benefit__media video,
+body.template--product .product-benefit__video,
+body.template--product .product-v2 .thumbnail-list .thumbnail,
+body.template--product .product-v2 .thumbnail-list .thumbnail img,
+body.template--product [class*="product-exploder__"] img,
+body.template--product .product-exploder__media,
+body.template--product .product-exploder__image,
+body.template--product .product-exploder__figure {
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+body.template--product .satisfaction-guarantee__container,
+body.template--product .reviews-masonry__card,
+body.template--product .product-faq__item,
+body.template--product .product-faq__list,
+body.template--product .product-exploder__list {
+  border-radius: 12px !important;
+}
+
+/* --- inset: 12px sides on every section --- */
+body.template--product .product-benefits-section,
+body.template--product [class*="product-exploder--"],
+body.template--product [class*="product-faq--"],
+body.template--product .reviews-masonry,
+body.template--product [class*="satisfaction-guarantee"]:not([class*="__"]) {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+/* ============================================================
+   COLLECTION PAGE — filters + sheet edge
+   ============================================================ */
+body.template--collection .open-facet-drawer,
+body.template--search .open-facet-drawer {
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  padding: 14px 24px !important;
+  background: #111 !important;
+  color: #fff !important;
+  border: 1px solid #111 !important;
+}
+.open-facet-drawer::first-letter { text-transform: uppercase !important; }
+.open-facet-drawer svg, .open-facet-drawer svg path { fill: #fff !important; stroke: #fff !important; }
+/* facets drawer: "Apply" solid black 8px, headings sentence case */
+.facets-container .button--primary,
+.mobile-facets .button--primary,
+.facets__form .button--primary,
+facet-filters-form .button--primary {
+  border-radius: 8px !important;
+  background: #111 !important;
+  color: #fff !important;
+  border: 1px solid #111 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  padding: 14px 24px !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+.facets__heading,
+.facets__summary,
+.facet-filters__label,
+.mobile-facets__heading,
+.mobile-facets__summary,
+.mobile-facets__label,
+.facets-container h2,
+.mobile-facets h2 {
+  text-transform: none !important;
+}
+.facets__heading::first-letter,
+.facets__summary::first-letter,
+.facet-filters__label::first-letter,
+.mobile-facets__heading::first-letter,
+.facets-container h2::first-letter,
+.mobile-facets h2::first-letter {
+  text-transform: uppercase !important;
+}
+.facets__summary, .mobile-facets__summary, .facet-filters__label { display: block; }
+/* the grid sheet slides over the banner with 12px corners, like the
+   homepage best sellers sheet over the hero */
+body.template--collection:has(.banner .banner__media) #ProductGridContainer {
+  position: relative !important;
+  z-index: 1 !important;
+  margin-top: -12px !important;
+  background: #fff !important;
+  border-radius: 12px 12px 0 0 !important;
+  overflow: hidden !important;
+}
