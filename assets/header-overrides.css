@@ -5020,3 +5020,142 @@ body.template--product .reviews-masonry__card {
 .mobile-facets__heading::first-letter {
   text-transform: uppercase !important;
 }
+
+/* ============================================================
+   COLLECTION PAGE — homepage mechanics
+   1. The banner pins like the homepage hero; the product grid section
+      slides over it as a white sheet. Corners are square while the page
+      sits at the top and become 12px once you scroll (html.is-scrolled).
+   2. The category bar is the homepage mobile bar: white bold text links
+      under the header pill with a hairline underneath, no pills, no
+      arrows. It scrolls sideways; a fade on the edge that still has
+      items shows there is more.
+   ============================================================ */
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  border-radius: 0 !important;
+  overflow: hidden;
+  margin-bottom: 0 !important;
+}
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) .banner,
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) .banner__media,
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) .banner__media img {
+  border-radius: 0 !important;
+}
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) ~ .shopify-section {
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+}
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section {
+  margin-top: 0 !important;
+  background-color: #fff !important;
+  border-radius: 0;
+  transition: border-radius 0.25s ease;
+}
+html.is-scrolled body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section {
+  border-radius: 12px 12px 0 0;
+}
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section > *:first-child {
+  border-radius: inherit;
+  background: #fff !important;
+}
+/* the earlier "sheet on the grid container" rule is superseded by the
+   section-level sheet above */
+body.template--collection:has(.banner .banner__media) #ProductGridContainer {
+  margin-top: 0 !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+/* --- category bar --- */
+.collection-tags-nav { display: none !important; }
+.collection-tags-wrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
+  z-index: 3;
+}
+.collection-tags-wrapper.on-banner {
+  position: absolute;
+  top: 100px;
+  left: 12px;
+  right: 12px;
+}
+.collection-tags-wrapper::after {
+  content: '';
+  position: absolute;
+  left: 4px; right: 4px; bottom: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.collection-tags-wrapper .collection-tags {
+  display: flex !important;
+  gap: 0 !important;
+  justify-content: flex-start !important;
+  padding: 0 4px !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.collection-tags-wrapper .collection-tags::-webkit-scrollbar { display: none; }
+.collection-tags-wrapper .collection-tags > div {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+/* few items: spread them like the homepage's three equal links */
+.collection-tags-wrapper:not(.is-scrollable) .collection-tags > div {
+  flex: 1 1 0;
+}
+.collection-tags .tag-button,
+.collection-tags .tag-button:hover,
+.collection-tags .tag-button.active,
+.collection-tags .tag-button.active:hover {
+  display: block !important;
+  position: relative;
+  padding: 12px 14px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.2 !important;
+  text-align: center;
+  color: #fff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  transition: opacity 0.15s ease !important;
+}
+.collection-tags .tag-button:not(.active) { opacity: 0.85 !important; }
+.collection-tags .tag-button.active::after {
+  content: '';
+  position: absolute;
+  left: 8px; right: 8px; bottom: 0;
+  height: 2px;
+  background: #fff;
+}
+/* scroll cue: fade the edge that still hides items */
+.collection-tags-wrapper.is-scrollable .collection-tags {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 calc(100% - 56px), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 calc(100% - 56px), transparent 100%);
+}
+.collection-tags-wrapper.is-scrollable.at-start .collection-tags {
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 56px), transparent 100%);
+          mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 56px), transparent 100%);
+}
+.collection-tags-wrapper.is-scrollable.at-end .collection-tags {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 100%);
+}
+.collection-tags-wrapper.is-scrollable.at-start.at-end .collection-tags {
+  -webkit-mask-image: none;
+          mask-image: none;
+}
