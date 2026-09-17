@@ -4974,3 +4974,27 @@ body.template--collection:has(.banner .banner__media) #ProductGridContainer {
   border-radius: 12px 12px 0 0 !important;
   overflow: hidden !important;
 }
+/* v2 product: white all the way (section wrapper, info column, benefits),
+   and 12px alignment for the buy box, benefits text, reviews and
+   guarantee sheet. Review cards get a hairline so they read on white. */
+body.template--product .shopify-section.bg-pdpbg,
+body.template--product .product-v2__info-wrapper,
+body.template--product .product-benefits-section,
+body.template--product .reviews-masonry {
+  background: #fff !important;
+  background-color: #fff !important;
+}
+body.template--product .product-v2__info-wrapper {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+body.template--product .product-benefit__content,
+body.template--product .reviews-masonry__inner,
+body.template--product .satisfaction-guarantee {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+body.template--product .reviews-masonry__card {
+  border: 1px solid #e5e5e5 !important;
+  box-shadow: none !important;
+}
