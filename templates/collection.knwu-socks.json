@@ -32,7 +32,7 @@
       "settings": {
         "navigation": "collection-navigation",
         "products_per_page": 8,
-        "variant_first_rules": "sockeloen-x-knwu:KNWU",
+        "variant_first_rules": "sockeloen-x-knwu:KNWU, knwu:KNWU",
         "image_ratio": "portrait",
         "show_secondary_image": true,
         "show_vendor": false,

@@ -508,7 +508,7 @@
         "title": "KNWU",
         "show_title": true,
         "collection": "knwu",
-        "variant_filter": "",
+        "variant_filter": "KNWU",
         "products_to_show": 4,
         "columns_desktop": 4,
         "disable_padding": false,
