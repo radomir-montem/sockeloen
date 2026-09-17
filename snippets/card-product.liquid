@@ -148,6 +148,7 @@
             {% unless hideProductPrice %}
               {% render 'price', product: card_product, price_class: '', compact: true %}
             {% endunless %}
+            {% render 'card-color-row', product: card_product, current_variant: card_product.selected_or_first_available_variant %}
           </div>
         </div>
         {%- if show_quick_add -%}

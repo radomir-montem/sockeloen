@@ -1,0 +1,47 @@
+{%- comment -%}
+  Colour row under a product card's title and price: up to five colour
+  swatches (real colours, photo fallback) plus "+N" for the rest. Tapping
+  a swatch swaps the card image, subtitle and link (assets/card-color-row.js).
+  Sold-out colours are left out.
+  Accepts: product, current_variant
+{%- endcomment -%}
+{%- liquid
+  assign ccr_index = -1
+  for opt in product.options
+    assign opt_dc = opt | downcase
+    if opt_dc == 'color' or opt_dc == 'colour' or opt_dc contains 'kleur'
+      assign ccr_index = forloop.index0
+      break
+    endif
+  endfor
+-%}
+{%- if ccr_index > -1 and product.variants.size > 1 -%}
+  {%- assign ccr_coming_soon = product.metafields.custom.coming_soon | default: false -%}
+  {%- assign ccr_seen = '' -%}
+  {%- assign ccr_count = 0 -%}
+  {%- assign ccr_current = current_variant.options[ccr_index] | strip -%}
+  {%- capture ccr_items -%}
+    {%- for v in product.variants -%}
+      {%- assign c = v.options[ccr_index] | strip -%}
+      {%- assign key = '|' | append: c | append: '|' -%}
+      {%- if ccr_seen contains key -%}{% continue %}{%- endif -%}
+      {%- unless shop.metafields.soldout_variants.enable or v.available or ccr_coming_soon -%}{% continue %}{%- endunless -%}
+      {%- assign ccr_seen = ccr_seen | append: key -%}
+      {%- assign ccr_count = ccr_count | plus: 1 -%}
+      {%- if ccr_count <= 5 -%}
+        {%- capture hex -%}{% render 'color-swatch-hex', name: c %}{%- endcapture -%}
+        {%- assign hex = hex | strip -%}
+        {%- assign img = v.featured_image -%}
+        <span class="ccr__swatch{% if c == ccr_current %} is-selected{% endif %}" role="link" tabindex="0" title="{{ c | escape }}" aria-label="{{ c | escape }}" data-url="{{ v.url }}" data-color="{{ c | escape }}"{% if img %} data-image="{{ img | image_url: width: 533 }}" data-alt="{{ img.alt | escape }}"{% endif %}{% if hex != blank %} style="background: {{ hex }};"{% endif %}>
+          {%- if hex == blank and img -%}<img src="{{ img | image_url: width: 64 }}" alt="" width="16" height="16" loading="lazy">{%- endif -%}
+        </span>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if ccr_count > 1 -%}
+    <div class="ccr">
+      {{ ccr_items }}
+      {%- if ccr_count > 5 -%}<span class="ccr__more">+{{ ccr_count | minus: 5 }}</span>{%- endif -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}

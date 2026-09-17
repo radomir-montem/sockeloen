@@ -5181,3 +5181,59 @@ body.template--collection:has(.banner .banner__media) #MainContent > .shopify-se
 body.template--collection .breadcrumbs {
   display: none !important;
 }
+
+/* ============================================================
+   PRODUCT CARD COLOUR ROW (all cards: collection, search, homepage,
+   product-page carousels). Up to five 16px swatches with 4px corners
+   under the price, "+N" for the rest. Selected colour: black ring, like
+   the size chips on the product page. Replaces the hover-only photo
+   swatches on the image tile.
+   ============================================================ */
+.card-color-swatches { display: none !important; }
+.ccr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  min-height: 16px;
+}
+.ccr__swatch {
+  position: relative;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: #e9e9e9;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease;
+}
+.ccr__swatch::after {
+  /* larger touch target than the 16px tile */
+  content: '';
+  position: absolute;
+  inset: -6px;
+}
+.ccr__swatch img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.ccr__swatch:hover,
+.ccr__swatch:focus-visible {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px #999;
+  outline: none;
+}
+.ccr__swatch.is-selected {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px #111;
+}
+.ccr__more {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  color: #666;
+  margin-left: 2px;
+}

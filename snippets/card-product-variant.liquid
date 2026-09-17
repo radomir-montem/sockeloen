@@ -285,6 +285,7 @@
             {% unless hideProductPrice %}
               {% render 'price', product: product, price_class: '', compact: true %}
             {% endunless %}
+            {% render 'card-color-row', product: product, current_variant: card_product %}
           </div>
         </div>
         {%- if show_quick_add -%}

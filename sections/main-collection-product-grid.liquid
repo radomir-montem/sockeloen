@@ -284,6 +284,13 @@
                         {%- endif -%}
                       {%- endfor -%}
                     {%- endif -%}
+                    {%- comment -%}
+                      A product metafield custom.card_variant (text, e.g. "Black") picks the
+                      colour shown on this product's card everywhere, above collection rules.
+                    {%- endcomment -%}
+                    {%- if product.metafields.custom.card_variant != blank -%}
+                      {%- assign variant_first = product.metafields.custom.card_variant -%}
+                    {%- endif -%}
                     {%- assign vf_needle = variant_first | downcase | strip -%}
                     {%- assign vf_done = false -%}
                     {% for vf_pass in (1..2) %}
