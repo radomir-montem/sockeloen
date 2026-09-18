@@ -1494,6 +1494,13 @@
         "default": 60
       },
       {
+        "type": "number",
+        "id": "free_shipping_usd",
+        "label": "Free shipping threshold (USD market)",
+        "info": "Used on product pages for visitors shopping in USD: when the selected quantity or bundle reaches this amount, the shipping line reads \"free shipping\". Should match the free shipping rate for the North America market.",
+        "default": 100
+      },
+      {
         "type": "header",
         "content": "Second Reward Tier"
       },

@@ -1351,7 +1351,20 @@
                 The secure_checkout block is also rendered here (after ship date, before USP accordions)
                 so it always appears in the right visual position regardless of block order.
               {%- endcomment -%}
-              <div id="shipment-message-v2" class="shipment-container !m-0 product-v2__trust-row product-v2__shipping-row" {{ block.shopify_attributes }}>
+              {%- liquid
+                comment
+                  Free-shipping threshold for the market the visitor shops in:
+                  the cart-bar setting for EUR markets, its own setting for USD.
+                  Country and currency are exposed for the script and for
+                  debugging (data-geo is filled from the geolocation cookie).
+                endcomment
+                assign ship_threshold = settings.free_shipping
+                if cart.currency.iso_code == 'USD'
+                  assign ship_threshold = settings.free_shipping_usd | default: 100
+                endif
+              -%}
+              <script type="application/json" id="ShipPrices-{{ section.id }}">{ {%- for v in product.variants -%}"{{ v.id }}":{{ v.price }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} }</script>
+              <div id="shipment-message-v2" class="shipment-container !m-0 product-v2__trust-row product-v2__shipping-row" data-threshold="{{ ship_threshold }}" data-currency="{{ cart.currency.iso_code }}" data-country="{{ localization.country.iso_code }}" data-market="{{ localization.market.handle }}" {{ block.shopify_attributes }}>
                 <svg class="product-v2__shipping-icon" width="39" height="24" viewBox="0 0 39 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="0.5" y="0.5" width="38" height="23" rx="3.5" fill="#FFFFFF" stroke="#E0E0E0"/>
                   <g clip-path="url(#clip_ship_{{ section.id }})">
@@ -1423,32 +1436,102 @@
                     return { countdown: false, date: getNextWorkday() };
                   }
 
+                  /* ---- free shipping: does the current selection reach the threshold? ---- */
+                  var box = document.getElementById('shipment-message-v2');
+                  var threshold = box ? parseFloat(box.getAttribute('data-threshold')) : NaN;
+                  var prices = {};
+                  try { prices = JSON.parse((document.getElementById('ShipPrices-{{ section.id }}') || {}).textContent || '{}'); } catch (e) {}
+                  try {
+                    var geo = JSON.parse(localStorage.getItem('geolocation') || 'null');
+                    if (geo && box) box.setAttribute('data-geo', geo.country_code || '');
+                  } catch (e) {}
+
+                  function parseMoney(str) {
+                    var s = (str || '').replace(/[^\d.,]/g, '');
+                    if (!s) return null;
+                    var dec = Math.max(s.lastIndexOf(','), s.lastIndexOf('.'));
+                    if (dec > -1 && s.length - dec - 1 === 2) {
+                      return parseFloat(s.slice(0, dec).replace(/[.,]/g, '') + '.' + s.slice(dec + 1));
+                    }
+                    return parseFloat(s.replace(/[.,]/g, ''));
+                  }
+                  function selectedTotal() {
+                    /* bundle widget (AOV): the selected offer's total wins */
+                    var offer = document.querySelector('.Avada-Volume__Item--Selected .AOV-Offer__DiscountPrice');
+                    if (offer) {
+                      var v = parseMoney(offer.textContent);
+                      if (v !== null && !isNaN(v)) return v;
+                    }
+                    var form = document.querySelector('.product-v2 form[action*="/cart/add"]');
+                    var idInput = form && form.querySelector('input[name="id"]');
+                    var cents = idInput ? prices[idInput.value] : null;
+                    var qtyEl = document.querySelector('.product-v2 input[name="quantity"]');
+                    var qty = qtyEl ? (parseInt(qtyEl.value, 10) || 1) : 1;
+                    return cents ? (cents / 100) * qty : 0;
+                  }
+                  function freeShipping() {
+                    if (!threshold || isNaN(threshold)) return false;
+                    var total = selectedTotal();
+                    if (box) box.setAttribute('data-selected-total', total.toFixed(2));
+                    return total >= threshold;
+                  }
+
                   function render() {
                     var el = document.getElementById('ship-date-text');
                     if (!el) return;
                     var info = getShipInfo();
+                    var free = freeShipping();
+                    if (box) box.classList.toggle('is-free-shipping', free);
 
                     if (info.countdown) {
                       var timeStr = info.hours > 0
                         ? '<span class="ship-countdown">' + info.hours + 'h ' + info.minutes + 'm</span>'
                         : '<span class="ship-countdown">' + info.minutes + 'm</span>';
                       if (isNl) {
-                        el.innerHTML = 'Bestel binnen ' + timeStr + ', wordt <span class="ship-date">vandaag</span> verzonden';
+                        el.innerHTML = free
+                          ? 'Bestel binnen ' + timeStr + ', <span class="ship-free">gratis verzending vandaag</span>'
+                          : 'Bestel binnen ' + timeStr + ', wordt <span class="ship-date">vandaag</span> verzonden';
                       } else {
-                        el.innerHTML = 'Order within ' + timeStr + ', ships <span class="ship-date">today</span>';
+                        el.innerHTML = free
+                          ? 'Order within ' + timeStr + ', <span class="ship-free">free shipping today</span>'
+                          : 'Order within ' + timeStr + ', ships <span class="ship-date">today</span>';
                       }
                     } else {
                       var f = formatDate(info.date);
                       if (isNl) {
-                        el.innerHTML = 'Voor <strong>15u00</strong> besteld, wordt verzonden op <span class="ship-date">' + f + '</span>';
+                        el.innerHTML = free
+                          ? 'Voor <strong>15u00</strong> besteld, <span class="ship-free">gratis verzonden</span> op <span class="ship-date">' + f + '</span>'
+                          : 'Voor <strong>15u00</strong> besteld, wordt verzonden op <span class="ship-date">' + f + '</span>';
                       } else {
-                        el.innerHTML = 'Ordered before <strong>15hr00</strong>, ships on <span class="ship-date">' + f + '</span>';
+                        el.innerHTML = free
+                          ? 'Ordered before <strong>15hr00</strong>, <span class="ship-free">free shipping</span> on <span class="ship-date">' + f + '</span>'
+                          : 'Ordered before <strong>15hr00</strong>, ships on <span class="ship-date">' + f + '</span>';
                       }
                     }
                     el.style.display = '';
                   }
 
+                  var renderTimer = null;
+                  function scheduleRender() {
+                    clearTimeout(renderTimer);
+                    renderTimer = setTimeout(render, 120);
+                  }
+
                   render();
+                  /* re-evaluate when the variant, the quantity or the bundle offer changes */
+                  document.addEventListener('change', scheduleRender, true);
+                  document.addEventListener('input', function (e) {
+                    if (e.target && e.target.name === 'quantity') scheduleRender();
+                  }, true);
+                  document.addEventListener('click', function (e) {
+                    if (e.target && e.target.closest && e.target.closest('.Avada-Volume__Item, .Avada-VolumeItem__Container')) scheduleRender();
+                  }, true);
+                  new MutationObserver(function (muts) {
+                    for (var i = 0; i < muts.length; i++) {
+                      var t = muts[i].target;
+                      if (t && t.closest && (t.closest('.Avada-VolumeItem__Container') || (t.matches && t.matches('input[name="id"]')))) { scheduleRender(); return; }
+                    }
+                  }).observe(document.body, { attributes: true, attributeFilter: ['class', 'value'], childList: true, subtree: true });
                   // Update countdown every 60s (only ticks when there's a countdown)
                   setInterval(function() {
                     var info = getShipInfo();

@@ -5416,3 +5416,29 @@ body.template--product .reviews-masonry__ribbon-stars svg path {
   color: #00B67A !important;
   fill: #00B67A !important;
 }
+
+/* Buy box: hover on Add to cart (and the sticky bar, size modal and
+   back-in-stock buttons) goes to a darker blue instead of orange; the
+   order-within countdown and the free-shipping words use the buy box
+   green (#5a9a00, the check marks). */
+body.template--product .product-v2 .product-form__submit:hover,
+body.template--product .product-v2 button[name="add"]:hover,
+body.template--product .product-v2-sticky-bar__atc-btn:hover,
+body.template--product .product-v2-size-modal__confirm:hover,
+body.template--product .product-v2 .klaviyo-bis-trigger:hover,
+body.template--product .product-v2 #out-of-stock:hover {
+  background: #0284d9 !important;
+  background-color: #0284d9 !important;
+}
+body.template--product .product-v2 .product-form__submit:not([disabled]):hover span svg,
+body.template--product .product-v2 button[name="add"]:not([disabled]):hover span svg,
+body.template--product .product-v2 .product-form__submit:not([disabled]):hover span svg path,
+body.template--product .product-v2 button[name="add"]:not([disabled]):hover span svg path {
+  fill: #0284d9 !important;
+  stroke: #0284d9 !important;
+}
+body.template--product .product-v2 .shipping-text .ship-countdown,
+body.template--product .product-v2 .shipping-text .ship-free {
+  color: #5a9a00 !important;
+  font-weight: 700 !important;
+}
