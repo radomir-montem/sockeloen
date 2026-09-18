@@ -197,6 +197,21 @@
     {% render 'breadcrumbs' %}
 
     <div class="product-grid-container mt-16" id="ProductGridContainer">
+      {%- comment -%}
+        Filter & sort sits at the top of the product sheet (it used to
+        render under the last product, where nobody scrolls to find it).
+      {%- endcomment -%}
+      {% if section.settings.filter_type == 'drawer' and section.settings.enable_filtering %}
+        <facets-open-button>
+          <button class="open-facet-drawer">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M3 14L3 13L11 13L11 14L3 14ZM12 17L12 10L14 10L14 13L17 13L17 14L14 14L14 17L12 17Z" fill="black"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M3 7L3 6L6 6L6 7L3 7ZM7 10L7 3L9 3L9 6L17 6L17 7L9 7L9 10L7 10Z" fill="black"></path>
+            </svg>
+            {{ 'products.facets.filter_and_sort' | t }}
+          </button>
+        </facets-open-button>
+      {% endif %}
       {%- paginate collection.products by 1000 -%}
         {%- if collection.products.size == 0 -%}
           <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
@@ -368,17 +383,6 @@
         {%- endif -%}
       {%- endpaginate -%}
 
-      {% if section.settings.filter_type == 'drawer' and section.settings.enable_filtering %}
-        <facets-open-button>
-          <button class="open-facet-drawer">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M3 14L3 13L11 13L11 14L3 14ZM12 17L12 10L14 10L14 13L17 13L17 14L14 14L14 17L12 17Z" fill="black"></path>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M3 7L3 6L6 6L6 7L3 7ZM7 10L7 3L9 3L9 6L17 6L17 7L9 7L9 10L7 10Z" fill="black"></path>
-            </svg>
-            {{ 'products.facets.filter_and_sort' | t }}
-          </button>
-        </facets-open-button>
-      {% endif %}
     </div>
   </div>
 </div>
