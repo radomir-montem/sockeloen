@@ -5386,3 +5386,33 @@ body.template--product section.product-faq {
     padding-right: 20px !important;
   }
 }
+
+/* Product page colour tidy-up (scoped to body.template--product):
+   - "Not 100% satisfied": white block behind the grey card
+   - "Shop now": the theme blue (same as Add to cart)
+   - exploder hotspots/numbers and FAQ toggles: blue instead of orange
+   - reviews ribbon stars: the review-card green */
+body.template--product .shopify-section.satisfaction-guarantee-section {
+  background: #fff !important;
+}
+body.template--product [class*="satisfaction-guarantee"],
+body.template--product [class*="product-exploder"],
+body.template--product [class*="product-faq"] {
+  --satisfaction-accent: #0395F6 !important;
+  --exploder-accent: #0395F6 !important;
+  --faq-accent: #0395F6 !important;
+}
+body.template--product .satisfaction-guarantee__button {
+  background-color: #0395F6 !important;
+  color: #fff !important;
+}
+body.template--product .satisfaction-guarantee__button:hover {
+  background-color: #0284d9 !important;
+}
+body.template--product .reviews-masonry__ribbon-stars,
+body.template--product .reviews-masonry__ribbon-stars svg,
+body.template--product .reviews-masonry__ribbon-stars svg path {
+  --reviews-accent: #00B67A;
+  color: #00B67A !important;
+  fill: #00B67A !important;
+}
