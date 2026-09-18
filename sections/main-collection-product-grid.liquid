@@ -59,12 +59,29 @@
       -%}
       <div class="collection-tags" id="CollectionTags-{{ section.id }}">
         {%- unless cat_has_active or collection == blank -%}
+          {%- liquid
+            comment
+              Long titles are shortened at a word boundary so the bar keeps
+              its rhythm: "KNWU x SOCKELOEN -- AERO CYCLING SOCKS" becomes
+              "KNWU x SOCKELOEN…". Separators left dangling are dropped.
+            endcomment
+            assign cur_title = collection.title | strip
+            if cur_title.size > 22
+              assign cur_title = cur_title | truncatewords: 3, ''
+              assign cur_title = cur_title | strip | replace: ' --', '' | replace: ' -', '' | replace: ' |', '' | replace: ' /', '' | strip
+              if cur_title.size > 24
+                assign cur_title = cur_title | truncate: 24, ''
+              endif
+              assign cur_title = cur_title | append: '…'
+            endif
+          -%}
           <div class="whitespace-nowrap">
             <a
               class="tag-button bg-white text-black active tag-button--current{% if collection.title contains 'UCI' or collection.title contains 'KNWU' %} tag-button--preserve-case{% endif %}"
               href="{{ collection.url }}"
               aria-current="page"
-            >{{ collection.title }}</a>
+              title="{{ collection.title | escape }}"
+            >{{ cur_title }}</a>
           </div>
         {%- endunless -%}
         {% for link in section.settings.navigation.links %}

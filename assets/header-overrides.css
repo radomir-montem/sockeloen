@@ -5503,8 +5503,11 @@ body.template--search #ProductGridContainer facets-open-button {
 .cart-drawer-item__image,
 .cross-sell-card__image-wrap {
   background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
-  overflow: hidden;
 }
+/* the image wrap must not clip: the quantity bubble hangs over its
+   corner. The tile radius sits on the wrap and the img themselves. */
+.cross-sell-card__image-wrap { overflow: hidden; }
+.cart-drawer-item__image { overflow: visible !important; }
 /* buttons and inputs: 8px */
 .cart-drawer__checkout-btn,
 .cart__checkout-animation,
@@ -5603,7 +5606,7 @@ cart-drawer [class*="text-green"] {
    first, active item; long titles get an ellipsis so they do not push
    the menu off screen. */
 .collection-tags .tag-button.tag-button--current {
-  max-width: 220px;
+  max-width: 260px; /* safety net; the label is shortened in Liquid */
   overflow: hidden;
   text-overflow: ellipsis;
 }
