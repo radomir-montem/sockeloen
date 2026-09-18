@@ -5471,3 +5471,131 @@ body.template--collection #ProductGridContainer facets-open-button,
 body.template--search #ProductGridContainer facets-open-button {
   margin-bottom: 24px;
 }
+
+/* ============================================================
+   CART DRAWER — the homepage/product brand system
+   Radius: 12px sheets (cards in the drawer), 4px image tiles, 8px
+   buttons and inputs. Casing: sentence case, nothing forced lowercase.
+   Badges: white 70% with black text like the product cards. One green
+   (#5a9a00, the buy-box green) for progress, "free" and gift accents.
+   Blue stays the action colour, sentence-case labels.
+   ============================================================ */
+/* sheets */
+.drawer__shipping-bar .free_shipping_container,
+.free_gift_widget,
+.cart-drawer-item,
+.cart-size-picker__panel,
+.free_gift_widget__product,
+.free_gift_widget__removed_notice {
+  border-radius: 12px !important;
+}
+/* image tiles: same grey gradient tile as the product cards */
+.cart-drawer-item__image,
+.cart-drawer-item__image img,
+.cross-sell-card__image-wrap,
+.cross-sell-card__image-wrap img,
+.free_gift_widget__image,
+.free_gift_widget__chosen-image,
+.cart-size-picker__product-info img,
+.cart-size-picker__option-btn--image img {
+  border-radius: 4px !important;
+}
+.cart-drawer-item__image,
+.cross-sell-card__image-wrap {
+  background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
+  overflow: hidden;
+}
+/* buttons and inputs: 8px */
+.cart-drawer__checkout-btn,
+.cart__checkout-animation,
+cart-drawer a[href="/checkout/"],
+cart-drawer .add-to-cart.submit_button,
+.cross-sell-card__add-btn,
+.cart-size-picker__confirm,
+.cart-size-picker__option-btn,
+.cart-drawer-item__qty-input,
+.free_gift_widget__add-btn,
+.free_gift_widget__change-btn,
+.drawer__close,
+.cart-drawer-item__trash,
+.cart-size-picker__close {
+  border-radius: 8px !important;
+}
+.cart-drawer-item__qty-input {
+  border-width: 1px !important;
+}
+/* casing: as typed, first letter capital */
+.cart-drawer-item__title,
+.cart-drawer-item__options,
+.cross-sell-card__title,
+.free_gift_widget__name,
+.free_gift_widget__variant,
+.free_gift_widget__chosen-text strong,
+.cart-drawer__checkout-btn,
+.cart__checkout-animation,
+.cross-sell-card__add-btn,
+.cart-size-picker__confirm,
+.cross-sell-card__badge {
+  text-transform: none !important;
+}
+.cart-drawer-item__title,
+.cart-drawer-item__options,
+.cross-sell-card__title,
+.free_gift_widget__name,
+.free_gift_widget__variant,
+.cart-drawer__checkout-btn,
+.cross-sell-card__add-btn,
+.cart-size-picker__confirm,
+.cross-sell-card__badge {
+  display: block;
+}
+.cart-drawer-item__title::first-letter,
+.cart-drawer-item__options::first-letter,
+.cross-sell-card__title::first-letter,
+.free_gift_widget__name::first-letter,
+.free_gift_widget__variant::first-letter,
+.cart-drawer__checkout-btn::first-letter,
+.cross-sell-card__add-btn::first-letter,
+.cart-size-picker__confirm::first-letter,
+.cross-sell-card__badge::first-letter {
+  text-transform: uppercase !important;
+}
+/* cross-sell badge: product-card badge style */
+.cross-sell-card__badge {
+  background: rgba(255, 255, 255, 0.7) !important;
+  color: #000 !important;
+  border-radius: 4px !important;
+  padding: 5px 8px !important;
+  font-weight: 700 !important;
+}
+/* cross-sell heading accent: grey italic like the product page titles */
+.cart-cross-sells__heading em {
+  color: #666 !important;
+  font-style: italic;
+}
+/* one green */
+.progressive_bar_shipping_price,
+.progress_bar_milestone.is-reached .progress_bar_milestone__badge {
+  background: #5a9a00 !important;
+  background-color: #5a9a00 !important;
+}
+.drawer__shipping-bar .free_shipping_container .progress_bar_track {
+  background-color: rgba(90, 154, 0, 0.18) !important;
+}
+#its_free,
+.free_gift_widget__chosen-check,
+.free_gift_widget__free_tag,
+.cart-drawer-item__gift-tag,
+cart-drawer .text-green-600,
+cart-drawer [class*="text-green"] {
+  color: #5a9a00 !important;
+}
+/* blue hover like the product page */
+.cart-drawer__checkout-btn:hover,
+.cross-sell-card__add-btn:hover,
+.cart-size-picker__confirm:hover:not(:disabled),
+.free_gift_widget__add-btn:hover:not(:disabled),
+.free_gift_widget__change-btn:hover {
+  background: #0284d9 !important;
+  background-color: #0284d9 !important;
+}
