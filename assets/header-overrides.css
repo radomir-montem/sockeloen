@@ -5453,15 +5453,9 @@ body.template--product .product-v2 .shipping-text .ship-free {
   font-weight: 700 !important;
 }
 
-/* Collection: "Filter and sort" at the top of the product sheet, right
-   aligned on the 12px grid inset, 12px above the first row of cards. */
-body.template--collection #ProductGridContainer > facets-open-button,
-body.template--search #ProductGridContainer > facets-open-button {
-  display: flex;
-  justify-content: flex-end;
-  padding: 12px 12px 0;
-}
-body.template--collection #ProductGridContainer > facets-open-button .open-facet-drawer,
-body.template--search #ProductGridContainer > facets-open-button .open-facet-drawer {
-  padding: 10px 16px !important;
+/* Search results: same 12px inset and gaps as the collection grid */
+body.template--search #product-grid {
+  padding: 12px !important;
+  column-gap: 12px !important;
+  row-gap: 12px !important;
 }
