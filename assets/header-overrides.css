@@ -4969,7 +4969,11 @@ body.template--collection:has(.banner .banner__media) #ProductGridContainer {
    clip-path, leaves position:fixed descendants alone, so the filter
    drawer that lives inside this section is not cut off at the top. */
 body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section {
-  overflow: hidden;
+  /* clip, not hidden: overflow:hidden turns the section into a scroll
+     container, which stops the floating "Filter and sort" button
+     (position:sticky at the end of the grid) from sticking to the
+     viewport bottom. overflow:clip just clips the corners. */
+  overflow: clip;
   transition: border-radius 0.25s ease;
 }
 body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section [class*="__product-grid-padding"],
