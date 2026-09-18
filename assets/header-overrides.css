@@ -5354,3 +5354,34 @@ body.template--product .product-v2 .product__media-item .product__media {
   cursor: pointer;
 }
 html.pdp-zoom-open, html.pdp-zoom-open body { overflow: hidden; }
+
+/* ============================================================
+   Product page (v2 templates only, scoped to body.template--product)
+   1. Italic accent words in section titles: grey (#666, the same grey
+      as the benefit tags and card subtitles) instead of orange.
+   2. "Let's take a look inside" and FAQ: their white background lived
+      on an inner container capped at 1400px, leaving off-white gutters
+      on wide screens. The container now spans the full width; its
+      content stays centred at 1400px through the side padding.
+   ============================================================ */
+body.template--product .bot-heading em,
+body.template--product .product-benefit__heading em,
+body.template--product .product-exploder__heading em,
+body.template--product .product-faq__heading em,
+body.template--product .reviews-masonry__heading em,
+body.template--product .satisfaction-guarantee__heading em {
+  color: #666 !important;
+}
+body.template--product section.product-exploder,
+body.template--product section.product-faq {
+  max-width: none !important;
+  padding-left: max(40px, calc((100% - 1400px) / 2 + 40px)) !important;
+  padding-right: max(40px, calc((100% - 1400px) / 2 + 40px)) !important;
+}
+@media screen and (max-width: 749px) {
+  body.template--product section.product-exploder,
+  body.template--product section.product-faq {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
