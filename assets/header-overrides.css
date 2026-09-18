@@ -5378,13 +5378,23 @@ html.pdp-zoom-open, html.pdp-zoom-open body { overflow: hidden; }
       on wide screens. The container now spans the full width; its
       content stays centred at 1400px through the side padding.
    ============================================================ */
+/* Titles with an italic accent: the italic word is black, the rest of
+   the title grey. Titles without an italic part stay black. */
+body.template--product .bot-heading:has(em),
+body.template--product .product-benefit__heading:has(em),
+body.template--product .product-exploder__heading:has(em),
+body.template--product .product-faq__heading:has(em),
+body.template--product .reviews-masonry__heading:has(em),
+body.template--product .satisfaction-guarantee__heading:has(em) {
+  color: #666 !important;
+}
 body.template--product .bot-heading em,
 body.template--product .product-benefit__heading em,
 body.template--product .product-exploder__heading em,
 body.template--product .product-faq__heading em,
 body.template--product .reviews-masonry__heading em,
 body.template--product .satisfaction-guarantee__heading em {
-  color: #666 !important;
+  color: #111 !important;
 }
 body.template--product section.product-exploder,
 body.template--product section.product-faq {
