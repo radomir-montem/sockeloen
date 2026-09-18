@@ -5463,3 +5463,11 @@ body.template--search #product-grid {
   column-gap: 12px !important;
   row-gap: 12px !important;
 }
+
+/* Collection/search: the floating "Filter and sort" pill rests at the
+   end of the grid container once you reach the bottom; give it 24px of
+   room so it does not sit flush against the footer. */
+body.template--collection #ProductGridContainer facets-open-button,
+body.template--search #ProductGridContainer facets-open-button {
+  margin-bottom: 24px;
+}
