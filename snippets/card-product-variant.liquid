@@ -287,6 +287,7 @@
             {% endunless %}
           </div>
         </div>
+        {% render 'card-color-row', product: product, current_variant: card_product %}
         {%- if show_quick_add -%}
           <div class="quick-add no-js-hidden">
             {%- assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id -%}

@@ -43,63 +43,103 @@
       overlap doesn't eat into the photo's visible area.
     {%- endcomment -%}
     <div class="collection-tags-wrapper" id="CollectionTagsWrapper-{{ section.id }}">
-      <button
-        type="button"
-        class="collection-tags-nav collection-tags-nav--prev"
-        aria-label="{{ 'general.slider.previous_slide' | t }}"
-        aria-controls="CollectionTags-{{ section.id }}"
-      >
-        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7 1L1 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
+      {%- liquid
+        comment
+          Is the current collection one of the menu links? If not, the bar
+          gets the current collection as an extra, active first item, so
+          the visitor always sees where they are (e.g. accessoires, KNWU).
+        endcomment
+        assign cat_has_active = false
+        for link in section.settings.navigation.links
+          if link.active or link.child_active or link.url == collection.url
+            assign cat_has_active = true
+            break
+          endif
+        endfor
+      -%}
       <div class="collection-tags" id="CollectionTags-{{ section.id }}">
+        {%- unless cat_has_active or collection == blank -%}
+          {%- liquid
+            comment
+              Long titles are shortened at a word boundary so the bar keeps
+              its rhythm: "KNWU x SOCKELOEN -- AERO CYCLING SOCKS" becomes
+              "KNWU x SOCKELOEN…". Separators left dangling are dropped.
+            endcomment
+            assign cur_title = collection.title | strip
+            if cur_title.size > 22
+              assign cur_title = cur_title | truncatewords: 3, ''
+              assign cur_title = cur_title | strip | replace: ' --', '' | replace: ' -', '' | replace: ' |', '' | replace: ' /', '' | strip
+              if cur_title.size > 24
+                assign cur_title = cur_title | truncate: 24, ''
+              endif
+              assign cur_title = cur_title | append: '…'
+            endif
+          -%}
+          <div class="whitespace-nowrap">
+            <a
+              class="tag-button bg-white text-black active tag-button--current{% if collection.title contains 'UCI' or collection.title contains 'KNWU' %} tag-button--preserve-case{% endif %}"
+              href="{{ collection.url }}"
+              aria-current="page"
+              title="{{ collection.title | escape }}"
+            >{{ cur_title }}</a>
+          </div>
+        {%- endunless -%}
         {% for link in section.settings.navigation.links %}
           <div class="whitespace-nowrap">
             <a
-              class="tag-button bg-white text-black {% if link.active %}active{% endif %}{% if link.title contains 'UCI' %} tag-button--preserve-case{% endif %}"
+              class="tag-button bg-white text-black {% if link.active or link.url == collection.url %}active{% endif %}{% if link.title contains 'UCI' %} tag-button--preserve-case{% endif %}"
               href="{{ link.url }}"
             >{{ link.title }}</a>
           </div>
         {% endfor %}
       </div>
-      <button
-        type="button"
-        class="collection-tags-nav collection-tags-nav--next"
-        aria-label="{{ 'general.slider.next_slide' | t }}"
-        aria-controls="CollectionTags-{{ section.id }}"
-      >
-        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
     </div>
     <script>
       (function() {
         var wrapper = document.getElementById('CollectionTagsWrapper-{{ section.id }}');
         if (!wrapper) return;
         var track = wrapper.querySelector('.collection-tags');
-        var prevBtn = wrapper.querySelector('.collection-tags-nav--prev');
-        var nextBtn = wrapper.querySelector('.collection-tags-nav--next');
 
-        function updateNavVisibility() {
-          var maxScroll = track.scrollWidth - track.clientWidth;
-          var atStart = track.scrollLeft <= 1;
-          var atEnd = track.scrollLeft >= maxScroll - 1;
-          wrapper.classList.toggle('is-scrollable', maxScroll > 1);
-          prevBtn.disabled = atStart;
-          nextBtn.disabled = atEnd || maxScroll <= 1;
+        /* The bar lives on the banner (like the homepage category bar), so the
+           product sheet can slide over it. Move it into the banner when there
+           is one; otherwise it stays where it is rendered. */
+        var banner = document.querySelector('#MainContent .banner');
+        if (banner && banner.querySelector('.banner__media')) {
+          banner.appendChild(wrapper);
+          wrapper.classList.add('on-banner');
         }
 
-        prevBtn.addEventListener('click', function() {
-          track.scrollBy({ left: -160, behavior: 'smooth' });
-        });
-        nextBtn.addEventListener('click', function() {
-          track.scrollBy({ left: 160, behavior: 'smooth' });
-        });
-        track.addEventListener('scroll', updateNavVisibility);
-        window.addEventListener('resize', updateNavVisibility);
-        updateNavVisibility();
+        /* Scroll cue: fade the edge that still has items behind it. */
+        function updateEdges() {
+          var maxScroll = track.scrollWidth - track.clientWidth;
+          wrapper.classList.toggle('is-scrollable', maxScroll > 1);
+          wrapper.classList.toggle('at-start', track.scrollLeft <= 1);
+          wrapper.classList.toggle('at-end', track.scrollLeft >= maxScroll - 1);
+        }
+        track.addEventListener('scroll', updateEdges, { passive: true });
+        window.addEventListener('resize', updateEdges);
+        updateEdges();
+
+        /* Start with the active item in view. */
+        var active = track.querySelector('.tag-button.active');
+        if (active) {
+          var a = active.parentElement;
+          var target = a.offsetLeft - (track.clientWidth - a.offsetWidth) / 2;
+          if (target > 0) track.scrollLeft = target;
+          updateEdges();
+        }
+
+        /* Sheet corners: square at the top, rounded once the page scrolls. */
+        var root = document.documentElement;
+        var ticking = false;
+        function updateScrolled() {
+          root.classList.toggle('is-scrolled', window.scrollY > 4);
+          ticking = false;
+        }
+        window.addEventListener('scroll', function() {
+          if (!ticking) { ticking = true; requestAnimationFrame(updateScrolled); }
+        }, { passive: true });
+        updateScrolled();
       })();
     </script>
   {% endif %}
@@ -283,6 +323,13 @@
                           {%- assign variant_first = parts[1] | strip -%}
                         {%- endif -%}
                       {%- endfor -%}
+                    {%- endif -%}
+                    {%- comment -%}
+                      A product metafield custom.card_variant (text, e.g. "Black") picks the
+                      colour shown on this product's card everywhere, above collection rules.
+                    {%- endcomment -%}
+                    {%- if product.metafields.custom.card_variant != blank -%}
+                      {%- assign variant_first = product.metafields.custom.card_variant -%}
                     {%- endif -%}
                     {%- assign vf_needle = variant_first | downcase | strip -%}
                     {%- assign vf_done = false -%}

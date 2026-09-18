@@ -61,6 +61,62 @@
 
       {%- comment -%} Breadcrumb overlay {%- endcomment -%}
       {% render 'breadcrumb-overlay' %}
+      <script src="{{ 'pdp-gallery.js' | asset_url }}" defer></script>
+
+      {%- comment -%}
+        Benefit tags over the photo (bottom-left, like a "model wears M"
+        note): the same three benefit metafields as the checklist in the
+        buy box, with the theme-editor fallbacks. Styled as the product
+        card badges. Phone widths only; on desktop the gallery is a grid.
+      {%- endcomment -%}
+      {%- liquid
+        assign tag1 = product.metafields.custom.custom_benefit_1.value | default: product.metafields.custom.custom_benefit_1
+        assign tag2 = product.metafields.custom.custom_benefit_2.value | default: product.metafields.custom.custom_benefit_2
+        assign tag3 = product.metafields.custom.custom_benefit_3.value | default: product.metafields.custom.custom_benefit_3
+        if tag1 == blank
+          assign tag1 = 'products.v2.default_benefit_1' | t
+        endif
+        if tag2 == blank
+          assign tag2 = 'products.v2.default_benefit_2' | t
+        endif
+        if tag3 == blank
+          assign tag3 = 'products.v2.default_benefit_3' | t
+        endif
+      -%}
+      {%- if tag1 != blank or tag2 != blank or tag3 != blank -%}
+        <div class="pdp-tags" aria-hidden="true" id="PdpTags-{{ section.id }}">
+          {%- if tag1 != blank -%}<span class="pdp-tag is-visible">{{ tag1 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag2 != blank -%}<span class="pdp-tag">{{ tag2 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag3 != blank -%}<span class="pdp-tag">{{ tag3 | strip | remove: '.' }}</span>{%- endif -%}
+        </div>
+        <script>
+          /* One benefit per photo: the tag shown follows the active slide
+             (1st photo = 1st benefit, 2nd = 2nd, 3rd = 3rd, then none). */
+          (function init() {
+            /* the gallery is rendered after this script; wait for the DOM */
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', init);
+              return;
+            }
+            var tags = document.getElementById('PdpTags-{{ section.id }}');
+            var list = document.querySelector('.product-v2 .product__media-list');
+            if (!tags || !list) return;
+            var items = Array.prototype.slice.call(tags.querySelectorAll('.pdp-tag'));
+            if (!items.length) return;
+            function update() {
+              var slides = Array.prototype.slice.call(list.querySelectorAll('.product__media-item')).filter(function (s) {
+                return s.style.display !== 'none';
+              });
+              var active = slides.findIndex(function (s) { return s.classList.contains('is-active'); });
+              if (active < 0) active = 0;
+              /* photo 1 > benefit 1, photo 2 > benefit 2, ...; later photos show none */
+              items.forEach(function (t, i) { t.classList.toggle('is-visible', i === active); });
+            }
+            new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+            update();
+          })();
+        </script>
+      {%- endif -%}
 
       {%- comment -%}
         Custom merchandising badges (product.metafields.custom.badge,
@@ -640,6 +696,7 @@
                       {%- if option.values.size > 1 -%}
                         <fieldset class="js product-form__input product-form__input--pill {% if is_color %}color-input{% else %}size-input{% endif %}">
                           <legend class="form__label">{{ option.name }}</legend>
+                          {% if is_color %}<div class="color-input__track">{% endif %}
                           {%- for value in option.values -%}
                             {%- liquid
                               assign variant_hidden = true
@@ -666,8 +723,17 @@
                             >
                             <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" {% if variant_hidden %}class="hidden" style="display:none;"{% endif %}>
                               {% if is_color %}
-                                {%- if swatch_style == 'images' -%}
-                                  {%- comment -%} Image-based swatch: find first variant with this color and use its featured image {%- endcomment -%}
+                                {%- comment -%}
+                                  Same swatch as the product cards: colour from
+                                  snippets/color-swatch-hex (shop metafield
+                                  custom.swatch_colors overrides), variant photo
+                                  when the value is not a colour.
+                                {%- endcomment -%}
+                                {%- capture swatch_bg -%}{% render 'color-swatch-hex', name: value %}{%- endcapture -%}
+                                {%- assign swatch_bg = swatch_bg | strip -%}
+                                {%- if swatch_bg != blank -%}
+                                  <span class="color-dot color-dot--swatch" style="background: {{ swatch_bg }};"></span>
+                                {%- else -%}
                                   {%- assign swatch_img = nil -%}
                                   {%- for variant in product.variants -%}
                                     {%- if variant.options contains value and variant.featured_image -%}
@@ -676,151 +742,20 @@
                                     {%- endif -%}
                                   {%- endfor -%}
                                   {%- if swatch_img -%}
-                                    <span class="color-dot color-dot--image">
+                                    <span class="color-dot color-dot--swatch color-dot--image">
                                       <img src="{{ swatch_img | image_url: width: 80 }}" alt="{{ value | escape }}" loading="lazy" width="40" height="40">
                                     </span>
                                   {%- else -%}
-                                    <span class="color-dot" style="background-color: #ccc;"></span>
+                                    <span class="color-dot color-dot--swatch"></span>
                                   {%- endif -%}
-                                  <span class="color-input__name">{{ value | escape }}</span>
-                                {%- else -%}
-                                {%- liquid
-                                  assign color_lower = value | downcase | strip
-                                  assign color_hex = '#ccc'
-                                  assign color_hex_2 = ''
-                                  assign is_split = false
-                                  assign is_light = false
-
-                                  comment
-                                    Split-dot logic: "X Logo" = base color + contrasting half
-                                    "All X" or plain "X" = solid color
-                                  endcomment
-
-                                  if color_lower == 'white' or color_lower == 'wit' or color_lower == 'all white'
-                                    assign color_hex = '#ffffff'
-                                    assign is_light = true
-                                  elsif color_lower == 'white logo' or color_lower == 'white-logo'
-                                    assign color_hex = '#ffffff'
-                                    assign color_hex_2 = '#1a1a1a'
-                                    assign is_split = true
-                                    assign is_light = true
-                                  elsif color_lower == 'black' or color_lower == 'zwart' or color_lower == 'all black'
-                                    assign color_hex = '#1a1a1a'
-                                  elsif color_lower == 'black logo' or color_lower == 'black-logo'
-                                    assign color_hex = '#1a1a1a'
-                                    assign color_hex_2 = '#ffffff'
-                                    assign is_split = true
-                                  elsif color_lower == 'red' or color_lower == 'rood'
-                                    assign color_hex = '#c0392b'
-                                  elsif color_lower == 'blue' or color_lower == 'blauw' or color_lower == 'bonnie blue'
-                                    assign color_hex = '#2980b9'
-                                  elsif color_lower == 'green' or color_lower == 'groen' or color_lower == 'moss green'
-                                    assign color_hex = '#5a7a2e'
-                                  elsif color_lower == 'yellow' or color_lower == 'geel'
-                                    assign color_hex = '#f1c40f'
-                                  elsif color_lower == 'orange' or color_lower == 'oranje'
-                                    assign color_hex = '#e67e22'
-                                  elsif color_lower == 'purple' or color_lower == 'paars' or color_lower == 'viola'
-                                    assign color_hex = '#8e44ad'
-                                  elsif color_lower == 'pink' or color_lower == 'roze' or color_lower == 'rose'
-                                    assign color_hex = '#e87ea1'
-                                  elsif color_lower == 'grey' or color_lower == 'gray' or color_lower == 'grijs'
-                                    assign color_hex = '#888888'
-                                  elsif color_lower == 'brown' or color_lower == 'bruin' or color_lower == 'mud'
-                                    assign color_hex = '#7b5e3c'
-                                  elsif color_lower == 'burgundy'
-                                    assign color_hex = '#722f37'
-                                  elsif color_lower == 'beige'
-                                    assign color_hex = '#d4c5a9'
-                                  elsif color_lower == 'snow'
-                                    assign color_hex = '#f5f5f0'
-                                    assign is_light = true
-                                  elsif color_lower == 'pine'
-                                    assign color_hex = '#2d5a3d'
-                                  elsif color_lower == 'mintgreen' or color_lower == 'mint green'
-                                    assign color_hex = '#98d9c2'
-                                  elsif color_lower == 'calunna red'
-                                    assign color_hex = '#a03040'
-                                  elsif color_lower == 'glossy'
-                                    assign color_hex = '#1a1a1a'
-                                  elsif color_lower == 'commute'
-                                    assign color_hex = '#555555'
-                                  elsif color_lower == 'black/gold' or color_lower == 'black / gold'
-                                    assign color_hex = '#1a1a1a'
-                                    assign color_hex_2 = '#c9a84c'
-                                    assign is_split = true
-                                  elsif color_lower == 'white/silver' or color_lower == 'white / silver'
-                                    assign color_hex = '#ffffff'
-                                    assign color_hex_2 = '#b0b0b0'
-                                    assign is_split = true
-                                    assign is_light = true
-                                  elsif color_lower == 'black / grey' or color_lower == 'black/grey'
-                                    assign color_hex = '#1a1a1a'
-                                    assign color_hex_2 = '#888888'
-                                    assign is_split = true
-                                  elsif color_lower == 'white/black' or color_lower == 'white / black'
-                                    assign color_hex = '#ffffff'
-                                    assign color_hex_2 = '#1a1a1a'
-                                    assign is_split = true
-                                    assign is_light = true
-                                  elsif color_lower contains 'gold'
-                                    assign color_hex = '#c9a84c'
-                                  elsif color_lower contains 'silver'
-                                    assign color_hex = '#b0b0b0'
-                                  elsif color_lower contains '/'
-                                    comment
-                                      Generic slash handler: split into two colors
-                                    endcomment
-                                    assign slash_parts = color_lower | split: '/'
-                                    assign part1 = slash_parts[0] | strip
-                                    assign part2 = slash_parts[1] | strip
-                                    assign is_split = true
-                                    if part1 == 'white' or part1 == 'wit'
-                                      assign color_hex = '#ffffff'
-                                      assign is_light = true
-                                    elsif part1 == 'black' or part1 == 'zwart'
-                                      assign color_hex = '#1a1a1a'
-                                    else
-                                      assign color_hex = '#ccc'
-                                    endif
-                                    if part2 == 'white' or part2 == 'wit'
-                                      assign color_hex_2 = '#ffffff'
-                                    elsif part2 == 'black' or part2 == 'zwart'
-                                      assign color_hex_2 = '#1a1a1a'
-                                    elsif part2 == 'gold'
-                                      assign color_hex_2 = '#c9a84c'
-                                    elsif part2 == 'silver'
-                                      assign color_hex_2 = '#b0b0b0'
-                                    elsif part2 == 'grey' or part2 == 'gray'
-                                      assign color_hex_2 = '#888888'
-                                    elsif part2 == 'red'
-                                      assign color_hex_2 = '#c0392b'
-                                    elsif part2 == 'blue'
-                                      assign color_hex_2 = '#2980b9'
-                                    elsif part2 == 'green'
-                                      assign color_hex_2 = '#5a7a2e'
-                                    else
-                                      assign color_hex_2 = '#ccc'
-                                    endif
-                                  elsif color_lower contains 'white'
-                                    assign color_hex = '#ffffff'
-                                    assign is_light = true
-                                  elsif color_lower contains 'black'
-                                    assign color_hex = '#1a1a1a'
-                                  endif
-                                -%}
-                                {% if is_split %}
-                                  <span class="color-dot color-dot--split" style="background: linear-gradient(to right, {{ color_hex }} 50%, {{ color_hex_2 }} 50%); border: 1px solid #ddd;"></span>
-                                {% else %}
-                                  <span class="color-dot" style="background-color: {{ color_hex }};{% if is_light %} border: 1px solid #ddd;{% endif %}"></span>
-                                {% endif %}
-                                <span class="color-input__name">{{ value | escape }}</span>
                                 {%- endif -%}
+                                <span class="color-input__name">{{ value | escape }}</span>
                               {% else %}
                                 <span class="size-label-text">{{ value | escape }}</span>
                               {% endif %}
                             </label>
                           {%- endfor -%}
+                          {% if is_color %}</div>{% endif %}
                           {%- if is_color -%}
                             <span class="color-input__selected-name">{{ option.selected_value | escape }}</span>
                           {%- endif -%}
@@ -1416,7 +1351,20 @@
                 The secure_checkout block is also rendered here (after ship date, before USP accordions)
                 so it always appears in the right visual position regardless of block order.
               {%- endcomment -%}
-              <div id="shipment-message-v2" class="shipment-container !m-0 product-v2__trust-row product-v2__shipping-row" {{ block.shopify_attributes }}>
+              {%- liquid
+                comment
+                  Free-shipping threshold for the market the visitor shops in:
+                  the cart-bar setting for EUR markets, its own setting for USD.
+                  Country and currency are exposed for the script and for
+                  debugging (data-geo is filled from the geolocation cookie).
+                endcomment
+                assign ship_threshold = settings.free_shipping
+                if cart.currency.iso_code == 'USD'
+                  assign ship_threshold = settings.free_shipping_usd | default: 100
+                endif
+              -%}
+              <script type="application/json" id="ShipPrices-{{ section.id }}">{ {%- for v in product.variants -%}"{{ v.id }}":{{ v.price }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} }</script>
+              <div id="shipment-message-v2" class="shipment-container !m-0 product-v2__trust-row product-v2__shipping-row" data-threshold="{{ ship_threshold }}" data-currency="{{ cart.currency.iso_code }}" data-country="{{ localization.country.iso_code }}" data-market="{{ localization.market.handle }}" {{ block.shopify_attributes }}>
                 <svg class="product-v2__shipping-icon" width="39" height="24" viewBox="0 0 39 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="0.5" y="0.5" width="38" height="23" rx="3.5" fill="#FFFFFF" stroke="#E0E0E0"/>
                   <g clip-path="url(#clip_ship_{{ section.id }})">
@@ -1488,32 +1436,102 @@
                     return { countdown: false, date: getNextWorkday() };
                   }
 
+                  /* ---- free shipping: does the current selection reach the threshold? ---- */
+                  var box = document.getElementById('shipment-message-v2');
+                  var threshold = box ? parseFloat(box.getAttribute('data-threshold')) : NaN;
+                  var prices = {};
+                  try { prices = JSON.parse((document.getElementById('ShipPrices-{{ section.id }}') || {}).textContent || '{}'); } catch (e) {}
+                  try {
+                    var geo = JSON.parse(localStorage.getItem('geolocation') || 'null');
+                    if (geo && box) box.setAttribute('data-geo', geo.country_code || '');
+                  } catch (e) {}
+
+                  function parseMoney(str) {
+                    var s = (str || '').replace(/[^\d.,]/g, '');
+                    if (!s) return null;
+                    var dec = Math.max(s.lastIndexOf(','), s.lastIndexOf('.'));
+                    if (dec > -1 && s.length - dec - 1 === 2) {
+                      return parseFloat(s.slice(0, dec).replace(/[.,]/g, '') + '.' + s.slice(dec + 1));
+                    }
+                    return parseFloat(s.replace(/[.,]/g, ''));
+                  }
+                  function selectedTotal() {
+                    /* bundle widget (AOV): the selected offer's total wins */
+                    var offer = document.querySelector('.Avada-Volume__Item--Selected .AOV-Offer__DiscountPrice');
+                    if (offer) {
+                      var v = parseMoney(offer.textContent);
+                      if (v !== null && !isNaN(v)) return v;
+                    }
+                    var form = document.querySelector('.product-v2 form[action*="/cart/add"]');
+                    var idInput = form && form.querySelector('input[name="id"]');
+                    var cents = idInput ? prices[idInput.value] : null;
+                    var qtyEl = document.querySelector('.product-v2 input[name="quantity"]');
+                    var qty = qtyEl ? (parseInt(qtyEl.value, 10) || 1) : 1;
+                    return cents ? (cents / 100) * qty : 0;
+                  }
+                  function freeShipping() {
+                    if (!threshold || isNaN(threshold)) return false;
+                    var total = selectedTotal();
+                    if (box) box.setAttribute('data-selected-total', total.toFixed(2));
+                    return total >= threshold;
+                  }
+
                   function render() {
                     var el = document.getElementById('ship-date-text');
                     if (!el) return;
                     var info = getShipInfo();
+                    var free = freeShipping();
+                    if (box) box.classList.toggle('is-free-shipping', free);
 
                     if (info.countdown) {
                       var timeStr = info.hours > 0
                         ? '<span class="ship-countdown">' + info.hours + 'h ' + info.minutes + 'm</span>'
                         : '<span class="ship-countdown">' + info.minutes + 'm</span>';
                       if (isNl) {
-                        el.innerHTML = 'Bestel binnen ' + timeStr + ', wordt <span class="ship-date">vandaag</span> verzonden';
+                        el.innerHTML = free
+                          ? 'Bestel binnen ' + timeStr + ', <span class="ship-free">gratis verzending vandaag</span>'
+                          : 'Bestel binnen ' + timeStr + ', wordt <span class="ship-date">vandaag</span> verzonden';
                       } else {
-                        el.innerHTML = 'Order within ' + timeStr + ', ships <span class="ship-date">today</span>';
+                        el.innerHTML = free
+                          ? 'Order within ' + timeStr + ', <span class="ship-free">free shipping today</span>'
+                          : 'Order within ' + timeStr + ', ships <span class="ship-date">today</span>';
                       }
                     } else {
                       var f = formatDate(info.date);
                       if (isNl) {
-                        el.innerHTML = 'Voor <strong>15u00</strong> besteld, wordt verzonden op <span class="ship-date">' + f + '</span>';
+                        el.innerHTML = free
+                          ? 'Voor <strong>15u00</strong> besteld, <span class="ship-free">gratis verzonden</span> op <span class="ship-date">' + f + '</span>'
+                          : 'Voor <strong>15u00</strong> besteld, wordt verzonden op <span class="ship-date">' + f + '</span>';
                       } else {
-                        el.innerHTML = 'Ordered before <strong>15hr00</strong>, ships on <span class="ship-date">' + f + '</span>';
+                        el.innerHTML = free
+                          ? 'Ordered before <strong>15hr00</strong>, <span class="ship-free">free shipping</span> on <span class="ship-date">' + f + '</span>'
+                          : 'Ordered before <strong>15hr00</strong>, ships on <span class="ship-date">' + f + '</span>';
                       }
                     }
                     el.style.display = '';
                   }
 
+                  var renderTimer = null;
+                  function scheduleRender() {
+                    clearTimeout(renderTimer);
+                    renderTimer = setTimeout(render, 120);
+                  }
+
                   render();
+                  /* re-evaluate when the variant, the quantity or the bundle offer changes */
+                  document.addEventListener('change', scheduleRender, true);
+                  document.addEventListener('input', function (e) {
+                    if (e.target && e.target.name === 'quantity') scheduleRender();
+                  }, true);
+                  document.addEventListener('click', function (e) {
+                    if (e.target && e.target.closest && e.target.closest('.Avada-Volume__Item, .Avada-VolumeItem__Container')) scheduleRender();
+                  }, true);
+                  new MutationObserver(function (muts) {
+                    for (var i = 0; i < muts.length; i++) {
+                      var t = muts[i].target;
+                      if (t && t.closest && (t.closest('.Avada-VolumeItem__Container') || (t.matches && t.matches('input[name="id"]')))) { scheduleRender(); return; }
+                    }
+                  }).observe(document.body, { attributes: true, attributeFilter: ['class', 'value'], childList: true, subtree: true });
                   // Update countdown every 60s (only ticks when there's a countdown)
                   setInterval(function() {
                     var info = getShipInfo();

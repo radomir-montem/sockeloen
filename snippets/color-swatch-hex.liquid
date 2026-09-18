@@ -1,0 +1,112 @@
+{%- comment -%}
+  Turns a colour option value into a CSS background for a card swatch.
+  Returns a hex, a two-tone gradient for "black / gold"-style values, or
+  nothing when the value is not a colour (prints, custom, team names) so
+  the card can fall back to the variant photo.
+  Usage: {% render 'color-swatch-hex', name: variant.option1 %}
+{%- endcomment -%}
+{%- liquid
+  assign raw = name | downcase | strip
+  assign n = raw | replace: '_', ' ' | replace: '-', ' ' | strip
+  assign out = ''
+  assign custom_hit = false
+
+  comment
+    1. Shop metafield custom.swatch_colors (multi-line text) wins. One
+       colour per line: "name: #hex".
+       The name is matched case-insensitively against the option value.
+  endcomment
+  if shop.metafields.custom.swatch_colors != blank
+    assign lines = shop.metafields.custom.swatch_colors | newline_to_br | split: '<br />'
+    for line in lines
+      assign pair = line | strip | split: ':'
+      if pair.size < 2
+        continue
+      endif
+      assign key = pair[0] | downcase | strip
+      if key == raw or key == n
+        assign val = pair[1] | strip | replace: '|', '/'
+        assign out = val | split: '/' | join: '|'
+        assign custom_hit = true
+        break
+      endif
+    endfor
+  endif
+
+  comment
+    2. Built-in table. "logo", "all", "front" and similar words are
+       stripped so "White-Logo front" and "AllWhite" both read as white.
+  endcomment
+  assign n = n | replace: 'allwhite', 'white' | replace: 'allblack', 'black' | replace: 'all white', 'white' | replace: 'all black', 'black'
+  assign n = n | replace: 'logo front', '' | replace: 'logowhite', 'white' | replace: 'logo', '' | replace: 'no velcro', '' | replace: 'v1', '' | replace: 'v2', '' | strip
+  assign parts = n | split: '/'
+  if custom_hit
+    assign parts = ''
+  endif
+  for part in parts
+    assign p = part | strip
+    assign h = ''
+    case p
+      when 'white', 'wit', 'snow', 'ssnow', 'white white'
+        assign h = '#f4f4f4'
+      when 'black', 'zwart', 'glossy', 'dark', 'commute'
+        assign h = '#151515'
+      when 'grey', 'gray', 'grijs', 'acero'
+        assign h = '#9a9ea3'
+      when 'girasole', 'yellow', 'geel'
+        assign h = '#e8c23a'
+      when 'bonnie blue'
+        assign h = '#4f86d6'
+      when 'blue', 'blauw', 'azul'
+        assign h = '#2451b8'
+      when 'navy', 'painter navy'
+        assign h = '#1f2a4d'
+      when 'celeste'
+        assign h = '#7fd0d6'
+      when "lamb's wool", 'lambs wool', 'beige', 'sand'
+        assign h = '#dccbae'
+      when 'tarroco', 'red', 'rood', 'calunna red'
+        assign h = '#c8342a'
+      when 'burgundy', 'bordeaux'
+        assign h = '#6e1c2c'
+      when 'oliva', 'olive', 'moss green'
+        assign h = '#5f7a3d'
+      when 'green', 'groen', 'pine'
+        assign h = '#2f6b45'
+      when 'sage'
+        assign h = '#9caa8c'
+      when 'neon green'
+        assign h = '#8cff3c'
+      when 'pansé', 'panse', 'viola', 'purple', 'paars'
+        assign h = '#6f4b9a'
+      when 'orange', 'oranje', 'knwu'
+        assign h = '#f26b1d'
+      when 'gold', 'goud'
+        assign h = '#c9a227'
+      when 'silver', 'zilver'
+        assign h = '#c4c4c4'
+      when 'brown', 'bruin', 'mud', 'wood'
+        assign h = '#7a5a3a'
+      when 'pink', 'roze'
+        assign h = '#e58bb8'
+      when 'merino winter'
+        assign h = '#4a4a4a'
+    endcase
+    if h != blank
+      if out == blank
+        assign out = h
+      else
+        assign out = out | append: '|' | append: h
+      endif
+    endif
+  endfor
+  comment
+    One colour per variant: logo variants take their base colour, and a
+    "#hex/#hex" metafield value uses the first colour only.
+  endcomment
+  if out contains '|'
+    assign two = out | split: '|'
+    assign out = two[0]
+  endif
+  echo out
+-%}

@@ -4038,7 +4038,7 @@ body.template--index #MainContent .card-wrapper .card-bottom-badge {
   bottom: 8px !important;
 }
 body.template--index #MainContent .card-wrapper .badge {
-  background-color: rgba(255, 255, 255, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
   color: #000 !important;
   /* text styling (size, weight, case) stays the theme's own */
   padding: 5px 8px !important;
@@ -4571,4 +4571,1052 @@ body.template--collection #product-grid {
   column-gap: 12px !important;
   row-gap: 12px !important;
   background: #fff !important;
+}
+
+/* ============================================================
+   SITE-WIDE PRODUCT CARD SYSTEM — the homepage card is the guideline.
+   Every product grid and carousel that renders `card-product`
+   (collection pages, search, featured collections, product-page
+   "bought often together" / recommendations / recently viewed) gets
+   the same tile: 4px corners, grey gradient on the image tile only,
+   white text area below, Eme-style badges 8px from the corner.
+   ID-scoped like the homepage block so it outranks the older
+   "squared cards" !important rules; not template-scoped any more.
+   ============================================================ */
+#MainContent .card-wrapper,
+#MainContent .card-wrapper .card,
+#MainContent .card-wrapper .card__inner,
+#MainContent .card-wrapper .card__media,
+#MainContent .card-wrapper .card__media .media,
+#MainContent .card-wrapper .card__media img {
+  border-radius: 4px !important;
+}
+#MainContent .card-wrapper .card__content,
+#MainContent .card-wrapper .card__information {
+  border-radius: 0 !important;
+}
+#MainContent .card-wrapper .card {
+  background: transparent !important;
+}
+#MainContent .card-wrapper .card__inner {
+  background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+#MainContent .card-wrapper .card__content {
+  background: #fff !important;
+}
+/* Badges: white 90%, black text, 5px 8px, 4px radius, 8px from the
+   corner. Text size/weight/case stays the theme's own. */
+#MainContent .card-wrapper .card-badge {
+  top: 8px !important;
+  left: 8px !important;
+  display: flex;
+  gap: 4px;
+}
+#MainContent .card-wrapper .card-bottom-badge {
+  left: 8px !important;
+  bottom: 8px !important;
+}
+#MainContent .card-wrapper .badge,
+#MainContent .card-wrapper .card-badge .badge,
+#MainContent .card-wrapper .card-bottom-badge .badge {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: #000 !important;
+  padding: 5px 8px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+/* Product-page carousels (bought often together, more from this
+   collection, recently viewed): the swipers have no slide gap, so the
+   12px rhythm comes from padding on the slides, with the container
+   pulled back out by the same amount so the edges stay flush. */
+.mfc-swiper,
+.yml-swiper,
+.rvi-swiper {
+  margin-left: -6px !important;
+  margin-right: -6px !important;
+}
+.mfc-swiper .swiper-slide,
+.yml-swiper .swiper-slide,
+.rvi-swiper .swiper-slide {
+  padding: 0 6px !important;
+  box-sizing: border-box !important;
+}
+/* "Bought often together" sets its own 12px slide gap (section JS). The
+   section gets the homepage rhythm: 12px side inset, title styled like
+   the homepage carousel titles (sentence case, left, 32px/20px), 12px
+   between title and cards. */
+[class*="bot-section-"] {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+[class*="bot-section-"] .bot-heading {
+  font-family: var(--font-heading-family) !important;
+  font-size: 32px !important;
+  line-height: 1 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.04em !important;
+  text-align: left !important;
+  text-transform: none !important;
+  padding: 0 0 12px !important;
+}
+[class*="bot-section-"] .bot-heading::first-letter {
+  text-transform: uppercase !important;
+}
+[class*="bot-section-"] .bot-heading em {
+  text-transform: lowercase !important;
+}
+@media screen and (max-width: 749px) {
+  [class*="bot-section-"] .bot-heading {
+    font-size: 20px !important;
+  }
+}
+/* The theme's swiper wrapper carries a 5px flex gap on top of Swiper's
+   own margin-right, which made the gap 17px and pushed the last column
+   past the edge. Swiper's spaceBetween is the single source of the gap. */
+.bot-swiper .swiper-wrapper,
+.mfc-swiper .swiper-wrapper,
+.yml-swiper .swiper-wrapper,
+.rvi-swiper .swiper-wrapper {
+  gap: 0 !important;
+}
+
+/* Badge text: sentence case, forced. Whatever is typed in the metafield
+   ("NEW", "PRINTED", "design online") renders as "New", "Printed",
+   "Design online". ::first-letter needs a block container, hence the
+   inline-block. */
+#MainContent .card-wrapper .badge {
+  text-transform: lowercase !important;
+  display: inline-block !important;
+}
+#MainContent .card-wrapper .badge::first-letter {
+  text-transform: uppercase !important;
+}
+
+/* ============================================================
+   V2 PRODUCT TEMPLATE — radius only.
+   Colours, typography, backgrounds and insets stay as the sections set
+   them; only corners follow the site system: 4px tiles, 8px buttons and
+   chips, 12px sheets.
+   ============================================================ */
+body.template--product .product-v2 .product-form__submit,
+body.template--product .product-v2 button[name="add"],
+body.template--product .product-v2 .product-form__submit[disabled],
+body.template--product .product-v2 button[name="add"][disabled],
+body.template--product .product-v2-sticky-bar__atc-btn,
+body.template--product .product-v2-size-modal__confirm,
+body.template--product .product-v2-size-modal__change,
+body.template--product .satisfaction-guarantee__button,
+body.template--product .product-v2 .klaviyo-bis-trigger,
+body.template--product .product-v2 #out-of-stock,
+body.template--product .product-v2 .product-form__input.size-input input[type='radio'] + label {
+  border-radius: 8px !important;
+}
+body.template--product .product-benefit__media,
+body.template--product .product-benefit__media img,
+body.template--product .product-benefit__media video,
+body.template--product .product-benefit__video,
+body.template--product .product-v2 .thumbnail-list .thumbnail,
+body.template--product .product-v2 .thumbnail-list .thumbnail img,
+body.template--product [class*="product-exploder__"] img,
+body.template--product .product-exploder__media,
+body.template--product .product-exploder__image,
+body.template--product .product-exploder__figure {
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+body.template--product .satisfaction-guarantee__container,
+body.template--product .reviews-masonry__card,
+body.template--product .product-faq__item,
+body.template--product .product-faq__list,
+body.template--product .product-exploder__list {
+  border-radius: 12px !important;
+}
+
+/* ============================================================
+   COLLECTION PAGE — filters + sheet edge
+   ============================================================ */
+body.template--collection .open-facet-drawer,
+body.template--search .open-facet-drawer {
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  padding: 14px 24px !important;
+  background: #111 !important;
+  color: #fff !important;
+  border: 1px solid #111 !important;
+}
+.open-facet-drawer::first-letter { text-transform: uppercase !important; }
+.open-facet-drawer svg, .open-facet-drawer svg path { fill: #fff !important; stroke: #fff !important; }
+/* facets drawer: "Apply" solid black 8px, headings sentence case */
+.facets-container .button--primary,
+.mobile-facets .button--primary,
+.facets__form .button--primary,
+facet-filters-form .button--primary {
+  border-radius: 8px !important;
+  background: #111 !important;
+  color: #fff !important;
+  border: 1px solid #111 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  padding: 14px 24px !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+.facets__heading,
+.facets__summary,
+.facet-filters__label,
+.mobile-facets__heading,
+.mobile-facets__summary,
+.mobile-facets__label,
+.facets-container h2,
+.mobile-facets h2 {
+  text-transform: none !important;
+}
+.facets__heading::first-letter,
+.facets__summary::first-letter,
+.facet-filters__label::first-letter,
+.mobile-facets__heading::first-letter,
+.facets-container h2::first-letter,
+.mobile-facets h2::first-letter {
+  text-transform: uppercase !important;
+}
+.facets__summary, .mobile-facets__summary, .facet-filters__label { display: block; }
+/* the grid sheet slides over the banner with 12px corners, like the
+   homepage best sellers sheet over the hero */
+body.template--collection:has(.banner .banner__media) #ProductGridContainer {
+  position: relative !important;
+  z-index: 1 !important;
+  margin-top: -12px !important;
+  background: #fff !important;
+  border-radius: 12px 12px 0 0 !important;
+  overflow: hidden !important;
+}
+/* filter drawer: custom.css lowercases everything inside the mobile form;
+   switch to sentence case (typed text + uppercase first letter). */
+#FacetFiltersFormMobile *,
+#FacetFiltersFormMobile .button--primary,
+.mobile-facets__header h2,
+.mobile-facets__heading {
+  text-transform: none !important;
+}
+#FacetFiltersFormMobile .button--primary,
+#FacetFiltersFormMobile .mobile-facets__summary > span,
+#FacetFiltersFormMobile .mobile-facets__label > span,
+.mobile-facets__header h2,
+.mobile-facets__heading {
+  display: inline-block;
+}
+#FacetFiltersFormMobile .button--primary::first-letter,
+#FacetFiltersFormMobile h2::first-letter,
+#FacetFiltersFormMobile .mobile-facets__summary > span::first-letter,
+.mobile-facets__header h2::first-letter,
+.mobile-facets__heading::first-letter {
+  text-transform: uppercase !important;
+}
+
+/* ============================================================
+   COLLECTION PAGE — homepage mechanics
+   1. The banner pins like the homepage hero; the product grid section
+      slides over it as a white sheet. Corners are square while the page
+      sits at the top and become 12px once you scroll (html.is-scrolled).
+   2. The category bar is the homepage mobile bar: white bold text links
+      under the header pill with a hairline underneath, no pills, no
+      arrows. It scrolls sideways; a fade on the edge that still has
+      items shows there is more.
+   ============================================================ */
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  border-radius: 0 !important;
+  overflow: hidden;
+  margin-bottom: 0 !important;
+}
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) .banner,
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) .banner__media,
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) .banner__media img {
+  border-radius: 0 !important;
+}
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) ~ .shopify-section {
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+}
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section {
+  margin-top: 0 !important;
+  background-color: #fff !important;
+  border-radius: 0;
+  transition: border-radius 0.25s ease;
+}
+html.is-scrolled body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section {
+  border-radius: 12px 12px 0 0;
+}
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section > *:first-child {
+  border-radius: inherit;
+  background: #fff !important;
+}
+/* the earlier "sheet on the grid container" rule is superseded by the
+   section-level sheet above */
+body.template--collection:has(.banner .banner__media) #ProductGridContainer {
+  margin-top: 0 !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+/* --- category bar --- */
+.collection-tags-nav { display: none !important; }
+.collection-tags-wrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
+  z-index: 3;
+}
+.collection-tags-wrapper.on-banner {
+  position: absolute;
+  top: 100px;
+  left: 12px;
+  right: 12px;
+}
+.collection-tags-wrapper::after {
+  content: '';
+  position: absolute;
+  left: 4px; right: 4px; bottom: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.collection-tags-wrapper .collection-tags {
+  display: flex !important;
+  gap: 0 !important;
+  justify-content: flex-start !important;
+  padding: 0 4px !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.collection-tags-wrapper .collection-tags::-webkit-scrollbar { display: none; }
+.collection-tags-wrapper .collection-tags > div {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+/* few items: spread them like the homepage's three equal links */
+.collection-tags-wrapper:not(.is-scrollable) .collection-tags > div {
+  flex: 1 1 0;
+}
+.collection-tags .tag-button,
+.collection-tags .tag-button:hover,
+.collection-tags .tag-button.active,
+.collection-tags .tag-button.active:hover {
+  display: block !important;
+  position: relative;
+  padding: 12px 14px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.2 !important;
+  text-align: center;
+  color: #fff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  transition: opacity 0.15s ease !important;
+}
+.collection-tags .tag-button:not(.active) { opacity: 0.85 !important; }
+.collection-tags .tag-button.active::after {
+  content: '';
+  position: absolute;
+  left: 8px; right: 8px; bottom: 0;
+  height: 2px;
+  background: #fff;
+}
+/* scroll cue: fade the edge that still hides items */
+.collection-tags-wrapper.is-scrollable .collection-tags {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 calc(100% - 56px), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 calc(100% - 56px), transparent 100%);
+}
+.collection-tags-wrapper.is-scrollable.at-start .collection-tags {
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 56px), transparent 100%);
+          mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 56px), transparent 100%);
+}
+.collection-tags-wrapper.is-scrollable.at-end .collection-tags {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 40px, #000 100%);
+}
+.collection-tags-wrapper.is-scrollable.at-start.at-end .collection-tags {
+  -webkit-mask-image: none;
+          mask-image: none;
+}
+/* The grid container and grid carry their own white background, which
+   filled the rounded corners again. Clip the whole sheet to the radius
+   (clip-path, so nothing else about overflow changes) and let the inner
+   layers be transparent on top of the white section. */
+/* overflow:hidden clips the inner grid layers to the corners but, unlike
+   clip-path, leaves position:fixed descendants alone, so the filter
+   drawer that lives inside this section is not cut off at the top. */
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section {
+  /* clip, not hidden: overflow:hidden turns the section into a scroll
+     container, which stops the floating "Filter and sort" button
+     (position:sticky at the end of the grid) from sticking to the
+     viewport bottom. overflow:clip just clips the corners. */
+  overflow: clip;
+  transition: border-radius 0.25s ease;
+}
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section [class*="__product-grid-padding"],
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section #ProductGridContainer,
+body.template--collection:has(.banner .banner__media) #MainContent > .shopify-section:first-child:has(.banner) + .shopify-section #product-grid {
+  background: transparent !important;
+}
+/* The breadcrumb strip used to sit hidden under the white grid container;
+   with the container transparent it showed through under the first cards.
+   The homepage system has no breadcrumbs, so hide it on collection pages. */
+body.template--collection .breadcrumbs {
+  display: none !important;
+}
+
+/* ============================================================
+   PRODUCT CARD COLOUR ROW (all cards: collection, search, homepage,
+   product-page carousels). Up to five 16px swatches with 4px corners
+   under the price, "+N" for the rest. Selected colour: black ring, like
+   the size chips on the product page. Replaces the hover-only photo
+   swatches on the image tile.
+   ============================================================ */
+.card-color-swatches { display: none !important; }
+.ccr {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  /* Left edge on the title's text edge (card__information has 5px
+     padding). Vertically the row sits on the variant name's line box,
+     the same rhythm as title > variant name. The information block
+     carries 5px bottom padding, hence the negative margin. */
+  margin: -1px 0 0 5px;
+  padding: 0 0 2px 0;
+  min-height: 12px;
+}
+.ccr__swatch {
+  position: relative;
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: #e9e9e9;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease;
+}
+.ccr__swatch::after {
+  /* larger touch target than the 16px tile */
+  content: '';
+  position: absolute;
+  inset: -6px;
+}
+.ccr__swatch img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.ccr__swatch::after { inset: -8px; }
+.ccr__swatch:hover,
+.ccr__swatch:focus-visible {
+  box-shadow: inset 0 0 0 1px #999, inset 0 0 0 2px #fff;
+  outline: none;
+}
+/* selected: ring drawn inside the tile, so the swatch never grows */
+.ccr__swatch.is-selected {
+  box-shadow: inset 0 0 0 1px #111, inset 0 0 0 2px #fff;
+}
+.ccr__more {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  color: #666;
+  margin-left: 1px;
+}
+/* the grid's spacer row under the information block must not eat the
+   colour row; let the content grow with it */
+#MainContent .card-wrapper .card__content {
+  height: auto !important;
+  min-height: 0 !important;
+}
+/* .card__content is a 3-row grid (spacer / information / spacer); the
+   information block is pinned to row 2, so the colour row goes in row 3
+   to sit under the title and price. */
+.card__content > .ccr {
+  grid-row-start: 3;
+  grid-column: 1 / -1;
+  align-self: start;
+}
+
+/* Product page colour picker: the same swatch as on the cards (16px
+   here, it is the primary control), 3px corners, hairline, inset ring
+   when selected. */
+.product-v2 .color-dot.color-dot--swatch {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  border-radius: 3px !important;
+  border: 0 !important;
+  background-color: #e9e9e9;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  padding: 0;
+}
+.product-v2 .color-dot--swatch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0 !important;
+}
+.product-v2 .product-form__input.color-input label:hover .color-dot--swatch {
+  box-shadow: inset 0 0 0 1px #999, inset 0 0 0 2px #fff;
+}
+.product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-dot--swatch {
+  box-shadow: inset 0 0 0 1px #111, inset 0 0 0 2px #fff !important;
+}
+
+/* sampled colours (card-color-row.js) replace the photo crop */
+.ccr__swatch.is-sampled img,
+.product-v2 .color-dot--swatch.is-sampled img { display: none; }
+/* The grid section is its own stacking context (z-index 1), which kept
+   the fixed filter drawer under the floating header. While the drawer is
+   open, lift the section above everything. */
+body.template--collection #MainContent > .shopify-section:has(.mobile-facets__disclosure[open]),
+body.template--search #MainContent > .shopify-section:has(.mobile-facets__disclosure[open]) {
+  z-index: 200 !important;
+}
+
+/* Product page: the grey of the gallery runs up behind the floating
+   header, like the hero on the homepage. The page offset that keeps
+   content clear of the header moves from #MainContent into the main
+   product section, which carries the grey background. */
+body.template--product #MainContent,
+body.template--product main,
+body.template--product main#MainContent {
+  padding-top: 0 !important;
+}
+body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
+  padding-top: 110px;
+}
+@media screen and (max-width: 989px) {
+  body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
+    padding-top: 108px;
+  }
+}
+/* Older product templates (no .product-v2) keep the full offset: their
+   breadcrumb and title sit in normal flow at the top of the section. */
+body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child:not(:has(.product-v2)) {
+  padding-top: 110px !important;
+}
+@media screen and (max-width: 989px) {
+  body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child:not(:has(.product-v2)) {
+    padding-top: 108px !important;
+  }
+}
+/* iOS paints the status bar strip and the overscroll area with the root
+   element's background, not with the first section's. Give the root the
+   same grey on product pages so the top reads as one surface. Body keeps
+   its own colour for the sections further down. */
+html:has(body.template--product) {
+  background: #f0f0f0 !important;
+  background-color: #f0f0f0 !important;
+}
+/* The gallery image carries the tile gradient (#ECECEC > #E2E2E2). The
+   strip above it (behind the header and the breadcrumb) gets the same
+   gradient so the top of the page reads as one surface. The root gets
+   the mid tone for the iOS status bar / overscroll area. */
+body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
+  background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
+}
+html:has(body.template--product) {
+  background: #e7e7e7 !important;
+  background-color: #e7e7e7 !important;
+}
+/* Test: the gallery starts where the announcement bar ends (44px), so the
+   glass header pill floats over the top of the photo. The breadcrumb
+   overlay moves down to stay clear of the pill (pill bottom 92px + 12px). */
+body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child:has(.product-v2) {
+  padding-top: 44px !important;
+}
+body.template--product .product-v2__media-wrapper .breadcrumb-overlay {
+  top: 60px !important;
+}
+/* Product gallery: the media box was 369x520 while the photos are 4:5,
+   so object-fit:cover cropped ~30px top and bottom and the product sat
+   low with its shadow cut. Box now follows the photo ratio (4:5) and the
+   image is contained, so nothing is cropped and it is centred. Thumbnails
+   go portrait (4:5) instead of square. */
+body.template--product .product-v2 .product__media-list .product__media,
+body.template--product .product-v2 .product__media-item .product__media {
+  aspect-ratio: 4 / 5 !important;
+  height: auto !important;
+  padding-bottom: 0 !important;
+}
+body.template--product .product-v2 .product__media img {
+  object-fit: contain !important;
+  object-position: center center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+body.template--product .product-v2 .thumbnail-list .thumbnail {
+  aspect-ratio: 4 / 5 !important;
+  height: auto !important;
+}
+body.template--product .product-v2 .thumbnail-list .thumbnail img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================================
+   Product page: colour tile = size chip. One row of 21px swatches
+   (21 + 2x12 padding + 2x2 border = 49px, the size chip's height); the
+   row scrolls sideways with an edge fade when there are many colours.
+   ============================================================ */
+body.template--product .product-v2 .product-form__input.color-input {
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  min-height: 49px;
+  padding: 12px 110px 12px 16px !important;
+  border-radius: 8px !important;
+  gap: 0 !important;
+}
+body.template--product .product-v2 .color-input__track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+          mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  padding-right: 24px;
+}
+body.template--product .product-v2 .color-input__track::-webkit-scrollbar { display: none; }
+body.template--product .product-v2 .color-input__track label { flex: 0 0 auto; }
+body.template--product .product-v2 .color-dot.color-dot--swatch {
+  width: 21px !important;
+  height: 21px !important;
+  min-width: 21px !important;
+  border-radius: 4px !important;
+}
+body.template--product .product-v2 .color-input__selected-name {
+  right: 16px !important;
+  font-size: 13px !important;
+  max-width: 88px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Benefit tags over the photo: card-badge styling, stacked bottom-left,
+   8px from the photo edge (the photo is 4:5 of the full width on phones). */
+.pdp-tags { display: none; }
+@media screen and (max-width: 749px) {
+  /* bottom-right of the photo (photo = full width, 4:5). One tag at a
+     time, following the active slide. */
+  .pdp-tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    right: 8px;
+    top: calc(100vw * 1.25 - 8px);
+    transform: translateY(-100%);
+    z-index: 2;
+    pointer-events: none;
+    max-width: 80%;
+    text-align: right;
+  }
+  .pdp-tag {
+    display: none;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: rgba(255, 255, 255, 0.7);
+    color: #666;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+    padding: 6px 10px;
+    border-radius: 4px;
+    text-transform: lowercase;
+  }
+  .pdp-tag.is-visible { display: inline-block; }
+  .pdp-tag::first-letter { text-transform: uppercase; }
+}
+/* the merchandising badge sat at 44px, now under the header pill: move
+   it below the pill, right-aligned so it does not collide with the
+   breadcrumb on the left */
+body.template--product .product-v2__media-wrapper > .card-badge {
+  top: 140px !important; /* under the breadcrumb (104px + its height) */
+  left: 12px !important;
+}
+/* the single-row colour tile must not grow with its content */
+body.template--product .product-v2 .product-form__input.color-input {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;        /* fieldsets default to min-content */
+  min-inline-size: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Product page: the media box is the full column width (it was 14px
+   short, leaving a strip of the section gradient at a different
+   position). Merchandising badge on the photo: same translucency and
+   shape as the card badges. */
+body.template--product .product-v2 .product__media-list .product__media,
+body.template--product .product-v2 .product__media-item .product__media,
+body.template--product .product-v2 .product__media-item {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+body.template--product .product-v2__media-wrapper > .card-badge .badge {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: #000 !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  padding: 5px 8px !important;
+  box-shadow: none !important;
+}
+/* the theme caps the media box at 520px (max-height), which broke the
+   4:5 ratio on wider phones; the ratio rules the height */
+body.template--product .product-v2 .product__media-list .product__media,
+body.template--product .product-v2 .product__media-item .product__media {
+  max-height: none !important;
+  min-height: 0 !important;
+}
+
+/* Desktop: the info column starts at 44px like the gallery, so its first
+   block (the social proof bar) sat behind the header pill. Push the
+   column's content below the pill (bottom 92px + 12px) and pin the sticky
+   buy box there too while scrolling. */
+@media screen and (min-width: 990px) {
+  body.template--product .product-v2 .product-v2__info-wrapper {
+    padding-top: 60px !important; /* 44 + 60 = 104 */
+  }
+  body.template--product .product-v2 .product-v2__info-container--sticky {
+    top: 104px !important;
+  }
+}
+
+/* Full-screen photo zoom (assets/pdp-gallery.js): same gradient as the
+   gallery, 8px close button in the site's badge style. */
+.pdp-zoom {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: linear-gradient(to right, #ECECEC, #E2E2E2);
+}
+.pdp-zoom.is-open { display: block; }
+.pdp-zoom__stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
+}
+.pdp-zoom__stage img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  transform-origin: center center;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.pdp-zoom__close {
+  position: absolute;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: 12px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  color: #111;
+  font-size: 26px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+html.pdp-zoom-open, html.pdp-zoom-open body { overflow: hidden; }
+
+/* ============================================================
+   Product page (v2 templates only, scoped to body.template--product)
+   1. Italic accent words in section titles: grey (#666, the same grey
+      as the benefit tags and card subtitles) instead of orange.
+   2. "Let's take a look inside" and FAQ: their white background lived
+      on an inner container capped at 1400px, leaving off-white gutters
+      on wide screens. The container now spans the full width; its
+      content stays centred at 1400px through the side padding.
+   ============================================================ */
+/* Titles with an italic accent: the italic word is black, the rest of
+   the title grey. Titles without an italic part stay black. */
+body.template--product .bot-heading:has(em),
+body.template--product .product-benefit__heading:has(em),
+body.template--product .product-exploder__heading:has(em),
+body.template--product .product-faq__heading:has(em),
+body.template--product .reviews-masonry__heading:has(em),
+body.template--product .satisfaction-guarantee__heading:has(em) {
+  color: #666 !important;
+}
+body.template--product .bot-heading em,
+body.template--product .product-benefit__heading em,
+body.template--product .product-exploder__heading em,
+body.template--product .product-faq__heading em,
+body.template--product .reviews-masonry__heading em,
+body.template--product .satisfaction-guarantee__heading em {
+  color: #111 !important;
+}
+body.template--product section.product-exploder,
+body.template--product section.product-faq {
+  max-width: none !important;
+  padding-left: max(40px, calc((100% - 1400px) / 2 + 40px)) !important;
+  padding-right: max(40px, calc((100% - 1400px) / 2 + 40px)) !important;
+}
+@media screen and (max-width: 749px) {
+  /* phones keep the sections' own 20px */
+  body.template--product section.product-exploder,
+  body.template--product section.product-faq {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+/* Product page colour tidy-up (scoped to body.template--product):
+   - "Not 100% satisfied": white block behind the grey card
+   - "Shop now": the theme blue (same as Add to cart)
+   - exploder hotspots/numbers and FAQ toggles: blue instead of orange
+   - reviews ribbon stars: the review-card green */
+body.template--product .shopify-section.satisfaction-guarantee-section {
+  background: #fff !important;
+}
+body.template--product [class*="satisfaction-guarantee"],
+body.template--product [class*="product-exploder"],
+body.template--product [class*="product-faq"] {
+  --satisfaction-accent: #0395F6 !important;
+  --exploder-accent: #0395F6 !important;
+  --faq-accent: #0395F6 !important;
+}
+body.template--product .satisfaction-guarantee__button {
+  background-color: #0395F6 !important;
+  color: #fff !important;
+}
+body.template--product .satisfaction-guarantee__button:hover {
+  background-color: #0284d9 !important;
+}
+body.template--product .reviews-masonry__ribbon-stars,
+body.template--product .reviews-masonry__ribbon-stars svg,
+body.template--product .reviews-masonry__ribbon-stars svg path {
+  --reviews-accent: #00B67A;
+  color: #00B67A !important;
+  fill: #00B67A !important;
+}
+
+/* Buy box: hover on Add to cart (and the sticky bar, size modal and
+   back-in-stock buttons) goes to a darker blue instead of orange; the
+   order-within countdown and the free-shipping words use the buy box
+   green (#5a9a00, the check marks). */
+body.template--product .product-v2 .product-form__submit:hover,
+body.template--product .product-v2 button[name="add"]:hover,
+body.template--product .product-v2-sticky-bar__atc-btn:hover,
+body.template--product .product-v2-size-modal__confirm:hover,
+body.template--product .product-v2 .klaviyo-bis-trigger:hover,
+body.template--product .product-v2 #out-of-stock:hover {
+  background: #0284d9 !important;
+  background-color: #0284d9 !important;
+}
+body.template--product .product-v2 .product-form__submit:not([disabled]):hover span svg,
+body.template--product .product-v2 button[name="add"]:not([disabled]):hover span svg,
+body.template--product .product-v2 .product-form__submit:not([disabled]):hover span svg path,
+body.template--product .product-v2 button[name="add"]:not([disabled]):hover span svg path {
+  fill: #0284d9 !important;
+  stroke: #0284d9 !important;
+}
+body.template--product .product-v2 .shipping-text .ship-countdown,
+body.template--product .product-v2 .shipping-text .ship-free {
+  color: #5a9a00 !important;
+  font-weight: 700 !important;
+}
+
+/* Search results: same 12px inset and gaps as the collection grid */
+body.template--search #product-grid {
+  padding: 12px !important;
+  column-gap: 12px !important;
+  row-gap: 12px !important;
+}
+
+/* Collection/search: the floating "Filter and sort" pill rests at the
+   end of the grid container once you reach the bottom; give it 24px of
+   room so it does not sit flush against the footer. */
+body.template--collection #ProductGridContainer facets-open-button,
+body.template--search #ProductGridContainer facets-open-button {
+  margin-bottom: 24px;
+}
+
+/* ============================================================
+   CART DRAWER — the homepage/product brand system
+   Radius: 12px sheets (cards in the drawer), 4px image tiles, 8px
+   buttons and inputs. Casing: sentence case, nothing forced lowercase.
+   Badges: white 70% with black text like the product cards. One green
+   (#5a9a00, the buy-box green) for progress, "free" and gift accents.
+   Blue stays the action colour, sentence-case labels.
+   ============================================================ */
+/* sheets */
+.drawer__shipping-bar .free_shipping_container,
+.free_gift_widget,
+.cart-drawer-item,
+.cart-size-picker__panel,
+.free_gift_widget__product,
+.free_gift_widget__removed_notice {
+  border-radius: 12px !important;
+}
+/* image tiles: same grey gradient tile as the product cards */
+.cart-drawer-item__image,
+.cart-drawer-item__image img,
+.cross-sell-card__image-wrap,
+.cross-sell-card__image-wrap img,
+.free_gift_widget__image,
+.free_gift_widget__chosen-image,
+.cart-size-picker__product-info img,
+.cart-size-picker__option-btn--image img {
+  border-radius: 4px !important;
+}
+.cart-drawer-item__image,
+.cross-sell-card__image-wrap {
+  background: linear-gradient(to right, #ECECEC, #E2E2E2) !important;
+}
+/* the image wrap must not clip: the quantity bubble hangs over its
+   corner. The tile radius sits on the wrap and the img themselves. */
+.cross-sell-card__image-wrap { overflow: hidden; }
+.cart-drawer-item__image { overflow: visible !important; }
+/* buttons and inputs: 8px */
+.cart-drawer__checkout-btn,
+.cart__checkout-animation,
+cart-drawer a[href="/checkout/"],
+cart-drawer .add-to-cart.submit_button,
+.cross-sell-card__add-btn,
+.cart-size-picker__confirm,
+.cart-size-picker__option-btn,
+.cart-drawer-item__qty-input,
+.free_gift_widget__add-btn,
+.free_gift_widget__change-btn,
+.drawer__close,
+.cart-drawer-item__trash,
+.cart-size-picker__close {
+  border-radius: 8px !important;
+}
+.cart-drawer-item__qty-input {
+  border-width: 1px !important;
+}
+/* casing: as typed, first letter capital */
+.cart-drawer-item__title,
+.cart-drawer-item__options,
+.cross-sell-card__title,
+.free_gift_widget__name,
+.free_gift_widget__variant,
+.free_gift_widget__chosen-text strong,
+.cart-drawer__checkout-btn,
+.cart__checkout-animation,
+.cross-sell-card__add-btn,
+.cart-size-picker__confirm,
+.cross-sell-card__badge {
+  text-transform: none !important;
+}
+.cart-drawer-item__title,
+.cart-drawer-item__options,
+.cross-sell-card__title,
+.free_gift_widget__name,
+.free_gift_widget__variant,
+.cart-drawer__checkout-btn,
+.cross-sell-card__add-btn,
+.cart-size-picker__confirm,
+.cross-sell-card__badge {
+  display: block;
+}
+.cart-drawer-item__title::first-letter,
+.cart-drawer-item__options::first-letter,
+.cross-sell-card__title::first-letter,
+.free_gift_widget__name::first-letter,
+.free_gift_widget__variant::first-letter,
+.cart-drawer__checkout-btn::first-letter,
+.cross-sell-card__add-btn::first-letter,
+.cart-size-picker__confirm::first-letter,
+.cross-sell-card__badge::first-letter {
+  text-transform: uppercase !important;
+}
+/* cross-sell badge: product-card badge style */
+.cross-sell-card__badge {
+  background: rgba(255, 255, 255, 0.7) !important;
+  color: #000 !important;
+  border-radius: 4px !important;
+  padding: 5px 8px !important;
+  font-weight: 700 !important;
+}
+/* cross-sell heading accent: grey italic like the product page titles */
+.cart-cross-sells__heading em {
+  color: #666 !important;
+  font-style: italic;
+}
+/* one green */
+.progressive_bar_shipping_price,
+.progress_bar_milestone.is-reached .progress_bar_milestone__badge {
+  background: #5a9a00 !important;
+  background-color: #5a9a00 !important;
+}
+.drawer__shipping-bar .free_shipping_container .progress_bar_track {
+  background-color: rgba(90, 154, 0, 0.18) !important;
+}
+#its_free,
+.free_gift_widget__chosen-check,
+.free_gift_widget__free_tag,
+.cart-drawer-item__gift-tag,
+cart-drawer .text-green-600,
+cart-drawer [class*="text-green"] {
+  color: #5a9a00 !important;
+}
+/* blue hover like the product page */
+.cart-drawer__checkout-btn:hover,
+.cross-sell-card__add-btn:hover,
+.cart-size-picker__confirm:hover:not(:disabled),
+.free_gift_widget__add-btn:hover:not(:disabled),
+.free_gift_widget__change-btn:hover {
+  background: #0284d9 !important;
+  background-color: #0284d9 !important;
+}
+/* Category bar: a collection that is not in the menu is added as the
+   first, active item; long titles get an ellipsis so they do not push
+   the menu off screen. */
+.collection-tags .tag-button.tag-button--current {
+  max-width: 260px; /* safety net; the label is shortened in Liquid */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
