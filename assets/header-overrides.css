@@ -5117,6 +5117,16 @@ body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
     padding-top: 108px;
   }
 }
+/* Older product templates (no .product-v2) keep the full offset: their
+   breadcrumb and title sit in normal flow at the top of the section. */
+body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child:not(:has(.product-v2)) {
+  padding-top: 110px !important;
+}
+@media screen and (max-width: 989px) {
+  body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child:not(:has(.product-v2)) {
+    padding-top: 108px !important;
+  }
+}
 /* iOS paints the status bar strip and the overscroll area with the root
    element's background, not with the first section's. Give the root the
    same grey on product pages so the top reads as one surface. Body keeps
@@ -5139,7 +5149,7 @@ html:has(body.template--product) {
 /* Test: the gallery starts where the announcement bar ends (44px), so the
    glass header pill floats over the top of the photo. The breadcrumb
    overlay moves down to stay clear of the pill (pill bottom 92px + 12px). */
-body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child {
+body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child:has(.product-v2) {
   padding-top: 44px !important;
 }
 body.template--product .product-v2__media-wrapper .breadcrumb-overlay {
