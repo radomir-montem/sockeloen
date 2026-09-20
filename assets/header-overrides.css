@@ -4507,9 +4507,56 @@ body.template--index #MainContent .tcs-eme__label { text-transform: capitalize !
   .tcs-eme { flex-direction: row; flex-wrap: wrap; }
   .tcs-eme__item { width: 50%; height: 695px; }
   .tcs-eme__sticky { padding: 30px 0; }
+  /* The banners' collection grids: full width, after the banner row */
+  .tcs-eme__mobile-collection { width: 100%; order: 1; }
 }
 @media screen and (min-width: 750px) {
-  .tcs-eme__mobile-collection { display: none; }
+  /* Shown on desktop too (4 columns via md:grid-cols-4), unless the
+     section keeps them phone-only. */
+  .tcs-eme--grids-mobile-only .tcs-eme__mobile-collection { display: none; }
+}
+
+/* ---- Pinned scroll effect (section setting "scroll_effect: pinned") ----
+   The stage (both banners, one viewport tall) is sticky inside a tall box.
+   The section starts one viewport early, underneath the section before it
+   (that one is opaque and z-index 1 from the hero rule; this one gets 0),
+   so the previous section slides up and uncovers the banners. Box height
+   = 1 viewport uncover + 40svh hold + 1 viewport pinned while the grids
+   (negative margin, z-index 2) slide over + the stage itself. Nothing
+   animates; it is all scroll position. */
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) ~ .shopify-section:has(> .tcs-eme--pinned) {
+  z-index: 0 !important;
+  margin-top: -100svh !important;
+}
+.tcs-eme--pinned { display: block; }
+.tcs-eme--pinned .tcs-eme__box { height: 340svh; }
+.tcs-eme--pinned .tcs-eme__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  overflow: hidden;
+  background: #111;
+}
+.tcs-eme--pinned .tcs-eme__item { width: auto; height: auto; min-height: 0; }
+/* the glass label sits fixed in the middle of its banner */
+.tcs-eme--pinned .tcs-eme__sticky {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  padding: 0;
+}
+.tcs-eme--pinned .tcs-eme__after {
+  position: relative;
+  z-index: 2;
+  margin-top: -100svh;
+  background: #fff;
+}
+@media screen and (min-width: 640px) {
+  .tcs-eme--pinned .tcs-eme__stage { grid-template-rows: none; grid-template-columns: 1fr 1fr; }
 }
 /* all homepage product carousels on plain white */
 body.template--index #MainContent .isolate.bg-background,
