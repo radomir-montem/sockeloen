@@ -182,22 +182,22 @@
               "link": ""
             }
           },
-          "announcement_3": {
+          "announcement_4": {
             "type": "announcement",
             "settings": {
-              "text": "100% satisfaction guarantee",
-              "usd_text": "100% satisfaction guarantee",
+              "text": "Free socks on orders > €150",
+              "usd_text": "Free socks on orders > $150",
               "text_alignment": "center",
               "bg_color": "#1a1a1a",
               "font_color": "#ffffff",
               "link": ""
             }
           },
-          "announcement_4": {
+          "announcement_3": {
             "type": "announcement",
             "settings": {
-              "text": "Customer is king",
-              "usd_text": "Customer is king",
+              "text": "100% Satisfaction guarantee",
+              "usd_text": "100% Satisfaction guarantee",
               "text_alignment": "center",
               "bg_color": "#1a1a1a",
               "font_color": "#ffffff",
@@ -208,8 +208,8 @@
         "block_order": [
           "announcement_1",
           "announcement_2",
-          "announcement_3",
-          "announcement_4"
+          "announcement_4",
+          "announcement_3"
         ],
         "settings": {
           "sale_mode": false,
@@ -621,12 +621,12 @@
         "settings": {
           "copyright": "Sockeloen Netherlands - Sockeloen",
           "footer_list": "footer",
+          "show_newsletter": false,
           "newsletter_text": "Subscribe to our NEWSLETTER",
           "klaviyo_id": "UmGHP8",
           "footer_logo": "shopify://shop_images/Worn_by_champions_KNWU_export_white.png",
           "logo_width": 200,
-          "logo_width_monile": 200,
-          "show_newsletter": false
+          "logo_width_monile": 200
         }
       },
       "main-password-header": {
