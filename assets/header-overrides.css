@@ -4494,7 +4494,9 @@ body.template--index .taggbox .tb_rt_image_wrap_ { border-radius: 4px !important
 .tcs-eme__item { position: relative; display: block; width: 100%; height: 630px; overflow: visible; color: #fff; text-decoration: none; }
 .tcs-eme__media { position: absolute; inset: 0; overflow: hidden; }
 .tcs-eme__img, .tcs-eme__media img { width: 100% !important; height: 100% !important; object-fit: cover; display: block; border-radius: 0 !important; }
-.tcs-eme__overlay { position: absolute; inset: 0; z-index: 1; display: flex; width: 100%; justify-content: center; padding: 0 10px; pointer-events: none; }
+/* the overlay ends at the banner's midpoint (+ half the label box), so the
+   sticky label can never travel below the middle of its banner */
+.tcs-eme__overlay { position: absolute; inset: 0; bottom: auto; height: calc(50% + 55px); z-index: 1; display: flex; width: 100%; justify-content: center; padding: 0 10px; pointer-events: none; }
 /* the label rides up with the banner and stops at the middle of the screen (pill centre = 50svh) */
 .tcs-eme__sticky { position: sticky; top: calc(50svh - 55px); display: flex; width: 100%; height: fit-content; justify-content: center; padding: 34px 0; }
 .tcs-eme__pill {
@@ -4513,6 +4515,7 @@ body.template--index #MainContent .tcs-eme__label { text-transform: capitalize !
   .tcs-eme { flex-direction: row; flex-wrap: wrap; }
   .tcs-eme__item { width: 50%; height: 695px; }
   .tcs-eme__sticky { padding: 30px 0; top: calc(50svh - 51px); }
+  .tcs-eme__overlay { height: calc(50% + 51px); }
   /* The banners' collection grids: full width, after the banner row */
   .tcs-eme__mobile-collection { width: 100%; order: 1; }
 }
