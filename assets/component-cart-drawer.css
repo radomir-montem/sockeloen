@@ -1632,7 +1632,21 @@ cart-drawer .add-to-cart.submit_button:hover {
      misalignment). */
   display: block;
   margin: 2px 0 0;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: #1a9e46;
+}
+
+/* The price cell says it too: "Free" where the eye looks for the price,
+   the normal price struck through underneath, like any other discount. */
+.cart-drawer-item__free-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a9e46;
+}
+
+/* One gift, one unit: the discount frees a single pair, so the stepper
+   would only let shoppers add a second, charged pair. Remove stays. */
+.cart-drawer-item--free-gift .cart-drawer-item__qty-input {
+  display: none;
 }

@@ -5599,9 +5599,14 @@ cart-drawer .add-to-cart.submit_button,
 .free_gift_widget__chosen-check,
 .free_gift_widget__free_tag,
 .cart-drawer-item__gift-tag,
+.cart-drawer-item__free-price,
+.cart-item__free-price,
 cart-drawer .text-green-600,
 cart-drawer [class*="text-green"] {
   color: #5a9a00 !important;
+}
+.cart-item__free-price {
+  font-weight: 700;
 }
 /* blue hover like the product page */
 .cart-drawer__checkout-btn:hover,

@@ -124,6 +124,15 @@
             {%- if cart != empty -%}
               <div class="drawer__cart-items-wrapper">
                 {% for item in cart.items %}
+                  {%- liquid
+                    # The gift line only reads "free" when the discount really
+                    # took it to 0. If a discount conflict leaves it charged,
+                    # the real price shows instead of a misleading tag.
+                    assign line_is_free_gift = false
+                    if item.properties['_free_gift'] == 'true' and item.final_line_price == 0 and item.original_line_price > 0
+                      assign line_is_free_gift = true
+                    endif
+                  -%}
                   <div
                     id="CartDrawer-Item-{{ item.index | plus: 1 }}"
                     cart-item-id="{{ item.id }}"
@@ -158,8 +167,8 @@
                           <a href="{{ item.url }}" class="cart-drawer-item__title">
                             {{- item.product.title | escape -}}
                           </a>
-                          {%- if item.properties['_free_gift'] == 'true' -%}
-                            <span class="cart-drawer-item__gift-tag">{{ 'sections.cart.free_gift_free_tag' | t }}</span>
+                          {%- if line_is_free_gift -%}
+                            <span class="cart-drawer-item__gift-tag">{{ 'sections.cart.free_gift_label' | t }}</span>
                           {%- endif -%}
                           {%- if item.product.has_only_default_variant == false -%}
                             <p class="cart-drawer-item__options">
@@ -191,8 +200,11 @@
                               </svg>
                             </div>
                           </div>
-                          <div class="cart-item__price-wrapper">
-                            {%- if item.original_line_price != item.final_line_price -%}
+                          <div class="cart-item__price-wrapper{% if line_is_free_gift %} cart-item__price-wrapper--free{% endif %}">
+                            {%- if line_is_free_gift -%}
+                              <span class="cart-drawer-item__sale-price cart-drawer-item__free-price">{{ 'sections.cart.free_gift_free_tag' | t }}</span>
+                              <s class="cart-drawer-item__old-price">{{ item.original_line_price | money_without_currency }}</s>
+                            {%- elsif item.original_line_price != item.final_line_price -%}
                               <span class="cart-drawer-item__sale-price">{{ item.final_line_price | money_without_currency }}</span>
                               <s class="cart-drawer-item__old-price">{{ item.original_line_price | money_without_currency }}</s>
                             {%- else -%}
