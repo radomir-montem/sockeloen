@@ -33,6 +33,40 @@
       </script>
     {% endif %}
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    {%- comment -%}
+      Colorlab / Printlane guard. The app embed's "product form selector"
+      setting is translatable theme content, and auto-translation once
+      turned form[action*="/cart/add"] into German and French prose, which
+      hid the Personalise button on /de/ and /fr/ for every Colorlab
+      product. The app assigns window.colorlab_shopify_data (and
+      printlane_shopify_data) in an inline script inside content_for_header;
+      this setter restores the default selector whenever the assigned one
+      is not a form selector that points at /cart/add.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        var selector = 'form[action*="/cart/add"]';
+        function fix(d) {
+          if (d && typeof d === 'object') {
+            var s = d.productFormSelector;
+            if (typeof s !== 'string' || !/^form(?![a-z])/i.test(s) || s.indexOf('/cart/add') === -1) d.productFormSelector = selector;
+            if (typeof d.cartRowSelector !== 'string' || /\s|[^\x20-\x7e]/.test(d.cartRowSelector)) d.cartRowSelector = 'tr';
+          }
+          return d;
+        }
+        ['colorlab_shopify_data', 'printlane_shopify_data'].forEach(function (name) {
+          var value = window[name];
+          try {
+            Object.defineProperty(window, name, {
+              configurable: true,
+              enumerable: true,
+              get: function () { return value; },
+              set: function (v) { value = fix(v); }
+            });
+          } catch (e) {}
+        });
+      })();
+    </script>
     <!-- OutlinkStickyBtn CODE Start -->{% if template.name == 'product'%}{% render('outlink-sticky') %}{% endif %}<!-- OutlinkStickyBtn END --> {{ content_for_header }}
 
     {%- liquid
