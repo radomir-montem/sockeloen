@@ -241,7 +241,11 @@
                             {{ 'products.product.price.sale_price' | t }}
                           </dt>
                           <dd class="price price--end" data-mczr="{% if item.properties._mczr_designId %}item_final_line_price-{{ item.properties._mczr_designId }}{% else %}item_final_line_price-not-mczr{% endif %}">
-                            {{ item.final_line_price | money }}
+                            {%- if item.properties['_free_gift'] == 'true' and item.final_line_price == 0 -%}
+                              <span class="cart-item__free-price">{{ 'sections.cart.free_gift_free_tag' | t }}</span>
+                            {%- else -%}
+                              {{ item.final_line_price | money }}
+                            {%- endif -%}
                           </dd>
                         </dl>
                       {%- else -%}
@@ -358,7 +362,11 @@
                             {{ 'products.product.price.sale_price' | t }}
                           </dt>
                           <dd class="price price--end" data-mczr="{% if item.properties._mczr_designId %}item_final_line_price-{{ item.properties._mczr_designId }}{% else %}item_final_line_price-not-mczr{% endif %}">
-                            {{ item.final_line_price | money }}
+                            {%- if item.properties['_free_gift'] == 'true' and item.final_line_price == 0 -%}
+                              <span class="cart-item__free-price">{{ 'sections.cart.free_gift_free_tag' | t }}</span>
+                            {%- else -%}
+                              {{ item.final_line_price | money }}
+                            {%- endif -%}
                           </dd>
                         </dl>
                       {%- else -%}
