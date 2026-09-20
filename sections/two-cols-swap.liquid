@@ -9,10 +9,12 @@
   Two scroll effects:
   - sticky_label (default): the banners scroll through, the pill sticks
     at 75svh while its banner passes.
-  - pinned: both banners fill one viewport and stay put. The section
-    starts one viewport early, underneath the section before it, so that
-    section slides up and uncovers the banners; after a short hold the
-    grids slide over them from below. Layout lives in header-overrides.css
+  - pinned: the banners keep their normal height and stay put. The
+    section starts one banner height early, underneath the section before
+    it, so that section slides up and uncovers the banners; the grids then
+    slide over them. Desktop: both banners side by side in one pinned
+    stage. Phone: a card stack (Socks pins, Winter slides over it, the
+    grid slides over Winter). Layout lives in header-overrides.css
     (.tcs-eme--pinned).
 {%- endcomment -%}
 {%- liquid
@@ -26,6 +28,7 @@
     <div class="tcs-eme__box">
       <div class="tcs-eme__stage">
         {%- for block in section.blocks -%}
+          {%- if forloop.index > 1 -%}<div class="tcs-eme__spacer" aria-hidden="true"></div>{%- endif -%}
           {% render 'tcs-eme-banner', block: block %}
         {%- endfor -%}
       </div>

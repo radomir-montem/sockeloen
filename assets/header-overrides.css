@@ -4517,29 +4517,35 @@ body.template--index #MainContent .tcs-eme__label { text-transform: capitalize !
 }
 
 /* ---- Pinned scroll effect (section setting "scroll_effect: pinned") ----
-   The stage (both banners, one viewport tall) is sticky inside a tall box.
-   The section starts one viewport early, underneath the section before it
-   (that one is opaque and z-index 1 from the hero rule; this one gets 0),
-   so the previous section slides up and uncovers the banners. Box height
-   = 1 viewport uncover + 40svh hold + 1 viewport pinned while the grids
-   (negative margin, z-index 2) slide over + the stage itself. Nothing
-   animates; it is all scroll position. */
+   Banners keep their normal height (--tcs-h). The section starts that
+   height early, underneath the section before it (opaque, z-index 1 from
+   the hero rule; this one gets 0), so that section slides up and uncovers
+   the banners from the bottom up. No hold: the grids (negative margin,
+   z-index 2) slide over as soon as the banners are uncovered, so something
+   moves for every pixel of scroll and the next content always peeks
+   below the banners.
+   Desktop: one pinned stage with both banners side by side; box = 3
+   heights (uncover, stage, pinned while the grids cover it).
+   Phone: a card stack, each banner sticky on its own (the stage is
+   display:contents): Socks is uncovered and pins, Winter slides over it
+   after a spacer of one height, the grid slides over Winter; box = 4
+   heights. Net page length equals the plain layout on both. No JS. */
 body.template--index #MainContent > .shopify-section:first-child:has(> .banner) ~ .shopify-section:has(> .tcs-eme--pinned) {
+  --tcs-h: 630px;
   z-index: 0 !important;
-  margin-top: -100svh !important;
+  margin-top: calc(-1 * var(--tcs-h)) !important;
 }
 .tcs-eme--pinned { display: block; }
-.tcs-eme--pinned .tcs-eme__box { height: 340svh; }
-.tcs-eme--pinned .tcs-eme__stage {
+.tcs-eme--pinned .tcs-eme__box { height: calc(4 * var(--tcs-h)); }
+.tcs-eme--pinned .tcs-eme__stage { display: contents; }
+.tcs-eme--pinned .tcs-eme__item {
   position: sticky;
   top: 0;
-  height: 100svh;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
+  width: 100%;
+  height: var(--tcs-h);
   overflow: hidden;
-  background: #111;
 }
-.tcs-eme--pinned .tcs-eme__item { width: auto; height: auto; min-height: 0; }
+.tcs-eme--pinned .tcs-eme__spacer { height: var(--tcs-h); }
 /* the glass label sits fixed in the middle of its banner */
 .tcs-eme--pinned .tcs-eme__sticky {
   position: absolute;
@@ -4552,11 +4558,23 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
 .tcs-eme--pinned .tcs-eme__after {
   position: relative;
   z-index: 2;
-  margin-top: -100svh;
+  margin-top: calc(-1 * var(--tcs-h));
   background: #fff;
 }
 @media screen and (min-width: 640px) {
-  .tcs-eme--pinned .tcs-eme__stage { grid-template-rows: none; grid-template-columns: 1fr 1fr; }
+  body.template--index #MainContent > .shopify-section:first-child:has(> .banner) ~ .shopify-section:has(> .tcs-eme--pinned) { --tcs-h: 695px; }
+  .tcs-eme--pinned .tcs-eme__box { height: calc(3 * var(--tcs-h)); }
+  .tcs-eme--pinned .tcs-eme__stage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: sticky;
+    top: 0;
+    height: var(--tcs-h);
+    overflow: hidden;
+    background: #111;
+  }
+  .tcs-eme--pinned .tcs-eme__item { position: relative; top: auto; width: auto; height: auto; min-height: 0; }
+  .tcs-eme--pinned .tcs-eme__spacer { display: none; }
 }
 /* all homepage product carousels on plain white */
 body.template--index #MainContent .isolate.bg-background,
