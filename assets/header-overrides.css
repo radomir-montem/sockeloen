@@ -3559,13 +3559,18 @@ body.template--index .regular-button {
   filter: brightness(0) invert(1);
 }
 
-/* Push hero banner content group (title, subtitle, buttons, social proof) downward */
+/* Hero content group (title, subtitle, buttons, social proof): pushed
+   55px down on desktop as its start position, plus --hero-scroll, which
+   the hero's script sets from the scroll position so the group scrolls
+   up with the page and docks under the header while the hero image stays
+   pinned (same behaviour as the labels of the pinned banners). */
 body.template--index .banner__box {
-  transform: translateY(55px);
+  transform: translateY(calc(55px + var(--hero-scroll, 0px)));
+  will-change: transform;
 }
 @media screen and (max-width: 749px) {
   body.template--index .banner__box {
-    transform: translateY(35px);
+    transform: translateY(calc(35px + var(--hero-scroll, 0px)));
   }
 }
 
@@ -4187,10 +4192,10 @@ body.template--index #MainContent [class*="two-cols-"] img {
 }
 
 /* Mobile hero: no extra downward shift of the content box — it pushed the
-   button under the best sellers sheet on phones. */
+   button under the best sellers sheet on phones. Only the scroll offset. */
 @media screen and (max-width: 749px) {
   body.template--index .banner__box {
-    transform: none !important;
+    transform: translateY(var(--hero-scroll, 0px)) !important;
   }
 }
 
@@ -4490,7 +4495,8 @@ body.template--index .taggbox .tb_rt_image_wrap_ { border-radius: 4px !important
 .tcs-eme__media { position: absolute; inset: 0; overflow: hidden; }
 .tcs-eme__img, .tcs-eme__media img { width: 100% !important; height: 100% !important; object-fit: cover; display: block; border-radius: 0 !important; }
 .tcs-eme__overlay { position: absolute; inset: 0; z-index: 1; display: flex; width: 100%; justify-content: center; padding: 0 10px; pointer-events: none; }
-.tcs-eme__sticky { position: sticky; top: 75svh; display: flex; width: 100%; height: fit-content; justify-content: center; padding: 34px 0; }
+/* the label rides up with the banner and stops at the middle of the screen (pill centre = 50svh) */
+.tcs-eme__sticky { position: sticky; top: calc(50svh - 55px); display: flex; width: 100%; height: fit-content; justify-content: center; padding: 34px 0; }
 .tcs-eme__pill {
   pointer-events: auto; display: flex; width: fit-content; align-items: center; justify-content: center;
   padding: 24px; border-radius: 8px; text-align: center;
@@ -4506,7 +4512,7 @@ body.template--index #MainContent .tcs-eme__label { text-transform: capitalize !
 @media screen and (min-width: 640px) {
   .tcs-eme { flex-direction: row; flex-wrap: wrap; }
   .tcs-eme__item { width: 50%; height: 695px; }
-  .tcs-eme__sticky { padding: 30px 0; }
+  .tcs-eme__sticky { padding: 30px 0; top: calc(50svh - 51px); }
   /* The banners' collection grids: full width, after the banner row */
   .tcs-eme__mobile-collection { width: 100%; order: 1; }
 }
