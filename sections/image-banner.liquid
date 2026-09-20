@@ -431,7 +431,10 @@
     function onScroll() {
       if (ticking) return;
       ticking = true;
-      window.requestAnimationFrame(update);
+      /* frames are paused in hidden tabs and throttled in some
+         embedded previews; fall back to a timer there */
+      if (document.hidden || !window.requestAnimationFrame) setTimeout(update, 0);
+      else window.requestAnimationFrame(update);
     }
     var timer;
     function remeasure() {
