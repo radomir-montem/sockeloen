@@ -1,59 +1,46 @@
 {%- if section.settings.eme_banners -%}
 {%- comment -%}
-  emestudios.com category banners: tall cover image, glass label pill that
-  sticks at 75svh while the banner scrolls through, whole banner is the link.
-  Optional per-block mobile-only product grid rendered right after the banner.
+  emestudios.com category banners: tall cover image, glass label pill,
+  whole banner is the link. Each block can carry a product grid
+  (setting "mobile_collection"): 2 columns under its banner on phones,
+  and from tablet up shown after the banner row (4 columns) unless
+  "grids_on_desktop" is off.
+
+  Two scroll effects:
+  - sticky_label (default): the banners scroll through, the pill sticks
+    at 75svh while its banner passes.
+  - pinned: both banners fill one viewport and stay put. The section
+    starts one viewport early, underneath the section before it, so that
+    section slides up and uncovers the banners; after a short hold the
+    grids slide over them from below. Layout lives in header-overrides.css
+    (.tcs-eme--pinned).
 {%- endcomment -%}
-<section class="tcs-eme">
-  {%- for block in section.blocks -%}
-    <a class="tcs-eme__item" {% if block.settings.button_url != blank %}href="{{ block.settings.button_url }}"{% else %}role="link" aria-disabled="true"{% endif %} {{ block.shopify_attributes }}>
-      <div class="tcs-eme__media">
-        {%- if block.settings.image != blank -%}
-          {% render 'c-image-element', image: block.settings.image, lazy: true, position: 'center', class: 'tcs-eme__img' %}
-        {%- else -%}
-          <div class="tcs-eme__img" style="background: {{ block.settings.color | default: '#111' }};"></div>
-        {%- endif -%}
+{%- liquid
+  assign pinned = false
+  if section.settings.scroll_effect == 'pinned'
+    assign pinned = true
+  endif
+-%}
+<section class="tcs-eme{% if pinned %} tcs-eme--pinned{% endif %}{% if section.settings.grids_on_desktop == false %} tcs-eme--grids-mobile-only{% endif %}">
+  {%- if pinned -%}
+    <div class="tcs-eme__box">
+      <div class="tcs-eme__stage">
+        {%- for block in section.blocks -%}
+          {% render 'tcs-eme-banner', block: block %}
+        {%- endfor -%}
       </div>
-      {%- if block.settings.heading != blank -%}
-        <div class="tcs-eme__overlay">
-          <div class="tcs-eme__sticky">
-            <span class="tcs-eme__pill"><span class="tcs-eme__label">{{ block.settings.heading }}</span></span>
-          </div>
-        </div>
-      {%- endif -%}
-    </a>
-    {%- if block.settings.mobile_collection != blank -%}
-      <div class="tcs-eme__mobile-collection collection">
-        {%- if block.settings.mobile_collection_title != blank -%}
-          <div class="fc-title"><h2 class="fc-title__heading">{{ block.settings.mobile_collection_title | escape }}</h2></div>
-        {%- endif -%}
-        <div class="grid grid-cols-2 tcs-eme__grid">
-          {%- for product in block.settings.mobile_collection.products limit: block.settings.mobile_collection_limit -%}
-            {%- liquid
-              assign match_variant = nil
-              if block.settings.mobile_variant_filter != blank
-                assign needle = block.settings.mobile_variant_filter | downcase | strip
-                for v in product.variants
-                  assign vt = v.title | downcase
-                  if vt contains needle
-                    assign match_variant = v
-                    break
-                  endif
-                endfor
-              endif
-            -%}
-            <div>
-              {%- if match_variant -%}
-                {% render 'card-product-variant', card_product: match_variant, product: product, title: product.title, media_aspect_ratio: 'portrait', show_secondary_image: true, show_vendor: false, show_rating: false, show_quick_add: false, section_id: section.id %}
-              {%- else -%}
-                {% render 'card-product', card_product: product, media_aspect_ratio: 'portrait', show_secondary_image: true, show_vendor: false, show_rating: false, show_quick_add: false, section_id: section.id %}
-              {%- endif -%}
-            </div>
-          {%- endfor -%}
-        </div>
-      </div>
-    {%- endif -%}
-  {%- endfor -%}
+    </div>
+    <div class="tcs-eme__after">
+      {%- for block in section.blocks -%}
+        {% render 'tcs-eme-grid', block: block, section: section %}
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    {%- for block in section.blocks -%}
+      {% render 'tcs-eme-banner', block: block %}
+      {% render 'tcs-eme-grid', block: block, section: section %}
+    {%- endfor -%}
+  {%- endif -%}
 </section>
 {%- else -%}
 <section class="bg-[#E1E1E1]">
@@ -287,6 +274,22 @@
       "id": "eme_banners",
       "label": "Eme-style category banners (tall image, sticky glass label)",
       "default": false
+    },
+    {
+      "type": "select",
+      "id": "scroll_effect",
+      "label": "Scroll effect (Eme banners)",
+      "options": [
+        { "value": "sticky_label", "label": "Banners scroll, label pill sticks" },
+        { "value": "pinned", "label": "Banners pinned, uncovered, grids slide over" }
+      ],
+      "default": "sticky_label"
+    },
+    {
+      "type": "checkbox",
+      "id": "grids_on_desktop",
+      "label": "Show the collection grids on desktop too",
+      "default": true
     }
   ]
 }
