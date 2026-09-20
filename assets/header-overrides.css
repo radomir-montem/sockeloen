@@ -4586,28 +4586,46 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
   }
 }
 @media screen and (min-width: 640px) {
+  /* Same mechanics as on phones, per column: each banner is two heights
+     tall, its media pins when it reaches the top, the label starts in
+     the middle and scrolls up to dock under the header, the grids sit
+     directly under the banners and slide over them. */
   .tcs-eme--pinned { display: block; }
-  .tcs-eme--pinned .tcs-eme__box { height: calc(2 * var(--tcs-h)); }
+  .tcs-eme--pinned .tcs-eme__box { height: auto; }
   .tcs-eme--pinned .tcs-eme__stage {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    position: sticky;
-    top: 0;
-    height: var(--tcs-h);
-    overflow: hidden;
+    position: static;
+    height: auto;
+    overflow: visible;
     background: #111;
   }
-  .tcs-eme--pinned .tcs-eme__item { position: relative; width: auto; height: auto; min-height: 0; }
-  /* the glass label sits fixed in the middle of its banner */
-  .tcs-eme--pinned .tcs-eme__sticky {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-    padding: 0;
+  .tcs-eme--pinned .tcs-eme__item {
+    position: relative;
+    display: block;
+    width: auto;
+    height: calc(2 * var(--tcs-h));
+    min-height: 0;
+    overflow: visible;
+    isolation: isolate;
   }
-  /* grids directly under the stage, sliding over it */
+  .tcs-eme--pinned .tcs-eme__media {
+    position: sticky;
+    inset: auto;
+    top: 0;
+    width: 100%;
+    height: var(--tcs-h);
+    overflow: hidden;
+  }
+  .tcs-eme--pinned .tcs-eme__overlay {
+    position: sticky;
+    inset: auto;
+    top: 108px;
+    height: auto;
+    margin-top: calc(-0.5 * var(--tcs-h));
+    padding: 0 10px;
+  }
+  .tcs-eme--pinned .tcs-eme__sticky { position: static; padding: 0; transform: none; }
   .tcs-eme--pinned .tcs-eme__after {
     position: relative;
     z-index: 2;
