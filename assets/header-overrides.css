@@ -4545,7 +4545,8 @@ body.template--index #MainContent > .shopify-section:first-child:has(> .banner) 
   height: var(--tcs-h);
   overflow: hidden;
 }
-.tcs-eme--pinned .tcs-eme__spacer { height: var(--tcs-h); }
+/* display:block beats the theme's div:empty { display:none } */
+.tcs-eme--pinned .tcs-eme__spacer { display: block; height: var(--tcs-h); }
 /* the glass label sits fixed in the middle of its banner */
 .tcs-eme--pinned .tcs-eme__sticky {
   position: absolute;
