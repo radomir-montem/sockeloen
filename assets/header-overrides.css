@@ -5608,8 +5608,17 @@ cart-drawer [class*="text-green"] {
 .cart-item__free-price {
   font-weight: 700;
 }
-/* blue hover like the product page */
+/* "Free" behind Shipping: same text style as the free gift line. */
+#its_free {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+/* blue hover like the product page. component-cart-drawer.css loads after
+   this file (from the header section) and forces orange with !important,
+   so the checkout buttons need the heavier selectors. */
 .cart-drawer__checkout-btn:hover,
+cart-drawer a.cart-drawer__checkout-btn:hover,
+#checkout.cart__checkout-button:hover,
 .cross-sell-card__add-btn:hover,
 .cart-size-picker__confirm:hover:not(:disabled),
 .free_gift_widget__add-btn:hover:not(:disabled),
