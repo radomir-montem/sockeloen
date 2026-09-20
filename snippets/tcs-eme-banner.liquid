@@ -3,7 +3,7 @@
   glass label pill, the whole banner is the link. Used by both scroll
   effects of the section.
 {%- endcomment -%}
-<a class="tcs-eme__item" {% if block.settings.button_url != blank %}href="{{ block.settings.button_url }}"{% else %}role="link" aria-disabled="true"{% endif %} {{ block.shopify_attributes }}>
+<a class="tcs-eme__item tcs-eme__item--n{{ index | default: 1 }}" {% if block.settings.button_url != blank %}href="{{ block.settings.button_url }}"{% else %}role="link" aria-disabled="true"{% endif %} {{ block.shopify_attributes }}>
   <div class="tcs-eme__media">
     {%- if block.settings.image != blank -%}
       {% render 'c-image-element', image: block.settings.image, lazy: true, position: 'center', class: 'tcs-eme__img' %}

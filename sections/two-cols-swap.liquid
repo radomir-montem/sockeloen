@@ -9,13 +9,13 @@
   Two scroll effects:
   - sticky_label (default): the banners scroll through, the pill sticks
     at 75svh while its banner passes.
-  - pinned. Desktop: both banners side by side in one pinned stage; the
-    section starts one banner height early, underneath the section before
-    it, so that section slides up and uncovers the banners, then the grids
-    slide over them. Phone: the reverse of sticky_label. Each banner
-    enters like any content and pins full-screen; its glass label travels
-    up from the bottom of the screen and docks under the header; then the
-    next banner, and finally the grid, slides over it. Layout lives in
+  - pinned. Desktop: both banners side by side in one stage that pins at
+    the top of the viewport; the grids sit directly under it and slide
+    over it. Phone: the reverse of sticky_label, in the order banner,
+    its grid, banner, its grid. Each banner enters like any content and
+    pins full-screen; its glass label starts in the middle, scrolls up
+    with the page and docks under the header; the grid sits directly
+    under the banner and slides over it. Layout lives in
     header-overrides.css (.tcs-eme--pinned).
 {%- endcomment -%}
 {%- liquid
@@ -23,25 +23,40 @@
   if section.settings.scroll_effect == 'pinned'
     assign pinned = true
   endif
+  # Which banners have a grid (phone flow: banner, its grid, banner, its
+  # grid). A banner without a grid is covered by whatever comes next:
+  # the second banner, or the section after this one.
+  assign first_has_grid = false
+  assign last_has_grid = false
+  for block in section.blocks
+    if block.settings.mobile_collection != blank
+      if forloop.first
+        assign first_has_grid = true
+      endif
+      if forloop.last
+        assign last_has_grid = true
+      endif
+    endif
+  endfor
 -%}
-<section class="tcs-eme{% if pinned %} tcs-eme--pinned{% endif %}{% if section.settings.grids_on_desktop == false %} tcs-eme--grids-mobile-only{% endif %}">
+<section class="tcs-eme{% if pinned %} tcs-eme--pinned{% endif %}{% if section.settings.grids_on_desktop == false %} tcs-eme--grids-mobile-only{% endif %}{% if pinned and first_has_grid == false and section.blocks.size > 1 %} tcs-eme--no-grid-1{% endif %}{% if pinned and last_has_grid == false %} tcs-eme--open-end{% endif %}">
   {%- if pinned -%}
     <div class="tcs-eme__box">
       <div class="tcs-eme__stage">
         {%- for block in section.blocks -%}
-          {% render 'tcs-eme-banner', block: block %}
+          {% render 'tcs-eme-banner', block: block, index: forloop.index %}
         {%- endfor -%}
       </div>
     </div>
     <div class="tcs-eme__after">
       {%- for block in section.blocks -%}
-        {% render 'tcs-eme-grid', block: block, section: section %}
+        {% render 'tcs-eme-grid', block: block, section: section, index: forloop.index %}
       {%- endfor -%}
     </div>
   {%- else -%}
     {%- for block in section.blocks -%}
-      {% render 'tcs-eme-banner', block: block %}
-      {% render 'tcs-eme-grid', block: block, section: section %}
+      {% render 'tcs-eme-banner', block: block, index: forloop.index %}
+      {% render 'tcs-eme-grid', block: block, section: section, index: forloop.index %}
     {%- endfor -%}
   {%- endif -%}
 </section>

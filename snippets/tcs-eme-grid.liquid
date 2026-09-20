@@ -5,7 +5,7 @@
   homepage carousels (unless the section hides it on desktop).
 {%- endcomment -%}
 {%- if block.settings.mobile_collection != blank -%}
-  <div class="tcs-eme__mobile-collection collection">
+  <div class="tcs-eme__mobile-collection tcs-eme__mobile-collection--n{{ index | default: 1 }} collection">
     {%- if block.settings.mobile_collection_title != blank -%}
       <div class="fc-title"><h2 class="fc-title__heading">{{ block.settings.mobile_collection_title | escape }}</h2></div>
     {%- endif -%}
