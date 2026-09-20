@@ -1,0 +1,21 @@
+{%- comment -%}
+  One Eme category banner (two-cols-swap "eme_banners"): cover image,
+  glass label pill, the whole banner is the link. Used by both scroll
+  effects of the section.
+{%- endcomment -%}
+<a class="tcs-eme__item tcs-eme__item--n{{ index | default: 1 }}" {% if block.settings.button_url != blank %}href="{{ block.settings.button_url }}"{% else %}role="link" aria-disabled="true"{% endif %} {{ block.shopify_attributes }}>
+  <div class="tcs-eme__media">
+    {%- if block.settings.image != blank -%}
+      {% render 'c-image-element', image: block.settings.image, lazy: true, position: 'center', class: 'tcs-eme__img' %}
+    {%- else -%}
+      <div class="tcs-eme__img" style="background: {{ block.settings.color | default: '#111' }};"></div>
+    {%- endif -%}
+  </div>
+  {%- if block.settings.heading != blank -%}
+    <div class="tcs-eme__overlay">
+      <div class="tcs-eme__sticky">
+        <span class="tcs-eme__pill"><span class="tcs-eme__label">{{ block.settings.heading }}</span></span>
+      </div>
+    </div>
+  {%- endif -%}
+</a>

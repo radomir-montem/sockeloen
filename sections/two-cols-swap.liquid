@@ -1,3 +1,66 @@
+{%- if section.settings.eme_banners -%}
+{%- comment -%}
+  emestudios.com category banners: tall cover image, glass label pill,
+  whole banner is the link. Each block can carry a product grid
+  (setting "mobile_collection"): 2 columns under its banner on phones,
+  and from tablet up shown after the banner row (4 columns) unless
+  "grids_on_desktop" is off.
+
+  Two scroll effects:
+  - sticky_label (default): the banners scroll through, the pill sticks
+    at 75svh while its banner passes.
+  - pinned. Desktop: both banners side by side in one stage that pins at
+    the top of the viewport; the grids sit directly under it and slide
+    over it. Phone: the reverse of sticky_label, in the order banner,
+    its grid, banner, its grid. Each banner enters like any content and
+    pins full-screen; its glass label starts in the middle, scrolls up
+    with the page and docks under the header; the grid sits directly
+    under the banner and slides over it. Layout lives in
+    header-overrides.css (.tcs-eme--pinned).
+{%- endcomment -%}
+{%- liquid
+  assign pinned = false
+  if section.settings.scroll_effect == 'pinned'
+    assign pinned = true
+  endif
+  # Which banners have a grid (phone flow: banner, its grid, banner, its
+  # grid). A banner without a grid is covered by whatever comes next:
+  # the second banner, or the section after this one.
+  assign first_has_grid = false
+  assign last_has_grid = false
+  for block in section.blocks
+    if block.settings.mobile_collection != blank
+      if forloop.first
+        assign first_has_grid = true
+      endif
+      if forloop.last
+        assign last_has_grid = true
+      endif
+    endif
+  endfor
+-%}
+<section class="tcs-eme{% if pinned %} tcs-eme--pinned{% endif %}{% if section.settings.grids_on_desktop == false %} tcs-eme--grids-mobile-only{% endif %}{% if pinned and first_has_grid == false and section.blocks.size > 1 %} tcs-eme--no-grid-1{% endif %}{% if pinned and last_has_grid == false %} tcs-eme--open-end{% endif %}">
+  {%- if pinned -%}
+    <div class="tcs-eme__box">
+      <div class="tcs-eme__stage">
+        {%- for block in section.blocks -%}
+          {% render 'tcs-eme-banner', block: block, index: forloop.index %}
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="tcs-eme__after">
+      {%- for block in section.blocks -%}
+        {% render 'tcs-eme-grid', block: block, section: section, index: forloop.index %}
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    {%- for block in section.blocks -%}
+      {% render 'tcs-eme-banner', block: block, index: forloop.index %}
+      {% render 'tcs-eme-grid', block: block, section: section, index: forloop.index %}
+    {%- endfor -%}
+  {%- endif -%}
+</section>
+{%- else -%}
 <section class="bg-[#E1E1E1]">
   <div id="shopify-section-{{ section.id }}" class="{% if template contains 'product' %} flex flex-col-reverse md:grid md:grid-cols-2 {% else %} grid grid-cols-1 md:grid-cols-2 {% endif %}">
     {% for block in section.blocks %}
@@ -57,7 +120,7 @@
     {% endif %}
 <span class="regular-button text-color border pointer-events-none"
   style="font-size: 12px; font-weight: 700;">
-  {{- block.settings.button_text | downcase -}}
+  {{- block.settings.button_text | capitalize -}}
 </span>
   </div>
 {% endif %}
@@ -67,6 +130,7 @@
     {% endfor %}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
@@ -184,6 +248,35 @@
             }
           ],
           "default": "mt-0"
+        },
+        {
+          "type": "header",
+          "content": "Mobile product grid (Eme banners only)"
+        },
+        {
+          "type": "collection",
+          "id": "mobile_collection",
+          "label": "Collection shown under this banner on mobile"
+        },
+        {
+          "type": "text",
+          "id": "mobile_collection_title",
+          "label": "Title"
+        },
+        {
+          "type": "range",
+          "id": "mobile_collection_limit",
+          "min": 2,
+          "max": 8,
+          "step": 2,
+          "default": 4,
+          "label": "Products"
+        },
+        {
+          "type": "text",
+          "id": "mobile_variant_filter",
+          "label": "Show variant containing",
+          "info": "e.g. KNWU — products show their first variant whose title contains this text"
         }
       ]
     }
@@ -191,6 +284,30 @@
   "presets": [
     {
       "name": "Cols with text"
+    }
+  ],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "eme_banners",
+      "label": "Eme-style category banners (tall image, sticky glass label)",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "scroll_effect",
+      "label": "Scroll effect (Eme banners)",
+      "options": [
+        { "value": "sticky_label", "label": "Banners scroll, label pill sticks" },
+        { "value": "pinned", "label": "Banners pinned, uncovered, grids slide over" }
+      ],
+      "default": "sticky_label"
+    },
+    {
+      "type": "checkbox",
+      "id": "grids_on_desktop",
+      "label": "Show the collection grids on desktop too",
+      "default": true
     }
   ]
 }

@@ -398,6 +398,68 @@
   </div>
 </div>
 
+{%- if template.name == 'index' -%}
+<script>
+  /* Homepage hero: the content group (title, subtitle, buttons, social
+     proof) keeps its start position, then scrolls up with the page and
+     docks under the floating header while the hero image stays pinned,
+     the same behaviour as the labels of the pinned category banners.
+     The offset goes into --hero-scroll, which the CSS adds to the
+     group's own translateY. Phones dock below the category bar. */
+  (function () {
+    var banner = document.getElementById('Banner-{{ section.id }}');
+    var box = banner && banner.querySelector('.banner__box');
+    if (!box || !document.body.classList.contains('template--index')) return;
+    var phone = window.matchMedia('(max-width: 749px)');
+    var startTop = null;
+    var ticking = false;
+    function dock() { return phone.matches ? 160 : 108; }
+    function measure() {
+      box.style.setProperty('--hero-scroll', '0px');
+      /* the hero is pinned at the top, so the group's viewport top is
+         its start position whatever the scroll position */
+      startTop = box.getBoundingClientRect().top;
+      update();
+    }
+    function update() {
+      ticking = false;
+      if (startTop === null) return;
+      var travel = Math.max(0, startTop - dock());
+      var offset = Math.min(window.scrollY, travel);
+      box.style.setProperty('--hero-scroll', (-offset) + 'px');
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      /* frames are paused in hidden tabs and throttled in some
+         embedded previews; fall back to a timer there */
+      if (document.hidden || !window.requestAnimationFrame) setTimeout(update, 0);
+      else window.requestAnimationFrame(update);
+    }
+    var timer;
+    function remeasure() {
+      clearTimeout(timer);
+      timer = setTimeout(measure, 100);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', remeasure);
+    window.addEventListener('pageshow', remeasure);
+    /* the hero markup is above this script, so measure right away (the
+       load event can be held up for seconds by third-party scripts),
+       then again whenever fonts or images settle the layout */
+    measure();
+    document.addEventListener('DOMContentLoaded', remeasure);
+    window.addEventListener('load', remeasure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(remeasure);
+      ro.observe(banner);
+      ro.observe(box);
+    }
+  })();
+</script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "t:sections.image-banner.name",

@@ -317,7 +317,8 @@
         "column_xrEcgn"
       ],
       "settings": {
-        "eme_banners": true
+        "eme_banners": true,
+        "scroll_effect": "pinned"
       }
     },
     "featured_collection_YRMqEF": {

@@ -3559,13 +3559,18 @@ body.template--index .regular-button {
   filter: brightness(0) invert(1);
 }
 
-/* Push hero banner content group (title, subtitle, buttons, social proof) downward */
+/* Hero content group (title, subtitle, buttons, social proof): pushed
+   55px down on desktop as its start position, plus --hero-scroll, which
+   the hero's script sets from the scroll position so the group scrolls
+   up with the page and docks under the header while the hero image stays
+   pinned (same behaviour as the labels of the pinned banners). */
 body.template--index .banner__box {
-  transform: translateY(55px);
+  transform: translateY(calc(55px + var(--hero-scroll, 0px)));
+  will-change: transform;
 }
 @media screen and (max-width: 749px) {
   body.template--index .banner__box {
-    transform: translateY(35px);
+    transform: translateY(calc(35px + var(--hero-scroll, 0px)));
   }
 }
 
@@ -4187,10 +4192,10 @@ body.template--index #MainContent [class*="two-cols-"] img {
 }
 
 /* Mobile hero: no extra downward shift of the content box — it pushed the
-   button under the best sellers sheet on phones. */
+   button under the best sellers sheet on phones. Only the scroll offset. */
 @media screen and (max-width: 749px) {
   body.template--index .banner__box {
-    transform: none !important;
+    transform: translateY(var(--hero-scroll, 0px)) !important;
   }
 }
 
@@ -4489,8 +4494,11 @@ body.template--index .taggbox .tb_rt_image_wrap_ { border-radius: 4px !important
 .tcs-eme__item { position: relative; display: block; width: 100%; height: 630px; overflow: visible; color: #fff; text-decoration: none; }
 .tcs-eme__media { position: absolute; inset: 0; overflow: hidden; }
 .tcs-eme__img, .tcs-eme__media img { width: 100% !important; height: 100% !important; object-fit: cover; display: block; border-radius: 0 !important; }
-.tcs-eme__overlay { position: absolute; inset: 0; z-index: 1; display: flex; width: 100%; justify-content: center; padding: 0 10px; pointer-events: none; }
-.tcs-eme__sticky { position: sticky; top: 75svh; display: flex; width: 100%; height: fit-content; justify-content: center; padding: 34px 0; }
+/* the overlay ends at the banner's midpoint (+ half the label box), so the
+   sticky label can never travel below the middle of its banner */
+.tcs-eme__overlay { position: absolute; inset: 0; bottom: auto; height: calc(50% + 55px); z-index: 1; display: flex; width: 100%; justify-content: center; padding: 0 10px; pointer-events: none; }
+/* the label rides up with the banner and stops at the middle of the screen (pill centre = 50svh) */
+.tcs-eme__sticky { position: sticky; top: calc(50svh - 55px); display: flex; width: 100%; height: fit-content; justify-content: center; padding: 34px 0; }
 .tcs-eme__pill {
   pointer-events: auto; display: flex; width: fit-content; align-items: center; justify-content: center;
   padding: 24px; border-radius: 8px; text-align: center;
@@ -4506,10 +4514,133 @@ body.template--index #MainContent .tcs-eme__label { text-transform: capitalize !
 @media screen and (min-width: 640px) {
   .tcs-eme { flex-direction: row; flex-wrap: wrap; }
   .tcs-eme__item { width: 50%; height: 695px; }
-  .tcs-eme__sticky { padding: 30px 0; }
+  .tcs-eme__sticky { padding: 30px 0; top: calc(50svh - 51px); }
+  .tcs-eme__overlay { height: calc(50% + 51px); }
+  /* The banners' collection grids: full width, after the banner row */
+  .tcs-eme__mobile-collection { width: 100%; order: 1; }
 }
 @media screen and (min-width: 750px) {
-  .tcs-eme__mobile-collection { display: none; }
+  /* Shown on desktop too (4 columns via md:grid-cols-4), unless the
+     section keeps them phone-only. */
+  .tcs-eme--grids-mobile-only .tcs-eme__mobile-collection { display: none; }
+}
+
+/* ---- Pinned scroll effect (section setting "scroll_effect: pinned") ----
+   The reverse of the first banner block: there the banners scroll and
+   the label sticks; here the banners stay and everything else moves.
+   Desktop: both banners side by side in one stage (normal height,
+   --tcs-h) that pins at the top of the viewport as soon as it gets
+   there. The grids sit directly under the stage (no gap) and slide over
+   it; box = 2 heights, the grids overlap the second one.
+   Phone: flow order banner, its grid, banner, its grid (flex order on
+   the banners and grids, the wrappers are display:contents). Each banner
+   is 2 viewports tall: its media pins full-screen for one viewport while
+   the grid, which sits directly under it, slides over it. The glass
+   label starts in the middle of the banner, scrolls up with the page
+   and docks under the floating header until it is covered. A banner
+   without a grid is covered by the next banner or the next section.
+   Net page length equals the plain layout. All scroll position, no JS. */
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) ~ .shopify-section:has(> .tcs-eme--pinned) {
+  --tcs-h: 695px;
+  z-index: 0 !important;
+}
+@media screen and (max-width: 639px) {
+  .tcs-eme--pinned { display: flex; flex-direction: column; }
+  .tcs-eme--pinned .tcs-eme__box,
+  .tcs-eme--pinned .tcs-eme__stage,
+  .tcs-eme--pinned .tcs-eme__after { display: contents; }
+  .tcs-eme--pinned .tcs-eme__item--n1 { order: 1; }
+  .tcs-eme--pinned .tcs-eme__mobile-collection--n1 { order: 2; }
+  .tcs-eme--pinned .tcs-eme__item--n2 { order: 3; }
+  .tcs-eme--pinned .tcs-eme__mobile-collection--n2 { order: 4; }
+  .tcs-eme--pinned .tcs-eme__item {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 200svh;
+    overflow: visible;
+    isolation: isolate; /* keeps this banner's label under what covers it */
+  }
+  .tcs-eme--pinned .tcs-eme__media {
+    position: sticky;
+    inset: auto;
+    top: 0;
+    width: 100%;
+    height: 100svh;
+    overflow: hidden;
+  }
+  /* label: in the flow at the middle of the banner, scrolls up with the
+     page once the banner is pinned, docks under the floating header */
+  .tcs-eme--pinned .tcs-eme__overlay {
+    position: sticky;
+    inset: auto;
+    top: 108px;
+    height: auto;
+    margin-top: -50svh;
+    padding: 0 12px;
+  }
+  .tcs-eme--pinned .tcs-eme__sticky { position: static; padding: 0; transform: none; }
+  .tcs-eme--pinned .tcs-eme__mobile-collection {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    margin-top: -100svh;
+    background: #fff;
+  }
+  /* first banner without a grid: the second banner covers it */
+  .tcs-eme--pinned.tcs-eme--no-grid-1 .tcs-eme__item--n2 { margin-top: -100svh; }
+  /* last banner without a grid: the next section covers it */
+  body.template--index #MainContent > .shopify-section:has(> .tcs-eme--pinned.tcs-eme--open-end) + .shopify-section {
+    margin-top: -100svh !important;
+  }
+}
+@media screen and (min-width: 640px) {
+  /* Same mechanics as on phones, per column: each banner is two heights
+     tall, its media pins when it reaches the top, the label starts in
+     the middle and scrolls up to dock under the header, the grids sit
+     directly under the banners and slide over them. */
+  .tcs-eme--pinned { display: block; }
+  .tcs-eme--pinned .tcs-eme__box { height: auto; }
+  .tcs-eme--pinned .tcs-eme__stage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: static;
+    height: auto;
+    overflow: visible;
+    background: #111;
+  }
+  .tcs-eme--pinned .tcs-eme__item {
+    position: relative;
+    display: block;
+    width: auto;
+    height: calc(2 * var(--tcs-h));
+    min-height: 0;
+    overflow: visible;
+    isolation: isolate;
+  }
+  .tcs-eme--pinned .tcs-eme__media {
+    position: sticky;
+    inset: auto;
+    top: 0;
+    width: 100%;
+    height: var(--tcs-h);
+    overflow: hidden;
+  }
+  .tcs-eme--pinned .tcs-eme__overlay {
+    position: sticky;
+    inset: auto;
+    top: 108px;
+    height: auto;
+    margin-top: calc(-0.5 * var(--tcs-h));
+    padding: 0 10px;
+  }
+  .tcs-eme--pinned .tcs-eme__sticky { position: static; padding: 0; transform: none; }
+  .tcs-eme--pinned .tcs-eme__after {
+    position: relative;
+    z-index: 2;
+    margin-top: calc(-1 * var(--tcs-h));
+    background: #fff;
+  }
 }
 /* all homepage product carousels on plain white */
 body.template--index #MainContent .isolate.bg-background,

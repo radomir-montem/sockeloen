@@ -1,0 +1,37 @@
+{%- comment -%}
+  Product grid that belongs to an Eme category banner (block setting
+  "mobile_collection"). Two columns on phones; from tablet up it is shown
+  as well, full width after the banner row, four columns like the other
+  homepage carousels (unless the section hides it on desktop).
+{%- endcomment -%}
+{%- if block.settings.mobile_collection != blank -%}
+  <div class="tcs-eme__mobile-collection tcs-eme__mobile-collection--n{{ index | default: 1 }} collection">
+    {%- if block.settings.mobile_collection_title != blank -%}
+      <div class="fc-title"><h2 class="fc-title__heading">{{ block.settings.mobile_collection_title | escape }}</h2></div>
+    {%- endif -%}
+    <div class="grid grid-cols-2 md:grid-cols-4 tcs-eme__grid">
+      {%- for product in block.settings.mobile_collection.products limit: block.settings.mobile_collection_limit -%}
+        {%- liquid
+          assign match_variant = nil
+          if block.settings.mobile_variant_filter != blank
+            assign needle = block.settings.mobile_variant_filter | downcase | strip
+            for v in product.variants
+              assign vt = v.title | downcase
+              if vt contains needle
+                assign match_variant = v
+                break
+              endif
+            endfor
+          endif
+        -%}
+        <div>
+          {%- if match_variant -%}
+            {% render 'card-product-variant', card_product: match_variant, product: product, title: product.title, media_aspect_ratio: 'portrait', show_secondary_image: true, show_vendor: false, show_rating: false, show_quick_add: false, section_id: section.id %}
+          {%- else -%}
+            {% render 'card-product', card_product: product, media_aspect_ratio: 'portrait', show_secondary_image: true, show_vendor: false, show_rating: false, show_quick_add: false, section_id: section.id %}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
