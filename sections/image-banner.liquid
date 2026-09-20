@@ -410,7 +410,6 @@
     var banner = document.getElementById('Banner-{{ section.id }}');
     var box = banner && banner.querySelector('.banner__box');
     if (!box || !document.body.classList.contains('template--index')) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var phone = window.matchMedia('(max-width: 749px)');
     var startTop = null;
     var ticking = false;
@@ -434,14 +433,26 @@
       ticking = true;
       window.requestAnimationFrame(update);
     }
-    var resizeTimer;
+    var timer;
+    function remeasure() {
+      clearTimeout(timer);
+      timer = setTimeout(measure, 100);
+    }
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(measure, 150);
-    });
-    if (document.readyState === 'complete') measure();
-    else window.addEventListener('load', measure);
+    window.addEventListener('resize', remeasure);
+    window.addEventListener('pageshow', remeasure);
+    /* the hero markup is above this script, so measure right away (the
+       load event can be held up for seconds by third-party scripts),
+       then again whenever fonts or images settle the layout */
+    measure();
+    document.addEventListener('DOMContentLoaded', remeasure);
+    window.addEventListener('load', remeasure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(remeasure);
+      ro.observe(banner);
+      ro.observe(box);
+    }
   })();
 </script>
 {%- endif -%}
