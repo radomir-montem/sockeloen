@@ -245,9 +245,7 @@
         "ecaa607f-a456-4c64-8b1d-82c823de6917"
       ],
       "settings": {
-        "eme_banners": true,
-        "scroll_effect": "sticky_label",
-        "grids_on_desktop": true
+        "eme_banners": true
       }
     },
     "featured_collection_knwu": {
@@ -295,7 +293,7 @@
         "column_xrEcgn": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/AWE_Email_banner_workfile_3.png",
+            "image": "shopify://shop_images/AWE_Email_banner_workfile_3_410698b6-4151-4f04-8eae-e2249df875fb.png",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
@@ -319,9 +317,7 @@
         "column_xrEcgn"
       ],
       "settings": {
-        "eme_banners": true,
-        "scroll_effect": "pinned",
-        "grids_on_desktop": true
+        "eme_banners": true
       }
     },
     "featured_collection_YRMqEF": {
@@ -723,9 +719,7 @@
       ],
       "disabled": true,
       "settings": {
-        "eme_banners": false,
-        "scroll_effect": "sticky_label",
-        "grids_on_desktop": true
+        "eme_banners": false
       }
     },
     "image_text": {
