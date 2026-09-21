@@ -20,8 +20,8 @@
         "kicker": "Black Friday 2026",
         "heading": "Don't miss the early break away",
         "subheading": "Join here to get exclusive access to our Black Friday deals first",
-        "button_label": "Get early access",
-        "note": "Members get the deals before anyone else. No spam.",
+        "button_label": "Sign up for early access",
+        "note": "Members get the deals before anyone else.",
         "text_position": "center",
         "klaviyo_list_id": "SyzS5z",
         "klaviyo_company_id": "S82fvg",
@@ -37,20 +37,8 @@
         "success_heading": "You're in the break away",
         "success_text": "Keep an eye on your inbox. You'll get the Black Friday deals before they go public.",
         "success_button": "Done",
-        "button_label_done": "You're in ✓ Invite a ride buddy",
-        "countdown_enabled": true,
-        "countdown_date": "2026-11-24T08:00:00+01:00",
-        "countdown_label": "Early access opens in",
-        "countdown_done": "Early access is open",
-        "show_social_proof": true,
-        "sp_text": "Join 78.342 athletes riding in Sockeloen",
-        "show_sound_toggle": true,
-        "benefit_1": "First access to every Black Friday deal",
-        "benefit_2": "Members-only extra deals",
-        "benefit_3": "One e-mail when the doors open, unsubscribe anytime",
         "phone_enabled": true,
-        "phone_country": "+31",
-        "share_enabled": true
+        "phone_country": "+31"
       }
     }
   },
