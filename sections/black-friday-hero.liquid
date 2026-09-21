@@ -51,6 +51,14 @@
       <p class="bf-hero__note">{{ s.note | escape }}</p>
     {%- endif -%}
   </div>
+  {%- if s.hide_footer -%}
+    {%- comment -%} the theme footer is hidden on this template; a one-line legal footer keeps the policies reachable {%- endcomment -%}
+    <p class="bf-hero__legal">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      {%- if shop.privacy_policy.url != blank -%}<a href="{{ shop.privacy_policy.url }}">{{ s.legal_privacy | default: 'Privacy policy' | escape }}</a>{%- endif -%}
+      {%- if shop.terms_of_service.url != blank -%}<a href="{{ shop.terms_of_service.url }}">{{ s.legal_terms | default: 'Terms' | escape }}</a>{%- endif -%}
+    </p>
+  {%- endif -%}
 </section>
 
 {%- comment -%} Full-screen sign-up sheet {%- endcomment -%}
@@ -135,6 +143,12 @@
   body.template--page.template--black-friday #MainContent {
     padding-top: 0;
   }
+  {%- if s.hide_footer %}
+  body.template--page.template--black-friday .shopify-section-group-footer-group,
+  body.template--page.template--black-friday #shopify-section-footer {
+    display: none;
+  }
+  {%- endif %}
 
   #BfHero-{{ sid }} {
     position: relative;
@@ -227,70 +241,100 @@
   }
   #BfHero-{{ sid }} .bf-hero__cta:hover { background: rgba(255, 255, 255, .34); border-color: rgba(255, 255, 255, .45); }
   #BfHero-{{ sid }} .bf-hero__note { margin: 0; font-size: 12px; color: rgba(255, 255, 255, .7); }
+  #BfHero-{{ sid }} .bf-hero__legal {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    z-index: 1;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    font-size: 11px;
+    letter-spacing: .02em;
+    color: rgba(255, 255, 255, .6);
+  }
+  #BfHero-{{ sid }} .bf-hero__legal a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  #BfHero-{{ sid }} .bf-hero__legal a:hover { color: #fff; }
   @media screen and (max-width: 749px) {
-    #BfHero-{{ sid }} .bf-hero__content { padding: 150px 16px 64px; gap: 14px; }
+    #BfHero-{{ sid }} .bf-hero__content { padding: 150px 16px 72px; gap: 14px; }
     #BfHero-{{ sid }} .bf-hero__cta { width: 100%; padding: 16px 20px; }
+    #BfHero-{{ sid }} .bf-hero__legal { bottom: calc(14px + env(safe-area-inset-bottom)); }
   }
 
-  /* ---- sign-up sheet ---- */
+  /* ---- sign-up sheet: whole page blurred, white glass panel that
+     covers the hero text, cookie-banner button recipe (52px, 8px
+     radius, uppercase 12px; solid primary, outlined secondary) ---- */
   #BfSignup-{{ sid }} { position: fixed; inset: 0; z-index: 400; }
   #BfSignup-{{ sid }}[hidden] { display: none; }
   #BfSignup-{{ sid }} .bf-signup__backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, .62);
-    backdrop-filter: blur(21px) saturate(180%);
-    -webkit-backdrop-filter: blur(21px) saturate(180%);
+    background: rgba(0, 0, 0, .55);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
   }
   #BfSignup-{{ sid }} .bf-signup__sheet {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: min(480px, calc(100% - 32px));
-    max-height: calc(100% - 32px);
+    width: min(720px, calc(100% - 48px));
+    min-height: min(600px, calc(100% - 48px));
+    max-height: calc(100% - 48px);
     overflow: auto;
-    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 64px;
     color: #111;
-    border-radius: 12px;
-    padding: 40px 32px 32px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
     text-align: center;
+    background: rgba(255, 255, 255, .78);
+    border: 1px solid rgba(255, 255, 255, .7);
+    border-radius: 12px;
+    backdrop-filter: blur(21px) saturate(180%);
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .25);
   }
   #BfSignup-{{ sid }} .bf-signup__close {
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 14px;
+    right: 14px;
     width: 40px;
     height: 40px;
     display: grid;
     place-items: center;
-    border: 0;
+    border: 1px solid rgba(0, 0, 0, .08);
     border-radius: 8px;
-    background: #f2f2f2;
+    background: rgba(255, 255, 255, .7);
     color: #111;
     cursor: pointer;
+    transition: background-color .15s ease;
   }
-  #BfSignup-{{ sid }} .bf-signup__close:hover { background: #e6e6e6; }
+  #BfSignup-{{ sid }} .bf-signup__close:hover { background: #fff; }
+  #BfSignup-{{ sid }} .bf-signup__form,
+  #BfSignup-{{ sid }} .bf-signup__success { width: 100%; max-width: 440px; margin: 0 auto; }
   #BfSignup-{{ sid }} .bf-signup__form[hidden],
   #BfSignup-{{ sid }} .bf-signup__success[hidden] { display: none; }
   #BfSignup-{{ sid }} .bf-signup__kicker {
-    margin: 0 0 10px;
+    margin: 0 0 12px;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: .08em;
     text-transform: uppercase;
-    color: #0395F6;
+    color: rgba(17, 17, 17, .55);
   }
   #BfSignup-{{ sid }} .bf-signup__title {
-    margin: 0 0 10px;
-    font-size: 26px;
+    margin: 0 0 12px;
+    font-size: 30px;
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1.08;
+    letter-spacing: -.01em;
     color: #111;
     text-wrap: balance;
   }
-  #BfSignup-{{ sid }} .bf-signup__text { margin: 0 0 22px; font-size: 15px; line-height: 1.5; color: #666; }
+  #BfSignup-{{ sid }} .bf-signup__text { margin: 0 0 24px; font-size: 15px; line-height: 1.5; color: #444; }
   #BfSignup-{{ sid }} .bf-signup__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   #BfSignup-{{ sid }} .bf-signup__input {
     width: 100%;
@@ -298,14 +342,15 @@
     padding: 0 16px;
     font-size: 16px;
     color: #111;
-    background: #fff;
-    border: 1px solid #d9d9d9;
+    background: rgba(255, 255, 255, .9);
+    border: 1px solid rgba(0, 0, 0, .14);
     border-radius: 8px;
     outline: none;
     box-sizing: border-box;
     transition: border-color .15s ease, box-shadow .15s ease;
   }
-  #BfSignup-{{ sid }} .bf-signup__input:focus { border-color: #0395F6; box-shadow: 0 0 0 3px rgba(3, 149, 246, .18); }
+  #BfSignup-{{ sid }} .bf-signup__input::placeholder { color: #8a8a8a; }
+  #BfSignup-{{ sid }} .bf-signup__input:focus { border-color: #111; box-shadow: 0 0 0 3px rgba(0, 0, 0, .08); background: #fff; }
   #BfSignup-{{ sid }} .bf-signup__input[aria-invalid="true"] { border-color: #d9202a; }
   #BfSignup-{{ sid }} .bf-signup__tel { position: relative; }
   #BfSignup-{{ sid }} .bf-signup__tel-country {
@@ -334,47 +379,48 @@
     margin-top: 1px;
     display: grid;
     place-items: center;
-    border: 1px solid #c9c9c9;
+    border: 1px solid rgba(0, 0, 0, .3);
     border-radius: 4px;
     color: #fff;
-    background: #fff;
+    background: rgba(255, 255, 255, .9);
     transition: background-color .15s ease, border-color .15s ease;
   }
-  #BfSignup-{{ sid }} .bf-signup__check-row input:checked + .bf-signup__check-box { background: #0395F6; border-color: #0395F6; }
-  #BfSignup-{{ sid }} .bf-signup__check-row input:focus-visible + .bf-signup__check-box { box-shadow: 0 0 0 3px rgba(3, 149, 246, .18); }
+  #BfSignup-{{ sid }} .bf-signup__check-row input:checked + .bf-signup__check-box { background: #111; border-color: #111; }
+  #BfSignup-{{ sid }} .bf-signup__check-row input:focus-visible + .bf-signup__check-box { box-shadow: 0 0 0 3px rgba(0, 0, 0, .1); }
   #BfSignup-{{ sid }} .bf-signup__check-text { font-size: 13px; line-height: 1.45; color: #444; }
   #BfSignup-{{ sid }} .bf-signup__error { margin: 10px 0 0; font-size: 13px; color: #d9202a; text-align: left; }
   #BfSignup-{{ sid }} .bf-signup__error[hidden] { display: none; }
-  #BfSignup-{{ sid }} .bf-signup__submit {
-    width: 100%;
-    margin-top: 12px;
-    padding: 16px 20px;
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-    background: #0395F6;
-    border: 0;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color .2s ease;
-  }
-  #BfSignup-{{ sid }} .bf-signup__submit:hover { background: #0284d9; }
-  #BfSignup-{{ sid }} .bf-signup__submit[disabled] { opacity: .7; cursor: wait; }
+  /* cookie-banner button recipe */
+  #BfSignup-{{ sid }} .bf-signup__submit,
   #BfSignup-{{ sid }} .bf-signup__skip {
     display: block;
     width: 100%;
-    margin: 14px 0 0;
-    padding: 6px;
-    font-size: 13px;
-    color: #666;
-    background: none;
-    border: 0;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    height: 52px;
+    margin: 12px 0 0;
+    padding: 0 20px;
+    font-size: 12px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background-color .2s ease, color .2s ease;
   }
-  #BfSignup-{{ sid }} .bf-signup__skip:hover { color: #111; }
-  #BfSignup-{{ sid }} .bf-signup__consent { margin: 14px 0 0; font-size: 12px; line-height: 1.45; color: #999; }
+  #BfSignup-{{ sid }} .bf-signup__submit {
+    font-weight: 600;
+    color: #fff;
+    background: #111;
+    border: 2px solid #111;
+  }
+  #BfSignup-{{ sid }} .bf-signup__submit:hover { background: #333; border-color: #333; }
+  #BfSignup-{{ sid }} .bf-signup__submit[disabled] { opacity: .7; cursor: wait; }
+  #BfSignup-{{ sid }} .bf-signup__skip {
+    font-weight: 400;
+    color: #111;
+    background: transparent;
+    border: 2px solid #111;
+  }
+  #BfSignup-{{ sid }} .bf-signup__skip:hover { background: rgba(0, 0, 0, .06); }
+  #BfSignup-{{ sid }} .bf-signup__consent { margin: 14px 0 0; font-size: 12px; line-height: 1.45; color: #666; }
   #BfSignup-{{ sid }} .bf-signup__check {
     width: 56px;
     height: 56px;
@@ -382,20 +428,22 @@
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background: rgba(90, 154, 0, .12);
+    background: rgba(90, 154, 0, .14);
     color: #5a9a00;
   }
   @media screen and (max-width: 749px) {
     #BfSignup-{{ sid }} .bf-signup__sheet {
-      top: auto;
-      bottom: 0;
-      left: 0;
+      top: 104px;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
       transform: none;
-      width: 100%;
-      max-height: calc(100% - 24px);
-      border-radius: 12px 12px 0 0;
-      padding: 40px 20px calc(24px + env(safe-area-inset-bottom));
+      width: auto;
+      min-height: 0;
+      max-height: none;
+      padding: 56px 20px calc(24px + env(safe-area-inset-bottom));
     }
+    #BfSignup-{{ sid }} .bf-signup__title { font-size: 26px; }
   }
 </style>
 
@@ -569,6 +617,11 @@
       { "value": "bottom", "label": "Bottom" },
       { "value": "top", "label": "Top" }
     ], "default": "center" },
+
+    { "type": "header", "content": "Footer" },
+    { "type": "checkbox", "id": "hide_footer", "label": "Hide the theme footer on this page", "default": true, "info": "Keeps visitors on the one goal. A one-line legal footer with the policy links stays." },
+    { "type": "text", "id": "legal_privacy", "label": "Privacy link text", "default": "Privacy policy" },
+    { "type": "text", "id": "legal_terms", "label": "Terms link text", "default": "Terms" },
 
     { "type": "header", "content": "Klaviyo" },
     { "type": "text", "id": "klaviyo_list_id", "label": "Klaviyo list ID", "info": "Everyone who signs up is added to this list." },

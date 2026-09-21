@@ -34,11 +34,11 @@
         "form_button": "Get exclusive access",
         "form_consent": "By signing up you agree to receive e-mails from Sockeloen. Unsubscribe anytime.",
         "error_text": "Please enter a valid e-mail address.",
+        "phone_enabled": true,
+        "phone_country": "+31",
         "success_heading": "You're in the break away",
         "success_text": "Keep an eye on your inbox. You'll get the Black Friday deals before they go public.",
-        "success_button": "Done",
-        "phone_enabled": true,
-        "phone_country": "+31"
+        "success_button": "Done"
       }
     }
   },
