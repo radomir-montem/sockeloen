@@ -1,0 +1,669 @@
+{%- comment -%}
+  Black Friday sign-up hero: full-screen looping video with the message
+  on top, header pill floating over it, footer below (template
+  page.black-friday). The button opens a full-screen sign-up sheet:
+  step 1 e-mail, step 2 optional mobile number with explicit SMS consent,
+  step 3 success. Both steps subscribe through Klaviyo's client API to
+  one list (custom source set, the list's opt-in process applies).
+  Optionally the button opens a Klaviyo-built form instead (setting
+  "Klaviyo form ID").
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign shade = s.overlay_opacity | divided_by: 100.0
+  assign sid = section.id
+-%}
+<section
+  id="BfHero-{{ sid }}"
+  class="bf-hero bf-hero--{{ s.text_position }}"
+  style="--bf-shade: {{ shade }}; --bf-min-h: {{ s.min_height }}svh; --bf-video-pos: {{ s.video_position }};"
+  data-bf-hero
+>
+  <div class="bf-hero__media">
+    {%- if s.video != blank -%}
+      {{ s.video | video_tag: image_size: '1920x', autoplay: true, loop: true, muted: true, controls: false, preload: 'auto', class: 'bf-hero__video' }}
+    {%- elsif s.video_url != blank -%}
+      <video class="bf-hero__video" autoplay loop muted playsinline preload="auto"{% if s.poster != blank %} poster="{{ s.poster | image_url: width: 1920 }}"{% endif %}>
+        <source src="{{ s.video_url }}" type="video/mp4">
+      </video>
+    {%- elsif s.poster != blank -%}
+      {{ s.poster | image_url: width: 2400 | image_tag: class: 'bf-hero__video', loading: 'eager', sizes: '100vw' }}
+    {%- else -%}
+      <div class="bf-hero__video bf-hero__video--empty"></div>
+    {%- endif -%}
+  </div>
+  <div class="bf-hero__shade" aria-hidden="true"></div>
+
+  <div class="bf-hero__content">
+    {%- if s.kicker != blank -%}
+      <p class="bf-hero__kicker">{{ s.kicker | escape }}</p>
+    {%- endif -%}
+    {%- if s.heading != blank -%}
+      <h1 class="bf-hero__heading">{{ s.heading | escape }}</h1>
+    {%- endif -%}
+    {%- if s.subheading != blank -%}
+      <p class="bf-hero__sub">{{ s.subheading | escape }}</p>
+    {%- endif -%}
+    {%- if s.button_label != blank -%}
+      <button type="button" class="bf-hero__cta" data-bf-open>{{ s.button_label | escape }}</button>
+    {%- endif -%}
+    {%- if s.note != blank -%}
+      <p class="bf-hero__note">{{ s.note | escape }}</p>
+    {%- endif -%}
+  </div>
+  {%- if s.hide_footer -%}
+    {%- comment -%} the theme footer is hidden on this template; a one-line legal footer keeps the policies reachable {%- endcomment -%}
+    <p class="bf-hero__legal">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      {%- if shop.privacy_policy.url != blank -%}<a href="{{ shop.privacy_policy.url }}">{{ s.legal_privacy | default: 'Privacy policy' | escape }}</a>{%- endif -%}
+      {%- if shop.terms_of_service.url != blank -%}<a href="{{ shop.terms_of_service.url }}">{{ s.legal_terms | default: 'Terms' | escape }}</a>{%- endif -%}
+    </p>
+  {%- endif -%}
+</section>
+
+{%- comment -%} Full-screen sign-up sheet {%- endcomment -%}
+<div class="bf-signup" id="BfSignup-{{ sid }}" hidden data-bf-signup
+  data-company="{{ s.klaviyo_company_id | escape }}"
+  data-list="{{ s.klaviyo_list_id | escape }}"
+  data-form="{{ s.klaviyo_form_id | escape }}"
+  data-source="{{ s.custom_source | escape }}"
+  data-country="{{ s.phone_country | default: '+31' | escape }}"
+>
+  <div class="bf-signup__sheet" role="dialog" aria-modal="true" aria-labelledby="BfSignupTitle-{{ sid }}">
+    <button type="button" class="bf-signup__close" data-bf-close aria-label="{{ 'accessibility.close' | t | default: 'Close' }}">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+
+    {%- comment -%} step 1: e-mail {%- endcomment -%}
+    <form class="bf-signup__form" data-bf-form novalidate>
+      {%- if s.form_kicker != blank -%}
+        <p class="bf-signup__kicker">{{ s.form_kicker | escape }}</p>
+      {%- endif -%}
+      <h2 class="bf-signup__title" id="BfSignupTitle-{{ sid }}">{{ s.form_heading | escape }}</h2>
+      {%- if s.form_text != blank -%}
+        <p class="bf-signup__text">{{ s.form_text | escape }}</p>
+      {%- endif -%}
+      <label class="bf-signup__label" for="BfEmail-{{ sid }}">{{ s.form_placeholder | default: 'E-mail address' | escape }}</label>
+      <input class="bf-signup__input" id="BfEmail-{{ sid }}" type="email" name="email" inputmode="email" autocomplete="email" placeholder="{{ s.form_placeholder | default: 'E-mail address' | escape }}" required>
+      <p class="bf-signup__error" data-bf-error hidden>{{ s.error_text | escape }}</p>
+      <button type="submit" class="bf-signup__submit" data-bf-submit>
+        <span data-bf-submit-label>{{ s.form_button | escape }}</span>
+      </button>
+      {%- if s.form_consent != blank -%}
+        <p class="bf-signup__consent">{{ s.form_consent | escape }}</p>
+      {%- endif -%}
+    </form>
+
+    {%- comment -%} step 2: mobile number (optional) {%- endcomment -%}
+    {%- if s.phone_enabled -%}
+      <form class="bf-signup__form bf-signup__phone" data-bf-phone-form hidden novalidate>
+        {%- if s.phone_kicker != blank -%}
+          <p class="bf-signup__kicker">{{ s.phone_kicker | escape }}</p>
+        {%- endif -%}
+        <h2 class="bf-signup__title">{{ s.phone_heading | escape }}</h2>
+        {%- if s.phone_text != blank -%}
+          <p class="bf-signup__text">{{ s.phone_text | escape }}</p>
+        {%- endif -%}
+        <label class="bf-signup__label" for="BfPhone-{{ sid }}">{{ s.phone_placeholder | default: 'Mobile number' | escape }}</label>
+        <div class="bf-signup__tel">
+          <span class="bf-signup__tel-country">{{ s.phone_country | default: '+31' | escape }}</span>
+          <input class="bf-signup__input bf-signup__input--tel" id="BfPhone-{{ sid }}" type="tel" name="phone" inputmode="tel" autocomplete="tel-national" placeholder="{{ s.phone_placeholder | default: '6 12345678' | escape }}">
+        </div>
+        <label class="bf-signup__check-row">
+          <input type="checkbox" name="sms_consent" data-bf-sms-consent>
+          <span class="bf-signup__check-box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="bf-signup__check-text">{{ s.phone_consent | escape }}</span>
+        </label>
+        <p class="bf-signup__error" data-bf-phone-error hidden>{{ s.phone_error | escape }}</p>
+        <button type="submit" class="bf-signup__submit" data-bf-phone-submit>
+          <span data-bf-phone-label>{{ s.phone_button | escape }}</span>
+        </button>
+        <button type="button" class="bf-signup__skip" data-bf-phone-skip>{{ s.phone_skip | escape }}</button>
+      </form>
+    {%- endif -%}
+
+    {%- comment -%} step 3: success {%- endcomment -%}
+    <div class="bf-signup__success" data-bf-success hidden>
+      <div class="bf-signup__check" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14.5l5 5L22 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h2 class="bf-signup__title">{{ s.success_heading | escape }}</h2>
+      {%- if s.success_text != blank -%}
+        <p class="bf-signup__text">{{ s.success_text | escape }}</p>
+      {%- endif -%}
+      <button type="button" class="bf-signup__submit bf-signup__submit--done" data-bf-close>{{ s.success_button | default: 'Done' | escape }}</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* the video runs up behind the floating header, like the homepage hero */
+  body.template--page.template--black-friday main#MainContent,
+  body.template--page.template--black-friday #MainContent {
+    padding-top: 0;
+  }
+  {%- if s.hide_footer %}
+  body.template--page.template--black-friday .shopify-section-group-footer-group,
+  body.template--page.template--black-friday #shopify-section-footer {
+    display: none;
+  }
+  {%- endif %}
+
+  #BfHero-{{ sid }} {
+    position: relative;
+    min-height: var(--bf-min-h, 100svh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #0b0b0b;
+    color: #fff;
+  }
+  #BfHero-{{ sid }} .bf-hero__media { position: absolute; inset: 0; }
+  #BfHero-{{ sid }} .bf-hero__media video,
+  #BfHero-{{ sid }} .bf-hero__media img,
+  #BfHero-{{ sid }} .bf-hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--bf-video-pos, center);
+    display: block;
+  }
+  #BfHero-{{ sid }} .bf-hero__video--empty { background: linear-gradient(160deg, #1a1a1a, #000); }
+  #BfHero-{{ sid }} .bf-hero__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, 0) 32%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .55) 100%),
+      rgba(0, 0, 0, var(--bf-shade, .35));
+    pointer-events: none;
+  }
+  #BfHero-{{ sid }} .bf-hero__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 140px 16px 96px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  #BfHero-{{ sid }}.bf-hero--bottom .bf-hero__content { align-self: flex-end; padding-bottom: 72px; }
+  #BfHero-{{ sid }}.bf-hero--top .bf-hero__content { align-self: flex-start; }
+  #BfHero-{{ sid }} .bf-hero__kicker {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .8);
+  }
+  #BfHero-{{ sid }} .bf-hero__heading {
+    margin: 0;
+    font-size: clamp(38px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -.01em;
+    color: #fff;
+    text-wrap: balance;
+  }
+  #BfHero-{{ sid }} .bf-hero__sub {
+    margin: 0;
+    max-width: 560px;
+    font-size: clamp(15px, 1.6vw, 19px);
+    line-height: 1.45;
+    color: rgba(255, 255, 255, .88);
+    text-wrap: balance;
+  }
+  /* glass button, same recipe as the homepage hero button */
+  #BfHero-{{ sid }} .bf-hero__cta {
+    margin-top: 8px;
+    padding: 15px 28px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(255, 255, 255, .2);
+    border: 1px solid rgba(255, 255, 255, .28);
+    border-radius: 8px;
+    backdrop-filter: blur(21px) saturate(180%);
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    transition: background-color .2s ease, border-color .2s ease;
+  }
+  #BfHero-{{ sid }} .bf-hero__cta:hover { background: rgba(255, 255, 255, .34); border-color: rgba(255, 255, 255, .45); }
+  #BfHero-{{ sid }} .bf-hero__note { margin: 0; font-size: 12px; color: rgba(255, 255, 255, .7); }
+  #BfHero-{{ sid }} .bf-hero__legal {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    z-index: 1;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    font-size: 11px;
+    letter-spacing: .02em;
+    color: rgba(255, 255, 255, .6);
+  }
+  #BfHero-{{ sid }} .bf-hero__legal a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  #BfHero-{{ sid }} .bf-hero__legal a:hover { color: #fff; }
+  @media screen and (max-width: 749px) {
+    #BfHero-{{ sid }} .bf-hero__content { padding: 150px 16px 72px; gap: 14px; }
+    #BfHero-{{ sid }} .bf-hero__cta { width: 100%; padding: 16px 20px; }
+    #BfHero-{{ sid }} .bf-hero__legal { bottom: calc(14px + env(safe-area-inset-bottom)); }
+  }
+
+  /* ---- sign-up sheet: a full-screen glass layer that slides in from the
+     right (0.7s, cubic-bezier(.4,0,.2,1), as on representclo.com) and
+     slides back out on close. Transparent enough for the video to show
+     through, blurred hard enough that nothing behind it can be read; the
+     hero text also fades out while it is open. Buttons follow the cookie
+     banner's recipe: 52px, 8px radius, uppercase 12px, solid primary and
+     outlined secondary. ---- */
+  #BfSignup-{{ sid }} {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    visibility: hidden;
+    transition: visibility 0s linear .7s;
+  }
+  #BfSignup-{{ sid }}[hidden] { display: none; }
+  #BfSignup-{{ sid }}.is-open { visibility: visible; transition-delay: 0s; }
+  #BfSignup-{{ sid }} .bf-signup__sheet {
+    position: absolute;
+    inset: 0;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 96px 24px 40px;
+    color: #111;
+    text-align: center;
+    background: rgba(255, 255, 255, .55);
+    backdrop-filter: blur(40px) saturate(160%);
+    -webkit-backdrop-filter: blur(40px) saturate(160%);
+    transform: translateX(100%);
+    transition: transform .7s cubic-bezier(.4, 0, .2, 1);
+    will-change: transform;
+  }
+  #BfSignup-{{ sid }}.is-open .bf-signup__sheet { transform: translateX(0); }
+  /* the hero copy steps aside while the sheet is open */
+  #BfHero-{{ sid }} .bf-hero__content { transition: opacity .35s ease; }
+  html.bf-signup-open #BfHero-{{ sid }} .bf-hero__content { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    #BfSignup-{{ sid }},
+    #BfSignup-{{ sid }} .bf-signup__sheet,
+    #BfHero-{{ sid }} .bf-hero__content { transition: none; }
+  }
+  #BfSignup-{{ sid }} .bf-signup__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .6);
+    color: #111;
+    cursor: pointer;
+    transition: background-color .15s ease;
+  }
+  #BfSignup-{{ sid }} .bf-signup__close:hover { background: #fff; }
+  #BfSignup-{{ sid }} .bf-signup__form,
+  #BfSignup-{{ sid }} .bf-signup__success { width: 100%; max-width: 440px; margin: 0 auto; }
+  #BfSignup-{{ sid }} .bf-signup__form[hidden],
+  #BfSignup-{{ sid }} .bf-signup__success[hidden] { display: none; }
+  #BfSignup-{{ sid }} .bf-signup__kicker {
+    margin: 0 0 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(17, 17, 17, .55);
+  }
+  #BfSignup-{{ sid }} .bf-signup__title {
+    margin: 0 0 12px;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -.01em;
+    color: #111;
+    text-wrap: balance;
+  }
+  #BfSignup-{{ sid }} .bf-signup__text { margin: 0 0 24px; font-size: 15px; line-height: 1.5; color: #333; }
+  #BfSignup-{{ sid }} .bf-signup__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  #BfSignup-{{ sid }} .bf-signup__input {
+    width: 100%;
+    height: 52px;
+    padding: 0 16px;
+    font-size: 16px;
+    color: #111;
+    background: rgba(255, 255, 255, .85);
+    border: 1px solid rgba(0, 0, 0, .14);
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+  }
+  #BfSignup-{{ sid }} .bf-signup__input::placeholder { color: #8a8a8a; }
+  #BfSignup-{{ sid }} .bf-signup__input:focus { border-color: #111; box-shadow: 0 0 0 3px rgba(0, 0, 0, .08); background: #fff; }
+  #BfSignup-{{ sid }} .bf-signup__input[aria-invalid="true"] { border-color: #d9202a; }
+  #BfSignup-{{ sid }} .bf-signup__tel { position: relative; }
+  #BfSignup-{{ sid }} .bf-signup__tel-country {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #666;
+    pointer-events: none;
+  }
+  #BfSignup-{{ sid }} .bf-signup__input--tel { padding-left: 56px; }
+  #BfSignup-{{ sid }} .bf-signup__check-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 14px 0 0;
+    text-align: left;
+    cursor: pointer;
+  }
+  #BfSignup-{{ sid }} .bf-signup__check-row input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  #BfSignup-{{ sid }} .bf-signup__check-box {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(0, 0, 0, .3);
+    border-radius: 4px;
+    color: #fff;
+    background: rgba(255, 255, 255, .85);
+    transition: background-color .15s ease, border-color .15s ease;
+  }
+  #BfSignup-{{ sid }} .bf-signup__check-row input:checked + .bf-signup__check-box { background: #111; border-color: #111; }
+  #BfSignup-{{ sid }} .bf-signup__check-row input:focus-visible + .bf-signup__check-box { box-shadow: 0 0 0 3px rgba(0, 0, 0, .1); }
+  #BfSignup-{{ sid }} .bf-signup__check-text { font-size: 13px; line-height: 1.45; color: #333; }
+  #BfSignup-{{ sid }} .bf-signup__error { margin: 10px 0 0; font-size: 13px; color: #d9202a; text-align: left; }
+  #BfSignup-{{ sid }} .bf-signup__error[hidden] { display: none; }
+  /* cookie-banner button recipe */
+  #BfSignup-{{ sid }} .bf-signup__submit,
+  #BfSignup-{{ sid }} .bf-signup__skip {
+    display: block;
+    width: 100%;
+    height: 52px;
+    margin: 12px 0 0;
+    padding: 0 20px;
+    font-size: 12px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color .2s ease, color .2s ease;
+  }
+  #BfSignup-{{ sid }} .bf-signup__submit {
+    font-weight: 600;
+    color: #fff;
+    background: #111;
+    border: 2px solid #111;
+  }
+  #BfSignup-{{ sid }} .bf-signup__submit:hover { background: #333; border-color: #333; }
+  #BfSignup-{{ sid }} .bf-signup__submit[disabled] { opacity: .7; cursor: wait; }
+  #BfSignup-{{ sid }} .bf-signup__skip {
+    font-weight: 400;
+    color: #111;
+    background: transparent;
+    border: 2px solid #111;
+  }
+  #BfSignup-{{ sid }} .bf-signup__skip:hover { background: rgba(0, 0, 0, .06); }
+  #BfSignup-{{ sid }} .bf-signup__consent { margin: 14px 0 0; font-size: 12px; line-height: 1.45; color: #555; }
+  #BfSignup-{{ sid }} .bf-signup__check {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(90, 154, 0, .16);
+    color: #5a9a00;
+  }
+  @media screen and (max-width: 749px) {
+    #BfSignup-{{ sid }} .bf-signup__sheet { padding: 88px 20px calc(24px + env(safe-area-inset-bottom)); }
+    #BfSignup-{{ sid }} .bf-signup__title { font-size: 28px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.getElementById('BfSignup-{{ sid }}');
+    var hero = document.getElementById('BfHero-{{ sid }}');
+    if (!root || !hero) return;
+    var endpoint = 'https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(root.getAttribute('data-company') || '');
+    var listId = root.getAttribute('data-list');
+    var source = root.getAttribute('data-source') || 'Black Friday early access';
+
+    /* autoplay on iOS needs playsinline + muted; the video_tag filter
+       does not always set playsinline */
+    hero.querySelectorAll('video').forEach(function (v) {
+      v.setAttribute('playsinline', '');
+      v.setAttribute('webkit-playsinline', '');
+      v.muted = true;
+      v.loop = true;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    });
+
+    var form = root.querySelector('[data-bf-form]');
+    var input = root.querySelector('input[type="email"]');
+    var errorEl = root.querySelector('[data-bf-error]');
+    var submit = root.querySelector('[data-bf-submit]');
+    var submitLabel = root.querySelector('[data-bf-submit-label]');
+    var submitText = submitLabel ? submitLabel.textContent : '';
+    var phoneForm = root.querySelector('[data-bf-phone-form]');
+    var phoneInput = phoneForm && phoneForm.querySelector('input[type="tel"]');
+    var phoneConsent = phoneForm && phoneForm.querySelector('[data-bf-sms-consent]');
+    var phoneError = phoneForm && phoneForm.querySelector('[data-bf-phone-error]');
+    var phoneSubmit = phoneForm && phoneForm.querySelector('[data-bf-phone-submit]');
+    var phoneLabel = phoneForm && phoneForm.querySelector('[data-bf-phone-label]');
+    var phoneText = phoneLabel ? phoneLabel.textContent : '';
+    var success = root.querySelector('[data-bf-success]');
+    var lastFocus = null;
+    var email = '';
+
+    function show(step) {
+      form.hidden = step !== 'email';
+      if (phoneForm) phoneForm.hidden = step !== 'phone';
+      success.hidden = step !== 'success';
+      var focusEl = step === 'email' ? input : step === 'phone' ? phoneInput : null;
+      if (focusEl) setTimeout(function () { focusEl.focus(); }, 60);
+    }
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var closeTimer = null;
+    function open() {
+      var formId = root.getAttribute('data-form');
+      if (formId && window._klOnsite) {
+        /* a Klaviyo-built full-screen form takes over */
+        window._klOnsite.push(['openForm', formId]);
+        return;
+      }
+      clearTimeout(closeTimer);
+      lastFocus = document.activeElement;
+      root.hidden = false;
+      void root.offsetWidth; /* commit the hidden state so the slide-in transitions */
+      root.classList.add('is-open');
+      document.documentElement.classList.add('bf-signup-open');
+      document.body.style.overflow = 'hidden';
+      show('email');
+    }
+    function close() {
+      root.classList.remove('is-open');
+      document.documentElement.classList.remove('bf-signup-open');
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(function () { root.hidden = true; }, reduced ? 0 : 720);
+    }
+    function setError(el, field, on) {
+      if (el) el.hidden = !on;
+      if (field) field.setAttribute('aria-invalid', on ? 'true' : 'false');
+    }
+    function subscribe(attributes) {
+      /* the list's own opt-in process applies; an explicit consent block
+         is rejected by this endpoint */
+      return fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' },
+        body: JSON.stringify({
+          data: {
+            type: 'subscription',
+            attributes: {
+              custom_source: source,
+              profile: { data: { type: 'profile', attributes: attributes } }
+            },
+            relationships: { list: { data: { type: 'list', id: listId } } }
+          }
+        })
+      }).then(function (res) { if (!res.ok) throw new Error('klaviyo ' + res.status); });
+    }
+
+    hero.querySelectorAll('[data-bf-open]').forEach(function (b) { b.addEventListener('click', open); });
+    root.querySelectorAll('[data-bf-close]').forEach(function (b) { b.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('is-open')) close(); });
+
+    /* step 1: e-mail */
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      email = (input.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !listId) { setError(errorEl, input, true); input.focus(); return; }
+      setError(errorEl, input, false);
+      submit.disabled = true;
+      if (submitLabel) submitLabel.textContent = '…';
+      subscribe({ email: email }).then(function () {
+        if (window.klaviyo && window.klaviyo.push) window.klaviyo.push(['identify', { $email: email }]);
+        show(phoneForm ? 'phone' : 'success');
+      }).catch(function () {
+        setError(errorEl, input, true);
+      }).then(function () {
+        submit.disabled = false;
+        if (submitLabel) submitLabel.textContent = submitText;
+      });
+    });
+
+    /* step 2: mobile number, only with the consent box ticked */
+    if (phoneForm) {
+      var country = root.getAttribute('data-country') || '+31';
+      function normalizePhone(raw) {
+        var v = (raw || '').replace(/[\s().-]/g, '');
+        if (v.indexOf('00') === 0) v = '+' + v.slice(2);
+        if (v.charAt(0) !== '+') {
+          if (v.charAt(0) === '0') v = v.slice(1);
+          v = country + v;
+        }
+        return /^\+[1-9]\d{7,14}$/.test(v) ? v : null;
+      }
+      phoneForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var phone = normalizePhone(phoneInput.value);
+        if (!phone || !phoneConsent.checked) { setError(phoneError, phoneInput, true); (phone ? phoneConsent : phoneInput).focus(); return; }
+        setError(phoneError, phoneInput, false);
+        phoneSubmit.disabled = true;
+        if (phoneLabel) phoneLabel.textContent = '…';
+        subscribe({ email: email, phone_number: phone }).then(function () {
+          show('success');
+        }).catch(function () {
+          setError(phoneError, phoneInput, true);
+        }).then(function () {
+          phoneSubmit.disabled = false;
+          if (phoneLabel) phoneLabel.textContent = phoneText;
+        });
+      });
+      var skip = phoneForm.querySelector('[data-bf-phone-skip]');
+      if (skip) skip.addEventListener('click', function () { show('success'); });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Black Friday sign-up hero",
+  "tag": "section",
+  "class": "section-bf-hero",
+  "settings": [
+    { "type": "header", "content": "Background" },
+    { "type": "video", "id": "video", "label": "Video", "info": "Landscape, muted, loops. Keep it short (5–15 s) and under ~8 MB for fast loading." },
+    { "type": "text", "id": "video_url", "label": "Video URL (fallback)", "info": "Direct MP4 link, used when no video is picked above." },
+    { "type": "image_picker", "id": "poster", "label": "Poster image", "info": "Shown while the video loads and when video cannot play." },
+    { "type": "select", "id": "video_position", "label": "Video focal point", "options": [
+      { "value": "center", "label": "Center" },
+      { "value": "top", "label": "Top" },
+      { "value": "bottom", "label": "Bottom" }
+    ], "default": "center" },
+    { "type": "range", "id": "overlay_opacity", "label": "Darken video", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 35 },
+    { "type": "range", "id": "min_height", "label": "Height", "min": 70, "max": 100, "step": 5, "unit": "vh", "default": 100 },
+
+    { "type": "header", "content": "Message" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Black Friday 2026" },
+    { "type": "text", "id": "heading", "label": "Title", "default": "Don't miss the early break away" },
+    { "type": "text", "id": "subheading", "label": "Subtitle", "default": "Join here to get exclusive access to our Black Friday deals first" },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Sign up for early access" },
+    { "type": "text", "id": "note", "label": "Small line under the button", "default": "Members get the deals before anyone else." },
+    { "type": "select", "id": "text_position", "label": "Text position", "options": [
+      { "value": "center", "label": "Center" },
+      { "value": "bottom", "label": "Bottom" },
+      { "value": "top", "label": "Top" }
+    ], "default": "center" },
+
+    { "type": "header", "content": "Footer" },
+    { "type": "checkbox", "id": "hide_footer", "label": "Hide the theme footer on this page", "default": true, "info": "Keeps visitors on the one goal. A one-line legal footer with the policy links stays." },
+    { "type": "text", "id": "legal_privacy", "label": "Privacy link text", "default": "Privacy policy" },
+    { "type": "text", "id": "legal_terms", "label": "Terms link text", "default": "Terms" },
+
+    { "type": "header", "content": "Klaviyo" },
+    { "type": "text", "id": "klaviyo_list_id", "label": "Klaviyo list ID", "info": "Everyone who signs up is added to this list." },
+    { "type": "text", "id": "klaviyo_company_id", "label": "Klaviyo public API key", "default": "S82fvg" },
+    { "type": "text", "id": "custom_source", "label": "Custom source", "default": "Black Friday early access page" },
+    { "type": "text", "id": "klaviyo_form_id", "label": "Klaviyo form ID (optional)", "info": "Fill in to open a form built in Klaviyo instead of the built-in sign-up sheet." },
+
+    { "type": "header", "content": "Sign-up sheet, step 1: e-mail" },
+    { "type": "text", "id": "form_kicker", "label": "Kicker", "default": "Exclusive access" },
+    { "type": "text", "id": "form_heading", "label": "Title", "default": "Get in the early break away" },
+    { "type": "text", "id": "form_text", "label": "Text", "default": "Drop your e-mail and get our Black Friday deals before anyone else." },
+    { "type": "text", "id": "form_placeholder", "label": "E-mail placeholder", "default": "E-mail address" },
+    { "type": "text", "id": "form_button", "label": "Button", "default": "Get exclusive access" },
+    { "type": "text", "id": "form_consent", "label": "Small print", "default": "By signing up you agree to receive e-mails from Sockeloen. Unsubscribe anytime." },
+    { "type": "text", "id": "error_text", "label": "Error message", "default": "Please enter a valid e-mail address." },
+
+    { "type": "header", "content": "Sign-up sheet, step 2: mobile number" },
+    { "type": "checkbox", "id": "phone_enabled", "label": "Ask for a mobile number after the e-mail", "default": true, "info": "Optional step. SMS consent is only recorded when the box is ticked." },
+    { "type": "text", "id": "phone_kicker", "label": "Kicker", "default": "One more thing" },
+    { "type": "text", "id": "phone_heading", "label": "Title", "default": "Want a text the moment the doors open?" },
+    { "type": "text", "id": "phone_text", "label": "Text", "default": "One SMS when early access starts, so you're first in line. Nothing else." },
+    { "type": "text", "id": "phone_country", "label": "Default country code", "default": "+31" },
+    { "type": "text", "id": "phone_placeholder", "label": "Number placeholder", "default": "6 12345678" },
+    { "type": "text", "id": "phone_consent", "label": "Consent text (required by law)", "default": "Yes, text me when early access opens. Message and data rates may apply. Reply STOP to unsubscribe." },
+    { "type": "text", "id": "phone_button", "label": "Button", "default": "Text me when it opens" },
+    { "type": "text", "id": "phone_skip", "label": "Skip link", "default": "No thanks, e-mail is enough" },
+    { "type": "text", "id": "phone_error", "label": "Error message", "default": "Please enter a valid mobile number and tick the box." },
+
+    { "type": "header", "content": "Sign-up sheet, step 3: success" },
+    { "type": "text", "id": "success_heading", "label": "Title", "default": "You're in the break away" },
+    { "type": "text", "id": "success_text", "label": "Text", "default": "Keep an eye on your inbox. You'll get the Black Friday deals before they go public." },
+    { "type": "text", "id": "success_button", "label": "Close button", "default": "Done" }
+  ],
+  "presets": [
+    { "name": "Black Friday sign-up hero" }
+  ]
+}
+{% endschema %}
