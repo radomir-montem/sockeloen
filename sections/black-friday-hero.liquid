@@ -3,7 +3,7 @@
   on top, header pill floating over it, footer below (template
   page.black-friday). The button opens a full-screen sign-up sheet that
   subscribes the e-mail to a Klaviyo list through Klaviyo's client API
-  (custom source set, marketing consent recorded). Optionally the button
+  (custom source set, list opt-in process applies). Optionally the button
   opens a Klaviyo-built form instead (setting "Klaviyo form ID").
 {%- endcomment -%}
 {%- liquid
@@ -413,15 +413,9 @@
             type: 'subscription',
             attributes: {
               custom_source: root.getAttribute('data-source') || 'Black Friday early access',
-              profile: {
-                data: {
-                  type: 'profile',
-                  attributes: {
-                    email: email,
-                    subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } }
-                  }
-                }
-              }
+              /* the list's own opt-in process applies; an explicit
+                 consent block is rejected by this endpoint */
+              profile: { data: { type: 'profile', attributes: { email: email } } }
             },
             relationships: { list: { data: { type: 'list', id: list } } }
           }
