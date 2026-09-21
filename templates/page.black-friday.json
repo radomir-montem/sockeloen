@@ -47,7 +47,7 @@
         "phone_consent": "Yes, text me when early access opens. Message and data rates may apply. Reply STOP to unsubscribe.",
         "phone_consent_checked": true,
         "phone_button": "Text me when I have to go all in",
-        "phone_skip": "No thanks, I like to get beaten on the line.",
+        "phone_skip": "I like to get beaten on the line.",
         "phone_error": "Please enter a valid mobile number and tick the box.",
         "success_heading": "Yes! You made it in the break away",
         "success_text": "Make sure to save energy now. Stay focussed, ready to sprint when the email or text hits your inbox.",
