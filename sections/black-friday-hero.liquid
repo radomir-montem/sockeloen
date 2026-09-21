@@ -124,9 +124,6 @@
 
     {%- comment -%} step 3: success {%- endcomment -%}
     <div class="bf-signup__success" data-bf-success hidden>
-      <div class="bf-signup__check" aria-hidden="true">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14.5l5 5L22 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
       <h2 class="bf-signup__title">{{ s.success_heading | escape }}</h2>
       {%- if s.success_text != blank -%}
         <p class="bf-signup__text">{{ s.success_text | escape }}</p>
