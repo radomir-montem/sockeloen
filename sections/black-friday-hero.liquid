@@ -110,7 +110,7 @@
           <input class="bf-signup__input bf-signup__input--tel" id="BfPhone-{{ sid }}" type="tel" name="phone" inputmode="tel" autocomplete="tel-national" placeholder="{{ s.phone_placeholder | default: '6 12345678' | escape }}">
         </div>
         <label class="bf-signup__check-row">
-          <input type="checkbox" name="sms_consent" data-bf-sms-consent>
+          <input type="checkbox" name="sms_consent" data-bf-sms-consent{% if s.phone_consent_checked %} checked{% endif %}>
           <span class="bf-signup__check-box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="bf-signup__check-text">{{ s.phone_consent | escape }}</span>
         </label>
@@ -653,6 +653,7 @@
     { "type": "text", "id": "phone_country", "label": "Default country code", "default": "+31" },
     { "type": "text", "id": "phone_placeholder", "label": "Number placeholder", "default": "6 12345678" },
     { "type": "text", "id": "phone_consent", "label": "Consent text (required by law)", "default": "Yes, text me when early access opens. Message and data rates may apply. Reply STOP to unsubscribe." },
+    { "type": "checkbox", "id": "phone_consent_checked", "label": "Pre-tick the consent box", "default": true, "info": "Note: a pre-ticked box is not valid consent under GDPR / Klaviyo's SMS rules." },
     { "type": "text", "id": "phone_button", "label": "Button", "default": "Text me when it opens" },
     { "type": "text", "id": "phone_skip", "label": "Skip link", "default": "No thanks, e-mail is enough" },
     { "type": "text", "id": "phone_error", "label": "Error message", "default": "Please enter a valid mobile number and tick the box." },
