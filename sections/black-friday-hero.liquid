@@ -1,0 +1,499 @@
+{%- comment -%}
+  Black Friday sign-up hero: full-screen looping video with the message
+  on top, header pill floating over it, footer below (template
+  page.black-friday). The button opens a full-screen sign-up sheet that
+  subscribes the e-mail to a Klaviyo list through Klaviyo's client API
+  (custom source set, marketing consent recorded). Optionally the button
+  opens a Klaviyo-built form instead (setting "Klaviyo form ID").
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign shade = s.overlay_opacity | divided_by: 100.0
+  assign sid = section.id
+-%}
+<section
+  id="BfHero-{{ sid }}"
+  class="bf-hero bf-hero--{{ s.text_position }}"
+  style="--bf-shade: {{ shade }}; --bf-min-h: {{ s.min_height }}svh; --bf-video-pos: {{ s.video_position }};"
+  data-bf-hero
+>
+  <div class="bf-hero__media">
+    {%- if s.video != blank -%}
+      {{ s.video | video_tag: image_size: '1920x', autoplay: true, loop: true, muted: true, controls: false, preload: 'auto', class: 'bf-hero__video' }}
+    {%- elsif s.video_url != blank -%}
+      <video class="bf-hero__video" autoplay loop muted playsinline preload="auto"{% if s.poster != blank %} poster="{{ s.poster | image_url: width: 1920 }}"{% endif %}>
+        <source src="{{ s.video_url }}" type="video/mp4">
+      </video>
+    {%- elsif s.poster != blank -%}
+      {{ s.poster | image_url: width: 2400 | image_tag: class: 'bf-hero__video', loading: 'eager', sizes: '100vw' }}
+    {%- else -%}
+      <div class="bf-hero__video bf-hero__video--empty"></div>
+    {%- endif -%}
+  </div>
+  <div class="bf-hero__shade" aria-hidden="true"></div>
+
+  <div class="bf-hero__content">
+    {%- if s.kicker != blank -%}
+      <p class="bf-hero__kicker">{{ s.kicker | escape }}</p>
+    {%- endif -%}
+    {%- if s.heading != blank -%}
+      <h1 class="bf-hero__heading">{{ s.heading | escape }}</h1>
+    {%- endif -%}
+    {%- if s.subheading != blank -%}
+      <p class="bf-hero__sub">{{ s.subheading | escape }}</p>
+    {%- endif -%}
+    {%- if s.button_label != blank -%}
+      <button type="button" class="bf-hero__cta" data-bf-open>{{ s.button_label | escape }}</button>
+    {%- endif -%}
+    {%- if s.note != blank -%}
+      <p class="bf-hero__note">{{ s.note | escape }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} Full-screen sign-up sheet {%- endcomment -%}
+<div class="bf-signup" id="BfSignup-{{ sid }}" hidden data-bf-signup
+  data-company="{{ s.klaviyo_company_id | escape }}"
+  data-list="{{ s.klaviyo_list_id | escape }}"
+  data-form="{{ s.klaviyo_form_id | escape }}"
+  data-source="{{ s.custom_source | escape }}"
+>
+  <div class="bf-signup__backdrop" data-bf-close></div>
+  <div class="bf-signup__sheet" role="dialog" aria-modal="true" aria-labelledby="BfSignupTitle-{{ sid }}">
+    <button type="button" class="bf-signup__close" data-bf-close aria-label="{{ 'accessibility.close' | t | default: 'Close' }}">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+
+    <form class="bf-signup__form" data-bf-form novalidate>
+      {%- if s.form_kicker != blank -%}
+        <p class="bf-signup__kicker">{{ s.form_kicker | escape }}</p>
+      {%- endif -%}
+      <h2 class="bf-signup__title" id="BfSignupTitle-{{ sid }}">{{ s.form_heading | escape }}</h2>
+      {%- if s.form_text != blank -%}
+        <p class="bf-signup__text">{{ s.form_text | escape }}</p>
+      {%- endif -%}
+      <label class="bf-signup__label" for="BfEmail-{{ sid }}">{{ s.form_placeholder | default: 'E-mail address' | escape }}</label>
+      <input class="bf-signup__input" id="BfEmail-{{ sid }}" type="email" name="email" inputmode="email" autocomplete="email" placeholder="{{ s.form_placeholder | default: 'E-mail address' | escape }}" required>
+      <p class="bf-signup__error" data-bf-error hidden>{{ s.error_text | escape }}</p>
+      <button type="submit" class="bf-signup__submit" data-bf-submit>
+        <span data-bf-submit-label>{{ s.form_button | escape }}</span>
+      </button>
+      {%- if s.form_consent != blank -%}
+        <p class="bf-signup__consent">{{ s.form_consent | escape }}</p>
+      {%- endif -%}
+    </form>
+
+    <div class="bf-signup__success" data-bf-success hidden>
+      <div class="bf-signup__check" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14.5l5 5L22 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h2 class="bf-signup__title">{{ s.success_heading | escape }}</h2>
+      {%- if s.success_text != blank -%}
+        <p class="bf-signup__text">{{ s.success_text | escape }}</p>
+      {%- endif -%}
+      <button type="button" class="bf-signup__submit bf-signup__submit--done" data-bf-close>{{ s.success_button | default: 'Done' | escape }}</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* the video runs up behind the floating header, like the homepage hero */
+  body.template--page.template--black-friday main#MainContent,
+  body.template--page.template--black-friday #MainContent {
+    padding-top: 0;
+  }
+
+  #BfHero-{{ sid }} {
+    position: relative;
+    min-height: var(--bf-min-h, 100svh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #0b0b0b;
+    color: #fff;
+  }
+  #BfHero-{{ sid }} .bf-hero__media { position: absolute; inset: 0; }
+  #BfHero-{{ sid }} .bf-hero__media video,
+  #BfHero-{{ sid }} .bf-hero__media img,
+  #BfHero-{{ sid }} .bf-hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--bf-video-pos, center);
+    display: block;
+  }
+  #BfHero-{{ sid }} .bf-hero__video--empty {
+    background: linear-gradient(160deg, #1a1a1a, #000);
+  }
+  #BfHero-{{ sid }} .bf-hero__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, 0) 32%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .55) 100%),
+      rgba(0, 0, 0, var(--bf-shade, .35));
+    pointer-events: none;
+  }
+  #BfHero-{{ sid }} .bf-hero__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 140px 16px 96px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  #BfHero-{{ sid }}.bf-hero--bottom .bf-hero__content { align-self: flex-end; padding-bottom: 72px; }
+  #BfHero-{{ sid }}.bf-hero--top .bf-hero__content { align-self: flex-start; }
+  #BfHero-{{ sid }} .bf-hero__kicker {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .8);
+  }
+  #BfHero-{{ sid }} .bf-hero__heading {
+    margin: 0;
+    font-size: clamp(38px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -.01em;
+    color: #fff;
+    text-wrap: balance;
+  }
+  #BfHero-{{ sid }} .bf-hero__sub {
+    margin: 0;
+    max-width: 560px;
+    font-size: clamp(15px, 1.6vw, 19px);
+    line-height: 1.45;
+    color: rgba(255, 255, 255, .88);
+    text-wrap: balance;
+  }
+  /* glass button, same recipe as the homepage hero button */
+  #BfHero-{{ sid }} .bf-hero__cta {
+    margin-top: 8px;
+    padding: 15px 28px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(255, 255, 255, .2);
+    border: 1px solid rgba(255, 255, 255, .28);
+    border-radius: 8px;
+    backdrop-filter: blur(21px) saturate(180%);
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    transition: background-color .2s ease, border-color .2s ease;
+  }
+  #BfHero-{{ sid }} .bf-hero__cta:hover { background: rgba(255, 255, 255, .34); border-color: rgba(255, 255, 255, .45); }
+  #BfHero-{{ sid }} .bf-hero__note {
+    margin: 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, .7);
+  }
+  @media screen and (max-width: 749px) {
+    #BfHero-{{ sid }} .bf-hero__content { padding: 150px 16px 64px; gap: 14px; }
+    #BfHero-{{ sid }} .bf-hero__cta { width: 100%; padding: 16px 20px; }
+  }
+
+  /* ---- sign-up sheet ---- */
+  #BfSignup-{{ sid }} { position: fixed; inset: 0; z-index: 400; }
+  #BfSignup-{{ sid }}[hidden] { display: none; }
+  #BfSignup-{{ sid }} .bf-signup__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .62);
+    backdrop-filter: blur(21px) saturate(180%);
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+  }
+  #BfSignup-{{ sid }} .bf-signup__sheet {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(480px, calc(100% - 32px));
+    max-height: calc(100% - 32px);
+    overflow: auto;
+    background: #fff;
+    color: #111;
+    border-radius: 12px;
+    padding: 40px 32px 32px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+    text-align: center;
+  }
+  #BfSignup-{{ sid }} .bf-signup__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    background: #f2f2f2;
+    color: #111;
+    cursor: pointer;
+  }
+  #BfSignup-{{ sid }} .bf-signup__close:hover { background: #e6e6e6; }
+  #BfSignup-{{ sid }} .bf-signup__kicker {
+    margin: 0 0 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #0395F6;
+  }
+  #BfSignup-{{ sid }} .bf-signup__title {
+    margin: 0 0 10px;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #111;
+    text-wrap: balance;
+  }
+  #BfSignup-{{ sid }} .bf-signup__text {
+    margin: 0 0 22px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #666;
+  }
+  #BfSignup-{{ sid }} .bf-signup__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  #BfSignup-{{ sid }} .bf-signup__input {
+    width: 100%;
+    height: 52px;
+    padding: 0 16px;
+    font-size: 16px;
+    color: #111;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  #BfSignup-{{ sid }} .bf-signup__input:focus { border-color: #0395F6; box-shadow: 0 0 0 3px rgba(3, 149, 246, .18); }
+  #BfSignup-{{ sid }} .bf-signup__input[aria-invalid="true"] { border-color: #d9202a; }
+  #BfSignup-{{ sid }} .bf-signup__error {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: #d9202a;
+    text-align: left;
+  }
+  #BfSignup-{{ sid }} .bf-signup__submit {
+    width: 100%;
+    margin-top: 12px;
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    background: #0395F6;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color .2s ease;
+  }
+  #BfSignup-{{ sid }} .bf-signup__submit:hover { background: #0284d9; }
+  #BfSignup-{{ sid }} .bf-signup__submit[disabled] { opacity: .7; cursor: wait; }
+  #BfSignup-{{ sid }} .bf-signup__consent {
+    margin: 14px 0 0;
+    font-size: 12px;
+    line-height: 1.45;
+    color: #999;
+  }
+  #BfSignup-{{ sid }} .bf-signup__check {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(90, 154, 0, .12);
+    color: #5a9a00;
+  }
+  @media screen and (max-width: 749px) {
+    #BfSignup-{{ sid }} .bf-signup__sheet {
+      top: auto;
+      bottom: 0;
+      left: 0;
+      transform: none;
+      width: 100%;
+      max-height: calc(100% - 24px);
+      border-radius: 12px 12px 0 0;
+      padding: 40px 20px calc(24px + env(safe-area-inset-bottom));
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.getElementById('BfSignup-{{ sid }}');
+    var hero = document.getElementById('BfHero-{{ sid }}');
+    if (!root || !hero) return;
+
+    /* autoplay on iOS needs playsinline + muted; the video_tag filter
+       does not always set playsinline */
+    hero.querySelectorAll('video').forEach(function (v) {
+      v.setAttribute('playsinline', '');
+      v.setAttribute('webkit-playsinline', '');
+      v.muted = true;
+      v.loop = true;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    });
+
+    var form = root.querySelector('[data-bf-form]');
+    var input = root.querySelector('input[type="email"]');
+    var errorEl = root.querySelector('[data-bf-error]');
+    var success = root.querySelector('[data-bf-success]');
+    var submit = root.querySelector('[data-bf-submit]');
+    var submitLabel = root.querySelector('[data-bf-submit-label]');
+    var submitText = submitLabel ? submitLabel.textContent : '';
+    var lastFocus = null;
+
+    function open() {
+      var formId = root.getAttribute('data-form');
+      if (formId && window._klOnsite) {
+        /* a Klaviyo-built full-screen form takes over */
+        window._klOnsite.push(['openForm', formId]);
+        return;
+      }
+      lastFocus = document.activeElement;
+      root.hidden = false;
+      document.documentElement.classList.add('bf-signup-open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () { if (input && !form.hidden) input.focus(); }, 50);
+    }
+    function close() {
+      root.hidden = true;
+      document.documentElement.classList.remove('bf-signup-open');
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    function showError(show) {
+      if (!errorEl) return;
+      errorEl.hidden = !show;
+      if (input) input.setAttribute('aria-invalid', show ? 'true' : 'false');
+    }
+
+    hero.querySelectorAll('[data-bf-open]').forEach(function (b) { b.addEventListener('click', open); });
+    root.querySelectorAll('[data-bf-close]').forEach(function (b) { b.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !root.hidden) close(); });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = (input.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError(true); input.focus(); return; }
+      showError(false);
+      var company = root.getAttribute('data-company');
+      var list = root.getAttribute('data-list');
+      if (!company || !list) { showError(true); return; }
+      submit.disabled = true;
+      if (submitLabel) submitLabel.textContent = '…';
+      fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(company), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' },
+        body: JSON.stringify({
+          data: {
+            type: 'subscription',
+            attributes: {
+              custom_source: root.getAttribute('data-source') || 'Black Friday early access',
+              profile: {
+                data: {
+                  type: 'profile',
+                  attributes: {
+                    email: email,
+                    subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } }
+                  }
+                }
+              }
+            },
+            relationships: { list: { data: { type: 'list', id: list } } }
+          }
+        })
+      }).then(function (res) {
+        if (!res.ok) throw new Error('klaviyo ' + res.status);
+        form.hidden = true;
+        success.hidden = false;
+        try { localStorage.setItem('bf-early-access', '1'); } catch (err) {}
+        if (window.klaviyo && window.klaviyo.push) {
+          window.klaviyo.push(['identify', { $email: email }]);
+        }
+      }).catch(function () {
+        showError(true);
+      }).then(function () {
+        submit.disabled = false;
+        if (submitLabel) submitLabel.textContent = submitText;
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Black Friday sign-up hero",
+  "tag": "section",
+  "class": "section-bf-hero",
+  "settings": [
+    { "type": "header", "content": "Background" },
+    { "type": "video", "id": "video", "label": "Video", "info": "Landscape, muted, loops. Keep it short (5–15 s) and under ~8 MB for fast loading." },
+    { "type": "text", "id": "video_url", "label": "Video URL (fallback)", "info": "Direct MP4 link, used when no video is picked above." },
+    { "type": "image_picker", "id": "poster", "label": "Poster image", "info": "Shown while the video loads and when video cannot play." },
+    { "type": "select", "id": "video_position", "label": "Video focal point", "options": [
+      { "value": "center", "label": "Center" },
+      { "value": "top", "label": "Top" },
+      { "value": "bottom", "label": "Bottom" }
+    ], "default": "center" },
+    { "type": "range", "id": "overlay_opacity", "label": "Darken video", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 35 },
+    { "type": "range", "id": "min_height", "label": "Height", "min": 70, "max": 100, "step": 5, "unit": "vh", "default": 100 },
+
+    { "type": "header", "content": "Message" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Black Friday 2026" },
+    { "type": "text", "id": "heading", "label": "Title", "default": "Don't miss the early break away" },
+    { "type": "text", "id": "subheading", "label": "Subtitle", "default": "Join here to get exclusive access to our Black Friday deals first" },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Sign up for early access" },
+    { "type": "text", "id": "note", "label": "Small line under the button", "default": "Members get the deals before anyone else." },
+    { "type": "select", "id": "text_position", "label": "Text position", "options": [
+      { "value": "center", "label": "Center" },
+      { "value": "bottom", "label": "Bottom" },
+      { "value": "top", "label": "Top" }
+    ], "default": "center" },
+
+    { "type": "header", "content": "Klaviyo" },
+    { "type": "text", "id": "klaviyo_list_id", "label": "Klaviyo list ID", "info": "Everyone who signs up is added to this list." },
+    { "type": "text", "id": "klaviyo_company_id", "label": "Klaviyo public API key", "default": "S82fvg" },
+    { "type": "text", "id": "custom_source", "label": "Custom source", "default": "Black Friday early access page" },
+    { "type": "text", "id": "klaviyo_form_id", "label": "Klaviyo form ID (optional)", "info": "Fill in to open a form built in Klaviyo instead of the built-in sign-up sheet." },
+
+    { "type": "header", "content": "Sign-up sheet" },
+    { "type": "text", "id": "form_kicker", "label": "Kicker", "default": "Exclusive access" },
+    { "type": "text", "id": "form_heading", "label": "Title", "default": "Get in the early break away" },
+    { "type": "text", "id": "form_text", "label": "Text", "default": "Drop your e-mail and get our Black Friday deals before anyone else." },
+    { "type": "text", "id": "form_placeholder", "label": "E-mail placeholder", "default": "E-mail address" },
+    { "type": "text", "id": "form_button", "label": "Button", "default": "Get exclusive access" },
+    { "type": "text", "id": "form_consent", "label": "Small print", "default": "By signing up you agree to receive e-mails from Sockeloen. Unsubscribe anytime." },
+    { "type": "text", "id": "error_text", "label": "Error message", "default": "Please enter a valid e-mail address." },
+    { "type": "text", "id": "success_heading", "label": "Success title", "default": "You're in the break away" },
+    { "type": "text", "id": "success_text", "label": "Success text", "default": "Keep an eye on your inbox. You'll get the Black Friday deals before they go public." },
+    { "type": "text", "id": "success_button", "label": "Success button", "default": "Done" }
+  ],
+  "presets": [
+    { "name": "Black Friday sign-up hero" }
+  ]
+}
+{% endschema %}

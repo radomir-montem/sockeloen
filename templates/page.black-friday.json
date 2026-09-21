@@ -1,0 +1,46 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "black-friday-hero",
+      "settings": {
+        "video": "shopify://files/videos/copy_DF72F8B9-6AF2-4A04-A98D-59F729A3E05A.MOV",
+        "video_url": "https://cdn.shopify.com/videos/c/vp/f9f97f9bc7f5497f972fb86400feaa91/f9f97f9bc7f5497f972fb86400feaa91.HD-1080p-4.8Mbps-79493069.mp4",
+        "video_position": "center",
+        "overlay_opacity": 35,
+        "min_height": 100,
+        "kicker": "Black Friday 2026",
+        "heading": "Don't miss the early break away",
+        "subheading": "Join here to get exclusive access to our Black Friday deals first",
+        "button_label": "Sign up for early access",
+        "note": "Members get the deals before anyone else.",
+        "text_position": "center",
+        "klaviyo_list_id": "",
+        "klaviyo_company_id": "S82fvg",
+        "custom_source": "Black Friday early access page",
+        "klaviyo_form_id": "",
+        "form_kicker": "Exclusive access",
+        "form_heading": "Get in the early break away",
+        "form_text": "Drop your e-mail and get our Black Friday deals before anyone else.",
+        "form_placeholder": "E-mail address",
+        "form_button": "Get exclusive access",
+        "form_consent": "By signing up you agree to receive e-mails from Sockeloen. Unsubscribe anytime.",
+        "error_text": "Please enter a valid e-mail address.",
+        "success_heading": "You're in the break away",
+        "success_text": "Keep an eye on your inbox. You'll get the Black Friday deals before they go public.",
+        "success_button": "Done"
+      }
+    }
+  },
+  "order": [
+    "hero"
+  ]
+}
