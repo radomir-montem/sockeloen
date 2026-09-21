@@ -1,21 +1,42 @@
 {%- comment -%}
   Black Friday sign-up hero: full-screen looping video with the message
   on top, header pill floating over it, footer below (template
-  page.black-friday). The button opens a full-screen sign-up sheet that
-  subscribes the e-mail to a Klaviyo list through Klaviyo's client API
-  (custom source set, list opt-in process applies). Optionally the button
-  opens a Klaviyo-built form instead (setting "Klaviyo form ID").
+  page.black-friday). Conversion helpers: social proof row, countdown to
+  the early-access opening, sound toggle for the video, a "you're in"
+  state for returning visitors.
+  The button opens a full-screen sign-up sheet: step 1 e-mail (with the
+  benefits), step 2 optional mobile number with explicit SMS consent,
+  step 3 success with a share button. Both steps subscribe through
+  Klaviyo's client API to one list (custom source set, the list's opt-in
+  process applies). Optionally the button opens a Klaviyo-built form
+  instead (setting "Klaviyo form ID").
 {%- endcomment -%}
 {%- liquid
   assign s = section.settings
   assign shade = s.overlay_opacity | divided_by: 100.0
   assign sid = section.id
+  if s.sp_avatar_1 != blank
+    assign sp_av1 = s.sp_avatar_1 | image_url: width: 80
+  else
+    assign sp_av1 = 'Scherm_afbeelding_2026-03-21_om_23.30.36.png' | file_img_url: '80x80', crop: 'center'
+  endif
+  if s.sp_avatar_2 != blank
+    assign sp_av2 = s.sp_avatar_2 | image_url: width: 80
+  else
+    assign sp_av2 = 'Scherm_afbeelding_2026-03-21_om_23.31.47.png' | file_img_url: '80x80', crop: 'center'
+  endif
+  if s.sp_avatar_3 != blank
+    assign sp_av3 = s.sp_avatar_3 | image_url: width: 80
+  else
+    assign sp_av3 = 'Scherm_afbeelding_2026-03-21_om_23.31.03.png' | file_img_url: '80x80', crop: 'center'
+  endif
 -%}
 <section
   id="BfHero-{{ sid }}"
   class="bf-hero bf-hero--{{ s.text_position }}"
   style="--bf-shade: {{ shade }}; --bf-min-h: {{ s.min_height }}svh; --bf-video-pos: {{ s.video_position }};"
   data-bf-hero
+  data-countdown="{{ s.countdown_date | escape }}"
 >
   <div class="bf-hero__media">
     {%- if s.video != blank -%}
@@ -42,13 +63,48 @@
     {%- if s.subheading != blank -%}
       <p class="bf-hero__sub">{{ s.subheading | escape }}</p>
     {%- endif -%}
+
+    {%- if s.countdown_enabled and s.countdown_date != blank -%}
+      <div class="bf-hero__count" data-bf-countdown hidden>
+        <p class="bf-hero__count-label" data-bf-count-label>{{ s.countdown_label | escape }}</p>
+        <div class="bf-hero__count-boxes" data-bf-count-boxes>
+          <div class="bf-hero__count-box"><span class="bf-hero__count-num" data-bf-d>0</span><span class="bf-hero__count-unit">{{ s.countdown_days | default: 'days' | escape }}</span></div>
+          <div class="bf-hero__count-box"><span class="bf-hero__count-num" data-bf-h>0</span><span class="bf-hero__count-unit">{{ s.countdown_hours | default: 'hrs' | escape }}</span></div>
+          <div class="bf-hero__count-box"><span class="bf-hero__count-num" data-bf-m>0</span><span class="bf-hero__count-unit">{{ s.countdown_minutes | default: 'min' | escape }}</span></div>
+          <div class="bf-hero__count-box"><span class="bf-hero__count-num" data-bf-s>0</span><span class="bf-hero__count-unit">{{ s.countdown_seconds | default: 'sec' | escape }}</span></div>
+        </div>
+        <p class="bf-hero__count-done" data-bf-count-done hidden>{{ s.countdown_done | escape }}</p>
+      </div>
+    {%- endif -%}
+
     {%- if s.button_label != blank -%}
-      <button type="button" class="bf-hero__cta" data-bf-open>{{ s.button_label | escape }}</button>
+      <button type="button" class="bf-hero__cta" data-bf-open data-label="{{ s.button_label | escape }}" data-label-done="{{ s.button_label_done | escape }}">{{ s.button_label | escape }}</button>
     {%- endif -%}
     {%- if s.note != blank -%}
       <p class="bf-hero__note">{{ s.note | escape }}</p>
     {%- endif -%}
+
+    {%- if s.show_social_proof and s.sp_text != blank -%}
+      <div class="banner-social-proof bf-hero__sp">
+        <div class="product-v2__social-proof-inner">
+          <div class="product-v2__sp-avatars">
+            <div class="product-v2__sp-avatar product-v2__sp-avatar--1"><img src="{{ sp_av1 }}" alt="" width="40" height="40" loading="lazy"></div>
+            <div class="product-v2__sp-avatar product-v2__sp-avatar--2"><img src="{{ sp_av2 }}" alt="" width="40" height="40" loading="lazy"></div>
+            <div class="product-v2__sp-avatar product-v2__sp-avatar--3"><img src="{{ sp_av3 }}" alt="" width="40" height="40" loading="lazy"></div>
+          </div>
+          <p class="product-v2__sp-text bf-hero__sp-text">{{ s.sp_text | escape }}</p>
+        </div>
+      </div>
+    {%- endif -%}
   </div>
+
+  {%- if s.show_sound_toggle and s.video != blank or s.show_sound_toggle and s.video_url != blank -%}
+    <button type="button" class="bf-hero__sound" data-bf-sound aria-pressed="false" data-on="{{ s.sound_label_on | default: 'Sound on' | escape }}" data-off="{{ s.sound_label_off | default: 'Sound off' | escape }}" aria-label="{{ s.sound_label_off | default: 'Sound off' | escape }}">
+      <svg class="bf-hero__sound-icon bf-hero__sound-icon--off" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg class="bf-hero__sound-icon bf-hero__sound-icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="bf-hero__sound-text" data-bf-sound-text>{{ s.sound_label_off | default: 'Sound off' | escape }}</span>
+    </button>
+  {%- endif -%}
 </section>
 
 {%- comment -%} Full-screen sign-up sheet {%- endcomment -%}
@@ -57,6 +113,10 @@
   data-list="{{ s.klaviyo_list_id | escape }}"
   data-form="{{ s.klaviyo_form_id | escape }}"
   data-source="{{ s.custom_source | escape }}"
+  data-phone="{{ s.phone_enabled }}"
+  data-country="{{ s.phone_country | default: '+31' | escape }}"
+  data-share-text="{{ s.share_message | escape }}"
+  data-share-copied="{{ s.share_copied | default: 'Link copied' | escape }}"
 >
   <div class="bf-signup__backdrop" data-bf-close></div>
   <div class="bf-signup__sheet" role="dialog" aria-modal="true" aria-labelledby="BfSignupTitle-{{ sid }}">
@@ -64,6 +124,7 @@
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
     </button>
 
+    {%- comment -%} step 1: e-mail {%- endcomment -%}
     <form class="bf-signup__form" data-bf-form novalidate>
       {%- if s.form_kicker != blank -%}
         <p class="bf-signup__kicker">{{ s.form_kicker | escape }}</p>
@@ -71,6 +132,17 @@
       <h2 class="bf-signup__title" id="BfSignupTitle-{{ sid }}">{{ s.form_heading | escape }}</h2>
       {%- if s.form_text != blank -%}
         <p class="bf-signup__text">{{ s.form_text | escape }}</p>
+      {%- endif -%}
+      {%- if s.benefit_1 != blank or s.benefit_2 != blank or s.benefit_3 != blank -%}
+        <ul class="bf-signup__benefits">
+          {%- for i in (1..3) -%}
+            {%- assign bkey = 'benefit_' | append: i -%}
+            {%- assign btxt = s[bkey] -%}
+            {%- if btxt != blank -%}
+              <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>{{ btxt | escape }}</span></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
       {%- endif -%}
       <label class="bf-signup__label" for="BfEmail-{{ sid }}">{{ s.form_placeholder | default: 'E-mail address' | escape }}</label>
       <input class="bf-signup__input" id="BfEmail-{{ sid }}" type="email" name="email" inputmode="email" autocomplete="email" placeholder="{{ s.form_placeholder | default: 'E-mail address' | escape }}" required>
@@ -83,6 +155,35 @@
       {%- endif -%}
     </form>
 
+    {%- comment -%} step 2: mobile number (optional) {%- endcomment -%}
+    {%- if s.phone_enabled -%}
+      <form class="bf-signup__form bf-signup__phone" data-bf-phone-form hidden novalidate>
+        {%- if s.phone_kicker != blank -%}
+          <p class="bf-signup__kicker">{{ s.phone_kicker | escape }}</p>
+        {%- endif -%}
+        <h2 class="bf-signup__title">{{ s.phone_heading | escape }}</h2>
+        {%- if s.phone_text != blank -%}
+          <p class="bf-signup__text">{{ s.phone_text | escape }}</p>
+        {%- endif -%}
+        <label class="bf-signup__label" for="BfPhone-{{ sid }}">{{ s.phone_placeholder | default: 'Mobile number' | escape }}</label>
+        <div class="bf-signup__tel">
+          <span class="bf-signup__tel-country" data-bf-country>{{ s.phone_country | default: '+31' | escape }}</span>
+          <input class="bf-signup__input bf-signup__input--tel" id="BfPhone-{{ sid }}" type="tel" name="phone" inputmode="tel" autocomplete="tel-national" placeholder="{{ s.phone_placeholder | default: '6 12345678' | escape }}">
+        </div>
+        <label class="bf-signup__check-row">
+          <input type="checkbox" name="sms_consent" data-bf-sms-consent>
+          <span class="bf-signup__check-box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="bf-signup__check-text">{{ s.phone_consent | escape }}</span>
+        </label>
+        <p class="bf-signup__error" data-bf-phone-error hidden>{{ s.phone_error | escape }}</p>
+        <button type="submit" class="bf-signup__submit" data-bf-phone-submit>
+          <span data-bf-phone-label>{{ s.phone_button | escape }}</span>
+        </button>
+        <button type="button" class="bf-signup__skip" data-bf-phone-skip>{{ s.phone_skip | escape }}</button>
+      </form>
+    {%- endif -%}
+
+    {%- comment -%} step 3: success {%- endcomment -%}
     <div class="bf-signup__success" data-bf-success hidden>
       <div class="bf-signup__check" aria-hidden="true">
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14.5l5 5L22 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -90,6 +191,12 @@
       <h2 class="bf-signup__title">{{ s.success_heading | escape }}</h2>
       {%- if s.success_text != blank -%}
         <p class="bf-signup__text">{{ s.success_text | escape }}</p>
+      {%- endif -%}
+      {%- if s.share_enabled and s.share_button != blank -%}
+        <button type="button" class="bf-signup__share" data-bf-share>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M12 3v13M7 8l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-bf-share-label>{{ s.share_button | escape }}</span>
+        </button>
       {%- endif -%}
       <button type="button" class="bf-signup__submit bf-signup__submit--done" data-bf-close>{{ s.success_button | default: 'Done' | escape }}</button>
     </div>
@@ -125,9 +232,7 @@
     object-position: var(--bf-video-pos, center);
     display: block;
   }
-  #BfHero-{{ sid }} .bf-hero__video--empty {
-    background: linear-gradient(160deg, #1a1a1a, #000);
-  }
+  #BfHero-{{ sid }} .bf-hero__video--empty { background: linear-gradient(160deg, #1a1a1a, #000); }
   #BfHero-{{ sid }} .bf-hero__shade {
     position: absolute;
     inset: 0;
@@ -176,6 +281,35 @@
     color: rgba(255, 255, 255, .88);
     text-wrap: balance;
   }
+  /* countdown: glass boxes, same recipe as the buttons */
+  #BfHero-{{ sid }} .bf-hero__count { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 4px; }
+  #BfHero-{{ sid }} .bf-hero__count[hidden] { display: none; }
+  #BfHero-{{ sid }} .bf-hero__count-label,
+  #BfHero-{{ sid }} .bf-hero__count-done {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .8);
+  }
+  #BfHero-{{ sid }} .bf-hero__count-done { color: #7ed321; }
+  #BfHero-{{ sid }} .bf-hero__count-boxes { display: flex; gap: 8px; }
+  #BfHero-{{ sid }} .bf-hero__count-box {
+    min-width: 66px;
+    padding: 10px 8px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: rgba(255, 255, 255, .16);
+    border: 1px solid rgba(255, 255, 255, .24);
+    border-radius: 8px;
+    backdrop-filter: blur(21px) saturate(180%);
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+  }
+  #BfHero-{{ sid }} .bf-hero__count-num { font-size: 24px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  #BfHero-{{ sid }} .bf-hero__count-unit { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(255, 255, 255, .75); }
   /* glass button, same recipe as the homepage hero button */
   #BfHero-{{ sid }} .bf-hero__cta {
     margin-top: 8px;
@@ -195,14 +329,45 @@
     transition: background-color .2s ease, border-color .2s ease;
   }
   #BfHero-{{ sid }} .bf-hero__cta:hover { background: rgba(255, 255, 255, .34); border-color: rgba(255, 255, 255, .45); }
-  #BfHero-{{ sid }} .bf-hero__note {
-    margin: 0;
-    font-size: 12px;
-    color: rgba(255, 255, 255, .7);
+  #BfHero-{{ sid }} .bf-hero__cta.is-done { background: rgba(126, 211, 33, .22); border-color: rgba(126, 211, 33, .45); }
+  #BfHero-{{ sid }} .bf-hero__note { margin: 0; font-size: 12px; color: rgba(255, 255, 255, .7); }
+  /* social proof row, same look as the homepage hero */
+  #BfHero-{{ sid }} .bf-hero__sp { margin-top: 8px !important; }
+  #BfHero-{{ sid }} .bf-hero__sp-text { color: rgba(255, 255, 255, .9) !important; font-size: 13px !important; }
+  /* sound toggle */
+  #BfHero-{{ sid }} .bf-hero__sound {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 14px 0 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(255, 255, 255, .2);
+    border: 1px solid rgba(255, 255, 255, .28);
+    border-radius: 999px;
+    backdrop-filter: blur(21px) saturate(180%);
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+    cursor: pointer;
+    transition: background-color .2s ease;
   }
+  #BfHero-{{ sid }} .bf-hero__sound:hover { background: rgba(255, 255, 255, .34); }
+  #BfHero-{{ sid }} .bf-hero__sound-icon--on { display: none; }
+  #BfHero-{{ sid }} .bf-hero__sound[aria-pressed="true"] .bf-hero__sound-icon--on { display: block; }
+  #BfHero-{{ sid }} .bf-hero__sound[aria-pressed="true"] .bf-hero__sound-icon--off { display: none; }
   @media screen and (max-width: 749px) {
-    #BfHero-{{ sid }} .bf-hero__content { padding: 150px 16px 64px; gap: 14px; }
+    #BfHero-{{ sid }} .bf-hero__content { padding: 150px 16px 84px; gap: 14px; }
     #BfHero-{{ sid }} .bf-hero__cta { width: 100%; padding: 16px 20px; }
+    #BfHero-{{ sid }} .bf-hero__count-box { min-width: 0; flex: 1; }
+    #BfHero-{{ sid }} .bf-hero__count-boxes { width: 100%; max-width: 360px; }
+    #BfHero-{{ sid }} .bf-hero__sound { right: 16px; bottom: 16px; }
   }
 
   /* ---- sign-up sheet ---- */
@@ -245,6 +410,8 @@
     cursor: pointer;
   }
   #BfSignup-{{ sid }} .bf-signup__close:hover { background: #e6e6e6; }
+  #BfSignup-{{ sid }} .bf-signup__form[hidden],
+  #BfSignup-{{ sid }} .bf-signup__success[hidden] { display: none; }
   #BfSignup-{{ sid }} .bf-signup__kicker {
     margin: 0 0 10px;
     font-size: 12px;
@@ -261,19 +428,19 @@
     color: #111;
     text-wrap: balance;
   }
-  #BfSignup-{{ sid }} .bf-signup__text {
+  #BfSignup-{{ sid }} .bf-signup__text { margin: 0 0 20px; font-size: 15px; line-height: 1.5; color: #666; }
+  #BfSignup-{{ sid }} .bf-signup__benefits {
+    list-style: none;
     margin: 0 0 22px;
-    font-size: 15px;
-    line-height: 1.5;
-    color: #666;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
   }
-  #BfSignup-{{ sid }} .bf-signup__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-  }
+  #BfSignup-{{ sid }} .bf-signup__benefits li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.4; color: #222; }
+  #BfSignup-{{ sid }} .bf-signup__benefits svg { flex: none; margin-top: 2px; color: #5a9a00; }
+  #BfSignup-{{ sid }} .bf-signup__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   #BfSignup-{{ sid }} .bf-signup__input {
     width: 100%;
     height: 52px;
@@ -289,12 +456,44 @@
   }
   #BfSignup-{{ sid }} .bf-signup__input:focus { border-color: #0395F6; box-shadow: 0 0 0 3px rgba(3, 149, 246, .18); }
   #BfSignup-{{ sid }} .bf-signup__input[aria-invalid="true"] { border-color: #d9202a; }
-  #BfSignup-{{ sid }} .bf-signup__error {
-    margin: 10px 0 0;
-    font-size: 13px;
-    color: #d9202a;
-    text-align: left;
+  #BfSignup-{{ sid }} .bf-signup__tel { position: relative; }
+  #BfSignup-{{ sid }} .bf-signup__tel-country {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #666;
+    pointer-events: none;
   }
+  #BfSignup-{{ sid }} .bf-signup__input--tel { padding-left: 56px; }
+  #BfSignup-{{ sid }} .bf-signup__check-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 14px 0 0;
+    text-align: left;
+    cursor: pointer;
+  }
+  #BfSignup-{{ sid }} .bf-signup__check-row input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  #BfSignup-{{ sid }} .bf-signup__check-box {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #c9c9c9;
+    border-radius: 4px;
+    color: #fff;
+    background: #fff;
+    transition: background-color .15s ease, border-color .15s ease;
+  }
+  #BfSignup-{{ sid }} .bf-signup__check-row input:checked + .bf-signup__check-box { background: #0395F6; border-color: #0395F6; }
+  #BfSignup-{{ sid }} .bf-signup__check-row input:focus-visible + .bf-signup__check-box { box-shadow: 0 0 0 3px rgba(3, 149, 246, .18); }
+  #BfSignup-{{ sid }} .bf-signup__check-text { font-size: 13px; line-height: 1.45; color: #444; }
+  #BfSignup-{{ sid }} .bf-signup__error { margin: 10px 0 0; font-size: 13px; color: #d9202a; text-align: left; }
+  #BfSignup-{{ sid }} .bf-signup__error[hidden] { display: none; }
   #BfSignup-{{ sid }} .bf-signup__submit {
     width: 100%;
     margin-top: 12px;
@@ -310,12 +509,21 @@
   }
   #BfSignup-{{ sid }} .bf-signup__submit:hover { background: #0284d9; }
   #BfSignup-{{ sid }} .bf-signup__submit[disabled] { opacity: .7; cursor: wait; }
-  #BfSignup-{{ sid }} .bf-signup__consent {
+  #BfSignup-{{ sid }} .bf-signup__skip {
+    display: block;
+    width: 100%;
     margin: 14px 0 0;
-    font-size: 12px;
-    line-height: 1.45;
-    color: #999;
+    padding: 6px;
+    font-size: 13px;
+    color: #666;
+    background: none;
+    border: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
   }
+  #BfSignup-{{ sid }} .bf-signup__skip:hover { color: #111; }
+  #BfSignup-{{ sid }} .bf-signup__consent { margin: 14px 0 0; font-size: 12px; line-height: 1.45; color: #999; }
   #BfSignup-{{ sid }} .bf-signup__check {
     width: 56px;
     height: 56px;
@@ -326,6 +534,26 @@
     background: rgba(90, 154, 0, .12);
     color: #5a9a00;
   }
+  #BfSignup-{{ sid }} .bf-signup__share {
+    width: 100%;
+    margin-top: 4px;
+    padding: 15px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color .15s ease, background-color .15s ease;
+  }
+  #BfSignup-{{ sid }} .bf-signup__share:hover { border-color: #111; }
+  #BfSignup-{{ sid }} .bf-signup__share + .bf-signup__submit--done { background: #111; }
+  #BfSignup-{{ sid }} .bf-signup__share + .bf-signup__submit--done:hover { background: #333; }
   @media screen and (max-width: 749px) {
     #BfSignup-{{ sid }} .bf-signup__sheet {
       top: auto;
@@ -345,96 +573,213 @@
     var root = document.getElementById('BfSignup-{{ sid }}');
     var hero = document.getElementById('BfHero-{{ sid }}');
     if (!root || !hero) return;
+    var STORAGE_KEY = 'bf-early-access';
+    var endpoint = 'https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(root.getAttribute('data-company') || '');
+    var listId = root.getAttribute('data-list');
+    var source = root.getAttribute('data-source') || 'Black Friday early access';
 
-    /* autoplay on iOS needs playsinline + muted; the video_tag filter
-       does not always set playsinline */
-    hero.querySelectorAll('video').forEach(function (v) {
-      v.setAttribute('playsinline', '');
-      v.setAttribute('webkit-playsinline', '');
-      v.muted = true;
-      v.loop = true;
-      var p = v.play();
+    /* ---- video: autoplay muted (browser rule), sound on tap ---- */
+    var video = hero.querySelector('video');
+    if (video) {
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.muted = true;
+      video.loop = true;
+      var p = video.play();
       if (p && p.catch) p.catch(function () {});
-    });
+    }
+    var sound = hero.querySelector('[data-bf-sound]');
+    if (sound && video) {
+      var soundText = sound.querySelector('[data-bf-sound-text]');
+      function setSound(on) {
+        sound.setAttribute('aria-pressed', on ? 'true' : 'false');
+        var label = sound.getAttribute(on ? 'data-on' : 'data-off');
+        sound.setAttribute('aria-label', label);
+        if (soundText) soundText.textContent = label;
+      }
+      sound.addEventListener('click', function () {
+        var turnOn = video.muted;
+        video.muted = !turnOn;
+        if (turnOn) {
+          video.volume = 1;
+          var pp = video.play();
+          if (pp && pp.catch) pp.catch(function () { video.muted = true; setSound(false); });
+        }
+        setSound(turnOn);
+      });
+    }
 
+    /* ---- countdown to the early-access opening ---- */
+    var count = hero.querySelector('[data-bf-countdown]');
+    var target = Date.parse(hero.getAttribute('data-countdown') || '');
+    if (count && !isNaN(target)) {
+      var d = count.querySelector('[data-bf-d]'), h = count.querySelector('[data-bf-h]'), m = count.querySelector('[data-bf-m]'), sEl = count.querySelector('[data-bf-s]');
+      var boxes = count.querySelector('[data-bf-count-boxes]'), label = count.querySelector('[data-bf-count-label]'), done = count.querySelector('[data-bf-count-done]');
+      var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+      function tick() {
+        var left = target - Date.now();
+        if (left <= 0) {
+          boxes.hidden = true; label.hidden = true; done.hidden = false;
+          return false;
+        }
+        var secs = Math.floor(left / 1000);
+        d.textContent = Math.floor(secs / 86400);
+        h.textContent = pad(Math.floor(secs % 86400 / 3600));
+        m.textContent = pad(Math.floor(secs % 3600 / 60));
+        sEl.textContent = pad(secs % 60);
+        return true;
+      }
+      count.hidden = false;
+      if (tick()) {
+        var timer = setInterval(function () { if (!tick()) clearInterval(timer); }, 1000);
+      }
+    }
+
+    /* ---- sheet ---- */
     var form = root.querySelector('[data-bf-form]');
     var input = root.querySelector('input[type="email"]');
     var errorEl = root.querySelector('[data-bf-error]');
-    var success = root.querySelector('[data-bf-success]');
     var submit = root.querySelector('[data-bf-submit]');
     var submitLabel = root.querySelector('[data-bf-submit-label]');
     var submitText = submitLabel ? submitLabel.textContent : '';
+    var phoneForm = root.querySelector('[data-bf-phone-form]');
+    var phoneInput = phoneForm && phoneForm.querySelector('input[type="tel"]');
+    var phoneConsent = phoneForm && phoneForm.querySelector('[data-bf-sms-consent]');
+    var phoneError = phoneForm && phoneForm.querySelector('[data-bf-phone-error]');
+    var phoneSubmit = phoneForm && phoneForm.querySelector('[data-bf-phone-submit]');
+    var phoneLabel = phoneForm && phoneForm.querySelector('[data-bf-phone-label]');
+    var phoneText = phoneLabel ? phoneLabel.textContent : '';
+    var success = root.querySelector('[data-bf-success]');
+    var cta = hero.querySelector('[data-bf-open]');
     var lastFocus = null;
+    var email = '';
 
+    function signedUp() { try { return localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) { return false; } }
+    function remember() { try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {} }
+    function markCta() {
+      if (!cta) return;
+      var doneLabel = cta.getAttribute('data-label-done');
+      if (signedUp() && doneLabel) { cta.textContent = doneLabel; cta.classList.add('is-done'); }
+    }
+    function show(step) {
+      form.hidden = step !== 'email';
+      if (phoneForm) phoneForm.hidden = step !== 'phone';
+      success.hidden = step !== 'success';
+      var focusEl = step === 'email' ? input : step === 'phone' ? phoneInput : null;
+      if (focusEl) setTimeout(function () { focusEl.focus(); }, 60);
+    }
     function open() {
       var formId = root.getAttribute('data-form');
       if (formId && window._klOnsite) {
-        /* a Klaviyo-built full-screen form takes over */
         window._klOnsite.push(['openForm', formId]);
         return;
       }
       lastFocus = document.activeElement;
       root.hidden = false;
-      document.documentElement.classList.add('bf-signup-open');
       document.body.style.overflow = 'hidden';
-      setTimeout(function () { if (input && !form.hidden) input.focus(); }, 50);
+      show(signedUp() ? 'success' : 'email');
     }
     function close() {
       root.hidden = true;
-      document.documentElement.classList.remove('bf-signup-open');
       document.body.style.overflow = '';
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
-    function showError(show) {
-      if (!errorEl) return;
-      errorEl.hidden = !show;
-      if (input) input.setAttribute('aria-invalid', show ? 'true' : 'false');
+    function setError(el, field, on) {
+      if (el) el.hidden = !on;
+      if (field) field.setAttribute('aria-invalid', on ? 'true' : 'false');
     }
-
-    hero.querySelectorAll('[data-bf-open]').forEach(function (b) { b.addEventListener('click', open); });
-    root.querySelectorAll('[data-bf-close]').forEach(function (b) { b.addEventListener('click', close); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !root.hidden) close(); });
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var email = (input.value || '').trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError(true); input.focus(); return; }
-      showError(false);
-      var company = root.getAttribute('data-company');
-      var list = root.getAttribute('data-list');
-      if (!company || !list) { showError(true); return; }
-      submit.disabled = true;
-      if (submitLabel) submitLabel.textContent = '…';
-      fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(company), {
+    function subscribe(attributes) {
+      return fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' },
         body: JSON.stringify({
           data: {
             type: 'subscription',
             attributes: {
-              custom_source: root.getAttribute('data-source') || 'Black Friday early access',
-              /* the list's own opt-in process applies; an explicit
-                 consent block is rejected by this endpoint */
-              profile: { data: { type: 'profile', attributes: { email: email } } }
+              custom_source: source,
+              profile: { data: { type: 'profile', attributes: attributes } }
             },
-            relationships: { list: { data: { type: 'list', id: list } } }
+            relationships: { list: { data: { type: 'list', id: listId } } }
           }
         })
-      }).then(function (res) {
-        if (!res.ok) throw new Error('klaviyo ' + res.status);
-        form.hidden = true;
-        success.hidden = false;
-        try { localStorage.setItem('bf-early-access', '1'); } catch (err) {}
-        if (window.klaviyo && window.klaviyo.push) {
-          window.klaviyo.push(['identify', { $email: email }]);
-        }
+      }).then(function (res) { if (!res.ok) throw new Error('klaviyo ' + res.status); });
+    }
+
+    hero.querySelectorAll('[data-bf-open]').forEach(function (b) { b.addEventListener('click', open); });
+    root.querySelectorAll('[data-bf-close]').forEach(function (b) { b.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !root.hidden) close(); });
+    markCta();
+
+    /* step 1: e-mail */
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      email = (input.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !listId) { setError(errorEl, input, true); input.focus(); return; }
+      setError(errorEl, input, false);
+      submit.disabled = true;
+      if (submitLabel) submitLabel.textContent = '…';
+      subscribe({ email: email }).then(function () {
+        remember();
+        markCta();
+        if (window.klaviyo && window.klaviyo.push) window.klaviyo.push(['identify', { $email: email }]);
+        show(phoneForm ? 'phone' : 'success');
       }).catch(function () {
-        showError(true);
+        setError(errorEl, input, true);
       }).then(function () {
         submit.disabled = false;
         if (submitLabel) submitLabel.textContent = submitText;
       });
     });
+
+    /* step 2: mobile number, only with the consent box ticked */
+    if (phoneForm) {
+      var country = root.getAttribute('data-country') || '+31';
+      function normalizePhone(raw) {
+        var v = (raw || '').replace(/[\s().-]/g, '');
+        if (v.indexOf('00') === 0) v = '+' + v.slice(2);
+        if (v.charAt(0) !== '+') {
+          if (v.charAt(0) === '0') v = v.slice(1);
+          v = country + v;
+        }
+        return /^\+[1-9]\d{7,14}$/.test(v) ? v : null;
+      }
+      phoneForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var phone = normalizePhone(phoneInput.value);
+        if (!phone || !phoneConsent.checked) { setError(phoneError, phoneInput, true); (phone ? phoneConsent : phoneInput).focus(); return; }
+        setError(phoneError, phoneInput, false);
+        phoneSubmit.disabled = true;
+        if (phoneLabel) phoneLabel.textContent = '…';
+        subscribe({ email: email, phone_number: phone }).then(function () {
+          show('success');
+        }).catch(function () {
+          setError(phoneError, phoneInput, true);
+        }).then(function () {
+          phoneSubmit.disabled = false;
+          if (phoneLabel) phoneLabel.textContent = phoneText;
+        });
+      });
+      var skip = phoneForm.querySelector('[data-bf-phone-skip]');
+      if (skip) skip.addEventListener('click', function () { show('success'); });
+    }
+
+    /* step 3: share */
+    var share = root.querySelector('[data-bf-share]');
+    if (share) {
+      var shareLabel = share.querySelector('[data-bf-share-label]');
+      var shareText = shareLabel ? shareLabel.textContent : '';
+      share.addEventListener('click', function () {
+        var url = location.origin + location.pathname;
+        var data = { title: document.title, text: root.getAttribute('data-share-text') || '', url: url };
+        if (navigator.share) { navigator.share(data).catch(function () {}); return; }
+        var copied = function () {
+          if (!shareLabel) return;
+          shareLabel.textContent = root.getAttribute('data-share-copied') || 'Link copied';
+          setTimeout(function () { shareLabel.textContent = shareText; }, 2000);
+        };
+        if (navigator.clipboard) navigator.clipboard.writeText(url).then(copied, copied); else copied();
+      });
+    }
   })();
 </script>
 
@@ -445,7 +790,7 @@
   "class": "section-bf-hero",
   "settings": [
     { "type": "header", "content": "Background" },
-    { "type": "video", "id": "video", "label": "Video", "info": "Landscape, muted, loops. Keep it short (5–15 s) and under ~8 MB for fast loading." },
+    { "type": "video", "id": "video", "label": "Video", "info": "Landscape, loops. Starts muted (browsers require that); visitors can turn the sound on with the button. Keep it short (5–15 s) and under ~8 MB." },
     { "type": "text", "id": "video_url", "label": "Video URL (fallback)", "info": "Direct MP4 link, used when no video is picked above." },
     { "type": "image_picker", "id": "poster", "label": "Poster image", "info": "Shown while the video loads and when video cannot play." },
     { "type": "select", "id": "video_position", "label": "Video focal point", "options": [
@@ -455,18 +800,39 @@
     ], "default": "center" },
     { "type": "range", "id": "overlay_opacity", "label": "Darken video", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 35 },
     { "type": "range", "id": "min_height", "label": "Height", "min": 70, "max": 100, "step": 5, "unit": "vh", "default": 100 },
+    { "type": "checkbox", "id": "show_sound_toggle", "label": "Show sound button", "default": true },
+    { "type": "text", "id": "sound_label_off", "label": "Sound button, muted", "default": "Sound off" },
+    { "type": "text", "id": "sound_label_on", "label": "Sound button, playing", "default": "Sound on" },
 
     { "type": "header", "content": "Message" },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "Black Friday 2026" },
     { "type": "text", "id": "heading", "label": "Title", "default": "Don't miss the early break away" },
     { "type": "text", "id": "subheading", "label": "Subtitle", "default": "Join here to get exclusive access to our Black Friday deals first" },
-    { "type": "text", "id": "button_label", "label": "Button", "default": "Sign up for early access" },
-    { "type": "text", "id": "note", "label": "Small line under the button", "default": "Members get the deals before anyone else." },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Get early access" },
+    { "type": "text", "id": "button_label_done", "label": "Button after signing up", "default": "You're in ✓ Invite a ride buddy" },
+    { "type": "text", "id": "note", "label": "Small line under the button", "default": "Members get the deals before anyone else. No spam." },
     { "type": "select", "id": "text_position", "label": "Text position", "options": [
       { "value": "center", "label": "Center" },
       { "value": "bottom", "label": "Bottom" },
       { "value": "top", "label": "Top" }
     ], "default": "center" },
+
+    { "type": "header", "content": "Countdown" },
+    { "type": "checkbox", "id": "countdown_enabled", "label": "Show countdown", "default": true },
+    { "type": "text", "id": "countdown_date", "label": "Early access opens at", "info": "Date and time, e.g. 2026-11-24T08:00:00+01:00", "default": "2026-11-24T08:00:00+01:00" },
+    { "type": "text", "id": "countdown_label", "label": "Label", "default": "Early access opens in" },
+    { "type": "text", "id": "countdown_done", "label": "Text when it has opened", "default": "Early access is open" },
+    { "type": "text", "id": "countdown_days", "label": "Days", "default": "days" },
+    { "type": "text", "id": "countdown_hours", "label": "Hours", "default": "hrs" },
+    { "type": "text", "id": "countdown_minutes", "label": "Minutes", "default": "min" },
+    { "type": "text", "id": "countdown_seconds", "label": "Seconds", "default": "sec" },
+
+    { "type": "header", "content": "Social proof" },
+    { "type": "checkbox", "id": "show_social_proof", "label": "Show social proof", "default": true },
+    { "type": "text", "id": "sp_text", "label": "Text", "default": "Join 78.342 athletes riding in Sockeloen" },
+    { "type": "image_picker", "id": "sp_avatar_1", "label": "Avatar 1" },
+    { "type": "image_picker", "id": "sp_avatar_2", "label": "Avatar 2" },
+    { "type": "image_picker", "id": "sp_avatar_3", "label": "Avatar 3" },
 
     { "type": "header", "content": "Klaviyo" },
     { "type": "text", "id": "klaviyo_list_id", "label": "Klaviyo list ID", "info": "Everyone who signs up is added to this list." },
@@ -474,17 +840,38 @@
     { "type": "text", "id": "custom_source", "label": "Custom source", "default": "Black Friday early access page" },
     { "type": "text", "id": "klaviyo_form_id", "label": "Klaviyo form ID (optional)", "info": "Fill in to open a form built in Klaviyo instead of the built-in sign-up sheet." },
 
-    { "type": "header", "content": "Sign-up sheet" },
+    { "type": "header", "content": "Sign-up sheet, step 1: e-mail" },
     { "type": "text", "id": "form_kicker", "label": "Kicker", "default": "Exclusive access" },
     { "type": "text", "id": "form_heading", "label": "Title", "default": "Get in the early break away" },
     { "type": "text", "id": "form_text", "label": "Text", "default": "Drop your e-mail and get our Black Friday deals before anyone else." },
+    { "type": "text", "id": "benefit_1", "label": "Benefit 1", "default": "First access to every Black Friday deal" },
+    { "type": "text", "id": "benefit_2", "label": "Benefit 2", "default": "Members-only extra deals" },
+    { "type": "text", "id": "benefit_3", "label": "Benefit 3", "default": "One e-mail when the doors open, unsubscribe anytime" },
     { "type": "text", "id": "form_placeholder", "label": "E-mail placeholder", "default": "E-mail address" },
     { "type": "text", "id": "form_button", "label": "Button", "default": "Get exclusive access" },
     { "type": "text", "id": "form_consent", "label": "Small print", "default": "By signing up you agree to receive e-mails from Sockeloen. Unsubscribe anytime." },
     { "type": "text", "id": "error_text", "label": "Error message", "default": "Please enter a valid e-mail address." },
-    { "type": "text", "id": "success_heading", "label": "Success title", "default": "You're in the break away" },
-    { "type": "text", "id": "success_text", "label": "Success text", "default": "Keep an eye on your inbox. You'll get the Black Friday deals before they go public." },
-    { "type": "text", "id": "success_button", "label": "Success button", "default": "Done" }
+
+    { "type": "header", "content": "Sign-up sheet, step 2: mobile number" },
+    { "type": "checkbox", "id": "phone_enabled", "label": "Ask for a mobile number after the e-mail", "default": true, "info": "Optional step. SMS consent is only recorded when the box is ticked." },
+    { "type": "text", "id": "phone_kicker", "label": "Kicker", "default": "One more thing" },
+    { "type": "text", "id": "phone_heading", "label": "Title", "default": "Want a text the moment the doors open?" },
+    { "type": "text", "id": "phone_text", "label": "Text", "default": "One SMS when early access starts, so you're first in line. Nothing else." },
+    { "type": "text", "id": "phone_country", "label": "Default country code", "default": "+31" },
+    { "type": "text", "id": "phone_placeholder", "label": "Number placeholder", "default": "6 12345678" },
+    { "type": "text", "id": "phone_consent", "label": "Consent text (required by law)", "default": "Yes, text me when early access opens. Message and data rates may apply. Reply STOP to unsubscribe." },
+    { "type": "text", "id": "phone_button", "label": "Button", "default": "Text me when it opens" },
+    { "type": "text", "id": "phone_skip", "label": "Skip link", "default": "No thanks, e-mail is enough" },
+    { "type": "text", "id": "phone_error", "label": "Error message", "default": "Please enter a valid mobile number and tick the box." },
+
+    { "type": "header", "content": "Sign-up sheet, step 3: success" },
+    { "type": "text", "id": "success_heading", "label": "Title", "default": "You're in the break away" },
+    { "type": "text", "id": "success_text", "label": "Text", "default": "Keep an eye on your inbox. You'll get the Black Friday deals before they go public." },
+    { "type": "checkbox", "id": "share_enabled", "label": "Show share button", "default": true },
+    { "type": "text", "id": "share_button", "label": "Share button", "default": "Invite a ride buddy" },
+    { "type": "text", "id": "share_message", "label": "Share message", "default": "Get early access to Sockeloen's Black Friday deals:" },
+    { "type": "text", "id": "share_copied", "label": "Copied confirmation", "default": "Link copied" },
+    { "type": "text", "id": "success_button", "label": "Close button", "default": "Done" }
   ],
   "presets": [
     { "name": "Black Friday sign-up hero" }
