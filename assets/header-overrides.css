@@ -3243,30 +3243,18 @@ body.mega-menu-switching .mega-menu-v2-panel {
   transform: none !important;
 }
 
-/* Minimal EME-style glass chips behind the nav text and the reviews line,
-   so both stay readable whatever sits behind the glass header. */
+/* Nav text and the reviews line readable everywhere the way the mobile
+   category bar (Socks / Overshoes / Gloves) is: no chip, bold text with
+   a soft halo shadow. */
 .mega-menu-v2-trigger-link {
-  padding: 6px 10px !important;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.32);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(21px) saturate(180%);
-  -webkit-backdrop-filter: blur(21px) saturate(180%);
-  transition: background-color 0.15s ease, color 0.15s ease;
+  font-weight: 700;
+  font-size: 13px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.55);
 }
-.mega-menu-v2-trigger-link:hover,
-.mega-menu-v2-trigger-link.is-open {
-  background: rgba(255, 255, 255, 0.55);
-}
-.mega-menu-v2-reviews {
-  padding: 8px 12px !important;
-  border-top: none !important;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
-.mega-menu-v2-reviews__text { color: #222 !important; }
-.mega-menu-v2-reviews__text strong { color: #111 !important; }
+.mega-menu-v2-trigger-link span { text-shadow: inherit; }
+.mega-menu-v2-reviews { border-top: 1px solid rgba(0, 0, 0, 0.08); }
+.mega-menu-v2-reviews__text { color: #111 !important; font-weight: 700; text-shadow: 0 1px 2px rgba(255, 255, 255, 0.55); }
+.mega-menu-v2-reviews__text strong { color: #111 !important; font-weight: 700; }
 .mega-menu-v2-reviews__logo { opacity: 0.9 !important; }
 
 .mega-menu-v2-inner {
