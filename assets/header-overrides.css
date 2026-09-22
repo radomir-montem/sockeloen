@@ -3236,6 +3236,38 @@ body.template--index .regular-button {
   opacity: 0;
   transform: translateY(-8px);
 }
+/* direct switch between two items: no fades, the panels swap in one frame */
+body.mega-menu-switching .mega-menu-v2-panel {
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Minimal EME-style glass chips behind the nav text and the reviews line,
+   so both stay readable whatever sits behind the glass header. */
+.mega-menu-v2-trigger-link {
+  padding: 6px 10px !important;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(21px) saturate(180%);
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.mega-menu-v2-trigger-link:hover,
+.mega-menu-v2-trigger-link.is-open {
+  background: rgba(255, 255, 255, 0.55);
+}
+.mega-menu-v2-reviews {
+  padding: 8px 12px !important;
+  border-top: none !important;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.mega-menu-v2-reviews__text { color: #222 !important; }
+.mega-menu-v2-reviews__text strong { color: #111 !important; }
+.mega-menu-v2-reviews__logo { opacity: 0.9 !important; }
 
 .mega-menu-v2-inner {
   /* No max-width/centering — the panel's own left/right edges already

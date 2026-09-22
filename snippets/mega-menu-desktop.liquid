@@ -26,6 +26,13 @@
       isCategory(i) { return this.activeCategory == i; },
       open(i) {
         clearTimeout(this.closeTimer);
+        /* Moving from one item straight to the next: swap the panels in
+           the same frame. With the fades, the old panel fading out under
+           the new one fading in read as a quick fold/unfold flash. */
+        if (this.activeMenu != -1 && this.activeMenu != i) {
+          document.body.classList.add('mega-menu-switching');
+          setTimeout(function () { document.body.classList.remove('mega-menu-switching'); }, 60);
+        }
         this.activeMenu = i;
         this.activeCategory = 1;
       },
