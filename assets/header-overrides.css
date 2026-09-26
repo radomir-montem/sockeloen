@@ -5772,3 +5772,63 @@ cart-drawer a.cart-drawer__checkout-btn:hover,
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+/* ============================================================
+   COLLECTION PAGE — "Filter and sort" button in the header/mega menu
+   glass: same gradient, blur and hairline border as header.header and
+   .mega-menu-v2-panel, with the mega menu's black 13px text.
+   ============================================================ */
+body.template--collection .open-facet-drawer,
+body.template--search .open-facet-drawer {
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.6), rgba(255,255,255,0.28), rgba(255,255,255,0.12)) !important;
+  background-color: transparent !important;
+  backdrop-filter: blur(21px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.1) !important;
+  color: #000 !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  padding: 12px 20px !important;
+  gap: 8px !important;
+}
+body.template--collection .open-facet-drawer:hover,
+body.template--search .open-facet-drawer:hover {
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.75), rgba(255,255,255,0.45), rgba(255,255,255,0.3)) !important;
+  color: #111 !important;
+}
+.open-facet-drawer svg,
+.open-facet-drawer svg path {
+  fill: #000 !important;
+  stroke: none !important;
+}
+
+/* ============================================================
+   PRODUCT PAGE (phone) — thumbnail row: the first thumbnail lost its
+   8px left inset because the slider snapped it to the edge
+   (scroll-padding 0), and 5 x 20% + 4 gaps overflowed the row so the
+   fifth thumbnail was cut on the right. Five thumbnails now fit exactly
+   inside the 8px insets on every screen width and the snap keeps the
+   inset.
+   ============================================================ */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .thumbnail-list {
+    padding: 4px 8px 0 !important;
+    gap: 8px !important;
+    scroll-padding-left: 8px !important;
+    scroll-padding-inline: 8px !important;
+  }
+  body.template--product .product-v2 .thumbnail-list li,
+  body.template--product .product-v2 .thumbnail-list .thumbnail-list__item {
+    flex: 0 0 calc((100% - 32px) / 5) !important;
+    width: calc((100% - 32px) / 5) !important;
+    scroll-snap-align: start;
+  }
+  body.template--product .product-v2 .thumbnail-list::after {
+    content: "";
+    flex: 0 0 1px;
+    margin-left: -8px;
+  }
+}
