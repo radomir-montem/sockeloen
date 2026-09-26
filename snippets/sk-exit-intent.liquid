@@ -186,7 +186,7 @@
     '#skx small{display:block;color:#4a4a4f;font-size:11.5px;margin-top:8px;line-height:1.35}#skx .bar{height:6px;background:rgba(0,0,0,.12);border-radius:3px;overflow:hidden;margin:10px 0 4px}#skx .bar i{display:block;height:100%;background:#25D366}' +
     '#skx .x{display:none}';
 
-  var bd, w;
+  var bd, w, sgOpen = false;
   function head() { return '<div class="top"><div class="ic"><img src="' + WA_ICON + '" alt=""></div><div class="app">WhatsApp</div><div class="now">now</div></div><h3>Jasper Ockeloen</h3>'; }
   function render(body) { w.innerHTML = head() + body + '<input type="text" name="hp" style="display:none" tabindex="-1" autocomplete="off"><button class="x" aria-label="' + t.close + '">×</button>'; w.querySelector('.x').addEventListener('click', close); }
   function close() { if (w && w.parentNode) w.parentNode.removeChild(w); if (bd && bd.parentNode) bd.parentNode.removeChild(bd); }
@@ -218,10 +218,12 @@
     bd = document.createElement('div'); bd.id = 'skx-bd'; document.body.appendChild(bd);
     w = document.createElement('div'); w.id = 'skx'; w.setAttribute('role', 'dialog'); w.setAttribute('aria-modal', 'true'); document.body.appendChild(w);
     bd.addEventListener('click', close);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; if (sgOpen) { var m = document.getElementById('skx-sg'); if (m) { var x = m.querySelector('button'); if (x) x.click(); } return; } close(); });
     requestAnimationFrame(function () { bd.classList.add('on'); w.classList.add('on'); });
     send({ ev: 'shown' });
-    render('<p>' + t.q + '</p><div class="opts">' + t.o.map(function (o, i) { return '<button type="button" class="o" data-i="' + i + '">' + esc(o) + '<span>›</span></button>'; }).join('') + '</div>');
+    // willekeurige volgorde (voorkomt positie-bias in de antwoorden), 'Something else' altijd als laatste
+    var order = [0, 1, 2, 3, 4, 5]; for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var tmp = order[i]; order[i] = order[j]; order[j] = tmp; } order.push(6);
+    render('<p>' + t.q + '</p><div class="opts">' + order.map(function (i) { return '<button type="button" class="o" data-i="' + i + '">' + esc(t.o[i]) + '<span>›</span></button>'; }).join('') + '</div>');
     w.querySelectorAll('.o').forEach(function (b) { b.addEventListener('click', function () { answer(CODES[+b.dataset.i]); }); });
   }
 
@@ -249,7 +251,7 @@
         var l = document.querySelector('.size-guide-link'), ov = document.getElementById('size-guide-overlay');
         if (!l || !ov) {
           // geen product-maattabel op deze pagina (collectie/cart) → de algemene maattabel-pagina in een eigen modal, zelfde blur eromheen
-          w.style.display = 'none';
+          w.style.display = 'none'; sgOpen = true;
           var m = document.createElement('div'); m.id = 'skx-sg';
           m.style.cssText = 'position:fixed;inset:0;z-index:1000001;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.35)';
           m.innerHTML = '<div style="background:#fff;border-radius:16px;width:min(560px,100%);max-height:86vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)"><div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #eee"><b style="font-size:18px">Size guide</b><button type="button" aria-label="' + t.close + '" style="border:0;background:transparent;font-size:24px;line-height:1;cursor:pointer;color:#333">×</button></div><div class="sk-sg-body" style="padding:6px 18px 18px;overflow:auto;font-size:14px;line-height:1.5;-webkit-overflow-scrolling:touch">…</div></div>';
@@ -266,16 +268,18 @@
             body.innerHTML = ''; body.appendChild(rte);
           }).catch(function () { m.querySelector('.sk-sg-body').innerHTML = '<a href="' + (loc === 'en' ? '' : '/' + loc) + '/pages/size-guide" target="_blank" rel="noopener">Open size guide ↗</a>'; });
           document.body.appendChild(m);
-          var closeSg = function () { if (m.parentNode) m.parentNode.removeChild(m); w.style.display = ''; var ta = w.querySelector('textarea'); if (ta) ta.focus(); };
+          var closeSg = function () { if (m.parentNode) m.parentNode.removeChild(m); sgOpen = false; w.style.display = ''; var ta = w.querySelector('textarea'); if (ta) ta.focus(); };
           m.querySelector('button').addEventListener('click', closeSg);
           m.addEventListener('click', function (e) { if (e.target === m) closeSg(); });
           return;
         }
         // theme-modal boven onze blur tonen, badge even verbergen; zodra de maattabel sluit komt de vraag terug
-        w.style.display = 'none'; ov.style.zIndex = '1000001';
+        // NB: op desktop zit de overlay in een sticky container (z-index 2 = eigen stacking context) → naar <body> verplaatsen, anders blijft hij onder onze blur
+        if (ov.parentElement !== document.body) document.body.appendChild(ov);
+        w.style.display = 'none'; ov.style.zIndex = '1000001'; sgOpen = true;
         l.click();
         var mo = new MutationObserver(function () {
-          if (getComputedStyle(ov).display === 'none') { mo.disconnect(); ov.style.zIndex = ''; w.style.display = ''; var ta = w.querySelector('textarea'); if (ta) ta.focus(); }
+          if (getComputedStyle(ov).display === 'none') { mo.disconnect(); ov.style.zIndex = ''; sgOpen = false; w.style.display = ''; var ta = w.querySelector('textarea'); if (ta) ta.focus(); }
         });
         mo.observe(ov, { attributes: true, attributeFilter: ['style', 'class'] });
       });
