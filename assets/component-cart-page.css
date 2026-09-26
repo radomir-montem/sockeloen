@@ -217,9 +217,14 @@ body.template--cart #MainContent {
   display: none;
 }
 
-/* the sections after the cart (best sellers) breathe */
-.cart__footer-wrapper + .shopify-section {
-  padding-top: 8px;
+/* room between the last card and the site footer */
+body.template--cart #MainContent {
+  padding-bottom: 32px;
+}
+@media screen and (max-width: 749px) {
+  body.template--cart:not(:has(.cart-page.is-empty)) #MainContent {
+    padding-bottom: 0;
+  }
 }
 
 /* ---------- phone: the summary sticks to the bottom like the drawer ---------- */
