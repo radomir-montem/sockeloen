@@ -1,4 +1,4 @@
-{%- comment -%} Sockeloen exit-intent v2 (WhatsApp badge). Beheerd door Claude via API — wijzig in sockeloen-exit-survey-snippet.html en her-deploy. {%- endcomment -%}
+{%- comment -%} Sockeloen exit-intent v2 (WhatsApp badge). Managed from the sockeloen-dashboards repo: edit sockeloen-exit-survey-snippet.html and run scripts/deploy-exit-intent.sh {%- endcomment -%}
 <script>
 (function () {
   if (window.__skExit) return; window.__skExit = true;
@@ -18,6 +18,15 @@
     sid = localStorage.getItem(SID_KEY); if (!sid) { sid = Math.random().toString(36).slice(2, 12); localStorage.setItem(SID_KEY, sid); }
   } catch (e) { grp = 'A'; sid = 'na'; }
   try { fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attributes: { exit_grp: grp } }) }).catch(function () {}); } catch (e) {}
+  // holdout-noemer: 1 sessie-ping per dag, voor groep A én B (alleen op product/collectie/cart, dus dezelfde pagina's waar de popup kan verschijnen)
+  try {
+    var p0 = location.pathname, pg0 = /\/products\//.test(p0) ? 'product' : /\/cart/.test(p0) ? 'cart' : /\/collections\//.test(p0) ? 'collection' : 'other';
+    var today = new Date().toISOString().slice(0, 10);
+    if (pg0 !== 'other' && localStorage.getItem('sk_exit_sess') !== today) {
+      localStorage.setItem('sk_exit_sess', today);
+      fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify({ ev: 'session', grp: grp, sid: sid, page: pg0, device: (/Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop') }) }).catch(function () {});
+    }
+  } catch (e) {}
   // ?skcart=1 → side cart openen en tonen welke code is toegepast (de drawer van de theme toont kortingscodes zelf niet)
   if (/[?&]skcart=1/.test(location.search)) {
     var tries = 0;
