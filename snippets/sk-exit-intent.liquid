@@ -18,6 +18,38 @@
     sid = localStorage.getItem(SID_KEY); if (!sid) { sid = Math.random().toString(36).slice(2, 12); localStorage.setItem(SID_KEY, sid); }
   } catch (e) { grp = 'A'; sid = 'na'; }
   try { fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attributes: { exit_grp: grp } }) }).catch(function () {}); } catch (e) {}
+  // ?skcart=1 → side cart openen en tonen welke code is toegepast (de drawer van de theme toont kortingscodes zelf niet)
+  if (/[?&]skcart=1/.test(location.search)) {
+    var tries = 0;
+    var openCart = function () {
+      var cd = document.querySelector('cart-drawer');
+      if (!cd || typeof cd.open !== 'function') { if (tries++ < 20) return setTimeout(openCart, 250); return; }
+      try { history.replaceState(null, '', location.pathname + location.search.replace(/[?&]skcart=1/, '').replace(/^&/, '?')); } catch (e) {}
+      fetch('/cart.js').then(function (r) { return r.json(); }).then(function (c) {
+        cd.open();
+        var apps = c.cart_level_discount_applications || [], msg = '';
+        var CB = { en: ['Code <b>{c}</b> applied — {d} at checkout', '10% off ({a})', 'free shipping'], nl: ['Code <b>{c}</b> toegepast — {d} bij het afrekenen', '10% korting ({a})', 'gratis verzending'], de: ['Code <b>{c}</b> angewendet — {d} an der Kasse', '10 % Rabatt ({a})', 'kostenloser Versand'], fr: ['Code <b>{c}</b> appliqué — {d} au paiement', '10 % de réduction ({a})', 'livraison offerte'] }[(document.documentElement.lang || 'en').slice(0, 2).toLowerCase()] || null;
+        var cb = CB || { 0: 'Code <b>{c}</b> applied — {d} at checkout', 1: '10% off ({a})', 2: 'free shipping' };
+        var codes = (c.discount_codes || []).filter(function (d) { return d.applicable; });
+        if (codes.length) {
+          var code = codes[0].code, app = apps.find(function (x) { return x.discount_application && x.discount_application.title === code; });
+          var d = /^EBSHIP/.test(code) ? cb[2] : cb[1].replace('{a}', app ? '−€' + (app.amount / 100).toFixed(2).replace('.', ',') : '');
+          msg = cb[0].replace('{c}', code).replace('{d}', d);
+        }
+        if (!msg) return;
+        setTimeout(function () {
+          var host = cd.querySelector('.drawer__scrollable') || cd.querySelector('.drawer__inner') || cd;
+          if (host.querySelector('.sk-code-banner')) return;
+          var b = document.createElement('div'); b.className = 'sk-code-banner';
+          b.style.cssText = 'margin:0 0 10px;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.35;color:#0f4a1f;background:rgba(37,211,102,.16);border:1px solid rgba(37,211,102,.45);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Roboto,Arial,sans-serif';
+          b.innerHTML = '✅ ' + msg;
+          host.insertBefore(b, host.firstChild);
+        }, 350);
+      }).catch(function () { try { cd.open(); } catch (e) {} });
+    };
+    openCart();
+  }
+
   var TEST = /[?&]skexit=1/.test(location.search); // ?skexit=1 → popup direct tonen (ook in groep B, negeert de 30-dagen-regel)
   if (grp === 'B' && !TEST) return;
   try { if (!TEST && localStorage.getItem(KEY) && Date.now() - Number(localStorage.getItem(KEY)) < 30 * 864e5) return; } catch (e) {}
@@ -41,7 +73,7 @@
     en: { q: "I would love to know what's stopping you from purchasing today. Pick one option below:",
       o: ['The price', 'Shipping costs', "Unsure about my size", "Not convinced they're faster", 'Delivery time', 'Just looking around', 'Something else'],
       price: "Got it 👍 As a new customer you get 10% off your first order. Here's your personal code, valid for 48 hours:",
-      ship1: function (c, t) { return 'Shipping is free from €' + t + (zone === 'INT' ? ' worldwide' : ' in NL, BE & EU') + '. ' + (c > 0 ? 'Your cart is €' + c.toFixed(0) + (c < t ? ', so €' + (t - c).toFixed(0) + ' to go. ' : ' — free shipping unlocked ✅ ') : '') + 'What would help?'; },
+      ship1: function (c, t) { return 'Shipping is free from €' + t + (zone === 'INT' || zone === 'ROW' ? '' : ' in NL, BE & EU') + '.' + (c > 0 ? ' Your cart is €' + c.toFixed(0) + ', so €' + (t - c).toFixed(0) + ' to go 🚚' : ' 🚚'); }, shipFree: function (c, t) { return 'Good news — your cart is €' + c.toFixed(0) + ', so shipping is already free 🎉'; }, shipCheckout: 'Checkout with free shipping', shipAdd: 'Show me some products I could add to reach free shipping',
       shipO: ['Show me some products I could add', 'A €' + threshold + ',- order is too much for me'],
       ship2: "Oké, I got you. I'll make a one time exception: use this code at checkout to get free shipping from €50, valid for 12 hours.",
       size: 'Did you check out our size guide?', sizeBtn: 'Open size guide', size2: "Still not clear? Please let me know what's not clear so we can improve:",
@@ -52,7 +84,7 @@
     nl: { q: 'Ik zou graag willen weten wat je tegenhoudt om vandaag te bestellen. Kies één optie:',
       o: ['De prijs', 'Verzendkosten', 'Twijfel over mijn maat', 'Niet overtuigd dat ze sneller zijn', 'Levertijd', 'Ik kijk alleen even rond', 'Iets anders'],
       price: 'Snap ik 👍 Als nieuwe klant krijg je 10% korting op je eerste bestelling. Hier is je persoonlijke code, 48 uur geldig:',
-      ship1: function (c, t) { return 'Verzending is gratis vanaf €' + t + (zone === 'INT' ? ' wereldwijd' : ' in NL, BE & EU') + '. ' + (c > 0 ? 'Je winkelmand is €' + c.toFixed(0) + (c < t ? ', dus nog €' + (t - c).toFixed(0) + ' te gaan. ' : ' — gratis verzending gehaald ✅ ') : '') + 'Wat helpt?'; },
+      ship1: function (c, t) { return 'Verzending is gratis vanaf €' + t + (zone === 'INT' || zone === 'ROW' ? '' : ' in NL, BE & EU') + '.' + (c > 0 ? ' Je winkelmand is €' + c.toFixed(0) + ', dus nog €' + (t - c).toFixed(0) + ' te gaan 🚚' : ' 🚚'); }, shipFree: function (c, t) { return 'Goed nieuws — je winkelmand is €' + c.toFixed(0) + ', dus de verzending is al gratis 🎉'; }, shipCheckout: 'Afrekenen met gratis verzending', shipAdd: 'Laat me producten zien om gratis verzending te halen',
       shipO: ['Laat me producten zien die ik kan toevoegen', 'Een bestelling van €' + threshold + ',- is te veel voor mij'],
       ship2: 'Oké, ik snap je. Ik maak eenmalig een uitzondering: gebruik deze code bij het afrekenen voor gratis verzending vanaf €50, 12 uur geldig.',
       size: 'Heb je onze maattabel al bekeken?', sizeBtn: 'Open maattabel', size2: 'Nog niet duidelijk? Laat me weten wat onduidelijk is, dan verbeteren we het:',
@@ -63,7 +95,7 @@
     de: { q: 'Ich würde gern wissen, was dich heute vom Kauf abhält. Wähle eine Option:',
       o: ['Der Preis', 'Versandkosten', 'Unsicher bei der Größe', 'Nicht überzeugt, dass sie schneller sind', 'Lieferzeit', 'Ich schaue nur', 'Etwas anderes'],
       price: 'Verstehe 👍 Als Neukunde bekommst du 10 % auf deine erste Bestellung. Hier ist dein persönlicher Code, 48 Stunden gültig:',
-      ship1: function (c, t) { return 'Versand ist ab €' + t + ' kostenlos. ' + (c > 0 ? 'Dein Warenkorb: €' + c.toFixed(0) + (c < t ? ', also noch €' + (t - c).toFixed(0) + '. ' : ' — kostenloser Versand erreicht ✅ ') : '') + 'Was hilft dir?'; },
+      ship1: function (c, t) { return 'Versand ist ab €' + t + ' kostenlos.' + (c > 0 ? ' Dein Warenkorb: €' + c.toFixed(0) + ', also noch €' + (t - c).toFixed(0) + ' 🚚' : ' 🚚'); }, shipFree: function (c, t) { return 'Gute Nachricht — dein Warenkorb liegt bei €' + c.toFixed(0) + ', der Versand ist also schon kostenlos 🎉'; }, shipCheckout: 'Zur Kasse mit kostenlosem Versand', shipAdd: 'Zeig mir Produkte für den kostenlosen Versand',
       shipO: ['Zeig mir Produkte, die ich hinzufügen könnte', 'Eine Bestellung von €' + threshold + ',- ist mir zu viel'],
       ship2: 'Okay, verstanden. Ich mache einmalig eine Ausnahme: Nutze diesen Code an der Kasse für kostenlosen Versand ab €50, 12 Stunden gültig.',
       size: 'Hast du unsere Größentabelle gesehen?', sizeBtn: 'Größentabelle öffnen', size2: 'Noch unklar? Sag mir, was unklar ist, damit wir es verbessern:',
@@ -74,7 +106,7 @@
     fr: { q: "J'aimerais savoir ce qui vous empêche de commander aujourd'hui. Choisissez une option :",
       o: ['Le prix', 'Les frais de livraison', 'Doute sur ma taille', 'Pas convaincu qu’elles sont plus rapides', 'Le délai de livraison', 'Je regarde seulement', 'Autre chose'],
       price: 'Compris 👍 En tant que nouveau client, vous avez 10 % sur votre première commande. Voici votre code personnel, valable 48 h :',
-      ship1: function (c, t) { return 'La livraison est offerte dès €' + t + '. ' + (c > 0 ? 'Votre panier : €' + c.toFixed(0) + (c < t ? ', encore €' + (t - c).toFixed(0) + '. ' : ' — livraison offerte ✅ ') : '') + 'Qu’est-ce qui vous aiderait ?'; },
+      ship1: function (c, t) { return 'La livraison est offerte dès €' + t + '.' + (c > 0 ? ' Votre panier : €' + c.toFixed(0) + ', encore €' + (t - c).toFixed(0) + ' 🚚' : ' 🚚'); }, shipFree: function (c, t) { return 'Bonne nouvelle — votre panier est à €' + c.toFixed(0) + ', la livraison est déjà offerte 🎉'; }, shipCheckout: 'Commander avec la livraison offerte', shipAdd: 'Montrez-moi des produits pour atteindre la livraison offerte',
       shipO: ['Montrez-moi des produits à ajouter', 'Une commande de €' + threshold + ',- c’est trop pour moi'],
       ship2: 'OK, je comprends. Exceptionnellement : utilisez ce code au paiement pour la livraison offerte dès €50, valable 12 h.',
       size: 'Avez-vous consulté notre guide des tailles ?', sizeBtn: 'Ouvrir le guide', size2: 'Toujours pas clair ? Dites-moi ce qui n’est pas clair pour que nous l’améliorions :',
@@ -160,13 +192,21 @@
   function thanks() { render('<p>' + t.thanks + '</p>'); setTimeout(close, 1600); }
   function row(a, b) { return '<div class="row">' + (a ? '<button class="btn" data-k="a">' + a + '</button>' : '') + (b ? '<button class="btn pri" data-k="b">' + b + '</button>' : '') + '</div>'; }
   function btn(k) { return w.querySelector('.btn[data-k=' + k + ']'); }
-  function codeScreen(a, want, text, applyRedirect) {
+  function goCart() { location.href = path + '?skcart=1'; }
+  function codeScreen(a, want, text) {
     render('<p>' + text + '</p><p class="code">…</p>' + row(t.copy, t.apply));
     send({ ev: 'follow', a: a, sub: want, want: want }, function (j) {
       var code = (j && j.code) || '';
       w.querySelector('.code').textContent = code;
       btn('a').addEventListener('click', function () { try { navigator.clipboard.writeText(code); } catch (e) {} btn('a').textContent = t.copied; send({ ev: 'click', a: a, sub: 'copy' }); });
-      btn('b').addEventListener('click', function () { send({ ev: 'click', a: a, sub: 'apply' }); location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(applyRedirect || (path + location.search)); });
+      btn('b').addEventListener('click', function () {
+        send({ ev: 'click', a: a, sub: 'apply' });
+        var back = path + '?skcart=1';
+        // 1) code op de cart zetten (Cart API), 2) via /discount/ ook de checkout-cookie zetten, 3) terug naar deze pagina met de side cart open
+        fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ discount: code }) }).catch(function () {}).then(function () {
+          location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(back);
+        });
+      });
     });
   }
 
@@ -188,9 +228,16 @@
     if (a === 'price') return codeScreen('price', 'code10', t.price);
     if (a === 'shipping') {
       var pct = Math.min(100, Math.round(cartTotal / threshold * 100));
-      render('<p>' + t.ship1(cartTotal, threshold) + '</p><div class="bar"><i style="width:' + pct + '%"></i></div><div class="opts"><button class="o" data-s="products">' + esc(t.shipO[0]) + '<span>›</span></button><button class="o" data-s="toomuch">' + esc(t.shipO[1]) + '<span>›</span></button></div>');
+      if (cartTotal >= threshold) {
+        // al boven de drempel → geen korting, alleen doorsturen naar de cart drawer (toont 'Shipping: Free')
+        render('<p>' + t.shipFree(cartTotal, threshold) + '</p><div class="bar"><i style="width:100%"></i></div>' + row(null, t.shipCheckout));
+        btn('b').addEventListener('click', function () { send({ ev: 'follow', a: 'shipping', sub: 'checkout_free' }); goCart(); });
+        return;
+      }
+      var opts = '<button class="o" data-s="products">' + esc(cartTotal >= 50 ? t.shipAdd : t.shipO[0]) + '<span>›</span></button>' + (cartTotal < 50 ? '<button class="o" data-s="toomuch">' + esc(t.shipO[1]) + '<span>›</span></button>' : '');
+      render('<p>' + t.ship1(cartTotal, threshold) + '</p><div class="bar"><i style="width:' + pct + '%"></i></div><div class="opts">' + opts + '</div>');
       w.querySelector('[data-s=products]').addEventListener('click', function () { send({ ev: 'follow', a: 'shipping', sub: 'products' }); location.href = (loc === 'en' ? '' : '/' + loc) + BESTSELLERS; });
-      w.querySelector('[data-s=toomuch]').addEventListener('click', function () { codeScreen('shipping', 'codeship', t.ship2, '/cart'); });
+      var tm = w.querySelector('[data-s=toomuch]'); if (tm) tm.addEventListener('click', function () { codeScreen('shipping', 'codeship', t.ship2); });
       return;
     }
     if (a === 'sizing') {
@@ -253,5 +300,6 @@
     if (page === 'product') setTimeout(function () { if (!shown && document.visibilityState === 'visible') trigger(); }, 60000);
   }
   if (TEST) setTimeout(trigger, 800);
+
 })();
 </script>
