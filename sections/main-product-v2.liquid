@@ -1876,6 +1876,93 @@
 
 {%- comment -%} Avada price fixes (€ removal + decimal comma) now handled in product-v2.js {%- endcomment -%}
 
+
+{%- comment -%}
+  Phone gallery: keep the swipe slider (.product__media-list, see
+  header-overrides.css) and the thumbnails in sync. A thumbnail tap makes
+  media-gallery.js set .is-active; we scroll the photo row to that item.
+  A finger swipe scrolls the row; we mark the photo in view as .is-active
+  through media-gallery.setActiveMedia so the thumbnail highlight follows.
+{%- endcomment -%}
+<script>
+  (function () {
+    var mq = window.matchMedia('(max-width: 989px)');
+    var section = document.getElementById('MainProduct-{{ section.id }}');
+    if (!section) return;
+    var list = section.querySelector('.product__media-list');
+    var gallery = section.querySelector('media-gallery');
+    if (!list || !gallery) return;
+    var programmatic = false;
+
+    function visibleItems() {
+      return Array.prototype.filter.call(list.querySelectorAll('.product__media-item'), function (li) {
+        return li.style.display !== 'none' && li.clientWidth > 0;
+      });
+    }
+    function scrollToActive(instant) {
+      if (!mq.matches) return;
+      var active = list.querySelector('.product__media-item.is-active');
+      if (!active || active.style.display === 'none') return;
+      var target = active.offsetLeft;
+      if (Math.abs(list.scrollLeft - target) < 2) return;
+      programmatic = true;
+      list.scrollTo({ left: target, behavior: instant ? 'auto' : 'smooth' });
+      clearTimeout(scrollToActive.t);
+      scrollToActive.t = setTimeout(function () {
+        /* a smooth scroll can be cancelled by a layout change (lazy image,
+           header state); if the row did not arrive, jump the rest */
+        var again = list.querySelector('.product__media-item.is-active');
+        if (again && Math.abs(list.scrollLeft - again.offsetLeft) > 2) {
+          list.scrollTo({ left: again.offsetLeft, behavior: 'auto' });
+        }
+        programmatic = false;
+      }, 700);
+    }
+
+    /* thumbnail tap: scroll right away as well, without waiting for the
+       class change to be observed */
+    section.addEventListener('click', function (e) {
+      if (!mq.matches) return;
+      var btn = e.target.closest('.thumbnail-list__item button');
+      if (!btn) return;
+      requestAnimationFrame(function () { scrollToActive(false); });
+    }, true);
+
+    /* thumbnail tap / variant change -> photo row follows */
+    new MutationObserver(function (records) {
+      var changed = records.some(function (r) {
+        return r.target.classList && r.target.classList.contains('is-active');
+      });
+      if (changed) scrollToActive(false);
+    }).observe(list, { attributes: true, attributeFilter: ['class'], subtree: true });
+
+    /* swipe -> active photo and thumbnail follow */
+    var settle;
+    list.addEventListener('scroll', function () {
+      if (!mq.matches || programmatic) return;
+      clearTimeout(settle);
+      settle = setTimeout(function () {
+        var items = visibleItems();
+        if (!items.length) return;
+        var x = list.scrollLeft;
+        var nearest = items[0];
+        items.forEach(function (li) {
+          if (Math.abs(li.offsetLeft - x) < Math.abs(nearest.offsetLeft - x)) nearest = li;
+        });
+        if (nearest.classList.contains('is-active')) return;
+        programmatic = true;
+        gallery.setActiveMedia(nearest.dataset.mediaId, false);
+        setTimeout(function () { programmatic = false; }, 100);
+      }, 80);
+    }, { passive: true });
+
+    /* first paint: line the row up with the active photo without motion */
+    window.addEventListener('load', function () { scrollToActive(true); });
+    setTimeout(function () { scrollToActive(true); }, 700);
+    mq.addEventListener && mq.addEventListener('change', function () { scrollToActive(true); });
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Product Hero V2",
