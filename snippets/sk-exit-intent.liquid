@@ -261,7 +261,8 @@
             var body = m.querySelector('.sk-sg-body');
             if (!rte) { body.innerHTML = '<a href="' + (loc === 'en' ? '' : '/' + loc) + '/pages/size-guide" target="_blank" rel="noopener">Open size guide ↗</a>'; return; }
             rte.querySelectorAll('script,style,iframe').forEach(function (x) { x.remove(); });
-            rte.querySelectorAll('table').forEach(function (tb) { tb.style.cssText = 'width:100%;border-collapse:collapse;font-size:13px;margin:10px 0'; tb.querySelectorAll('td,th').forEach(function (c) { c.style.cssText = 'padding:7px 8px;border-bottom:1px solid #eee;text-align:left'; }); });
+            rte.querySelectorAll('table').forEach(function (tb) { tb.removeAttribute('border'); tb.removeAttribute('cellpadding'); tb.style.cssText = 'width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;border:0'; tb.querySelectorAll('td,th').forEach(function (c) { c.removeAttribute('style'); c.style.cssText = 'padding:8px 8px;border:0;border-bottom:1px solid #eee;text-align:left;vertical-align:middle'; }); tb.querySelectorAll('th, tr:first-child td').forEach(function (c) { c.style.background = '#f5f5f5'; c.style.fontWeight = '700'; }); });
+            rte.querySelectorAll('p,h1,h2,h3,h4,div').forEach(function (e) { e.style.textAlign = 'left'; });
             rte.querySelectorAll('img').forEach(function (i) { i.style.maxWidth = '100%'; i.style.height = 'auto'; });
             body.innerHTML = ''; body.appendChild(rte);
           }).catch(function () { m.querySelector('.sk-sg-body').innerHTML = '<a href="' + (loc === 'en' ? '' : '/' + loc) + '/pages/size-guide" target="_blank" rel="noopener">Open size guide ↗</a>'; });
