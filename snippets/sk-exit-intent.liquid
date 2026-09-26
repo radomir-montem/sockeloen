@@ -218,7 +218,7 @@
     bd = document.createElement('div'); bd.id = 'skx-bd'; document.body.appendChild(bd);
     w = document.createElement('div'); w.id = 'skx'; w.setAttribute('role', 'dialog'); w.setAttribute('aria-modal', 'true'); document.body.appendChild(w);
     bd.addEventListener('click', close);
-    document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; if (sgOpen) { var m = document.getElementById('skx-sg'); if (m) { var x = m.querySelector('button'); if (x) x.click(); } return; } close(); });
+    document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; if (sgOpen) { var m = document.getElementById('skx-sg'); var x = m ? m.querySelector('button') : document.querySelector('#size-guide-overlay .size-guide-modal__close'); if (x) x.click(); return; } close(); });
     requestAnimationFrame(function () { bd.classList.add('on'); w.classList.add('on'); });
     send({ ev: 'shown' });
     // willekeurige volgorde (voorkomt positie-bias in de antwoorden), 'Something else' altijd als laatste
