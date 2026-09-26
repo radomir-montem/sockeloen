@@ -157,12 +157,17 @@ body.template--cart #MainContent {
 .cart-page__footer-wrap.is-empty {
   display: none;
 }
+/* component-cart.css turns .cart__footer into a flex row with 35rem
+   children pushed right (margin-left:auto); the card is one plain block */
 .cart-page__footer-wrap .cart__footer {
+  display: block !important;
   padding: 0;
   margin: 0;
 }
-.cart-page__footer-wrap .cart__footer > * + * {
-  margin-top: 0;
+.cart-page__footer-wrap .cart__footer > * {
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
 }
 .cart-page__footer.cart-drawer__footer {
   background: #fff;
@@ -270,11 +275,15 @@ body.template--cart #MainContent {
   body.template--cart #MainContent > .cart__footer-wrapper {
     grid-column: 2;
     grid-row: 1;
+    /* the section stretches to the row, the card inside sticks just under
+       the header pill (announcement 44 + pill 48 + 12) while the items
+       scroll past; no offset, so nothing jumps when it sticks */
+    align-self: stretch;
+    padding-top: 8px;
+  }
+  body.template--cart #MainContent > .cart__footer-wrapper .cart-page__footer-wrap {
     position: sticky;
-    top: 108px;
-    /* the heading row of the items column is 8 + 8 + 26 + 12 = 54px high,
-       so the summary card lines up with the shipping bar */
-    padding-top: 62px;
+    top: 104px;
   }
   body.template--cart #MainContent > .shopify-section:has(.cart-page.is-empty) {
     grid-column: 1 / -1;
