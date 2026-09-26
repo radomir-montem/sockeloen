@@ -5826,9 +5826,4 @@ body.template--search .open-facet-drawer:hover {
     width: calc((100% - 32px) / 5) !important;
     scroll-snap-align: start;
   }
-  body.template--product .product-v2 .thumbnail-list::after {
-    content: "";
-    flex: 0 0 1px;
-    margin-left: -8px;
-  }
 }
