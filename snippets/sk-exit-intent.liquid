@@ -33,8 +33,8 @@
   var country = (geo && geo.country_code) || (window.Shopify && Shopify.country) || 'NL';
   var box = document.getElementById('shipment-message-v2');
   var threshold = box ? parseFloat(box.getAttribute('data-threshold')) : NaN;
-  var zone = country === 'NL' ? 'NL' : country === 'BE' ? 'BE' : /^(AT|BG|HR|CY|CZ|DK|EE|FI|FR|DE|GR|HU|IE|IT|LV|LT|LU|MT|PL|PT|RO|SK|SI|ES|SE)$/.test(country) ? 'EU' : 'INT';
-  if (isNaN(threshold)) threshold = zone === 'INT' ? 100 : 75;
+  var zone = country === 'NL' ? 'NL' : country === 'BE' ? 'BE' : /^(AT|BG|HR|CY|CZ|DK|EE|FI|FR|DE|GR|HU|IE|IT|LV|LT|LU|MT|PL|PT|RO|SK|SI|ES|SE)$/.test(country) ? 'EU' : /^(AE|AU|CA|CH|GB|HK|IL|JP|KR|MY|NO|NZ|SG|US)$/.test(country) ? 'INT' : 'ROW';
+  if (isNaN(threshold)) threshold = zone === 'INT' ? 100 : zone === 'ROW' ? 150 : 75;
 
   // ---- teksten (4 talen) ----
   var T = {
@@ -48,7 +48,7 @@
       fast: "As a high performance athlete I'm just like you. That's why we tested them in the wind tunnel with Eindhoven University of Technology. Read the blog or download the full independent report.", fastA: 'Download report', fastB: 'Read the blog',
       browse: 'No rush. Join the Early Breakaway and be the first to hear about new colours, limited drops and sale — plus a welcome discount on your first order.', browseBtn: 'Join', browseOk: "You're in. Welcome to the Early Breakaway 🚀", email: 'Your email',
       other: 'Tell me — what held you back?', ph: 'Type here…', send: 'Send', skip: 'Skip', copy: 'Copy code', copied: 'Copied ✓', apply: 'Apply & continue', gotit: 'Got it', thanks: 'Thank you — this really helps 🙏', close: 'Close',
-      dlv: { within: 'If you order within {h}, your order ships today', before: 'Order before 15:00 on a workday and your order ships the same day', free: ' — free shipping (cart above €{t})', notfree: ' — free shipping from €{t}, or express for €{x}', arrive: ', delivered {d}', d: { NL: 'tomorrow (express) · 1–3 workdays standard', BE: 'tomorrow (express) · 1–3 workdays standard', EU: 'in 2–7 days (express) · 2–10 days standard', INT: 'in 2–3 days (UPS Express) · 14–18 days standard' } } },
+      dlv: { standardFirst: 'and can be with you {d} with standard shipping ({p})', intro: 'I understand that you would like to know exactly when your package is arriving 📦 I see that you are in {country}.', within: 'If you order within {h}, your order ships today', later: 'If you order now, your order ships {ship}', express: 'and can be with you {d} with express shipping ({p})', standard: '{d} with standard shipping ({p})', or: ' or ', free: 'free', freeNote: ' Free shipping from €{t} — your cart is €{c}, so €{g} to go.', freeOk: ' Your cart is above €{t}, so shipping is on us 🎉', on: 'on {d}', between: 'between {a} and {b}' } },
     nl: { q: 'Ik zou graag willen weten wat je tegenhoudt om vandaag te bestellen. Kies één optie:',
       o: ['De prijs', 'Verzendkosten', 'Twijfel over mijn maat', 'Niet overtuigd dat ze sneller zijn', 'Levertijd', 'Ik kijk alleen even rond', 'Iets anders'],
       price: 'Snap ik 👍 Als nieuwe klant krijg je 10% korting op je eerste bestelling. Hier is je persoonlijke code, 48 uur geldig:',
@@ -59,7 +59,7 @@
       fast: 'Als topsporter ben ik net als jij. Daarom hebben we ze getest in de windtunnel met de TU Eindhoven. Lees de blog of download het volledige onafhankelijke rapport.', fastA: 'Download rapport', fastB: 'Lees de blog',
       browse: 'Geen haast. Word lid van de Early Breakaway en hoor als eerste over nieuwe kleuren, limited drops en sale — plus een welkomstkorting op je eerste bestelling.', browseBtn: 'Aanmelden', browseOk: 'Je bent erbij. Welkom bij de Early Breakaway 🚀', email: 'Je e-mail',
       other: 'Vertel — wat hield je tegen?', ph: 'Typ hier…', send: 'Versturen', skip: 'Overslaan', copy: 'Kopieer code', copied: 'Gekopieerd ✓', apply: 'Toepassen & verder', gotit: 'Duidelijk', thanks: 'Dank je — dit helpt ons echt 🙏', close: 'Sluiten',
-      dlv: { within: 'Bestel binnen {h}, dan gaat je bestelling vandaag de deur uit', before: 'Bestel op een werkdag vóór 15:00 en je bestelling gaat dezelfde dag de deur uit', free: ' — gratis verzonden (winkelmand boven €{t})', notfree: ' — gratis vanaf €{t}, of express voor €{x}', arrive: ', bezorgd {d}', d: { NL: 'morgen (express) · 1–3 werkdagen standaard', BE: 'morgen (express) · 1–3 werkdagen standaard', EU: 'in 2–7 dagen (express) · 2–10 dagen standaard', INT: 'in 2–3 dagen (UPS Express) · 14–18 dagen standaard' } } },
+      dlv: { standardFirst: 'en kan hij {d} bij je zijn met standaard verzending ({p})', intro: 'Ik snap dat je precies wilt weten wanneer je pakket aankomt 📦 Ik zie dat je in {country} bent.', within: 'Als je binnen {h} bestelt, gaat je bestelling vandaag nog de deur uit', later: 'Als je nu bestelt, gaat je bestelling {ship} de deur uit', express: 'en kan hij {d} bij je zijn met express verzending ({p})', standard: '{d} met standaard verzending ({p})', or: ' of ', free: 'gratis', freeNote: ' Gratis verzending vanaf €{t} — je winkelmand is €{c}, dus nog €{g} te gaan.', freeOk: ' Je winkelmand zit boven de €{t}, dus de verzending is van ons 🎉', on: 'op {d}', between: 'tussen {a} en {b}' } },
     de: { q: 'Ich würde gern wissen, was dich heute vom Kauf abhält. Wähle eine Option:',
       o: ['Der Preis', 'Versandkosten', 'Unsicher bei der Größe', 'Nicht überzeugt, dass sie schneller sind', 'Lieferzeit', 'Ich schaue nur', 'Etwas anderes'],
       price: 'Verstehe 👍 Als Neukunde bekommst du 10 % auf deine erste Bestellung. Hier ist dein persönlicher Code, 48 Stunden gültig:',
@@ -70,7 +70,7 @@
       fast: 'Als Leistungssportler bin ich wie du. Deshalb haben wir sie im Windkanal mit der TU Eindhoven getestet. Lies den Blog oder lade den vollständigen unabhängigen Bericht herunter.', fastA: 'Bericht laden', fastB: 'Blog lesen',
       browse: 'Kein Stress. Tritt dem Early Breakaway bei und erfahre als Erster von neuen Farben, limitierten Drops und Sale — plus Willkommensrabatt auf deine erste Bestellung.', browseBtn: 'Beitreten', browseOk: 'Du bist dabei. Willkommen im Early Breakaway 🚀', email: 'Deine E-Mail',
       other: 'Erzähl mir — was hat dich abgehalten?', ph: 'Hier tippen…', send: 'Senden', skip: 'Überspringen', copy: 'Code kopieren', copied: 'Kopiert ✓', apply: 'Anwenden & weiter', gotit: 'Alles klar', thanks: 'Danke — das hilft uns wirklich 🙏', close: 'Schließen',
-      dlv: { within: 'Bestelle innerhalb von {h}, dann geht deine Bestellung heute raus', before: 'Bestelle an einem Werktag vor 15:00 und deine Bestellung geht am selben Tag raus', free: ' — kostenloser Versand (Warenkorb über €{t})', notfree: ' — kostenlos ab €{t}, oder Express für €{x}', arrive: ', Lieferung {d}', d: { NL: 'morgen (Express) · 1–3 Werktage Standard', BE: 'morgen (Express) · 1–3 Werktage Standard', EU: 'in 2–7 Tagen (Express) · 2–10 Tage Standard', INT: 'in 2–3 Tagen (UPS Express) · 14–18 Tage Standard' } } },
+      dlv: { standardFirst: 'und kann {d} mit Standardversand bei dir sein ({p})', intro: 'Ich verstehe, dass du genau wissen möchtest, wann dein Paket ankommt 📦 Ich sehe, du bist in {country}.', within: 'Wenn du innerhalb von {h} bestellst, geht deine Bestellung heute noch raus', later: 'Wenn du jetzt bestellst, geht deine Bestellung {ship} raus', express: 'und kann {d} mit Expressversand bei dir sein ({p})', standard: '{d} mit Standardversand ({p})', or: ' oder ', free: 'kostenlos', freeNote: ' Kostenloser Versand ab €{t} — dein Warenkorb liegt bei €{c}, also noch €{g}.', freeOk: ' Dein Warenkorb liegt über €{t}, der Versand geht auf uns 🎉', on: 'am {d}', between: 'zwischen {a} und {b}' } },
     fr: { q: "J'aimerais savoir ce qui vous empêche de commander aujourd'hui. Choisissez une option :",
       o: ['Le prix', 'Les frais de livraison', 'Doute sur ma taille', 'Pas convaincu qu’elles sont plus rapides', 'Le délai de livraison', 'Je regarde seulement', 'Autre chose'],
       price: 'Compris 👍 En tant que nouveau client, vous avez 10 % sur votre première commande. Voici votre code personnel, valable 48 h :',
@@ -81,7 +81,7 @@
       fast: 'En tant qu’athlète de haut niveau, je suis comme vous. C’est pourquoi nous les avons testées en soufflerie avec l’Université de technologie d’Eindhoven. Lisez le blog ou téléchargez le rapport indépendant complet.', fastA: 'Télécharger le rapport', fastB: 'Lire le blog',
       browse: 'Pas de précipitation. Rejoignez l’Early Breakaway et soyez le premier informé des nouvelles couleurs, éditions limitées et soldes — plus une remise de bienvenue sur votre première commande.', browseBtn: 'Rejoindre', browseOk: 'C’est fait. Bienvenue dans l’Early Breakaway 🚀', email: 'Votre e-mail',
       other: 'Dites-moi — qu’est-ce qui vous a retenu ?', ph: 'Écrivez ici…', send: 'Envoyer', skip: 'Passer', copy: 'Copier le code', copied: 'Copié ✓', apply: 'Appliquer & continuer', gotit: 'Compris', thanks: 'Merci — cela nous aide vraiment 🙏', close: 'Fermer',
-      dlv: { within: 'Commandez dans les {h}, votre commande part aujourd’hui', before: 'Commandez un jour ouvré avant 15h00 et votre commande part le jour même', free: ' — livraison offerte (panier au-dessus de €{t})', notfree: ' — offerte dès €{t}, ou express pour €{x}', arrive: ', livrée {d}', d: { NL: 'demain (express) · 1–3 jours ouvrés standard', BE: 'demain (express) · 1–3 jours ouvrés standard', EU: 'en 2–7 jours (express) · 2–10 jours standard', INT: 'en 2–3 jours (UPS Express) · 14–18 jours standard' } } }
+      dlv: { standardFirst: 'et peut être chez vous {d} en livraison standard ({p})', intro: 'Je comprends que vous vouliez savoir exactement quand votre colis arrive 📦 Je vois que vous êtes en {country}.', within: 'Si vous commandez dans les {h}, votre commande part aujourd’hui', later: 'Si vous commandez maintenant, votre commande part {ship}', express: 'et peut être chez vous {d} en livraison express ({p})', standard: '{d} en livraison standard ({p})', or: ' ou ', free: 'offerte', freeNote: ' Livraison offerte dès €{t} — votre panier est à €{c}, encore €{g}.', freeOk: ' Votre panier dépasse €{t}, la livraison est pour nous 🎉', on: 'le {d}', between: 'entre le {a} et le {b}' } }
   };
   var t = T[loc] || T.en;
   var CODES = ['price', 'shipping', 'sizing', 'faster_doubt', 'delivery', 'browsing', 'other'];
@@ -96,18 +96,34 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   // ---- levertekst (zelfde logica als onder de koopknop: NL-tijd, cutoff 15:00, werkdagen) ----
+  // ---- levertekst: zelfde cutoff/werkdag-logica als onder de koopknop (NL-tijd, 15:00), verzendmethodes + kosten per zone uit het Shopify-verzendprofiel ----
+  var SHIP = { // min/max = werkdagen na verzenddag; price(cart) → bedrag, 0 = gratis, null = niet beschikbaar
+    NL:  { standard: { min: 1, max: 2, price: function (c) { return c >= 75 ? 0 : 5.99; } } },
+    BE:  { express: { min: 1, max: 1, price: function () { return 5.99; } }, standard: { min: 2, max: 3, price: function (c) { return c >= 75 ? 0 : null; } } },
+    EU:  { express: { min: 2, max: 7, price: function () { return 9.99; } }, standard: { min: 2, max: 10, price: function (c) { return c >= 75 ? 0 : null; } } },
+    INT: { express: { min: 2, max: 3, price: function (c) { return c >= 150 ? 0 : c >= 100 ? 9.99 : 27.99; } }, standard: { min: 14, max: 18, price: function (c) { return c >= 100 ? 0 : 17.99; } } },
+    ROW: { standard: { min: 2, max: 18, price: function (c) { return c >= 150 ? 0 : 19.99; } } }
+  };
+  var NL_NOW = function () { var d = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' })); return d; };
+  function addWorkdays(d, n) { var x = new Date(d); while (n > 0) { x.setDate(x.getDate() + 1); if (x.getDay() !== 0 && x.getDay() !== 6) n--; } return x; }
+  function fmtDay(d) { var L = { en: 'en-GB', nl: 'nl-NL', de: 'de-DE', fr: 'fr-FR' }[loc] || 'en-GB'; return d.toLocaleDateString(L, { weekday: 'long', day: 'numeric', month: 'long' }); }
+  function fmtEur(v) { return v === 0 ? t.dlv.free : '€' + v.toFixed(2).replace('.', ','); }
   function deliveryText() {
-    var parts = new Date().toLocaleString('en-GB', { timeZone: 'Europe/Amsterdam', hour: 'numeric', minute: 'numeric', hour12: false }).split(':');
-    var h = parseInt(parts[0], 10), m = parseInt(parts[1], 10);
-    var day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(new Date().toLocaleString('en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'short' }));
+    var now = NL_NOW(), h = now.getHours(), m = now.getMinutes(), day = now.getDay();
     var work = day >= 1 && day <= 5, before = h < CUTOFF;
-    var s;
-    if (work && before) { var mins = (CUTOFF - h - 1) * 60 + (60 - m); s = t.dlv.within.replace('{h}', (Math.floor(mins / 60) ? Math.floor(mins / 60) + 'h ' : '') + (mins % 60) + 'm'); }
-    else s = t.dlv.before;
-    var express = zone === 'NL' || zone === 'BE' ? '5,99' : zone === 'EU' ? '9,99' : '27,99';
-    s += cartTotal >= threshold ? t.dlv.free.replace('{t}', threshold) : t.dlv.notfree.replace('{t}', threshold).replace('{x}', express);
-    s += t.dlv.arrive.replace('{d}', t.dlv.d[zone]);
-    return s + '.';
+    var ship = (work && before) ? new Date(now) : addWorkdays(now, 1);
+    var cn = country; try { cn = new Intl.DisplayNames([loc], { type: 'region' }).of(country) || country; } catch (e) {}
+    var s = t.dlv.intro.replace('{country}', cn) + ' ';
+    if (work && before) { var mins = (CUTOFF - h - 1) * 60 + (60 - m); s += t.dlv.within.replace('{h}', (Math.floor(mins / 60) ? Math.floor(mins / 60) + 'h ' : '') + (mins % 60) + 'm'); }
+    else s += t.dlv.later.replace('{ship}', t.dlv.on.replace('{d}', fmtDay(ship)));
+    var z = SHIP[zone] || SHIP.ROW, parts = [];
+    var win = function (mth) { var a = addWorkdays(ship, mth.min), b = addWorkdays(ship, mth.max); return mth.min === mth.max ? t.dlv.on.replace('{d}', fmtDay(a)) : t.dlv.between.replace('{a}', fmtDay(a)).replace('{b}', fmtDay(b)); };
+    var pe = z.express ? z.express.price(cartTotal) : null, ps = z.standard ? z.standard.price(cartTotal) : null;
+    if (z.express && pe !== null) parts.push(t.dlv.express.replace('{d}', win(z.express)).replace('{p}', fmtEur(pe)));
+    if (z.standard && ps !== null) parts.push((parts.length ? t.dlv.standard : t.dlv.standardFirst).replace('{d}', win(z.standard)).replace('{p}', fmtEur(ps)));
+    s += ' ' + parts.join(t.dlv.or) + '.';
+    s += cartTotal >= threshold ? t.dlv.freeOk.replace('{t}', threshold) : t.dlv.freeNote.replace('{t}', threshold).replace('{c}', cartTotal.toFixed(0)).replace('{g}', (threshold - cartTotal).toFixed(0));
+    return s;
   }
 
   // ---- UI ----
