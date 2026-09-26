@@ -5827,3 +5827,54 @@ body.template--search .open-facet-drawer:hover {
     scroll-snap-align: start;
   }
 }
+
+
+/* ============================================================
+   PRODUCT PAGE (phone) — the big photo is a horizontal swipe slider.
+   The v2 template showed one .is-active item and hid the rest, so a
+   thumbnail tap swapped the photo with no motion and a finger swipe did
+   nothing. The list is now a scroll-snap row (one photo per screen):
+   thumbnails scroll it smoothly, swiping moves between photos, and the
+   script in main-product-v2.liquid keeps .is-active and the thumbnail
+   highlight in sync with the visible photo. Variant filtering still
+   hides photos through the inline display:none.
+   ============================================================ */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .product__media-list {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0 !important;
+  }
+  body.template--product .product-v2 .product__media-list::-webkit-scrollbar {
+    display: none;
+  }
+  body.template--product .product-v2 .product__media-list .product__media-item,
+  body.template--product .product-v2 .product__media-list:has(.is-active) .product__media-item:first-child:not(.is-active),
+  body.template--product .product-v2 .product__media-list .product__media-item--variant,
+  body.template--product .product-v2 .product__media-list:has(.is-active) .product__media-item--variant:first-child:not(.is-active) {
+    display: block !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    min-width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  body.template--product .product-v2 .product__media-list .product__media-item[style*="display: none"] {
+    display: none !important;
+  }
+}
+
+/* colour tiles: the hover ring and the selected ring sit inside the tile
+   (they used to be drawn outside it, where the row's edge clipped them and
+   they nudged the neighbours). The tile keeps its size. */
+body.template--product .product-v2 .product-form__input.color-input label:hover .color-dot {
+  box-shadow: inset 0 0 0 2px #bbb !important;
+}
+body.template--product .product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-dot {
+  box-shadow: inset 0 0 0 2px #0395F6 !important;
+}
