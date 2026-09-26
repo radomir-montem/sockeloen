@@ -1908,8 +1908,25 @@
       programmatic = true;
       list.scrollTo({ left: target, behavior: instant ? 'auto' : 'smooth' });
       clearTimeout(scrollToActive.t);
-      scrollToActive.t = setTimeout(function () { programmatic = false; }, 700);
+      scrollToActive.t = setTimeout(function () {
+        /* a smooth scroll can be cancelled by a layout change (lazy image,
+           header state); if the row did not arrive, jump the rest */
+        var again = list.querySelector('.product__media-item.is-active');
+        if (again && Math.abs(list.scrollLeft - again.offsetLeft) > 2) {
+          list.scrollTo({ left: again.offsetLeft, behavior: 'auto' });
+        }
+        programmatic = false;
+      }, 700);
     }
+
+    /* thumbnail tap: scroll right away as well, without waiting for the
+       class change to be observed */
+    section.addEventListener('click', function (e) {
+      if (!mq.matches) return;
+      var btn = e.target.closest('.thumbnail-list__item button');
+      if (!btn) return;
+      requestAnimationFrame(function () { scrollToActive(false); });
+    }, true);
 
     /* thumbnail tap / variant change -> photo row follows */
     new MutationObserver(function (records) {
