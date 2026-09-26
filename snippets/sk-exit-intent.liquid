@@ -30,10 +30,10 @@
         var apps = c.cart_level_discount_applications || [], msg = '';
         var CB = { en: ['Code <b>{c}</b> applied — {d} at checkout', '10% off ({a})', 'free shipping'], nl: ['Code <b>{c}</b> toegepast — {d} bij het afrekenen', '10% korting ({a})', 'gratis verzending'], de: ['Code <b>{c}</b> angewendet — {d} an der Kasse', '10 % Rabatt ({a})', 'kostenloser Versand'], fr: ['Code <b>{c}</b> appliqué — {d} au paiement', '10 % de réduction ({a})', 'livraison offerte'] }[(document.documentElement.lang || 'en').slice(0, 2).toLowerCase()] || null;
         var cb = CB || { 0: 'Code <b>{c}</b> applied — {d} at checkout', 1: '10% off ({a})', 2: 'free shipping' };
-        var codes = (c.discount_codes || []).filter(function (d) { return d.applicable; });
+        var codes = (c.discount_codes || []).filter(function (d) { return /^(EB10-|EBSHIP-|EXIT10$|EXITSHIP50$)/.test(d.code); });
         if (codes.length) {
           var code = codes[0].code, app = apps.find(function (x) { return x.discount_application && x.discount_application.title === code; });
-          var d = /^EBSHIP/.test(code) ? cb[2] : cb[1].replace('{a}', app ? '−€' + (app.amount / 100).toFixed(2).replace('.', ',') : '');
+          var d = /^(EBSHIP|EXITSHIP)/.test(code) ? cb[2] : cb[1].replace(' ({a})', app ? ' (−€' + (app.amount / 100).toFixed(2).replace('.', ',') + ')' : '');
           msg = cb[0].replace('{c}', code).replace('{d}', d);
         }
         if (!msg) return;
@@ -41,7 +41,7 @@
           var host = cd.querySelector('.drawer__scrollable') || cd.querySelector('.drawer__inner') || cd;
           if (host.querySelector('.sk-code-banner')) return;
           var b = document.createElement('div'); b.className = 'sk-code-banner';
-          b.style.cssText = 'margin:0 0 10px;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.35;color:#0f4a1f;background:rgba(37,211,102,.16);border:1px solid rgba(37,211,102,.45);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Roboto,Arial,sans-serif';
+          b.style.cssText = 'visibility:visible!important;margin:0 0 10px;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.35;color:#0f4a1f;background:rgba(37,211,102,.16);border:1px solid rgba(37,211,102,.45);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Roboto,Arial,sans-serif';
           b.innerHTML = '✅ ' + msg;
           host.insertBefore(b, host.firstChild);
         }, 350);
