@@ -1,0 +1,222 @@
+{%- comment -%} Sockeloen exit-intent v2 (WhatsApp badge). Beheerd door Claude via API — wijzig in sockeloen-exit-survey-snippet.html en her-deploy. {%- endcomment -%}
+<script>
+(function () {
+  if (window.__skExit) return; window.__skExit = true;
+  var ENDPOINT = 'https://floral-brook-5b03sockeloen-pipedrive-proxy.sockeloen.workers.dev/exit-survey';
+  var WA_ICON = 'https://cdn.shopify.com/s/files/1/0705/7496/5016/files/WA_ICON_d8be208b-4b86-4cda-bd37-516f2e77298f.png?v=1790456660';
+  var KLAVIYO_COMPANY = 'S82fvg', KLAVIYO_LIST = 'SknXmh';                             // welcome-flow masterlist
+  var BLOG = { en: '/blogs/aero-socks/fastest-sock-on-the-planet', nl: '/nl/blogs/aero-socks/fastest-sock-on-the-planet', de: '/de/blogs/aero-socks/fastest-sock-on-the-planet', fr: '/fr/blogs/aero-socks/fastest-sock-on-the-planet' };
+  var REPORT = 'https://custom.sockeloen.nl/en-fsotp-research-tue-report/';
+  var BESTSELLERS = '/collections/best-sellers-1';
+  var KEY = 'sk_exit_v2', GRP_KEY = 'sk_exit_grp', SID_KEY = 'sk_exit_sid';
+  var CUTOFF = 15; // NL-tijd, zelfde als de levertekst onder de koopknop
+
+  // ---- holdout: 50% ziet de popup nooit (groep B); groep wordt als cart-attribute meegestuurd zodat we conversie kunnen vergelijken
+  var grp, sid;
+  try {
+    grp = localStorage.getItem(GRP_KEY); if (!grp) { grp = Math.random() < 0.5 ? 'A' : 'B'; localStorage.setItem(GRP_KEY, grp); }
+    sid = localStorage.getItem(SID_KEY); if (!sid) { sid = Math.random().toString(36).slice(2, 12); localStorage.setItem(SID_KEY, sid); }
+  } catch (e) { grp = 'A'; sid = 'na'; }
+  try { fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attributes: { exit_grp: grp } }) }).catch(function () {}); } catch (e) {}
+  var TEST = /[?&]skexit=1/.test(location.search); // ?skexit=1 → popup direct tonen (ook in groep B, negeert de 30-dagen-regel)
+  if (grp === 'B' && !TEST) return;
+  try { if (!TEST && localStorage.getItem(KEY) && Date.now() - Number(localStorage.getItem(KEY)) < 30 * 864e5) return; } catch (e) {}
+
+  var path = location.pathname;
+  var page = /\/products\//.test(path) ? 'product' : /\/cart/.test(path) ? 'cart' : /\/collections\//.test(path) ? 'collection' : 'other';
+  if (page === 'other') return;
+  if (/\/checkouts?\//.test(path) || /thank_you|orders\//.test(path)) return;
+  var product = (path.match(/\/products\/([^\/?#]+)/) || [])[1] || '';
+  var loc = (document.documentElement.lang || (window.Shopify && Shopify.locale) || 'en').slice(0, 2).toLowerCase();
+  var isMobile = /Mobi|Android/i.test(navigator.userAgent) || window.matchMedia('(pointer:coarse)').matches;
+  var geo = null; try { geo = JSON.parse(localStorage.getItem('geolocation') || 'null'); } catch (e) {}
+  var country = (geo && geo.country_code) || (window.Shopify && Shopify.country) || 'NL';
+  var box = document.getElementById('shipment-message-v2');
+  var threshold = box ? parseFloat(box.getAttribute('data-threshold')) : NaN;
+  var zone = country === 'NL' ? 'NL' : country === 'BE' ? 'BE' : /^(AT|BG|HR|CY|CZ|DK|EE|FI|FR|DE|GR|HU|IE|IT|LV|LT|LU|MT|PL|PT|RO|SK|SI|ES|SE)$/.test(country) ? 'EU' : 'INT';
+  if (isNaN(threshold)) threshold = zone === 'INT' ? 100 : 75;
+
+  // ---- teksten (4 talen) ----
+  var T = {
+    en: { q: "I would love to know what's stopping you from purchasing today. Pick one option below:",
+      o: ['The price', 'Shipping costs', "Unsure about my size", "Not convinced they're faster", 'Delivery time', 'Just looking around', 'Something else'],
+      price: "Got it 👍 As a new customer you get 10% off your first order. Here's your personal code, valid for 48 hours:",
+      ship1: function (c, t) { return 'Shipping is free from €' + t + (zone === 'INT' ? ' worldwide' : ' in NL, BE & EU') + '. ' + (c > 0 ? 'Your cart is €' + c.toFixed(0) + (c < t ? ', so €' + (t - c).toFixed(0) + ' to go. ' : ' — free shipping unlocked ✅ ') : '') + 'What would help?'; },
+      shipO: ['Show me some products I could add', 'A €' + threshold + ',- order is too much for me'],
+      ship2: "Oké, I got you. I'll make a one time exception: use this code at checkout to get free shipping from €50, valid for 12 hours.",
+      size: 'Did you check out our size guide?', sizeBtn: 'Open size guide', size2: "Still not clear? Please let me know what's not clear so we can improve:",
+      fast: "As a high performance athlete I'm just like you. That's why we tested them in the wind tunnel with Eindhoven University of Technology. Read the blog or download the full independent report.", fastA: 'Download report', fastB: 'Read the blog',
+      browse: 'No rush. Join the Early Breakaway and be the first to hear about new colours, limited drops and sale — plus a welcome discount on your first order.', browseBtn: 'Join', browseOk: "You're in. Welcome to the Early Breakaway 🚀", email: 'Your email',
+      other: 'Tell me — what held you back?', ph: 'Type here…', send: 'Send', skip: 'Skip', copy: 'Copy code', copied: 'Copied ✓', apply: 'Apply & continue', gotit: 'Got it', thanks: 'Thank you — this really helps 🙏', close: 'Close',
+      dlv: { within: 'If you order within {h}, your order ships today', before: 'Order before 15:00 on a workday and your order ships the same day', free: ' — free shipping (cart above €{t})', notfree: ' — free shipping from €{t}, or express for €{x}', arrive: ', delivered {d}', d: { NL: 'tomorrow (express) · 1–3 workdays standard', BE: 'tomorrow (express) · 1–3 workdays standard', EU: 'in 2–7 days (express) · 2–10 days standard', INT: 'in 2–3 days (UPS Express) · 14–18 days standard' } } },
+    nl: { q: 'Ik zou graag willen weten wat je tegenhoudt om vandaag te bestellen. Kies één optie:',
+      o: ['De prijs', 'Verzendkosten', 'Twijfel over mijn maat', 'Niet overtuigd dat ze sneller zijn', 'Levertijd', 'Ik kijk alleen even rond', 'Iets anders'],
+      price: 'Snap ik 👍 Als nieuwe klant krijg je 10% korting op je eerste bestelling. Hier is je persoonlijke code, 48 uur geldig:',
+      ship1: function (c, t) { return 'Verzending is gratis vanaf €' + t + (zone === 'INT' ? ' wereldwijd' : ' in NL, BE & EU') + '. ' + (c > 0 ? 'Je winkelmand is €' + c.toFixed(0) + (c < t ? ', dus nog €' + (t - c).toFixed(0) + ' te gaan. ' : ' — gratis verzending gehaald ✅ ') : '') + 'Wat helpt?'; },
+      shipO: ['Laat me producten zien die ik kan toevoegen', 'Een bestelling van €' + threshold + ',- is te veel voor mij'],
+      ship2: 'Oké, ik snap je. Ik maak eenmalig een uitzondering: gebruik deze code bij het afrekenen voor gratis verzending vanaf €50, 12 uur geldig.',
+      size: 'Heb je onze maattabel al bekeken?', sizeBtn: 'Open maattabel', size2: 'Nog niet duidelijk? Laat me weten wat onduidelijk is, dan verbeteren we het:',
+      fast: 'Als topsporter ben ik net als jij. Daarom hebben we ze getest in de windtunnel met de TU Eindhoven. Lees de blog of download het volledige onafhankelijke rapport.', fastA: 'Download rapport', fastB: 'Lees de blog',
+      browse: 'Geen haast. Word lid van de Early Breakaway en hoor als eerste over nieuwe kleuren, limited drops en sale — plus een welkomstkorting op je eerste bestelling.', browseBtn: 'Aanmelden', browseOk: 'Je bent erbij. Welkom bij de Early Breakaway 🚀', email: 'Je e-mail',
+      other: 'Vertel — wat hield je tegen?', ph: 'Typ hier…', send: 'Versturen', skip: 'Overslaan', copy: 'Kopieer code', copied: 'Gekopieerd ✓', apply: 'Toepassen & verder', gotit: 'Duidelijk', thanks: 'Dank je — dit helpt ons echt 🙏', close: 'Sluiten',
+      dlv: { within: 'Bestel binnen {h}, dan gaat je bestelling vandaag de deur uit', before: 'Bestel op een werkdag vóór 15:00 en je bestelling gaat dezelfde dag de deur uit', free: ' — gratis verzonden (winkelmand boven €{t})', notfree: ' — gratis vanaf €{t}, of express voor €{x}', arrive: ', bezorgd {d}', d: { NL: 'morgen (express) · 1–3 werkdagen standaard', BE: 'morgen (express) · 1–3 werkdagen standaard', EU: 'in 2–7 dagen (express) · 2–10 dagen standaard', INT: 'in 2–3 dagen (UPS Express) · 14–18 dagen standaard' } } },
+    de: { q: 'Ich würde gern wissen, was dich heute vom Kauf abhält. Wähle eine Option:',
+      o: ['Der Preis', 'Versandkosten', 'Unsicher bei der Größe', 'Nicht überzeugt, dass sie schneller sind', 'Lieferzeit', 'Ich schaue nur', 'Etwas anderes'],
+      price: 'Verstehe 👍 Als Neukunde bekommst du 10 % auf deine erste Bestellung. Hier ist dein persönlicher Code, 48 Stunden gültig:',
+      ship1: function (c, t) { return 'Versand ist ab €' + t + ' kostenlos. ' + (c > 0 ? 'Dein Warenkorb: €' + c.toFixed(0) + (c < t ? ', also noch €' + (t - c).toFixed(0) + '. ' : ' — kostenloser Versand erreicht ✅ ') : '') + 'Was hilft dir?'; },
+      shipO: ['Zeig mir Produkte, die ich hinzufügen könnte', 'Eine Bestellung von €' + threshold + ',- ist mir zu viel'],
+      ship2: 'Okay, verstanden. Ich mache einmalig eine Ausnahme: Nutze diesen Code an der Kasse für kostenlosen Versand ab €50, 12 Stunden gültig.',
+      size: 'Hast du unsere Größentabelle gesehen?', sizeBtn: 'Größentabelle öffnen', size2: 'Noch unklar? Sag mir, was unklar ist, damit wir es verbessern:',
+      fast: 'Als Leistungssportler bin ich wie du. Deshalb haben wir sie im Windkanal mit der TU Eindhoven getestet. Lies den Blog oder lade den vollständigen unabhängigen Bericht herunter.', fastA: 'Bericht laden', fastB: 'Blog lesen',
+      browse: 'Kein Stress. Tritt dem Early Breakaway bei und erfahre als Erster von neuen Farben, limitierten Drops und Sale — plus Willkommensrabatt auf deine erste Bestellung.', browseBtn: 'Beitreten', browseOk: 'Du bist dabei. Willkommen im Early Breakaway 🚀', email: 'Deine E-Mail',
+      other: 'Erzähl mir — was hat dich abgehalten?', ph: 'Hier tippen…', send: 'Senden', skip: 'Überspringen', copy: 'Code kopieren', copied: 'Kopiert ✓', apply: 'Anwenden & weiter', gotit: 'Alles klar', thanks: 'Danke — das hilft uns wirklich 🙏', close: 'Schließen',
+      dlv: { within: 'Bestelle innerhalb von {h}, dann geht deine Bestellung heute raus', before: 'Bestelle an einem Werktag vor 15:00 und deine Bestellung geht am selben Tag raus', free: ' — kostenloser Versand (Warenkorb über €{t})', notfree: ' — kostenlos ab €{t}, oder Express für €{x}', arrive: ', Lieferung {d}', d: { NL: 'morgen (Express) · 1–3 Werktage Standard', BE: 'morgen (Express) · 1–3 Werktage Standard', EU: 'in 2–7 Tagen (Express) · 2–10 Tage Standard', INT: 'in 2–3 Tagen (UPS Express) · 14–18 Tage Standard' } } },
+    fr: { q: "J'aimerais savoir ce qui vous empêche de commander aujourd'hui. Choisissez une option :",
+      o: ['Le prix', 'Les frais de livraison', 'Doute sur ma taille', 'Pas convaincu qu’elles sont plus rapides', 'Le délai de livraison', 'Je regarde seulement', 'Autre chose'],
+      price: 'Compris 👍 En tant que nouveau client, vous avez 10 % sur votre première commande. Voici votre code personnel, valable 48 h :',
+      ship1: function (c, t) { return 'La livraison est offerte dès €' + t + '. ' + (c > 0 ? 'Votre panier : €' + c.toFixed(0) + (c < t ? ', encore €' + (t - c).toFixed(0) + '. ' : ' — livraison offerte ✅ ') : '') + 'Qu’est-ce qui vous aiderait ?'; },
+      shipO: ['Montrez-moi des produits à ajouter', 'Une commande de €' + threshold + ',- c’est trop pour moi'],
+      ship2: 'OK, je comprends. Exceptionnellement : utilisez ce code au paiement pour la livraison offerte dès €50, valable 12 h.',
+      size: 'Avez-vous consulté notre guide des tailles ?', sizeBtn: 'Ouvrir le guide', size2: 'Toujours pas clair ? Dites-moi ce qui n’est pas clair pour que nous l’améliorions :',
+      fast: 'En tant qu’athlète de haut niveau, je suis comme vous. C’est pourquoi nous les avons testées en soufflerie avec l’Université de technologie d’Eindhoven. Lisez le blog ou téléchargez le rapport indépendant complet.', fastA: 'Télécharger le rapport', fastB: 'Lire le blog',
+      browse: 'Pas de précipitation. Rejoignez l’Early Breakaway et soyez le premier informé des nouvelles couleurs, éditions limitées et soldes — plus une remise de bienvenue sur votre première commande.', browseBtn: 'Rejoindre', browseOk: 'C’est fait. Bienvenue dans l’Early Breakaway 🚀', email: 'Votre e-mail',
+      other: 'Dites-moi — qu’est-ce qui vous a retenu ?', ph: 'Écrivez ici…', send: 'Envoyer', skip: 'Passer', copy: 'Copier le code', copied: 'Copié ✓', apply: 'Appliquer & continuer', gotit: 'Compris', thanks: 'Merci — cela nous aide vraiment 🙏', close: 'Fermer',
+      dlv: { within: 'Commandez dans les {h}, votre commande part aujourd’hui', before: 'Commandez un jour ouvré avant 15h00 et votre commande part le jour même', free: ' — livraison offerte (panier au-dessus de €{t})', notfree: ' — offerte dès €{t}, ou express pour €{x}', arrive: ', livrée {d}', d: { NL: 'demain (express) · 1–3 jours ouvrés standard', BE: 'demain (express) · 1–3 jours ouvrés standard', EU: 'en 2–7 jours (express) · 2–10 jours standard', INT: 'en 2–3 jours (UPS Express) · 14–18 jours standard' } } }
+  };
+  var t = T[loc] || T.en;
+  var CODES = ['price', 'shipping', 'sizing', 'faster_doubt', 'delivery', 'browsing', 'other'];
+  var shown = false, start = Date.now(), cartTotal = 0;
+
+  function mark() { try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {} }
+  function send(o, cb) {
+    o.page = page; o.product = product; o.locale = loc; o.device = isMobile ? 'mobile' : 'desktop'; o.cartTotal = cartTotal; o.path = path; o.grp = grp; o.sid = sid; o.hp = (document.querySelector('#skx input[name=hp]') || {}).value || '';
+    try { fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify(o) }).then(function (r) { return r.json(); }).then(function (j) { cb && cb(j); }).catch(function () { cb && cb(null); }); } catch (e) { cb && cb(null); }
+  }
+  function cartFetch(cb) { try { fetch('/cart.js').then(function (r) { return r.json(); }).then(function (c) { cartTotal = (c.total_price || 0) / 100; cb(); }).catch(cb); } catch (e) { cb(); } }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // ---- levertekst (zelfde logica als onder de koopknop: NL-tijd, cutoff 15:00, werkdagen) ----
+  function deliveryText() {
+    var parts = new Date().toLocaleString('en-GB', { timeZone: 'Europe/Amsterdam', hour: 'numeric', minute: 'numeric', hour12: false }).split(':');
+    var h = parseInt(parts[0], 10), m = parseInt(parts[1], 10);
+    var day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(new Date().toLocaleString('en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'short' }));
+    var work = day >= 1 && day <= 5, before = h < CUTOFF;
+    var s;
+    if (work && before) { var mins = (CUTOFF - h - 1) * 60 + (60 - m); s = t.dlv.within.replace('{h}', (Math.floor(mins / 60) ? Math.floor(mins / 60) + 'h ' : '') + (mins % 60) + 'm'); }
+    else s = t.dlv.before;
+    var express = zone === 'NL' || zone === 'BE' ? '5,99' : zone === 'EU' ? '9,99' : '27,99';
+    s += cartTotal >= threshold ? t.dlv.free.replace('{t}', threshold) : t.dlv.notfree.replace('{t}', threshold).replace('{x}', express);
+    s += t.dlv.arrive.replace('{d}', t.dlv.d[zone]);
+    return s + '.';
+  }
+
+  // ---- UI ----
+  var css = '#skx-bd{position:fixed;inset:0;z-index:1000000;backdrop-filter:blur(21px) saturate(180%);-webkit-backdrop-filter:blur(21px) saturate(180%);background:rgba(0,0,0,.25);opacity:0;transition:opacity .25s}' +
+    '#skx-bd.on{opacity:1}' +
+    '#skx{position:fixed;left:50%;top:14%;transform:translate(-50%,-12px);z-index:1000001;width:min(372px,calc(100vw - 24px));border-radius:22px;padding:14px 16px 14px;color:#111;opacity:0;transition:opacity .3s,transform .3s;' +
+    'font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Roboto,Arial,sans-serif;background:linear-gradient(to right bottom,rgba(255,255,255,.6),rgba(255,255,255,.28),rgba(255,255,255,.12));' +
+    'backdrop-filter:blur(21px) saturate(180%);-webkit-backdrop-filter:blur(21px) saturate(180%);border:1px solid rgba(255,255,255,.35);box-shadow:0 2px 2px rgba(0,0,0,.1),0 18px 50px rgba(0,0,0,.25);box-sizing:border-box}' +
+    '#skx.on{opacity:1;transform:translate(-50%,0)}' +
+    '#skx .top{display:flex;align-items:center;gap:10px;margin-bottom:8px}#skx .ic{width:38px;height:38px;border-radius:9px;overflow:hidden;background:#25D366;flex:none}#skx .ic img{width:100%;height:100%;display:block}' +
+    '#skx .app{flex:1;font-size:15px;letter-spacing:.02em;text-transform:uppercase;color:#7a2e1f;opacity:.9}#skx .now{font-size:14px;color:#5b4a66;opacity:.85}' +
+    '#skx h3{margin:0 0 1px;font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.25;color:#111}#skx p{margin:0;font-size:17px;line-height:1.3;color:#1a1a1a}' +
+    '#skx .code{font-weight:700;letter-spacing:.06em;font-size:19px;margin-top:8px}' +
+    '#skx .opts{margin-top:12px;display:grid;gap:6px}#skx .o{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.5);border-radius:12px;padding:10px 13px;font-size:15.5px;cursor:pointer;color:#111;text-align:left;width:100%;font-family:inherit}' +
+    '#skx .o:hover{background:rgba(255,255,255,.8)}#skx .o span{color:#8a8a8e;font-size:15px}' +
+    '#skx .row{display:flex;gap:8px;margin-top:12px}#skx .btn{flex:1;text-align:center;border-radius:12px;padding:11px 12px;font-size:15.5px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.55);color:#111;text-decoration:none;font-family:inherit;display:block}' +
+    '#skx .btn.pri{background:#111;color:#fff;border-color:#111}' +
+    '#skx textarea,#skx input{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.5);border-radius:12px;padding:10px 13px;font-size:15px;font-family:inherit;background:rgba(255,255,255,.7);color:#111;margin-top:10px}#skx textarea{min-height:58px;resize:vertical}' +
+    '#skx small{display:block;color:#4a4a4f;font-size:11.5px;margin-top:8px;line-height:1.35}#skx .bar{height:6px;background:rgba(0,0,0,.12);border-radius:3px;overflow:hidden;margin:10px 0 4px}#skx .bar i{display:block;height:100%;background:#25D366}' +
+    '#skx .x{display:none}';
+
+  var bd, w;
+  function head() { return '<div class="top"><div class="ic"><img src="' + WA_ICON + '" alt=""></div><div class="app">WhatsApp</div><div class="now">now</div></div><h3>Jasper Ockeloen</h3>'; }
+  function render(body) { w.innerHTML = head() + body + '<input type="text" name="hp" style="display:none" tabindex="-1" autocomplete="off"><button class="x" aria-label="' + t.close + '">×</button>'; w.querySelector('.x').addEventListener('click', close); }
+  function close() { if (w && w.parentNode) w.parentNode.removeChild(w); if (bd && bd.parentNode) bd.parentNode.removeChild(bd); }
+  function thanks() { render('<p>' + t.thanks + '</p>'); setTimeout(close, 1600); }
+  function row(a, b) { return '<div class="row">' + (a ? '<button class="btn" data-k="a">' + a + '</button>' : '') + (b ? '<button class="btn pri" data-k="b">' + b + '</button>' : '') + '</div>'; }
+  function btn(k) { return w.querySelector('.btn[data-k=' + k + ']'); }
+  function codeScreen(a, want, text, applyRedirect) {
+    render('<p>' + text + '</p><p class="code">…</p>' + row(t.copy, t.apply));
+    send({ ev: 'follow', a: a, sub: want, want: want }, function (j) {
+      var code = (j && j.code) || '';
+      w.querySelector('.code').textContent = code;
+      btn('a').addEventListener('click', function () { try { navigator.clipboard.writeText(code); } catch (e) {} btn('a').textContent = t.copied; send({ ev: 'click', a: a, sub: 'copy' }); });
+      btn('b').addEventListener('click', function () { send({ ev: 'click', a: a, sub: 'apply' }); location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(applyRedirect || (path + location.search)); });
+    });
+  }
+
+  function show() {
+    if (shown) return; shown = true; mark();
+    var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+    bd = document.createElement('div'); bd.id = 'skx-bd'; document.body.appendChild(bd);
+    w = document.createElement('div'); w.id = 'skx'; w.setAttribute('role', 'dialog'); w.setAttribute('aria-modal', 'true'); document.body.appendChild(w);
+    bd.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    requestAnimationFrame(function () { bd.classList.add('on'); w.classList.add('on'); });
+    send({ ev: 'shown' });
+    render('<p>' + t.q + '</p><div class="opts">' + t.o.map(function (o, i) { return '<button type="button" class="o" data-i="' + i + '">' + esc(o) + '<span>›</span></button>'; }).join('') + '</div>');
+    w.querySelectorAll('.o').forEach(function (b) { b.addEventListener('click', function () { answer(CODES[+b.dataset.i]); }); });
+  }
+
+  function answer(a) {
+    send({ ev: 'answer', a: a });
+    if (a === 'price') return codeScreen('price', 'code10', t.price);
+    if (a === 'shipping') {
+      var pct = Math.min(100, Math.round(cartTotal / threshold * 100));
+      render('<p>' + t.ship1(cartTotal, threshold) + '</p><div class="bar"><i style="width:' + pct + '%"></i></div><div class="opts"><button class="o" data-s="products">' + esc(t.shipO[0]) + '<span>›</span></button><button class="o" data-s="toomuch">' + esc(t.shipO[1]) + '<span>›</span></button></div>');
+      w.querySelector('[data-s=products]').addEventListener('click', function () { send({ ev: 'follow', a: 'shipping', sub: 'products' }); location.href = (loc === 'en' ? '' : '/' + loc) + BESTSELLERS; });
+      w.querySelector('[data-s=toomuch]').addEventListener('click', function () { codeScreen('shipping', 'codeship', t.ship2, '/cart'); });
+      return;
+    }
+    if (a === 'sizing') {
+      render('<p>' + t.size + '</p><button class="btn pri" data-k="g" style="margin-top:10px">' + t.sizeBtn + '</button><p style="margin-top:12px">' + t.size2 + '</p><textarea placeholder="' + esc(t.ph) + '" maxlength="300"></textarea>' + row(t.skip, t.send));
+      btn('g').addEventListener('click', function () { send({ ev: 'follow', a: 'sizing', sub: 'guide' }); var l = document.querySelector('.size-guide-link'); if (l) { close(); l.click(); } else location.href = (loc === 'en' ? '' : '/' + loc) + '/pages/size-guides'; });
+      btn('a').addEventListener('click', close);
+      btn('b').addEventListener('click', function () { var v = w.querySelector('textarea').value.trim(); if (v) send({ ev: 'follow', a: 'sizing', sub: 'feedback', o: v }); thanks(); });
+      return;
+    }
+    if (a === 'faster_doubt') {
+      render('<p>' + t.fast + '</p>' + row(t.fastA, t.fastB));
+      btn('a').addEventListener('click', function () { send({ ev: 'follow', a: 'faster_doubt', sub: 'report' }); window.open(REPORT, '_blank', 'noopener'); });
+      btn('b').addEventListener('click', function () { send({ ev: 'follow', a: 'faster_doubt', sub: 'blog' }); window.open(BLOG[loc] || BLOG.en, '_blank', 'noopener'); });
+      return;
+    }
+    if (a === 'delivery') {
+      render('<p>' + deliveryText() + '</p>' + row(null, t.gotit));
+      btn('b').addEventListener('click', function () { send({ ev: 'follow', a: 'delivery', sub: 'gotit' }); close(); });
+      return;
+    }
+    if (a === 'browsing') {
+      render('<p>' + t.browse + '</p><input type="email" placeholder="' + esc(t.email) + '" autocomplete="email">' + row(t.skip, t.browseBtn) + '<small>Privacy policy · unsubscribe any time</small>');
+      btn('a').addEventListener('click', close);
+      btn('b').addEventListener('click', function () {
+        var em = w.querySelector('input[type=email]').value.trim(); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return;
+        send({ ev: 'follow', a: 'browsing', sub: 'join' });
+        try {
+          fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + KLAVIYO_COMPANY, { method: 'POST', headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' },
+            body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'exit-intent-browsing', profile: { data: { type: 'profile', attributes: { email: em, subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } } } } } }, relationships: { list: { data: { type: 'list', id: KLAVIYO_LIST } } } } }) }).catch(function () {});
+        } catch (e) {}
+        render('<p>' + t.browseOk + '</p>'); setTimeout(close, 1800);
+      });
+      return;
+    }
+    // other
+    render('<p>' + t.other + '</p><textarea placeholder="' + esc(t.ph) + '" maxlength="300"></textarea>' + row(t.skip, t.send));
+    btn('a').addEventListener('click', close);
+    btn('b').addEventListener('click', function () { var v = w.querySelector('textarea').value.trim(); if (v) send({ ev: 'follow', a: 'other', sub: 'text', o: v }); thanks(); });
+  }
+
+  function trigger() { cartFetch(show); }
+  // Desktop: muis verlaat het venster aan de bovenkant, na minimaal 8 s
+  if (!isMobile) {
+    document.addEventListener('mouseout', function (e) { if (e.relatedTarget || e.toElement) return; if (e.clientY <= 0 && Date.now() - start > 8000) trigger(); });
+  } else {
+    // Mobiel: snel omhoog scrollen na 25 s, of 60 s inactief op PDP
+    var lastY = window.scrollY, lastT = Date.now();
+    window.addEventListener('scroll', function () { var y = window.scrollY, now = Date.now(); if (lastY - y > 350 && now - lastT < 400 && now - start > 25000 && y < 600) trigger(); lastY = y; lastT = now; }, { passive: true });
+    if (page === 'product') setTimeout(function () { if (!shown && document.visibilityState === 'visible') trigger(); }, 60000);
+  }
+  if (TEST) setTimeout(trigger, 800);
+})();
+</script>
