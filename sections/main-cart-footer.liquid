@@ -26,18 +26,34 @@
             {% render block %}
           {%- when 'subtotal' -%}
             <div class="js-contents" {{ block.shopify_attributes }}>
-              {% assign free_shipping_cents = settings.free_shipping | times: 100 %}
-              <div class="cart-drawer__totals" role="status">
-                {%- if cart.original_total_price > cart.total_price -%}
-                  <div class="cart-drawer__total-row cart-drawer__total-row--shipping cart-page__total-row--savings">
-                    <span class="cart-drawer__total-label small-text">{{ 'sections.cart.headings.total' | t }}</span>
-                    <span class="cart-drawer__total-value small-text"><s>{{ cart.original_total_price | money_without_currency }}</s></span>
+              {%- liquid
+                assign free_shipping_cents = settings.free_shipping | times: 100
+                assign savings = cart.original_total_price | minus: cart.total_price
+                assign code_savings = 0
+                for discount in cart.cart_level_discount_applications
+                  assign code_savings = code_savings | plus: discount.total_allocated_amount
+                endfor
+                assign line_savings = savings | minus: code_savings
+              -%}
+              <div class="cart-drawer__totals cart-page__totals" role="status">
+                {%- if savings > 0 -%}
+                  <div class="cart-drawer__total-row cart-drawer__total-row--shipping">
+                    <span class="cart-drawer__total-label small-text">{{ 'sections.cart.subtotal' | t }}</span>
+                    <span class="cart-drawer__total-value small-text">{{ cart.original_total_price | money_without_currency }}</span>
                   </div>
+                  {%- for discount in cart.cart_level_discount_applications -%}
+                    <div class="cart-drawer__total-row cart-drawer__total-row--shipping cart-page__total-row--discount">
+                      <span class="cart-drawer__total-label small-text">{{ 'customer.order.discount' | t }} · {{ discount.title }}</span>
+                      <span class="cart-drawer__total-value small-text">-{{ discount.total_allocated_amount | money_without_currency }}</span>
+                    </div>
+                  {%- endfor -%}
+                  {%- if line_savings > 0 -%}
+                    <div class="cart-drawer__total-row cart-drawer__total-row--shipping cart-page__total-row--discount">
+                      <span class="cart-drawer__total-label small-text">{{ 'customer.order.discount' | t }}</span>
+                      <span class="cart-drawer__total-value small-text">-{{ line_savings | money_without_currency }}</span>
+                    </div>
+                  {%- endif -%}
                 {%- endif -%}
-                <div class="cart-drawer__total-row">
-                  <span class="cart-drawer__total-label">{{ 'sections.cart.subtotal' | t }}</span>
-                  <span class="cart-drawer__total-value" data-mczr="cart_total_price">{{ cart.total_price | money_without_currency }}</span>
-                </div>
                 <div class="cart-drawer__total-row cart-drawer__total-row--shipping">
                   <span class="cart-drawer__total-label small-text">{{ 'sections.cart.shipping' | t }}</span>
                   <span class="cart-drawer__total-value small-text">
@@ -45,31 +61,11 @@
                     <span class="font-semibold {% if cart.total_price < free_shipping_cents %}hidden{% endif %}" id="its_free">{{ 'sections.cart.shipping_free' | t }}</span>
                   </span>
                 </div>
+                <div class="cart-drawer__total-row cart-page__total-row--grand">
+                  <span class="cart-drawer__total-label">{%- if savings > 0 -%}{{ 'sections.cart.headings.total' | t }}{%- else -%}{{ 'sections.cart.subtotal' | t }}{%- endif -%}</span>
+                  <span class="cart-drawer__total-value" data-mczr="cart_total_price">{{ cart.total_price | money_without_currency }}</span>
+                </div>
               </div>
-
-              {%- if cart.cart_level_discount_applications.size > 0 -%}
-                <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
-                  {%- for discount in cart.cart_level_discount_applications -%}
-                    <li class="discounts__discount discounts__discount--end">
-                      {%- render 'icon-discount' -%}
-                      {{ discount.title }}
-                      (-{{ discount.total_allocated_amount | money_without_currency }})
-                    </li>
-                  {%- endfor -%}
-                </ul>
-              {%- endif -%}
-
-              <small class="tax-note caption-large rte cart-page__tax-note">
-                {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
-                  {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
-                {%- elsif cart.taxes_included -%}
-                  {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
-                {%- elsif shop.shipping_policy.body != blank -%}
-                  {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
-                {%- else -%}
-                  {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
-                {%- endif -%}
-              </small>
             </div>
           {%- else -%}
             <div class="cart__ctas cart-drawer__buttons" {{ block.shopify_attributes }}>
@@ -106,6 +102,18 @@
             {%- comment -%} express checkout buttons left out: the drawer has none {%- endcomment -%}
         {%- endcase -%}
       {% endfor %}
+
+      <small class="tax-note caption-large rte cart-page__tax-note">
+        {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+          {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+        {%- elsif cart.taxes_included -%}
+          {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+        {%- elsif shop.shipping_policy.body != blank -%}
+          {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+        {%- else -%}
+          {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+        {%- endif -%}
+      </small>
 
       <div id="cart-errors"></div>
     </div>
