@@ -286,7 +286,7 @@ body.template--cart #MainContent {
     align-items: start;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 40px 20px 96px;
+    padding: 72px 20px 96px; /* heading lands 48px under the header pill */
     box-sizing: content-box;
   }
   body.template--cart #MainContent > .shopify-section {
