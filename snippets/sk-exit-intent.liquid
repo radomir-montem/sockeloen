@@ -10,6 +10,9 @@
   var BESTSELLERS = '/collections/best-sellers-1';
   var KEY = 'sk_exit_v2', GRP_KEY = 'sk_exit_grp', SID_KEY = 'sk_exit_sid';
   var CUTOFF = 15; // NL-tijd, zelfde als de levertekst onder de koopknop
+  // Ingelogde klant met eerdere bestellingen → geen 10%-'nieuwe klant'-code, maar een eerlijke prijsvraag.
+  // (Liquid wordt gerenderd omdat dit als snippets/sk-exit-intent.liquid in de theme staat; lokaal blijft het geldige JS.)
+  var EXISTING = '{% if customer and customer.orders_count > 0 %}1{% endif %}' === '1';
 
   // ---- holdout: 50% ziet de popup nooit (groep B); groep wordt als cart-attribute meegestuurd zodat we conversie kunnen vergelijken
   var grp, sid;
@@ -18,17 +21,12 @@
     sid = localStorage.getItem(SID_KEY); if (!sid) { sid = Math.random().toString(36).slice(2, 12); localStorage.setItem(SID_KEY, sid); }
   } catch (e) { grp = 'A'; sid = 'na'; }
   try { fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attributes: { exit_grp: grp } }) }).catch(function () {}); } catch (e) {}
-  // holdout-noemer: 1 sessie-ping per dag, voor groep A én B (alleen op product/collectie/cart, dus dezelfde pagina's waar de popup kan verschijnen)
-  try {
-    var p0 = location.pathname, pg0 = /\/products\//.test(p0) ? 'product' : /\/cart/.test(p0) ? 'cart' : /\/collections\//.test(p0) ? 'collection' : 'other';
-    var today = new Date().toISOString().slice(0, 10);
-    if (pg0 !== 'other' && localStorage.getItem('sk_exit_sess') !== today) {
-      localStorage.setItem('sk_exit_sess', today);
-      fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify({ ev: 'session', grp: grp, sid: sid, page: pg0, device: (/Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop') }) }).catch(function () {});
-    }
-  } catch (e) {}
   // ?skcart=1 → side cart openen en tonen welke code is toegepast (de drawer van de theme toont kortingscodes zelf niet)
-  if (/[?&]skcart=1/.test(location.search)) {
+  // NB: Shopify's /discount/CODE?redirect=… laat de querystring van het redirect-doel vallen, dus na 'Apply & continue'
+  // komt ?skcart=1 nooit aan. Daarom zetten we vóór die redirect ook een sessionStorage-vlag (max 2 min oud).
+  var cartFlag = null;
+  try { cartFlag = JSON.parse(sessionStorage.getItem('sk_exit_cart') || 'null'); sessionStorage.removeItem('sk_exit_cart'); if (cartFlag && Date.now() - (cartFlag.ts || 0) > 120000) cartFlag = null; } catch (e) { cartFlag = null; }
+  if (/[?&]skcart=1/.test(location.search) || cartFlag) {
     var tries = 0;
     var openCart = function () {
       var cd = document.querySelector('cart-drawer');
@@ -37,12 +35,15 @@
       fetch('/cart.js').then(function (r) { return r.json(); }).then(function (c) {
         cd.open();
         var apps = c.cart_level_discount_applications || [], msg = null;
-        var CB = { en: ['Code', '10% off at checkout{a}', 'free shipping from €50 at checkout'], nl: ['Code', '10% korting bij het afrekenen{a}', 'gratis verzending vanaf €50 bij het afrekenen'], de: ['Code', '10 % Rabatt an der Kasse{a}', 'kostenloser Versand ab €50 an der Kasse'], fr: ['Code', '10 % de réduction au paiement{a}', 'livraison offerte dès €50 au paiement'] };
+        var CB = { en: ['Code', '10% off at checkout{a}', 'free shipping from €50 at checkout', 'saved for checkout'], nl: ['Code', '10% korting bij het afrekenen{a}', 'gratis verzending vanaf €50 bij het afrekenen', 'bewaard voor het afrekenen'], de: ['Code', '10 % Rabatt an der Kasse{a}', 'kostenloser Versand ab €50 an der Kasse', 'für die Kasse gespeichert'], fr: ['Code', '10 % de réduction au paiement{a}', 'livraison offerte dès €50 au paiement', 'enregistré pour le paiement'] };
         var cb = CB[(document.documentElement.lang || 'en').slice(0, 2).toLowerCase()] || CB.en;
         var codes = (c.discount_codes || []).filter(function (d) { return /^(EB10-|EBSHIP-|EXIT10$|EXITSHIP50$)/.test(d.code); });
+        if (!codes.length && cartFlag && cartFlag.code) codes = [{ code: cartFlag.code, applicable: false }];
         if (codes.length) {
-          var code = codes[0].code, app = apps.find(function (x) { return x.discount_application && x.discount_application.title === code; });
-          var d = /^(EBSHIP|EXITSHIP)/.test(code) ? cb[2] : cb[1].replace('{a}', app ? ' (−€' + (app.amount / 100).toFixed(2).replace('.', ',') + ')' : '');
+          var code = codes[0].code, app = apps.find(function (x) { return x.title === code || (x.discount_application && x.discount_application.title === code); });
+          var isShip = /^(EBSHIP|EXITSHIP)/.test(code);
+          // 10%-code die (nog) niet op de cart landt — bv. naast een bundelcode — niet als 'korting' verkopen maar als bewaard
+          var d = isShip ? cb[2] : (codes[0].applicable === false && !app) ? cb[3] : cb[1].replace('{a}', app ? ' (−€' + ((app.total_allocated_amount || app.amount || 0) / 100).toFixed(2).replace('.', ',') + ')' : '');
           msg = { head: cb[0], code: code, detail: d };
         }
         if (!msg) return;
@@ -78,52 +79,68 @@
   var zone = country === 'NL' ? 'NL' : country === 'BE' ? 'BE' : /^(AT|BG|HR|CY|CZ|DK|EE|FI|FR|DE|GR|HU|IE|IT|LV|LT|LU|MT|PL|PT|RO|SK|SI|ES|SE)$/.test(country) ? 'EU' : /^(AE|AU|CA|CH|GB|HK|IL|JP|KR|MY|NO|NZ|SG|US)$/.test(country) ? 'INT' : 'ROW';
   if (isNaN(threshold)) threshold = zone === 'INT' ? 100 : zone === 'ROW' ? 150 : 75;
 
-  // ---- teksten (4 talen) ----
+  // ---- teksten (4 talen) — korte WhatsApp-berichten: 1 emoji per bericht, enters als echte chatregels ----
   var T = {
-    en: { q: "I would love to know what's stopping you from purchasing today. Pick one option below:",
+    en: { q: "Hey, quick one before you go 👋\nWhat's holding you back today?",
       o: ['The price', 'Shipping costs', "Unsure about my size", "Not convinced they're faster", 'Delivery time', 'Just looking around', 'Something else'],
-      price: "Got it 👍 As a new customer you get 10% off your first order. Here's your personal code, valid for 48 hours:",
-      ship1: function (c, t) { return 'Shipping is free from €' + t + (zone === 'INT' || zone === 'ROW' ? '' : ' in NL, BE & EU') + '.' + (c > 0 ? ' Your cart is €' + c.toFixed(0) + ', so €' + (t - c).toFixed(0) + ' to go 🚚' : ' 🚚'); }, shipFree: function (c, t) { return 'Good news — your cart is €' + c.toFixed(0) + ', so shipping is already free 🎉'; }, shipCheckout: 'Checkout with free shipping', shipAdd: 'Show me some products I could add to reach free shipping',
+      none: "Nothing, I'm still shopping",
+      price: "Fair 👍\nAs a new customer you get 10% off your first order. Your personal code, valid 48 hours:",
+      priceOld: "Fair 🙏\nYou already know our socks, so tell me straight: what would make the price work for you?",
+      ship1: function (c, t) { return 'Shipping is free from €' + t + (zone === 'INT' || zone === 'ROW' ? '' : ' in NL, BE & EU') + ' 🚚' + (c > 0 ? '\nYour cart is €' + c.toFixed(0) + ', so €' + (t - c).toFixed(0) + ' to go.' : ''); },
+      shipFree: function (c, t) { return 'Good news 🎉\nYour cart is €' + c.toFixed(0) + ', so shipping is already free.'; },
+      shipCheckout: 'Checkout with free shipping', shipAdd: 'Show me products to reach free shipping',
       shipO: ['Show me some products I could add', 'A €' + threshold + ',- order is too much for me'],
-      ship2: "Oké, I got you. I'll make a one time exception: use this code at checkout to get free shipping from €50, valid for 12 hours.",
-      size: 'Did you check out our size guide?', sizeBtn: 'Open size guide', size2: "Still not clear? Please let me know what's not clear so we can improve:",
-      fast: "As a high performance athlete I'm just like you. That's why we tested them in the wind tunnel with Eindhoven University of Technology. Read the blog or download the full independent report.", fastA: 'Download report', fastB: 'Read the blog',
-      browse: 'No rush. Join the Early Breakaway and be the first to hear about new colours, limited drops and sale — plus a welcome discount on your first order.', browseBtn: 'Join', browseOk: "You're in. Welcome to the Early Breakaway 🚀", email: 'Your email',
-      other: 'Tell me — what held you back?', ph: 'Type here…', send: 'Send', skip: 'Skip', copy: 'Copy code', copied: 'Copied ✓', apply: 'Apply & continue', gotit: 'Got it', thanks: 'Thank you — this really helps 🙏', close: 'Close',
-      dlv: { freeDual: ' Standard shipping is free from €{t1} and express from €{t2} — your cart is €{c}, so {g}.', gStd: '€{g} to go for free standard shipping', gExp: '€{g} to go for free express shipping', gAll: 'both are on us 🎉', standardFirst: 'and can be with you {d} with standard shipping ({p})', intro: 'I understand that you would like to know exactly when your package is arriving 📦 I see that you are in {country}.', within: 'If you order within {h}, your order ships today', later: 'If you order now, your order ships {ship}', express: 'and can be with you {d} with express shipping ({p})', standard: '{d} with standard shipping ({p})', or: ' or ', free: 'free', freeNote: ' Free shipping from €{t} — your cart is €{c}, so €{g} to go.', freeOk: ' Your cart is above €{t}, so shipping is on us 🎉', on: 'on {d}', between: 'between {a} and {b}' } },
-    nl: { q: 'Ik zou graag willen weten wat je tegenhoudt om vandaag te bestellen. Kies één optie:',
+      ship2: "Okay, I get it 🤝\nOne-time exception: this code gives you free shipping from €50, valid 12 hours.",
+      size: 'Did you check the size guide? 📏', sizeBtn: 'Open size guide', size2: "Still not clear?\nTell me what's confusing, then I'll fix it:",
+      fast: "As an athlete I'm just as critical as you 😉\nThat's why we tested them in the wind tunnel at TU Eindhoven.", fastA: 'Or download the full report', fastB: 'Read the blog',
+      browse: 'No rush 🙌\nJoin the Early Breakaway: first to hear about new colours, drops and sale, plus a welcome discount on your first order.', browseBtn: 'Join', browseOk: "You're in 🚀\nWelcome to the Early Breakaway.", email: 'Your email',
+      other: 'Tell me 👂\nWhat held you back?', ph: 'Type here…', send: 'Send', skip: 'Skip', copy: 'Copy code', copied: 'Copied ✓', apply: 'Apply & continue', gotit: 'Got it', thanks: 'Thanks, this really helps 🙏', close: 'Close', now: 'now', priv: 'Privacy policy · unsubscribe any time', sizeTitle: 'Size guide', browseErr: "That didn't work. Check your email address and try again.",
+      dlv: { intro: "Good question 📦 I see you're in {country}.", within: 'Order within {h} and it ships today.', later: 'Order now and it ships {ship}.', exp: 'Express', std: 'Standard', free: 'free', freeDual: 'Standard is free from €{t1}, express from €{t2}. Your cart is €{c}: {g}.', gStd: '€{g} to go for free standard shipping', gExp: '€{g} to go for free express', gAll: 'both on us', freeNote: 'Free shipping from €{t}. Your cart is €{c}, so €{g} to go.', freeOk: 'Your cart is above €{t}, so shipping is on us.', on: 'on {d}', between: '{a} – {b}' } },
+    nl: { q: 'Hey, snelle vraag voordat je gaat 👋\nWat houdt je vandaag tegen?',
       o: ['De prijs', 'Verzendkosten', 'Twijfel over mijn maat', 'Niet overtuigd dat ze sneller zijn', 'Levertijd', 'Ik kijk alleen even rond', 'Iets anders'],
-      price: 'Snap ik 👍 Als nieuwe klant krijg je 10% korting op je eerste bestelling. Hier is je persoonlijke code, 48 uur geldig:',
-      ship1: function (c, t) { return 'Verzending is gratis vanaf €' + t + (zone === 'INT' || zone === 'ROW' ? '' : ' in NL, BE & EU') + '.' + (c > 0 ? ' Je winkelmand is €' + c.toFixed(0) + ', dus nog €' + (t - c).toFixed(0) + ' te gaan 🚚' : ' 🚚'); }, shipFree: function (c, t) { return 'Goed nieuws — je winkelmand is €' + c.toFixed(0) + ', dus de verzending is al gratis 🎉'; }, shipCheckout: 'Afrekenen met gratis verzending', shipAdd: 'Laat me producten zien om gratis verzending te halen',
+      none: 'Niks, ik kijk nog even verder',
+      price: 'Snap ik 👍\nAls nieuwe klant krijg je 10% korting op je eerste bestelling. Je persoonlijke code, 48 uur geldig:',
+      priceOld: 'Snap ik 🙏\nJij kent onze sokken al, dus zeg het maar eerlijk: wat zou de prijs voor jou goed maken?',
+      ship1: function (c, t) { return 'Verzending is gratis vanaf €' + t + (zone === 'INT' || zone === 'ROW' ? '' : ' in NL, BE & EU') + ' 🚚' + (c > 0 ? '\nJe winkelmand is €' + c.toFixed(0) + ', dus nog €' + (t - c).toFixed(0) + ' te gaan.' : ''); },
+      shipFree: function (c, t) { return 'Goed nieuws 🎉\nJe winkelmand is €' + c.toFixed(0) + ', dus de verzending is al gratis.'; },
+      shipCheckout: 'Afrekenen met gratis verzending', shipAdd: 'Laat me producten zien voor gratis verzending',
       shipO: ['Laat me producten zien die ik kan toevoegen', 'Een bestelling van €' + threshold + ',- is te veel voor mij'],
-      ship2: 'Oké, ik snap je. Ik maak eenmalig een uitzondering: gebruik deze code bij het afrekenen voor gratis verzending vanaf €50, 12 uur geldig.',
-      size: 'Heb je onze maattabel al bekeken?', sizeBtn: 'Open maattabel', size2: 'Nog niet duidelijk? Laat me weten wat onduidelijk is, dan verbeteren we het:',
-      fast: 'Als topsporter ben ik net als jij. Daarom hebben we ze getest in de windtunnel met de TU Eindhoven. Lees de blog of download het volledige onafhankelijke rapport.', fastA: 'Download rapport', fastB: 'Lees de blog',
-      browse: 'Geen haast. Word lid van de Early Breakaway en hoor als eerste over nieuwe kleuren, limited drops en sale — plus een welkomstkorting op je eerste bestelling.', browseBtn: 'Aanmelden', browseOk: 'Je bent erbij. Welkom bij de Early Breakaway 🚀', email: 'Je e-mail',
-      other: 'Vertel — wat hield je tegen?', ph: 'Typ hier…', send: 'Versturen', skip: 'Overslaan', copy: 'Kopieer code', copied: 'Gekopieerd ✓', apply: 'Toepassen & verder', gotit: 'Duidelijk', thanks: 'Dank je — dit helpt ons echt 🙏', close: 'Sluiten',
-      dlv: { freeDual: ' Standaard verzending is gratis vanaf €{t1} en express vanaf €{t2} — je winkelmand is €{c}, dus {g}.', gStd: 'nog €{g} te gaan voor gratis standaard verzending', gExp: 'nog €{g} te gaan voor gratis express', gAll: 'allebei van ons 🎉', standardFirst: 'en kan hij {d} bij je zijn met standaard verzending ({p})', intro: 'Ik snap dat je precies wilt weten wanneer je pakket aankomt 📦 Ik zie dat je in {country} bent.', within: 'Als je binnen {h} bestelt, gaat je bestelling vandaag nog de deur uit', later: 'Als je nu bestelt, gaat je bestelling {ship} de deur uit', express: 'en kan hij {d} bij je zijn met express verzending ({p})', standard: '{d} met standaard verzending ({p})', or: ' of ', free: 'gratis', freeNote: ' Gratis verzending vanaf €{t} — je winkelmand is €{c}, dus nog €{g} te gaan.', freeOk: ' Je winkelmand zit boven de €{t}, dus de verzending is van ons 🎉', on: 'op {d}', between: 'tussen {a} en {b}' } },
-    de: { q: 'Ich würde gern wissen, was dich heute vom Kauf abhält. Wähle eine Option:',
+      ship2: 'Oké, ik snap je 🤝\nEenmalige uitzondering: met deze code heb je gratis verzending vanaf €50, 12 uur geldig.',
+      size: 'Heb je de maattabel al bekeken? 📏', sizeBtn: 'Open maattabel', size2: 'Nog niet duidelijk?\nZeg me wat onduidelijk is, dan pas ik het aan:',
+      fast: 'Als sporter ben ik net zo kritisch als jij 😉\nDaarom hebben we ze getest in de windtunnel van de TU Eindhoven.', fastA: 'Of download het volledige rapport', fastB: 'Lees de blog',
+      browse: 'Geen haast 🙌\nWord lid van de Early Breakaway: als eerste nieuws over nieuwe kleuren, drops en sale, plus een welkomstkorting op je eerste bestelling.', browseBtn: 'Aanmelden', browseOk: 'Je bent erbij 🚀\nWelkom bij de Early Breakaway.', email: 'Je e-mail',
+      other: 'Vertel 👂\nWat hield je tegen?', ph: 'Typ hier…', send: 'Versturen', skip: 'Overslaan', copy: 'Kopieer code', copied: 'Gekopieerd ✓', apply: 'Toepassen & verder', gotit: 'Duidelijk', thanks: 'Dank je, dit helpt echt 🙏', close: 'Sluiten', now: 'nu', priv: 'Privacybeleid · altijd uit te schrijven', sizeTitle: 'Maattabel', browseErr: 'Dat lukte niet. Check je e-mailadres en probeer het nog eens.',
+      dlv: { intro: 'Goede vraag 📦 Ik zie dat je in {country} bent.', within: 'Bestel binnen {h} en hij gaat vandaag nog de deur uit.', later: 'Bestel nu en hij gaat {ship} de deur uit.', exp: 'Express', std: 'Standaard', free: 'gratis', freeDual: 'Standaard is gratis vanaf €{t1}, express vanaf €{t2}. Je winkelmand is €{c}: {g}.', gStd: 'nog €{g} tot gratis standaard verzending', gExp: 'nog €{g} tot gratis express', gAll: 'allebei van ons', freeNote: 'Gratis verzending vanaf €{t}. Je winkelmand is €{c}, dus nog €{g} te gaan.', freeOk: 'Je winkelmand zit boven de €{t}, dus de verzending is van ons.', on: 'op {d}', between: '{a} – {b}' } },
+    de: { q: 'Hey, kurze Frage bevor du gehst 👋\nWas hält dich heute ab?',
       o: ['Der Preis', 'Versandkosten', 'Unsicher bei der Größe', 'Nicht überzeugt, dass sie schneller sind', 'Lieferzeit', 'Ich schaue nur', 'Etwas anderes'],
-      price: 'Verstehe 👍 Als Neukunde bekommst du 10 % auf deine erste Bestellung. Hier ist dein persönlicher Code, 48 Stunden gültig:',
-      ship1: function (c, t) { return 'Versand ist ab €' + t + ' kostenlos.' + (c > 0 ? ' Dein Warenkorb: €' + c.toFixed(0) + ', also noch €' + (t - c).toFixed(0) + ' 🚚' : ' 🚚'); }, shipFree: function (c, t) { return 'Gute Nachricht — dein Warenkorb liegt bei €' + c.toFixed(0) + ', der Versand ist also schon kostenlos 🎉'; }, shipCheckout: 'Zur Kasse mit kostenlosem Versand', shipAdd: 'Zeig mir Produkte für den kostenlosen Versand',
+      none: 'Nichts, ich schaue noch weiter',
+      price: 'Verstehe 👍\nAls Neukunde bekommst du 10 % auf deine erste Bestellung. Dein persönlicher Code, 48 Stunden gültig:',
+      priceOld: 'Verstehe 🙏\nDu kennst unsere Socken schon, also sag es mir ehrlich: was müsste am Preis anders sein?',
+      ship1: function (c, t) { return 'Versand ist ab €' + t + (zone === 'INT' || zone === 'ROW' ? '' : ' in NL, BE & EU') + ' kostenlos 🚚' + (c > 0 ? '\nDein Warenkorb liegt bei €' + c.toFixed(0) + ', also noch €' + (t - c).toFixed(0) + '.' : ''); },
+      shipFree: function (c, t) { return 'Gute Nachricht 🎉\nDein Warenkorb liegt bei €' + c.toFixed(0) + ', der Versand ist also schon kostenlos.'; },
+      shipCheckout: 'Zur Kasse mit kostenlosem Versand', shipAdd: 'Zeig mir Produkte für den kostenlosen Versand',
       shipO: ['Zeig mir Produkte, die ich hinzufügen könnte', 'Eine Bestellung von €' + threshold + ',- ist mir zu viel'],
-      ship2: 'Okay, verstanden. Ich mache einmalig eine Ausnahme: Nutze diesen Code an der Kasse für kostenlosen Versand ab €50, 12 Stunden gültig.',
-      size: 'Hast du unsere Größentabelle gesehen?', sizeBtn: 'Größentabelle öffnen', size2: 'Noch unklar? Sag mir, was unklar ist, damit wir es verbessern:',
-      fast: 'Als Leistungssportler bin ich wie du. Deshalb haben wir sie im Windkanal mit der TU Eindhoven getestet. Lies den Blog oder lade den vollständigen unabhängigen Bericht herunter.', fastA: 'Bericht laden', fastB: 'Blog lesen',
-      browse: 'Kein Stress. Tritt dem Early Breakaway bei und erfahre als Erster von neuen Farben, limitierten Drops und Sale — plus Willkommensrabatt auf deine erste Bestellung.', browseBtn: 'Beitreten', browseOk: 'Du bist dabei. Willkommen im Early Breakaway 🚀', email: 'Deine E-Mail',
-      other: 'Erzähl mir — was hat dich abgehalten?', ph: 'Hier tippen…', send: 'Senden', skip: 'Überspringen', copy: 'Code kopieren', copied: 'Kopiert ✓', apply: 'Anwenden & weiter', gotit: 'Alles klar', thanks: 'Danke — das hilft uns wirklich 🙏', close: 'Schließen',
-      dlv: { freeDual: ' Standardversand ist ab €{t1} kostenlos, Express ab €{t2} — dein Warenkorb liegt bei €{c}, also {g}.', gStd: 'noch €{g} bis zum kostenlosen Standardversand', gExp: 'noch €{g} bis zum kostenlosen Express', gAll: 'beides geht auf uns 🎉', standardFirst: 'und kann {d} mit Standardversand bei dir sein ({p})', intro: 'Ich verstehe, dass du genau wissen möchtest, wann dein Paket ankommt 📦 Ich sehe, du bist in {country}.', within: 'Wenn du innerhalb von {h} bestellst, geht deine Bestellung heute noch raus', later: 'Wenn du jetzt bestellst, geht deine Bestellung {ship} raus', express: 'und kann {d} mit Expressversand bei dir sein ({p})', standard: '{d} mit Standardversand ({p})', or: ' oder ', free: 'kostenlos', freeNote: ' Kostenloser Versand ab €{t} — dein Warenkorb liegt bei €{c}, also noch €{g}.', freeOk: ' Dein Warenkorb liegt über €{t}, der Versand geht auf uns 🎉', on: 'am {d}', between: 'zwischen {a} und {b}' } },
-    fr: { q: "J'aimerais savoir ce qui vous empêche de commander aujourd'hui. Choisissez une option :",
+      ship2: 'Okay, verstanden 🤝\nEinmalige Ausnahme: mit diesem Code hast du kostenlosen Versand ab €50, 12 Stunden gültig.',
+      size: 'Hast du die Größentabelle schon gesehen? 📏', sizeBtn: 'Größentabelle öffnen', size2: 'Noch unklar?\nSag mir, was unklar ist, dann passe ich es an:',
+      fast: 'Als Sportler bin ich genauso kritisch wie du 😉\nDeshalb haben wir sie im Windkanal der TU Eindhoven getestet.', fastA: 'Oder den vollständigen Bericht laden', fastB: 'Blog lesen',
+      browse: 'Kein Stress 🙌\nTritt dem Early Breakaway bei: als Erster erfährst du von neuen Farben, Drops und Sale, plus Willkommensrabatt auf deine erste Bestellung.', browseBtn: 'Beitreten', browseOk: 'Du bist dabei 🚀\nWillkommen im Early Breakaway.', email: 'Deine E-Mail',
+      other: 'Erzähl mal 👂\nWas hat dich abgehalten?', ph: 'Hier tippen…', send: 'Senden', skip: 'Überspringen', copy: 'Code kopieren', copied: 'Kopiert ✓', apply: 'Anwenden & weiter', gotit: 'Alles klar', thanks: 'Danke, das hilft wirklich 🙏', close: 'Schließen', now: 'jetzt', priv: 'Datenschutz · jederzeit abmelden', sizeTitle: 'Größentabelle', browseErr: 'Das hat nicht geklappt. Prüfe deine E-Mail-Adresse und versuch es noch einmal.',
+      dlv: { intro: 'Gute Frage 📦 Ich sehe, du bist in {country}.', within: 'Bestell innerhalb von {h} und es geht heute noch raus.', later: 'Bestell jetzt und es geht {ship} raus.', exp: 'Express', std: 'Standard', free: 'kostenlos', freeDual: 'Standard ist ab €{t1} kostenlos, Express ab €{t2}. Dein Warenkorb liegt bei €{c}: {g}.', gStd: 'noch €{g} bis zum kostenlosen Standardversand', gExp: 'noch €{g} bis zum kostenlosen Express', gAll: 'beides geht auf uns', freeNote: 'Kostenloser Versand ab €{t}. Dein Warenkorb liegt bei €{c}, also noch €{g}.', freeOk: 'Dein Warenkorb liegt über €{t}, der Versand geht auf uns.', on: 'am {d}', between: '{a} – {b}' } },
+    fr: { q: "Hey, une petite question avant de partir 👋\nQu'est-ce qui vous retient aujourd'hui ?",
       o: ['Le prix', 'Les frais de livraison', 'Doute sur ma taille', 'Pas convaincu qu’elles sont plus rapides', 'Le délai de livraison', 'Je regarde seulement', 'Autre chose'],
-      price: 'Compris 👍 En tant que nouveau client, vous avez 10 % sur votre première commande. Voici votre code personnel, valable 48 h :',
-      ship1: function (c, t) { return 'La livraison est offerte dès €' + t + '.' + (c > 0 ? ' Votre panier : €' + c.toFixed(0) + ', encore €' + (t - c).toFixed(0) + ' 🚚' : ' 🚚'); }, shipFree: function (c, t) { return 'Bonne nouvelle — votre panier est à €' + c.toFixed(0) + ', la livraison est déjà offerte 🎉'; }, shipCheckout: 'Commander avec la livraison offerte', shipAdd: 'Montrez-moi des produits pour atteindre la livraison offerte',
+      none: 'Rien, je regarde encore',
+      price: 'Je comprends 👍\nEn tant que nouveau client, vous avez 10 % sur votre première commande. Votre code personnel, valable 48 h :',
+      priceOld: "Je comprends 🙏\nVous connaissez déjà nos chaussettes, alors dites-moi franchement : qu'est-ce qui rendrait le prix juste pour vous ?",
+      ship1: function (c, t) { return 'La livraison est offerte dès €' + t + (zone === 'INT' || zone === 'ROW' ? '' : ' en NL, BE & UE') + ' 🚚' + (c > 0 ? '\nVotre panier est à €' + c.toFixed(0) + ', encore €' + (t - c).toFixed(0) + '.' : ''); },
+      shipFree: function (c, t) { return 'Bonne nouvelle 🎉\nVotre panier est à €' + c.toFixed(0) + ', la livraison est déjà offerte.'; },
+      shipCheckout: 'Commander avec la livraison offerte', shipAdd: 'Montrez-moi des produits pour la livraison offerte',
       shipO: ['Montrez-moi des produits à ajouter', 'Une commande de €' + threshold + ',- c’est trop pour moi'],
-      ship2: 'OK, je comprends. Exceptionnellement : utilisez ce code au paiement pour la livraison offerte dès €50, valable 12 h.',
-      size: 'Avez-vous consulté notre guide des tailles ?', sizeBtn: 'Ouvrir le guide', size2: 'Toujours pas clair ? Dites-moi ce qui n’est pas clair pour que nous l’améliorions :',
-      fast: 'En tant qu’athlète de haut niveau, je suis comme vous. C’est pourquoi nous les avons testées en soufflerie avec l’Université de technologie d’Eindhoven. Lisez le blog ou téléchargez le rapport indépendant complet.', fastA: 'Télécharger le rapport', fastB: 'Lire le blog',
-      browse: 'Pas de précipitation. Rejoignez l’Early Breakaway et soyez le premier informé des nouvelles couleurs, éditions limitées et soldes — plus une remise de bienvenue sur votre première commande.', browseBtn: 'Rejoindre', browseOk: 'C’est fait. Bienvenue dans l’Early Breakaway 🚀', email: 'Votre e-mail',
-      other: 'Dites-moi — qu’est-ce qui vous a retenu ?', ph: 'Écrivez ici…', send: 'Envoyer', skip: 'Passer', copy: 'Copier le code', copied: 'Copié ✓', apply: 'Appliquer & continuer', gotit: 'Compris', thanks: 'Merci — cela nous aide vraiment 🙏', close: 'Fermer',
-      dlv: { freeDual: ' La livraison standard est offerte dès €{t1} et l’express dès €{t2} — votre panier est à €{c}, donc {g}.', gStd: 'encore €{g} pour la livraison standard offerte', gExp: 'encore €{g} pour l’express offert', gAll: 'les deux sont pour nous 🎉', standardFirst: 'et peut être chez vous {d} en livraison standard ({p})', intro: 'Je comprends que vous vouliez savoir exactement quand votre colis arrive 📦 Je vois que vous êtes en {country}.', within: 'Si vous commandez dans les {h}, votre commande part aujourd’hui', later: 'Si vous commandez maintenant, votre commande part {ship}', express: 'et peut être chez vous {d} en livraison express ({p})', standard: '{d} en livraison standard ({p})', or: ' ou ', free: 'offerte', freeNote: ' Livraison offerte dès €{t} — votre panier est à €{c}, encore €{g}.', freeOk: ' Votre panier dépasse €{t}, la livraison est pour nous 🎉', on: 'le {d}', between: 'entre le {a} et le {b}' } }
+      ship2: 'OK, je comprends 🤝\nExceptionnellement : ce code vous donne la livraison offerte dès €50, valable 12 h.',
+      size: 'Avez-vous regardé le guide des tailles ? 📏', sizeBtn: 'Ouvrir le guide', size2: 'Toujours pas clair ?\nDites-moi ce qui coince, je corrige :',
+      fast: "En tant qu'athlète je suis aussi exigeant que vous 😉\nC'est pourquoi nous les avons testées en soufflerie à la TU Eindhoven.", fastA: 'Ou téléchargez le rapport complet', fastB: 'Lire le blog',
+      browse: "Pas de précipitation 🙌\nRejoignez l'Early Breakaway : nouvelles couleurs, drops et soldes en avant-première, plus une remise de bienvenue sur votre première commande.", browseBtn: 'Rejoindre', browseOk: "C'est fait 🚀\nBienvenue dans l'Early Breakaway.", email: 'Votre e-mail',
+      other: "Dites-moi 👂\nQu'est-ce qui vous a retenu ?", ph: 'Écrivez ici…', send: 'Envoyer', skip: 'Passer', copy: 'Copier le code', copied: 'Copié ✓', apply: 'Appliquer & continuer', gotit: 'Compris', thanks: 'Merci, ça aide vraiment 🙏', close: 'Fermer', now: 'maintenant', priv: 'Confidentialité · désinscription à tout moment', sizeTitle: 'Guide des tailles', browseErr: 'Ça n’a pas marché. Vérifiez votre adresse e-mail et réessayez.',
+      dlv: { intro: 'Bonne question 📦 Je vois que vous êtes {country}.', within: "Commandez dans les {h} et ça part aujourd'hui.", later: 'Commandez maintenant et ça part {ship}.', exp: 'Express', std: 'Standard', free: 'offerte', freeDual: 'Standard offerte dès €{t1}, express dès €{t2}. Votre panier est à €{c} : {g}.', gStd: 'encore €{g} pour la livraison standard offerte', gExp: "encore €{g} pour l'express offert", gAll: 'les deux sont pour nous', freeNote: 'Livraison offerte dès €{t}. Votre panier est à €{c}, encore €{g}.', freeOk: 'Votre panier dépasse €{t}, la livraison est pour nous.', on: 'le {d}', between: '{a} – {b}' } }
   };
   var t = T[loc] || T.en;
   var CODES = ['price', 'shipping', 'sizing', 'faster_doubt', 'delivery', 'browsing', 'other'];
@@ -150,30 +167,35 @@
   function addWorkdays(d, n) { var x = new Date(d); while (n > 0) { x.setDate(x.getDate() + 1); if (x.getDay() !== 0 && x.getDay() !== 6) n--; } return x; }
   function fmtDay(d) { var L = { en: 'en-GB', nl: 'nl-NL', de: 'de-DE', fr: 'fr-FR' }[loc] || 'en-GB'; return d.toLocaleDateString(L, { weekday: 'long', day: 'numeric', month: 'long' }); }
   function fmtEur(v) { return v === 0 ? t.dlv.free : '€' + v.toFixed(2).replace('.', ','); }
+  function fmtShort(d) { var L = { en: 'en-GB', nl: 'nl-NL', de: 'de-DE', fr: 'fr-FR' }[loc] || 'en-GB'; return d.toLocaleDateString(L, { weekday: 'short', day: 'numeric', month: 'short' }); }
   function deliveryText() {
     var now = NL_NOW(), h = now.getHours(), m = now.getMinutes(), day = now.getDay();
     var work = day >= 1 && day <= 5, before = h < CUTOFF;
     var ship = (work && before) ? new Date(now) : addWorkdays(now, 1);
     var cn = country; try { cn = new Intl.DisplayNames([loc], { type: 'region' }).of(country) || country; } catch (e) {}
-    var s = t.dlv.intro.replace('{country}', cn) + ' ';
-    if (work && before) { var mins = (CUTOFF - h - 1) * 60 + (60 - m); s += t.dlv.within.replace('{h}', (Math.floor(mins / 60) ? Math.floor(mins / 60) + 'h ' : '') + (mins % 60) + 'm'); }
-    else s += t.dlv.later.replace('{ship}', t.dlv.on.replace('{d}', fmtDay(ship)));
-    var z = SHIP[zone] || SHIP.ROW, parts = [];
-    var win = function (mth) { var a = addWorkdays(ship, mth.min), b = addWorkdays(ship, mth.max); return mth.min === mth.max ? t.dlv.on.replace('{d}', fmtDay(a)) : t.dlv.between.replace('{a}', fmtDay(a)).replace('{b}', fmtDay(b)); };
+    // Intl gives 'Netherlands' / 'United States'; after 'in' those need an article in en/de/fr ('the Netherlands', 'den Niederlanden')
+    var ART = { en: { NL: 'the Netherlands', US: 'the United States', GB: 'the United Kingdom', AE: 'the United Arab Emirates', CZ: 'the Czech Republic', PH: 'the Philippines' },
+      de: { NL: 'den Niederlanden', US: 'den USA', GB: 'Großbritannien', CH: 'der Schweiz', AE: 'den Vereinigten Arabischen Emiraten', CZ: 'Tschechien', PH: 'den Philippinen' },
+      fr: { NL: 'aux Pays-Bas', US: 'aux États-Unis', GB: 'au Royaume-Uni', BE: 'en Belgique', FR: 'en France', DE: 'en Allemagne', CH: 'en Suisse', ES: 'en Espagne', IT: 'en Italie', PT: 'au Portugal', LU: 'au Luxembourg', CA: 'au Canada', JP: 'au Japon', DK: 'au Danemark', AE: 'aux Émirats arabes unis' } };
+    if (ART[loc] && ART[loc][country]) cn = ART[loc][country]; else if (loc === 'fr') cn = 'en ' + cn;
+    var lines = [t.dlv.intro.replace('{country}', cn)];
+    if (work && before) { var mins = (CUTOFF - h - 1) * 60 + (60 - m); lines.push(t.dlv.within.replace('{h}', (Math.floor(mins / 60) ? Math.floor(mins / 60) + 'h ' : '') + (mins % 60) + 'm')); }
+    else lines.push(t.dlv.later.replace('{ship}', t.dlv.on.replace('{d}', fmtDay(ship))));
+    var z = SHIP[zone] || SHIP.ROW;
+    var win = function (mth) { var a = addWorkdays(ship, mth.min), b = addWorkdays(ship, mth.max); return mth.min === mth.max ? fmtShort(a) : t.dlv.between.replace('{a}', fmtShort(a)).replace('{b}', fmtShort(b)); };
     var pe = z.express ? z.express.price(cartTotal) : null, ps = z.standard ? z.standard.price(cartTotal) : null;
-    if (z.express && pe !== null) parts.push(t.dlv.express.replace('{d}', win(z.express)).replace('{p}', fmtEur(pe)));
-    if (z.standard && ps !== null) parts.push((parts.length ? t.dlv.standard : t.dlv.standardFirst).replace('{d}', win(z.standard)).replace('{p}', fmtEur(ps)));
-    s += ' ' + parts.join(t.dlv.or) + '.';
+    if (z.express && pe !== null) lines.push(t.dlv.exp + ': ' + win(z.express) + ' (' + fmtEur(pe) + ')');
+    if (z.standard && ps !== null) lines.push(t.dlv.std + ': ' + win(z.standard) + ' (' + fmtEur(ps) + ')');
     // gratis-verzending-noot: per methode (VS/UPS-landen: standaard gratis vanaf €100, express vanaf €150)
     var fs = z.standard && z.standard.freeFrom, fe = z.express && z.express.freeFrom;
     if (fs && fe && fe !== fs) {
       var g = cartTotal >= fe ? t.dlv.gAll : cartTotal >= fs ? t.dlv.gExp.replace('{g}', (fe - cartTotal).toFixed(0)) : t.dlv.gStd.replace('{g}', (fs - cartTotal).toFixed(0));
-      s += t.dlv.freeDual.replace('{t1}', fs).replace('{t2}', fe).replace('{c}', cartTotal.toFixed(0)).replace('{g}', g);
+      lines.push(t.dlv.freeDual.replace('{t1}', fs).replace('{t2}', fe).replace('{c}', cartTotal.toFixed(0)).replace('{g}', g));
     } else {
       var th = fs || fe || threshold;
-      s += cartTotal >= th ? t.dlv.freeOk.replace('{t}', th) : t.dlv.freeNote.replace('{t}', th).replace('{c}', cartTotal.toFixed(0)).replace('{g}', (th - cartTotal).toFixed(0));
+      lines.push(cartTotal >= th ? t.dlv.freeOk.replace('{t}', th) : t.dlv.freeNote.replace('{t}', th).replace('{c}', cartTotal.toFixed(0)).replace('{g}', (th - cartTotal).toFixed(0)));
     }
-    return s;
+    return lines.join('\n');
   }
 
   // ---- UI ----
@@ -185,7 +207,7 @@
     '#skx.on{opacity:1;transform:translate(-50%,0)}' +
     '#skx .top{display:flex;align-items:center;gap:10px;margin-bottom:8px}#skx .ic{width:38px;height:38px;flex:none;border-radius:9px;overflow:hidden;background:transparent}#skx .ic img{width:38px;height:38px;display:block;transform:scale(1.5);transform-origin:center}' +
     '#skx .app{flex:1;font-size:15px;letter-spacing:.02em;text-transform:uppercase;color:#7a2e1f;opacity:.9}#skx .now{font-size:14px;color:#5b4a66;opacity:.85}' +
-    '#skx h3{margin:0 0 1px;font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.25;color:#111}#skx p{margin:0;font-size:17px;line-height:1.3;color:#1a1a1a}' +
+    '#skx h3{margin:0 0 1px;font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.25;color:#111}#skx p{margin:0;font-size:17px;line-height:1.3;color:#1a1a1a;white-space:pre-line}' +
     '#skx .code{font-weight:700;letter-spacing:.06em;font-size:19px;margin-top:8px;cursor:pointer}#skx .code small{display:block;font-size:11px;font-weight:400;letter-spacing:0;color:#4a4a4f;margin-top:2px}' +
     '#skx .opts{margin-top:12px;display:grid;gap:6px}#skx .o{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.5);border-radius:12px;padding:10px 13px;font-size:15.5px;cursor:pointer;color:#111;text-align:left;width:100%;font-family:inherit}' +
     '#skx .o:hover{background:rgba(255,255,255,.8)}#skx .o span{color:#8a8a8e;font-size:15px}' +
@@ -193,16 +215,18 @@
     '#skx .btn.pri{background:#111;color:#fff;border-color:#111}' +
     '#skx textarea,#skx input{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.5);border-radius:12px;padding:10px 13px;font-size:15px;font-family:inherit;background:rgba(255,255,255,.7);color:#111;margin-top:10px}#skx textarea{min-height:58px;resize:vertical}' +
     '#skx small{display:block;color:#4a4a4f;font-size:11.5px;margin-top:8px;line-height:1.35}#skx .bar{height:6px;background:rgba(0,0,0,.12);border-radius:3px;overflow:hidden;margin:10px 0 4px}#skx .bar i{display:block;height:100%;background:#25D366}' +
+    '#skx small.err{color:#b3261e;margin-top:6px}#skx .o.none{background:transparent;border-color:transparent;color:#4a4a4f;justify-content:center;font-size:14px;padding:8px 13px 2px}#skx .o.none:hover{background:transparent;color:#111}#skx small.lnk{text-align:center;font-size:13px}#skx small.lnk a{color:#111;text-decoration:underline}' +
     '#skx .x{display:none}';
 
   var bd, w, sgOpen = false;
-  function head() { return '<div class="top"><div class="ic"><img src="' + WA_ICON + '" alt=""></div><div class="app">WhatsApp</div><div class="now">now</div></div><h3>Jasper Ockeloen</h3>'; }
+  function head() { return '<div class="top"><div class="ic"><img src="' + WA_ICON + '" alt=""></div><div class="app">WhatsApp</div><div class="now">' + (t.now || 'now') + '</div></div><h3>Jasper Ockeloen</h3>'; }
   function render(body) { w.innerHTML = head() + body + '<input type="text" name="hp" style="display:none" tabindex="-1" autocomplete="off"><button class="x" aria-label="' + t.close + '">×</button>'; w.querySelector('.x').addEventListener('click', close); }
   function close() { if (w && w.parentNode) w.parentNode.removeChild(w); if (bd && bd.parentNode) bd.parentNode.removeChild(bd); }
   function thanks() { render('<p>' + t.thanks + '</p>'); setTimeout(close, 1600); }
   function row(a, b) { return '<div class="row">' + (a ? '<button class="btn" data-k="a">' + a + '</button>' : '') + (b ? '<button class="btn pri" data-k="b">' + b + '</button>' : '') + '</div>'; }
   function btn(k) { return w.querySelector('.btn[data-k=' + k + ']'); }
-  function goCart() { location.href = path + '?skcart=1'; }
+  function cartFlagSet(code) { try { sessionStorage.setItem('sk_exit_cart', JSON.stringify({ code: code || null, ts: Date.now() })); } catch (e) {} }
+  function goCart() { cartFlagSet(null); location.href = path + '?skcart=1'; }
   function codeScreen(a, want, text) {
     render('<p>' + text + '</p><p class="code">…</p>' + row(null, t.apply));
     send({ ev: 'follow', a: a, sub: want, want: want }, function (j) {
@@ -214,6 +238,8 @@
         send({ ev: 'click', a: a, sub: 'apply' });
         var back = path + '?skcart=1';
         // 1) code op de cart zetten (Cart API), 2) via /discount/ ook de checkout-cookie zetten, 3) terug naar deze pagina met de side cart open
+        //    (Shopify laat ?skcart=1 vallen bij die redirect → de sessionStorage-vlag opent de drawer alsnog)
+        cartFlagSet(code);
         fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ discount: code }) }).catch(function () {}).then(function () {
           location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(back);
         });
@@ -232,13 +258,22 @@
     send({ ev: 'shown' });
     // willekeurige volgorde (voorkomt positie-bias in de antwoorden), 'Something else' altijd als laatste
     var order = [0, 1, 2, 3, 4, 5]; for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var tmp = order[i]; order[i] = order[j]; order[j] = tmp; } order.push(6);
-    render('<p>' + t.q + '</p><div class="opts">' + order.map(function (i) { return '<button type="button" class="o" data-i="' + i + '">' + esc(t.o[i]) + '<span>›</span></button>'; }).join('') + '</div>');
-    w.querySelectorAll('.o').forEach(function (b) { b.addEventListener('click', function () { answer(CODES[+b.dataset.i]); }); });
+    render('<p>' + t.q + '</p><div class="opts">' + order.map(function (i) { return '<button type="button" class="o" data-i="' + i + '">' + esc(t.o[i]) + '<span>›</span></button>'; }).join('') + '</div>' +
+      // uitweg voor wie gewoon nog aan het winkelen is: sluit zonder vraag, telt niet als antwoord (click-event 'keep_shopping')
+      '<button type="button" class="o none">' + esc(t.none) + '</button>');
+    w.querySelectorAll('.o[data-i]').forEach(function (b) { b.addEventListener('click', function () { answer(CODES[+b.dataset.i]); }); });
+    w.querySelector('.o.none').addEventListener('click', function () { send({ ev: 'click', a: 'other', sub: 'keep_shopping' }); close(); });
   }
 
   function answer(a) {
     send({ ev: 'answer', a: a });
-    if (a === 'price') return codeScreen('price', 'code10', t.price);
+    if (a === 'price') {
+      if (!EXISTING) return codeScreen('price', 'code10', t.price);
+      render('<p>' + t.priceOld + '</p><textarea placeholder="' + esc(t.ph) + '" maxlength="300"></textarea>' + row(t.skip, t.send));
+      btn('a').addEventListener('click', close);
+      btn('b').addEventListener('click', function () { var v = w.querySelector('textarea').value.trim(); if (v) send({ ev: 'follow', a: 'price', sub: 'price_feedback', o: v }); thanks(); });
+      return;
+    }
     if (a === 'shipping') {
       var pct = Math.min(100, Math.round(cartTotal / threshold * 100));
       if (cartTotal >= threshold) {
@@ -263,19 +298,19 @@
           w.style.display = 'none'; sgOpen = true;
           var m = document.createElement('div'); m.id = 'skx-sg';
           m.style.cssText = 'position:fixed;inset:0;z-index:1000001;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.35)';
-          m.innerHTML = '<div style="background:#fff;border-radius:16px;width:min(560px,100%);max-height:86vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)"><div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #eee"><b style="font-size:18px">Size guide</b><button type="button" aria-label="' + t.close + '" style="border:0;background:transparent;font-size:24px;line-height:1;cursor:pointer;color:#333">×</button></div><div class="sk-sg-body" style="padding:6px 18px 18px;overflow:auto;font-size:14px;line-height:1.5;-webkit-overflow-scrolling:touch">…</div></div>';
+          m.innerHTML = '<div style="background:#fff;border-radius:16px;width:min(560px,100%);max-height:86vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)"><div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #eee"><b style="font-size:18px">' + esc(t.sizeTitle) + '</b><button type="button" aria-label="' + t.close + '" style="border:0;background:transparent;font-size:24px;line-height:1;cursor:pointer;color:#333">×</button></div><div class="sk-sg-body" style="padding:6px 18px 18px;overflow:auto;font-size:14px;line-height:1.5;-webkit-overflow-scrolling:touch">…</div></div>';
           // Shopify staat framen niet toe (frame-ancestors none) → de maattabel-pagina ophalen en de inhoud (.rte) in de modal zetten
           fetch((loc === 'en' ? '' : '/' + loc) + '/pages/size-guide').then(function (r) { return r.text(); }).then(function (html) {
             var doc = new DOMParser().parseFromString(html, 'text/html');
             var rte = doc.querySelector('main .rte') || doc.querySelector('.rte') || doc.querySelector('main');
             var body = m.querySelector('.sk-sg-body');
-            if (!rte) { body.innerHTML = '<a href="' + (loc === 'en' ? '' : '/' + loc) + '/pages/size-guide" target="_blank" rel="noopener">Open size guide ↗</a>'; return; }
+            if (!rte) { body.innerHTML = '<a href="' + (loc === 'en' ? '' : '/' + loc) + '/pages/size-guide" target="_blank" rel="noopener">' + esc(t.sizeBtn) + ' ↗</a>'; return; }
             rte.querySelectorAll('script,style,iframe').forEach(function (x) { x.remove(); });
             rte.querySelectorAll('table').forEach(function (tb) { tb.removeAttribute('border'); tb.removeAttribute('cellpadding'); tb.style.cssText = 'width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;border:0'; tb.querySelectorAll('td,th').forEach(function (c) { c.removeAttribute('style'); c.style.cssText = 'padding:8px 8px;border:0;border-bottom:1px solid #eee;text-align:left;vertical-align:middle'; }); tb.querySelectorAll('th, tr:first-child td').forEach(function (c) { c.style.background = '#f5f5f5'; c.style.fontWeight = '700'; }); });
             rte.querySelectorAll('p,h1,h2,h3,h4,div').forEach(function (e) { e.style.textAlign = 'left'; });
             rte.querySelectorAll('img').forEach(function (i) { i.style.maxWidth = '100%'; i.style.height = 'auto'; });
             body.innerHTML = ''; body.appendChild(rte);
-          }).catch(function () { m.querySelector('.sk-sg-body').innerHTML = '<a href="' + (loc === 'en' ? '' : '/' + loc) + '/pages/size-guide" target="_blank" rel="noopener">Open size guide ↗</a>'; });
+          }).catch(function () { m.querySelector('.sk-sg-body').innerHTML = '<a href="' + (loc === 'en' ? '' : '/' + loc) + '/pages/size-guide" target="_blank" rel="noopener">' + esc(t.sizeBtn) + ' ↗</a>'; });
           document.body.appendChild(m);
           var closeSg = function () { if (m.parentNode) m.parentNode.removeChild(m); sgOpen = false; w.style.display = ''; var ta = w.querySelector('textarea'); if (ta) ta.focus(); };
           m.querySelector('button').addEventListener('click', closeSg);
@@ -297,8 +332,8 @@
       return;
     }
     if (a === 'faster_doubt') {
-      render('<p>' + t.fast + '</p>' + row(t.fastA, t.fastB));
-      btn('a').addEventListener('click', function () { send({ ev: 'follow', a: 'faster_doubt', sub: 'report' }); window.open(REPORT, '_blank', 'noopener'); });
+      render('<p>' + t.fast + '</p>' + row(null, t.fastB) + '<small class="lnk"><a href="' + REPORT + '" target="_blank" rel="noopener">' + esc(t.fastA) + '</a></small>');
+      w.querySelector('.lnk a').addEventListener('click', function () { send({ ev: 'follow', a: 'faster_doubt', sub: 'report' }); });
       btn('b').addEventListener('click', function () { send({ ev: 'follow', a: 'faster_doubt', sub: 'blog' }); window.open(BLOG[loc] || BLOG.en, '_blank', 'noopener'); });
       return;
     }
@@ -308,16 +343,25 @@
       return;
     }
     if (a === 'browsing') {
-      render('<p>' + t.browse + '</p><input type="email" placeholder="' + esc(t.email) + '" autocomplete="email">' + row(t.skip, t.browseBtn) + '<small>Privacy policy · unsubscribe any time</small>');
+      render('<p>' + t.browse + '</p><input type="email" placeholder="' + esc(t.email) + '" autocomplete="email">' + row(t.skip, t.browseBtn) + '<small>' + t.priv + '</small>');
       btn('a').addEventListener('click', close);
       btn('b').addEventListener('click', function () {
         var em = w.querySelector('input[type=email]').value.trim(); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return;
         send({ ev: 'follow', a: 'browsing', sub: 'join' });
+        var bb = btn('b'); bb.disabled = true; bb.textContent = '…';
+        var done = function (ok) {
+          if (ok) { render('<p>' + t.browseOk + '</p>'); setTimeout(close, 1800); return; }
+          bb.disabled = false; bb.textContent = t.browseBtn;
+          var er = w.querySelector('small.err'); if (!er) { er = document.createElement('small'); er.className = 'err'; w.querySelector('input[type=email]').insertAdjacentElement('afterend', er); }
+          er.textContent = t.browseErr;
+        };
+        // Klaviyo client API (2024-10-15): a `subscriptions` block on the profile is rejected with 400; the list relationship
+        // is what subscribes the profile (single opt-in list). Wait for the answer before saying "you're in".
         try {
           fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + KLAVIYO_COMPANY, { method: 'POST', headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' },
-            body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'exit-intent-browsing', profile: { data: { type: 'profile', attributes: { email: em, subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } } } } } }, relationships: { list: { data: { type: 'list', id: KLAVIYO_LIST } } } } }) }).catch(function () {});
-        } catch (e) {}
-        render('<p>' + t.browseOk + '</p>'); setTimeout(close, 1800);
+            body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'exit-intent-browsing', profile: { data: { type: 'profile', attributes: { email: em } } } }, relationships: { list: { data: { type: 'list', id: KLAVIYO_LIST } } } } }) })
+            .then(function (r) { done(r.ok); }).catch(function () { done(false); });
+        } catch (e) { done(false); }
       });
       return;
     }
