@@ -28,24 +28,22 @@
       fetch('/cart.js').then(function (r) { return r.json(); }).then(function (c) {
         cd.open();
         var apps = c.cart_level_discount_applications || [], msg = null;
-        var CB = { en: ['✅ Discount code applied', '10% off · {a} at checkout', 'Free shipping from €50 at checkout'], nl: ['✅ Kortingscode toegepast', '10% korting · {a} bij het afrekenen', 'Gratis verzending vanaf €50 bij het afrekenen'], de: ['✅ Rabattcode angewendet', '10 % Rabatt · {a} an der Kasse', 'Kostenloser Versand ab €50 an der Kasse'], fr: ['✅ Code de réduction appliqué', '10 % de réduction · {a} au paiement', 'Livraison offerte dès €50 au paiement'] };
+        var CB = { en: ['Code', '10% off at checkout{a}', 'free shipping from €50 at checkout'], nl: ['Code', '10% korting bij het afrekenen{a}', 'gratis verzending vanaf €50 bij het afrekenen'], de: ['Code', '10 % Rabatt an der Kasse{a}', 'kostenloser Versand ab €50 an der Kasse'], fr: ['Code', '10 % de réduction au paiement{a}', 'livraison offerte dès €50 au paiement'] };
         var cb = CB[(document.documentElement.lang || 'en').slice(0, 2).toLowerCase()] || CB.en;
         var codes = (c.discount_codes || []).filter(function (d) { return /^(EB10-|EBSHIP-|EXIT10$|EXITSHIP50$)/.test(d.code); });
         if (codes.length) {
           var code = codes[0].code, app = apps.find(function (x) { return x.discount_application && x.discount_application.title === code; });
-          var d = /^(EBSHIP|EXITSHIP)/.test(code) ? cb[2] : cb[1].replace('{a}', app ? '−€' + (app.amount / 100).toFixed(2).replace('.', ',') : '').replace(' · ', app ? ' · ' : '');
+          var d = /^(EBSHIP|EXITSHIP)/.test(code) ? cb[2] : cb[1].replace('{a}', app ? ' (−€' + (app.amount / 100).toFixed(2).replace('.', ',') + ')' : '');
           msg = { head: cb[0], code: code, detail: d };
         }
         if (!msg) return;
         setTimeout(function () {
-          var host = cd.querySelector('.drawer__scrollable') || cd.querySelector('.drawer__inner') || cd;
-          if (host.querySelector('.sk-code-banner')) return;
+          // in de kolom van de cart zelf (niet de cross-sell-kolom op desktop): vóór de gratis-verzending-balk, met exact dezelfde padding/breedte
+          var bar = cd.querySelector('.drawer__shipping-bar'), host = bar || cd.querySelector('.drawer__inner-empty__main') || cd.querySelector('.drawer__scrollable') || cd;
+          if (cd.querySelector('.sk-code-banner')) return;
           var b = document.createElement('div'); b.className = 'sk-code-banner';
-          b.style.cssText = 'visibility:visible!important;margin:12px 16px 0;padding:14px 16px;border-radius:12px;background:#fff;color:#111;font-size:14px;line-height:1.35;font-family:inherit';
-          b.innerHTML = '<div style="display:flex;align-items:center;gap:8px;font-weight:700">' + msg.head + '</div>' +
-            '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap">' +
-            '<span style="display:inline-block;padding:8px 14px;border-radius:12px;background:rgba(37,211,102,.10);border:1.5px dashed #25D366;font-weight:700;letter-spacing:.08em;color:#0f4a1f">' + msg.code + '</span>' +
-            '<span style="color:#4a4a4f">' + msg.detail + '</span></div>';
+          b.style.cssText = 'visibility:visible!important;margin:0 0 8px;padding:14px 16px;border-radius:12px;background:#fff;color:#111;font-size:14px;line-height:1.4;font-family:inherit;display:flex;align-items:center;gap:8px;flex-wrap:wrap';
+          b.innerHTML = '<span>✅</span><span>' + msg.head + ' <b>' + msg.code + '</b>' + (msg.detail ? ' · ' + msg.detail : '') + '</span>';
           host.insertBefore(b, host.firstChild);
         }, 350);
       }).catch(function () { try { cd.open(); } catch (e) {} });
@@ -179,7 +177,7 @@
     '#skx .top{display:flex;align-items:center;gap:10px;margin-bottom:8px}#skx .ic{width:38px;height:38px;flex:none;border-radius:9px;overflow:hidden;background:transparent}#skx .ic img{width:38px;height:38px;display:block;transform:scale(1.5);transform-origin:center}' +
     '#skx .app{flex:1;font-size:15px;letter-spacing:.02em;text-transform:uppercase;color:#7a2e1f;opacity:.9}#skx .now{font-size:14px;color:#5b4a66;opacity:.85}' +
     '#skx h3{margin:0 0 1px;font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.25;color:#111}#skx p{margin:0;font-size:17px;line-height:1.3;color:#1a1a1a}' +
-    '#skx .code{display:inline-block;margin-top:10px;padding:9px 14px;border-radius:12px;background:rgba(255,255,255,.75);border:1.5px dashed #25D366;font-weight:700;letter-spacing:.08em;font-size:18px;color:#0f4a1f}' +
+    '#skx .code{font-weight:700;letter-spacing:.06em;font-size:19px;margin-top:8px;cursor:pointer}#skx .code small{display:block;font-size:11px;font-weight:400;letter-spacing:0;color:#4a4a4f;margin-top:2px}' +
     '#skx .opts{margin-top:12px;display:grid;gap:6px}#skx .o{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.5);border-radius:12px;padding:10px 13px;font-size:15.5px;cursor:pointer;color:#111;text-align:left;width:100%;font-family:inherit}' +
     '#skx .o:hover{background:rgba(255,255,255,.8)}#skx .o span{color:#8a8a8e;font-size:15px}' +
     '#skx .row{display:flex;gap:8px;margin-top:12px}#skx .btn{flex:1;text-align:center;border-radius:12px;padding:11px 12px;font-size:15.5px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.55);color:#111;text-decoration:none;font-family:inherit;display:block}' +
@@ -197,11 +195,12 @@
   function btn(k) { return w.querySelector('.btn[data-k=' + k + ']'); }
   function goCart() { location.href = path + '?skcart=1'; }
   function codeScreen(a, want, text) {
-    render('<p>' + text + '</p><p class="code">…</p>' + row(t.copy, t.apply));
+    render('<p>' + text + '</p><p class="code">…</p>' + row(null, t.apply));
     send({ ev: 'follow', a: a, sub: want, want: want }, function (j) {
       var code = (j && j.code) || '';
-      w.querySelector('.code').textContent = code;
-      btn('a').addEventListener('click', function () { try { navigator.clipboard.writeText(code); } catch (e) {} btn('a').textContent = t.copied; send({ ev: 'click', a: a, sub: 'copy' }); });
+      var ce = w.querySelector('.code'); ce.textContent = code;
+      // geen aparte kopieerknop: één primaire actie; tikken op de code kopieert stilletjes (fallback als de checkout de code kwijtraakt)
+      ce.addEventListener('click', function () { try { navigator.clipboard.writeText(code); } catch (e) {} var s = ce.querySelector('small') || document.createElement('small'); s.textContent = t.copied; ce.appendChild(s); send({ ev: 'click', a: a, sub: 'copy' }); });
       btn('b').addEventListener('click', function () {
         send({ ev: 'click', a: a, sub: 'apply' });
         var back = path + '?skcart=1';
