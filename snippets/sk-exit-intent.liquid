@@ -253,7 +253,18 @@
           w.style.display = 'none';
           var m = document.createElement('div'); m.id = 'skx-sg';
           m.style.cssText = 'position:fixed;inset:0;z-index:1000001;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.35)';
-          m.innerHTML = '<div style="background:#fff;border-radius:16px;width:min(560px,100%);max-height:86vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)"><div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #eee"><b style="font-size:18px">Size guide</b><button type="button" aria-label="' + t.close + '" style="border:0;background:transparent;font-size:24px;line-height:1;cursor:pointer;color:#333">×</button></div><iframe src="' + (loc === 'en' ? '' : '/' + loc) + '/pages/size-guide" style="border:0;width:100%;height:70vh;display:block" title="Size guide"></iframe></div>';
+          m.innerHTML = '<div style="background:#fff;border-radius:16px;width:min(560px,100%);max-height:86vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)"><div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #eee"><b style="font-size:18px">Size guide</b><button type="button" aria-label="' + t.close + '" style="border:0;background:transparent;font-size:24px;line-height:1;cursor:pointer;color:#333">×</button></div><div class="sk-sg-body" style="padding:6px 18px 18px;overflow:auto;font-size:14px;line-height:1.5;-webkit-overflow-scrolling:touch">…</div></div>';
+          // Shopify staat framen niet toe (frame-ancestors none) → de maattabel-pagina ophalen en de inhoud (.rte) in de modal zetten
+          fetch((loc === 'en' ? '' : '/' + loc) + '/pages/size-guide').then(function (r) { return r.text(); }).then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var rte = doc.querySelector('main .rte') || doc.querySelector('.rte') || doc.querySelector('main');
+            var body = m.querySelector('.sk-sg-body');
+            if (!rte) { body.innerHTML = '<a href="' + (loc === 'en' ? '' : '/' + loc) + '/pages/size-guide" target="_blank" rel="noopener">Open size guide ↗</a>'; return; }
+            rte.querySelectorAll('script,style,iframe').forEach(function (x) { x.remove(); });
+            rte.querySelectorAll('table').forEach(function (tb) { tb.style.cssText = 'width:100%;border-collapse:collapse;font-size:13px;margin:10px 0'; tb.querySelectorAll('td,th').forEach(function (c) { c.style.cssText = 'padding:7px 8px;border-bottom:1px solid #eee;text-align:left'; }); });
+            rte.querySelectorAll('img').forEach(function (i) { i.style.maxWidth = '100%'; i.style.height = 'auto'; });
+            body.innerHTML = ''; body.appendChild(rte);
+          }).catch(function () { m.querySelector('.sk-sg-body').innerHTML = '<a href="' + (loc === 'en' ? '' : '/' + loc) + '/pages/size-guide" target="_blank" rel="noopener">Open size guide ↗</a>'; });
           document.body.appendChild(m);
           var closeSg = function () { if (m.parentNode) m.parentNode.removeChild(m); w.style.display = ''; var ta = w.querySelector('textarea'); if (ta) ta.focus(); };
           m.querySelector('button').addEventListener('click', closeSg);
