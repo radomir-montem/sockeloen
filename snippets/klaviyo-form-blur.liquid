@@ -18,6 +18,9 @@
       requestAnimationFrame(function () { document.documentElement.classList.add('kl-form-open'); });
     }
     function off() { document.documentElement.classList.remove('kl-form-open'); }
+    // test aid: ?klform=FORMID opens that Klaviyo form on load (frequency caps make the real popup hard to catch)
+    var want = new URLSearchParams(location.search).get('klform');
+    if (want && /^[A-Za-z0-9]{4,10}$/.test(want)) { window._klOnsite = window._klOnsite || []; window._klOnsite.push(['openForm', want]); }
     window.addEventListener('klaviyoForms', function (e) {
       var d = e.detail || {};
       if (d.type === 'open') on();
