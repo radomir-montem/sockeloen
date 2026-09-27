@@ -56,8 +56,8 @@
             "button_label_1": "",
             "button_link_1": "",
             "button_style_secondary_1": false,
-            "button_label_2": "Shop Aero socks",
-            "button_link_2": "shopify://collections/all-socks",
+            "button_label_2": "Shop KNWU",
+            "button_link_2": "shopify://collections/sockeloen-x-knwu",
             "button_style_secondary_2": false
           }
         }
@@ -74,7 +74,7 @@
         "show_progress": true,
         "show_arrows": true,
         "controls_color": "#ffffff",
-        "banner_image_height": 700,
+        "banner_image_height": 800,
         "image_height_mobile": 650,
         "desktop_content_position": "middle-left",
         "show_text_box": false,
