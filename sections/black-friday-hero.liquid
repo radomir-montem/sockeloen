@@ -177,6 +177,9 @@
     transform: scale(calc(1 + var(--bf-blur, 0px) / 100px));
   }
   #BfHero-{{ sid }} .bf-hero__video--empty { background: linear-gradient(160deg, #1a1a1a, #000); }
+  /* the theme hides empty divs (div:empty { display:none }); the shade and the fallback are empty by design */
+  #BfHero-{{ sid }} .bf-hero__shade,
+  #BfHero-{{ sid }} .bf-hero__video--empty { display: block !important; }
   #BfHero-{{ sid }} .bf-hero__shade {
     position: absolute;
     inset: 0;
