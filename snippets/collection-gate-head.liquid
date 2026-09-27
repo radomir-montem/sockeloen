@@ -20,7 +20,9 @@
 {%- if gate_on -%}
   {%- assign gate_hash = settings.gate_password | strip | downcase | sha256 -%}
   <style>
-    html.gate-locked #MainContent, html.gate-locked .shopify-section-group-footer-group, html.gate-locked #shopify-section-footer { visibility: hidden !important; }
+    /* the page stays as a blurred silhouette behind the sheet (you can tell it is a collection), but nothing is readable or clickable */
+    html.gate-locked #MainContent, html.gate-locked .shopify-section-group-footer-group, html.gate-locked #shopify-section-footer {
+      filter: blur(14px) saturate(120%) !important; pointer-events: none !important; user-select: none !important; }
     html.gate-locked { overflow: hidden; }
   </style>
   <script>
