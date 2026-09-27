@@ -22,6 +22,7 @@
     var want = new URLSearchParams(location.search).get('klform');
     if (want && /^[A-Za-z0-9]{4,10}$/.test(want)) { window._klOnsite = window._klOnsite || []; window._klOnsite.push(['openForm', want]); }
     window.addEventListener('klaviyoForms', function (e) {
+      if (document.querySelector('.bf-hero')) return; // sign-up pages suppress Klaviyo forms, so no blur either
       var d = e.detail || {};
       if (d.type === 'open') on();
       else if (d.type === 'close') off();
