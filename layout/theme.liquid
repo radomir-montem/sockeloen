@@ -633,5 +633,8 @@ window.Futy = { key: '64db5abbdb94c' };
 <script src="{{ 'custom-quick-add.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'ipinfo.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'card-color-row.js' | asset_url }}" defer></script>
+{% comment %} exit-intent popup: the snippet is managed from the sockeloen-dashboards repo (scripts/deploy-exit-intent.sh writes snippets/sk-exit-intent.liquid straight to the live theme); keep this render line, it is what the live theme has {% endcomment %}
+{% render 'sk-exit-intent' %}
+{% render 'klaviyo-form-blur' %}
 </body>
 </html>
