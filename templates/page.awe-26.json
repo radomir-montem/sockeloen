@@ -12,7 +12,6 @@
     "hero": {
       "type": "black-friday-hero",
       "settings": {
-        "video": "shopify://files/videos/roos_video_a786dcf3.mp4",
         "video_url": "",
         "poster": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23876.jpg",
         "video_position": "top",
