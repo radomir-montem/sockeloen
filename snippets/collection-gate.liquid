@@ -35,7 +35,8 @@
 <style>
   html.gate-locked #SkGate { display: flex; }
   #SkGate { position: fixed; inset: 0; z-index: 100000; display: none; align-items: center; justify-content: center; padding: 96px 24px 40px; overflow: auto;
-    color: #111; text-align: center; background: rgba(255,255,255,.72); backdrop-filter: blur(40px) saturate(160%); -webkit-backdrop-filter: blur(40px) saturate(160%); }
+    color: #111; text-align: center; background: rgba(255,255,255,.42); backdrop-filter: blur(10px) saturate(160%); -webkit-backdrop-filter: blur(10px) saturate(160%); }
+  #SkGate .sk-gate__inner { text-shadow: 0 1px 0 rgba(255,255,255,.6); }
   #SkGate[hidden] { display: none !important; }
   #SkGate .sk-gate__inner { width: 100%; max-width: 420px; }
   #SkGate .sk-gate__kicker { margin: 0 0 12px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #555; }
