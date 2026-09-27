@@ -33,6 +33,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23876.jpg",
+            "image_mobile": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23876.jpg",
             "image_overlay_opacity": 30,
             "heading": "All Weather Essentials '26",
             "use_h1_tag": false,
@@ -48,7 +49,8 @@
         "slide_3": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/banner.demi.homepage.desktop.png",
+            "image": "shopify://shop_images/bg.demi-_1.png",
+            "image_mobile": "shopify://shop_images/banner.demi.homepage.desktop.png",
             "image_overlay_opacity": 30,
             "heading": "Worn by world champions",
             "use_h1_tag": false,
