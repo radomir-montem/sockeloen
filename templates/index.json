@@ -9,115 +9,6 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Best shoecovers on the planet?",
-            "heading_size": "h2",
-            "use_h1_tag": false,
-            "heading_align_desktop": "left",
-            "heading_align_mobile": "left",
-            "heading_font_size_desktop": 50,
-            "heading_font_size_mobile": 32,
-            "heading_line_height_desktop": 0,
-            "heading_line_height_mobile": 0,
-            "heading_font_weight": "700",
-            "heading_italic": false,
-            "heading_color": "#ffffff",
-            "heading_letter_spacing": 0,
-            "heading_text_transform": "default"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "Keep your feet dry, clean and look stylish with the best shoecovers out there.",
-            "text_style": "subtitle",
-            "text_hide_mobile": true,
-            "text_max_width": 0,
-            "text_align_desktop": "left",
-            "text_align_mobile": "left",
-            "text_font_size_desktop": 0,
-            "text_font_size_mobile": 0,
-            "text_line_height_desktop": 0,
-            "text_line_height_mobile": 1.5,
-            "text_font_weight": "default",
-            "text_italic": false,
-            "text_color": "",
-            "text_letter_spacing": 0,
-            "text_text_transform": "default"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "",
-            "button_link_1": "shopify://products/aero-shoe-cover-del-crosso",
-            "button_style_secondary_1": true,
-            "button_label_2": "Shop Shoecovers",
-            "button_link_2": "shopify://collections/cycling-overshoes",
-            "button_style_secondary_2": false,
-            "button_style": "glass",
-            "button_bg_color": "#ffffff",
-            "button_text_color": "#000000",
-            "button_font_size_desktop": 12,
-            "button_font_size_mobile": 12,
-            "button_font_weight": "default",
-            "button_letter_spacing": 0,
-            "button_text_transform": "default",
-            "buttons_align_desktop": "left",
-            "buttons_align_mobile": "inherit"
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text",
-        "button"
-      ],
-      "custom_css": [],
-      "settings": {
-        "image": "shopify://shop_images/bg.delcrosso.png",
-        "image_mobile": "shopify://shop_images/bg.delcrosso.mobile.png",
-        "image_overlay_opacity": 20,
-        "banner_image_height": 700,
-        "image_height_mobile": 650,
-        "adapt_height_first_image": false,
-        "desktop_content_position": "middle-left",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "accent-2",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false,
-        "show_mobile_cats": true,
-        "cat_1_label": "Socks",
-        "cat_1_link": "/collections/all-socks/1-pair",
-        "cat_2_label": "Overshoes",
-        "cat_2_link": "shopify://collections/cycling-overshoes",
-        "cat_3_label": "Gloves",
-        "cat_3_link": "shopify://collections/cycling-gloves",
-        "show_social_proof": true,
-        "sp_name": "Riejanne Markus",
-        "sp_link": "",
-        "sp_verified_badge": true,
-        "sp_count": "78.342",
-        "sp_brand": "Sockeloen",
-        "sp_custom_text": "",
-        "sp_avatar_size": 36,
-        "sp_font_size_desktop": 13,
-        "sp_font_size_mobile": 11,
-        "sp_line_height": 0,
-        "sp_font_weight": "default",
-        "sp_text_color": "#ffffff",
-        "sp_spacing_top": 26,
-        "sp_align_desktop": "left",
-        "sp_align_mobile": "left"
-      }
-    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -898,10 +789,143 @@
       "settings": {
         "font_size": 26
       }
+    },
+    "hero_slider": {
+      "type": "hero-slider",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/bg.delcrosso.png",
+            "image_mobile": "shopify://shop_images/bg.delcrosso.mobile.png",
+            "image_overlay_opacity": 20,
+            "heading": "Best shoecovers on the planet?",
+            "use_h1_tag": false,
+            "text": "Keep your feet dry, clean and look stylish with the best shoecovers out there.",
+            "button_label_1": "",
+            "button_link_1": "shopify://products/aero-shoe-cover-del-crosso",
+            "button_style_secondary_1": true,
+            "button_label_2": "Shop Shoecovers",
+            "button_link_2": "shopify://collections/cycling-overshoes",
+            "button_style_secondary_2": false
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23876.jpg",
+            "image_overlay_opacity": 30,
+            "heading": "All Weather Essentials '26",
+            "use_h1_tag": false,
+            "text": "The new winter collection. Join the early break away and shop it first.",
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Get early access",
+            "button_link_2": "/pages/awe-26",
+            "button_style_secondary_2": false
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Scherm_afbeelding_2026-09-21_om_23.40.35.png",
+            "image_overlay_opacity": 30,
+            "heading": "Worn by world champions",
+            "use_h1_tag": false,
+            "text": "Aero socks tested in the wind tunnel with TU Eindhoven.",
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Shop Aero socks",
+            "button_link_2": "shopify://collections/cycling-socks",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
+      "settings": {
+        "autoplay": true,
+        "autoplay_delay": 5,
+        "slide_speed": 1000,
+        "show_progress": true,
+        "show_arrows": true,
+        "controls_color": "#ffffff",
+        "banner_image_height": 700,
+        "image_height_mobile": 650,
+        "desktop_content_position": "middle-left",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "accent-2",
+        "mobile_content_alignment": "center",
+        "show_mobile_cats": true,
+        "cat_1_label": "Socks",
+        "cat_1_link": "/collections/all-socks/1-pair",
+        "cat_2_label": "Overshoes",
+        "cat_2_link": "shopify://collections/cycling-overshoes",
+        "cat_3_label": "Gloves",
+        "cat_3_link": "shopify://collections/cycling-gloves",
+        "heading_size": "h2",
+        "heading_align_desktop": "left",
+        "heading_align_mobile": "left",
+        "heading_font_size_desktop": 50,
+        "heading_font_size_mobile": 32,
+        "heading_line_height_desktop": 0,
+        "heading_line_height_mobile": 0,
+        "heading_font_weight": "700",
+        "heading_italic": false,
+        "heading_color": "#ffffff",
+        "heading_letter_spacing": 0,
+        "heading_text_transform": "default",
+        "text_style": "subtitle",
+        "text_hide_mobile": true,
+        "text_max_width": 0,
+        "text_align_desktop": "left",
+        "text_align_mobile": "left",
+        "text_font_size_desktop": 0,
+        "text_font_size_mobile": 0,
+        "text_line_height_desktop": 0,
+        "text_line_height_mobile": 1.5,
+        "text_font_weight": "default",
+        "text_italic": false,
+        "text_color": "",
+        "text_letter_spacing": 0,
+        "text_text_transform": "default",
+        "button_style": "glass",
+        "button_bg_color": "#ffffff",
+        "button_text_color": "#000000",
+        "button_font_size_desktop": 12,
+        "button_font_size_mobile": 12,
+        "button_font_weight": "default",
+        "button_letter_spacing": 0,
+        "button_text_transform": "default",
+        "buttons_align_desktop": "left",
+        "buttons_align_mobile": "inherit",
+        "show_social_proof": true,
+        "sp_name": "Riejanne Markus",
+        "sp_link": "",
+        "sp_verified_badge": true,
+        "sp_count": "78.342",
+        "sp_brand": "Sockeloen",
+        "sp_custom_text": "",
+        "sp_avatar_size": 36,
+        "sp_font_size_desktop": 13,
+        "sp_font_size_mobile": 11,
+        "sp_line_height": 0,
+        "sp_font_weight": "default",
+        "sp_text_color": "#ffffff",
+        "sp_spacing_top": 26,
+        "sp_align_desktop": "left",
+        "sp_align_mobile": "left"
+      }
     }
   },
   "order": [
-    "image_banner",
+    "hero_slider",
     "featured_collection",
     "rich_text_BAQBfh",
     "rich_text_aqpE7M",
