@@ -4,8 +4,8 @@
     "theme_name": "Dawn",
     "theme_version": "7.0.1",
     "theme_author": "Shopify",
-    "theme_documentation_url": "https:\/\/help.shopify.com\/manual\/online-store\/themes",
-    "theme_support_url": "https:\/\/support.shopify.com\/"
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://support.shopify.com/"
   },
   {
     "name": "Product Colors",
@@ -83,6 +83,88 @@
         "id": "ten_fourteen_days_shipment",
         "label": "Country",
         "info": "Example 'Brazil, Argentina, Uruguay'"
+      }
+    ]
+  },
+  {
+    "name": "Early access gate",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Locks one collection (and its product pages) behind a password until you switch it off. Visitors with the password, or with a link containing ?key=PASSWORD, are remembered on their device."
+      },
+      {
+        "type": "checkbox",
+        "id": "gate_enabled",
+        "label": "Enable the gate",
+        "default": false
+      },
+      {
+        "type": "collection",
+        "id": "gate_collection",
+        "label": "Collection to lock"
+      },
+      {
+        "type": "text",
+        "id": "gate_password",
+        "label": "Password",
+        "info": "Not case-sensitive. Also works as ?key=… in the link you e-mail."
+      },
+      {
+        "type": "range",
+        "id": "gate_days",
+        "label": "Remember access for (days)",
+        "min": 1,
+        "max": 30,
+        "step": 1,
+        "default": 7
+      },
+      {
+        "type": "text",
+        "id": "gate_kicker",
+        "label": "Kicker",
+        "default": "Early access"
+      },
+      {
+        "type": "text",
+        "id": "gate_heading",
+        "label": "Heading",
+        "default": "The break away is closed"
+      },
+      {
+        "type": "textarea",
+        "id": "gate_text",
+        "label": "Text",
+        "default": "Enter the password from your early-access e-mail to see the collection."
+      },
+      {
+        "type": "text",
+        "id": "gate_placeholder",
+        "label": "Input placeholder",
+        "default": "Password"
+      },
+      {
+        "type": "text",
+        "id": "gate_button",
+        "label": "Button",
+        "default": "Open"
+      },
+      {
+        "type": "text",
+        "id": "gate_error",
+        "label": "Wrong password text",
+        "default": "That password is not right."
+      },
+      {
+        "type": "text",
+        "id": "gate_signup_text",
+        "label": "Sign-up link text",
+        "default": "No password yet? Join the early break away"
+      },
+      {
+        "type": "url",
+        "id": "gate_signup_url",
+        "label": "Sign-up link"
       }
     ]
   },
@@ -1513,9 +1595,18 @@
         "id": "second_tier_type",
         "label": "Second Tier Type",
         "options": [
-          { "value": "none", "label": "None (single free shipping tier only)" },
-          { "value": "gift", "label": "Free Gift (customer picks a product)" },
-          { "value": "express_shipping", "label": "Free Express Shipping" }
+          {
+            "value": "none",
+            "label": "None (single free shipping tier only)"
+          },
+          {
+            "value": "gift",
+            "label": "Free Gift (customer picks a product)"
+          },
+          {
+            "value": "express_shipping",
+            "label": "Free Express Shipping"
+          }
         ],
         "default": "gift"
       },
