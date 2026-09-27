@@ -14,7 +14,7 @@
       "settings": {
         "video_url": "",
         "poster": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23876.jpg",
-        "video_position": "center",
+        "video_position": "bottom",
         "overlay_opacity": 55,
         "media_blur": 0,
         "min_height": 100,
