@@ -177,6 +177,9 @@
     transform: scale(calc(1 + var(--bf-blur, 0px) / 100px));
   }
   #BfHero-{{ sid }} .bf-hero__video--empty { background: linear-gradient(160deg, #1a1a1a, #000); }
+  /* no Klaviyo popups or flyouts on the sign-up pages: this page is the sign-up */
+  body:has(#BfHero-{{ sid }}) form.klaviyo-form,
+  body:has(#BfHero-{{ sid }}) [class*="kl-private-reset-css"]:has(form.klaviyo-form) { display: none !important; }
   /* the theme hides empty divs (div:empty { display:none }); the shade and the fallback are empty by design */
   #BfHero-{{ sid }} .bf-hero__shade,
   #BfHero-{{ sid }} .bf-hero__video--empty { display: block !important; }
