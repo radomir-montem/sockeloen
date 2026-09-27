@@ -260,8 +260,9 @@
         {%- if bl.image != blank -%}
           <div class="banner__media media{% if bl.image_mobile != blank %} hidden md:!block{% endif %}">
             {%- assign image_height = bl.image.width | divided_by: bl.image.aspect_ratio -%}
+            {%- if forloop.first %}{% assign img_loading = 'eager' %}{% else %}{% assign img_loading = 'lazy' %}{% endif -%}
             {{ bl.image | image_url: width: 1500 | image_tag:
-              loading: forloop.first | default: false | replace: 'true', 'eager' | replace: 'false', 'lazy',
+              loading: img_loading,
               width: bl.image.width,
               height: image_height,
               sizes: '100vw',
