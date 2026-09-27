@@ -135,14 +135,14 @@
 
 <style>
   /* the video runs up behind the floating header, like the homepage hero */
-  body.template--page.template--black-friday main#MainContent,
-  body.template--page.template--black-friday #MainContent {
-    padding-top: 0;
+  body:has(#BfHero-{{ sid }}) main#MainContent,
+  body:has(#BfHero-{{ sid }}) #MainContent {
+    padding-top: 0 !important;
   }
   {%- if s.hide_footer %}
-  body.template--page.template--black-friday .shopify-section-group-footer-group,
-  body.template--page.template--black-friday #shopify-section-footer {
-    display: none;
+  body:has(#BfHero-{{ sid }}) .shopify-section-group-footer-group,
+  body:has(#BfHero-{{ sid }}) #shopify-section-footer {
+    display: none !important;
   }
   {%- endif %}
 

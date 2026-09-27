@@ -746,7 +746,19 @@
         "disabled": true,
         "settings": {}
       }
-    }
+    },
+    "gate_enabled": true,
+    "gate_collection": "awe-26",
+    "gate_password": "breakaway26",
+    "gate_days": 7,
+    "gate_kicker": "All Weather Essentials '26",
+    "gate_heading": "Only accessible for riders from the Early Breakaway",
+    "gate_text": "Enter the breakaway password",
+    "gate_placeholder": "Password",
+    "gate_button": "Get access",
+    "gate_error": "That password is not right.",
+    "gate_signup_text": "Not in the early breakaway? Click here to join.",
+    "gate_signup_url": "/pages/awe-26"
   },
   "presets": {
     "Default": {

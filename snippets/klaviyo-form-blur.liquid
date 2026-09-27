@@ -1,0 +1,30 @@
+{%- comment -%}
+  Klaviyo popup: blur the page behind it (same glass blur as the cart drawer and the
+  exit-intent popup) from the moment the form opens until it is closed. Only popup and
+  flyout forms; embedded forms and the theme's own sign-up sheets are not affected.
+{%- endcomment -%}
+<style>
+  #kl-form-blur { position: fixed; inset: 0; z-index: 89999; /* Klaviyo renders its popup in a fixed wrapper at z-index 90000 */ background: rgba(255,255,255,.18);
+    backdrop-filter: blur(21px) saturate(180%); -webkit-backdrop-filter: blur(21px) saturate(180%);
+    opacity: 0; transition: opacity .25s ease; pointer-events: none; display: block !important; }
+  html.kl-form-open #kl-form-blur { opacity: 1; pointer-events: auto; }
+  html.kl-form-open { overflow: hidden; }
+</style>
+<script>
+  (function () {
+    var bd = null;
+    function on() {
+      if (!bd) { bd = document.createElement('div'); bd.id = 'kl-form-blur'; document.body.appendChild(bd); }
+      requestAnimationFrame(function () { document.documentElement.classList.add('kl-form-open'); });
+    }
+    function off() { document.documentElement.classList.remove('kl-form-open'); }
+    // test aid: ?klform=FORMID opens that Klaviyo form on load (frequency caps make the real popup hard to catch)
+    var want = new URLSearchParams(location.search).get('klform');
+    if (want && /^[A-Za-z0-9]{4,10}$/.test(want)) { window._klOnsite = window._klOnsite || []; window._klOnsite.push(['openForm', want]); }
+    window.addEventListener('klaviyoForms', function (e) {
+      var d = e.detail || {};
+      if (d.type === 'open') on();
+      else if (d.type === 'close') off();
+    });
+  })();
+</script>
