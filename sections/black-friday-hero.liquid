@@ -21,7 +21,12 @@
 >
   <div class="bf-hero__media">
     {%- if s.video != blank -%}
-      {{ s.video | video_tag: image_size: '1920x', autoplay: true, loop: true, muted: true, controls: false, preload: 'auto', class: 'bf-hero__video' }}
+      {%- if s.poster != blank -%}
+        {%- assign poster_url = s.poster | image_url: width: 1920 -%}
+        {{ s.video | video_tag: image_size: '1920x', poster: poster_url, autoplay: true, loop: true, muted: true, controls: false, preload: 'auto', class: 'bf-hero__video' }}
+      {%- else -%}
+        {{ s.video | video_tag: image_size: '1920x', autoplay: true, loop: true, muted: true, controls: false, preload: 'auto', class: 'bf-hero__video' }}
+      {%- endif -%}
     {%- elsif s.video_url != blank -%}
       <video class="bf-hero__video" autoplay loop muted playsinline preload="auto"{% if s.poster != blank %} poster="{{ s.poster | image_url: width: 1920 }}"{% endif %}>
         <source src="{{ s.video_url }}" type="video/mp4">
