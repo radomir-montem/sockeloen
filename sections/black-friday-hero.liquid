@@ -16,7 +16,7 @@
 <section
   id="BfHero-{{ sid }}"
   class="bf-hero bf-hero--{{ s.text_position }}"
-  style="--bf-shade: {{ shade }}; --bf-min-h: {{ s.min_height }}svh; --bf-video-pos: {{ s.video_position }};"
+  style="--bf-shade: {{ shade }}; --bf-min-h: {{ s.min_height }}svh; --bf-video-pos: {{ s.video_position }}; --bf-blur: {{ s.media_blur | default: 0 }}px;"
   data-bf-hero
 >
   <div class="bf-hero__media">
@@ -167,6 +167,9 @@
     object-fit: cover;
     object-position: var(--bf-video-pos, center);
     display: block;
+    /* soft, dark backdrop: blur the footage and scale it a touch so the blurred edges never show */
+    filter: blur(var(--bf-blur, 0px));
+    transform: scale(calc(1 + var(--bf-blur, 0px) / 100px));
   }
   #BfHero-{{ sid }} .bf-hero__video--empty { background: linear-gradient(160deg, #1a1a1a, #000); }
   #BfHero-{{ sid }} .bf-hero__shade {
@@ -608,6 +611,7 @@
       { "value": "bottom", "label": "Bottom" }
     ], "default": "center" },
     { "type": "range", "id": "overlay_opacity", "label": "Darken video", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 35 },
+    { "type": "range", "id": "media_blur", "label": "Blur video", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 0 },
     { "type": "range", "id": "min_height", "label": "Height", "min": 70, "max": 100, "step": 5, "unit": "vh", "default": 100 },
 
     { "type": "header", "content": "Message" },

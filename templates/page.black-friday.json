@@ -16,7 +16,7 @@
         "video_url": "https://cdn.shopify.com/videos/c/vp/f9f97f9bc7f5497f972fb86400feaa91/f9f97f9bc7f5497f972fb86400feaa91.HD-1080p-4.8Mbps-79493069.mp4",
         "poster": "shopify://shop_images/Scherm_afbeelding_2026-09-21_om_23.40.35.png",
         "video_position": "center",
-        "overlay_opacity": 35,
+        "overlay_opacity": 50,
         "min_height": 100,
         "kicker": "Black Friday '26",
         "heading": "Don't miss the early break away",
@@ -50,7 +50,8 @@
         "phone_error": "Please enter a valid mobile number and tick the box.",
         "success_heading": "You're in the break away",
         "success_text": "Keep an eye on your inbox. You'll get the Black Friday deals before they go public.",
-        "success_button": "Done"
+        "success_button": "Done",
+        "media_blur": 8
       }
     }
   },
