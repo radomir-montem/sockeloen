@@ -13,9 +13,9 @@
       "type": "black-friday-hero",
       "settings": {
         "video_url": "",
-        "poster": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23501.jpg",
+        "poster": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23876.jpg",
         "video_position": "center",
-        "overlay_opacity": 35,
+        "overlay_opacity": 80,
         "min_height": 100,
         "kicker": "All Weather Essentials '26",
         "heading": "Don't miss the early break away",
