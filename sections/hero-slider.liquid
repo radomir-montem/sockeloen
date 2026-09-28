@@ -451,29 +451,29 @@
 
     /* swipe on touch, drag with the mouse */
     var startX = 0, dx = 0, width = 0;
+    /* no pointer capture: capturing retargets the pointer-up to the track, which stops the
+       button under the finger from receiving its click. Moves are tracked on the window. */
     track.addEventListener('pointerdown', function (e) {
       if (n < 2 || animating || e.button > 0) return;
       dragging = true; dragged = false; startX = e.clientX; dx = 0; width = root.clientWidth;
-      track.classList.remove('is-animating'); pause();
-      track.setPointerCapture && track.setPointerCapture(e.pointerId);
     });
-    track.addEventListener('pointermove', function (e) {
+    window.addEventListener('pointermove', function (e) {
       if (!dragging) return;
       dx = e.clientX - startX;
-      if (Math.abs(dx) > 6) dragged = true;
-      track.style.transform = 'translate3d(calc(' + (-pos * 100) + '% + ' + dx + 'px), 0, 0)';
-    });
+      if (!dragged && Math.abs(dx) > 8) { dragged = true; track.classList.remove('is-animating'); pause(); }
+      if (dragged) track.style.transform = 'translate3d(calc(' + (-pos * 100) + '% + ' + dx + 'px), 0, 0)';
+    }, { passive: true });
     function endDrag() {
       if (!dragging) return;
       dragging = false;
+      if (!dragged) { dx = 0; return; }
       if (dx < -Math.min(60, width * 0.15)) next();
       else if (dx > Math.min(60, width * 0.15)) prev();
       else { setX(pos, true); animating = true; resume(); }
       dx = 0;
     }
-    track.addEventListener('pointerup', endDrag);
-    track.addEventListener('pointercancel', endDrag);
-    track.addEventListener('lostpointercapture', endDrag);
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
     /* a swipe must not count as a click on a button */
     track.addEventListener('click', function (e) { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
 
