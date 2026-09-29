@@ -9,11 +9,12 @@
     if template.name == 'collection' and collection.handle == settings.gate_collection.handle
       assign gate_on = true
     elsif template.name == 'product'
-      for c in product.collections
-        if c.handle == settings.gate_collection.handle
-          assign gate_on = true
-        endif
-      endfor
+      capture gate_flag
+        render 'gate-product-check', product: product
+      endcapture
+      if gate_flag contains 'true'
+        assign gate_on = true
+      endif
     endif
   endif
 -%}

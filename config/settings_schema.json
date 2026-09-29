@@ -111,6 +111,29 @@
         "info": "Not case-sensitive. Also works as ?key=… in the link you e-mail."
       },
       {
+        "type": "select",
+        "id": "gate_scope",
+        "label": "Which products are early-access only",
+        "options": [
+          {
+            "value": "tagged",
+            "label": "Only products with the tag below"
+          },
+          {
+            "value": "all",
+            "label": "Every product in the collection"
+          }
+        ],
+        "default": "tagged",
+        "info": "Early-access-only products get the password on their product page and are hidden from other collections, search, recommendations and cart cross-sells. Other products in the collection stay visible and buyable everywhere."
+      },
+      {
+        "type": "text",
+        "id": "gate_tag",
+        "label": "Early access tag",
+        "default": "early-access"
+      },
+      {
         "type": "range",
         "id": "gate_days",
         "label": "Remember access for (days)",

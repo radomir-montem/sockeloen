@@ -5878,3 +5878,8 @@ body.template--product .product-v2 .product-form__input.color-input label:hover 
 body.template--product .product-v2 .product-form__input.color-input input[type='radio']:checked + label .color-dot {
   box-shadow: inset 0 0 0 2px #0395F6 !important;
 }
+
+
+/* Early access gate: a product that is early-access only renders just a marker instead of
+   its card; the grid cell, slide or list item around it disappears with it. */
+:is(li, div, .grid__item, .swiper-slide, .slider__slide):has(> [data-gate-hidden]) { display: none !important; }

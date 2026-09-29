@@ -14,6 +14,25 @@
   Usage:
   {% render 'card-product', show_vendor: section.settings.show_vendor %}
 {% endcomment %}
+{%- liquid
+  assign gate_hide = false
+  if settings.gate_enabled
+    assign gate_here = false
+    if template.name == 'collection' and collection.handle == settings.gate_collection.handle
+      assign gate_here = true
+    endif
+    unless gate_here
+      capture gate_flag
+        render 'gate-product-check', product: card_product
+      endcapture
+      if gate_flag contains 'true'
+        assign gate_hide = true
+      endif
+    endunless
+  endif
+-%}
+{%- if gate_hide -%}<span data-gate-hidden hidden></span>{%- else -%}
+
 
 {% assign hideProductPrice = card_product.metafields.custom.hide_product_price | default: false %}
 {% assign coming_soon = card_product.metafields.custom.coming_soon | default: false %}
@@ -374,4 +393,6 @@
       </div>
     </div>
   </div>
+{%- endif -%}
+
 {%- endif -%}

@@ -23,16 +23,17 @@
 {% endfor %}
 
 {% assign manual_count = 0 %}
+{%- capture gate_hidden -%}{%- render 'gate-hidden-handles' -%}{%- endcapture -%}
 
 {% if force_collection != blank %}
   {%- comment -%} Fixed mode: always this collection, no personalization {%- endcomment -%}
   {% assign fixed_count = 0 %}
   {% for gp in force_collection.products %}
     {% unless cart_handles contains gp.handle %}
-      {% if gp.available and fixed_count < max_cross_sells %}
+      {% assign gate_key = ',' | append: gp.handle | append: ',' %}{% unless gate_hidden contains gate_key %}{% if gp.available and fixed_count < max_cross_sells %}
         {% assign cross_sell_handles = cross_sell_handles | append: ',' | append: gp.handle %}
         {% assign fixed_count = fixed_count | plus: 1 %}
-      {% endif %}
+      {% endif %}{% endunless %}
     {% endunless %}
   {% endfor %}
 {% else %}
@@ -42,10 +43,10 @@
     {% if meta_cross != blank %}
       {% for ref_product in meta_cross %}
         {% unless cart_handles contains ref_product.handle or cross_sell_handles contains ref_product.handle %}
-          {% if ref_product.available and manual_count < max_cross_sells %}
+          {% assign gate_key = ',' | append: ref_product.handle | append: ',' %}{% unless gate_hidden contains gate_key %}{% if ref_product.available and manual_count < max_cross_sells %}
             {% assign cross_sell_handles = cross_sell_handles | append: ',' | append: ref_product.handle %}
             {% assign manual_count = manual_count | plus: 1 %}
-          {% endif %}
+          {% endif %}{% endunless %}
         {% endunless %}
       {% endfor %}
     {% endif %}
@@ -58,10 +59,10 @@
   {% if fallback_count < max_cross_sells and global_products != blank %}
     {% for gp in global_products.products %}
       {% unless cart_handles contains gp.handle or cross_sell_handles contains gp.handle %}
-        {% if gp.available and fallback_count < max_cross_sells %}
+        {% assign gate_key = ',' | append: gp.handle | append: ',' %}{% unless gate_hidden contains gate_key %}{% if gp.available and fallback_count < max_cross_sells %}
           {% assign cross_sell_handles = cross_sell_handles | append: ',' | append: gp.handle %}
           {% assign fallback_count = fallback_count | plus: 1 %}
-        {% endif %}
+        {% endif %}{% endunless %}
       {% endunless %}
     {% endfor %}
   {% endif %}
@@ -116,6 +117,7 @@
     var cartProductIds = [{{ cart_product_ids | remove_first: ',' }}];
     var cartHandles = {{ cart_handles | remove_first: ',' | split: ',' | json }};
     var existingHandles = {{ cross_sell_handles | remove_first: ',' | split: ',' | json }};
+    var gateHidden = {{ gate_hidden | split: ',' | json }};
     var maxNeeded = {{ max_cross_sells }} - currentCount;
 
     if (cartProductIds.length === 0 || maxNeeded <= 0) return;
@@ -130,6 +132,7 @@
           if (added >= maxNeeded) return;
           if (cartHandles.indexOf(p.handle) !== -1) return;
           if (existingHandles.indexOf(p.handle) !== -1) return;
+          if (gateHidden.indexOf(p.handle) !== -1) return;
           if (!p.available) return;
 
           var card = document.createElement('div');
