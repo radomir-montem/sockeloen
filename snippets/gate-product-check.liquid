@@ -1,0 +1,34 @@
+{%- comment -%}
+  Early access gate: prints "true" when this product is early-access-only right now, else "false".
+  A product counts when the gate is on, it sits in the gated collection, and (scope "tagged")
+  it carries the early-access tag. Existing products in the collection without the tag stay
+  visible and buyable everywhere.
+  Params: product (required)
+  Usage:  {%- capture gated -%}{%- render 'gate-product-check', product: product -%}{%- endcapture -%}
+{%- endcomment -%}
+{%- liquid
+  assign out = 'false'
+  if settings.gate_enabled and settings.gate_password != blank and settings.gate_collection != blank and product != blank
+    assign candidate = true
+    if settings.gate_scope != 'all'
+      assign candidate = false
+      assign want = settings.gate_tag | default: 'early-access-26' | strip | downcase
+      for t in product.tags
+        assign tl = t | strip | downcase
+        if tl == want
+          assign candidate = true
+          break
+        endif
+      endfor
+    endif
+    if candidate
+      for c in product.collections
+        if c.handle == settings.gate_collection.handle
+          assign out = 'true'
+          break
+        endif
+      endfor
+    endif
+  endif
+  echo out
+-%}

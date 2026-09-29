@@ -1,0 +1,31 @@
+{%- comment -%}
+  Early access gate: prints the handles of all early-access-only products as ",a,b,c,"
+  (empty string when the gate is off). For loops and scripts that list products outside
+  the product card (cart cross-sells, predictive search, recommendations).
+{%- endcomment -%}
+{%- liquid
+  assign out = ''
+  if settings.gate_enabled and settings.gate_password != blank and settings.gate_collection != blank
+    assign want = settings.gate_tag | default: 'early-access-26' | strip | downcase
+    for p in settings.gate_collection.products limit: 250
+      assign hit = true
+      if settings.gate_scope != 'all'
+        assign hit = false
+        for t in p.tags
+          assign tl = t | strip | downcase
+          if tl == want
+            assign hit = true
+            break
+          endif
+        endfor
+      endif
+      if hit
+        assign out = out | append: ',' | append: p.handle
+      endif
+    endfor
+    if out != ''
+      assign out = out | append: ','
+    endif
+  endif
+  echo out
+-%}

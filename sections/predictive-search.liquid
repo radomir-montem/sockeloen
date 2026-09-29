@@ -12,6 +12,8 @@
     {%- endif -%}
     <ul id="predictive-search-results-list" class="predictive-search__results-list list-unstyled bg-[#e2e2e2]" role="listbox" aria-labelledby="predictive-search-products">
       {%- for product in predictive_search.resources.products -%}
+        {%- capture gate_flag -%}{%- render 'gate-product-check', product: product -%}{%- endcapture -%}
+        {%- if gate_flag contains 'true' -%}{%- continue -%}{%- endif -%}
         <li id="predictive-search-option-{{ forloop.index }}" class="predictive-search__list-item" role="option" aria-selected="false">
           <a href="{{ product.url }}" class="predictive-search__item predictive-search__item--link link link--text" tabindex="-1">
             {%- if product.featured_media != blank -%}
