@@ -401,8 +401,8 @@
     btn('b').addEventListener('click', function () { var v = w.querySelector('textarea').value.trim(); if (v) send({ ev: 'follow', a: 'other', sub: 'text', o: v }); thanks(); });
   }
 
-  // nooit tegelijk met een Klaviyo-formulier (html.kl-form-open komt van snippets/klaviyo-form-blur.liquid)
-  function klOpen() { return document.documentElement.classList.contains('kl-form-open'); }
+  // nooit tegelijk met een Klaviyo-formulier (window.__skKlOpen komt van snippets/klaviyo-form-blur.liquid)
+  function klOpen() { return !!window.__skKlOpen; }
   function trigger() { if (locked() || klOpen()) return; cartFetch(show); }
   // Desktop: muis verlaat het venster aan de bovenkant, na minimaal 8 s
   if (!isMobile) {
