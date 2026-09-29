@@ -71,6 +71,9 @@
   }
 
   var TEST = /[?&]skexit=1/.test(location.search); // ?skexit=1 → popup direct tonen (ook in groep B, negeert de 30-dagen-regel)
+  // Nooit op de early-access-pagina's: de sign-up pagina's (.bf-hero) en alles achter het wachtwoord
+  // (collectie + productpagina's; de theme zet daar window.__skNoKlaviyo in de <head>), ook niet met ?skexit=1.
+  if (window.__skNoKlaviyo || document.querySelector('.bf-hero, #SkGate')) return;
   if (grp === 'B' && !TEST) return;
   try { if (!TEST && localStorage.getItem(KEY) && Date.now() - Number(localStorage.getItem(KEY)) < 30 * 864e5) return; } catch (e) {}
 
