@@ -2,27 +2,38 @@
   Klaviyo popup: blur the page behind it (same glass blur as the cart drawer and the
   exit-intent popup) from the moment the form opens until it is closed. Only popup and
   flyout forms; embedded forms and the theme's own sign-up sheets are not affected.
+
+  Product and cart pages never show a Klaviyo popup or flyout: product pages belong to the
+  WhatsApp exit popup (snippets/sk-exit-intent.liquid), the cart has no popups at all.
+  Embedded Klaviyo forms (e.g. "notify me") keep working there.
 {%- endcomment -%}
+{%- assign kl_no_popup = false -%}
+{%- if template.name == 'product' or template.name == 'cart' -%}{%- assign kl_no_popup = true -%}{%- endif -%}
 <style>
   #kl-form-blur { position: fixed; inset: 0; z-index: 89999; /* Klaviyo renders its popup in a fixed wrapper at z-index 90000 */ background: rgba(255,255,255,.18);
     backdrop-filter: blur(21px) saturate(180%); -webkit-backdrop-filter: blur(21px) saturate(180%);
     opacity: 0; transition: opacity .25s ease; pointer-events: none; display: block !important; }
-  html.kl-form-open #kl-form-blur { opacity: 1; pointer-events: auto; }
-  html.kl-form-open { overflow: hidden; }
+  #kl-form-blur.is-on { opacity: 1; pointer-events: auto; }
+  {%- if kl_no_popup %}
+  div[role="dialog"]:has(form.klaviyo-form) { display: none !important; }
+  {%- endif %}
 </style>
 <script>
   (function () {
-    var bd = null;
+    var bd = null, noPopup = {% if kl_no_popup %}true{% else %}false{% endif %};
+    // state lives on the backdrop itself and on window.__skKlOpen: the theme rewrites <html class> while hydrating, which dropped a class set there
     function on() {
       if (!bd) { bd = document.createElement('div'); bd.id = 'kl-form-blur'; document.body.appendChild(bd); }
-      requestAnimationFrame(function () { document.documentElement.classList.add('kl-form-open'); });
+      window.__skKlOpen = true;
+      document.documentElement.style.overflow = 'hidden';
+      requestAnimationFrame(function () { if (window.__skKlOpen && bd) bd.classList.add('is-on'); });
     }
-    function off() { document.documentElement.classList.remove('kl-form-open'); }
+    function off() { window.__skKlOpen = false; document.documentElement.style.overflow = ''; if (bd) bd.classList.remove('is-on'); }
     // test aid: ?klform=FORMID opens that Klaviyo form on load (frequency caps make the real popup hard to catch)
     var want = new URLSearchParams(location.search).get('klform');
     if (want && /^[A-Za-z0-9]{4,10}$/.test(want)) { window._klOnsite = window._klOnsite || []; window._klOnsite.push(['openForm', want]); }
     window.addEventListener('klaviyoForms', function (e) {
-      if (window.__skNoKlaviyo || document.querySelector('.bf-hero')) return; // sign-up and password pages suppress Klaviyo forms, so no blur either
+      if (noPopup || window.__skNoKlaviyo || document.querySelector('.bf-hero')) return; // pages that suppress Klaviyo popups get no blur either
       var d = e.detail || {};
       if (d.type === 'open') on();
       else if (d.type === 'close') off();

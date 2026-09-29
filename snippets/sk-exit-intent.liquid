@@ -8,28 +8,43 @@
   var BLOG = { en: '/blogs/aero-socks/fastest-sock-on-the-planet', nl: '/nl/blogs/aero-socks/fastest-sock-on-the-planet', de: '/de/blogs/aero-socks/fastest-sock-on-the-planet', fr: '/fr/blogs/aero-socks/fastest-sock-on-the-planet' };
   var REPORT = 'https://custom.sockeloen.nl/en-fsotp-research-tue-report/';
   var BESTSELLERS = '/collections/best-sellers-1';
-  var KEY = 'sk_exit_v2', GRP_KEY = 'sk_exit_grp', SID_KEY = 'sk_exit_sid';
+  // Holdout-test t2 (start 30 sep 2026): nieuwe sleutels, zodat iedereen opnieuw wordt ingedeeld en de oude test (exit_grp) niet meetelt.
+  var KEY = 'sk_exit_t2_shown', GRP_KEY = 'sk_exit_t2_grp', SID_KEY = 'sk_exit_sid', ATTR = 'exit_t2', SESS_KEY = 'sk_exit_t2_sess';
+  var TEST = /[?&]skexit=1/.test(location.search); // ?skexit=1 → popup direct tonen (ook in groep B, negeert de 30-dagen-regel); telt niet mee in de test
+  var ON_PRODUCT = /\/products\//.test(location.pathname); // de popup én de test draaien alleen op productpagina's
   var CUTOFF = 15; // NL-tijd, zelfde als de levertekst onder de koopknop
   // Ingelogde klant met eerdere bestellingen → geen 10%-'nieuwe klant'-code, maar een eerlijke prijsvraag.
   // (Liquid wordt gerenderd omdat dit als snippets/sk-exit-intent.liquid in de theme staat; lokaal blijft het geldige JS.)
   var EXISTING = '{% if customer and customer.orders_count > 0 %}1{% endif %}' === '1';
 
-  // ---- holdout: 50% ziet de popup nooit (groep B); groep wordt als cart-attribute meegestuurd zodat we conversie kunnen vergelijken
-  var grp, sid;
+  // ---- holdout: 50% ziet de popup nooit (groep B). Eerlijke indeling:
+  //  - browsers zonder werkende opslag doen niet mee (geen popup, geen cart-attribute, geen sessie-ping);
+  //  - de groep staat in localStorage + cookie en wordt anders uit het cart-attribute teruggehaald (de cart-cookie is server-side en leeft langer);
+  //  - cart-attribute en sessie-ping alleen voor bezoekers die een productpagina zien, dus teller en noemer gaan over dezelfde mensen.
+  var grp = null, sid = null, storageOk = true;
+  function ck(n) { var m = document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
+  function setCk(n, v) { try { document.cookie = n + '=' + encodeURIComponent(v) + '; path=/; max-age=' + 180 * 86400 + '; SameSite=Lax'; } catch (e) {} }
   try {
-    grp = localStorage.getItem(GRP_KEY); if (!grp) { grp = Math.random() < 0.5 ? 'A' : 'B'; localStorage.setItem(GRP_KEY, grp); }
+    localStorage.setItem('sk_exit_probe', '1'); localStorage.removeItem('sk_exit_probe');
+    grp = localStorage.getItem(GRP_KEY) || ck(GRP_KEY);
+    if (grp !== 'A' && grp !== 'B') grp = null;
+    if (grp) { localStorage.setItem(GRP_KEY, grp); setCk(GRP_KEY, grp); } // beide opslagplekken gelijk houden
     sid = localStorage.getItem(SID_KEY); if (!sid) { sid = Math.random().toString(36).slice(2, 12); localStorage.setItem(SID_KEY, sid); }
-  } catch (e) { grp = 'A'; sid = 'na'; }
-  try { fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attributes: { exit_grp: grp } }) }).catch(function () {}); } catch (e) {}
-  // holdout-noemer: 1 sessie-ping per dag, voor groep A én B (alleen op product/collectie/cart, dus dezelfde pagina's waar de popup kan verschijnen)
-  try {
-    var p0 = location.pathname, pg0 = /\/products\//.test(p0) ? 'product' : /\/cart/.test(p0) ? 'cart' : /\/collections\//.test(p0) ? 'collection' : 'other';
-    var today = new Date().toISOString().slice(0, 10);
-    if (pg0 !== 'other' && localStorage.getItem('sk_exit_sess') !== today) {
-      localStorage.setItem('sk_exit_sess', today);
-      fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify({ ev: 'session', grp: grp, sid: sid, page: pg0, device: (/Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop') }) }).catch(function () {});
-    }
-  } catch (e) {}
+  } catch (e) { storageOk = false; }
+  function saveGrp(g) { grp = g; try { localStorage.setItem(GRP_KEY, g); } catch (e) {} setCk(GRP_KEY, g); }
+  function enrol() {
+    // alleen op productpagina's: groep op de cart zetten (oude test-attribute leegmaken) + 1 sessie-ping per dag
+    if (!storageOk || TEST || !ON_PRODUCT || !grp) return;
+    var at = {}; at[ATTR] = grp; at.exit_grp = '';
+    try { fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attributes: at }) }).catch(function () {}); } catch (e) {}
+    try {
+      var today = new Date().toISOString().slice(0, 10);
+      if (localStorage.getItem(SESS_KEY) !== today) {
+        localStorage.setItem(SESS_KEY, today);
+        fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify({ ev: 'session', grp: grp, sid: sid, page: 'product', device: (/Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop') }) }).catch(function () {});
+      }
+    } catch (e) {}
+  }
   // ?skcart=1 → side cart openen en tonen welke code is toegepast (de drawer van de theme toont kortingscodes zelf niet)
   // NB: Shopify's /discount/CODE?redirect=… laat de querystring van het redirect-doel vallen, dus na 'Apply & continue'
   // komt ?skcart=1 nooit aan. Daarom zetten we vóór die redirect ook een sessionStorage-vlag (max 2 min oud).
@@ -70,7 +85,9 @@
     openCart();
   }
 
-  var TEST = /[?&]skexit=1/.test(location.search); // ?skexit=1 → popup direct tonen (ook in groep B, negeert de 30-dagen-regel)
+  function boot() {
+  enrol();
+  if (!storageOk && !TEST) return;
   // Nooit op de sign-up pagina's (.bf-hero), ook niet met ?skexit=1. Op de pagina's achter het wachtwoord
   // (collectie + productpagina's) alleen zolang ze op slot zitten: zie locked() bij trigger().
   if (document.querySelector('.bf-hero')) return;
@@ -80,7 +97,7 @@
 
   var path = location.pathname;
   var page = /\/products\//.test(path) ? 'product' : /\/cart/.test(path) ? 'cart' : /\/collections\//.test(path) ? 'collection' : 'other';
-  if (page === 'other') return;
+  if (page !== 'product') return; // alleen productpagina's: nooit op cart, collectie of andere pagina's
   if (/\/checkouts?\//.test(path) || /thank_you|orders\//.test(path)) return;
   var product = (path.match(/\/products\/([^\/?#]+)/) || [])[1] || '';
   var loc = (document.documentElement.lang || (window.Shopify && Shopify.locale) || 'en').slice(0, 2).toLowerCase();
@@ -384,7 +401,9 @@
     btn('b').addEventListener('click', function () { var v = w.querySelector('textarea').value.trim(); if (v) send({ ev: 'follow', a: 'other', sub: 'text', o: v }); thanks(); });
   }
 
-  function trigger() { if (locked()) return; cartFetch(show); }
+  // nooit tegelijk met een Klaviyo-formulier (window.__skKlOpen komt van snippets/klaviyo-form-blur.liquid)
+  function klOpen() { return !!window.__skKlOpen; }
+  function trigger() { if (locked() || klOpen()) return; cartFetch(show); }
   // Desktop: muis verlaat het venster aan de bovenkant, na minimaal 8 s
   if (!isMobile) {
     document.addEventListener('mouseout', function (e) { if (e.relatedTarget || e.toElement) return; if (e.clientY <= 0 && Date.now() - start > 8000) trigger(); });
@@ -395,6 +414,15 @@
     if (page === 'product') setTimeout(function () { if (!shown && document.visibilityState === 'visible') trigger(); }, 60000);
   }
   if (TEST) setTimeout(trigger, 800);
+  } // boot
+  if (grp || !storageOk) { boot(); }
+  else if (!ON_PRODUCT && !TEST) { /* nog niet ingedeeld en geen productpagina: indelen gebeurt op de eerste productpagina */ }
+  else {
+    // nog geen groep in deze browser: eerst kijken of de cart er al een heeft, anders loten
+    var done = false, go = function (g) { if (done) return; done = true; saveGrp(g === 'A' || g === 'B' ? g : (Math.random() < 0.5 ? 'A' : 'B')); boot(); };
+    setTimeout(function () { go(null); }, 2500);
+    try { fetch('/cart.js').then(function (r) { return r.json(); }).then(function (c) { go(c && c.attributes && c.attributes[ATTR]); }).catch(function () { go(null); }); } catch (e) { go(null); }
+  }
 
 })();
 </script>
