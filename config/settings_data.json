@@ -750,7 +750,7 @@
     "gate_enabled": true,
     "gate_collection": "awe-26",
     "gate_password": "breakaway26",
-    "gate_days": 7,
+    "gate_days": 0,
     "gate_kicker": "All Weather Essentials '26",
     "gate_heading": "Only accessible for riders from the Early Breakaway",
     "gate_text": "Enter the breakaway password",

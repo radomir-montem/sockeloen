@@ -131,16 +131,17 @@
         "type": "text",
         "id": "gate_tag",
         "label": "Early access tag",
-        "default": "early-access"
+        "default": "early-access-26"
       },
       {
         "type": "range",
         "id": "gate_days",
         "label": "Remember access for (days)",
-        "min": 1,
+        "min": 0,
         "max": 30,
         "step": 1,
-        "default": 7
+        "default": 0,
+        "info": "0 = do not remember: access lasts for this visit only and ends when the browser tab is closed."
       },
       {
         "type": "text",

@@ -63,7 +63,7 @@
       return crypto.subtle.digest('SHA-256', enc).then(function (buf) { return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); });
     }
     function unlock() {
-      try { localStorage.setItem(G.key, JSON.stringify({ h: G.hash, exp: Date.now() + G.days * 864e5 })); } catch (e) {}
+      try { (G.days > 0 ? localStorage : sessionStorage).setItem(G.key, JSON.stringify({ h: G.hash, exp: Date.now() + G.days * 864e5 })); } catch (e) {}
       document.documentElement.classList.remove('gate-locked'); el.hidden = true;
     }
     function tryPassword(v, fromLink) {
