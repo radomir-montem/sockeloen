@@ -72,7 +72,11 @@
   data-list="{{ s.klaviyo_list_id | escape }}"
   data-form="{{ s.klaviyo_form_id | escape }}"
   data-source="{{ s.custom_source | escape }}"
+  data-phone-channel="{{ s.phone_channel | default: 'whatsapp' }}"
   data-country="{{ s.phone_country | default: '+31' | escape }}"
+  data-country-auto="{% if s.phone_country_auto == false %}0{% else %}1{% endif %}"
+  data-country-iso="{{ localization.country.iso_code | escape }}"
+  data-locale="{{ request.locale.iso_code | escape }}"
 >
   <div class="bf-signup__sheet" role="dialog" aria-modal="true" aria-labelledby="BfSignupTitle-{{ sid }}">
     <button type="button" class="bf-signup__close" data-bf-close aria-label="{{ 'accessibility.close' | t | default: 'Close' }}">
@@ -111,7 +115,8 @@
         {%- endif -%}
         <label class="bf-signup__label" for="BfPhone-{{ sid }}">{{ s.phone_placeholder | default: 'Mobile number' | escape }}</label>
         <div class="bf-signup__tel">
-          <span class="bf-signup__tel-country">{{ s.phone_country | default: '+31' | escape }}</span>
+          <span class="bf-signup__tel-country" data-bf-tel-prefix>{{ s.phone_country | default: '+31' | escape }}</span>
+          <select class="bf-signup__tel-select" data-bf-tel-select aria-label="{{ s.phone_country_label | default: 'Country code' | escape }}" hidden></select>
           <input class="bf-signup__input bf-signup__input--tel" id="BfPhone-{{ sid }}" type="tel" name="phone" inputmode="tel" autocomplete="tel-national" placeholder="{{ s.phone_placeholder | default: '6 12345678' | escape }}">
         </div>
         <label class="bf-signup__check-row">
@@ -381,6 +386,31 @@
     color: #666;
     pointer-events: none;
   }
+  #BfSignup-{{ sid }} .bf-signup__tel-country[data-pick]::after {
+    content: "";
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+    border: 4px solid transparent;
+    border-top-color: currentColor;
+    border-bottom-width: 0;
+  }
+  #BfSignup-{{ sid }} .bf-signup__tel-select {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 56px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    font-size: 16px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  #BfSignup-{{ sid }} .bf-signup__tel-select:focus-visible + .bf-signup__input--tel { border-color: #111; box-shadow: 0 0 0 3px rgba(0, 0, 0, .08); }
   #BfSignup-{{ sid }} .bf-signup__input--tel { padding-left: 56px; }
   #BfSignup-{{ sid }} .bf-signup__check-row {
     display: flex;
@@ -531,11 +561,11 @@
       if (field) field.setAttribute('aria-invalid', on ? 'true' : 'false');
     }
     function subscribe(attributes) {
-      /* the list's own opt-in process applies; an explicit consent block
-         is rejected by this endpoint */
+      /* consent is sent per channel (revision 2026-07-15 accepts the block):
+         e-mail marketing for the address, WhatsApp or SMS marketing for the number */
       return fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' },
+        headers: { 'Content-Type': 'application/json', 'revision': '2026-07-15' },
         body: JSON.stringify({
           data: {
             type: 'subscription',
@@ -561,7 +591,7 @@
       setError(errorEl, input, false);
       submit.disabled = true;
       if (submitLabel) submitLabel.textContent = '…';
-      subscribe({ email: email }).then(function () {
+      subscribe({ email: email, subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } } }).then(function () {
         if (window.klaviyo && window.klaviyo.push) window.klaviyo.push(['identify', { $email: email }]);
         show(phoneForm ? 'phone' : 'success');
       }).catch(function () {
@@ -575,6 +605,58 @@
     /* step 2: mobile number, only with the consent box ticked */
     if (phoneForm) {
       var country = root.getAttribute('data-country') || '+31';
+      /* country code follows the country the visitor is browsing from; they can still pick another one */
+      var DIAL = {};
+      'AD376 AE971 AF93 AG1268 AI1264 AL355 AM374 AO244 AR54 AS1684 AT43 AU61 AW297 AX358 AZ994 BA387 BB1246 BD880 BE32 BF226 BG359 BH973 BI257 BJ229 BL590 BM1441 BN673 BO591 BQ599 BR55 BS1242 BT975 BW267 BY375 BZ501 CA1 CD243 CF236 CG242 CH41 CI225 CK682 CL56 CM237 CN86 CO57 CR506 CU53 CV238 CW599 CY357 CZ420 DE49 DJ253 DK45 DM1767 DO1 DZ213 EC593 EE372 EG20 ER291 ES34 ET251 FI358 FJ679 FK500 FM691 FO298 FR33 GA241 GB44 GD1473 GE995 GF594 GG44 GH233 GI350 GL299 GM220 GN224 GP590 GQ240 GR30 GT502 GU1671 GW245 GY592 HK852 HN504 HR385 HT509 HU36 ID62 IE353 IL972 IM44 IN91 IQ964 IR98 IS354 IT39 JE44 JM1876 JO962 JP81 KE254 KG996 KH855 KI686 KM269 KN1869 KP850 KR82 KW965 KY1345 KZ7 LA856 LB961 LC1758 LI423 LK94 LR231 LS266 LT370 LU352 LV371 LY218 MA212 MC377 MD373 ME382 MF590 MG261 MH692 MK389 ML223 MM95 MN976 MO853 MP1670 MQ596 MR222 MS1664 MT356 MU230 MV960 MW265 MX52 MY60 MZ258 NA264 NC687 NE227 NG234 NI505 NL31 NO47 NP977 NR674 NU683 NZ64 OM968 PA507 PE51 PF689 PG675 PH63 PK92 PL48 PM508 PR1 PS970 PT351 PW680 PY595 QA974 RE262 RO40 RS381 RU7 RW250 SA966 SB677 SC248 SD249 SE46 SG65 SH290 SI386 SK421 SL232 SM378 SN221 SO252 SR597 SS211 ST239 SV503 SX1721 SY963 SZ268 TC1649 TD235 TG228 TH66 TJ992 TL670 TM993 TN216 TO676 TR90 TT1868 TV688 TW886 TZ255 UA380 UG256 US1 UY598 UZ998 VA39 VC1784 VE58 VG1284 VI1340 VN84 VU678 WF681 WS685 XK383 YE967 YT262 ZA27 ZM260 ZW263'
+        .split(' ').forEach(function (c) { DIAL[c.slice(0, 2)] = '+' + c.slice(2); });
+      var prefixEl = phoneForm.querySelector('[data-bf-tel-prefix]');
+      var selectEl = phoneForm.querySelector('[data-bf-tel-select]');
+      var picked = false;
+      function setCountry(code, iso) {
+        country = code;
+        if (prefixEl) prefixEl.textContent = code;
+        if (selectEl && iso && DIAL[iso]) selectEl.value = iso;
+        var pad = 'calc(' + code.length + 'ch + ' + (selectEl && !selectEl.hidden ? 46 : 32) + 'px)';
+        phoneInput.style.paddingLeft = pad;
+        if (selectEl) selectEl.style.width = pad;
+      }
+      if (selectEl) {
+        var names = null;
+        try { names = new Intl.DisplayNames([root.getAttribute('data-locale') || 'en'], { type: 'region' }); } catch (err) {}
+        Object.keys(DIAL).map(function (iso) {
+          var n = iso;
+          try { if (names) n = names.of(iso) || iso; } catch (err) {}
+          return { iso: iso, name: n };
+        }).sort(function (a, b) { return a.name.localeCompare(b.name); }).forEach(function (c) {
+          var opt = document.createElement('option');
+          opt.value = c.iso;
+          opt.textContent = c.name + ' (' + DIAL[c.iso] + ')';
+          selectEl.appendChild(opt);
+        });
+        selectEl.hidden = false;
+        if (prefixEl) prefixEl.setAttribute('data-pick', '');
+        selectEl.addEventListener('change', function () {
+          picked = true;
+          setCountry(DIAL[selectEl.value], selectEl.value);
+          phoneInput.focus();
+        });
+      }
+      var startIso = null;
+      Object.keys(DIAL).some(function (iso) { if (DIAL[iso] === country) { startIso = iso; return true; } return false; });
+      if (country === '+31') startIso = 'NL';
+      setCountry(country, startIso);
+      if (root.getAttribute('data-country-auto') !== '0') {
+        var shopIso = (root.getAttribute('data-country-iso') || '').toUpperCase();
+        if (DIAL[shopIso]) setCountry(DIAL[shopIso], shopIso);
+        try {
+          fetch('/browsing_context_suggestions.json', { credentials: 'same-origin' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+            var iso = d && d.detected_values && d.detected_values.country && d.detected_values.country.handle;
+            iso = (iso || '').toUpperCase();
+            if (!picked && DIAL[iso]) setCountry(DIAL[iso], iso);
+          }).catch(function () {});
+        } catch (err) {}
+      }
+      var phoneChannel = root.getAttribute('data-phone-channel') || 'whatsapp';
       function normalizePhone(raw) {
         var v = (raw || '').replace(/[\s().-]/g, '');
         if (v.indexOf('00') === 0) v = '+' + v.slice(2);
@@ -591,7 +673,7 @@
         setError(phoneError, phoneInput, false);
         phoneSubmit.disabled = true;
         if (phoneLabel) phoneLabel.textContent = '…';
-        subscribe({ email: email, phone_number: phone }).then(function () {
+        subscribe({ email: email, phone_number: phone, subscriptions: phoneChannel === 'sms' ? { sms: { marketing: { consent: 'SUBSCRIBED' } } } : { whatsapp: { marketing: { consent: 'SUBSCRIBED' } } } }).then(function () {
           show('success');
         }).catch(function () {
           setError(phoneError, phoneInput, true);
@@ -658,15 +740,17 @@
     { "type": "text", "id": "error_text", "label": "Error message", "default": "Please enter a valid e-mail address." },
 
     { "type": "header", "content": "Sign-up sheet, step 2: mobile number" },
-    { "type": "checkbox", "id": "phone_enabled", "label": "Ask for a mobile number after the e-mail", "default": true, "info": "Optional step. SMS consent is only recorded when the box is ticked." },
+    { "type": "checkbox", "id": "phone_enabled", "label": "Ask for a mobile number after the e-mail", "default": true, "info": "Optional step. Consent is only recorded when the box is ticked." },
+    { "type": "select", "id": "phone_channel", "label": "Channel the number is for", "options": [ { "value": "whatsapp", "label": "WhatsApp" }, { "value": "sms", "label": "SMS" } ], "default": "whatsapp", "info": "Consent is recorded in Klaviyo for this channel only. The consent text below must name the same channel." },
     { "type": "text", "id": "phone_kicker", "label": "Kicker", "default": "One more thing" },
-    { "type": "text", "id": "phone_heading", "label": "Title", "default": "Want a text the moment the doors open?" },
-    { "type": "text", "id": "phone_text", "label": "Text", "default": "One SMS when early access starts, so you're first in line. Nothing else." },
-    { "type": "text", "id": "phone_country", "label": "Default country code", "default": "+31" },
+    { "type": "text", "id": "phone_heading", "label": "Title", "default": "Want a WhatsApp the moment the doors open?" },
+    { "type": "text", "id": "phone_text", "label": "Text", "default": "One WhatsApp message when early access starts, so you're first in line." },
+    { "type": "checkbox", "id": "phone_country_auto", "label": "Country code follows the visitor's country", "default": true, "info": "Uses the country the visitor is browsing from. Visitors can still pick another country code." },
+    { "type": "text", "id": "phone_country", "label": "Default country code", "default": "+31", "info": "Used when the visitor's country cannot be detected." },
     { "type": "text", "id": "phone_placeholder", "label": "Number placeholder", "default": "6 12345678" },
-    { "type": "text", "id": "phone_consent", "label": "Consent text (required by law)", "default": "Yes, text me when early access opens. Message and data rates may apply. Reply STOP to unsubscribe." },
-    { "type": "checkbox", "id": "phone_consent_checked", "label": "Pre-tick the consent box", "default": true, "info": "Note: a pre-ticked box is not valid consent under GDPR / Klaviyo's SMS rules." },
-    { "type": "text", "id": "phone_button", "label": "Button", "default": "Text me when it opens" },
+    { "type": "text", "id": "phone_consent", "label": "Consent text (required by law)", "default": "Yes, Sockeloen may send me WhatsApp messages about early access and offers. Reply STOP to unsubscribe." },
+    { "type": "checkbox", "id": "phone_consent_checked", "label": "Pre-tick the consent box", "default": true, "info": "Note: a pre-ticked box is not valid consent under GDPR / Meta's WhatsApp rules." },
+    { "type": "text", "id": "phone_button", "label": "Button", "default": "WhatsApp me when it opens" },
     { "type": "text", "id": "phone_skip", "label": "Skip link", "default": "No thanks, e-mail is enough" },
     { "type": "text", "id": "phone_error", "label": "Error message", "default": "Please enter a valid mobile number and tick the box." },
 
