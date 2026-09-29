@@ -12,7 +12,7 @@
     assign candidate = true
     if settings.gate_scope != 'all'
       assign candidate = false
-      assign want = settings.gate_tag | default: 'early-access' | strip | downcase
+      assign want = settings.gate_tag | default: 'early-access-26' | strip | downcase
       for t in product.tags
         assign tl = t | strip | downcase
         if tl == want

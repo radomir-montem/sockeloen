@@ -6,7 +6,7 @@
 {%- liquid
   assign out = ''
   if settings.gate_enabled and settings.gate_password != blank and settings.gate_collection != blank
-    assign want = settings.gate_tag | default: 'early-access' | strip | downcase
+    assign want = settings.gate_tag | default: 'early-access-26' | strip | downcase
     for p in settings.gate_collection.products limit: 250
       assign hit = true
       if settings.gate_scope != 'all'
