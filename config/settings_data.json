@@ -758,7 +758,9 @@
     "gate_button": "Get access",
     "gate_error": "That password is not right.",
     "gate_signup_text": "Not in the early breakaway? Click here to join.",
-    "gate_signup_url": "/pages/awe-26"
+    "gate_signup_url": "/pages/awe-26",
+    "gate_scope": "all",
+    "gate_tag": "early-access"
   },
   "presets": {
     "Default": {
