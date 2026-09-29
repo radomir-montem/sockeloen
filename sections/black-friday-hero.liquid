@@ -72,6 +72,7 @@
   data-list="{{ s.klaviyo_list_id | escape }}"
   data-form="{{ s.klaviyo_form_id | escape }}"
   data-source="{{ s.custom_source | escape }}"
+  data-phone-channel="{{ s.phone_channel | default: 'whatsapp' }}"
   data-country="{{ s.phone_country | default: '+31' | escape }}"
 >
   <div class="bf-signup__sheet" role="dialog" aria-modal="true" aria-labelledby="BfSignupTitle-{{ sid }}">
@@ -531,11 +532,11 @@
       if (field) field.setAttribute('aria-invalid', on ? 'true' : 'false');
     }
     function subscribe(attributes) {
-      /* the list's own opt-in process applies; an explicit consent block
-         is rejected by this endpoint */
+      /* consent is sent per channel (revision 2026-07-15 accepts the block):
+         e-mail marketing for the address, WhatsApp or SMS marketing for the number */
       return fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'revision': '2024-10-15' },
+        headers: { 'Content-Type': 'application/json', 'revision': '2026-07-15' },
         body: JSON.stringify({
           data: {
             type: 'subscription',
@@ -561,7 +562,7 @@
       setError(errorEl, input, false);
       submit.disabled = true;
       if (submitLabel) submitLabel.textContent = '…';
-      subscribe({ email: email }).then(function () {
+      subscribe({ email: email, subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } } }).then(function () {
         if (window.klaviyo && window.klaviyo.push) window.klaviyo.push(['identify', { $email: email }]);
         show(phoneForm ? 'phone' : 'success');
       }).catch(function () {
@@ -575,6 +576,7 @@
     /* step 2: mobile number, only with the consent box ticked */
     if (phoneForm) {
       var country = root.getAttribute('data-country') || '+31';
+      var phoneChannel = root.getAttribute('data-phone-channel') || 'whatsapp';
       function normalizePhone(raw) {
         var v = (raw || '').replace(/[\s().-]/g, '');
         if (v.indexOf('00') === 0) v = '+' + v.slice(2);
@@ -591,7 +593,7 @@
         setError(phoneError, phoneInput, false);
         phoneSubmit.disabled = true;
         if (phoneLabel) phoneLabel.textContent = '…';
-        subscribe({ email: email, phone_number: phone }).then(function () {
+        subscribe({ email: email, phone_number: phone, subscriptions: phoneChannel === 'sms' ? { sms: { marketing: { consent: 'SUBSCRIBED' } } } : { whatsapp: { marketing: { consent: 'SUBSCRIBED' } } } }).then(function () {
           show('success');
         }).catch(function () {
           setError(phoneError, phoneInput, true);
@@ -658,15 +660,16 @@
     { "type": "text", "id": "error_text", "label": "Error message", "default": "Please enter a valid e-mail address." },
 
     { "type": "header", "content": "Sign-up sheet, step 2: mobile number" },
-    { "type": "checkbox", "id": "phone_enabled", "label": "Ask for a mobile number after the e-mail", "default": true, "info": "Optional step. SMS consent is only recorded when the box is ticked." },
+    { "type": "checkbox", "id": "phone_enabled", "label": "Ask for a mobile number after the e-mail", "default": true, "info": "Optional step. Consent is only recorded when the box is ticked." },
+    { "type": "select", "id": "phone_channel", "label": "Channel the number is for", "options": [ { "value": "whatsapp", "label": "WhatsApp" }, { "value": "sms", "label": "SMS" } ], "default": "whatsapp", "info": "Consent is recorded in Klaviyo for this channel only. The consent text below must name the same channel." },
     { "type": "text", "id": "phone_kicker", "label": "Kicker", "default": "One more thing" },
-    { "type": "text", "id": "phone_heading", "label": "Title", "default": "Want a text the moment the doors open?" },
-    { "type": "text", "id": "phone_text", "label": "Text", "default": "One SMS when early access starts, so you're first in line. Nothing else." },
+    { "type": "text", "id": "phone_heading", "label": "Title", "default": "Want a WhatsApp the moment the doors open?" },
+    { "type": "text", "id": "phone_text", "label": "Text", "default": "One WhatsApp message when early access starts, so you're first in line." },
     { "type": "text", "id": "phone_country", "label": "Default country code", "default": "+31" },
     { "type": "text", "id": "phone_placeholder", "label": "Number placeholder", "default": "6 12345678" },
-    { "type": "text", "id": "phone_consent", "label": "Consent text (required by law)", "default": "Yes, text me when early access opens. Message and data rates may apply. Reply STOP to unsubscribe." },
-    { "type": "checkbox", "id": "phone_consent_checked", "label": "Pre-tick the consent box", "default": true, "info": "Note: a pre-ticked box is not valid consent under GDPR / Klaviyo's SMS rules." },
-    { "type": "text", "id": "phone_button", "label": "Button", "default": "Text me when it opens" },
+    { "type": "text", "id": "phone_consent", "label": "Consent text (required by law)", "default": "Yes, Sockeloen may send me WhatsApp messages about early access and offers. Reply STOP to unsubscribe." },
+    { "type": "checkbox", "id": "phone_consent_checked", "label": "Pre-tick the consent box", "default": true, "info": "Note: a pre-ticked box is not valid consent under GDPR / Meta's WhatsApp rules." },
+    { "type": "text", "id": "phone_button", "label": "Button", "default": "WhatsApp me when it opens" },
     { "type": "text", "id": "phone_skip", "label": "Skip link", "default": "No thanks, e-mail is enough" },
     { "type": "text", "id": "phone_error", "label": "Error message", "default": "Please enter a valid mobile number and tick the box." },
 
