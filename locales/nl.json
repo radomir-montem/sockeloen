@@ -535,6 +535,14 @@
       "delivery_options": {
         "ship": "Verzending",
         "pick_up": "Afhalen"
+      },
+      "marketing": {
+        "accept_whatsapp_marketing_checkbox_label": "Stuur me via WhatsApp updates over mijn bestelling, nieuws en aanbiedingen",
+        "whatsapp": {
+          "disclaimer": {
+            "description_html": "Door je aan te melden via WhatsApp ga je akkoord met het ontvangen van WhatsApp-berichten over je bestelling (zoals orderbevestiging en verzendupdates) en marketingberichten op het opgegeven telefoonnummer. Toestemming is geen voorwaarde voor aankoop. Antwoord STOP om je af te melden. De berichtfrequentie varieert. Er kunnen bericht- en datatarieven van toepassing zijn. Bekijk ons %{privacy_policy_link} en onze %{terms_of_service_link}."
+          }
+        }
       }
     }
   },

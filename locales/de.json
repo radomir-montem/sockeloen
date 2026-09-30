@@ -518,6 +518,14 @@
       },
       "payment_errors": {
         "payment_method_not_applicable": "Diese Zahlungsmethode ist nicht anwendbar. Verwenden Sie eine andere Zahlungsmethode."
+      },
+      "marketing": {
+        "accept_whatsapp_marketing_checkbox_label": "Schick mir per WhatsApp Bestell-Updates, Neuigkeiten und Angebote",
+        "whatsapp": {
+          "disclaimer": {
+            "description_html": "Mit der Anmeldung über WhatsApp stimmst du zu, WhatsApp-Nachrichten zu deiner Bestellung (z. B. Bestellbestätigung und Versand-Updates) sowie Marketingnachrichten an die angegebene Telefonnummer zu erhalten. Die Einwilligung ist keine Kaufbedingung. Antworte mit STOP, um dich abzumelden. Die Nachrichtenhäufigkeit variiert. Es können Nachrichten- und Datengebühren anfallen. Sieh dir unsere %{privacy_policy_link} und %{terms_of_service_link} an."
+          }
+        }
       }
     },
     "page_titles": {
