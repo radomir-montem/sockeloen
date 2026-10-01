@@ -215,8 +215,6 @@
     margin: 0;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
     color: rgba(255, 255, 255, .8);
   }
   #BfHero-{{ sid }} .bf-hero__heading {
@@ -283,8 +281,8 @@
      slides back out on close. Transparent enough for the video to show
      through, blurred hard enough that nothing behind it can be read; the
      hero text also fades out while it is open. Buttons follow the cookie
-     banner's recipe: 52px, 8px radius, uppercase 12px, solid primary and
-     outlined secondary. ---- */
+     banner's recipe: 52px, 8px radius, uppercase 12px, solid primary; the
+     secondary is a plain text link in the editor's own casing. ---- */
   #BfSignup-{{ sid }} {
     position: fixed;
     inset: 0;
@@ -345,9 +343,7 @@
     margin: 0 0 12px;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: rgba(17, 17, 17, .55);
+    color: #fff;
   }
   #BfSignup-{{ sid }} .bf-signup__title {
     margin: 0 0 12px;
@@ -463,12 +459,14 @@
   #BfSignup-{{ sid }} .bf-signup__submit:hover { background: #333; border-color: #333; }
   #BfSignup-{{ sid }} .bf-signup__submit[disabled] { opacity: .7; cursor: wait; }
   #BfSignup-{{ sid }} .bf-signup__skip {
+    font-size: 14px;
     font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
     color: #111;
     background: transparent;
-    border: 2px solid #111;
+    border: 0;
   }
-  #BfSignup-{{ sid }} .bf-signup__skip:hover { background: rgba(0, 0, 0, .06); }
   #BfSignup-{{ sid }} .bf-signup__consent { margin: 14px 0 0; font-size: 12px; line-height: 1.45; color: #555; }
   #BfSignup-{{ sid }} .bf-signup__check {
     width: 56px;
