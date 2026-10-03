@@ -15,6 +15,20 @@
     "three_five_days_shipment": "Bulgaria, Croatia, Cyprus, Czechia, Denmark, Estonia, Finland, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden",
     "five_seven_days_shipment": "Switzerland, United Kingdom, Norway",
     "ten_fourteen_days_shipment": "South Africa, Uruguay",
+    "gate_enabled": true,
+    "gate_collection": "awe-26",
+    "gate_password": "breakaway26",
+    "gate_scope": "tagged",
+    "gate_tag": "early-access-26",
+    "gate_days": 0,
+    "gate_kicker": "All Weather Essentials '26",
+    "gate_heading": "Only accessible for Breakaway members.",
+    "gate_text": "Enter password",
+    "gate_placeholder": "Password",
+    "gate_button": "Get access",
+    "gate_error": "That password is not right.",
+    "gate_signup_text": "Not in the early breakaway? Click here to join.",
+    "gate_signup_url": "/pages/awe-26",
     "colors_solid_button_labels": "#ffffff",
     "colors_accent_1": "#000000",
     "gradient_accent_1": "",
@@ -746,21 +760,7 @@
         "disabled": true,
         "settings": {}
       }
-    },
-    "gate_enabled": true,
-    "gate_collection": "awe-26",
-    "gate_password": "breakaway26",
-    "gate_days": 0,
-    "gate_kicker": "All Weather Essentials '26",
-    "gate_heading": "Only accessible for riders from the Early Breakaway",
-    "gate_text": "Enter the breakaway password",
-    "gate_placeholder": "Password",
-    "gate_button": "Get access",
-    "gate_error": "That password is not right.",
-    "gate_signup_text": "Not in the early breakaway? Click here to join.",
-    "gate_signup_url": "/pages/awe-26",
-    "gate_scope": "tagged",
-    "gate_tag": "early-access-26"
+    }
   },
   "presets": {
     "Default": {
