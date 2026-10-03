@@ -5883,3 +5883,97 @@ body.template--product .product-v2 .product-form__input.color-input input[type='
 /* Early access gate: a product that is early-access only renders just a marker instead of
    its card; the grid cell, slide or list item around it disappears with it. */
 :is(li, div, .grid__item, .swiper-slide, .slider__slide):has(> [data-gate-hidden]) { display: none !important; }
+
+
+/* ============================================================
+   Product page, colour picker in "Product images" style: each colour is
+   its own product photo (4:5, like the gallery), big enough to tell the
+   variants apart. "Color: name" sits above; the tiles wrap onto more
+   rows instead of scrolling, and scale with the column (about 5 per row
+   on a phone). Selected tile: 2px blue ring inside the tile.
+   ============================================================ */
+body.template--product .product-v2 .product-form__input.color-input--thumbs {
+  display: block !important;
+  min-height: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+}
+body.template--product .product-v2 .color-input--thumbs .color-input__track {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 8px;
+  overflow: visible;
+  padding: 0;
+  -webkit-mask-image: none;
+          mask-image: none;
+}
+@media screen and (min-width: 750px) {
+  body.template--product .product-v2 .color-input--thumbs .color-input__track {
+    grid-template-columns: repeat(auto-fill, minmax(68px, 84px));
+  }
+}
+body.template--product .product-v2 .color-input--thumbs .color-input__track label {
+  display: block;
+  width: 100%;
+}
+body.template--product .product-v2 .color-input--thumbs .color-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+body.template--product .product-v2 .product-form__input.color-input--thumbs label .color-thumb img {
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* the ring is drawn over the photo so it never shifts the tiles */
+body.template--product .product-v2 .color-input--thumbs .color-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  transition: box-shadow 0.15s ease;
+}
+@media (hover: hover) {
+  body.template--product .product-v2 .color-input--thumbs label:hover .color-thumb::after {
+    box-shadow: inset 0 0 0 2px #bbb;
+  }
+}
+body.template--product .product-v2 .color-input--thumbs input[type='radio']:checked + label .color-thumb::after {
+  box-shadow: inset 0 0 0 2px #0395F6;
+}
+body.template--product .product-v2 .color-input--thumbs input[type='radio']:focus-visible + label .color-thumb::after {
+  box-shadow: inset 0 0 0 2px #0395F6, inset 0 0 0 4px #fff;
+}
+/* colours that fall back to a plain swatch keep the tile shape */
+body.template--product .product-v2 .color-input--thumbs .color-dot.color-dot--swatch {
+  width: 100% !important;
+  height: auto !important;
+  min-width: 0 !important;
+  aspect-ratio: 4 / 5;
+  border-radius: 8px !important;
+}
+body.template--product .product-v2 .color-input--thumbs .color-input__selected-name {
+  position: static !important;
+  transform: none;
+  display: block;
+  max-width: none;
+  margin: 8px 0 0;
+  font-size: 13px !important;
+  font-weight: 600;
+  white-space: normal;
+}
+body.template--product .product-v2 .color-input--thumbs .color-input__selected-name::before {
+  content: attr(data-label) ": ";
+  font-weight: 400;
+  color: #666;
+}
