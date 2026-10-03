@@ -36,7 +36,7 @@
         "form_heading": "Drop your e-mail and shop before anyone else.",
         "form_text": "This is the only way to get access to this collection.",
         "form_placeholder": "E-mail address",
-        "form_button": "Get first access",
+        "form_button": "Become a Breakaway member",
         "form_consent": "By signing up you agree to receive e-mails from Sockeloen.",
         "error_text": "Please enter a valid e-mail address.",
         "phone_enabled": true,
@@ -52,8 +52,8 @@
         "phone_button": "WhatsApp me when it opens",
         "phone_skip": "No thanks, e-mail is enough",
         "phone_error": "Please enter a valid mobile number and tick the box.",
-        "success_heading": "You're in the break away",
-        "success_text": "Keep an eye on your inbox. You'll get access to the All Weather Essentials '26 before they go public.",
+        "success_heading": "Congretz, you made it into the break away.",
+        "success_text": "From now on you'll get first access to all product launches, starting with the All Weather Essentials '26",
         "success_button": "Done"
       }
     }
