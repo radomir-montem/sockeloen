@@ -5890,7 +5890,7 @@ body.template--product .product-v2 .product-form__input.color-input input[type='
    its own product photo (4:5, like the gallery), big enough to tell the
    variants apart. "Color: name" sits above; the tiles wrap onto more
    rows instead of scrolling, and scale with the column (about 5 per row
-   on a phone). Selected tile: 2px blue ring inside the tile.
+   on a phone, 8 on desktop so the buy button stays on the first screen). Selected tile: 2px blue ring inside the tile.
    ============================================================ */
 body.template--product .product-v2 .product-form__input.color-input--thumbs {
   display: flex !important;
@@ -5913,7 +5913,7 @@ body.template--product .product-v2 .color-input--thumbs .color-input__track {
 }
 @media screen and (min-width: 750px) {
   body.template--product .product-v2 .color-input--thumbs .color-input__track {
-    grid-template-columns: repeat(auto-fill, minmax(68px, 84px));
+    grid-template-columns: repeat(auto-fill, minmax(60px, 72px));
   }
 }
 body.template--product .product-v2 .color-input--thumbs .color-input__track label {
