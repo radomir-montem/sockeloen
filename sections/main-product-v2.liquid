@@ -694,7 +694,7 @@
                       {%- endif -%}
 
                       {%- if option.values.size > 1 -%}
-                        <fieldset class="js product-form__input product-form__input--pill {% if is_color %}color-input{% else %}size-input{% endif %}">
+                        <fieldset class="js product-form__input product-form__input--pill {% if is_color %}color-input{% if swatch_style == 'images' %} color-input--thumbs{% endif %}{% else %}size-input{% endif %}">
                           <legend class="form__label">{{ option.name }}</legend>
                           {% if is_color %}<div class="color-input__track">{% endif %}
                           {%- for value in option.values -%}
@@ -729,18 +729,23 @@
                                   custom.swatch_colors overrides), variant photo
                                   when the value is not a colour.
                                 {%- endcomment -%}
+                                {%- assign swatch_img = nil -%}
+                                {%- for variant in product.variants -%}
+                                  {%- if variant.options contains value and variant.featured_image -%}
+                                    {%- assign swatch_img = variant.featured_image -%}
+                                    {%- break -%}
+                                  {%- endif -%}
+                                {%- endfor -%}
                                 {%- capture swatch_bg -%}{% render 'color-swatch-hex', name: value %}{%- endcapture -%}
                                 {%- assign swatch_bg = swatch_bg | strip -%}
-                                {%- if swatch_bg != blank -%}
+                                {%- if swatch_style == 'images' and swatch_img -%}
+                                  {%- comment -%} "Product images" style: the variant's own photo as a 4:5 thumbnail {%- endcomment -%}
+                                  <span class="color-thumb">
+                                    <img src="{{ swatch_img | image_url: width: 200 }}" alt="{{ value | escape }}" loading="lazy" width="80" height="100">
+                                  </span>
+                                {%- elsif swatch_bg != blank -%}
                                   <span class="color-dot color-dot--swatch" style="background: {{ swatch_bg }};"></span>
                                 {%- else -%}
-                                  {%- assign swatch_img = nil -%}
-                                  {%- for variant in product.variants -%}
-                                    {%- if variant.options contains value and variant.featured_image -%}
-                                      {%- assign swatch_img = variant.featured_image -%}
-                                      {%- break -%}
-                                    {%- endif -%}
-                                  {%- endfor -%}
                                   {%- if swatch_img -%}
                                     <span class="color-dot color-dot--swatch color-dot--image">
                                       <img src="{{ swatch_img | image_url: width: 80 }}" alt="{{ value | escape }}" loading="lazy" width="40" height="40">
@@ -757,7 +762,7 @@
                           {%- endfor -%}
                           {% if is_color %}</div>{% endif %}
                           {%- if is_color -%}
-                            <span class="color-input__selected-name">{{ option.selected_value | escape }}</span>
+                            <span class="color-input__selected-name" data-label="{{ option.name | escape }}">{{ option.selected_value | escape }}</span>
                           {%- endif -%}
                         </fieldset>
                         {%- comment -%} Size guide link moved below ATC button {%- endcomment -%}
@@ -1960,6 +1965,61 @@
     window.addEventListener('load', function () { scrollToActive(true); });
     setTimeout(function () { scrollToActive(true); }, 700);
     mq.addEventListener && mq.addEventListener('change', function () { scrollToActive(true); });
+  })();
+</script>
+
+{%- comment -%}
+  The shipping and secure-checkout lines stay on one line on every
+  screen. The text is scaled down from 14px until it fits the column
+  (never below 9px; below that it wraps again). Re-runs on resize and when the
+  shipping text is filled in.
+{%- endcomment -%}
+<script>
+  (function () {
+    var section = document.getElementById('MainProduct-{{ section.id }}');
+    if (!section) return;
+    var MAX = 14, MIN = 9;
+
+    function textEl(row) {
+      var els = row.querySelectorAll('.shipping-text, :scope > span');
+      for (var i = 0; i < els.length; i++) {
+        if (els[i].offsetParent !== null && els[i].textContent.trim()) return els[i];
+      }
+      return null;
+    }
+
+    function fit() {
+      section.querySelectorAll('.product-v2__trust-row').forEach(function (row) {
+        var el = textEl(row);
+        if (!el) return;
+        /* our own style writes re-trigger the observer: skip when nothing changed */
+        var key = el.textContent + '|' + row.clientWidth;
+        if (row._fitKey === key) return;
+        row._fitKey = key;
+        el.style.removeProperty('font-size');
+        row.classList.add('is-one-line');
+        var size = MAX;
+        el.style.setProperty('font-size', size + 'px', 'important');
+        while (el.scrollWidth > el.clientWidth + 1 && size > MIN) {
+          size -= 0.5;
+          el.style.setProperty('font-size', size + 'px', 'important');
+        }
+        if (el.scrollWidth > el.clientWidth + 1) {
+          row.classList.remove('is-one-line');
+          el.style.removeProperty('font-size');
+        }
+      });
+    }
+
+    var timer;
+    function schedule() { clearTimeout(timer); timer = setTimeout(fit, 60); }
+    window.addEventListener('resize', schedule);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    var ship = section.querySelector('.product-v2__shipping-row');
+    if (ship && window.MutationObserver) {
+      new MutationObserver(schedule).observe(ship, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['style'] });
+    }
+    fit();
   })();
 </script>
 
