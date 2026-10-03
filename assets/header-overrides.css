@@ -6003,4 +6003,8 @@ body.template--product .product-v2 .thumbnail-slider .thumbnail-list {
     flex: 1 1 auto;
     min-width: 0;
   }
+  /* the date and "free shipping" parts follow the scaled size */
+  body.template--product .product-v2 .product-v2__trust-row.is-one-line .shipping-text * {
+    font-size: inherit !important;
+  }
 }
