@@ -106,15 +106,16 @@
         </span>
       </span>
     </small>
-    {% if product.compare_at_price > product.price and save_badge %}
+    {%- comment -%} the badge follows the same target as the price above: the selected variant with use_variant, else the product {%- endcomment -%}
+    {% if compare_at_price > price and save_badge %}
       <span
         id="Badge-{{ section_id }}-{{ card_product.id }}"
         class="product-save-badge"
       >
         {% if compact %}
-          SAVE {{ product.compare_at_price | minus: product.price | money | remove: '€' | remove: '&euro;' | strip | split: ',' | first }}
+          SAVE {{ compare_at_price | minus: price | money | remove: '€' | remove: '&euro;' | strip | split: ',' | first }}
         {% else %}
-          SAVE {{ product.compare_at_price | minus: product.price | money }}
+          SAVE {{ compare_at_price | minus: price | money }}
         {% endif %}
       </span>
     {% endif %}
