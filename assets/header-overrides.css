@@ -5893,7 +5893,9 @@ body.template--product .product-v2 .product-form__input.color-input input[type='
    on a phone). Selected tile: 2px blue ring inside the tile.
    ============================================================ */
 body.template--product .product-v2 .product-form__input.color-input--thumbs {
-  display: block !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch !important;
   min-height: 0;
   padding: 0 !important;
   border: 0 !important;
@@ -5966,8 +5968,9 @@ body.template--product .product-v2 .color-input--thumbs .color-input__selected-n
   position: static !important;
   transform: none;
   display: block;
+  order: -1;
   max-width: none;
-  margin: 8px 0 0;
+  margin: 0 0 8px;
   font-size: 13px !important;
   font-weight: 600;
   white-space: normal;
