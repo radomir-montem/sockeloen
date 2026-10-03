@@ -1,6 +1,7 @@
 {%- comment -%}
   Early access gate, body part: the glass password sheet (same look as the sign-up sheet on
-  the Black Friday / AWE pages). Rendered only when collection-gate-head.liquid locked the page.
+  the Black Friday / AWE pages: white kicker in the editor's own casing, same title, field
+  and button; the collection has no video behind it, so the glass carries a grey tint). Rendered only when collection-gate-head.liquid locked the page.
 {%- endcomment -%}
 {%- liquid
   assign gate_on = false
@@ -29,28 +30,30 @@
       <button type="submit" class="sk-gate__submit">{{ settings.gate_button | escape }}</button>
     </form>
     {%- if settings.gate_signup_url != blank and settings.gate_signup_text != blank -%}
-      <a class="sk-gate__signup" href="{{ settings.gate_signup_url }}">{{ settings.gate_signup_text | escape }}</a>
+      {%- comment -%} #signup opens the sign-up sheet (step 1) on the Black Friday / AWE pages straight away {%- endcomment -%}
+      {%- assign gate_signup_href = settings.gate_signup_url -%}
+      {%- unless gate_signup_href contains '#' -%}{%- assign gate_signup_href = gate_signup_href | append: '#signup' -%}{%- endunless -%}
+      <a class="sk-gate__signup" href="{{ gate_signup_href }}">{{ settings.gate_signup_text | escape }}</a>
     {%- endif -%}
   </div>
 </div>
 <style>
   html.gate-locked #SkGate { display: flex; }
   #SkGate { position: fixed; inset: 0; z-index: 100000; display: none; align-items: center; justify-content: center; padding: 96px 24px 40px; overflow: auto;
-    color: #111; text-align: center; background: rgba(255,255,255,.42); backdrop-filter: blur(10px) saturate(160%); -webkit-backdrop-filter: blur(10px) saturate(160%); }
-  #SkGate .sk-gate__inner { text-shadow: 0 1px 0 rgba(255,255,255,.6); }
+    color: #111; text-align: center; background: rgba(150,150,150,.55); backdrop-filter: blur(40px) saturate(160%); -webkit-backdrop-filter: blur(40px) saturate(160%); }
   #SkGate[hidden] { display: none !important; }
-  #SkGate .sk-gate__inner { width: 100%; max-width: 420px; }
-  #SkGate .sk-gate__kicker { margin: 0 0 12px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #555; }
-  #SkGate .sk-gate__title { margin: 0 0 12px; font-size: 32px; line-height: 1.1; font-weight: 700; letter-spacing: -.01em; }
-  #SkGate .sk-gate__text { margin: 0 0 24px; font-size: 16px; line-height: 1.5; color: #333; }
-  #SkGate .sk-gate__form { display: grid; gap: 10px; }
-  #SkGate .sk-gate__input { width: 100%; height: 52px; padding: 0 16px; font-size: 16px; color: #111; background: rgba(255,255,255,.85); border: 1px solid rgba(0,0,0,.14); border-radius: 8px; outline: none; text-align: center; letter-spacing: .06em; }
+  #SkGate .sk-gate__inner { width: 100%; max-width: 440px; }
+  #SkGate .sk-gate__kicker { margin: 0 0 12px; font-size: 12px; font-weight: 700; color: #fff; }
+  #SkGate .sk-gate__title { margin: 0 0 12px; font-size: 32px; line-height: 1.08; font-weight: 700; letter-spacing: -.01em; color: #111; text-wrap: balance; }
+  #SkGate .sk-gate__text { margin: 0 0 24px; font-size: 15px; line-height: 1.5; color: #333; }
+  #SkGate .sk-gate__form { display: grid; gap: 12px; }
+  #SkGate .sk-gate__input { width: 100%; height: 52px; padding: 0 16px; font-size: 16px; color: #111; background: rgba(255,255,255,.85); border: 1px solid rgba(0,0,0,.14); border-radius: 8px; outline: none; box-sizing: border-box; }
   #SkGate .sk-gate__input:focus { border-color: #111; box-shadow: 0 0 0 3px rgba(0,0,0,.08); background: #fff; }
   #SkGate .sk-gate__input[aria-invalid="true"] { border-color: #d9202a; }
   #SkGate .sk-gate__error { margin: 0; font-size: 13px; color: #d9202a; }
-  #SkGate .sk-gate__submit { height: 52px; border: 0; border-radius: 8px; background: #111; color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
-  #SkGate .sk-gate__submit:hover { background: #000; }
-  #SkGate .sk-gate__signup { display: inline-block; margin-top: 20px; font-size: 14px; color: #111; text-decoration: underline; text-underline-offset: 3px; }
+  #SkGate .sk-gate__submit { height: 52px; border: 2px solid #111; border-radius: 8px; background: #111; color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: background-color .2s ease; }
+  #SkGate .sk-gate__submit:hover { background: #333; border-color: #333; }
+  #SkGate .sk-gate__signup { display: inline-block; margin-top: 12px; padding: 16px 0; font-size: 14px; color: #111; text-decoration: none; }
   #SkGate.is-shaking .sk-gate__form { animation: sk-gate-shake .35s; }
   @keyframes sk-gate-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 </style>

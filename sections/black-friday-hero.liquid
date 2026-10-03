@@ -683,6 +683,12 @@
       var skip = phoneForm.querySelector('[data-bf-phone-skip]');
       if (skip) skip.addEventListener('click', function () { show('success'); });
     }
+
+    /* a link ending in #signup (the early-access gate's "join" link) lands on step 1 of the sheet */
+    if (location.hash === '#signup') {
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+      open();
+    }
   })();
 </script>
 
