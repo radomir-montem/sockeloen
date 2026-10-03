@@ -1968,6 +1968,60 @@
   })();
 </script>
 
+{%- comment -%}
+  Desktop: the shipping and secure-checkout lines stay on one line. The
+  text is scaled down from 14px until it fits the column (never below
+  10px; below that it wraps again). Re-runs on resize and when the
+  shipping text is filled in.
+{%- endcomment -%}
+<script>
+  (function () {
+    var section = document.getElementById('MainProduct-{{ section.id }}');
+    if (!section) return;
+    var mq = window.matchMedia('(min-width: 990px)');
+    var MAX = 14, MIN = 10;
+
+    function textEl(row) {
+      var els = row.querySelectorAll('.shipping-text, :scope > span');
+      for (var i = 0; i < els.length; i++) {
+        if (els[i].offsetParent !== null && els[i].textContent.trim()) return els[i];
+      }
+      return null;
+    }
+
+    function fit() {
+      section.querySelectorAll('.product-v2__trust-row').forEach(function (row) {
+        var el = textEl(row);
+        if (!el) return;
+        el.style.removeProperty('font-size');
+        row.classList.remove('is-one-line');
+        if (!mq.matches) return;
+        row.classList.add('is-one-line');
+        var size = MAX;
+        el.style.setProperty('font-size', size + 'px', 'important');
+        while (el.scrollWidth > el.clientWidth + 1 && size > MIN) {
+          size -= 0.5;
+          el.style.setProperty('font-size', size + 'px', 'important');
+        }
+        if (el.scrollWidth > el.clientWidth + 1) {
+          row.classList.remove('is-one-line');
+          el.style.removeProperty('font-size');
+        }
+      });
+    }
+
+    var timer;
+    function schedule() { clearTimeout(timer); timer = setTimeout(fit, 60); }
+    window.addEventListener('resize', schedule);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    var ship = section.querySelector('.product-v2__shipping-row');
+    if (ship && window.MutationObserver) {
+      new MutationObserver(schedule).observe(ship, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['style'] });
+    }
+    fit();
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Product Hero V2",

@@ -5980,3 +5980,27 @@ body.template--product .product-v2 .color-input--thumbs .color-input__selected-n
   font-weight: 400;
   color: #666;
 }
+
+
+/* Product page: the thumbnail row shrank to its content when a variant
+   has fewer than five photos, so the thumbnails (a fifth of the row)
+   came out tiny. The row is always the full width now; every thumbnail
+   keeps the same size, left-aligned, whatever the number of photos. */
+body.template--product .product-v2 .thumbnail-slider .thumbnail-list {
+  flex: 1 1 100% !important;
+  width: 100% !important;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Product page (desktop): "Ordered before ..." and "Safe & secure
+   checkout ..." stay on one line; the script in main-product-v2.liquid
+   scales the text down until it fits the column. */
+@media screen and (min-width: 990px) {
+  body.template--product .product-v2 .product-v2__trust-row.is-one-line .shipping-text,
+  body.template--product .product-v2 .product-v2__trust-row.is-one-line > span {
+    white-space: nowrap !important;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
