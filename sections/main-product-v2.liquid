@@ -1969,17 +1969,16 @@
 </script>
 
 {%- comment -%}
-  Desktop: the shipping and secure-checkout lines stay on one line. The
-  text is scaled down from 14px until it fits the column (never below
-  10px; below that it wraps again). Re-runs on resize and when the
+  The shipping and secure-checkout lines stay on one line on every
+  screen. The text is scaled down from 14px until it fits the column
+  (never below 9px; below that it wraps again). Re-runs on resize and when the
   shipping text is filled in.
 {%- endcomment -%}
 <script>
   (function () {
     var section = document.getElementById('MainProduct-{{ section.id }}');
     if (!section) return;
-    var mq = window.matchMedia('(min-width: 990px)');
-    var MAX = 14, MIN = 10;
+    var MAX = 14, MIN = 9;
 
     function textEl(row) {
       var els = row.querySelectorAll('.shipping-text, :scope > span');
@@ -1993,9 +1992,11 @@
       section.querySelectorAll('.product-v2__trust-row').forEach(function (row) {
         var el = textEl(row);
         if (!el) return;
+        /* our own style writes re-trigger the observer: skip when nothing changed */
+        var key = el.textContent + '|' + row.clientWidth;
+        if (row._fitKey === key) return;
+        row._fitKey = key;
         el.style.removeProperty('font-size');
-        row.classList.remove('is-one-line');
-        if (!mq.matches) return;
         row.classList.add('is-one-line');
         var size = MAX;
         el.style.setProperty('font-size', size + 'px', 'important');
