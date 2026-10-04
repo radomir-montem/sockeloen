@@ -5920,26 +5920,37 @@ body.template--product .product-v2 .color-input--thumbs .color-input__track labe
   display: block;
   width: 100%;
 }
+/* 4:5 box through padding and an absolutely placed photo: Safari resolves
+   a child's height: 100% inside an aspect-ratio box to nothing, which
+   left the tiles empty there. */
 body.template--product .product-v2 .color-input--thumbs .color-thumb {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 0;
+  padding-top: 125%;
   border-radius: 8px;
   overflow: hidden;
   background: #f5f5f5;
 }
 body.template--product .product-v2 .product-form__input.color-input--thumbs label .color-thumb img {
   display: block !important;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  max-width: none;
   object-fit: cover;
 }
 /* the ring is drawn over the photo so it never shifts the tiles */
 body.template--product .product-v2 .color-input--thumbs .color-thumb::after {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   border-radius: inherit;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
   pointer-events: none;
@@ -5959,9 +5970,9 @@ body.template--product .product-v2 .color-input--thumbs input[type='radio']:focu
 /* colours that fall back to a plain swatch keep the tile shape */
 body.template--product .product-v2 .color-input--thumbs .color-dot.color-dot--swatch {
   width: 100% !important;
-  height: auto !important;
+  height: 0 !important;
+  padding-top: 125% !important;
   min-width: 0 !important;
-  aspect-ratio: 4 / 5;
   border-radius: 8px !important;
 }
 body.template--product .product-v2 .color-input--thumbs .color-input__selected-name {
