@@ -6047,6 +6047,7 @@ body.template--product .product-v2 .thumbnail-list .thumbnail::after {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 1 !important;
   border-radius: inherit;
   box-shadow: inset 0 0 0 1.5px transparent;
   pointer-events: none;
