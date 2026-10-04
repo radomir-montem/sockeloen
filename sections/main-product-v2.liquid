@@ -1961,6 +1961,35 @@
       }, 80);
     }, { passive: true });
 
+    /* gentle swipe: the scroll-snap row only moves on when the finger drags
+       past half a photo, so a short swipe snapped back. A horizontal swipe
+       of 24px or more now always goes to the next / previous photo. */
+    var touch = null;
+    list.addEventListener('touchstart', function (e) {
+      if (!mq.matches || e.touches.length !== 1) { touch = null; return; }
+      var items = visibleItems();
+      var x = list.scrollLeft, index = 0;
+      items.forEach(function (li, i) {
+        if (Math.abs(li.offsetLeft - x) < Math.abs(items[index].offsetLeft - x)) index = i;
+      });
+      touch = { x: e.touches[0].clientX, y: e.touches[0].clientY, index: index };
+    }, { passive: true });
+    list.addEventListener('touchend', function (e) {
+      if (!touch || !e.changedTouches.length) return;
+      var dx = e.changedTouches[0].clientX - touch.x;
+      var dy = e.changedTouches[0].clientY - touch.y;
+      var from = touch.index;
+      touch = null;
+      if (Math.abs(dx) < 24 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      var items = visibleItems();
+      var target = items[from + (dx < 0 ? 1 : -1)];
+      if (!target) return;
+      clearTimeout(settle);
+      if (target.classList.contains('is-active')) { scrollToActive(false); return; }
+      gallery.setActiveMedia(target.dataset.mediaId, false);
+    }, { passive: true });
+    list.addEventListener('touchcancel', function () { touch = null; }, { passive: true });
+
     /* first paint: line the row up with the active photo without motion */
     window.addEventListener('load', function () { scrollToActive(true); });
     setTimeout(function () { scrollToActive(true); }, 700);
