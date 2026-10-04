@@ -6062,3 +6062,14 @@ body.template--product .product-v2 .thumbnail-list {
   scroll-padding-left: 0 !important;
   scroll-padding-inline: 0 !important;
 }
+
+/* Product page (phone and tablet): no breadcrumb over the product photo;
+   the merchandising badge takes its place under the header pill. */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2__media-wrapper .breadcrumb-overlay {
+    display: none !important;
+  }
+  body.template--product .product-v2__media-wrapper > .card-badge {
+    top: 104px !important;
+  }
+}
