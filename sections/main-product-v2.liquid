@@ -65,8 +65,8 @@
 
       {%- comment -%}
         Benefit tags over the photo (bottom-left, like a "model wears M"
-        note): the same three benefit metafields as the checklist in the
-        buy box, with the theme-editor fallbacks. Styled as the product
+        note): the same benefit metafields as the checklist in the buy box
+        (1-3 with the theme-editor fallbacks, 4-5 only when filled in). Styled as the product
         card badges. Phone widths only; on desktop the gallery is a grid.
       {%- endcomment -%}
       {%- liquid
@@ -82,16 +82,21 @@
         if tag3 == blank
           assign tag3 = 'products.v2.default_benefit_3' | t
         endif
+        assign tag4 = product.metafields.custom.custom_benefit_4.value | default: product.metafields.custom.custom_benefit_4
+        assign tag5 = product.metafields.custom.custom_benefit_5.value | default: product.metafields.custom.custom_benefit_5
       -%}
-      {%- if tag1 != blank or tag2 != blank or tag3 != blank -%}
+      {%- if tag1 != blank or tag2 != blank or tag3 != blank or tag4 != blank or tag5 != blank -%}
         <div class="pdp-tags" aria-hidden="true" id="PdpTags-{{ section.id }}">
-          {%- if tag1 != blank -%}<span class="pdp-tag is-visible">{{ tag1 | strip | remove: '.' }}</span>{%- endif -%}
-          {%- if tag2 != blank -%}<span class="pdp-tag">{{ tag2 | strip | remove: '.' }}</span>{%- endif -%}
-          {%- if tag3 != blank -%}<span class="pdp-tag">{{ tag3 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag1 != blank -%}<span class="pdp-tag is-visible" data-photo="0">{{ tag1 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag2 != blank -%}<span class="pdp-tag" data-photo="1">{{ tag2 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag3 != blank -%}<span class="pdp-tag" data-photo="2">{{ tag3 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag4 != blank -%}<span class="pdp-tag" data-photo="3">{{ tag4 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag5 != blank -%}<span class="pdp-tag" data-photo="4">{{ tag5 | strip | remove: '.' }}</span>{%- endif -%}
         </div>
         <script>
           /* One benefit per photo: the tag shown follows the active slide
-             (1st photo = 1st benefit, 2nd = 2nd, 3rd = 3rd, then none). */
+             (1st photo = 1st benefit, ... 5th = 5th, then none; a benefit
+             that is not filled in leaves its photo without a tag). */
           (function init() {
             /* the gallery is rendered after this script; wait for the DOM */
             if (document.readyState === 'loading') {
@@ -110,7 +115,7 @@
               var active = slides.findIndex(function (s) { return s.classList.contains('is-active'); });
               if (active < 0) active = 0;
               /* photo 1 > benefit 1, photo 2 > benefit 2, ...; later photos show none */
-              items.forEach(function (t, i) { t.classList.toggle('is-visible', i === active); });
+              items.forEach(function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === active); });
             }
             new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
             update();
@@ -629,8 +634,13 @@
           if ben3 == blank
             assign ben3 = 'products.v2.default_benefit_3' | t
           endif
+          comment
+            benefits 4 and 5 are optional: no fallback, shown only when filled in
+          endcomment
+          assign ben4 = product.metafields.custom.custom_benefit_4.value | default: product.metafields.custom.custom_benefit_4
+          assign ben5 = product.metafields.custom.custom_benefit_5.value | default: product.metafields.custom.custom_benefit_5
         -%}
-        {%- if ben1 != blank or ben2 != blank or ben3 != blank -%}
+        {%- if ben1 != blank or ben2 != blank or ben3 != blank or ben4 != blank or ben5 != blank -%}
           <ul class="product-v2__benefits">
             {%- if ben1 != blank -%}
               {%- assign ben1_first = ben1 | slice: 0 | upcase -%}{%- assign ben1_rest = ben1 | slice: 1, 999 -%}{%- assign ben1_cap = ben1_first | append: ben1_rest -%}
@@ -654,6 +664,22 @@
               <li class="product-v2__benefit">
                 {% render 'icon-checkmark' %}
                 <span>{{ ben3_cap }}</span>
+              </li>
+            {%- endif -%}
+            {%- if ben4 != blank -%}
+              {%- assign ben4_first = ben4 | slice: 0 | upcase -%}{%- assign ben4_rest = ben4 | slice: 1, 999 -%}{%- assign ben4_cap = ben4_first | append: ben4_rest -%}
+              {%- unless ben4_cap contains '.' or ben4_cap contains '!' -%}{%- assign ben4_cap = ben4_cap | append: '.' -%}{%- endunless -%}
+              <li class="product-v2__benefit">
+                {% render 'icon-checkmark' %}
+                <span>{{ ben4_cap }}</span>
+              </li>
+            {%- endif -%}
+            {%- if ben5 != blank -%}
+              {%- assign ben5_first = ben5 | slice: 0 | upcase -%}{%- assign ben5_rest = ben5 | slice: 1, 999 -%}{%- assign ben5_cap = ben5_first | append: ben5_rest -%}
+              {%- unless ben5_cap contains '.' or ben5_cap contains '!' -%}{%- assign ben5_cap = ben5_cap | append: '.' -%}{%- endunless -%}
+              <li class="product-v2__benefit">
+                {% render 'icon-checkmark' %}
+                <span>{{ ben5_cap }}</span>
               </li>
             {%- endif -%}
           </ul>
