@@ -5830,28 +5830,30 @@ body.template--search .open-facet-drawer:hover {
 
 
 /* ============================================================
-   PRODUCT PAGE (phone) — the big photo is a horizontal swipe slider.
-   The v2 template showed one .is-active item and hid the rest, so a
-   thumbnail tap swapped the photo with no motion and a finger swipe did
-   nothing. The list is now a scroll-snap row (one photo per screen):
-   thumbnails scroll it smoothly, swiping moves between photos, and the
-   script in main-product-v2.liquid keeps .is-active and the thumbnail
-   highlight in sync with the visible photo. Variant filtering still
-   hides photos through the inline display:none.
+   PRODUCT PAGE (phone) — the big photo is a swipe slider. The photos
+   sit in one row (one per screen) that is moved with a transform by the
+   script in main-product-v2.liquid: it follows the finger and glides
+   300ms to the photo on release (Swiper's default feel). The row itself
+   does not scroll; its wrapper clips it. Vertical swipes still scroll
+   the page (touch-action: pan-y). Variant filtering still hides photos
+   through the inline display:none.
    ============================================================ */
 @media screen and (max-width: 989px) {
+  body.template--product .product-v2 slider-component[id^="GalleryViewer"] {
+    overflow: hidden !important;
+  }
   body.template--product .product-v2 .product__media-list {
     display: flex !important;
     flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
     gap: 0 !important;
-  }
-  body.template--product .product-v2 .product__media-list::-webkit-scrollbar {
-    display: none;
+    touch-action: pan-y;
+    transition-property: transform;
+    transition-timing-function: ease;
+    will-change: transform;
+    -webkit-user-select: none;
+            user-select: none;
   }
   body.template--product .product-v2 .product__media-list .product__media-item,
   body.template--product .product-v2 .product__media-list:has(.is-active) .product__media-item:first-child:not(.is-active),
@@ -5861,11 +5863,12 @@ body.template--search .open-facet-drawer:hover {
     flex: 0 0 100% !important;
     width: 100% !important;
     min-width: 100%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
   }
   body.template--product .product-v2 .product__media-list .product__media-item[style*="display: none"] {
     display: none !important;
+  }
+  body.template--product .product-v2 .product__media-list img {
+    -webkit-user-drag: none;
   }
 }
 
