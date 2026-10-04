@@ -1957,6 +1957,18 @@
         gallery.setActiveMedia(target.dataset.mediaId, false);
         selfChange = false;
       }
+      centerThumb(ms);
+    }
+    /* the selected thumbnail sits in the middle of the strip (as far as the
+       ends allow), so the next and previous photos are visible beside it */
+    function centerThumb(ms) {
+      var strip = section.querySelector('.thumbnail-list');
+      var current = strip && strip.querySelector('button[aria-current="true"]');
+      var li = current && current.closest('.thumbnail-list__item');
+      if (!li) return;
+      var left = li.offsetLeft - (strip.clientWidth - li.offsetWidth) / 2;
+      left = Math.max(0, Math.min(left, strip.scrollWidth - strip.clientWidth));
+      strip.scrollTo({ left: left, behavior: ms ? 'smooth' : 'auto' });
     }
     function sync(ms) {
       if (!mq.matches) {

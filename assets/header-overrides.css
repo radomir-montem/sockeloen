@@ -6031,3 +6031,33 @@ body.template--product .product-v2 .product-v2__trust-row.is-one-line .shipping-
 .facets-container.facets-container-drawer .mobile-facets__open {
   visibility: hidden;
 }
+
+
+/* Product page: the selected thumbnail carries a light grey border (drawn
+   over the photo, so it does not change the thumbnail's size) instead of
+   fading; the script in main-product-v2.liquid keeps it centred. */
+body.template--product .product-v2 .thumbnail-list .thumbnail {
+  position: relative;
+  opacity: 1 !important;
+}
+body.template--product .product-v2 .thumbnail-list .thumbnail::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1.5px transparent;
+  pointer-events: none;
+  transition: box-shadow 0.2s ease;
+}
+body.template--product .product-v2 .thumbnail-list .thumbnail[aria-current="true"]::after {
+  box-shadow: inset 0 0 0 1.5px #b5b5b5;
+}
+/* centring needs the strip to be free to stop anywhere */
+body.template--product .product-v2 .thumbnail-list {
+  scroll-snap-type: none !important;
+  scroll-padding-left: 0 !important;
+  scroll-padding-inline: 0 !important;
+}
