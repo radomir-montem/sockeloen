@@ -741,7 +741,7 @@
                                 {%- if swatch_style == 'images' and swatch_img -%}
                                   {%- comment -%} "Product images" style: the variant's own photo as a 4:5 thumbnail {%- endcomment -%}
                                   <span class="color-thumb">
-                                    <img src="{{ swatch_img | image_url: width: 200 }}" alt="{{ value | escape }}" loading="lazy" width="80" height="100">
+                                    <img src="{{ swatch_img | image_url: width: 200 }}" alt="{{ value | escape }}" width="80" height="100">
                                   </span>
                                 {%- elsif swatch_bg != blank -%}
                                   <span class="color-dot color-dot--swatch" style="background: {{ swatch_bg }};"></span>
