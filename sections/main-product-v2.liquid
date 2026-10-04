@@ -1909,11 +1909,16 @@
 
 
 {%- comment -%}
-  Phone gallery: keep the swipe slider (.product__media-list, see
-  header-overrides.css) and the thumbnails in sync. A thumbnail tap makes
-  media-gallery.js set .is-active; we scroll the photo row to that item.
-  A finger swipe scrolls the row; we mark the photo in view as .is-active
-  through media-gallery.setActiveMedia so the thumbnail highlight follows.
+  Phone gallery slider. Same touch model as Swiper's defaults (the slider
+  on cloudpillo.com): the photo row follows the finger 1:1 through a
+  transform, and on release it glides 300ms to a photo:
+  - a quick swipe (under 300ms, more than 5px) always goes one photo on;
+  - a slow drag goes on once it is past half a photo, else it returns;
+  - never more than one photo per swipe; rubber-band at both ends;
+  - a swipe steeper than 45 degrees scrolls the page instead.
+  Thumbnail taps and variant changes (media-gallery.js sets .is-active)
+  glide the row the same way; after a swipe the photo in view is set
+  through media-gallery.setActiveMedia so thumbnails and benefit tags follow.
 {%- endcomment -%}
 <script>
   (function () {
@@ -1923,114 +1928,136 @@
     var list = section.querySelector('.product__media-list');
     var gallery = section.querySelector('media-gallery');
     if (!list || !gallery) return;
-    var programmatic = false;
 
-    function visibleItems() {
+    var SPEED = 300, THRESHOLD = 5, LONG_MS = 300, LONG_RATIO = 0.5, RESISTANCE = 0.85;
+    var index = 0, translate = 0, drag = null, selfChange = false;
+
+    function items() {
       return Array.prototype.filter.call(list.querySelectorAll('.product__media-item'), function (li) {
-        return li.style.display !== 'none' && li.clientWidth > 0;
+        return li.style.display !== 'none';
       });
     }
-    function scrollToActive(instant) {
-      if (!mq.matches) return;
-      var active = list.querySelector('.product__media-item.is-active');
-      if (!active || active.style.display === 'none') return;
-      var target = active.offsetLeft;
-      if (Math.abs(list.scrollLeft - target) < 2) return;
-      programmatic = true;
-      list.scrollTo({ left: target, behavior: instant ? 'auto' : 'smooth' });
-      clearTimeout(scrollToActive.t);
-      scrollToActive.t = setTimeout(function () {
-        /* a smooth scroll can be cancelled by a layout change (lazy image,
-           header state); if the row did not arrive, jump the rest */
-        var again = list.querySelector('.product__media-item.is-active');
-        if (again && Math.abs(list.scrollLeft - again.offsetLeft) > 2) {
-          list.scrollTo({ left: again.offsetLeft, behavior: 'auto' });
-        }
-        programmatic = false;
-      }, 700);
+    function width() { return list.clientWidth || 1; }
+    function setTranslate(x, ms) {
+      translate = x;
+      list.style.transitionDuration = (ms || 0) + 'ms';
+      list.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+    }
+    function activeIndex() {
+      var i = items().findIndex(function (li) { return li.classList.contains('is-active'); });
+      return i < 0 ? 0 : i;
+    }
+    function slideTo(i, ms) {
+      var all = items();
+      index = Math.max(0, Math.min(i, all.length - 1));
+      setTranslate(-index * width(), ms);
+      var target = all[index];
+      if (target && !target.classList.contains('is-active')) {
+        selfChange = true;
+        gallery.setActiveMedia(target.dataset.mediaId, false);
+        selfChange = false;
+      }
+    }
+    function sync(ms) {
+      if (!mq.matches) {
+        list.style.removeProperty('transform');
+        list.style.removeProperty('transition-duration');
+        return;
+      }
+      list.scrollLeft = 0;
+      slideTo(activeIndex(), ms);
     }
 
-    /* thumbnail tap: scroll right away as well, without waiting for the
-       class change to be observed */
-    section.addEventListener('click', function (e) {
-      if (!mq.matches) return;
-      var btn = e.target.closest('.thumbnail-list__item button');
-      if (!btn) return;
-      requestAnimationFrame(function () { scrollToActive(false); });
+    /* thumbnail tap / variant change / variant photo filter -> the row follows */
+    new MutationObserver(function (records) {
+      if (selfChange || drag) return;
+      var filtered = records.some(function (r) { return r.attributeName === 'style' && r.target !== list; });
+      var active = records.some(function (r) { return r.attributeName === 'class'; });
+      if (filtered) sync(0); else if (active && activeIndex() !== index) sync(SPEED);
+    }).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+
+    function point(e) {
+      var t = e.touches ? e.touches[0] : e;
+      return t ? { x: t.clientX, y: t.clientY } : null;
+    }
+    function start(e) {
+      if (!mq.matches || (e.touches && e.touches.length !== 1)) { drag = null; return; }
+      var p = point(e);
+      /* pick the row up where it is, also in the middle of a glide */
+      var live = new DOMMatrixReadOnly(getComputedStyle(list).transform).m41;
+      setTranslate(live, 0);
+      drag = { x: p.x, y: p.y, from: live, time: Date.now(), moving: false, scrolling: null, dx: 0 };
+    }
+    function move(e) {
+      if (!drag) return;
+      if (e.touches && e.touches.length !== 1) return;
+      var p = point(e);
+      var dx = p.x - drag.x, dy = p.y - drag.y;
+      if (drag.scrolling === null) {
+        if (Math.abs(dx) < THRESHOLD && Math.abs(dy) < THRESHOLD) return;
+        /* steeper than 45 degrees: this is a page scroll */
+        drag.scrolling = Math.atan2(Math.abs(dy), Math.abs(dx)) * 180 / Math.PI > 45;
+        /* the first 5px are not part of the drag, as in Swiper */
+        drag.x += dx > 0 ? THRESHOLD : -THRESHOLD;
+        dx = p.x - drag.x;
+      }
+      if (drag.scrolling) return;
+      drag.moving = true;
+      drag.dx = dx;
+      var min = 0, max = -(items().length - 1) * width();
+      var x = drag.from + dx;
+      if (x > min) x = min - 1 + Math.pow(-min + drag.from + dx, RESISTANCE);
+      else if (x < max) x = max + 1 - Math.pow(max - drag.from - dx, RESISTANCE);
+      setTranslate(x, 0);
+      if (e.cancelable && !e.touches) e.preventDefault();
+    }
+    function end() {
+      if (!drag) return;
+      var d = drag;
+      drag = null;
+      if (!d.moving) { slideTo(index, SPEED); return; }
+      var w = width(), count = items().length;
+      var pos = Math.max(0, Math.min(-translate, (count - 1) * w));
+      var stop = Math.min(Math.floor(pos / w), count - 1);
+      var ratio = (pos - stop * w) / w;
+      var next = d.dx < 0;
+      var target;
+      if (Date.now() - d.time > LONG_MS) {
+        target = next ? (ratio >= LONG_RATIO ? stop + 1 : stop) : (ratio > 1 - LONG_RATIO ? stop + 1 : stop);
+      } else {
+        target = next ? stop + 1 : stop;
+      }
+      /* never more than one photo away from where the swipe began */
+      target = Math.max(index - 1, Math.min(target, index + 1));
+      suppressClick = true;
+      setTimeout(function () { suppressClick = false; }, 350);
+      slideTo(target, SPEED);
+    }
+
+    list.addEventListener('touchstart', start, { passive: true });
+    list.addEventListener('touchmove', move, { passive: true });
+    list.addEventListener('touchend', end, { passive: true });
+    list.addEventListener('touchcancel', end, { passive: true });
+    /* mouse drag in a narrow desktop window */
+    list.addEventListener('mousedown', function (e) { if (e.button === 0) start(e); });
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', end);
+    list.addEventListener('dragstart', function (e) { if (mq.matches) e.preventDefault(); });
+
+    /* a drag is not a tap on the photo */
+    var suppressClick = false;
+    list.addEventListener('click', function (e) {
+      if (suppressClick) { e.preventDefault(); e.stopPropagation(); }
     }, true);
 
-    /* thumbnail tap / variant change -> photo row follows */
-    new MutationObserver(function (records) {
-      var changed = records.some(function (r) {
-        return r.target.classList && r.target.classList.contains('is-active');
-      });
-      if (changed) scrollToActive(false);
-    }).observe(list, { attributes: true, attributeFilter: ['class'], subtree: true });
-
-    /* swipe -> active photo and thumbnail follow */
-    var settle;
-    list.addEventListener('scroll', function () {
-      if (!mq.matches || programmatic) return;
-      clearTimeout(settle);
-      settle = setTimeout(function () {
-        if (programmatic) return;
-        var items = visibleItems();
-        if (!items.length) return;
-        var x = list.scrollLeft;
-        var nearest = items[0];
-        items.forEach(function (li) {
-          if (Math.abs(li.offsetLeft - x) < Math.abs(nearest.offsetLeft - x)) nearest = li;
-        });
-        if (nearest.classList.contains('is-active')) return;
-        programmatic = true;
-        gallery.setActiveMedia(nearest.dataset.mediaId, false);
-        setTimeout(function () { programmatic = false; }, 100);
-      }, 80);
-    }, { passive: true });
-
-    /* One photo per swipe. The scroll-snap row only moved on when the
-       finger dragged past half a photo (a short swipe snapped back), and
-       a fast flick could carry past several photos. A horizontal swipe of
-       24px or more now goes exactly one photo forward or back from where
-       the finger went down: the browser's own momentum is stopped on
-       release and the row is scrolled to that photo. */
-    var touch = null;
-    list.addEventListener('touchstart', function (e) {
-      if (!mq.matches || e.touches.length !== 1) { touch = null; return; }
-      var items = visibleItems();
-      /* start from the active photo, not from a row that may still be moving */
-      var index = items.findIndex(function (li) { return li.classList.contains('is-active'); });
-      if (index < 0) index = 0;
-      touch = { x: e.touches[0].clientX, y: e.touches[0].clientY, index: index };
-    }, { passive: true });
-    list.addEventListener('touchend', function (e) {
-      if (!touch || !e.changedTouches.length) return;
-      var dx = e.changedTouches[0].clientX - touch.x;
-      var dy = e.changedTouches[0].clientY - touch.y;
-      var from = touch.index;
-      touch = null;
-      var items = visibleItems();
-      var step = 0;
-      if (Math.abs(dx) >= 24 && Math.abs(dx) >= Math.abs(dy) * 1.2) step = dx < 0 ? 1 : -1;
-      var target = items[from + step] || items[from];
-      if (!target) return;
-      clearTimeout(settle);
-      programmatic = true;
-      /* overflow hidden for one frame cancels the momentum scroll */
-      list.style.setProperty('overflow-x', 'hidden', 'important');
-      requestAnimationFrame(function () {
-        list.style.removeProperty('overflow-x');
-        programmatic = false;
-        if (target.classList.contains('is-active')) scrollToActive(false);
-        else gallery.setActiveMedia(target.dataset.mediaId, false);
-      });
-    }, { passive: true });
-    list.addEventListener('touchcancel', function () { touch = null; }, { passive: true });
-
-    /* first paint: line the row up with the active photo without motion */
-    window.addEventListener('load', function () { scrollToActive(true); });
-    setTimeout(function () { scrollToActive(true); }, 700);
-    mq.addEventListener && mq.addEventListener('change', function () { scrollToActive(true); });
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () { sync(0); }, 60);
+    });
+    mq.addEventListener && mq.addEventListener('change', function () { sync(0); });
+    window.addEventListener('load', function () { sync(0); });
+    sync(0);
   })();
 </script>
 
