@@ -6006,3 +6006,14 @@ body.template--product .product-v2 .product-v2__trust-row.is-one-line > span {
 body.template--product .product-v2 .product-v2__trust-row.is-one-line .shipping-text * {
   font-size: inherit !important;
 }
+
+/* Collection page: the old filter bar (filter label, "Sort by", product
+   count, active-filter pills) is collapsed to height 0 in custom.css, but
+   its content was still drawn behind the product grid and showed through
+   the gaps between the tiles. Hide what is left of it; the filter drawer
+   itself (opened by the floating filter button) stays visible. */
+.facets-container.facets-container-drawer > facet-filters-form,
+.facets-container.facets-container-drawer > .product-count,
+.facets-container.facets-container-drawer .mobile-facets__open {
+  visibility: hidden;
+}
