@@ -161,21 +161,22 @@
      column widths and 12px gaps, and the row scrolls sideways so every
      product can be reached. Swiper takes over once it is initialised. */
   .{{ swiper_id }}:not(.swiper-initialized) .swiper-wrapper {
-    display: flex;
-    gap: 12px;
+    display: flex !important;
+    gap: 12px !important;
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
   .{{ swiper_id }}:not(.swiper-initialized) .swiper-wrapper::-webkit-scrollbar { display: none; }
   .{{ swiper_id }}:not(.swiper-initialized) .swiper-slide {
-    flex: 0 0 calc((100% - {{ section.settings.mobile_columns | minus: 1 | times: 12 }}px) / {{ section.settings.mobile_columns }});
+    flex: 0 0 calc((100% - {{ section.settings.mobile_columns | minus: 1 | times: 12 }}px) / {{ section.settings.mobile_columns }}) !important;
     width: auto;
     min-width: 0;
+    margin-right: 0 !important;
   }
   @media screen and (min-width: 768px) {
     .{{ swiper_id }}:not(.swiper-initialized) .swiper-slide {
-      flex-basis: calc((100% - {{ section.settings.desktop_columns | minus: 1 | times: 12 }}px) / {{ section.settings.desktop_columns }});
+      flex-basis: calc((100% - {{ section.settings.desktop_columns | minus: 1 | times: 12 }}px) / {{ section.settings.desktop_columns }}) !important;
     }
   }
   /* Hover: crossfade to second image */
