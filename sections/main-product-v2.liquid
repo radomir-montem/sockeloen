@@ -2227,8 +2227,8 @@
     var index = 0, translate = 0, drag = null, selfChange = false, suppressClick = false;
 
     /* Photo order in this layout: the photos were sorted for the classic
-       page (overview, overview, close-up, close-up, ...). Here photos 3/4,
-       5/6, 7/8 ... swap places, so an overview and a close-up alternate.
+       page. Here photos 3/4 and 7/8 (and 9/10, ...) swap places, so an
+       overview and a close-up alternate; photos 5/6 stay as they are.
        The order is only visual (data-pdp-order + CSS order); the DOM and
        the classic and phone pages keep the admin order. */
     function domItems() {
@@ -2239,6 +2239,7 @@
     function items() {
       var all = domItems();
       for (var i = 2; i + 1 < all.length; i += 2) {
+        if (i === 4) continue; /* photos 5 and 6 keep their order */
         var t = all[i]; all[i] = all[i + 1]; all[i + 1] = t;
       }
       return all;
