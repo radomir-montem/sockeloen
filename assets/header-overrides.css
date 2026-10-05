@@ -6091,3 +6091,8 @@ body.template--product .product-v2 .product__media--inline-video video {
   display: block;
   pointer-events: none;
 }
+/* its thumbnail is a plain still like the photo thumbnails (the theme's
+   play badge was unstyled here and covered the strip) */
+body.template--product .product-v2 .thumbnail-list .thumbnail__badge {
+  display: none !important;
+}
