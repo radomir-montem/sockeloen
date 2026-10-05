@@ -2224,7 +2224,8 @@
       });
     }
     function slideWidth() { return (list.clientWidth || 1) / PER_VIEW; }
-    function maxIndex() { return Math.max(0, items().length - PER_VIEW); }
+    /* every photo can be the left one; the last then has no neighbour on the right */
+    function maxIndex() { return Math.max(0, items().length - 1); }
     function setTranslate(x, ms) {
       translate = x;
       list.style.transitionDuration = (ms || 0) + 'ms';
@@ -2265,7 +2266,7 @@
         }
         return;
       }
-      /* the selected photo becomes the left photo (the last one can only be the right photo) */
+      /* the selected photo becomes the left photo */
       slideTo(activeIndex(), ms, false);
     }
 
@@ -2360,6 +2361,36 @@
     mq.addEventListener && mq.addEventListener('change', function () { index = 0; sync(0); });
     window.addEventListener('load', function () { sync(0); });
     sync(0);
+
+    /* The three tiles should fit the window without scrolling. The compact
+       spacing in pdp-gallery-layout.css does that on most screens; on a
+       short window the buy box is scaled down a little (never below 80%).
+       Not while an info link is open: that is allowed to grow. */
+    var info = root.querySelector('.product-v2__info-wrapper');
+    function fitInfo() {
+      if (!info) return;
+      if (!on()) { info.style.removeProperty('--pdp-zoom'); return; }
+      if (info.querySelector('.pdp-tile--links details[open]')) return;
+      info.style.setProperty('--pdp-zoom', '1');
+      var top = info.getBoundingClientRect().top + window.scrollY;
+      var available = window.innerHeight - top - 12;
+      var z = Math.max(0.8, Math.min(1, available / info.offsetHeight));
+      info.style.setProperty('--pdp-zoom', String(Math.round(z * 1000) / 1000));
+    }
+    var fitTimer;
+    function scheduleFit() { clearTimeout(fitTimer); fitTimer = setTimeout(fitInfo, 80); }
+    window.addEventListener('resize', scheduleFit);
+    window.addEventListener('load', scheduleFit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFit);
+    if (window.ResizeObserver && info) {
+      var lastH = 0;
+      new ResizeObserver(function () {
+        /* only react to content changes, not to our own zoom */
+        var h = info.scrollHeight;
+        if (Math.abs(h - lastH) > 2) { lastH = h; scheduleFit(); }
+      }).observe(info.firstElementChild || info);
+    }
+    fitInfo();
 
     /* info links: height glide and plus/minus */
     section.addEventListener('click', function (e) {
