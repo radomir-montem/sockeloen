@@ -38,10 +38,6 @@
             "logos_size": 26
           }
         },
-        "aov_ai_bundle_offer_volume_RqqnNt": {
-          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
-          "settings": {}
-        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
@@ -74,13 +70,17 @@
             "page": "",
             "logos_size": 26
           }
+        },
+        "aov_ai_bundle_offer_volume_RqqnNt": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
         }
       },
       "block_order": [
+        "aov_ai_bundle_offer_volume_RqqnNt",
         "variant_picker_zY3Bwx",
         "usps_8gwUq7",
         "collapsible_tab_7gPUjj",
-        "aov_ai_bundle_offer_volume_RqqnNt",
         "quantity_selector",
         "size_guide_irnJtn",
         "shipping_info",
@@ -122,7 +122,7 @@
       "type": "bought-often-together",
       "name": "Product Carousel",
       "settings": {
-        "product_source": "my_fields.product_upsells",
+        "product_source": "my_fields.product_upsells","layout":"grid",
         "product_list": [],
         "collection": "best-sellers-1",
         "max_products": 8,
