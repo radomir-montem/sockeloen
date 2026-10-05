@@ -1,0 +1,596 @@
+/* ==========================================================================
+   v2 product page, desktop layout experiment ("gallery").
+   On only when .product-v2 carries .product-v2--gallery (theme setting
+   "Product page (desktop layout)", or ?pdp=gallery in the URL) and only
+   from 990px. Without that class nothing below applies, except that the
+   .pdp-tile wrappers stay invisible.
+
+   Layout after representclo.com: the photos are one strip pinned at full
+   window height, two side by side; a thumbnail rail sits on its left; the
+   buy box lies over the right-hand photo as three glass tiles (the header
+   pill's glass, 8px corners) and scrolls over the pinned photos.
+   The strip is moved by the script at the end of main-product-v2.liquid.
+   ========================================================================== */
+
+.pdp-tile { display: contents; }
+
+@media screen and (min-width: 990px) {
+  /* ---- frame: photos and buy box share one grid cell ---- */
+  body.template--product :has(> .product-v2.product-v2--gallery) {
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  body.template--product .product-v2.product-v2--gallery {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    min-height: calc(100vh - 44px);
+    position: relative;
+  }
+  body.template--product .product-v2.product-v2--gallery > .product-v2__media-wrapper {
+    grid-area: 1 / 1;
+    position: sticky !important;
+    top: 44px; /* the photos start where the announcement bar ends */
+    align-self: start;
+    width: 100% !important;
+    max-width: none !important;
+    height: calc(100vh - 44px);
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+    /* the photo backdrop, for when the last photo stands alone on the left */
+    background: linear-gradient(to right, #ECECEC, #E2E2E2);
+  }
+
+  /* ---- photo strip: two photos per screen, full height, cropped to fill ---- */
+  body.template--product .product-v2--gallery media-gallery,
+  body.template--product .product-v2--gallery slider-component[id^="GalleryViewer"] {
+    display: block !important;
+    position: static !important;
+    height: 100% !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+  body.template--product .product-v2--gallery .product__media-list {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    grid-template-columns: none !important;
+    gap: 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    transition-property: transform;
+    transition-timing-function: ease;
+    will-change: transform;
+    cursor: grab;
+    -webkit-user-select: none;
+            user-select: none;
+  }
+  body.template--product .product-v2--gallery.is-dragging .product__media-list { cursor: grabbing; }
+  body.template--product .product-v2--gallery .product__media-list .product__media-item,
+  body.template--product .product-v2--gallery .product__media-list:has(.is-active) .product__media-item:first-child:not(.is-active) {
+    display: block !important;
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+  }
+  body.template--product .product-v2--gallery .product__media-list .product__media-item[style*="display: none"] {
+    display: none !important;
+  }
+  body.template--product .product-v2--gallery .product__media-item modal-opener,
+  body.template--product .product-v2--gallery .product__media-item .product__media {
+    display: block !important;
+    height: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    aspect-ratio: auto !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+  }
+  body.template--product .product-v2--gallery .product__media-item .product__media img,
+  body.template--product .product-v2--gallery .product__media-item .product__media video {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    border-radius: 0 !important;
+    -webkit-user-drag: none;
+  }
+  body.template--product .product-v2--gallery .product__media-toggle { cursor: inherit; }
+
+  /* visual photo order (set by the script: photos 3/4, 5/6, 7/8 swapped), for the strip and the rail */
+  body.template--product .product-v2--gallery [data-pdp-order="0"] { order: 0; }
+  body.template--product .product-v2--gallery [data-pdp-order="1"] { order: 1; }
+  body.template--product .product-v2--gallery [data-pdp-order="2"] { order: 2; }
+  body.template--product .product-v2--gallery [data-pdp-order="3"] { order: 3; }
+  body.template--product .product-v2--gallery [data-pdp-order="4"] { order: 4; }
+  body.template--product .product-v2--gallery [data-pdp-order="5"] { order: 5; }
+  body.template--product .product-v2--gallery [data-pdp-order="6"] { order: 6; }
+  body.template--product .product-v2--gallery [data-pdp-order="7"] { order: 7; }
+  body.template--product .product-v2--gallery [data-pdp-order="8"] { order: 8; }
+  body.template--product .product-v2--gallery [data-pdp-order="9"] { order: 9; }
+  body.template--product .product-v2--gallery [data-pdp-order="10"] { order: 10; }
+  body.template--product .product-v2--gallery [data-pdp-order="11"] { order: 11; }
+  body.template--product .product-v2--gallery [data-pdp-order="12"] { order: 12; }
+  body.template--product .product-v2--gallery [data-pdp-order="13"] { order: 13; }
+  body.template--product .product-v2--gallery [data-pdp-order="14"] { order: 14; }
+  body.template--product .product-v2--gallery [data-pdp-order="15"] { order: 15; }
+  body.template--product .product-v2--gallery [data-pdp-order="16"] { order: 16; }
+  body.template--product .product-v2--gallery [data-pdp-order="17"] { order: 17; }
+  body.template--product .product-v2--gallery [data-pdp-order="18"] { order: 18; }
+  body.template--product .product-v2--gallery [data-pdp-order="19"] { order: 19; }
+  body.template--product .product-v2--gallery [data-pdp-order="20"] { order: 20; }
+  body.template--product .product-v2--gallery [data-pdp-order="21"] { order: 21; }
+  body.template--product .product-v2--gallery [data-pdp-order="22"] { order: 22; }
+  body.template--product .product-v2--gallery [data-pdp-order="23"] { order: 23; }
+  body.template--product .product-v2--gallery [data-pdp-order="99"] { order: 99; }
+  body.template--product .product-v2--gallery .product__media-item.pdp-clone { pointer-events: none; }
+  .product-v2:not(.product-v2--gallery) .pdp-clone { display: none !important; }
+
+  /* ---- thumbnail rail on the left ---- */
+  body.template--product .product-v2--gallery .thumbnail-slider {
+    display: block !important;
+    position: absolute !important;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: auto !important;
+    max-height: calc(100% - 160px);
+    margin: 0 !important;
+    padding: 6px 8px !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    background: none !important;
+  }
+  body.template--product .product-v2--gallery .thumbnail-slider::-webkit-scrollbar { display: none; }
+  body.template--product .product-v2--gallery .thumbnail-slider .slider-button { display: none !important; }
+  body.template--product .product-v2--gallery .thumbnail-slider .thumbnail-list {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: none !important;
+    gap: 4px !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: none !important;
+    position: relative;
+  }
+  body.template--product .product-v2--gallery .thumbnail-list .thumbnail-list__item {
+    flex: none !important;
+    width: 54px !important;
+    height: 68px !important;
+  }
+  body.template--product .product-v2--gallery .thumbnail-list .thumbnail-list__item[style*="display: none"] {
+    display: none !important;
+  }
+  /* thumbnails as on phones: rounded, full colour, light grey border on the selected one */
+  body.template--product .product-v2--gallery .thumbnail-list .thumbnail {
+    display: block;
+    width: 54px !important;
+    height: 68px !important;
+    aspect-ratio: auto !important;
+    opacity: 1 !important;
+  }
+
+  /* ---- buy box: three glass tiles over the right-hand photo ---- */
+  body.template--product .product-v2.product-v2--gallery > .product-v2__info-wrapper {
+    grid-area: 1 / 1;
+    justify-self: end;
+    align-self: start;
+    z-index: 2;
+    /* right edge on the announcement bar's right edge (20px); starts under
+       the header pill (bottom 92px + 12px; the section itself starts at 44px) */
+    --pdp-zoom: 1;
+    zoom: var(--pdp-zoom);
+    width: calc(clamp(420px, 34vw, 520px) / var(--pdp-zoom)) !important;
+    max-width: none !important;
+    margin: calc(60px / var(--pdp-zoom)) calc(20px / var(--pdp-zoom)) calc(12px / var(--pdp-zoom)) 0 !important;
+    padding: 0 !important;
+    background: none !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__info-wrapper > div {
+    position: static !important;
+    top: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  body.template--product .product-v2--gallery .pdp-tile {
+    display: block;
+    padding: 18px 28px;
+    /* the same glass as the open mega menu (.mega-menu-v2-panel): gradient,
+       blur, hairline, shadow, 8px corners */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12));
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+            backdrop-filter: blur(21px) saturate(180%);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  }
+  body.template--product .product-v2--gallery .pdp-tile:empty { display: none; }
+  /* social proof sits straight on the glass, without its own white bar */
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__social-proof,
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__reviews-bar {
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--trust .product-v2__secure-row {
+    margin-bottom: 0 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile > :first-child { margin-top: 0 !important; }
+  body.template--product .product-v2--gallery .pdp-tile > :last-child { margin-bottom: 0 !important; }
+
+  /* ---- spacing inside the tiles: one even rhythm (12px between the
+     groups, 18px to the tile edge). Tighter than the classic page so the
+     three tiles fit a window; the script scales the column down a little
+     on short screens. ---- */
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__social-proof,
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__reviews-bar {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 12px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__title {
+    padding-bottom: 6px !important;
+    margin-bottom: 0 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__price {
+    margin-bottom: 12px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__benefits {
+    margin-bottom: 14px !important;
+    gap: 4px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__benefit {
+    margin: 0 !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    line-height: 1.35 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input {
+    margin-bottom: 12px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .color-input--thumbs .color-input__track {
+    grid-template-columns: repeat(auto-fill, minmax(46px, 54px)) !important;
+    gap: 8px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .color-input--thumbs .color-input__selected-name {
+    margin-bottom: 8px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio'] + label,
+  body.template--product .product-v2--gallery .pdp-tile .size-input--single .size-pill-single {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-form-wrapper {
+    margin-top: 2px !important;
+    margin-bottom: 12px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .size-guide-link {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--buy > :last-child,
+  body.template--product .product-v2--gallery .pdp-tile--buy > :last-child > * {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--trust .product-v2__trust-row {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--trust > * + * {
+    margin-top: 10px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    min-height: 0 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__title {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+  }
+
+  /* ---- title and price on one line: same size and weight, € sign kept.
+     On sale the old price and the SAVE badge sit under the price. ---- */
+  body.template--product .product-v2--gallery .pdp-tile--buy {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    align-items: start;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--buy > * {
+    grid-column: 1 / -1;
+    order: 3;
+    min-width: 0;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--buy > .product-v2__social-proof,
+  body.template--product .product-v2--gallery .pdp-tile--buy > .product-v2__reviews-bar {
+    order: 0;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--buy > .product-v2__title {
+    grid-column: 1;
+    order: 1;
+    padding-bottom: 0 !important;
+    margin-bottom: 12px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--buy > .product-v2__price {
+    grid-column: 2;
+    order: 2;
+    margin: 0 0 12px !important;
+    padding: 0 !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price {
+    margin: 0 !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price__container {
+    display: grid !important;
+    grid-template-columns: auto auto;
+    justify-content: end;
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 12px; /* the same step as between the other groups */
+    margin: 0 !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price__regular {
+    grid-column: 1 / -1;
+    justify-self: end;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price--on-sale .price__regular {
+    display: none !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price--on-sale .price__sale {
+    display: contents !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price__regular .regular-text,
+  body.template--product .product-v2--gallery .product-v2__price .price__sale .real-price {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: end;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    font-style: normal !important;
+    line-height: 32.2px !important;
+    letter-spacing: 0.6px !important;
+    color: #121212 !important;
+    white-space: nowrap;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price__sale > span:not(.visually-hidden):not(.real-price) {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+    margin: 0 !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price__sale > span:not(.real-price) .regular-text {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    line-height: 1.2 !important;
+    color: #666 !important;
+    text-decoration: line-through;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .product-save-badge {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0 !important;
+  }
+  /* A product with a discounted variant always keeps the second row and a
+     fixed column width, so the title and everything below stay put when
+     switching between a discounted and a full-price variant. */
+  body.template--product .product-v2--gallery .product-v2__price--has-sale .price__container {
+    grid-template-rows: 32.2px 18px;
+    width: 164px;
+  }
+  body.template--product .product-v2--gallery .product-v2__price--has-sale .product-save-badge {
+    white-space: nowrap;
+  }
+
+  /* ---- size chips and colour tiles: a dark tint instead of white ---- */
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio'] + label,
+  body.template--product .product-v2--gallery .pdp-tile .size-input--single .size-pill-single {
+    background: rgba(0, 0, 0, 0.08) !important;
+    background-color: rgba(0, 0, 0, 0.08) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio'] + label:hover {
+    background-color: rgba(0, 0, 0, 0.13) !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio']:checked + label,
+  body.template--product .product-v2--gallery .pdp-tile .size-input--single .size-pill-single {
+    background-color: rgba(0, 0, 0, 0.13) !important;
+    border-color: #0395F6 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio'].disabled + label {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+    border-color: transparent !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .color-input--thumbs .color-thumb {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  /* bundle offers (Avada volume discount app): the same tint as the size chips */
+  body.template--product .product-v2--gallery .pdp-tile .Avada-Volume__Item {
+    background: rgba(0, 0, 0, 0.08) !important;
+    background-color: rgba(0, 0, 0, 0.08) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .Avada-Volume__Item:hover {
+    background-color: rgba(0, 0, 0, 0.13) !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .Avada-Volume__Item.Avada-Volume__Item--Selected {
+    background-color: rgba(0, 0, 0, 0.13) !important;
+    border-color: #0395F6 !important;
+  }
+  /* the photos carry their own light backdrop: tone it down to the same tint */
+  body.template--product .product-v2--gallery .pdp-tile .color-input--thumbs .color-thumb img {
+    filter: brightness(0.9);
+  }
+
+  /* ---- an opened info link: the text is a sub-text of its title (same
+     typeface, one size smaller, clear of the plus/minus) ---- */
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content,
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content * {
+    font-family: inherit !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.2px !important;
+    color: #1a1a1a !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content {
+    padding: 0 28px 14px 0 !important;
+    margin-top: -2px;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion details[open]:not(.is-closing) .accordion__title {
+    font-weight: 600 !important;
+  }
+
+  /* ---- benefit tag on the left photo, as on phones (one per photo) ---- */
+  body.template--product .product-v2--gallery .pdp-tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    top: auto;
+    bottom: 20px;
+    right: calc(50% + 20px);
+    transform: none;
+    z-index: 2;
+    max-width: 44%;
+    pointer-events: none;
+    text-align: right;
+  }
+  body.template--product .product-v2--gallery .pdp-tag {
+    display: none;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: rgba(255, 255, 255, 0.7);
+    color: #666;
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+    padding: 8px 13px;
+    border-radius: 5px;
+    text-transform: lowercase;
+  }
+  body.template--product .product-v2--gallery .pdp-tag.is-visible { display: inline-block; }
+  body.template--product .product-v2--gallery .pdp-tag::first-letter { text-transform: uppercase; }
+
+  /* no breadcrumb over the photos */
+  body.template--product .product-v2--gallery .breadcrumb-overlay {
+    display: none !important;
+  }
+
+  /* ---- info links: plus that turns into a minus, 200ms height glide ---- */
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary {
+    position: relative;
+    padding-right: 28px;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary .icon-caret {
+    display: none !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary::before,
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary::after {
+    content: "";
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    width: 12px;
+    height: 2px;
+    margin-top: -1px;
+    background: currentColor;
+    transition: transform 0.2s ease;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary::after {
+    transform: rotate(90deg);
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion details[open]:not(.is-closing) > summary::after {
+    transform: rotate(180deg);
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content {
+    overflow: hidden;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion:first-child {
+    border-top: 0 !important;
+    margin-top: 0 !important;
+  }
+  /* no line under the last link: the tile's edge closes the list */
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion:last-child,
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion:last-child details,
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion:last-child summary {
+    border-bottom: 0 !important;
+  }
+  /* ---- size guide pop-up: centred on the page, the page blurred behind it
+     (the blur of the Klaviyo and exit-intent pop-ups), the panel in the
+     tiles' glass ---- */
+  body:has(.product-v2--gallery) .size-guide-overlay {
+    z-index: 100000;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.18);
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+            backdrop-filter: blur(21px) saturate(180%);
+  }
+  body:has(.product-v2--gallery) .size-guide-modal {
+    max-width: 560px;
+    max-height: calc(100vh - 48px);
+    padding: 24px 28px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12));
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+            backdrop-filter: blur(21px) saturate(180%);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1), 0 18px 50px rgba(0, 0, 0, 0.25);
+  }
+  body:has(.product-v2--gallery) .size-guide-modal__title { color: #121212; }
+  body:has(.product-v2--gallery) .size-guide-modal__close { color: #121212; }
+  body:has(.product-v2--gallery) .size-guide-modal__intro { color: #1a1a1a; }
+  body:has(.product-v2--gallery) .size-guide-table th {
+    background: rgba(0, 0, 0, 0.08);
+    border-bottom: 0;
+    color: #121212;
+  }
+  body:has(.product-v2--gallery) .size-guide-table th:first-child { border-radius: 6px 0 0 6px; }
+  body:has(.product-v2--gallery) .size-guide-table th:last-child { border-radius: 0 6px 6px 0; }
+  body:has(.product-v2--gallery) .size-guide-table td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    color: #1a1a1a;
+  }
+  body:has(.product-v2--gallery) .size-guide-table tbody tr:hover { background: rgba(0, 0, 0, 0.05); }
+  body:has(.product-v2--gallery) .size-guide-modal__link { color: #121212; }
+}

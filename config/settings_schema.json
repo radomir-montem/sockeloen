@@ -18,6 +18,22 @@
     ]
   },
   {
+    "name": "Product page (desktop layout)",
+    "settings": [
+      {
+        "type": "select",
+        "id": "pdp_desktop_layout",
+        "label": "Desktop layout of the v2 product page",
+        "options": [
+          { "value": "classic", "label": "Classic (photo grid + buy box)" },
+          { "value": "gallery", "label": "Gallery (experiment: pinned photo strip, glass tiles)" }
+        ],
+        "default": "classic",
+        "info": "Phones and tablets are not affected. To compare without changing this setting, add ?pdp=gallery or ?pdp=classic to a product URL."
+      }
+    ]
+  },
+  {
     "name": "Shipping details",
     "settings": [
       {
@@ -111,13 +127,37 @@
         "info": "Not case-sensitive. Also works as ?key=… in the link you e-mail."
       },
       {
+        "type": "select",
+        "id": "gate_scope",
+        "label": "Which products are early-access only",
+        "options": [
+          {
+            "value": "tagged",
+            "label": "Only products with the tag below"
+          },
+          {
+            "value": "all",
+            "label": "Every product in the collection"
+          }
+        ],
+        "default": "tagged",
+        "info": "Early-access-only products get the password on their product page and are hidden from other collections, search, recommendations and cart cross-sells. Other products in the collection stay visible and buyable everywhere."
+      },
+      {
+        "type": "text",
+        "id": "gate_tag",
+        "label": "Early access tag",
+        "default": "early-access-26"
+      },
+      {
         "type": "range",
         "id": "gate_days",
         "label": "Remember access for (days)",
-        "min": 1,
+        "min": 0,
         "max": 30,
         "step": 1,
-        "default": 7
+        "default": 0,
+        "info": "0 = do not remember: access lasts for this visit only and ends when the browser tab is closed."
       },
       {
         "type": "text",

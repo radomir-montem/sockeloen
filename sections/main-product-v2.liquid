@@ -54,7 +54,26 @@
     >
   {%- endif -%}
 
-  <div class="product-v2 product--medium product--left product--thumbnail grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
+  {{ 'pdp-gallery-layout.css' | asset_url | stylesheet_tag }}
+  <div class="product-v2 product--medium product--left product--thumbnail grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}{% if settings.pdp_desktop_layout == 'gallery' %} product-v2--gallery{% endif %}">
+    {%- comment -%}
+      Desktop layout experiment ("gallery": full-height photo strip with the
+      buy box as glass tiles over it, see assets/pdp-gallery-layout.css).
+      The theme setting decides; ?pdp=gallery or ?pdp=classic in the URL
+      overrides it for this browser tab, to compare the two.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        try {
+          var m = /[?&]pdp=(gallery|classic)/.exec(location.search);
+          if (m) sessionStorage.setItem('pdpLayout', m[1]);
+          var v = sessionStorage.getItem('pdpLayout');
+          var root = document.currentScript.parentElement;
+          if (v === 'gallery') root.classList.add('product-v2--gallery');
+          if (v === 'classic') root.classList.remove('product-v2--gallery');
+        } catch (e) {}
+      })();
+    </script>
 
     {%- comment -%} ========== LEFT COLUMN: MEDIA ========== {%- endcomment -%}
     <div class="grid__item product-v2__media-wrapper relative">
@@ -109,15 +128,19 @@
             var items = Array.prototype.slice.call(tags.querySelectorAll('.pdp-tag'));
             if (!items.length) return;
             function update() {
-              var slides = Array.prototype.slice.call(list.querySelectorAll('.product__media-item')).filter(function (s) {
+              var slides = Array.prototype.slice.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)')).filter(function (s) {
                 return s.style.display !== 'none';
               });
+              /* the desktop gallery layout shows the photos in its own order (data-pdp-order) */
+              if (slides.length && slides[0].hasAttribute('data-pdp-order')) {
+                slides.sort(function (a, b) { return a.getAttribute('data-pdp-order') - b.getAttribute('data-pdp-order'); });
+              }
               var active = slides.findIndex(function (s) { return s.classList.contains('is-active'); });
               if (active < 0) active = 0;
               /* photo 1 > benefit 1, photo 2 > benefit 2, ...; later photos show none */
               items.forEach(function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === active); });
             }
-            new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+            new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style', 'data-pdp-order'], subtree: true });
             update();
           })();
         </script>
@@ -448,6 +471,8 @@
         class="{% if section.settings.enable_sticky_info %}product-v2__info-container--sticky{% endif %}"
       >
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
+        {%- comment -%} .pdp-tile wrappers are invisible (display: contents) unless the desktop gallery layout is on: tile 1 = social proof to the buy button, tile 2 = shipping and payment lines, tile 3 = the info links {%- endcomment -%}
+        <div class="pdp-tile pdp-tile--buy">
 
         {%- comment -%} 1. Social proof bar — switchable between Trustpilot stars and athlete social proof {%- endcomment -%}
         {%- if section.settings.social_proof_type == 'trustpilot' -%}
@@ -567,7 +592,8 @@
         {%- endif -%}
 
         {%- comment -%} 4. Price (€ symbol removed via JS) {%- endcomment -%}
-        <div class="product-v2__price no-js-hidden" id="price-{{ section.id }}" role="status">
+        {%- comment -%} --has-sale: some variant is discounted; the gallery layout then keeps room for the old price and badge so nothing jumps between variants {%- endcomment -%}
+        <div class="product-v2__price no-js-hidden{% if product.compare_at_price_max > product.price_min %} product-v2__price--has-sale{% endif %}" id="price-{{ section.id }}" role="status">
           {%- render 'price',
             product: product,
             use_variant: true,
@@ -582,7 +608,10 @@
             function stripEuro(root){
               if (_stripping) return;
               _stripping = true;
+              /* the desktop gallery layout shows the price with its € sign, next to the title */
+              var keepEuro = window.matchMedia('(min-width: 990px)').matches;
               root.querySelectorAll('.regular-text, .price-item, .real-price, .product-v2-sticky-bar__price').forEach(function(el){
+                if (keepEuro && el.closest('.product-v2--gallery .product-v2__price')) return;
                 el.childNodes.forEach(function(n){
                   if(n.nodeType===3) n.textContent = n.textContent.replace(/€\s*/g,'');
                 });
@@ -1374,6 +1403,7 @@
               {%- comment -%} Rendered inside shipping_info block instead — this is a no-op here {%- endcomment -%}
 
             {%- when 'shipping_info' -%}
+              </div><div class="pdp-tile pdp-tile--trust">
               {%- comment -%}
                 Ship date logic (v2):
                 - Before 15:00 CET/CEST on a working day → shipped today
@@ -1581,6 +1611,7 @@
                 {%- endif -%}
               {%- endfor -%}
 
+              </div><div class="pdp-tile pdp-tile--links">
               {%- comment -%} USP accordions — from locale translations {%- endcomment -%}
               {%- assign usp_headings = 'products.v2.usp_1_heading,products.v2.usp_2_heading,products.v2.usp_3_heading,products.v2.usp_4_heading' | split: ',' -%}
               {%- assign usp_bodies = 'products.v2.usp_1_body_html,products.v2.usp_2_body_html,products.v2.usp_3_body_html,products.v2.usp_4_body_html' | split: ',' -%}
@@ -1669,6 +1700,7 @@
 
           {%- endcase -%}
         {%- endfor -%}
+        </div>
       </div>
     </div>
   </div>
@@ -1973,8 +2005,11 @@
     }
     function sync(ms) {
       if (!mq.matches) {
-        list.style.removeProperty('transform');
-        list.style.removeProperty('transition-duration');
+        /* the desktop gallery layout has its own slider (below) */
+        if (!section.querySelector('.product-v2--gallery')) {
+          list.style.removeProperty('transform');
+          list.style.removeProperty('transition-duration');
+        }
         return;
       }
       list.scrollLeft = 0;
@@ -2163,6 +2198,359 @@
       new MutationObserver(schedule).observe(ship, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['style'] });
     }
     fit();
+  })();
+</script>
+
+{%- comment -%}
+  Desktop gallery layout (experiment, .product-v2--gallery, 990px and up).
+  Modelled on representclo.com: the photo strip is pinned at full window
+  height with two photos side by side and is moved sideways by dragging
+  (Swiper's defaults: follows the pointer, 300ms glide, a quick flick or a
+  drag past a quarter photo moves on), by a sideways trackpad swipe, or by
+  the thumbnail rail on the left (a tap makes that photo the left one). The
+  buy box scrolls over the pinned photos; the page moves on after it.
+  The info links open and close with a 200ms height glide and a plus that
+  turns into a minus (as on emestudios.com).
+{%- endcomment -%}
+<script>
+  (function () {
+    var mq = window.matchMedia('(min-width: 990px)');
+    var section = document.getElementById('MainProduct-{{ section.id }}');
+    if (!section) return;
+    var root = section.querySelector('.product-v2');
+    var list = section.querySelector('.product__media-list');
+    var gallery = section.querySelector('media-gallery');
+    if (!root || !list || !gallery) return;
+    function on() { return mq.matches && root.classList.contains('product-v2--gallery'); }
+
+    var SPEED = 300, THRESHOLD = 5, LONG_MS = 300, LONG_RATIO = 0.25, RESISTANCE = 0.85, PER_VIEW = 2;
+    var index = 0, translate = 0, drag = null, selfChange = false, suppressClick = false;
+
+    /* Photo order in this layout: the photos were sorted for the classic
+       page (overview, overview, close-up, close-up, ...). Here photos 3/4,
+       5/6, 7/8 ... swap places, so an overview and a close-up alternate.
+       The order is only visual (data-pdp-order + CSS order); the DOM and
+       the classic and phone pages keep the admin order. */
+    function domItems() {
+      return Array.prototype.filter.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)'), function (li) {
+        return li.style.display !== 'none';
+      });
+    }
+    function items() {
+      var all = domItems();
+      for (var i = 2; i + 1 < all.length; i += 2) {
+        var t = all[i]; all[i] = all[i + 1]; all[i + 1] = t;
+      }
+      return all;
+    }
+    function setOrder(el, value) {
+      if (value === null) { if (el.hasAttribute('data-pdp-order')) el.removeAttribute('data-pdp-order'); return; }
+      if (el.getAttribute('data-pdp-order') !== String(value)) el.setAttribute('data-pdp-order', value);
+    }
+    function applyOrder() {
+      var thumbs = section.querySelectorAll('.thumbnail-list__item');
+      if (!on()) {
+        list.querySelectorAll('[data-pdp-order]').forEach(function (el) { setOrder(el, null); });
+        thumbs.forEach(function (el) { setOrder(el, null); });
+        return;
+      }
+      var all = items();
+      list.querySelectorAll('.product__media-item:not(.pdp-clone)').forEach(function (li) {
+        var pos = all.indexOf(li);
+        setOrder(li, pos < 0 ? null : pos);
+      });
+      thumbs.forEach(function (th) {
+        var pos = all.findIndex(function (li) { return li.dataset.mediaId === th.dataset.target; });
+        setOrder(th, pos < 0 ? null : pos);
+      });
+    }
+    /* a copy of the first photo closes the strip, so the last photo has the
+       first one beside it instead of an empty half */
+    function closeStrip() {
+      var old = list.querySelector('.pdp-clone');
+      var all = on() ? items() : [];
+      var first = all[0];
+      if (!first || all.length < 2) { if (old) old.remove(); return; }
+      if (old && old._source === first && old.style.display !== 'none' && old === list.lastElementChild) return;
+      if (old) old.remove();
+      var clone = first.cloneNode(true);
+      clone._source = first;
+      clone.classList.add('pdp-clone');
+      clone.classList.remove('is-active');
+      clone.removeAttribute('id');
+      clone.removeAttribute('data-media-id');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('data-pdp-order', '99');
+      clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+      clone.querySelectorAll('button, a, video').forEach(function (el) { el.setAttribute('tabindex', '-1'); });
+      list.appendChild(clone);
+    }
+    function slideWidth() { return (list.clientWidth || 1) / PER_VIEW; }
+    /* every photo can be the left one; the last then has no neighbour on the right */
+    function maxIndex() { return Math.max(0, items().length - 1); }
+    function setTranslate(x, ms) {
+      translate = x;
+      list.style.transitionDuration = (ms || 0) + 'ms';
+      list.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+    }
+    function activeIndex() {
+      var i = items().findIndex(function (li) { return li.classList.contains('is-active'); });
+      return i < 0 ? 0 : i;
+    }
+
+    /* thumbnail rail: keep the selected thumbnail in view */
+    var strip = section.querySelector('.thumbnail-list');
+    function showThumb() {
+      var current = strip && strip.querySelector('button[aria-current="true"]');
+      var li = current && current.closest('.thumbnail-list__item');
+      var rail = strip && strip.parentElement;
+      if (li && rail && rail.scrollHeight > rail.clientHeight) {
+        rail.scrollTo({ top: li.offsetTop - (rail.clientHeight - li.offsetHeight) / 2, behavior: 'smooth' });
+      }
+    }
+
+    function slideTo(i, ms, setActive) {
+      var all = items();
+      index = Math.max(0, Math.min(i, maxIndex()));
+      setTranslate(-index * slideWidth(), ms);
+      if (setActive && all[index] && !all[index].classList.contains('is-active')) {
+        selfChange = true;
+        gallery.setActiveMedia(all[index].dataset.mediaId, false);
+        selfChange = false;
+      }
+      showThumb();
+    }
+    function sync(ms) {
+      applyOrder();
+      closeStrip();
+      if (!on()) {
+        if (mq.matches) {
+          list.style.removeProperty('transform');
+          list.style.removeProperty('transition-duration');
+        }
+        return;
+      }
+      /* the selected photo becomes the left photo */
+      slideTo(activeIndex(), ms, false);
+    }
+
+    /* Choosing another size keeps the photo that was selected (the theme
+       jumps back to the variant's first photo); another colour shows that
+       colour's first photo as before. */
+    var keep = null;
+    section.addEventListener('change', function (e) {
+      if (!on() || !e.target.matches || !e.target.matches('variant-radios input[type="radio"]')) return;
+      if (e.target.closest('.color-input')) { keep = null; return; }
+      var active = items()[activeIndex()];
+      keep = active ? { id: active.dataset.mediaId, until: Date.now() + 1500 } : null;
+    }, true);
+    function restoreKept() {
+      if (!keep || Date.now() > keep.until) { keep = null; return false; }
+      var li = items().find(function (x) { return x.dataset.mediaId === keep.id; });
+      if (!li) return false;
+      if (!li.classList.contains('is-active')) {
+        selfChange = true;
+        gallery.setActiveMedia(keep.id, false);
+        selfChange = false;
+      }
+      applyOrder();
+      closeStrip();
+      slideTo(items().indexOf(li), 0, false);
+      return true;
+    }
+
+    new MutationObserver(function (records) {
+      if (selfChange || drag || !on()) return;
+      if (records.every(function (r) { return r.target.classList && r.target.classList.contains('pdp-clone'); })) return;
+      if (restoreKept()) return;
+      var filtered = records.some(function (r) { return r.attributeName === 'style' && r.target !== list; });
+      if (filtered) { index = 0; sync(0); } else sync(SPEED);
+    }).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+
+    function point(e) {
+      var t = e.touches ? e.touches[0] : e;
+      return t ? { x: t.clientX, y: t.clientY } : null;
+    }
+    function start(e) {
+      if (!on() || (e.touches && e.touches.length !== 1)) { drag = null; return; }
+      var p = point(e);
+      var live = new DOMMatrixReadOnly(getComputedStyle(list).transform).m41;
+      setTranslate(live, 0);
+      drag = { x: p.x, y: p.y, from: live, time: Date.now(), moving: false, scrolling: null, dx: 0 };
+    }
+    function move(e) {
+      if (!drag) return;
+      var p = point(e);
+      if (!p) return;
+      var dx = p.x - drag.x, dy = p.y - drag.y;
+      if (drag.scrolling === null) {
+        if (Math.abs(dx) < THRESHOLD && Math.abs(dy) < THRESHOLD) return;
+        drag.scrolling = !!e.touches && Math.atan2(Math.abs(dy), Math.abs(dx)) * 180 / Math.PI > 45;
+        drag.x += dx > 0 ? THRESHOLD : -THRESHOLD;
+        dx = p.x - drag.x;
+      }
+      if (drag.scrolling) return;
+      drag.moving = true;
+      drag.dx = dx;
+      root.classList.add('is-dragging');
+      var min = 0, max = -maxIndex() * slideWidth();
+      var x = drag.from + dx;
+      if (x > min) x = min - 1 + Math.pow(-min + drag.from + dx, RESISTANCE);
+      else if (x < max) x = max + 1 - Math.pow(max - drag.from - dx, RESISTANCE);
+      setTranslate(x, 0);
+      if (!e.touches && e.cancelable) e.preventDefault();
+    }
+    function end() {
+      if (!drag) return;
+      var d = drag;
+      drag = null;
+      root.classList.remove('is-dragging');
+      if (!d.moving) { slideTo(index, SPEED, false); return; }
+      var w = slideWidth();
+      var pos = Math.max(0, Math.min(-translate, maxIndex() * w));
+      var stop = Math.min(Math.floor(pos / w), maxIndex());
+      var ratio = (pos - stop * w) / w;
+      var next = d.dx < 0;
+      var target;
+      if (Date.now() - d.time > LONG_MS) {
+        target = next ? (ratio >= LONG_RATIO ? stop + 1 : stop) : (ratio > 1 - LONG_RATIO ? stop + 1 : stop);
+      } else {
+        target = next ? stop + 1 : stop;
+      }
+      suppressClick = true;
+      setTimeout(function () { suppressClick = false; }, 350);
+      slideTo(target, SPEED, true);
+    }
+    list.addEventListener('mousedown', function (e) { if (e.button === 0) start(e); });
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', end);
+    list.addEventListener('touchstart', start, { passive: true });
+    list.addEventListener('touchmove', move, { passive: true });
+    list.addEventListener('touchend', end, { passive: true });
+    list.addEventListener('touchcancel', end, { passive: true });
+    list.addEventListener('dragstart', function (e) { if (on()) e.preventDefault(); });
+    list.addEventListener('click', function (e) {
+      if (on() && suppressClick) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+
+    /* sideways trackpad swipe: one photo per gesture */
+    var wheelLock = 0;
+    list.addEventListener('wheel', function (e) {
+      if (!on() || Math.abs(e.deltaX) <= Math.abs(e.deltaY) || Math.abs(e.deltaX) < 12) return;
+      e.preventDefault();
+      var now = Date.now();
+      if (now < wheelLock) return;
+      wheelLock = now + 450;
+      slideTo(index + (e.deltaX > 0 ? 1 : -1), SPEED, true);
+    }, { passive: false });
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () { sync(0); }, 60);
+    });
+    mq.addEventListener && mq.addEventListener('change', function () { index = 0; sync(0); });
+    window.addEventListener('load', function () { sync(0); });
+    sync(0);
+
+    /* The three tiles should fit the window without scrolling. The compact
+       spacing in pdp-gallery-layout.css does that on most screens; on a
+       short window the buy box is scaled down a little (never below 80%).
+       Not while an info link is open: that is allowed to grow. */
+    var info = root.querySelector('.product-v2__info-wrapper');
+    /* the social proof line always fits one line: scaled down from its own
+       size until it does (never below 10px) */
+    function fitSocialProof() {
+      var text = info && info.querySelector('.product-v2__sp-text');
+      if (!text) return;
+      text.style.removeProperty('font-size');
+      text.style.removeProperty('white-space');
+      if (!on()) return;
+      text.style.whiteSpace = 'nowrap';
+      /* the text does not shrink by itself: it pushes its row wider, so measure the row */
+      var row = text.closest('.product-v2__social-proof-inner') || text.parentElement;
+      var size = parseFloat(getComputedStyle(text).fontSize) || 13;
+      while (row.scrollWidth > row.clientWidth + 1 && size > 10) {
+        size -= 0.25;
+        text.style.setProperty('font-size', size + 'px', 'important');
+      }
+    }
+    function fitInfo() {
+      if (!info) return;
+      fitSocialProof();
+      if (!on()) { info.style.removeProperty('--pdp-zoom'); return; }
+      if (info.querySelector('.pdp-tile--links details[open]')) return;
+      info.style.setProperty('--pdp-zoom', '1');
+      var top = info.getBoundingClientRect().top + window.scrollY;
+      var available = window.innerHeight - top - 12;
+      var z = Math.max(0.8, Math.min(1, available / info.offsetHeight));
+      info.style.setProperty('--pdp-zoom', String(Math.round(z * 1000) / 1000));
+    }
+    var fitTimer;
+    function scheduleFit() { clearTimeout(fitTimer); fitTimer = setTimeout(fitInfo, 80); }
+    window.addEventListener('resize', scheduleFit);
+    window.addEventListener('load', scheduleFit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFit);
+    if (window.ResizeObserver && info) {
+      var lastH = 0;
+      new ResizeObserver(function () {
+        /* only react to content changes, not to our own zoom */
+        var h = info.scrollHeight;
+        if (Math.abs(h - lastH) > 2) { lastH = h; scheduleFit(); }
+      }).observe(info.firstElementChild || info);
+    }
+    fitInfo();
+
+    /* Size guide pop-up: it is rendered inside a glass tile, and a tile's
+       backdrop-filter would pin the "fixed" overlay to that tile instead
+       of the window. Move it to <body> before it opens, so it is centred
+       on the page; a click on the blurred page or Escape closes it. */
+    function sizeGuide() { return document.getElementById('size-guide-overlay'); }
+    function closeSizeGuide() {
+      var overlay = sizeGuide();
+      if (!overlay) return;
+      overlay.style.display = 'none';
+      document.body.classList.remove('noscroll');
+    }
+    section.addEventListener('click', function (e) {
+      if (!on() || !e.target.closest('.size-guide-link')) return;
+      var overlay = sizeGuide();
+      if (overlay && overlay.parentElement !== document.body) document.body.appendChild(overlay);
+    }, true);
+    document.addEventListener('click', function (e) {
+      if (on() && e.target === sizeGuide()) closeSizeGuide();
+    });
+    document.addEventListener('keydown', function (e) {
+      var overlay = sizeGuide();
+      if (on() && e.key === 'Escape' && overlay && overlay.style.display !== 'none') closeSizeGuide();
+    });
+
+    /* info links: height glide and plus/minus */
+    section.addEventListener('click', function (e) {
+      if (!on()) return;
+      var summary = e.target.closest('.pdp-tile--links .product__accordion summary');
+      if (!summary) return;
+      var details = summary.parentElement;
+      var content = details.querySelector('.accordion__content');
+      if (!content || !content.animate) return;
+      e.preventDefault();
+      if (details._anim) details._anim.cancel();
+      var opening = !details.open || details.classList.contains('is-closing');
+      if (opening) {
+        details.open = true;
+        details.classList.remove('is-closing');
+        var h = content.scrollHeight;
+        details._anim = content.animate([{ height: '0px' }, { height: h + 'px' }], { duration: 200, easing: 'ease-out' });
+      } else {
+        details.classList.add('is-closing');
+        var from = content.offsetHeight;
+        details._anim = content.animate([{ height: from + 'px' }, { height: '0px' }], { duration: 200, easing: 'ease-out' });
+        details._anim.onfinish = function () {
+          details.open = false;
+          details.classList.remove('is-closing');
+        };
+      }
+    });
   })();
 </script>
 
