@@ -421,14 +421,14 @@
   }
 
   /* ---- an opened info link: the text is a sub-text of its title (same
-     typeface, one size smaller, grey, clear of the plus/minus) ---- */
+     typeface, one size smaller, clear of the plus/minus) ---- */
   body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content,
   body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content * {
     font-family: inherit !important;
     font-size: 13px !important;
     line-height: 1.5 !important;
     letter-spacing: 0.2px !important;
-    color: #5c5c5c !important;
+    color: #1a1a1a !important;
   }
   body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content {
     padding: 0 28px 14px 0 !important;
