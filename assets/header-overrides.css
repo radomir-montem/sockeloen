@@ -6107,6 +6107,11 @@ body.template--product .product-v2 .thumbnail-list .thumbnail__badge {
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
+  /* on the homepage the link sits inside the h1 */
+  header.header > .header__heading .header__heading-link {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 }
 
 /* Announcement bar: the message text itself is centred. The arrow hangs
