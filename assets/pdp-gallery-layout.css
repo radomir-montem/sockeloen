@@ -16,7 +16,8 @@
 
 @media screen and (min-width: 990px) {
   /* ---- frame: photos and buy box share one grid cell ---- */
-  body.template--product #MainContent > .shopify-section:has(.product-v2--gallery) {
+  body.template--product #MainContent > .shopify-section.shopify-section:has(.product-v2--gallery),
+  body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child:has(.product-v2.product-v2--gallery) {
     padding-top: 0 !important;
   }
   body.template--product :has(> .product-v2.product-v2--gallery) {
