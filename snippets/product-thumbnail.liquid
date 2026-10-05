@@ -13,6 +13,7 @@
     - xr_button: {Boolean} Renders the "View in your space" button (shopify-xr-button) if the media is a 3D Model
     - media_width: {Float} The width percentage that the media column occupies on desktop.
     - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+    - inline_video: {Boolean} Shopify-hosted videos play in place: muted, looping, autoplay, no controls, no play button or modal, cropped to the 4:5 photo box (optional, used by the v2 product page)
 
     Usage:
     {% render 'product-thumbnail',
@@ -43,6 +44,11 @@
   (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | times: media_width | divided_by: desktop_columns | round }}px, (min-width: 990px) calc({{ media_width | times: 100 | divided_by: desktop_columns }}vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / {{ mobile_columns }} - 4rem)
 {%- endcapture -%}
 
+{%- if inline_video and media.media_type == 'video' -%}
+  <div class="product__media media media--transparent gradient global-media-settings product__media--inline-video" style="padding-top: 125%;">
+    {{ media | video_tag: image_size: '1100x', autoplay: true, muted: true, loop: true, playsinline: true, controls: false, preload: 'metadata', class: 'pdp-inline-video' }}
+  </div>
+{%- else -%}
 <noscript>
   {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
     <span class="product__media-icon motion-reduce quick-add-hidden">{% render 'icon-play' %}</span>
@@ -159,4 +165,5 @@
   {%- else -%}
     </deferred-media>
   {%- endif -%}
+{%- endif -%}
 {%- endif -%}

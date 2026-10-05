@@ -225,6 +225,7 @@
               >
                 {%- assign media_position = 1 -%}
                 {% render 'product-thumbnail',
+                  inline_video: true,
                   media: featured_media,
                   media_count: media_count,
                   position: media_position,
@@ -258,7 +259,7 @@
                     if media_position > 1
                       assign lazy_load = true
                     endif
-                    render 'product-thumbnail', media: media, media_count: media_count, position: media_position, desktop_layout: 'thumbnail', mobile_layout: 'show', loop: section.settings.enable_video_looping, modal_id: section.id, xr_button: true, media_width: media_width, lazy_load: lazy_load
+                    render 'product-thumbnail', inline_video: true, media: media, media_count: media_count, position: media_position, desktop_layout: 'thumbnail', mobile_layout: 'show', loop: section.settings.enable_video_looping, modal_id: section.id, xr_button: true, media_width: media_width, lazy_load: lazy_load
                   -%}
                 </li>
               {%- endunless -%}
@@ -2070,6 +2071,43 @@
     mq.addEventListener && mq.addEventListener('change', function () { sync(0); });
     window.addEventListener('load', function () { sync(0); });
     sync(0);
+  })();
+</script>
+
+{%- comment -%}
+  Product videos in the gallery play in place (muted, looping, no
+  controls). A video plays while at least half of it is on screen and
+  pauses otherwise (other photo in the phone slider, scrolled away); the
+  theme pauses all media on a photo or variant change, so a visible video
+  is started again.
+{%- endcomment -%}
+<script>
+  (function () {
+    var section = document.getElementById('MainProduct-{{ section.id }}');
+    if (!section || !('IntersectionObserver' in window)) return;
+    var videos = section.querySelectorAll('video.pdp-inline-video');
+    if (!videos.length) return;
+    function play(v) {
+      v.muted = true;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var v = entry.target;
+        v._onScreen = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+        if (v._onScreen) play(v); else v.pause();
+      });
+    }, { threshold: [0, 0.5, 1] });
+    Array.prototype.forEach.call(videos, function (v) {
+      v.muted = true;
+      v.setAttribute('playsinline', '');
+      v.removeAttribute('controls');
+      v.addEventListener('pause', function () {
+        if (v._onScreen) requestAnimationFrame(function () { if (v._onScreen) play(v); });
+      });
+      io.observe(v);
+    });
   })();
 </script>
 
