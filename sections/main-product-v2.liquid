@@ -2455,7 +2455,7 @@
 
     /* The three tiles should fit the window without scrolling. The compact
        spacing in pdp-gallery-layout.css does that on most screens; on a
-       short window the buy box is scaled down a little (never below 80%).
+       short window the buy box is scaled down a little (never below 85%).
        Not while an info link is open: that is allowed to grow. */
     var info = root.querySelector('.product-v2__info-wrapper');
     /* the social proof line always fits one line: scaled down from its own
@@ -2475,16 +2475,29 @@
         text.style.setProperty('font-size', size + 'px', 'important');
       }
     }
+    /* Older Firefox has no CSS zoom: there the column keeps its full size. */
+    var zoomOK = !!(window.CSS && CSS.supports && CSS.supports('zoom', '1'));
     function fitInfo() {
       if (!info) return;
       fitSocialProof();
       if (!on()) { info.style.removeProperty('--pdp-zoom'); return; }
       if (info.querySelector('.pdp-tile--links details[open]')) return;
       info.style.setProperty('--pdp-zoom', '1');
+      if (!zoomOK) return;
       var top = info.getBoundingClientRect().top + window.scrollY;
       var available = window.innerHeight - top - 12;
-      var z = Math.max(0.8, Math.min(1, available / info.offsetHeight));
+      var total = info.offsetHeight;
+      var z = available / total;
+      /* When all three tiles would need more than 10% shrinking, keep the
+         text readable instead: fit the buy tile and the shipping/payment
+         tile, and let the info links start below the fold. */
+      var tiles = info.querySelectorAll('.pdp-tile');
+      if (z < 0.9 && tiles.length > 2) {
+        z = available / (total - tiles[tiles.length - 1].offsetHeight - 8);
+      }
+      z = Math.max(0.85, Math.min(1, z));
       info.style.setProperty('--pdp-zoom', String(Math.round(z * 1000) / 1000));
+      fitSocialProof();
     }
     var fitTimer;
     function scheduleFit() { clearTimeout(fitTimer); fitTimer = setTimeout(fitInfo, 80); }
