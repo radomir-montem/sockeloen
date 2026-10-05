@@ -6073,3 +6073,26 @@ body.template--product .product-v2 .thumbnail-list {
     top: 104px !important;
   }
 }
+
+
+/* Product page: a product video fills the same 4:5 box as the photos
+   (cropped, centred) and plays in place with nothing over it. */
+body.template--product .product-v2 .product__media--inline-video {
+  overflow: hidden;
+}
+body.template--product .product-v2 .product__media--inline-video video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  pointer-events: none;
+}
+/* its thumbnail is a plain still like the photo thumbnails (the theme's
+   play badge was unstyled here and covered the strip) */
+body.template--product .product-v2 .thumbnail-list .thumbnail__badge {
+  display: none !important;
+}
