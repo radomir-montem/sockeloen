@@ -157,6 +157,27 @@
   .{{ swiper_id }} .swiper-wrapper {
     flex-wrap: nowrap !important;
   }
+  /* Until the slider script has started (or if it never does): the same
+     column widths and 12px gaps, and the row scrolls sideways so every
+     product can be reached. Swiper takes over once it is initialised. */
+  .{{ swiper_id }}:not(.swiper-initialized) .swiper-wrapper {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .{{ swiper_id }}:not(.swiper-initialized) .swiper-wrapper::-webkit-scrollbar { display: none; }
+  .{{ swiper_id }}:not(.swiper-initialized) .swiper-slide {
+    flex: 0 0 calc((100% - {{ section.settings.mobile_columns | minus: 1 | times: 12 }}px) / {{ section.settings.mobile_columns }});
+    width: auto;
+    min-width: 0;
+  }
+  @media screen and (min-width: 768px) {
+    .{{ swiper_id }}:not(.swiper-initialized) .swiper-slide {
+      flex-basis: calc((100% - {{ section.settings.desktop_columns | minus: 1 | times: 12 }}px) / {{ section.settings.desktop_columns }});
+    }
+  }
   /* Hover: crossfade to second image */
   .bot-section-{{ section.id }} .media.media--hover-effect > img {
     transition: opacity 0.35s ease;
