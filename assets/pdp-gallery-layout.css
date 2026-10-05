@@ -115,6 +115,9 @@
   }
   body.template--product .product-v2--gallery .product__media-toggle { cursor: inherit; }
 
+  body.template--product .product-v2--gallery .product__media-item.pdp-clone { pointer-events: none; }
+  .product-v2:not(.product-v2--gallery) .pdp-clone { display: none !important; }
+
   /* ---- thumbnail rail on the left ---- */
   body.template--product .product-v2--gallery .thumbnail-slider {
     display: block !important;
@@ -173,7 +176,7 @@
        the header pill (bottom 92px + 12px; the section itself starts at 44px) */
     --pdp-zoom: 1;
     zoom: var(--pdp-zoom);
-    width: calc(clamp(400px, 32vw, 480px) / var(--pdp-zoom)) !important;
+    width: calc(clamp(420px, 34vw, 520px) / var(--pdp-zoom)) !important;
     max-width: none !important;
     margin: calc(60px / var(--pdp-zoom)) calc(20px / var(--pdp-zoom)) calc(12px / var(--pdp-zoom)) 0 !important;
     padding: 0 !important;
@@ -188,7 +191,7 @@
   }
   body.template--product .product-v2--gallery .pdp-tile {
     display: block;
-    padding: 18px 22px;
+    padding: 18px 28px;
     /* the same glass as the open mega menu (.mega-menu-v2-panel): gradient,
        blur, hairline, shadow, 8px corners */
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -378,7 +381,16 @@
     grid-row: 2;
     margin: 0 !important;
   }
-  /* not on sale: the badge is absent and the price is alone on its row */
+  /* A product with a discounted variant always keeps the second row and a
+     fixed column width, so the title and everything below stay put when
+     switching between a discounted and a full-price variant. */
+  body.template--product .product-v2--gallery .product-v2__price--has-sale .price__container {
+    grid-template-rows: 32.2px 18px;
+    min-width: 132px;
+  }
+  body.template--product .product-v2--gallery .product-v2__price--has-sale .product-save-badge {
+    white-space: nowrap;
+  }
 
   /* ---- size chips and colour tiles: a dark tint instead of white ---- */
   body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio'] + label,

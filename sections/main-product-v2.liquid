@@ -588,7 +588,8 @@
         {%- endif -%}
 
         {%- comment -%} 4. Price (€ symbol removed via JS) {%- endcomment -%}
-        <div class="product-v2__price no-js-hidden" id="price-{{ section.id }}" role="status">
+        {%- comment -%} --has-sale: some variant is discounted; the gallery layout then keeps room for the old price and badge so nothing jumps between variants {%- endcomment -%}
+        <div class="product-v2__price no-js-hidden{% if product.compare_at_price_max > product.price_min %} product-v2__price--has-sale{% endif %}" id="price-{{ section.id }}" role="status">
           {%- render 'price',
             product: product,
             use_variant: true,
@@ -2222,9 +2223,29 @@
     var index = 0, translate = 0, drag = null, selfChange = false, suppressClick = false;
 
     function items() {
-      return Array.prototype.filter.call(list.querySelectorAll('.product__media-item'), function (li) {
+      return Array.prototype.filter.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)'), function (li) {
         return li.style.display !== 'none';
       });
+    }
+    /* a copy of the first photo closes the strip, so the last photo has the
+       first one beside it instead of an empty half */
+    function closeStrip() {
+      var old = list.querySelector('.pdp-clone');
+      var all = on() ? items() : [];
+      var first = all[0];
+      if (!first || all.length < 2) { if (old) old.remove(); return; }
+      if (old && old._source === first && old.style.display !== 'none' && old === list.lastElementChild) return;
+      if (old) old.remove();
+      var clone = first.cloneNode(true);
+      clone._source = first;
+      clone.classList.add('pdp-clone');
+      clone.classList.remove('is-active');
+      clone.removeAttribute('id');
+      clone.removeAttribute('data-media-id');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+      clone.querySelectorAll('button, a, video').forEach(function (el) { el.setAttribute('tabindex', '-1'); });
+      list.appendChild(clone);
     }
     function slideWidth() { return (list.clientWidth || 1) / PER_VIEW; }
     /* every photo can be the left one; the last then has no neighbour on the right */
@@ -2262,6 +2283,7 @@
       showThumb();
     }
     function sync(ms) {
+      closeStrip();
       if (!on()) {
         if (mq.matches) {
           list.style.removeProperty('transform');
@@ -2273,8 +2295,34 @@
       slideTo(activeIndex(), ms, false);
     }
 
+    /* Choosing another size keeps the photo that was selected (the theme
+       jumps back to the variant's first photo); another colour shows that
+       colour's first photo as before. */
+    var keep = null;
+    section.addEventListener('change', function (e) {
+      if (!on() || !e.target.matches || !e.target.matches('variant-radios input[type="radio"]')) return;
+      if (e.target.closest('.color-input')) { keep = null; return; }
+      var active = items()[activeIndex()];
+      keep = active ? { id: active.dataset.mediaId, until: Date.now() + 1500 } : null;
+    }, true);
+    function restoreKept() {
+      if (!keep || Date.now() > keep.until) { keep = null; return false; }
+      var li = items().find(function (x) { return x.dataset.mediaId === keep.id; });
+      if (!li) return false;
+      if (!li.classList.contains('is-active')) {
+        selfChange = true;
+        gallery.setActiveMedia(keep.id, false);
+        selfChange = false;
+      }
+      closeStrip();
+      slideTo(items().indexOf(li), 0, false);
+      return true;
+    }
+
     new MutationObserver(function (records) {
       if (selfChange || drag || !on()) return;
+      if (records.every(function (r) { return r.target.classList && r.target.classList.contains('pdp-clone'); })) return;
+      if (restoreKept()) return;
       var filtered = records.some(function (r) { return r.attributeName === 'style' && r.target !== list; });
       if (filtered) { index = 0; sync(0); } else sync(SPEED);
     }).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
