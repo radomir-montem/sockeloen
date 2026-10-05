@@ -111,7 +111,7 @@
       "type": "bought-often-together",
       "name": "Product Carousel",
       "settings": {
-        "product_source": "my_fields.product_upsells",
+        "product_source": "my_fields.product_upsells","layout":"grid",
         "product_list": [],
         "collection": "best-sellers-1",
         "max_products": 8,
