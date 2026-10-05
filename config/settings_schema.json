@@ -18,6 +18,22 @@
     ]
   },
   {
+    "name": "Product page (desktop layout)",
+    "settings": [
+      {
+        "type": "select",
+        "id": "pdp_desktop_layout",
+        "label": "Desktop layout of the v2 product page",
+        "options": [
+          { "value": "classic", "label": "Classic (photo grid + buy box)" },
+          { "value": "gallery", "label": "Gallery (experiment: pinned photo strip, glass tiles)" }
+        ],
+        "default": "classic",
+        "info": "Phones and tablets are not affected. To compare without changing this setting, add ?pdp=gallery or ?pdp=classic to a product URL."
+      }
+    ]
+  },
+  {
     "name": "Shipping details",
     "settings": [
       {

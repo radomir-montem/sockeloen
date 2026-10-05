@@ -1,0 +1,251 @@
+/* ==========================================================================
+   v2 product page, desktop layout experiment ("gallery").
+   On only when .product-v2 carries .product-v2--gallery (theme setting
+   "Product page (desktop layout)", or ?pdp=gallery in the URL) and only
+   from 990px. Without that class nothing below applies, except that the
+   .pdp-tile wrappers stay invisible.
+
+   Layout after representclo.com: the photos are one strip pinned at full
+   window height, two side by side; a thumbnail rail sits on its left; the
+   buy box lies over the right-hand photo as glass tiles (the header
+   pill's glass, 8px corners) and scrolls over the pinned photos.
+   The strip is moved by the script at the end of main-product-v2.liquid.
+   ========================================================================== */
+
+.pdp-tile { display: contents; }
+
+@media screen and (min-width: 990px) {
+  /* ---- frame: photos and buy box share one grid cell ---- */
+  body.template--product #MainContent > .shopify-section:has(.product-v2--gallery) {
+    padding-top: 0 !important;
+  }
+  body.template--product :has(> .product-v2.product-v2--gallery) {
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  body.template--product .product-v2.product-v2--gallery {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    min-height: 100vh;
+    position: relative;
+  }
+  body.template--product .product-v2.product-v2--gallery > .product-v2__media-wrapper {
+    grid-area: 1 / 1;
+    position: sticky !important;
+    top: 0;
+    align-self: start;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100vh;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+  /* ---- photo strip: two photos per screen, full height, cropped to fill ---- */
+  body.template--product .product-v2--gallery media-gallery,
+  body.template--product .product-v2--gallery slider-component[id^="GalleryViewer"] {
+    display: block !important;
+    position: static !important;
+    height: 100% !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+  body.template--product .product-v2--gallery .product__media-list {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    grid-template-columns: none !important;
+    gap: 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    transition-property: transform;
+    transition-timing-function: ease;
+    will-change: transform;
+    cursor: grab;
+    -webkit-user-select: none;
+            user-select: none;
+  }
+  body.template--product .product-v2--gallery.is-dragging .product__media-list { cursor: grabbing; }
+  body.template--product .product-v2--gallery .product__media-list .product__media-item,
+  body.template--product .product-v2--gallery .product__media-list:has(.is-active) .product__media-item:first-child:not(.is-active) {
+    display: block !important;
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+  }
+  body.template--product .product-v2--gallery .product__media-list .product__media-item[style*="display: none"] {
+    display: none !important;
+  }
+  body.template--product .product-v2--gallery .product__media-item modal-opener,
+  body.template--product .product-v2--gallery .product__media-item .product__media {
+    display: block !important;
+    height: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    aspect-ratio: auto !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+  }
+  body.template--product .product-v2--gallery .product__media-item .product__media img,
+  body.template--product .product-v2--gallery .product__media-item .product__media video {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    border-radius: 0 !important;
+    -webkit-user-drag: none;
+  }
+  body.template--product .product-v2--gallery .product__media-toggle { cursor: inherit; }
+
+  /* ---- thumbnail rail on the left, dot beside the selected photo ---- */
+  body.template--product .product-v2--gallery .thumbnail-slider {
+    display: block !important;
+    position: absolute !important;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: auto !important;
+    max-height: calc(100% - 240px);
+    margin: 0 !important;
+    padding: 6px 8px 6px 16px !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    background: none !important;
+  }
+  body.template--product .product-v2--gallery .thumbnail-slider::-webkit-scrollbar { display: none; }
+  body.template--product .product-v2--gallery .thumbnail-slider .slider-button { display: none !important; }
+  body.template--product .product-v2--gallery .thumbnail-slider .thumbnail-list {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: none !important;
+    gap: 4px !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: none !important;
+    position: relative;
+  }
+  body.template--product .product-v2--gallery .thumbnail-list .thumbnail-list__item {
+    flex: none !important;
+    width: 54px !important;
+    height: 68px !important;
+  }
+  body.template--product .product-v2--gallery .thumbnail-list .thumbnail-list__item[style*="display: none"] {
+    display: none !important;
+  }
+  body.template--product .product-v2--gallery .thumbnail-list .thumbnail {
+    display: block;
+    width: 54px !important;
+    height: 68px !important;
+    aspect-ratio: auto !important;
+    border-radius: 0 !important;
+    opacity: 0.4 !important;
+    transition: opacity 0.3s ease;
+  }
+  body.template--product .product-v2--gallery .thumbnail-list .thumbnail:hover,
+  body.template--product .product-v2--gallery .thumbnail-list .thumbnail[aria-current="true"] {
+    opacity: 1 !important;
+  }
+  body.template--product .product-v2--gallery .thumbnail-list .thumbnail::after { box-shadow: none !important; }
+  body.template--product .product-v2--gallery .thumbnail-list .thumbnail img { border-radius: 0 !important; }
+  .pdp-rail-dot { display: none; }
+  body.template--product .product-v2--gallery .pdp-rail-dot {
+    display: block;
+    position: absolute;
+    left: -12px;
+    top: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #111;
+    transition: transform 0.3s ease-out;
+    pointer-events: none;
+  }
+
+  /* ---- buy box: two glass tiles over the right-hand photo ---- */
+  body.template--product .product-v2.product-v2--gallery > .product-v2__info-wrapper {
+    grid-area: 1 / 1;
+    justify-self: end;
+    align-self: start;
+    z-index: 2;
+    width: clamp(400px, 32vw, 480px) !important;
+    max-width: none !important;
+    margin: 104px 24px 24px 0 !important;
+    padding: 0 !important;
+    background: none !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__info-wrapper > div {
+    position: static !important;
+    top: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  body.template--product .product-v2--gallery .pdp-tile {
+    display: block;
+    padding: 20px 24px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+            backdrop-filter: blur(21px) saturate(180%);
+  }
+  body.template--product .product-v2--gallery .pdp-tile:empty { display: none; }
+  body.template--product .product-v2--gallery .pdp-tile > :first-child { margin-top: 0 !important; }
+  body.template--product .product-v2--gallery .pdp-tile > :last-child { margin-bottom: 0 !important; }
+
+  /* ---- info links: plus that turns into a minus, 200ms height glide ---- */
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary {
+    position: relative;
+    padding-right: 28px;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary .icon-caret {
+    display: none !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary::before,
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary::after {
+    content: "";
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    width: 12px;
+    height: 2px;
+    margin-top: -1px;
+    background: currentColor;
+    transition: transform 0.2s ease;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion summary::after {
+    transform: rotate(90deg);
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion details[open]:not(.is-closing) > summary::after {
+    transform: rotate(180deg);
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content {
+    overflow: hidden;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion:first-child {
+    border-top: 0 !important;
+    margin-top: 0 !important;
+  }
+}

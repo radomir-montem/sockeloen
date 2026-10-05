@@ -54,7 +54,26 @@
     >
   {%- endif -%}
 
-  <div class="product-v2 product--medium product--left product--thumbnail grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
+  {{ 'pdp-gallery-layout.css' | asset_url | stylesheet_tag }}
+  <div class="product-v2 product--medium product--left product--thumbnail grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}{% if settings.pdp_desktop_layout == 'gallery' %} product-v2--gallery{% endif %}">
+    {%- comment -%}
+      Desktop layout experiment ("gallery": full-height photo strip with the
+      buy box as glass tiles over it, see assets/pdp-gallery-layout.css).
+      The theme setting decides; ?pdp=gallery or ?pdp=classic in the URL
+      overrides it for this browser tab, to compare the two.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        try {
+          var m = /[?&]pdp=(gallery|classic)/.exec(location.search);
+          if (m) sessionStorage.setItem('pdpLayout', m[1]);
+          var v = sessionStorage.getItem('pdpLayout');
+          var root = document.currentScript.parentElement;
+          if (v === 'gallery') root.classList.add('product-v2--gallery');
+          if (v === 'classic') root.classList.remove('product-v2--gallery');
+        } catch (e) {}
+      })();
+    </script>
 
     {%- comment -%} ========== LEFT COLUMN: MEDIA ========== {%- endcomment -%}
     <div class="grid__item product-v2__media-wrapper relative">
@@ -448,6 +467,8 @@
         class="{% if section.settings.enable_sticky_info %}product-v2__info-container--sticky{% endif %}"
       >
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
+        {%- comment -%} .pdp-tile wrappers are invisible (display: contents) unless the desktop gallery layout is on: tile 1 = social proof to payment line, tile 2 = the info links {%- endcomment -%}
+        <div class="pdp-tile pdp-tile--buy">
 
         {%- comment -%} 1. Social proof bar — switchable between Trustpilot stars and athlete social proof {%- endcomment -%}
         {%- if section.settings.social_proof_type == 'trustpilot' -%}
@@ -1581,6 +1602,7 @@
                 {%- endif -%}
               {%- endfor -%}
 
+              </div><div class="pdp-tile pdp-tile--links">
               {%- comment -%} USP accordions — from locale translations {%- endcomment -%}
               {%- assign usp_headings = 'products.v2.usp_1_heading,products.v2.usp_2_heading,products.v2.usp_3_heading,products.v2.usp_4_heading' | split: ',' -%}
               {%- assign usp_bodies = 'products.v2.usp_1_body_html,products.v2.usp_2_body_html,products.v2.usp_3_body_html,products.v2.usp_4_body_html' | split: ',' -%}
@@ -1669,6 +1691,7 @@
 
           {%- endcase -%}
         {%- endfor -%}
+        </div>
       </div>
     </div>
   </div>
@@ -1973,8 +1996,11 @@
     }
     function sync(ms) {
       if (!mq.matches) {
-        list.style.removeProperty('transform');
-        list.style.removeProperty('transition-duration');
+        /* the desktop gallery layout has its own slider (below) */
+        if (!section.querySelector('.product-v2--gallery')) {
+          list.style.removeProperty('transform');
+          list.style.removeProperty('transition-duration');
+        }
         return;
       }
       list.scrollLeft = 0;
@@ -2163,6 +2189,215 @@
       new MutationObserver(schedule).observe(ship, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['style'] });
     }
     fit();
+  })();
+</script>
+
+{%- comment -%}
+  Desktop gallery layout (experiment, .product-v2--gallery, 990px and up).
+  Modelled on representclo.com: the photo strip is pinned at full window
+  height with two photos side by side and is moved sideways by dragging
+  (Swiper's defaults: follows the pointer, 300ms glide, a quick flick or a
+  drag past a quarter photo moves on), by a sideways trackpad swipe, or by
+  the thumbnail rail on the left, whose dot marks the selected photo. The
+  buy box scrolls over the pinned photos; the page moves on after it.
+  The info links open and close with a 200ms height glide and a plus that
+  turns into a minus (as on emestudios.com).
+{%- endcomment -%}
+<script>
+  (function () {
+    var mq = window.matchMedia('(min-width: 990px)');
+    var section = document.getElementById('MainProduct-{{ section.id }}');
+    if (!section) return;
+    var root = section.querySelector('.product-v2');
+    var list = section.querySelector('.product__media-list');
+    var gallery = section.querySelector('media-gallery');
+    if (!root || !list || !gallery) return;
+    function on() { return mq.matches && root.classList.contains('product-v2--gallery'); }
+
+    var SPEED = 300, THRESHOLD = 5, LONG_MS = 300, LONG_RATIO = 0.25, RESISTANCE = 0.85, PER_VIEW = 2;
+    var index = 0, translate = 0, drag = null, selfChange = false, suppressClick = false;
+
+    function items() {
+      return Array.prototype.filter.call(list.querySelectorAll('.product__media-item'), function (li) {
+        return li.style.display !== 'none';
+      });
+    }
+    function slideWidth() { return (list.clientWidth || 1) / PER_VIEW; }
+    function maxIndex() { return Math.max(0, items().length - PER_VIEW); }
+    function setTranslate(x, ms) {
+      translate = x;
+      list.style.transitionDuration = (ms || 0) + 'ms';
+      list.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+    }
+    function activeIndex() {
+      var i = items().findIndex(function (li) { return li.classList.contains('is-active'); });
+      return i < 0 ? 0 : i;
+    }
+
+    /* thumbnail rail: a dot slides to the selected thumbnail */
+    var strip = section.querySelector('.thumbnail-list');
+    var dot = null;
+    function moveDot() {
+      if (!strip) return;
+      if (!dot) {
+        dot = document.createElement('span');
+        dot.className = 'pdp-rail-dot';
+        dot.setAttribute('aria-hidden', 'true');
+        strip.appendChild(dot);
+      }
+      var current = strip.querySelector('button[aria-current="true"]');
+      var li = current && current.closest('.thumbnail-list__item');
+      if (!li) return;
+      dot.style.transform = 'translateY(' + (li.offsetTop + li.offsetHeight / 2 - 3) + 'px)';
+      var rail = strip.parentElement;
+      if (rail && rail.scrollHeight > rail.clientHeight) {
+        rail.scrollTo({ top: li.offsetTop - (rail.clientHeight - li.offsetHeight) / 2, behavior: 'smooth' });
+      }
+    }
+
+    function slideTo(i, ms, setActive) {
+      var all = items();
+      index = Math.max(0, Math.min(i, maxIndex()));
+      setTranslate(-index * slideWidth(), ms);
+      if (setActive && all[index] && !all[index].classList.contains('is-active')) {
+        selfChange = true;
+        gallery.setActiveMedia(all[index].dataset.mediaId, false);
+        selfChange = false;
+      }
+      moveDot();
+    }
+    function sync(ms) {
+      if (!on()) {
+        if (mq.matches) {
+          list.style.removeProperty('transform');
+          list.style.removeProperty('transition-duration');
+        }
+        return;
+      }
+      /* keep the selected photo in view: as the left photo, or the right one at the end */
+      var a = activeIndex();
+      if (a < index || a > index + PER_VIEW - 1 || index > maxIndex()) slideTo(a, ms, false);
+      else slideTo(index, ms, false);
+    }
+
+    new MutationObserver(function (records) {
+      if (selfChange || drag || !on()) return;
+      var filtered = records.some(function (r) { return r.attributeName === 'style' && r.target !== list; });
+      if (filtered) { index = 0; sync(0); } else sync(SPEED);
+    }).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+
+    function point(e) {
+      var t = e.touches ? e.touches[0] : e;
+      return t ? { x: t.clientX, y: t.clientY } : null;
+    }
+    function start(e) {
+      if (!on() || (e.touches && e.touches.length !== 1)) { drag = null; return; }
+      var p = point(e);
+      var live = new DOMMatrixReadOnly(getComputedStyle(list).transform).m41;
+      setTranslate(live, 0);
+      drag = { x: p.x, y: p.y, from: live, time: Date.now(), moving: false, scrolling: null, dx: 0 };
+    }
+    function move(e) {
+      if (!drag) return;
+      var p = point(e);
+      if (!p) return;
+      var dx = p.x - drag.x, dy = p.y - drag.y;
+      if (drag.scrolling === null) {
+        if (Math.abs(dx) < THRESHOLD && Math.abs(dy) < THRESHOLD) return;
+        drag.scrolling = !!e.touches && Math.atan2(Math.abs(dy), Math.abs(dx)) * 180 / Math.PI > 45;
+        drag.x += dx > 0 ? THRESHOLD : -THRESHOLD;
+        dx = p.x - drag.x;
+      }
+      if (drag.scrolling) return;
+      drag.moving = true;
+      drag.dx = dx;
+      root.classList.add('is-dragging');
+      var min = 0, max = -maxIndex() * slideWidth();
+      var x = drag.from + dx;
+      if (x > min) x = min - 1 + Math.pow(-min + drag.from + dx, RESISTANCE);
+      else if (x < max) x = max + 1 - Math.pow(max - drag.from - dx, RESISTANCE);
+      setTranslate(x, 0);
+      if (!e.touches && e.cancelable) e.preventDefault();
+    }
+    function end() {
+      if (!drag) return;
+      var d = drag;
+      drag = null;
+      root.classList.remove('is-dragging');
+      if (!d.moving) { slideTo(index, SPEED, false); return; }
+      var w = slideWidth();
+      var pos = Math.max(0, Math.min(-translate, maxIndex() * w));
+      var stop = Math.min(Math.floor(pos / w), maxIndex());
+      var ratio = (pos - stop * w) / w;
+      var next = d.dx < 0;
+      var target;
+      if (Date.now() - d.time > LONG_MS) {
+        target = next ? (ratio >= LONG_RATIO ? stop + 1 : stop) : (ratio > 1 - LONG_RATIO ? stop + 1 : stop);
+      } else {
+        target = next ? stop + 1 : stop;
+      }
+      suppressClick = true;
+      setTimeout(function () { suppressClick = false; }, 350);
+      slideTo(target, SPEED, true);
+    }
+    list.addEventListener('mousedown', function (e) { if (e.button === 0) start(e); });
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', end);
+    list.addEventListener('touchstart', start, { passive: true });
+    list.addEventListener('touchmove', move, { passive: true });
+    list.addEventListener('touchend', end, { passive: true });
+    list.addEventListener('touchcancel', end, { passive: true });
+    list.addEventListener('dragstart', function (e) { if (on()) e.preventDefault(); });
+    list.addEventListener('click', function (e) {
+      if (on() && suppressClick) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+
+    /* sideways trackpad swipe: one photo per gesture */
+    var wheelLock = 0;
+    list.addEventListener('wheel', function (e) {
+      if (!on() || Math.abs(e.deltaX) <= Math.abs(e.deltaY) || Math.abs(e.deltaX) < 12) return;
+      e.preventDefault();
+      var now = Date.now();
+      if (now < wheelLock) return;
+      wheelLock = now + 450;
+      slideTo(index + (e.deltaX > 0 ? 1 : -1), SPEED, true);
+    }, { passive: false });
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () { sync(0); }, 60);
+    });
+    mq.addEventListener && mq.addEventListener('change', function () { index = 0; sync(0); });
+    window.addEventListener('load', function () { sync(0); });
+    sync(0);
+
+    /* info links: height glide and plus/minus */
+    section.addEventListener('click', function (e) {
+      if (!on()) return;
+      var summary = e.target.closest('.pdp-tile--links .product__accordion summary');
+      if (!summary) return;
+      var details = summary.parentElement;
+      var content = details.querySelector('.accordion__content');
+      if (!content || !content.animate) return;
+      e.preventDefault();
+      if (details._anim) details._anim.cancel();
+      var opening = !details.open || details.classList.contains('is-closing');
+      if (opening) {
+        details.open = true;
+        details.classList.remove('is-closing');
+        var h = content.scrollHeight;
+        details._anim = content.animate([{ height: '0px' }, { height: h + 'px' }], { duration: 200, easing: 'ease-out' });
+      } else {
+        details.classList.add('is-closing');
+        var from = content.offsetHeight;
+        details._anim = content.animate([{ height: from + 'px' }, { height: '0px' }], { duration: 200, easing: 'ease-out' });
+        details._anim.onfinish = function () {
+          details.open = false;
+          details.classList.remove('is-closing');
+        };
+      }
+    });
   })();
 </script>
 
