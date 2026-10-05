@@ -128,15 +128,19 @@
             var items = Array.prototype.slice.call(tags.querySelectorAll('.pdp-tag'));
             if (!items.length) return;
             function update() {
-              var slides = Array.prototype.slice.call(list.querySelectorAll('.product__media-item')).filter(function (s) {
+              var slides = Array.prototype.slice.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)')).filter(function (s) {
                 return s.style.display !== 'none';
               });
+              /* the desktop gallery layout shows the photos in its own order (data-pdp-order) */
+              if (slides.length && slides[0].hasAttribute('data-pdp-order')) {
+                slides.sort(function (a, b) { return a.getAttribute('data-pdp-order') - b.getAttribute('data-pdp-order'); });
+              }
               var active = slides.findIndex(function (s) { return s.classList.contains('is-active'); });
               if (active < 0) active = 0;
               /* photo 1 > benefit 1, photo 2 > benefit 2, ...; later photos show none */
               items.forEach(function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === active); });
             }
-            new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+            new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style', 'data-pdp-order'], subtree: true });
             update();
           })();
         </script>
@@ -2222,9 +2226,42 @@
     var SPEED = 300, THRESHOLD = 5, LONG_MS = 300, LONG_RATIO = 0.25, RESISTANCE = 0.85, PER_VIEW = 2;
     var index = 0, translate = 0, drag = null, selfChange = false, suppressClick = false;
 
-    function items() {
+    /* Photo order in this layout: the photos were sorted for the classic
+       page (overview, overview, close-up, close-up, ...). Here photos 3/4,
+       5/6, 7/8 ... swap places, so an overview and a close-up alternate.
+       The order is only visual (data-pdp-order + CSS order); the DOM and
+       the classic and phone pages keep the admin order. */
+    function domItems() {
       return Array.prototype.filter.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)'), function (li) {
         return li.style.display !== 'none';
+      });
+    }
+    function items() {
+      var all = domItems();
+      for (var i = 2; i + 1 < all.length; i += 2) {
+        var t = all[i]; all[i] = all[i + 1]; all[i + 1] = t;
+      }
+      return all;
+    }
+    function setOrder(el, value) {
+      if (value === null) { if (el.hasAttribute('data-pdp-order')) el.removeAttribute('data-pdp-order'); return; }
+      if (el.getAttribute('data-pdp-order') !== String(value)) el.setAttribute('data-pdp-order', value);
+    }
+    function applyOrder() {
+      var thumbs = section.querySelectorAll('.thumbnail-list__item');
+      if (!on()) {
+        list.querySelectorAll('[data-pdp-order]').forEach(function (el) { setOrder(el, null); });
+        thumbs.forEach(function (el) { setOrder(el, null); });
+        return;
+      }
+      var all = items();
+      list.querySelectorAll('.product__media-item:not(.pdp-clone)').forEach(function (li) {
+        var pos = all.indexOf(li);
+        setOrder(li, pos < 0 ? null : pos);
+      });
+      thumbs.forEach(function (th) {
+        var pos = all.findIndex(function (li) { return li.dataset.mediaId === th.dataset.target; });
+        setOrder(th, pos < 0 ? null : pos);
       });
     }
     /* a copy of the first photo closes the strip, so the last photo has the
@@ -2243,6 +2280,7 @@
       clone.removeAttribute('id');
       clone.removeAttribute('data-media-id');
       clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('data-pdp-order', '99');
       clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
       clone.querySelectorAll('button, a, video').forEach(function (el) { el.setAttribute('tabindex', '-1'); });
       list.appendChild(clone);
@@ -2283,6 +2321,7 @@
       showThumb();
     }
     function sync(ms) {
+      applyOrder();
       closeStrip();
       if (!on()) {
         if (mq.matches) {
@@ -2314,6 +2353,7 @@
         gallery.setActiveMedia(keep.id, false);
         selfChange = false;
       }
+      applyOrder();
       closeStrip();
       slideTo(items().indexOf(li), 0, false);
       return true;
@@ -2418,8 +2458,24 @@
        short window the buy box is scaled down a little (never below 80%).
        Not while an info link is open: that is allowed to grow. */
     var info = root.querySelector('.product-v2__info-wrapper');
+    /* the social proof line always fits one line: scaled down from its own
+       size until it does (never below 10px) */
+    function fitSocialProof() {
+      var text = info && info.querySelector('.product-v2__sp-text');
+      if (!text) return;
+      text.style.removeProperty('font-size');
+      text.style.removeProperty('white-space');
+      if (!on()) return;
+      text.style.whiteSpace = 'nowrap';
+      var size = parseFloat(getComputedStyle(text).fontSize) || 13;
+      while (text.scrollWidth > text.clientWidth + 1 && size > 10) {
+        size -= 0.25;
+        text.style.setProperty('font-size', size + 'px', 'important');
+      }
+    }
     function fitInfo() {
       if (!info) return;
+      fitSocialProof();
       if (!on()) { info.style.removeProperty('--pdp-zoom'); return; }
       if (info.querySelector('.pdp-tile--links details[open]')) return;
       info.style.setProperty('--pdp-zoom', '1');

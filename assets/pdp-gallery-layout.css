@@ -115,6 +115,32 @@
   }
   body.template--product .product-v2--gallery .product__media-toggle { cursor: inherit; }
 
+  /* visual photo order (set by the script: photos 3/4, 5/6, 7/8 swapped), for the strip and the rail */
+  body.template--product .product-v2--gallery [data-pdp-order="0"] { order: 0; }
+  body.template--product .product-v2--gallery [data-pdp-order="1"] { order: 1; }
+  body.template--product .product-v2--gallery [data-pdp-order="2"] { order: 2; }
+  body.template--product .product-v2--gallery [data-pdp-order="3"] { order: 3; }
+  body.template--product .product-v2--gallery [data-pdp-order="4"] { order: 4; }
+  body.template--product .product-v2--gallery [data-pdp-order="5"] { order: 5; }
+  body.template--product .product-v2--gallery [data-pdp-order="6"] { order: 6; }
+  body.template--product .product-v2--gallery [data-pdp-order="7"] { order: 7; }
+  body.template--product .product-v2--gallery [data-pdp-order="8"] { order: 8; }
+  body.template--product .product-v2--gallery [data-pdp-order="9"] { order: 9; }
+  body.template--product .product-v2--gallery [data-pdp-order="10"] { order: 10; }
+  body.template--product .product-v2--gallery [data-pdp-order="11"] { order: 11; }
+  body.template--product .product-v2--gallery [data-pdp-order="12"] { order: 12; }
+  body.template--product .product-v2--gallery [data-pdp-order="13"] { order: 13; }
+  body.template--product .product-v2--gallery [data-pdp-order="14"] { order: 14; }
+  body.template--product .product-v2--gallery [data-pdp-order="15"] { order: 15; }
+  body.template--product .product-v2--gallery [data-pdp-order="16"] { order: 16; }
+  body.template--product .product-v2--gallery [data-pdp-order="17"] { order: 17; }
+  body.template--product .product-v2--gallery [data-pdp-order="18"] { order: 18; }
+  body.template--product .product-v2--gallery [data-pdp-order="19"] { order: 19; }
+  body.template--product .product-v2--gallery [data-pdp-order="20"] { order: 20; }
+  body.template--product .product-v2--gallery [data-pdp-order="21"] { order: 21; }
+  body.template--product .product-v2--gallery [data-pdp-order="22"] { order: 22; }
+  body.template--product .product-v2--gallery [data-pdp-order="23"] { order: 23; }
+  body.template--product .product-v2--gallery [data-pdp-order="99"] { order: 99; }
   body.template--product .product-v2--gallery .product__media-item.pdp-clone { pointer-events: none; }
   .product-v2:not(.product-v2--gallery) .pdp-clone { display: none !important; }
 
@@ -415,6 +441,20 @@
   body.template--product .product-v2--gallery .pdp-tile .color-input--thumbs .color-thumb {
     background: rgba(0, 0, 0, 0.08);
   }
+  /* bundle offers (Avada volume discount app): the same tint as the size chips */
+  body.template--product .product-v2--gallery .pdp-tile .Avada-Volume__Item {
+    background: rgba(0, 0, 0, 0.08) !important;
+    background-color: rgba(0, 0, 0, 0.08) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .Avada-Volume__Item:hover {
+    background-color: rgba(0, 0, 0, 0.13) !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .Avada-Volume__Item.Avada-Volume__Item--Selected {
+    background-color: rgba(0, 0, 0, 0.13) !important;
+    border-color: #0395F6 !important;
+  }
   /* the photos carry their own light backdrop: tone it down to the same tint */
   body.template--product .product-v2--gallery .pdp-tile .color-input--thumbs .color-thumb img {
     filter: brightness(0.9);
@@ -445,11 +485,11 @@
     align-items: flex-end;
     position: absolute;
     top: auto;
-    bottom: 12px;
-    right: calc(50% + 12px);
+    bottom: 20px;
+    right: calc(50% + 20px);
     transform: none;
     z-index: 2;
-    max-width: 40%;
+    max-width: 44%;
     pointer-events: none;
     text-align: right;
   }
@@ -461,12 +501,12 @@
     text-overflow: ellipsis;
     background: rgba(255, 255, 255, 0.7);
     color: #666;
-    font-size: 12px;
+    font-size: 17px;
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: 0;
-    padding: 6px 10px;
-    border-radius: 4px;
+    padding: 10px 16px;
+    border-radius: 6px;
     text-transform: lowercase;
   }
   body.template--product .product-v2--gallery .pdp-tag.is-visible { display: inline-block; }
