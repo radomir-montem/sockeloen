@@ -149,7 +149,7 @@
   body.template--product .product-v2--gallery .thumbnail-slider {
     display: block !important;
     position: absolute !important;
-    left: 24px;
+    left: 12px; /* 12px + the rail's 8px padding = 20px, the left edge of the header bar */
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
