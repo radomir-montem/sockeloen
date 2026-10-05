@@ -2501,6 +2501,30 @@
     }
     fitInfo();
 
+    /* Size guide pop-up: it is rendered inside a glass tile, and a tile's
+       backdrop-filter would pin the "fixed" overlay to that tile instead
+       of the window. Move it to <body> before it opens, so it is centred
+       on the page; a click on the blurred page or Escape closes it. */
+    function sizeGuide() { return document.getElementById('size-guide-overlay'); }
+    function closeSizeGuide() {
+      var overlay = sizeGuide();
+      if (!overlay) return;
+      overlay.style.display = 'none';
+      document.body.classList.remove('noscroll');
+    }
+    section.addEventListener('click', function (e) {
+      if (!on() || !e.target.closest('.size-guide-link')) return;
+      var overlay = sizeGuide();
+      if (overlay && overlay.parentElement !== document.body) document.body.appendChild(overlay);
+    }, true);
+    document.addEventListener('click', function (e) {
+      if (on() && e.target === sizeGuide()) closeSizeGuide();
+    });
+    document.addEventListener('keydown', function (e) {
+      var overlay = sizeGuide();
+      if (on() && e.key === 'Escape' && overlay && overlay.style.display !== 'none') closeSizeGuide();
+    });
+
     /* info links: height glide and plus/minus */
     section.addEventListener('click', function (e) {
       if (!on()) return;

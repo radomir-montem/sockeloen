@@ -556,4 +556,41 @@
   body.template--product .product-v2--gallery .pdp-tile--links .product__accordion:last-child summary {
     border-bottom: 0 !important;
   }
+  /* ---- size guide pop-up: centred on the page, the page blurred behind it
+     (the blur of the Klaviyo and exit-intent pop-ups), the panel in the
+     tiles' glass ---- */
+  body:has(.product-v2--gallery) .size-guide-overlay {
+    z-index: 100000;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.18);
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+            backdrop-filter: blur(21px) saturate(180%);
+  }
+  body:has(.product-v2--gallery) .size-guide-modal {
+    max-width: 560px;
+    max-height: calc(100vh - 48px);
+    padding: 24px 28px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12));
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+            backdrop-filter: blur(21px) saturate(180%);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1), 0 18px 50px rgba(0, 0, 0, 0.25);
+  }
+  body:has(.product-v2--gallery) .size-guide-modal__title { color: #121212; }
+  body:has(.product-v2--gallery) .size-guide-modal__close { color: #121212; }
+  body:has(.product-v2--gallery) .size-guide-modal__intro { color: #1a1a1a; }
+  body:has(.product-v2--gallery) .size-guide-table th {
+    background: rgba(0, 0, 0, 0.08);
+    border-bottom: 0;
+    color: #121212;
+  }
+  body:has(.product-v2--gallery) .size-guide-table th:first-child { border-radius: 6px 0 0 6px; }
+  body:has(.product-v2--gallery) .size-guide-table th:last-child { border-radius: 0 6px 6px 0; }
+  body:has(.product-v2--gallery) .size-guide-table td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    color: #1a1a1a;
+  }
+  body:has(.product-v2--gallery) .size-guide-table tbody tr:hover { background: rgba(0, 0, 0, 0.05); }
+  body:has(.product-v2--gallery) .size-guide-modal__link { color: #121212; }
 }
