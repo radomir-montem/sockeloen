@@ -467,7 +467,7 @@
         class="{% if section.settings.enable_sticky_info %}product-v2__info-container--sticky{% endif %}"
       >
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
-        {%- comment -%} .pdp-tile wrappers are invisible (display: contents) unless the desktop gallery layout is on: tile 1 = social proof to payment line, tile 2 = the info links {%- endcomment -%}
+        {%- comment -%} .pdp-tile wrappers are invisible (display: contents) unless the desktop gallery layout is on: tile 1 = social proof to the buy button, tile 2 = shipping and payment lines, tile 3 = the info links {%- endcomment -%}
         <div class="pdp-tile pdp-tile--buy">
 
         {%- comment -%} 1. Social proof bar — switchable between Trustpilot stars and athlete social proof {%- endcomment -%}
@@ -1395,6 +1395,7 @@
               {%- comment -%} Rendered inside shipping_info block instead — this is a no-op here {%- endcomment -%}
 
             {%- when 'shipping_info' -%}
+              </div><div class="pdp-tile pdp-tile--trust">
               {%- comment -%}
                 Ship date logic (v2):
                 - Before 15:00 CET/CEST on a working day → shipped today
@@ -2198,7 +2199,7 @@
   height with two photos side by side and is moved sideways by dragging
   (Swiper's defaults: follows the pointer, 300ms glide, a quick flick or a
   drag past a quarter photo moves on), by a sideways trackpad swipe, or by
-  the thumbnail rail on the left, whose dot marks the selected photo. The
+  the thumbnail rail on the left (a tap makes that photo the left one). The
   buy box scrolls over the pinned photos; the page moves on after it.
   The info links open and close with a 200ms height glide and a plus that
   turns into a minus (as on emestudios.com).
@@ -2234,23 +2235,13 @@
       return i < 0 ? 0 : i;
     }
 
-    /* thumbnail rail: a dot slides to the selected thumbnail */
+    /* thumbnail rail: keep the selected thumbnail in view */
     var strip = section.querySelector('.thumbnail-list');
-    var dot = null;
-    function moveDot() {
-      if (!strip) return;
-      if (!dot) {
-        dot = document.createElement('span');
-        dot.className = 'pdp-rail-dot';
-        dot.setAttribute('aria-hidden', 'true');
-        strip.appendChild(dot);
-      }
-      var current = strip.querySelector('button[aria-current="true"]');
+    function showThumb() {
+      var current = strip && strip.querySelector('button[aria-current="true"]');
       var li = current && current.closest('.thumbnail-list__item');
-      if (!li) return;
-      dot.style.transform = 'translateY(' + (li.offsetTop + li.offsetHeight / 2 - 3) + 'px)';
-      var rail = strip.parentElement;
-      if (rail && rail.scrollHeight > rail.clientHeight) {
+      var rail = strip && strip.parentElement;
+      if (li && rail && rail.scrollHeight > rail.clientHeight) {
         rail.scrollTo({ top: li.offsetTop - (rail.clientHeight - li.offsetHeight) / 2, behavior: 'smooth' });
       }
     }
@@ -2264,7 +2255,7 @@
         gallery.setActiveMedia(all[index].dataset.mediaId, false);
         selfChange = false;
       }
-      moveDot();
+      showThumb();
     }
     function sync(ms) {
       if (!on()) {
@@ -2274,10 +2265,8 @@
         }
         return;
       }
-      /* keep the selected photo in view: as the left photo, or the right one at the end */
-      var a = activeIndex();
-      if (a < index || a > index + PER_VIEW - 1 || index > maxIndex()) slideTo(a, ms, false);
-      else slideTo(index, ms, false);
+      /* the selected photo becomes the left photo (the last one can only be the right photo) */
+      slideTo(activeIndex(), ms, false);
     }
 
     new MutationObserver(function (records) {
