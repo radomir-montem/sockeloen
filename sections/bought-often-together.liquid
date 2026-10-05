@@ -3,6 +3,7 @@
   1. "Recently viewed" — fully client-side (if selected)
   2. First 3 slots: product source metafield / manual list / fallback upsells metafield
   3. Remaining slots (up to max): filled from Collection setting (no duplicates)
+  Layout setting: carousel (Swiper) or grid (all products in rows, no slider).
   4. If nothing else: global upsells fallback
 {%- endcomment -%}
 
@@ -12,6 +13,10 @@
   assign swiper_id = 'bot-swiper-' | append: section.id
   assign max_items = section.settings.max_products
   assign metafield_limit = 3
+  assign is_grid = false
+  if section.settings.layout == 'grid' and section.settings.product_source != 'recently_viewed'
+    assign is_grid = true
+  endif
 
   if section.settings.product_source == 'recently_viewed'
     assign is_recently_viewed = true
@@ -157,25 +162,49 @@
   .{{ swiper_id }} .swiper-wrapper {
     flex-wrap: nowrap !important;
   }
+  /* Grid layout: every product in rows ({{ section.settings.mobile_columns }} per row on phones,
+     {{ section.settings.desktop_columns }} from 768px), 12px gaps, no slider. */
+  .{{ swiper_id }}.bot-grid .swiper-wrapper {
+    display: grid !important;
+    grid-template-columns: repeat({{ section.settings.mobile_columns }}, minmax(0, 1fr));
+    gap: 12px !important;
+    transform: none !important;
+    height: auto;
+  }
+  .{{ swiper_id }}.bot-grid .swiper-slide {
+    width: auto !important;
+    margin: 0 !important;
+    min-width: 0;
+    height: auto;
+  }
+  .{{ swiper_id }}.bot-grid .bot-swiper-next,
+  .{{ swiper_id }}.bot-grid .bot-swiper-prev {
+    display: none !important;
+  }
+  @media screen and (min-width: 768px) {
+    .{{ swiper_id }}.bot-grid .swiper-wrapper {
+      grid-template-columns: repeat({{ section.settings.desktop_columns }}, minmax(0, 1fr));
+    }
+  }
   /* Until the slider script has started (or if it never does): the same
      column widths and 12px gaps, and the row scrolls sideways so every
      product can be reached. Swiper takes over once it is initialised. */
-  .{{ swiper_id }}:not(.swiper-initialized) .swiper-wrapper {
+  .{{ swiper_id }}:not(.swiper-initialized):not(.bot-grid) .swiper-wrapper {
     display: flex !important;
     gap: 12px !important;
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
-  .{{ swiper_id }}:not(.swiper-initialized) .swiper-wrapper::-webkit-scrollbar { display: none; }
-  .{{ swiper_id }}:not(.swiper-initialized) .swiper-slide {
+  .{{ swiper_id }}:not(.swiper-initialized):not(.bot-grid) .swiper-wrapper::-webkit-scrollbar { display: none; }
+  .{{ swiper_id }}:not(.swiper-initialized):not(.bot-grid) .swiper-slide {
     flex: 0 0 calc((100% - {{ section.settings.mobile_columns | minus: 1 | times: 12 }}px) / {{ section.settings.mobile_columns }}) !important;
     width: auto;
     min-width: 0;
     margin-right: 0 !important;
   }
   @media screen and (min-width: 768px) {
-    .{{ swiper_id }}:not(.swiper-initialized) .swiper-slide {
+    .{{ swiper_id }}:not(.swiper-initialized):not(.bot-grid) .swiper-slide {
       flex-basis: calc((100% - {{ section.settings.desktop_columns | minus: 1 | times: 12 }}px) / {{ section.settings.desktop_columns }}) !important;
     }
   }
@@ -205,7 +234,7 @@
     </h4>
   {%- endif -%}
 
-  <div class="{{ swiper_id }} bot-swiper overflow-hidden relative">
+  <div class="{{ swiper_id }} bot-swiper overflow-hidden relative{% if is_grid %} bot-grid{% endif %}">
     <div class="swiper-wrapper">
       {%- unless is_recently_viewed -%}
         {%- for handle in combined_handle_array -%}
@@ -242,7 +271,10 @@
     var desktopColumns = {{ section.settings.desktop_columns }};
     var imageRatio = '{{ section.settings.image_ratio }}';
 
+    var isGrid = {{ is_grid }};
+
     function initSwiper() {
+      if (isGrid) return; /* grid layout: plain rows, no slider */
       if (typeof window.Swiper === 'undefined') {
         setTimeout(initSwiper, 100);
         return;
@@ -461,6 +493,17 @@
         { "value": "portrait", "label": "Portrait (4:5)" }
       ],
       "default": "square"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "carousel", "label": "Carousel (one row, slides sideways)" },
+        { "value": "grid", "label": "Grid (all products in rows, no sliding)" }
+      ],
+      "default": "carousel",
+      "info": "Recently viewed always uses the carousel."
     },
     {
       "type": "range",
