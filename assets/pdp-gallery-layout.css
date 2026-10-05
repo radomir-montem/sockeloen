@@ -294,6 +294,167 @@
     margin: 0 !important;
   }
 
+  /* ---- title and price on one line: same size and weight, € sign kept.
+     On sale the old price and the SAVE badge sit under the price. ---- */
+  body.template--product .product-v2--gallery .pdp-tile--buy {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    align-items: start;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--buy > * {
+    grid-column: 1 / -1;
+    order: 3;
+    min-width: 0;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--buy > .product-v2__social-proof,
+  body.template--product .product-v2--gallery .pdp-tile--buy > .product-v2__reviews-bar {
+    order: 0;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--buy > .product-v2__title {
+    grid-column: 1;
+    order: 1;
+    padding-bottom: 0 !important;
+    margin-bottom: 12px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--buy > .product-v2__price {
+    grid-column: 2;
+    order: 2;
+    margin: 0 0 12px !important;
+    padding: 0 !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price {
+    margin: 0 !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price__container {
+    display: grid !important;
+    grid-template-columns: auto auto;
+    justify-content: end;
+    align-items: center;
+    column-gap: 6px;
+    row-gap: 4px;
+    margin: 0 !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price__regular {
+    grid-column: 1 / -1;
+    justify-self: end;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price--on-sale .price__regular {
+    display: none !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price--on-sale .price__sale {
+    display: contents !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price__regular .regular-text,
+  body.template--product .product-v2--gallery .product-v2__price .price__sale .real-price {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: end;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    font-style: normal !important;
+    line-height: 32.2px !important;
+    letter-spacing: 0.6px !important;
+    color: #121212 !important;
+    white-space: nowrap;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price__sale > span:not(.visually-hidden):not(.real-price) {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+    margin: 0 !important;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .price__sale > span:not(.real-price) .regular-text {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    line-height: 1.2 !important;
+    color: #666 !important;
+    text-decoration: line-through;
+  }
+  body.template--product .product-v2--gallery .product-v2__price .product-save-badge {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0 !important;
+  }
+  /* not on sale: the badge is absent and the price is alone on its row */
+
+  /* ---- size chips and colour tiles: a dark tint instead of white ---- */
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio'] + label,
+  body.template--product .product-v2--gallery .pdp-tile .size-input--single .size-pill-single {
+    background: rgba(0, 0, 0, 0.08) !important;
+    background-color: rgba(0, 0, 0, 0.08) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio'] + label:hover {
+    background-color: rgba(0, 0, 0, 0.13) !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio']:checked + label,
+  body.template--product .product-v2--gallery .pdp-tile .size-input--single .size-pill-single {
+    background-color: rgba(0, 0, 0, 0.13) !important;
+    border-color: #0395F6 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio'].disabled + label {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+    border-color: transparent !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .color-input--thumbs .color-thumb {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  /* the photos carry their own light backdrop: tone it down to the same tint */
+  body.template--product .product-v2--gallery .pdp-tile .color-input--thumbs .color-thumb img {
+    filter: brightness(0.9);
+  }
+
+  /* ---- an opened info link reads in the same type as its title ---- */
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content,
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content * {
+    font-family: inherit !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.28px !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content {
+    padding-top: 0 !important;
+    padding-bottom: 12px !important;
+  }
+
+  /* ---- benefit tag on the left photo, as on phones (one per photo) ---- */
+  body.template--product .product-v2--gallery .pdp-tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    top: auto;
+    bottom: 12px;
+    right: calc(50% + 12px);
+    transform: none;
+    z-index: 2;
+    max-width: 40%;
+    pointer-events: none;
+    text-align: right;
+  }
+  body.template--product .product-v2--gallery .pdp-tag {
+    display: none;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: rgba(255, 255, 255, 0.7);
+    color: #666;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+    padding: 6px 10px;
+    border-radius: 4px;
+    text-transform: lowercase;
+  }
+  body.template--product .product-v2--gallery .pdp-tag.is-visible { display: inline-block; }
+  body.template--product .product-v2--gallery .pdp-tag::first-letter { text-transform: uppercase; }
+
   /* no breadcrumb over the photos */
   body.template--product .product-v2--gallery .breadcrumb-overlay {
     display: none !important;

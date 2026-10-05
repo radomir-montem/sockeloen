@@ -603,7 +603,10 @@
             function stripEuro(root){
               if (_stripping) return;
               _stripping = true;
+              /* the desktop gallery layout shows the price with its € sign, next to the title */
+              var keepEuro = window.matchMedia('(min-width: 990px)').matches;
               root.querySelectorAll('.regular-text, .price-item, .real-price, .product-v2-sticky-bar__price').forEach(function(el){
+                if (keepEuro && el.closest('.product-v2--gallery .product-v2__price')) return;
                 el.childNodes.forEach(function(n){
                   if(n.nodeType===3) n.textContent = n.textContent.replace(/€\s*/g,'');
                 });
