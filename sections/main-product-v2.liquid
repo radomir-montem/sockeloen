@@ -2467,8 +2467,10 @@
       text.style.removeProperty('white-space');
       if (!on()) return;
       text.style.whiteSpace = 'nowrap';
+      /* the text does not shrink by itself: it pushes its row wider, so measure the row */
+      var row = text.closest('.product-v2__social-proof-inner') || text.parentElement;
       var size = parseFloat(getComputedStyle(text).fontSize) || 13;
-      while (text.scrollWidth > text.clientWidth + 1 && size > 10) {
+      while (row.scrollWidth > row.clientWidth + 1 && size > 10) {
         size -= 0.25;
         text.style.setProperty('font-size', size + 'px', 'important');
       }
