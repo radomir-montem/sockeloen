@@ -7,7 +7,7 @@
 
    Layout after representclo.com: the photos are one strip pinned at full
    window height, two side by side; a thumbnail rail sits on its left; the
-   buy box lies over the right-hand photo as glass tiles (the header
+   buy box lies over the right-hand photo as three glass tiles (the header
    pill's glass, 8px corners) and scrolls over the pinned photos.
    The strip is moved by the script at the end of main-product-v2.liquid.
    ========================================================================== */
@@ -117,7 +117,7 @@
   }
   body.template--product .product-v2--gallery .product__media-toggle { cursor: inherit; }
 
-  /* ---- thumbnail rail on the left, dot beside the selected photo ---- */
+  /* ---- thumbnail rail on the left ---- */
   body.template--product .product-v2--gallery .thumbnail-slider {
     display: block !important;
     position: absolute !important;
@@ -128,7 +128,7 @@
     width: auto !important;
     max-height: calc(100% - 240px);
     margin: 0 !important;
-    padding: 6px 8px 6px 16px !important;
+    padding: 6px 8px !important;
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-width: none;
@@ -156,36 +156,16 @@
   body.template--product .product-v2--gallery .thumbnail-list .thumbnail-list__item[style*="display: none"] {
     display: none !important;
   }
+  /* thumbnails as on phones: rounded, full colour, light grey border on the selected one */
   body.template--product .product-v2--gallery .thumbnail-list .thumbnail {
     display: block;
     width: 54px !important;
     height: 68px !important;
     aspect-ratio: auto !important;
-    border-radius: 0 !important;
-    opacity: 0.4 !important;
-    transition: opacity 0.3s ease;
-  }
-  body.template--product .product-v2--gallery .thumbnail-list .thumbnail:hover,
-  body.template--product .product-v2--gallery .thumbnail-list .thumbnail[aria-current="true"] {
     opacity: 1 !important;
   }
-  body.template--product .product-v2--gallery .thumbnail-list .thumbnail::after { box-shadow: none !important; }
-  body.template--product .product-v2--gallery .thumbnail-list .thumbnail img { border-radius: 0 !important; }
-  .pdp-rail-dot { display: none; }
-  body.template--product .product-v2--gallery .pdp-rail-dot {
-    display: block;
-    position: absolute;
-    left: -12px;
-    top: 0;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #111;
-    transition: transform 0.3s ease-out;
-    pointer-events: none;
-  }
 
-  /* ---- buy box: two glass tiles over the right-hand photo ---- */
+  /* ---- buy box: three glass tiles over the right-hand photo ---- */
   body.template--product .product-v2.product-v2--gallery > .product-v2__info-wrapper {
     grid-area: 1 / 1;
     justify-self: end;
@@ -213,6 +193,21 @@
             backdrop-filter: blur(21px) saturate(180%);
   }
   body.template--product .product-v2--gallery .pdp-tile:empty { display: none; }
+  /* social proof sits straight on the glass, without its own white bar */
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__social-proof,
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__reviews-bar {
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--trust .product-v2__secure-row {
+    margin-bottom: 0 !important;
+  }
   body.template--product .product-v2--gallery .pdp-tile > :first-child { margin-top: 0 !important; }
   body.template--product .product-v2--gallery .pdp-tile > :last-child { margin-bottom: 0 !important; }
 
