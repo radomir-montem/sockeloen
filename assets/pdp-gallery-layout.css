@@ -386,7 +386,7 @@
      switching between a discounted and a full-price variant. */
   body.template--product .product-v2--gallery .product-v2__price--has-sale .price__container {
     grid-template-rows: 32.2px 18px;
-    min-width: 132px;
+    width: 164px;
   }
   body.template--product .product-v2--gallery .product-v2__price--has-sale .product-save-badge {
     white-space: nowrap;
