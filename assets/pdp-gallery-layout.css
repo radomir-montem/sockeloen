@@ -73,6 +73,7 @@
     transition-timing-function: ease;
     will-change: transform;
     cursor: grab;
+    touch-action: pan-y; /* touch screens: sideways drags move the strip, vertical ones scroll the page */
     -webkit-user-select: none;
             user-select: none;
   }
@@ -242,6 +243,10 @@
   }
   body.template--product .product-v2--gallery .pdp-tile--trust .product-v2__secure-row {
     margin-bottom: 0 !important;
+  }
+  /* smaller avatars leave the one-line social proof text more room */
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__sp-avatars {
+    zoom: 0.78;
   }
   body.template--product .product-v2--gallery .pdp-tile > :first-child { margin-top: 0 !important; }
   body.template--product .product-v2--gallery .pdp-tile > :last-child { margin-bottom: 0 !important; }
