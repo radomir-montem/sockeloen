@@ -6096,3 +6096,35 @@ body.template--product .product-v2 .product__media--inline-video video {
 body.template--product .product-v2 .thumbnail-list .thumbnail__badge {
   display: none !important;
 }
+
+/* Header (desktop): the logo sat 3.75px left of the page centre (its link
+   is wider than the grid's middle column and was pulled left). Centre the
+   link on the column, so the logo is on the exact middle of the page. */
+@media screen and (min-width: 990px) {
+  header.header > a.header__heading-link,
+  header.header > .header__heading {
+    justify-self: center !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  /* on the homepage the link sits inside the h1 */
+  header.header > .header__heading .header__heading-link {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* Announcement bar: the message text itself is centred. The arrow hangs
+   after it without taking part in the centring (it used to push the text
+   about 11px to the left). */
+#announcement-bar .announcement-bar__message {
+  position: relative;
+}
+#announcement-bar .announcement-bar__message .icon-arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 8px;
+}
