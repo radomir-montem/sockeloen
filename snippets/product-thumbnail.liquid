@@ -46,15 +46,14 @@
 
 {%- if inline_video and media.media_type == 'video' -%}
   <div class="product__media media media--transparent gradient global-media-settings product__media--inline-video" style="padding-top: 125%;">
-    {%- comment -%} the 720p MP4 is plenty for a photo-sized tile and a third lighter than the 1080p file video_tag would pick {%- endcomment -%}
-    {%- assign inline_src = nil -%}
-    {%- for source in media.sources -%}
-      {%- if source.format == 'mp4' -%}
-        {%- if inline_src == nil or source.height == 720 -%}{%- assign inline_src = source -%}{%- endif -%}
-      {%- endif -%}
-    {%- endfor -%}
+    {%- comment -%} adaptive stream first (Safari and iOS pick the quality that fits the connection), then the MP4 files for other browsers {%- endcomment -%}
     <video class="pdp-inline-video" autoplay muted loop playsinline preload="metadata" poster="{{ media.preview_image | image_url: width: 1100 }}"{% if media.alt != blank %} aria-label="{{ media.alt | escape }}"{% endif %}>
-      {%- if inline_src -%}<source src="{{ inline_src.url }}" type="{{ inline_src.mime_type }}">{%- endif -%}
+      {%- for source in media.sources -%}
+        {%- if source.format == 'm3u8' -%}<source src="{{ source.url }}" type="{{ source.mime_type }}">{%- endif -%}
+      {%- endfor -%}
+      {%- for source in media.sources -%}
+        {%- if source.format == 'mp4' -%}<source src="{{ source.url }}" type="{{ source.mime_type }}">{%- endif -%}
+      {%- endfor -%}
     </video>
   </div>
 {%- else -%}
