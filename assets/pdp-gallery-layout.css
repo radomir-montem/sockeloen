@@ -334,8 +334,8 @@
     grid-template-columns: auto auto;
     justify-content: end;
     align-items: center;
-    column-gap: 6px;
-    row-gap: 4px;
+    column-gap: 10px;
+    row-gap: 12px; /* the same step as between the other groups */
     margin: 0 !important;
   }
   body.template--product .product-v2--gallery .product-v2__price .price__regular {
@@ -420,17 +420,22 @@
     filter: brightness(0.9);
   }
 
-  /* ---- an opened info link reads in the same type as its title ---- */
+  /* ---- an opened info link: the text is a sub-text of its title (same
+     typeface, one size smaller, grey, clear of the plus/minus) ---- */
   body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content,
   body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content * {
     font-family: inherit !important;
-    font-size: 14px !important;
+    font-size: 13px !important;
     line-height: 1.5 !important;
-    letter-spacing: 0.28px !important;
+    letter-spacing: 0.2px !important;
+    color: #5c5c5c !important;
   }
   body.template--product .product-v2--gallery .pdp-tile--links .product__accordion .accordion__content {
-    padding-top: 0 !important;
-    padding-bottom: 12px !important;
+    padding: 0 28px 14px 0 !important;
+    margin-top: -2px;
+  }
+  body.template--product .product-v2--gallery .pdp-tile--links .product__accordion details[open]:not(.is-closing) .accordion__title {
+    font-weight: 600 !important;
   }
 
   /* ---- benefit tag on the left photo, as on phones (one per photo) ---- */
