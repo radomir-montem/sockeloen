@@ -1104,6 +1104,7 @@
               </div>
 
             {%- when 'quantity_selector' -%}
+              {%- render 'product-upsell-tiles', product: product, product_form_id: product_form_id -%}
               <div class="product-form-wrapper">
                 <div class="flex {% if product.metafields.custom.hide_quantity_selector %} flex-wrap {% endif %} items-end gap-2 !mb-0">
                   <div

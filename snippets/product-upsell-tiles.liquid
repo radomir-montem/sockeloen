@@ -1,0 +1,72 @@
+{%- comment -%}
+  Upsell tiles on the v2 product page (under the sizes, above Add to Cart).
+
+  Driven by three product metafields on the main product:
+  - custom.upsell_product              the add-on product (e.g. Merino winter socks)
+  - custom.upsell_discount_percentages [10, 20]: discount on 1 piece, on 2 pieces, ...;
+                                        the list's length is the maximum quantity offered
+  - custom.upsell_label                short name on the tiles (empty = product title)
+
+  Tile 0 is the main product alone; tile n adds n pieces of the add-on. Choosing
+  a tile shows one picker per piece for the add-on's options (options with a
+  single value are skipped). Add to Cart first adds the add-on pieces with the
+  line attribute _upsell_for = the main product's gid, then the main product.
+  The "Upsell discount" function (apps/theme-backup-ci, extensions/upsell-discount)
+  gives those lines the percentage from the metafield while the main product is
+  in the cart. Prices on the tiles are computed in the browser from the variant
+  prices, so they follow the selected variant of the main product.
+{%- endcomment -%}
+{%- liquid
+  assign upsell = product.metafields.custom.upsell_product.value
+  assign upsell_pcts = product.metafields.custom.upsell_discount_percentages.value
+  assign upsell_label = product.metafields.custom.upsell_label | default: upsell.title
+-%}
+{%- if upsell != blank and upsell.available and upsell_pcts.size > 0 -%}
+  {{ 'pdp-upsell.css' | asset_url | stylesheet_tag }}
+  <div class="pdp-upsell" data-pdp-upsell data-host-gid="gid://shopify/Product/{{ product.id }}" data-form="{{ product_form_id }}" data-label="{{ upsell_label | escape }}" data-url="{{ upsell.url }}" data-money="{{ cart.currency.symbol | default: '€' }}">
+    <div class="pdp-upsell__tiles" role="radiogroup" aria-label="{{ 'products.v2.upsell_group' | t: label: upsell_label }}">
+      <button type="button" class="pdp-upsell__tile is-selected" role="radio" aria-checked="true" data-qty="0">
+        <span class="pdp-upsell__dot" aria-hidden="true"></span>
+        <span class="pdp-upsell__text">
+          <span class="pdp-upsell__title">{{ 'products.v2.upsell_only' | t: product: product.title }}</span>
+        </span>
+        <span class="pdp-upsell__price"><span data-upsell-total>{{ product.selected_or_first_available_variant.price | money }}</span></span>
+      </button>
+      {%- for pct in upsell_pcts -%}
+        <button type="button" class="pdp-upsell__tile" role="radio" aria-checked="false" data-qty="{{ forloop.index }}" data-pct="{{ pct }}">
+          <span class="pdp-upsell__dot" aria-hidden="true"></span>
+          {%- if upsell.featured_image -%}
+            <span class="pdp-upsell__img" aria-hidden="true">
+              {%- for i in (1..forloop.index) -%}
+                <img src="{{ upsell.featured_image | image_url: width: 120 }}" alt="" width="40" height="50" loading="lazy">
+              {%- endfor -%}
+            </span>
+          {%- endif -%}
+          <span class="pdp-upsell__text">
+            <span class="pdp-upsell__title">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
+            <span class="pdp-upsell__sub">{{ 'products.v2.upsell_save' | t: percent: pct }} <span data-upsell-saving></span></span>
+          </span>
+          <span class="pdp-upsell__price">
+            <s data-upsell-compare></s>
+            <span data-upsell-total></span>
+          </span>
+        </button>
+      {%- endfor -%}
+    </div>
+    <div class="pdp-upsell__pickers" data-upsell-pickers hidden></div>
+    <script type="application/json" data-upsell-product>
+      {
+        "options": {{ upsell.options_with_values | json }},
+        "variants": [
+          {%- for v in upsell.variants -%}
+            { "id": {{ v.id }}, "price": {{ v.price }}, "available": {{ v.available }}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+    <script type="application/json" data-host-variants>
+      [{%- for v in product.variants -%}{ "id": {{ v.id }}, "price": {{ v.price }} }{% unless forloop.last %},{% endunless %}{%- endfor -%}]
+    </script>
+  </div>
+  <script src="{{ 'pdp-upsell.js' | asset_url }}" defer></script>
+{%- endif -%}
