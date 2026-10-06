@@ -236,6 +236,7 @@
         "other": "+ {{ count }} Paar {{ label }}"
       },
       "upsell_save": "Spare {{ percent }}% auf die Socken",
+      "upsell_tagline": "Komplettes Winterset: warme, trockene Füße",
       "upsell_you_save": "Du sparst {{ amount }}",
       "upsell_badge_popular": "Am beliebtesten",
       "upsell_badge_value": "Bester Preis",

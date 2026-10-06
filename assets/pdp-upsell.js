@@ -211,6 +211,12 @@
       renderPrices();
     });
     document.addEventListener('variant:change', renderPrices);
+    /* the tile preselected in the markup (custom.upsell_default_qty) */
+    var preselected = tiles.find(function (t) { return t.classList.contains('is-selected'); });
+    if (preselected) {
+      state.qty = parseInt(preselected.getAttribute('data-qty'), 10) || 0;
+      if (state.qty) renderPickers();
+    }
     renderPrices();
 
     state.items = function () {

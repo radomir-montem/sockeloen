@@ -203,6 +203,7 @@
         "other": "+ {{ count }} paar {{ label }}"
       },
       "upsell_save": "Bespaar {{ percent }}% op de sokken",
+      "upsell_tagline": "Complete winterset: warme, droge voeten",
       "upsell_you_save": "Je bespaart {{ amount }}",
       "upsell_badge_popular": "Meest gekozen",
       "upsell_badge_value": "Beste deal",

@@ -9,6 +9,10 @@
   - custom.upsell_discount_percentages [10, 20]: discount on 1 piece, on 2 pieces, ...;
                                         the list's length is the maximum quantity offered
   - custom.upsell_label                short name on the tiles (empty = product title)
+  - custom.upsell_default_qty          optional: the tile selected on load (0 = main product only,
+                                        1 = first bundle tile, ...); default 0
+  - custom.upsell_tagline              optional: one line under the bundle titles (empty = the
+                                        translated products.v2.upsell_tagline)
 
   Tile 0 is the main product alone; tile n adds n pieces of the add-on. Each tile
   shows the main product's photo + n photos of the add-on; the first add-on
@@ -28,6 +32,14 @@
   endif
   assign upsell_pcts = product.metafields.custom.upsell_discount_percentages.value
   assign upsell_label = product.metafields.custom.upsell_label | default: upsell.title
+  assign upsell_default_qty = product.metafields.custom.upsell_default_qty.value | default: 0
+  if upsell_default_qty > upsell_pcts.size
+    assign upsell_default_qty = upsell_pcts.size
+  endif
+  assign upsell_tagline = product.metafields.custom.upsell_tagline | default: nil
+  if upsell_tagline == blank
+    assign upsell_tagline = 'products.v2.upsell_tagline' | t
+  endif
   assign tile_img = upsell.featured_image
   if upsell_variant != blank and upsell_variant.image
     assign tile_img = upsell_variant.image
@@ -44,7 +56,7 @@
   {{ 'pdp-upsell.css' | asset_url | stylesheet_tag }}
   <div class="pdp-upsell" data-pdp-upsell data-host-gid="gid://shopify/Product/{{ product.id }}" data-form="{{ product_form_id }}" data-label="{{ upsell_label | escape }}" data-url="{{ upsell.url }}" data-money="{{ cart.currency.symbol | default: '€' }}" data-host-size="{{ host_size | escape }}" data-host-options='{{ product.options | json }}'{% if upsell_variant != blank %} data-upsell-variant="{{ upsell_variant.id }}"{% endif %}>
     <div class="pdp-upsell__tiles" role="radiogroup" aria-label="{{ 'products.v2.upsell_group' | t: label: upsell_label }}">
-      <button type="button" class="pdp-upsell__tile is-selected" role="radio" aria-checked="true" data-qty="0">
+      <button type="button" class="pdp-upsell__tile{% if upsell_default_qty == 0 %} is-selected{% endif %}" role="radio" aria-checked="{% if upsell_default_qty == 0 %}true{% else %}false{% endif %}" data-qty="0">
         <span class="pdp-upsell__dot" aria-hidden="true"></span>
         <span class="pdp-upsell__img" aria-hidden="true">
           <img src="{{ product.featured_image | image_url: width: 96 }}" alt="" width="32" height="32" data-upsell-host-img>
@@ -55,7 +67,7 @@
         <span class="pdp-upsell__price"><span class="pdp-upsell__total" data-upsell-total>{{ product.selected_or_first_available_variant.price | money }}</span></span>
       </button>
       {%- for pct in upsell_pcts -%}
-        <button type="button" class="pdp-upsell__tile" role="radio" aria-checked="false" data-qty="{{ forloop.index }}" data-pct="{{ pct }}">
+        <button type="button" class="pdp-upsell__tile{% if upsell_default_qty == forloop.index %} is-selected{% endif %}" role="radio" aria-checked="{% if upsell_default_qty == forloop.index %}true{% else %}false{% endif %}" data-qty="{{ forloop.index }}" data-pct="{{ pct }}">
           {%- if forloop.index == 1 -%}
             <span class="pdp-upsell__badge">{{ 'products.v2.upsell_badge_popular' | t }}</span>
           {%- elsif forloop.last -%}
@@ -71,7 +83,7 @@
           </span>
           <span class="pdp-upsell__text">
             <span class="pdp-upsell__title">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
-            <span class="pdp-upsell__sub">{{ 'products.v2.upsell_save' | t: percent: pct }}</span>
+            <span class="pdp-upsell__sub">{{ upsell_tagline }}</span>
           </span>
           <span class="pdp-upsell__price">
             <span class="pdp-upsell__total" data-upsell-total></span>
