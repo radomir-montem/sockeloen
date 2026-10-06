@@ -73,21 +73,22 @@
    text height: a taller text column would otherwise enlarge the photos, which
    narrows the text, which wraps again). 46px fits the tile's natural content
    height on desktop, 40px on phones where width is scarce. */
-.pdp-upsell__img { display: flex; align-items: center; gap: 3px; flex: none; --upsell-thumb: 46px; }
+.pdp-upsell__img { display: flex; align-items: center; flex: none; --upsell-thumb: 46px; }
 .pdp-upsell__plus { margin: 0 3px; font-size: 14px; font-weight: 700; color: #1a1a1a; }
 .pdp-upsell__img img {
   height: var(--upsell-thumb);
   width: calc(var(--upsell-thumb) * 0.8);
   object-fit: cover;
   border-radius: 6px;
+  border: 1.5px solid #fff; /* keeps overlapping photos apart */
+  box-sizing: content-box;
   background: #f5f5f5;
-  box-sizing: border-box;
 }
+.pdp-upsell__img img + img { margin-left: -10px; }
 @media screen and (max-width: 749px) {
-  /* phones: same photo size, but every other pixel goes to the text column */
-  .pdp-upsell__img { --upsell-thumb: 40px; gap: 2px; }
-  .pdp-upsell__plus { margin: 0 2px; }
-  .pdp-upsell__tile { padding: 12px 12px; gap: 8px; }
+  /* phones: smaller photos, tighter tile, so the text column keeps its width */
+  .pdp-upsell__img { --upsell-thumb: 40px; }
+  .pdp-upsell__tile { padding: 12px; gap: 8px; }
   .pdp-upsell__saving { font-size: 12px; }
   .pdp-upsell__total { font-size: 13px; }
 }
