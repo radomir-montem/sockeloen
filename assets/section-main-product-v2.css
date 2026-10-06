@@ -842,7 +842,12 @@ a.product-v2__sp-avatar {
   --upsell-thumb: 46px;
 }
 @media screen and (max-width: 749px) {
-  .product-v2 .avada-img-stack { --upsell-thumb: 40px; }
+  /* phones: four photos side by side would push the price out of the tile, so
+     they fan out with a small overlap and a white edge to keep them apart */
+  .product-v2 .avada-img-stack { --upsell-thumb: 40px; gap: 0; }
+  .product-v2 .avada-img-stack__img { border: 1.5px solid #fff; box-sizing: content-box; }
+  .product-v2 .avada-img-stack__img + .avada-img-stack__img { margin-left: -10px !important; }
+  .product-v2 .avada-img-stack__plus { margin: 0 3px; }
 }
 
 /* photos like the upsell tiles and the colour tiles: portrait 4:5, rounded (assets/pdp-upsell.css) */
