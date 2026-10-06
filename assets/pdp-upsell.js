@@ -6,6 +6,11 @@
 
   var states = [];
 
+  function roundHalfEven(x) {
+    var f = Math.floor(x), d = x - f;
+    if (Math.abs(d - 0.5) < 1e-9) return f % 2 === 0 ? f : f + 1;
+    return Math.round(x);
+  }
   function money(cents, symbol) {
     var v = (Math.round(cents) / 100).toFixed(2).replace('.', ',');
     return (symbol || '€') + v;
@@ -147,12 +152,15 @@
         var qty = parseInt(tile.getAttribute('data-qty'), 10);
         var pieces = 0;
         var pct = parseFloat(tile.getAttribute('data-pct')) || 0;
+        /* the discount is applied per cart line, rounded to the cent (half to
+           even, like Shopify), so the saving is summed per piece the same way */
+        var bundleSave = 0;
         for (var i = 0; i < qty; i++) {
           var v = pieceVariant(i);
-          pieces += v ? v.price : (choices[0].fixed.price || 0);
+          var price = v ? v.price : (choices[0].fixed.price || 0);
+          pieces += price;
+          bundleSave += roundHalfEven(price * pct / 100);
         }
-        /* rounded to cents first, the way the discount itself is applied */
-        var bundleSave = Math.round(pieces * pct / 100);
         var total = host + pieces - bundleSave;
         /* Maximum saving on every tile: the main product's own sale saving
            (compare-at price) plus the bundle discount on the add-ons. */
