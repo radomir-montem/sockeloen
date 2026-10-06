@@ -85,8 +85,13 @@
 }
 .pdp-upsell__img img + img { margin-left: -16px; }
 @media screen and (max-width: 749px) {
+  /* phones: same photo size, but every other pixel goes to the text column */
   .pdp-upsell__img { --upsell-thumb: 40px; }
-  .pdp-upsell__img img + img { margin-left: -14px; }
+  .pdp-upsell__img img + img { margin-left: -18px; }
+  .pdp-upsell__plus { margin: 0 3px; }
+  .pdp-upsell__tile { padding: 12px 12px; gap: 8px; }
+  .pdp-upsell__saving { font-size: 12px; }
+  .pdp-upsell__total { font-size: 13px; }
 }
 .pdp-upsell__price { display: flex; flex-direction: column; align-items: flex-end; flex: none; margin-left: auto; line-height: 1.2; }
 .pdp-upsell__total { font-size: 14px; font-weight: 600; color: #1a1a1a; }
