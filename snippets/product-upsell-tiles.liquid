@@ -41,6 +41,7 @@
   endcomment
   assign choices_json = ''
   assign choice_imgs = ''
+  assign choice_labels = ''
   if upsell_choices != blank
     for v in upsell_choices
       if v.product.available == false
@@ -58,6 +59,7 @@
       assign choices_json = choices_json | append: one
       assign img = v.image | default: v.product.featured_image
       assign choice_imgs = choice_imgs | append: img | image_url: width: 96 | append: '|'
+      assign choice_labels = choice_labels | append: v.product.title | append: '|'
     endfor
   elsif upsell_variant != blank
     assign upsell = upsell_variant.product
@@ -73,6 +75,7 @@
     assign choice_imgs = upsell.featured_image | image_url: width: 96 | append: '|'
   endif
   assign choice_imgs = choice_imgs | split: '|'
+  assign choice_labels = choice_labels | split: '|'
   assign upsell_pcts = product.metafields.custom.upsell_discount_percentages.value
   assign upsell_label = product.metafields.custom.upsell_label | default: upsell.title
   assign upsell_default_qty = product.metafields.custom.upsell_default_qty.value | default: upsell_pcts.size
@@ -137,7 +140,19 @@
           </span>
           <span class="pdp-upsell__text">
             <span class="pdp-upsell__title">{{ upsell_title }}</span>
-            <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
+            {%- if choice_labels.size > 1 -%}
+              {%- comment -%} different products per piece: name them, e.g. "Plus Merino socks + Beanie" {%- endcomment -%}
+              {%- assign items = '' -%}
+              {%- for i in (1..forloop.index) -%}
+                {%- assign ci = i | minus: 1 -%}
+                {%- if ci >= choice_labels.size -%}{%- assign ci = choice_labels.size | minus: 1 -%}{%- endif -%}
+                {%- if items != '' -%}{%- assign items = items | append: ' + ' -%}{%- endif -%}
+                {%- assign items = items | append: choice_labels[ci] -%}
+              {%- endfor -%}
+              <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add_list' | t: items: items }}</span>
+            {%- else -%}
+              <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
+            {%- endif -%}
             <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
           </span>
           <span class="pdp-upsell__price">

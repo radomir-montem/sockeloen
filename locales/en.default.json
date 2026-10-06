@@ -206,6 +206,7 @@
       "upsell_save": "Save {{ percent }}% on the socks",
       "upsell_set_title": "Complete winter set",
       "upsell_free_shipping": "+ Free shipping",
+      "upsell_add_list": "Plus {{ items }}",
       "upsell_you_save": "You save {{ amount }}",
       "upsell_badge_popular": "Most popular",
       "upsell_badge_value": "Best value",
