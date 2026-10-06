@@ -3,10 +3,10 @@
 
   Driven by product metafields on the main product:
   - custom.upsell_product              the add-on product (e.g. Merino winter socks)
-  - custom.upsell_variants             list of variants the customer can choose from per piece
-                                        (e.g. two different socks); each fixes the colour so only a
-                                        size is asked when the product has several. Piece n starts
-                                        on choice n, so a 2-piece set defaults to two different ones.
+  - custom.upsell_variants             list of variants: piece n of a set is choice n (a 2-piece set
+                                        = two different socks). No pickers are shown: use one-size
+                                        products; a sized product silently gets the size closest to
+                                        the main product's size.
   - custom.upsell_variant              fallback when upsell_variants is empty: the single variant
                                         to offer (its product wins over upsell_product)
   - custom.upsell_discount_percentages [10, 20]: discount on 1 piece, on 2 pieces, ...;
@@ -110,8 +110,8 @@
         </span>
         <span class="pdp-upsell__text">
           <span class="pdp-upsell__title">{{ 'products.v2.upsell_only' | t: product: product.title }}</span>
-          <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
         </span>
+        <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
         <span class="pdp-upsell__price">
           <span class="pdp-upsell__total" data-upsell-total>{{ product.selected_or_first_available_variant.price | money }}</span>
           <s class="pdp-upsell__compare" data-upsell-compare></s>
@@ -138,8 +138,8 @@
           <span class="pdp-upsell__text">
             <span class="pdp-upsell__title">{{ upsell_title }}</span>
             <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
-            <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
           </span>
+          <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
           <span class="pdp-upsell__price">
             <span class="pdp-upsell__total" data-upsell-total></span>
             <s class="pdp-upsell__compare" data-upsell-compare></s>
@@ -148,7 +148,6 @@
         </button>
       {%- endfor -%}
     </div>
-    <div class="pdp-upsell__pickers" data-upsell-pickers hidden></div>
     <script type="application/json" data-upsell-choices>[{{ choices_json }}]</script>
     <script type="application/json" data-host-variants>
       [{%- for v in product.variants -%}{ "id": {{ v.id }}, "price": {{ v.price }}, "compare": {{ v.compare_at_price | default: 0 }}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}{%- endfor -%}]

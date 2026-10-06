@@ -19,7 +19,6 @@
     var symbol = root.getAttribute('data-money') || '€';
     var shipThreshold = parseFloat(root.getAttribute('data-ship-threshold')) || 0;
     var tiles = Array.prototype.slice.call(root.querySelectorAll('.pdp-upsell__tile'));
-    var pickers = root.querySelector('[data-upsell-pickers]');
     var isSizeName = function (name) { return /size|maat|größe/i.test(name); };
     /* Each choice is an offered variant: it fixes every option except the size,
        so only the variants sharing its non-size options stay, and a size is
@@ -172,72 +171,9 @@
       });
     }
 
-    function renderPickers() {
-      pickers.innerHTML = '';
-      var anySizes = choices.some(function (c) { return c.sizeOptions.length; });
-      if (!state.qty || (!askChoice && !anySizes)) { pickers.hidden = true; return; }
-      pickers.hidden = false;
-      for (var i = 0; i < state.qty; i++) {
-        (function (i) {
-          if (!state.picks[i]) state.picks[i] = defaultPick(i);
-          var pick = state.picks[i];
-          var c = choices[pick.choice] || choices[0];
-          var row = document.createElement('div');
-          row.className = 'pdp-upsell__row';
-          var label = document.createElement('span');
-          label.className = 'pdp-upsell__row-label';
-          label.textContent = (root.getAttribute('data-label') || '') + (state.qty > 1 ? ' ' + (i + 1) : '');
-          row.appendChild(label);
-          if (askChoice) {
-            var pickSelect = document.createElement('select');
-            pickSelect.className = 'pdp-upsell__select';
-            pickSelect.setAttribute('aria-label', label.textContent);
-            choices.forEach(function (ch, ci) {
-              if (!ch.variants.some(function (v) { return v.available; })) return;
-              var opt = document.createElement('option');
-              opt.value = String(ci);
-              opt.textContent = ch.label;
-              if (ci === pick.choice) opt.selected = true;
-              pickSelect.appendChild(opt);
-            });
-            pickSelect.addEventListener('change', function () {
-              var ci = parseInt(pickSelect.value, 10);
-              state.picks[i] = { choice: ci, sizes: defaultSizes(choices[ci]) };
-              renderPickers();
-              renderPrices();
-            });
-            row.appendChild(pickSelect);
-          }
-          c.sizeOptions.forEach(function (o) {
-            var idx = c.options.indexOf(o);
-            var select = document.createElement('select');
-            select.className = 'pdp-upsell__select pdp-upsell__select--size';
-            select.setAttribute('aria-label', o.name);
-            o.values.forEach(function (value) {
-              var ok = c.variants.some(function (v) { return v.available && v.options[idx] === value; });
-              if (!ok) return;
-              var opt = document.createElement('option');
-              opt.value = value;
-              opt.textContent = value;
-              if (pick.sizes[o.name] === value) opt.selected = true;
-              select.appendChild(opt);
-            });
-            select.addEventListener('change', function () {
-              pick.sizes[o.name] = select.value;
-              if (!variantFor(pick)) {
-                /* this combination does not exist: fall back to the first one with this value */
-                var v = c.variants.find(function (x) { return x.available && x.options[idx] === select.value; });
-                if (v) c.sizeOptions.forEach(function (q) { pick.sizes[q.name] = v.options[c.options.indexOf(q)]; });
-                renderPickers();
-              }
-              renderPrices();
-            });
-            row.appendChild(select);
-          });
-          pickers.appendChild(row);
-        })(i);
-      }
-    }
+    /* No pickers: piece n is choice n (the shop owner lists one-size products);
+       a sized product silently gets the size closest to the main product's. */
+    function renderPickers() {}
 
     tiles.forEach(function (tile) {
       tile.addEventListener('click', function () {
