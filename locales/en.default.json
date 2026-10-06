@@ -204,7 +204,8 @@
         "other": "Plus {{ count }} pairs {{ label }}"
       },
       "upsell_save": "Save {{ percent }}% on the socks",
-      "upsell_set_title": "Complete winter set",
+      "upsell_set_title": "Winter set",
+      "upsell_set_title_full": "Complete winter set",
       "upsell_free_shipping": "+ Free shipping",
       "upsell_add_list": "Plus {{ items }}",
       "upsell_you_save": "You save {{ amount }}",
