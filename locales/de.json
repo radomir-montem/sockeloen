@@ -236,7 +236,8 @@
         "other": "Plus {{ count }} Paar {{ label }}"
       },
       "upsell_save": "Spare {{ percent }}% auf die Socken",
-      "upsell_set_title": "Komplettes Winterset",
+      "upsell_set_title": "Winterset",
+      "upsell_set_title_full": "Komplettes Winterset",
       "upsell_free_shipping": "+ Kostenloser Versand",
       "upsell_add_list": "Plus {{ items }}",
       "upsell_you_save": "Du sparst {{ amount }}",

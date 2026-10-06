@@ -87,7 +87,7 @@
   box-sizing: content-box;
   background: #f5f5f5;
 }
-.pdp-upsell__img img + img { margin-left: -10px; }
+.pdp-upsell__plus--piece { margin: 0 1px; }
 @media screen and (max-width: 749px) {
   /* phones: smaller photos, tighter tile, so the text column keeps its width */
   .pdp-upsell__img { --upsell-thumb: 40px; }

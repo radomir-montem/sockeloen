@@ -11,9 +11,10 @@
   - custom.upsell_label                short name on the tiles (empty = product title)
   - custom.upsell_default_qty          optional: the tile selected on load (0 = main product only,
                                         1 = first bundle tile, ...); default = the last (best value) tile
-  - custom.upsell_title                optional: title of the bundle tiles (empty = the translated
-                                        products.v2.upsell_set_title, "Complete winter set"); the
-                                        line under it is "Plus n pair(s) <label>"
+  - custom.upsell_title                optional: title of the largest set (empty = translated
+                                        "Complete winter set"); custom.upsell_title_small for the
+                                        smaller sets (empty = "Winter set"). Under it: one line per
+                                        product ("Plus <sock>" / "+ <beanie>")
 
   Tile 0 is the main product alone; tile n adds n pieces of the add-on. Each tile
   shows the main product's photo + n photos of the add-on; the first add-on
@@ -63,9 +64,17 @@
   if upsell_default_qty > upsell_pcts.size
     assign upsell_default_qty = upsell_pcts.size
   endif
-  assign upsell_title = product.metafields.custom.upsell_title | default: nil
-  if upsell_title == blank
-    assign upsell_title = 'products.v2.upsell_set_title' | t
+  comment
+    Tile titles: the last (largest) set is the "complete" one, the smaller sets
+    get the short name. Both can be overridden per product.
+  endcomment
+  assign upsell_title_full = product.metafields.custom.upsell_title | default: nil
+  if upsell_title_full == blank
+    assign upsell_title_full = 'products.v2.upsell_set_title_full' | t
+  endif
+  assign upsell_title_small = product.metafields.custom.upsell_title_small | default: nil
+  if upsell_title_small == blank
+    assign upsell_title_small = 'products.v2.upsell_set_title' | t
   endif
   comment
     Free-shipping threshold of the market (same rule as the shipping row):
@@ -116,18 +125,19 @@
             {%- for i in (1..forloop.index) -%}
               {%- assign ci = i | minus: 1 -%}
               {%- if ci >= choice_imgs.size -%}{%- assign ci = choice_imgs.size | minus: 1 -%}{%- endif -%}
+              {%- if i > 1 -%}<span class="pdp-upsell__plus pdp-upsell__plus--piece">+</span>{%- endif -%}
               <img src="{{ choice_imgs[ci] }}" alt="" width="32" height="32" loading="lazy" data-upsell-piece-img="{{ i | minus: 1 }}">
             {%- endfor -%}
           </span>
           <span class="pdp-upsell__text">
-            <span class="pdp-upsell__title">{{ upsell_title }}</span>
+            <span class="pdp-upsell__title">{% if forloop.last %}{{ upsell_title_full }}{% else %}{{ upsell_title_small }}{% endif %}</span>
             {%- if choice_labels.size > 1 -%}
               {%- comment -%} different products per piece: name them, e.g. "Plus Merino socks + Beanie" {%- endcomment -%}
               {%- assign items = '' -%}
               {%- for i in (1..forloop.index) -%}
                 {%- assign ci = i | minus: 1 -%}
                 {%- if ci >= choice_labels.size -%}{%- assign ci = choice_labels.size | minus: 1 -%}{%- endif -%}
-                {%- if items != '' -%}{%- assign items = items | append: ' + ' -%}{%- endif -%}
+                {%- if items != '' -%}{%- assign items = items | append: '<br>+ ' -%}{%- endif -%}
                 {%- assign items = items | append: choice_labels[ci] -%}
               {%- endfor -%}
               <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add_list' | t: items: items }}</span>
