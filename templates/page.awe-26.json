@@ -51,7 +51,8 @@
         "phone_error": "Please enter a valid mobile number and tick the box.",
         "success_heading": "You're in the break away",
         "success_text": "Keep an eye on your inbox. You'll get access to the All Weather Essentials '26 before they go public.",
-        "success_button": "Done"
+        "success_button": "Done",
+        "phone_channel": "whatsapp"
       }
     }
   },
