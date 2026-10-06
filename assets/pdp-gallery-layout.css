@@ -462,7 +462,7 @@
   }
   body.template--product .product-v2--gallery .pdp-tile .pdp-upsell { margin-bottom: 12px; }
   /* the sizes above end closer to the tiles here: 8px makes the gap above the first tile equal to the gap between tiles */
-  body.template--product .product-v2--gallery .pdp-tile .pdp-upsell__tiles { padding-top: 18px; }
+  body.template--product .product-v2--gallery .pdp-tile .pdp-upsell__tiles { padding-top: 8px; }
   /* bundle offers (Avada volume discount app): the same tint as the size chips */
   body.template--product .product-v2--gallery .pdp-tile .Avada-Volume__Item {
     background: rgba(0, 0, 0, 0.08) !important;

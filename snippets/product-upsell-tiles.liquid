@@ -110,8 +110,8 @@
         </span>
         <span class="pdp-upsell__text">
           <span class="pdp-upsell__title">{{ 'products.v2.upsell_only' | t: product: product.title }}</span>
+          <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
         </span>
-        <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
         <span class="pdp-upsell__price">
           <span class="pdp-upsell__total" data-upsell-total>{{ product.selected_or_first_available_variant.price | money }}</span>
           <s class="pdp-upsell__compare" data-upsell-compare></s>
@@ -138,8 +138,8 @@
           <span class="pdp-upsell__text">
             <span class="pdp-upsell__title">{{ upsell_title }}</span>
             <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
+            <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
           </span>
-          <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
           <span class="pdp-upsell__price">
             <span class="pdp-upsell__total" data-upsell-total></span>
             <s class="pdp-upsell__compare" data-upsell-compare></s>
