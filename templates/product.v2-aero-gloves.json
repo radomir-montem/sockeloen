@@ -63,10 +63,6 @@
             "custom_liquid": ""
           }
         },
-        "aov_bundle_upsell_offer_volume_GnqccC": {
-          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
-          "settings": {}
-        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
@@ -100,7 +96,7 @@
           "type": "usps",
           "settings": {
             "usp1": "shopify://shop_images/Copia_de_STAMP.USPS.png",
-            "usp1_text": "<p><a href=\"/policies/shipping-policy\" title=\"Shipping Policy\"><strong>Free </strong>Shipping &gt; €75,-</a></p>",
+            "usp1_text": "<p><a href=\"/policies/shipping-policy\" title=\"Shipping Policy\"><strong>Free </strong>Shipping &gt; €80,-</a></p>",
             "usp2": "shopify://shop_images/Copia_de_PELOTON.USPS.png",
             "usp2_text": "<p><strong>Born</strong> in the peloton</p>",
             "usp3": "shopify://shop_images/copia_6.lastkm.USP.TRANS_2a8877e2-c653-43ee-9192-49baddd27640.png",
@@ -229,6 +225,10 @@
         "selleasy_lb_upsell_widget_pac_hPJQEw": {
           "type": "shopify://apps/selleasy/blocks/lb-upsell-widget-pac/790c1a03-a71f-4bc1-9869-00dad526d3c2",
           "settings": {}
+        },
+        "aov_bundle_upsell_offer_volume_GnqccC": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
         }
       },
       "block_order": [
@@ -238,9 +238,9 @@
         "price",
         "inventory_status_qrtERa",
         "variant_picker",
+        "aov_bundle_upsell_offer_volume_GnqccC",
         "custom_button_iFjaR9",
         "custom_liquid_jrCLVk",
-        "aov_bundle_upsell_offer_volume_GnqccC",
         "quantity_selector",
         "a82d9b45-1b3b-4c51-9913-271732bc495f",
         "9818c7f0-7715-4e56-af03-fb7a9cca40f4",
