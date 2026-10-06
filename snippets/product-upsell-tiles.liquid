@@ -30,25 +30,26 @@
         <span class="pdp-upsell__text">
           <span class="pdp-upsell__title">{{ 'products.v2.upsell_only' | t: product: product.title }}</span>
         </span>
-        <span class="pdp-upsell__price"><span data-upsell-total>{{ product.selected_or_first_available_variant.price | money }}</span></span>
+        <span class="pdp-upsell__price"><span class="pdp-upsell__total" data-upsell-total>{{ product.selected_or_first_available_variant.price | money }}</span></span>
       </button>
       {%- for pct in upsell_pcts -%}
         <button type="button" class="pdp-upsell__tile" role="radio" aria-checked="false" data-qty="{{ forloop.index }}" data-pct="{{ pct }}">
           <span class="pdp-upsell__dot" aria-hidden="true"></span>
+          <span class="pdp-upsell__text">
+            <span class="pdp-upsell__title">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
+            <span class="pdp-upsell__sub">{{ 'products.v2.upsell_save' | t: percent: pct }}</span>
+          </span>
           {%- if upsell.featured_image -%}
             <span class="pdp-upsell__img" aria-hidden="true">
               {%- for i in (1..forloop.index) -%}
-                <img src="{{ upsell.featured_image | image_url: width: 120 }}" alt="" width="40" height="50" loading="lazy">
+                <img src="{{ upsell.featured_image | image_url: width: 96 }}" alt="" width="32" height="32" loading="lazy">
               {%- endfor -%}
             </span>
           {%- endif -%}
-          <span class="pdp-upsell__text">
-            <span class="pdp-upsell__title">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
-            <span class="pdp-upsell__sub">{{ 'products.v2.upsell_save' | t: percent: pct }} <span data-upsell-saving></span></span>
-          </span>
           <span class="pdp-upsell__price">
-            <s data-upsell-compare></s>
-            <span data-upsell-total></span>
+            <span class="pdp-upsell__total" data-upsell-total></span>
+            <s class="pdp-upsell__compare" data-upsell-compare></s>
+            <span class="pdp-upsell__saving"><span data-upsell-saving-text>{{ 'products.v2.upsell_you_save' | t: amount: '__AMOUNT__' }}</span></span>
           </span>
         </button>
       {%- endfor -%}

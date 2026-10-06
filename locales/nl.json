@@ -196,6 +196,14 @@
       "bis_success": "Gelukt! We mailen je zodra het weer op voorraad is.",
       "size_guide_title": "Maattabel",
       "size_guide_link": "Twijfel je over je maat?",
+      "upsell_group": "Voeg {{ label }} toe",
+      "upsell_only": "Alleen de {{ product }}",
+      "upsell_add": {
+        "one": "+ {{ count }} paar {{ label }}",
+        "other": "+ {{ count }} paar {{ label }}"
+      },
+      "upsell_save": "Bespaar {{ percent }}% op de sokken",
+      "upsell_you_save": "Je bespaart {{ amount }}",
       "size_guide_full_link": "Bekijk de volledige maattabel",
       "size_guide_socks_intro": "Vind je sokmaat op basis van je schoenmaat.",
       "size_guide_gloves_intro": "Meet de breedte van je wijsvinger om je handschoenmaat te vinden.",

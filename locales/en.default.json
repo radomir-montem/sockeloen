@@ -204,6 +204,7 @@
         "other": "+ {{ count }} pairs {{ label }}"
       },
       "upsell_save": "Save {{ percent }}% on the socks",
+      "upsell_you_save": "You save {{ amount }}",
       "size_guide_full_link": "View full size guide",
       "size_guide_socks_intro": "Find your sock size based on your shoe size.",
       "size_guide_gloves_intro": "Measure the width of your index finger to find your glove size.",

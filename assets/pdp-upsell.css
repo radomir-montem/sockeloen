@@ -1,17 +1,19 @@
 /* Upsell tiles under the sizes (snippets/product-upsell-tiles.liquid).
-   Same build as the volume-discount tiles: a radio dot, a small photo
-   stack, the title and the price on the right. Classic page and phones:
-   white tiles with a grey border, the chosen one blue. The desktop
-   gallery layout gives them its dark tint (pdp-gallery-layout.css). */
+   Built like the volume-discount tiles of the Avada app on the socks:
+   20px radio dot, the label, a stack of round 32px photos, and on the
+   right the price (14px/600), the old price struck through in light grey
+   and "You save €x" in blue. 2px grey border, 10px corners, the chosen
+   tile blue. The desktop gallery layout tints them (pdp-gallery-layout.css). */
 .pdp-upsell { margin: 0 0 12px; }
-.pdp-upsell__tiles { display: flex; flex-direction: column; gap: 8px; }
+.pdp-upsell__tiles { display: flex; flex-direction: column; gap: 12px; }
 .pdp-upsell__tile {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
+  min-height: 60px;
   margin: 0;
-  padding: 10px 14px;
+  padding: 12px 16px;
   border: 2px solid #e5e5e5;
   border-radius: 10px;
   background: #fff;
@@ -22,12 +24,13 @@
   transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 .pdp-upsell__tile:hover { border-color: #bbb; }
-.pdp-upsell__tile.is-selected { border-color: #0395F6; }
+.pdp-upsell__tile.is-selected,
+.pdp-upsell__tile.is-selected:hover { border-color: #0395F6; }
 .pdp-upsell__dot {
   flex: none;
-  width: 18px;
-  height: 18px;
-  border: 2px solid #c8c8c8;
+  width: 20px;
+  height: 20px;
+  border: 1.75px solid #d1d5db;
   border-radius: 50%;
   position: relative;
   transition: border-color 0.15s ease;
@@ -40,23 +43,26 @@
   border-radius: 50%;
   background: #0395F6;
 }
-.pdp-upsell__img { display: flex; flex: none; }
+.pdp-upsell__text { display: flex; flex-direction: column; min-width: 0; flex: 0 1 auto; }
+.pdp-upsell__title { font-size: 13px; font-weight: 500; line-height: 1.4; color: #1a1a1a; }
+.pdp-upsell__sub { font-size: 12px; font-weight: 400; line-height: 1.3; color: #666; }
+.pdp-upsell__img { display: flex; align-items: center; flex: none; }
 .pdp-upsell__img img {
   width: 32px;
-  height: 40px;
+  height: 32px;
   object-fit: cover;
-  border-radius: 4px;
-  background: #f0f0f0;
+  border-radius: 50%;
+  border: 1.75px solid #fff;
+  background: #f5f5f5;
+  box-sizing: border-box;
 }
-.pdp-upsell__img img + img { margin-left: -14px; box-shadow: -2px 0 0 #fff; }
-.pdp-upsell__text { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
-.pdp-upsell__title { font-size: 14px; font-weight: 600; line-height: 1.3; }
-.pdp-upsell__sub { font-size: 12px; color: #555; line-height: 1.3; }
-.pdp-upsell__price { display: flex; flex-direction: column; align-items: flex-end; flex: none; }
-.pdp-upsell__price s { font-size: 12px; color: #888; }
-.pdp-upsell__price s:empty { display: none; }
-.pdp-upsell__price > span { font-size: 15px; font-weight: 700; }
-.pdp-upsell__pickers { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.pdp-upsell__img img + img { margin-left: -10px; }
+.pdp-upsell__price { display: flex; flex-direction: column; align-items: flex-end; flex: none; margin-left: auto; line-height: 1.2; }
+.pdp-upsell__total { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+.pdp-upsell__compare { font-size: 12px; color: #bbb; }
+.pdp-upsell__compare:empty { display: none; }
+.pdp-upsell__saving { font-size: 12px; font-weight: 700; color: #0395F6; white-space: nowrap; }
+.pdp-upsell__pickers { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
 .pdp-upsell__pickers[hidden] { display: none; }
 .pdp-upsell__row { display: flex; align-items: center; gap: 10px; }
 .pdp-upsell__row-label { flex: 0 0 auto; min-width: 90px; font-size: 13px; color: #555; }
@@ -75,3 +81,6 @@
           appearance: none;
 }
 .pdp-upsell__select:focus { outline: none; border-color: #0395F6; }
+@media screen and (max-width: 420px) {
+  .pdp-upsell__sub { display: none; }
+}

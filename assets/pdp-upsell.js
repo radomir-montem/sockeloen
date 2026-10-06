@@ -71,8 +71,11 @@
           total = full - saving;
           var cmp = tile.querySelector('[data-upsell-compare]');
           if (cmp) cmp.textContent = money(full, symbol);
-          var sv = tile.querySelector('[data-upsell-saving]');
-          if (sv) sv.textContent = '(' + money(saving, symbol) + ')';
+          var sv = tile.querySelector('[data-upsell-saving-text]');
+          if (sv) {
+            if (!sv.dataset.template) sv.dataset.template = sv.textContent;
+            sv.textContent = sv.dataset.template.replace('__AMOUNT__', money(saving, symbol));
+          }
         }
         tile.querySelector('[data-upsell-total]').textContent = money(total, symbol);
       });
