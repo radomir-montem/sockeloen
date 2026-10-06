@@ -11,7 +11,7 @@
                                         the list's length is the maximum quantity offered
   - custom.upsell_label                short name on the tiles (empty = product title)
   - custom.upsell_default_qty          optional: the tile selected on load (0 = main product only,
-                                        1 = first bundle tile, ...); default 0
+                                        1 = first bundle tile, ...); default = the last (best value) tile
   - custom.upsell_title                optional: title of the bundle tiles (empty = the translated
                                         products.v2.upsell_set_title, "Complete winter set"); the
                                         line under it is "Plus n pair(s) <label>"
@@ -34,7 +34,7 @@
   endif
   assign upsell_pcts = product.metafields.custom.upsell_discount_percentages.value
   assign upsell_label = product.metafields.custom.upsell_label | default: upsell.title
-  assign upsell_default_qty = product.metafields.custom.upsell_default_qty.value | default: 0
+  assign upsell_default_qty = product.metafields.custom.upsell_default_qty.value | default: upsell_pcts.size
   if upsell_default_qty > upsell_pcts.size
     assign upsell_default_qty = upsell_pcts.size
   endif

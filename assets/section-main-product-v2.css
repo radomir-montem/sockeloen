@@ -836,14 +836,19 @@ a.product-v2__sp-avatar {
 .product-v2 .avada-img-stack {
   display: flex;
   align-items: center;
+  align-self: stretch;
   margin: 0 !important;
   flex-shrink: 1;
   min-width: 0;
 }
 
+/* photos take the tile's content height (36–56px), like the upsell tiles */
 .product-v2 .avada-img-stack__img {
-  width: 32px;
-  height: 32px;
+  height: 100% !important;
+  min-height: 36px;
+  max-height: 56px;
+  width: auto !important;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
   border-radius: 50%;
   border: 2px solid #fff;
