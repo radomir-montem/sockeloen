@@ -29,22 +29,6 @@
             "button_style_secondary_2": false
           }
         },
-        "slide_2": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23876.jpg",
-            "image_overlay_opacity": 30,
-            "heading": "All Weather Essentials '26",
-            "use_h1_tag": false,
-            "text": "The new winter collection. Join the early break away and shop it first.",
-            "button_label_1": "",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Get early access",
-            "button_link_2": "/pages/awe-26",
-            "button_style_secondary_2": false
-          }
-        },
         "slide_3": {
           "type": "slide",
           "settings": {
@@ -60,12 +44,29 @@
             "button_link_2": "shopify://collections/cycling-socks",
             "button_style_secondary_2": false
           }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23876.jpg",
+            "video": "shopify://files/videos/copy_DCA8A2FD-CD03-4931-8601-062B99A8E1C3.MOV",
+            "image_overlay_opacity": 30,
+            "heading": "All Weather Essentials '26",
+            "use_h1_tag": false,
+            "text": "The new winter collection. Join the early break away and shop it first.",
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Get early access",
+            "button_link_2": "/pages/awe-26",
+            "button_style_secondary_2": false
+          }
         }
       },
       "block_order": [
         "slide_1",
-        "slide_2",
-        "slide_3"
+        "slide_3",
+        "slide_2"
       ],
       "settings": {
         "autoplay": true,
