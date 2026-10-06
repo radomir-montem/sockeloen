@@ -170,7 +170,7 @@
     },
     "v2": {
       "usp_1_heading": "Free shipping",
-      "usp_1_body_html": "<p>We offer free shipping on all orders above €75. Orders placed before 15:00 CET on working days are shipped the same day. Delivery takes 1-3 business days within the EU.</p>",
+      "usp_1_body_html": "<p>We offer free shipping on all orders above €80. Orders placed before 15:00 CET on working days are shipped the same day. Delivery takes 1-3 business days within the EU.</p>",
       "usp_2_heading": "100% Satisfaction guarantee",
       "usp_2_body_html": "<p>Not satisfied? We offer hassle-free returns within 30 days of purchase. No questions asked. Your satisfaction is our priority.</p>",
       "usp_3_heading": "Born in the peloton",
@@ -205,6 +205,7 @@
       },
       "upsell_save": "Save {{ percent }}% on the socks",
       "upsell_set_title": "Complete winter set",
+      "upsell_free_shipping": "+ Free shipping",
       "upsell_you_save": "You save {{ amount }}",
       "upsell_badge_popular": "Most popular",
       "upsell_badge_value": "Best value",
