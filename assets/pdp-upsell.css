@@ -5,7 +5,8 @@
    and "You save €x" in blue. 2px grey border, 10px corners, the chosen
    tile blue. The desktop gallery layout tints them (pdp-gallery-layout.css). */
 .pdp-upsell { margin: 0 0 12px; }
-.pdp-upsell__tiles { display: flex; flex-direction: column; gap: 20px; padding-top: 4px; }
+/* padding-top: the sizes above end 8px higher, so the first tile sits 20px below them like the tiles below it */
+.pdp-upsell__tiles { display: flex; flex-direction: column; gap: 20px; padding-top: 16px; }
 .pdp-upsell__tile {
   display: flex;
   align-items: center;
@@ -67,23 +68,26 @@
   white-space: nowrap;
   pointer-events: none;
 }
-/* The photos take the full height of the tile's content (text + price column),
-   between 36 and 56px, so the tile itself never grows because of them. */
-.pdp-upsell__img { display: flex; align-items: center; align-self: stretch; flex: none; }
+/* Photo size is fixed per breakpoint (not tied to the text height: a taller
+   text column would otherwise enlarge the photos, which narrows the text, which
+   wraps again). 46px fits the tile's natural content height (title + sub, or
+   price + compare + saving) on desktop, 40px on phones where width is scarce. */
+.pdp-upsell__img { display: flex; align-items: center; flex: none; --upsell-thumb: 46px; }
 .pdp-upsell__plus { margin: 0 4px; font-size: 14px; font-weight: 700; color: #1a1a1a; }
 .pdp-upsell__img img {
-  height: 100%;
-  min-height: 36px;
-  max-height: 56px;
-  width: auto;
-  aspect-ratio: 1 / 1;
+  width: var(--upsell-thumb);
+  height: var(--upsell-thumb);
   object-fit: cover;
   border-radius: 50%;
   border: 1.75px solid #fff;
   background: #f5f5f5;
   box-sizing: border-box;
 }
-.pdp-upsell__img img + img { margin-left: -14px; }
+.pdp-upsell__img img + img { margin-left: -16px; }
+@media screen and (max-width: 749px) {
+  .pdp-upsell__img { --upsell-thumb: 40px; }
+  .pdp-upsell__img img + img { margin-left: -14px; }
+}
 .pdp-upsell__price { display: flex; flex-direction: column; align-items: flex-end; flex: none; margin-left: auto; line-height: 1.2; }
 .pdp-upsell__total { font-size: 14px; font-weight: 600; color: #1a1a1a; }
 .pdp-upsell__compare { font-size: 12px; color: #bbb; }
