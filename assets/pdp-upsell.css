@@ -5,8 +5,10 @@
    and "You save €x" in blue. 2px grey border, 10px corners, the chosen
    tile blue. The desktop gallery layout tints them (pdp-gallery-layout.css). */
 .pdp-upsell { margin: 0 0 12px; }
-/* padding-top: the sizes above end 8px higher, so the first tile sits 20px below them like the tiles below it */
-.pdp-upsell__tiles { display: flex; flex-direction: column; gap: 20px; padding-top: 16px; }
+/* 30px between tiles: room for the "Free shipping" pill on a tile's bottom edge
+   and the badge on the next tile's top edge. padding-top: the sizes above end
+   8px higher, so the first tile sits as far below them as the tiles do. */
+.pdp-upsell__tiles { display: flex; flex-direction: column; gap: 30px; padding-top: 22px; }
 .pdp-upsell__tile {
   display: flex;
   align-items: center;
