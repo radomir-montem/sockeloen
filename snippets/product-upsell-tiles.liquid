@@ -6,6 +6,8 @@
                                         = two different products, e.g. socks + beanie). No pickers are
                                         shown: use one-size products; a sized product silently gets
                                         the size closest to the main product's size.
+  - custom.upsell_labels               optional display names, same order (e.g. "Merino cycling
+                                        socks", "Under-helmet cap"); empty = product title
   - custom.upsell_discount_percentages [10, 20]: discount on 1 piece, on 2 pieces, ...;
                                         the list's length is the maximum quantity offered
   - custom.upsell_label                short name on the tiles (empty = product title)
@@ -29,6 +31,7 @@
 {%- liquid
   assign upsell = nil
   assign upsell_choices = product.metafields.custom.upsell_variants.value
+  assign upsell_label_list = product.metafields.custom.upsell_labels.value
   comment
     The choices, as JSON for the script and as lists of photo urls and titles
     for the tiles (choice n is the default for piece n).
@@ -53,7 +56,12 @@
       assign choices_json = choices_json | append: one
       assign img = v.image | default: v.product.featured_image
       assign choice_imgs = choice_imgs | append: img | image_url: width: 96 | append: '|'
-      assign choice_labels = choice_labels | append: v.product.title | append: '|'
+      assign custom_label = upsell_label_list[forloop.index0]
+      if custom_label != blank
+        assign choice_labels = choice_labels | append: custom_label | append: '|'
+      else
+        assign choice_labels = choice_labels | append: v.product.title | append: '|'
+      endif
     endfor
   endif
   assign choice_imgs = choice_imgs | split: '|'
