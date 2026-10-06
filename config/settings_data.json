@@ -746,7 +746,8 @@
         "disabled": true,
         "settings": {}
       }
-    }
+    },
+    "pdp_desktop_layout": "gallery"
   },
   "presets": {
     "Default": {
