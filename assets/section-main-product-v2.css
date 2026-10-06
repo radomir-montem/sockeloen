@@ -616,6 +616,8 @@ a.product-v2__sp-avatar {
   border: 2px solid #e5e5e5 !important;
   border-radius: 10px !important;
   padding: 12px 16px !important;
+  min-height: 60px !important;
+  box-sizing: border-box !important;
   overflow: visible !important;
   width: 100% !important;
   cursor: pointer !important;
@@ -688,16 +690,18 @@ a.product-v2__sp-avatar {
 
 /* Tier quantity label (1 Pair, 3 Pairs) */
 .product-v2 .Avada-Volume__Info--TriggerQty {
-  font-size: 14px !important;
+  font-size: 13px !important;
   font-weight: 500 !important;
+  line-height: 1.4 !important;
   color: #1a1a1a !important;
 }
 
 /* Discount text ("for", "Standard price") — match customer benefits style */
 .product-v2 .Avada-Volume__DiscountText {
-  font-size: 14px !important;
+  font-size: 12px !important;
   font-weight: 400 !important;
-  color: #1a1a1a !important;
+  line-height: 1.3 !important;
+  color: #666 !important;
 }
 
 /* Prices — push to the right, stack vertically */
@@ -707,13 +711,14 @@ a.product-v2__sp-avatar {
   flex-direction: column !important;
   align-items: flex-end !important;
   gap: 0 !important;
+  line-height: 1.2 !important;
   flex-shrink: 0 !important;
   order: 3 !important;
 }
 
 .product-v2 .Avada-Offer__PriceDiscount {
   font-size: 14px !important;
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   color: #1a1a1a !important;
   order: 1 !important;
 }
@@ -782,11 +787,13 @@ a.product-v2__sp-avatar {
 
 /* Savings line — inside price column, below old price */
 .product-v2 .avada-savings-line {
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 700;
   color: #0395F6;
   margin-top: 0;
   text-align: right;
-  line-height: 1.3;
+  line-height: 1.2;
+  white-space: nowrap;
   order: 3 !important;
 }
 
@@ -799,6 +806,8 @@ a.product-v2__sp-avatar {
 }
 
 /* ---------- Injected radio dot ---------- */
+/* Hidden since 2026-10-06: the blue border already marks the selected tile. */
+.product-v2 .avada-radio-dot { display: none !important; }
 .product-v2 .avada-radio-dot {
   width: 20px;
   height: 20px;
@@ -830,35 +839,46 @@ a.product-v2__sp-avatar {
   height: 10px;
 }
 
-/* ---------- Avada Bundle Image Stack (overlapping product images) ---------- */
+/* ---------- Avada Bundle Image Stack ----------
+   Same recipe as the upsell tiles (assets/pdp-upsell.css): portrait 4:5 photos
+   like the colour tiles, 6px corners, grey background, overlapping 10px with a
+   white edge; 46px high on desktop, 40px on phones. */
 .product-v2 .avada-img-stack {
   display: flex;
   align-items: center;
+  gap: 0;
   margin: 0 !important;
-  flex-shrink: 1;
-  min-width: 0;
+  flex-shrink: 0;
+  --upsell-thumb: 46px;
 }
-
 .product-v2 .avada-img-stack__img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  height: var(--upsell-thumb) !important;
+  width: calc(var(--upsell-thumb) * 0.8) !important;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1.5px solid #fff;
+  box-sizing: content-box;
+  box-shadow: none;
   background: #f5f5f5;
+  margin: 0 !important;
   flex-shrink: 0;
   position: relative;
 }
-
-/* "+" divider between the bought thumbnails and the free one(s), for
-   tiers phrased as "3 + 1 free" */
+.product-v2 .avada-img-stack__img + .avada-img-stack__img { margin-left: -10px !important; }
 .product-v2 .avada-img-stack__plus {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: #1a1a1a;
-  margin: 0 4px;
+  margin: 0 3px;
   flex-shrink: 0;
+}
+@media screen and (max-width: 749px) {
+  .product-v2 .avada-img-stack { --upsell-thumb: 40px; }
+  .product-v2 .Avada-Volume__Item { padding: 12px !important; }
+  .product-v2 .Avada-Volume__Content,
+  .product-v2 .Avada-Volume__Content--Horizontal { gap: 8px !important; }
+  .product-v2 .Avada-Offer__PriceDiscount { font-size: 13px !important; }
+  .product-v2 .avada-savings-line { font-size: 12px; }
 }
 
 /* Hide #1 / #2 / #3 product numbers and product rows in bundle tiers */
