@@ -456,7 +456,6 @@
     background: rgba(0, 0, 0, 0.13);
     border-color: #0395F6;
   }
-  body.template--product .product-v2--gallery .pdp-tile .pdp-upsell__img img { border-color: rgba(255, 255, 255, 0.7); }
   body.template--product .product-v2--gallery .pdp-tile .pdp-upsell__select {
     background-color: rgba(0, 0, 0, 0.08);
     border-color: transparent;
