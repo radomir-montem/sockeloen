@@ -799,6 +799,8 @@ a.product-v2__sp-avatar {
 }
 
 /* ---------- Injected radio dot ---------- */
+/* Hidden since 2026-10-06: the blue border already marks the selected tile. */
+.product-v2 .avada-radio-dot { display: none !important; }
 .product-v2 .avada-radio-dot {
   width: 20px;
   height: 20px;

@@ -26,6 +26,8 @@
 .pdp-upsell__tile:hover { border-color: #bbb; }
 .pdp-upsell__tile.is-selected,
 .pdp-upsell__tile.is-selected:hover { border-color: #0395F6; }
+/* the dot is hidden (like on the Avada tiles): the blue border marks the selection */
+.pdp-upsell__dot { display: none; }
 .pdp-upsell__dot {
   flex: none;
   width: 20px;
