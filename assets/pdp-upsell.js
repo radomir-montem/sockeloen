@@ -135,7 +135,10 @@
         /* rounded to cents first, the way the discount itself is applied */
         var bundleSave = Math.round(pieces * pct / 100);
         var total = host + pieces - bundleSave;
-        var saving = hostSave + bundleSave;
+        /* The struck price is always "current prices without the bundle deal":
+           main product (at its sale price) + add-ons at full price. Only the
+           main-product-only tile shows its own sale saving (compare-at price). */
+        var saving = qty > 0 ? bundleSave : hostSave;
         var cmp = tile.querySelector('[data-upsell-compare]');
         if (cmp) cmp.textContent = saving > 0 ? money(total + saving, symbol) : '';
         var sv = tile.querySelector('[data-upsell-saving-text]');
