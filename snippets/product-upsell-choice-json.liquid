@@ -1,0 +1,32 @@
+{%- comment -%}
+  One add-on choice for the upsell tiles (snippets/product-upsell-tiles.liquid),
+  as JSON: the offered variant, its product's options and variants. The script
+  keeps the variants sharing the choice's non-size options and lets the
+  customer pick a size when the product has more than one.
+  Parameters: variant (the offered variant), host_label (fallback label)
+{%- endcomment -%}
+{%- liquid
+  assign p = variant.product
+  assign choice_label = p.title
+  for opt in p.options_with_values
+    assign opt_name = opt.name | downcase
+    unless opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe'
+      if opt.values.size > 1
+        assign choice_label = choice_label | append: ' – ' | append: variant.options[forloop.index0]
+      endif
+    endunless
+  endfor
+  assign choice_img = variant.image | default: p.featured_image
+-%}
+{
+  "id": {{ variant.id }},
+  "label": {{ choice_label | json }},
+  "image": {{ choice_img | image_url: width: 96 | json }},
+  "url": {{ p.url | json }},
+  "options": {{ p.options_with_values | json }},
+  "variants": [
+    {%- for v in p.variants -%}
+      { "id": {{ v.id }}, "price": {{ v.price }}, "available": {{ v.available }}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
