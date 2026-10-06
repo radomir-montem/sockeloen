@@ -67,7 +67,8 @@
             pieces += v ? v.price : addOnPrice();
           }
           var full = host + pieces;
-          var saving = pieces * pct / 100;
+          /* rounded to cents first, the way the discount itself is applied */
+          var saving = Math.round(pieces * pct / 100);
           total = full - saving;
           var cmp = tile.querySelector('[data-upsell-compare]');
           if (cmp) cmp.textContent = money(full, symbol);
