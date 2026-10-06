@@ -4,7 +4,6 @@
   if (window.__pdpUpsellInit) return;
   window.__pdpUpsellInit = true;
 
-  var ProductForm = customElements.get('product-form');
   var states = [];
 
   function money(cents, symbol) {
@@ -161,32 +160,34 @@
   document.querySelectorAll('[data-pdp-upsell]').forEach(init);
 
   /* Add to Cart: the add-on pieces go in first, then the main product
-     through the theme's own handler (which also refreshes the cart drawer). */
-  if (ProductForm && !ProductForm.prototype.__upsellPatched) {
-    ProductForm.prototype.__upsellPatched = true;
-    var original = ProductForm.prototype.onSubmitHandler;
-    ProductForm.prototype.onSubmitHandler = function (evt) {
-      var self = this;
-      var state = states.find(function (s) { return s.form === self.form; });
-      var items = state && state.qty ? state.items() : [];
-      if (!items.length) return original.call(this, evt);
-      evt.preventDefault();
-      if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
-      this.submitButton.classList.add('loading');
-      fetch(window.routes && window.routes.cart_add_url ? window.routes.cart_add_url + '.js' : '/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-        body: JSON.stringify({ items: items }),
+     through the theme's own handler (which also refreshes the cart drawer).
+     The theme binds its handler on the form at construction, so a capture
+     listener on the document runs before it and can hold it back. */
+  document.addEventListener('submit', function (evt) {
+    var form = evt.target;
+    var state = states.find(function (s) { return s.form === form; });
+    var items = state && state.qty ? state.items() : [];
+    if (!items.length) return;
+    var productForm = form.closest('product-form');
+    if (!productForm || typeof productForm.onSubmitHandler !== 'function') return;
+    var button = productForm.querySelector('[type="submit"]');
+    if (button && button.getAttribute('aria-disabled') === 'true') { evt.preventDefault(); evt.stopImmediatePropagation(); return; }
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+    if (button) button.classList.add('loading');
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ items: items }),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        if (res.status) throw new Error(res.description || 'add-on failed');
+        productForm.onSubmitHandler(evt);
       })
-        .then(function (r) { return r.json(); })
-        .then(function (res) {
-          if (res.status) throw new Error(res.description || 'add-on failed');
-          original.call(self, evt);
-        })
-        .catch(function (err) {
-          self.submitButton.classList.remove('loading');
-          if (self.handleErrorMessage) self.handleErrorMessage(err.message);
-        });
-    };
-  }
+      .catch(function (err) {
+        if (button) button.classList.remove('loading');
+        if (productForm.handleErrorMessage) productForm.handleErrorMessage(err.message);
+      });
+  }, true);
 })();
