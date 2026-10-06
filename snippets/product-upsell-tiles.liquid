@@ -2,13 +2,10 @@
   Upsell tiles on the v2 product page (under the sizes, above Add to Cart).
 
   Driven by product metafields on the main product:
-  - custom.upsell_product              the add-on product (e.g. Merino winter socks)
   - custom.upsell_variants             list of variants: piece n of a set is choice n (a 2-piece set
-                                        = two different socks). No pickers are shown: use one-size
-                                        products; a sized product silently gets the size closest to
-                                        the main product's size.
-  - custom.upsell_variant              fallback when upsell_variants is empty: the single variant
-                                        to offer (its product wins over upsell_product)
+                                        = two different products, e.g. socks + beanie). No pickers are
+                                        shown: use one-size products; a sized product silently gets
+                                        the size closest to the main product's size.
   - custom.upsell_discount_percentages [10, 20]: discount on 1 piece, on 2 pieces, ...;
                                         the list's length is the maximum quantity offered
   - custom.upsell_label                short name on the tiles (empty = product title)
@@ -29,15 +26,11 @@
   prices, so they follow the selected variant of the main product.
 {%- endcomment -%}
 {%- liquid
-  assign upsell = product.metafields.custom.upsell_product.value
-  assign upsell_variant = product.metafields.custom.upsell_variant.value
+  assign upsell = nil
   assign upsell_choices = product.metafields.custom.upsell_variants.value
-  if upsell_choices == blank and upsell_variant != blank
-    assign upsell_choices = nil
-  endif
   comment
-    The choices, as JSON for the script and as a list of photo urls for the
-    tiles (choice n is the default for piece n).
+    The choices, as JSON for the script and as lists of photo urls and titles
+    for the tiles (choice n is the default for piece n).
   endcomment
   assign choices_json = ''
   assign choice_imgs = ''
@@ -61,18 +54,6 @@
       assign choice_imgs = choice_imgs | append: img | image_url: width: 96 | append: '|'
       assign choice_labels = choice_labels | append: v.product.title | append: '|'
     endfor
-  elsif upsell_variant != blank
-    assign upsell = upsell_variant.product
-    capture choices_json
-      render 'product-upsell-choice-json', variant: upsell_variant
-    endcapture
-    assign img = upsell_variant.image | default: upsell.featured_image
-    assign choice_imgs = img | image_url: width: 96 | append: '|'
-  elsif upsell != blank
-    capture choices_json
-      render 'product-upsell-choice-json', variant: upsell.selected_or_first_available_variant
-    endcapture
-    assign choice_imgs = upsell.featured_image | image_url: width: 96 | append: '|'
   endif
   assign choice_imgs = choice_imgs | split: '|'
   assign choice_labels = choice_labels | split: '|'
