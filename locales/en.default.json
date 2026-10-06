@@ -207,7 +207,7 @@
       "upsell_set_title": "Winter set",
       "upsell_set_title_full": "Complete winter set",
       "upsell_free_shipping": "+ Free shipping",
-      "upsell_add_list": "Plus {{ items }}",
+      "upsell_add_list": "+ {{ items }}",
       "upsell_you_save": "You save {{ amount }}",
       "upsell_badge_popular": "Most popular",
       "upsell_badge_value": "Best value",
