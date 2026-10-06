@@ -204,6 +204,8 @@
       },
       "upsell_save": "Bespaar {{ percent }}% op de sokken",
       "upsell_you_save": "Je bespaart {{ amount }}",
+      "upsell_badge_popular": "Meest gekozen",
+      "upsell_badge_value": "Beste deal",
       "size_guide_full_link": "Bekijk de volledige maattabel",
       "size_guide_socks_intro": "Vind je sokmaat op basis van je schoenmaat.",
       "size_guide_gloves_intro": "Meet de breedte van je wijsvinger om je handschoenmaat te vinden.",

@@ -19,14 +19,63 @@
     var symbol = root.getAttribute('data-money') || '€';
     var tiles = Array.prototype.slice.call(root.querySelectorAll('.pdp-upsell__tile'));
     var pickers = root.querySelector('[data-upsell-pickers]');
-    /* options worth asking for: more than one value among available variants */
+    /* The offered variant (metafield) fixes every option except the size:
+       only variants sharing its non-size options are offered. */
+    var isSizeName = function (name) { return /size|maat|größe/i.test(name); };
+    var fixedId = parseInt(root.getAttribute('data-upsell-variant') || '0', 10);
+    var fixedVariant = data.variants.find(function (v) { return v.id === fixedId; });
+    if (fixedVariant) {
+      data.variants = data.variants.filter(function (v) {
+        return data.options.every(function (o, i) { return isSizeName(o.name) || v.options[i] === fixedVariant.options[i]; });
+      });
+      if (!data.variants.length) data.variants = [fixedVariant];
+    }
+    /* options worth asking for: size options with more than one available value */
     var options = data.options.filter(function (o, i) {
+      if (!isSizeName(o.name)) return false;
       var values = {};
       data.variants.forEach(function (v) { if (v.available) values[v.options[i]] = true; });
       return Object.keys(values).length > 1;
     });
     var state = { root: root, form: form, qty: 0, picks: [], data: data, options: options };
     states.push(state);
+
+    /* "39-41" -> [39, 41]; "L" -> null */
+    function range(label) {
+      var m = String(label || '').match(/(\d+)\s*[-–\/]\s*(\d+)/);
+      if (m) return [parseInt(m[1], 10), parseInt(m[2], 10)];
+      var n = String(label || '').match(/^\s*(\d+)\s*$/);
+      return n ? [parseInt(n[1], 10), parseInt(n[1], 10)] : null;
+    }
+    /* the add-on size that overlaps most with the main product's size */
+    function matchingSize(option) {
+      var idx = data.options.indexOf(option);
+      var hostLabel = currentHostSize();
+      var host = range(hostLabel);
+      var best = null, bestScore = -1;
+      option.values.forEach(function (value) {
+        var ok = data.variants.some(function (v) { return v.available && v.options[idx] === value; });
+        if (!ok) return;
+        var score = 0;
+        if (hostLabel && value === hostLabel) score = 1000;
+        else if (host) {
+          var r = range(value);
+          if (r) score = Math.max(0, Math.min(host[1], r[1]) - Math.max(host[0], r[0]) + 1);
+        }
+        if (score > bestScore) { bestScore = score; best = value; }
+      });
+      return best;
+    }
+    function currentHostSize() {
+      var idInput = form.querySelector('[name="id"]');
+      var id = idInput ? parseInt(idInput.value, 10) : 0;
+      var v = hostVariants.find(function (h) { return h.id === id; });
+      if (!v || !v.options) return root.getAttribute('data-host-size') || '';
+      var hostOptions = JSON.parse(root.getAttribute('data-host-options') || 'null');
+      if (!hostOptions) return root.getAttribute('data-host-size') || '';
+      for (var i = 0; i < hostOptions.length; i++) if (isSizeName(hostOptions[i])) return v.options[i];
+      return root.getAttribute('data-host-size') || '';
+    }
 
     function hostPrice() {
       var idInput = form.querySelector('[name="id"]');
@@ -40,12 +89,14 @@
           var idx = data.options.indexOf(o);
           return v.options[idx] === pick[o.name];
         });
-      });
+      }) || (options.length ? null : (fixedVariant && fixedVariant.available ? fixedVariant : data.variants.find(function (v) { return v.available; })));
     }
     function defaultPick() {
       var pick = {};
-      var first = data.variants.find(function (v) { return v.available; }) || data.variants[0];
-      options.forEach(function (o) { pick[o.name] = first.options[data.options.indexOf(o)]; });
+      var first = fixedVariant || data.variants.find(function (v) { return v.available; }) || data.variants[0];
+      options.forEach(function (o) {
+        pick[o.name] = matchingSize(o) || first.options[data.options.indexOf(o)];
+      });
       return pick;
     }
     function addOnPrice() {
@@ -53,7 +104,16 @@
       return v ? v.price : 0;
     }
 
+    function renderHostImage() {
+      var active = document.querySelector('.product-v2 .product__media-item.is-active img') || document.querySelector('.product-v2 .product__media-item:not([style*="display: none"]) img');
+      if (!active) return;
+      var src = active.currentSrc || active.src;
+      if (!src) return;
+      src = src.indexOf('width=') !== -1 ? src.replace(/width=\d+/, 'width=96') : src;
+      root.querySelectorAll('[data-upsell-host-img]').forEach(function (img) { if (img.src !== src) img.src = src; });
+    }
     function renderPrices() {
+      renderHostImage();
       var host = hostPrice();
       tiles.forEach(function (tile) {
         var qty = parseInt(tile.getAttribute('data-qty'), 10);
@@ -93,6 +153,7 @@
           var label = document.createElement('span');
           label.className = 'pdp-upsell__row-label';
           label.textContent = (root.getAttribute('data-label') || '') + (state.qty > 1 ? ' ' + (i + 1) : '');
+          label.textContent += ' · ' + (options[0] ? options[0].name : '');
           row.appendChild(label);
           options.forEach(function (o) {
             var idx = data.options.indexOf(o);
@@ -143,7 +204,12 @@
     if (idInput && window.MutationObserver) {
       new MutationObserver(renderPrices).observe(idInput, { attributes: true, attributeFilter: ['value'] });
     }
-    form.addEventListener('change', renderPrices);
+    form.addEventListener('change', function () {
+      /* a new size on the main product: the add-on size follows again */
+      state.picks = [];
+      if (state.qty) renderPickers();
+      renderPrices();
+    });
     document.addEventListener('variant:change', renderPrices);
     renderPrices();
 

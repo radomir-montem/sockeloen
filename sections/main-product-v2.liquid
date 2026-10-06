@@ -54,6 +54,52 @@
     >
   {%- endif -%}
 
+  {%- comment -%}
+    Default size: without a variant in the URL, the page opens on the best-selling
+    size (product metafield custom.default_size) of the first colour, unless that
+    size is sold out. Done as an early redirect so the whole page renders with it.
+  {%- endcomment -%}
+  {%- liquid
+    assign default_size = product.metafields.custom.default_size
+    assign default_variant_id = nil
+    if default_size != blank and product.variants.size > 1
+      assign size_index = nil
+      for opt in product.options_with_values
+        assign opt_name = opt.name | downcase
+        if opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe'
+          assign size_index = forloop.index0
+        endif
+      endfor
+      if size_index != nil
+        assign base = product.selected_or_first_available_variant
+        for v in product.variants
+          if v.available == false or v.options[size_index] != default_size
+            continue
+          endif
+          assign same = true
+          for o in v.options
+            if forloop.index0 != size_index and o != base.options[forloop.index0]
+              assign same = false
+            endif
+          endfor
+          if same
+            assign default_variant_id = v.id
+            break
+          endif
+        endfor
+      endif
+    endif
+  -%}
+  {%- if default_variant_id != nil and default_variant_id != product.selected_or_first_available_variant.id -%}
+    <script>
+      (function () {
+        var u = new URL(location.href);
+        if (u.searchParams.has('variant')) return;
+        u.searchParams.set('variant', '{{ default_variant_id }}');
+        location.replace(u.toString());
+      })();
+    </script>
+  {%- endif -%}
   {{ 'pdp-gallery-layout.css' | asset_url | stylesheet_tag }}
   <div class="product-v2 product--medium product--left product--thumbnail grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}{% if settings.pdp_desktop_layout == 'gallery' %} product-v2--gallery{% endif %}">
     {%- comment -%}

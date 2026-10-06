@@ -5,7 +5,7 @@
    and "You save €x" in blue. 2px grey border, 10px corners, the chosen
    tile blue. The desktop gallery layout tints them (pdp-gallery-layout.css). */
 .pdp-upsell { margin: 0 0 12px; }
-.pdp-upsell__tiles { display: flex; flex-direction: column; gap: 12px; }
+.pdp-upsell__tiles { display: flex; flex-direction: column; gap: 14px; padding-top: 4px; }
 .pdp-upsell__tile {
   display: flex;
   align-items: center;
@@ -46,7 +46,23 @@
 .pdp-upsell__text { display: flex; flex-direction: column; min-width: 0; flex: 0 1 auto; }
 .pdp-upsell__title { font-size: 13px; font-weight: 500; line-height: 1.4; color: #1a1a1a; }
 .pdp-upsell__sub { font-size: 12px; font-weight: 400; line-height: 1.3; color: #666; }
+.pdp-upsell__tile { position: relative; }
+.pdp-upsell__badge {
+  position: absolute;
+  top: -10px;
+  right: 16px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+  white-space: nowrap;
+  pointer-events: none;
+}
 .pdp-upsell__img { display: flex; align-items: center; flex: none; }
+.pdp-upsell__plus { margin: 0 4px; font-size: 13px; font-weight: 700; color: #1a1a1a; }
 .pdp-upsell__img img {
   width: 32px;
   height: 32px;
