@@ -140,7 +140,8 @@
                 {%- if items != '' -%}{%- assign items = items | append: '<br>+ ' -%}{%- endif -%}
                 {%- assign items = items | append: choice_labels[ci] -%}
               {%- endfor -%}
-              <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add_list' | t: items: items }}</span>
+              {%- comment -%} the line break must survive the translation filter's escaping {%- endcomment -%}
+              <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add_list' | t: items: '__ITEMS__' | replace: '__ITEMS__', items }}</span>
             {%- else -%}
               <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
             {%- endif -%}

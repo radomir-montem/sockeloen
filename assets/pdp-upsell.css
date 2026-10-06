@@ -90,7 +90,9 @@
 .pdp-upsell__plus--piece { margin: 0 1px; }
 @media screen and (max-width: 749px) {
   /* phones: smaller photos, tighter tile, so the text column keeps its width */
-  .pdp-upsell__img { --upsell-thumb: 40px; }
+  .pdp-upsell__img { --upsell-thumb: 36px; }
+  .pdp-upsell__plus { margin: 0 2px; }
+  .pdp-upsell__plus--piece { margin: 0; }
   .pdp-upsell__tile { padding: 12px; gap: 8px; }
   .pdp-upsell__saving { font-size: 12px; }
   .pdp-upsell__total { font-size: 13px; }
