@@ -169,7 +169,7 @@
     },
     "v2": {
       "usp_1_heading": "Gratis verzending",
-      "usp_1_body_html": "<p>Wij bieden gratis verzending op alle bestellingen boven €75. Bestellingen geplaatst vóór 15:00 CET op werkdagen worden dezelfde dag verzonden. Levering duurt 1-3 werkdagen binnen de EU.</p>",
+      "usp_1_body_html": "<p>Wij bieden gratis verzending op alle bestellingen boven €80. Bestellingen geplaatst vóór 15:00 CET op werkdagen worden dezelfde dag verzonden. Levering duurt 1-3 werkdagen binnen de EU.</p>",
       "usp_2_heading": "100% Tevredenheidsgarantie",
       "usp_2_body_html": "<p>Niet tevreden? Wij bieden een probleemloze retour binnen 30 dagen na aankoop. Geen vragen gesteld. Jouw tevredenheid is onze prioriteit.</p>",
       "usp_3_heading": "Born in the peloton",
@@ -204,6 +204,7 @@
       },
       "upsell_save": "Bespaar {{ percent }}% op de sokken",
       "upsell_set_title": "Complete winterset",
+      "upsell_free_shipping": "+ Gratis verzending",
       "upsell_you_save": "Je bespaart {{ amount }}",
       "upsell_badge_popular": "Meest gekozen",
       "upsell_badge_value": "Beste deal",
