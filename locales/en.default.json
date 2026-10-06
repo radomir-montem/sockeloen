@@ -200,11 +200,11 @@
       "upsell_group": "Add {{ label }}",
       "upsell_only": "{{ product }} only",
       "upsell_add": {
-        "one": "+ {{ count }} pair {{ label }}",
-        "other": "+ {{ count }} pairs {{ label }}"
+        "one": "Plus {{ count }} pair {{ label }}",
+        "other": "Plus {{ count }} pairs {{ label }}"
       },
       "upsell_save": "Save {{ percent }}% on the socks",
-      "upsell_tagline": "Complete winter set: warm, dry feet",
+      "upsell_set_title": "Complete winter set",
       "upsell_you_save": "You save {{ amount }}",
       "upsell_badge_popular": "Most popular",
       "upsell_badge_value": "Best value",

@@ -77,11 +77,19 @@
       return root.getAttribute('data-host-size') || '';
     }
 
-    function hostPrice() {
+    function hostVariant() {
       var idInput = form.querySelector('[name="id"]');
       var id = idInput ? parseInt(idInput.value, 10) : 0;
-      var v = hostVariants.find(function (h) { return h.id === id; }) || hostVariants[0];
+      return hostVariants.find(function (h) { return h.id === id; }) || hostVariants[0];
+    }
+    function hostPrice() {
+      var v = hostVariant();
       return v ? v.price : 0;
+    }
+    /* the main product's own saving (compare-at price minus price), 0 when not on sale */
+    function hostSaving() {
+      var v = hostVariant();
+      return v && v.compare > v.price ? v.compare - v.price : 0;
     }
     function variantFor(pick) {
       return data.variants.find(function (v) {
@@ -115,27 +123,25 @@
     function renderPrices() {
       renderHostImage();
       var host = hostPrice();
+      var hostSave = hostSaving();
       tiles.forEach(function (tile) {
         var qty = parseInt(tile.getAttribute('data-qty'), 10);
-        var total = host;
-        if (qty > 0) {
-          var pct = parseFloat(tile.getAttribute('data-pct')) || 0;
-          var pieces = 0;
-          for (var i = 0; i < qty; i++) {
-            var v = variantFor(state.picks[i] || defaultPick());
-            pieces += v ? v.price : addOnPrice();
-          }
-          var full = host + pieces;
-          /* rounded to cents first, the way the discount itself is applied */
-          var saving = Math.round(pieces * pct / 100);
-          total = full - saving;
-          var cmp = tile.querySelector('[data-upsell-compare]');
-          if (cmp) cmp.textContent = money(full, symbol);
-          var sv = tile.querySelector('[data-upsell-saving-text]');
-          if (sv) {
-            if (!sv.dataset.template) sv.dataset.template = sv.textContent;
-            sv.textContent = sv.dataset.template.replace('__AMOUNT__', money(saving, symbol));
-          }
+        var pieces = 0;
+        var pct = parseFloat(tile.getAttribute('data-pct')) || 0;
+        for (var i = 0; i < qty; i++) {
+          var v = variantFor(state.picks[i] || defaultPick());
+          pieces += v ? v.price : addOnPrice();
+        }
+        /* rounded to cents first, the way the discount itself is applied */
+        var bundleSave = Math.round(pieces * pct / 100);
+        var total = host + pieces - bundleSave;
+        var saving = hostSave + bundleSave;
+        var cmp = tile.querySelector('[data-upsell-compare]');
+        if (cmp) cmp.textContent = saving > 0 ? money(total + saving, symbol) : '';
+        var sv = tile.querySelector('[data-upsell-saving-text]');
+        if (sv) {
+          if (!sv.dataset.template) sv.dataset.template = sv.textContent;
+          sv.textContent = saving > 0 ? sv.dataset.template.replace('__AMOUNT__', money(saving, symbol)) : '';
         }
         tile.querySelector('[data-upsell-total]').textContent = money(total, symbol);
       });

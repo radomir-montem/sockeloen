@@ -3,16 +3,18 @@
 
   Driven by product metafields on the main product:
   - custom.upsell_product              the add-on product (e.g. Merino winter socks)
-  - custom.upsell_variant              optional: the variant to offer; fixes the colour (and any
-                                        other option) so the customer only chooses the size, which
-                                        is preselected to match the main product's size
+  - custom.upsell_variant              optional: the variant to offer; its product wins over
+                                        upsell_product, and it fixes the colour (and any other
+                                        option) so the customer only chooses the size, which is
+                                        preselected to match the main product's size
   - custom.upsell_discount_percentages [10, 20]: discount on 1 piece, on 2 pieces, ...;
                                         the list's length is the maximum quantity offered
   - custom.upsell_label                short name on the tiles (empty = product title)
   - custom.upsell_default_qty          optional: the tile selected on load (0 = main product only,
                                         1 = first bundle tile, ...); default 0
-  - custom.upsell_tagline              optional: one line under the bundle titles (empty = the
-                                        translated products.v2.upsell_tagline)
+  - custom.upsell_title                optional: title of the bundle tiles (empty = the translated
+                                        products.v2.upsell_set_title, "Complete winter set"); the
+                                        line under it is "Plus n pair(s) <label>"
 
   Tile 0 is the main product alone; tile n adds n pieces of the add-on. Each tile
   shows the main product's photo + n photos of the add-on; the first add-on
@@ -27,7 +29,7 @@
 {%- liquid
   assign upsell = product.metafields.custom.upsell_product.value
   assign upsell_variant = product.metafields.custom.upsell_variant.value
-  if upsell_variant != blank and upsell == blank
+  if upsell_variant != blank
     assign upsell = upsell_variant.product
   endif
   assign upsell_pcts = product.metafields.custom.upsell_discount_percentages.value
@@ -36,9 +38,9 @@
   if upsell_default_qty > upsell_pcts.size
     assign upsell_default_qty = upsell_pcts.size
   endif
-  assign upsell_tagline = product.metafields.custom.upsell_tagline | default: nil
-  if upsell_tagline == blank
-    assign upsell_tagline = 'products.v2.upsell_tagline' | t
+  assign upsell_title = product.metafields.custom.upsell_title | default: nil
+  if upsell_title == blank
+    assign upsell_title = 'products.v2.upsell_set_title' | t
   endif
   assign tile_img = upsell.featured_image
   if upsell_variant != blank and upsell_variant.image
@@ -64,7 +66,11 @@
         <span class="pdp-upsell__text">
           <span class="pdp-upsell__title">{{ 'products.v2.upsell_only' | t: product: product.title }}</span>
         </span>
-        <span class="pdp-upsell__price"><span class="pdp-upsell__total" data-upsell-total>{{ product.selected_or_first_available_variant.price | money }}</span></span>
+        <span class="pdp-upsell__price">
+          <span class="pdp-upsell__total" data-upsell-total>{{ product.selected_or_first_available_variant.price | money }}</span>
+          <s class="pdp-upsell__compare" data-upsell-compare></s>
+          <span class="pdp-upsell__saving" data-upsell-saving><span data-upsell-saving-text>{{ 'products.v2.upsell_you_save' | t: amount: '__AMOUNT__' }}</span></span>
+        </span>
       </button>
       {%- for pct in upsell_pcts -%}
         <button type="button" class="pdp-upsell__tile{% if upsell_default_qty == forloop.index %} is-selected{% endif %}" role="radio" aria-checked="{% if upsell_default_qty == forloop.index %}true{% else %}false{% endif %}" data-qty="{{ forloop.index }}" data-pct="{{ pct }}">
@@ -82,13 +88,13 @@
             {%- endfor -%}
           </span>
           <span class="pdp-upsell__text">
-            <span class="pdp-upsell__title">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
-            <span class="pdp-upsell__sub">{{ upsell_tagline }}</span>
+            <span class="pdp-upsell__title">{{ upsell_title }}</span>
+            <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
           </span>
           <span class="pdp-upsell__price">
             <span class="pdp-upsell__total" data-upsell-total></span>
             <s class="pdp-upsell__compare" data-upsell-compare></s>
-            <span class="pdp-upsell__saving"><span data-upsell-saving-text>{{ 'products.v2.upsell_you_save' | t: amount: '__AMOUNT__' }}</span></span>
+            <span class="pdp-upsell__saving" data-upsell-saving><span data-upsell-saving-text>{{ 'products.v2.upsell_you_save' | t: amount: '__AMOUNT__' }}</span></span>
           </span>
         </button>
       {%- endfor -%}
@@ -105,7 +111,7 @@
       }
     </script>
     <script type="application/json" data-host-variants>
-      [{%- for v in product.variants -%}{ "id": {{ v.id }}, "price": {{ v.price }}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}{%- endfor -%}]
+      [{%- for v in product.variants -%}{ "id": {{ v.id }}, "price": {{ v.price }}, "compare": {{ v.compare_at_price | default: 0 }}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}{%- endfor -%}]
     </script>
   </div>
   <script src="{{ 'pdp-upsell.js' | asset_url }}" defer></script>

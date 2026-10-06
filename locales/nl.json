@@ -199,11 +199,11 @@
       "upsell_group": "Voeg {{ label }} toe",
       "upsell_only": "Alleen de {{ product }}",
       "upsell_add": {
-        "one": "+ {{ count }} paar {{ label }}",
-        "other": "+ {{ count }} paar {{ label }}"
+        "one": "Plus een paar {{ label }}",
+        "other": "Plus {{ count }} paar {{ label }}"
       },
       "upsell_save": "Bespaar {{ percent }}% op de sokken",
-      "upsell_tagline": "Complete winterset: warme, droge voeten",
+      "upsell_set_title": "Complete winterset",
       "upsell_you_save": "Je bespaart {{ amount }}",
       "upsell_badge_popular": "Meest gekozen",
       "upsell_badge_value": "Beste deal",

@@ -101,6 +101,4 @@
           appearance: none;
 }
 .pdp-upsell__select:focus { outline: none; border-color: #0395F6; }
-@media screen and (max-width: 420px) {
-  .pdp-upsell__sub { display: none; }
-}
+.pdp-upsell__saving:has(> :empty) { display: none; }
