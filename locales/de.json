@@ -238,6 +238,7 @@
       "upsell_save": "Spare {{ percent }}% auf die Socken",
       "upsell_set_title": "Komplettes Winterset",
       "upsell_free_shipping": "+ Kostenloser Versand",
+      "upsell_add_list": "Plus {{ items }}",
       "upsell_you_save": "Du sparst {{ amount }}",
       "upsell_badge_popular": "Am beliebtesten",
       "upsell_badge_value": "Bester Preis",

@@ -205,6 +205,7 @@
       "upsell_save": "Bespaar {{ percent }}% op de sokken",
       "upsell_set_title": "Complete winterset",
       "upsell_free_shipping": "+ Gratis verzending",
+      "upsell_add_list": "Plus {{ items }}",
       "upsell_you_save": "Je bespaart {{ amount }}",
       "upsell_badge_popular": "Meest gekozen",
       "upsell_badge_value": "Beste deal",
