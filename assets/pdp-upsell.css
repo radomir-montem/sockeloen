@@ -5,8 +5,10 @@
    and "You save €x" in blue. 2px grey border, 10px corners, the chosen
    tile blue. The desktop gallery layout tints them (pdp-gallery-layout.css). */
 .pdp-upsell { margin: 0 0 12px; }
-/* padding-top: the sizes above end 8px higher, so the first tile sits 20px below them like the tiles below it */
-.pdp-upsell__tiles { display: flex; flex-direction: column; gap: 20px; padding-top: 16px; }
+/* 30px between tiles: room for the "Free shipping" pill on a tile's bottom edge
+   and the badge on the next tile's top edge. padding-top: the sizes above end
+   8px higher, so the first tile sits as far below them as the tiles do. */
+.pdp-upsell__tiles { display: flex; flex-direction: column; gap: 30px; padding-top: 22px; }
 .pdp-upsell__tile {
   display: flex;
   align-items: center;
@@ -49,6 +51,29 @@
 .pdp-upsell__text { display: flex; flex-direction: column; min-width: 0; flex: 0 1 auto; }
 .pdp-upsell__title { font-size: 13px; font-weight: 500; line-height: 1.4; color: #1a1a1a; }
 .pdp-upsell__sub { font-size: 12px; font-weight: 400; line-height: 1.3; color: #666; }
+/* "Free shipping": the badge recipe of the notification bar / "Most popular"
+   (dark glass pill), in green, crossing the tile's bottom border */
+.pdp-upsell__ship {
+  position: absolute;
+  bottom: -11px;
+  left: 0;
+  right: 0;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.4px;
+  background: rgba(46, 125, 50, 0.85);
+  backdrop-filter: blur(21px) saturate(180%);
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.pdp-upsell__ship[hidden] { display: none; }
 .pdp-upsell__tile { position: relative; }
 .pdp-upsell__badge {
   position: absolute;
@@ -97,9 +122,8 @@
 .pdp-upsell__compare { font-size: 12px; color: #bbb; }
 .pdp-upsell__compare:empty { display: none; }
 .pdp-upsell__saving { font-size: 13px; font-weight: 700; color: #0395F6; white-space: nowrap; }
-.pdp-upsell__pickers { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
-.pdp-upsell__pickers[hidden] { display: none; }
-.pdp-upsell__row { display: flex; align-items: center; gap: 10px; }
+.pdp-upsell__row { display: flex; align-items: center; gap: 8px; }
+.pdp-upsell__select--size { flex: 0 0 auto; width: auto; min-width: 96px; }
 .pdp-upsell__row-label { flex: 0 0 auto; min-width: 90px; font-size: 13px; color: #555; }
 .pdp-upsell__select {
   flex: 1 1 auto;

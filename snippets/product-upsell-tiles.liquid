@@ -3,10 +3,12 @@
 
   Driven by product metafields on the main product:
   - custom.upsell_product              the add-on product (e.g. Merino winter socks)
-  - custom.upsell_variant              optional: the variant to offer; its product wins over
-                                        upsell_product, and it fixes the colour (and any other
-                                        option) so the customer only chooses the size, which is
-                                        preselected to match the main product's size
+  - custom.upsell_variants             list of variants: piece n of a set is choice n (a 2-piece set
+                                        = two different socks). No pickers are shown: use one-size
+                                        products; a sized product silently gets the size closest to
+                                        the main product's size.
+  - custom.upsell_variant              fallback when upsell_variants is empty: the single variant
+                                        to offer (its product wins over upsell_product)
   - custom.upsell_discount_percentages [10, 20]: discount on 1 piece, on 2 pieces, ...;
                                         the list's length is the maximum quantity offered
   - custom.upsell_label                short name on the tiles (empty = product title)
@@ -29,9 +31,48 @@
 {%- liquid
   assign upsell = product.metafields.custom.upsell_product.value
   assign upsell_variant = product.metafields.custom.upsell_variant.value
-  if upsell_variant != blank
-    assign upsell = upsell_variant.product
+  assign upsell_choices = product.metafields.custom.upsell_variants.value
+  if upsell_choices == blank and upsell_variant != blank
+    assign upsell_choices = nil
   endif
+  comment
+    The choices, as JSON for the script and as a list of photo urls for the
+    tiles (choice n is the default for piece n).
+  endcomment
+  assign choices_json = ''
+  assign choice_imgs = ''
+  if upsell_choices != blank
+    for v in upsell_choices
+      if v.product.available == false
+        continue
+      endif
+      if forloop.first
+        assign upsell = v.product
+      endif
+      capture one
+        render 'product-upsell-choice-json', variant: v
+      endcapture
+      if choices_json != ''
+        assign choices_json = choices_json | append: ','
+      endif
+      assign choices_json = choices_json | append: one
+      assign img = v.image | default: v.product.featured_image
+      assign choice_imgs = choice_imgs | append: img | image_url: width: 96 | append: '|'
+    endfor
+  elsif upsell_variant != blank
+    assign upsell = upsell_variant.product
+    capture choices_json
+      render 'product-upsell-choice-json', variant: upsell_variant
+    endcapture
+    assign img = upsell_variant.image | default: upsell.featured_image
+    assign choice_imgs = img | image_url: width: 96 | append: '|'
+  elsif upsell != blank
+    capture choices_json
+      render 'product-upsell-choice-json', variant: upsell.selected_or_first_available_variant
+    endcapture
+    assign choice_imgs = upsell.featured_image | image_url: width: 96 | append: '|'
+  endif
+  assign choice_imgs = choice_imgs | split: '|'
   assign upsell_pcts = product.metafields.custom.upsell_discount_percentages.value
   assign upsell_label = product.metafields.custom.upsell_label | default: upsell.title
   assign upsell_default_qty = product.metafields.custom.upsell_default_qty.value | default: upsell_pcts.size
@@ -42,9 +83,13 @@
   if upsell_title == blank
     assign upsell_title = 'products.v2.upsell_set_title' | t
   endif
-  assign tile_img = upsell.featured_image
-  if upsell_variant != blank and upsell_variant.image
-    assign tile_img = upsell_variant.image
+  comment
+    Free-shipping threshold of the market (same rule as the shipping row):
+    tiles whose total reaches it show "Free shipping".
+  endcomment
+  assign ship_threshold = settings.free_shipping
+  if cart.currency.iso_code == 'USD'
+    assign ship_threshold = settings.free_shipping_usd | default: 100
   endif
   assign host_size = ''
   for opt in product.options_with_values
@@ -54,9 +99,9 @@
     endif
   endfor
 -%}
-{%- if upsell != blank and upsell.available and upsell_pcts.size > 0 -%}
+{%- if upsell != blank and choices_json != '' and upsell_pcts.size > 0 -%}
   {{ 'pdp-upsell.css' | asset_url | stylesheet_tag }}
-  <div class="pdp-upsell" data-pdp-upsell data-host-gid="gid://shopify/Product/{{ product.id }}" data-form="{{ product_form_id }}" data-label="{{ upsell_label | escape }}" data-url="{{ upsell.url }}" data-money="{{ cart.currency.symbol | default: '€' }}" data-host-size="{{ host_size | escape }}" data-host-options='{{ product.options | json }}'{% if upsell_variant != blank %} data-upsell-variant="{{ upsell_variant.id }}"{% endif %}>
+  <div class="pdp-upsell" data-pdp-upsell data-host-gid="gid://shopify/Product/{{ product.id }}" data-form="{{ product_form_id }}" data-label="{{ upsell_label | escape }}" data-url="{{ upsell.url }}" data-money="{{ cart.currency.symbol | default: '€' }}" data-host-size="{{ host_size | escape }}" data-host-options='{{ product.options | json }}' data-ship-threshold="{{ ship_threshold }}">
     <div class="pdp-upsell__tiles" role="radiogroup" aria-label="{{ 'products.v2.upsell_group' | t: label: upsell_label }}">
       <button type="button" class="pdp-upsell__tile{% if upsell_default_qty == 0 %} is-selected{% endif %}" role="radio" aria-checked="{% if upsell_default_qty == 0 %}true{% else %}false{% endif %}" data-qty="0">
         <span class="pdp-upsell__dot" aria-hidden="true"></span>
@@ -66,6 +111,7 @@
         <span class="pdp-upsell__text">
           <span class="pdp-upsell__title">{{ 'products.v2.upsell_only' | t: product: product.title }}</span>
         </span>
+        <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
         <span class="pdp-upsell__price">
           <span class="pdp-upsell__total" data-upsell-total>{{ product.selected_or_first_available_variant.price | money }}</span>
           <s class="pdp-upsell__compare" data-upsell-compare></s>
@@ -84,13 +130,16 @@
             <img src="{{ product.featured_image | image_url: width: 96 }}" alt="" width="32" height="32" data-upsell-host-img>
             <span class="pdp-upsell__plus">+</span>
             {%- for i in (1..forloop.index) -%}
-              <img src="{{ tile_img | image_url: width: 96 }}" alt="" width="32" height="32" loading="lazy">
+              {%- assign ci = i | minus: 1 -%}
+              {%- if ci >= choice_imgs.size -%}{%- assign ci = choice_imgs.size | minus: 1 -%}{%- endif -%}
+              <img src="{{ choice_imgs[ci] }}" alt="" width="32" height="32" loading="lazy" data-upsell-piece-img="{{ i | minus: 1 }}">
             {%- endfor -%}
           </span>
           <span class="pdp-upsell__text">
             <span class="pdp-upsell__title">{{ upsell_title }}</span>
             <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
           </span>
+          <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
           <span class="pdp-upsell__price">
             <span class="pdp-upsell__total" data-upsell-total></span>
             <s class="pdp-upsell__compare" data-upsell-compare></s>
@@ -99,17 +148,7 @@
         </button>
       {%- endfor -%}
     </div>
-    <div class="pdp-upsell__pickers" data-upsell-pickers hidden></div>
-    <script type="application/json" data-upsell-product>
-      {
-        "options": {{ upsell.options_with_values | json }},
-        "variants": [
-          {%- for v in upsell.variants -%}
-            { "id": {{ v.id }}, "price": {{ v.price }}, "available": {{ v.available }}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}
-          {%- endfor -%}
-        ]
-      }
-    </script>
+    <script type="application/json" data-upsell-choices>[{{ choices_json }}]</script>
     <script type="application/json" data-host-variants>
       [{%- for v in product.variants -%}{ "id": {{ v.id }}, "price": {{ v.price }}, "compare": {{ v.compare_at_price | default: 0 }}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}{%- endfor -%}]
     </script>

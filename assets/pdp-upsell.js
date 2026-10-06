@@ -12,32 +12,32 @@
   }
 
   function init(root) {
-    var data = JSON.parse(root.querySelector('[data-upsell-product]').textContent);
+    var choices = JSON.parse(root.querySelector('[data-upsell-choices]').textContent);
     var hostVariants = JSON.parse(root.querySelector('[data-host-variants]').textContent);
     var form = document.getElementById(root.getAttribute('data-form'));
-    if (!form) return;
+    if (!form || !choices.length) return;
     var symbol = root.getAttribute('data-money') || '€';
+    var shipThreshold = parseFloat(root.getAttribute('data-ship-threshold')) || 0;
     var tiles = Array.prototype.slice.call(root.querySelectorAll('.pdp-upsell__tile'));
-    var pickers = root.querySelector('[data-upsell-pickers]');
-    /* The offered variant (metafield) fixes every option except the size:
-       only variants sharing its non-size options are offered. */
     var isSizeName = function (name) { return /size|maat|größe/i.test(name); };
-    var fixedId = parseInt(root.getAttribute('data-upsell-variant') || '0', 10);
-    var fixedVariant = data.variants.find(function (v) { return v.id === fixedId; });
-    if (fixedVariant) {
-      data.variants = data.variants.filter(function (v) {
-        return data.options.every(function (o, i) { return isSizeName(o.name) || v.options[i] === fixedVariant.options[i]; });
+    /* Each choice is an offered variant: it fixes every option except the size,
+       so only the variants sharing its non-size options stay, and a size is
+       asked only when more than one is available. */
+    choices.forEach(function (c) {
+      c.fixed = c.variants.find(function (v) { return v.id === c.id; }) || c.variants[0];
+      c.variants = c.variants.filter(function (v) {
+        return c.options.every(function (o, i) { return isSizeName(o.name) || v.options[i] === c.fixed.options[i]; });
       });
-      if (!data.variants.length) data.variants = [fixedVariant];
-    }
-    /* options worth asking for: size options with more than one available value */
-    var options = data.options.filter(function (o, i) {
-      if (!isSizeName(o.name)) return false;
-      var values = {};
-      data.variants.forEach(function (v) { if (v.available) values[v.options[i]] = true; });
-      return Object.keys(values).length > 1;
+      if (!c.variants.length) c.variants = [c.fixed];
+      c.sizeOptions = c.options.filter(function (o, i) {
+        if (!isSizeName(o.name)) return false;
+        var values = {};
+        c.variants.forEach(function (v) { if (v.available) values[v.options[i]] = true; });
+        return Object.keys(values).length > 1;
+      });
     });
-    var state = { root: root, form: form, qty: 0, picks: [], data: data, options: options };
+    var askChoice = choices.length > 1;
+    var state = { root: root, form: form, qty: 0, picks: [], choices: choices };
     states.push(state);
 
     /* "39-41" -> [39, 41]; "L" -> null */
@@ -48,13 +48,13 @@
       return n ? [parseInt(n[1], 10), parseInt(n[1], 10)] : null;
     }
     /* the add-on size that overlaps most with the main product's size */
-    function matchingSize(option) {
-      var idx = data.options.indexOf(option);
+    function matchingSize(choice, option) {
+      var idx = choice.options.indexOf(option);
       var hostLabel = currentHostSize();
       var host = range(hostLabel);
       var best = null, bestScore = -1;
       option.values.forEach(function (value) {
-        var ok = data.variants.some(function (v) { return v.available && v.options[idx] === value; });
+        var ok = choice.variants.some(function (v) { return v.available && v.options[idx] === value; });
         if (!ok) return;
         var score = 0;
         if (hostLabel && value === hostLabel) score = 1000;
@@ -91,27 +91,45 @@
       var v = hostVariant();
       return v && v.compare > v.price ? v.compare - v.price : 0;
     }
+    /* a pick = { choice: index, sizes: { optionName: value } } */
     function variantFor(pick) {
-      return data.variants.find(function (v) {
-        return v.available && options.every(function (o) {
-          var idx = data.options.indexOf(o);
-          return v.options[idx] === pick[o.name];
+      var c = choices[pick.choice] || choices[0];
+      return c.variants.find(function (v) {
+        return v.available && c.sizeOptions.every(function (o) {
+          var idx = c.options.indexOf(o);
+          return v.options[idx] === pick.sizes[o.name];
         });
-      }) || (options.length ? null : (fixedVariant && fixedVariant.available ? fixedVariant : data.variants.find(function (v) { return v.available; })));
+      }) || (c.sizeOptions.length ? null : (c.fixed.available ? c.fixed : c.variants.find(function (v) { return v.available; })));
     }
-    function defaultPick() {
-      var pick = {};
-      var first = fixedVariant || data.variants.find(function (v) { return v.available; }) || data.variants[0];
-      options.forEach(function (o) {
-        pick[o.name] = matchingSize(o) || first.options[data.options.indexOf(o)];
+    /* piece i starts on choice i (two pieces = two different products when offered) */
+    function defaultPick(i) {
+      var ci = Math.min(i || 0, choices.length - 1);
+      if (!choices[ci].variants.some(function (v) { return v.available; })) {
+        ci = Math.max(0, choices.findIndex(function (c) { return c.variants.some(function (v) { return v.available; }); }));
+      }
+      return { choice: ci, sizes: defaultSizes(choices[ci]) };
+    }
+    function defaultSizes(c) {
+      var sizes = {};
+      c.sizeOptions.forEach(function (o) {
+        sizes[o.name] = matchingSize(c, o) || c.fixed.options[c.options.indexOf(o)];
       });
-      return pick;
+      return sizes;
     }
-    function addOnPrice() {
-      var v = data.variants.find(function (x) { return x.available; }) || data.variants[0];
-      return v ? v.price : 0;
+    function pieceVariant(i) {
+      return variantFor(state.picks[i] || defaultPick(i));
     }
 
+    function renderPieceImages() {
+      tiles.forEach(function (tile) {
+        tile.querySelectorAll('[data-upsell-piece-img]').forEach(function (img) {
+          var i = parseInt(img.getAttribute('data-upsell-piece-img'), 10);
+          var pick = state.picks[i] || defaultPick(i);
+          var c = choices[pick.choice] || choices[0];
+          if (c.image && img.getAttribute('src') !== c.image) img.setAttribute('src', c.image);
+        });
+      });
+    }
     function renderHostImage() {
       var active = document.querySelector('.product-v2 .product__media-item.is-active img') || document.querySelector('.product-v2 .product__media-item:not([style*="display: none"]) img');
       if (!active) return;
@@ -122,6 +140,7 @@
     }
     function renderPrices() {
       renderHostImage();
+      renderPieceImages();
       var host = hostPrice();
       var hostSave = hostSaving();
       tiles.forEach(function (tile) {
@@ -129,12 +148,14 @@
         var pieces = 0;
         var pct = parseFloat(tile.getAttribute('data-pct')) || 0;
         for (var i = 0; i < qty; i++) {
-          var v = variantFor(state.picks[i] || defaultPick());
-          pieces += v ? v.price : addOnPrice();
+          var v = pieceVariant(i);
+          pieces += v ? v.price : (choices[0].fixed.price || 0);
         }
         /* rounded to cents first, the way the discount itself is applied */
         var bundleSave = Math.round(pieces * pct / 100);
         var total = host + pieces - bundleSave;
+        /* Maximum saving on every tile: the main product's own sale saving
+           (compare-at price) plus the bundle discount on the add-ons. */
         var saving = hostSave + bundleSave;
         var cmp = tile.querySelector('[data-upsell-compare]');
         if (cmp) cmp.textContent = saving > 0 ? money(total + saving, symbol) : '';
@@ -144,53 +165,15 @@
           sv.textContent = saving > 0 ? sv.dataset.template.replace('__AMOUNT__', money(saving, symbol)) : '';
         }
         tile.querySelector('[data-upsell-total]').textContent = money(total, symbol);
+        /* "Free shipping" when this tile's total reaches the market's threshold */
+        var ship = tile.querySelector('[data-upsell-ship]');
+        if (ship) ship.hidden = !(shipThreshold > 0 && total >= shipThreshold * 100);
       });
     }
 
-    function renderPickers() {
-      pickers.innerHTML = '';
-      if (!state.qty || !options.length) { pickers.hidden = true; return; }
-      pickers.hidden = false;
-      for (var i = 0; i < state.qty; i++) {
-        (function (i) {
-          if (!state.picks[i]) state.picks[i] = defaultPick();
-          var row = document.createElement('div');
-          row.className = 'pdp-upsell__row';
-          var label = document.createElement('span');
-          label.className = 'pdp-upsell__row-label';
-          label.textContent = (root.getAttribute('data-label') || '') + (state.qty > 1 ? ' ' + (i + 1) : '');
-          label.textContent += ' · ' + (options[0] ? options[0].name : '');
-          row.appendChild(label);
-          options.forEach(function (o) {
-            var idx = data.options.indexOf(o);
-            var select = document.createElement('select');
-            select.className = 'pdp-upsell__select';
-            select.setAttribute('aria-label', o.name);
-            o.values.forEach(function (value) {
-              var ok = data.variants.some(function (v) { return v.available && v.options[idx] === value; });
-              if (!ok) return;
-              var opt = document.createElement('option');
-              opt.value = value;
-              opt.textContent = value;
-              if (state.picks[i][o.name] === value) opt.selected = true;
-              select.appendChild(opt);
-            });
-            select.addEventListener('change', function () {
-              state.picks[i][o.name] = select.value;
-              if (!variantFor(state.picks[i])) {
-                /* this combination does not exist: fall back to the first one with this value */
-                var v = data.variants.find(function (x) { return x.available && x.options[idx] === select.value; });
-                if (v) options.forEach(function (q) { state.picks[i][q.name] = v.options[data.options.indexOf(q)]; });
-                renderPickers();
-              }
-              renderPrices();
-            });
-            row.appendChild(select);
-          });
-          pickers.appendChild(row);
-        })(i);
-      }
-    }
+    /* No pickers: piece n is choice n (the shop owner lists one-size products);
+       a sized product silently gets the size closest to the main product's. */
+    function renderPickers() {}
 
     tiles.forEach(function (tile) {
       tile.addEventListener('click', function () {
@@ -228,7 +211,7 @@
     state.items = function () {
       var items = [];
       for (var i = 0; i < state.qty; i++) {
-        var v = variantFor(state.picks[i] || defaultPick());
+        var v = pieceVariant(i);
         if (!v) continue;
         var existing = items.find(function (it) { return it.id === v.id; });
         if (existing) existing.quantity += 1;
