@@ -1,0 +1,100 @@
+{%- comment -%}
+  Upsell tiles on the v2 product page (under the sizes, above Add to Cart).
+
+  Driven by product metafields on the main product:
+  - custom.upsell_product              the add-on product (e.g. Merino winter socks)
+  - custom.upsell_variant              optional: the variant to offer; fixes the colour (and any
+                                        other option) so the customer only chooses the size, which
+                                        is preselected to match the main product's size
+  - custom.upsell_discount_percentages [10, 20]: discount on 1 piece, on 2 pieces, ...;
+                                        the list's length is the maximum quantity offered
+  - custom.upsell_label                short name on the tiles (empty = product title)
+
+  Tile 0 is the main product alone; tile n adds n pieces of the add-on. Each tile
+  shows the main product's photo + n photos of the add-on; the first add-on
+  tile carries "Most popular", the last "Best value". Choosing a tile shows
+  one size picker per piece when the add-on has more than one size. Add to Cart first adds the add-on pieces with the
+  line attribute _upsell_for = the main product's gid, then the main product.
+  The "Upsell discount" function (apps/theme-backup-ci, extensions/upsell-discount)
+  gives those lines the percentage from the metafield while the main product is
+  in the cart. Prices on the tiles are computed in the browser from the variant
+  prices, so they follow the selected variant of the main product.
+{%- endcomment -%}
+{%- liquid
+  assign upsell = product.metafields.custom.upsell_product.value
+  assign upsell_variant = product.metafields.custom.upsell_variant.value
+  if upsell_variant != blank and upsell == blank
+    assign upsell = upsell_variant.product
+  endif
+  assign upsell_pcts = product.metafields.custom.upsell_discount_percentages.value
+  assign upsell_label = product.metafields.custom.upsell_label | default: upsell.title
+  assign tile_img = upsell.featured_image
+  if upsell_variant != blank and upsell_variant.image
+    assign tile_img = upsell_variant.image
+  endif
+  assign host_size = ''
+  for opt in product.options_with_values
+    assign opt_name = opt.name | downcase
+    if opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe'
+      assign host_size = opt.selected_value
+    endif
+  endfor
+-%}
+{%- if upsell != blank and upsell.available and upsell_pcts.size > 0 -%}
+  {{ 'pdp-upsell.css' | asset_url | stylesheet_tag }}
+  <div class="pdp-upsell" data-pdp-upsell data-host-gid="gid://shopify/Product/{{ product.id }}" data-form="{{ product_form_id }}" data-label="{{ upsell_label | escape }}" data-url="{{ upsell.url }}" data-money="{{ cart.currency.symbol | default: '€' }}" data-host-size="{{ host_size | escape }}" data-host-options='{{ product.options | json }}'{% if upsell_variant != blank %} data-upsell-variant="{{ upsell_variant.id }}"{% endif %}>
+    <div class="pdp-upsell__tiles" role="radiogroup" aria-label="{{ 'products.v2.upsell_group' | t: label: upsell_label }}">
+      <button type="button" class="pdp-upsell__tile is-selected" role="radio" aria-checked="true" data-qty="0">
+        <span class="pdp-upsell__dot" aria-hidden="true"></span>
+        <span class="pdp-upsell__img" aria-hidden="true">
+          <img src="{{ product.featured_image | image_url: width: 96 }}" alt="" width="32" height="32" data-upsell-host-img>
+        </span>
+        <span class="pdp-upsell__text">
+          <span class="pdp-upsell__title">{{ 'products.v2.upsell_only' | t: product: product.title }}</span>
+        </span>
+        <span class="pdp-upsell__price"><span class="pdp-upsell__total" data-upsell-total>{{ product.selected_or_first_available_variant.price | money }}</span></span>
+      </button>
+      {%- for pct in upsell_pcts -%}
+        <button type="button" class="pdp-upsell__tile" role="radio" aria-checked="false" data-qty="{{ forloop.index }}" data-pct="{{ pct }}">
+          {%- if forloop.index == 1 -%}
+            <span class="pdp-upsell__badge">{{ 'products.v2.upsell_badge_popular' | t }}</span>
+          {%- elsif forloop.last -%}
+            <span class="pdp-upsell__badge">{{ 'products.v2.upsell_badge_value' | t }}</span>
+          {%- endif -%}
+          <span class="pdp-upsell__dot" aria-hidden="true"></span>
+          <span class="pdp-upsell__img" aria-hidden="true">
+            <img src="{{ product.featured_image | image_url: width: 96 }}" alt="" width="32" height="32" data-upsell-host-img>
+            <span class="pdp-upsell__plus">+</span>
+            {%- for i in (1..forloop.index) -%}
+              <img src="{{ tile_img | image_url: width: 96 }}" alt="" width="32" height="32" loading="lazy">
+            {%- endfor -%}
+          </span>
+          <span class="pdp-upsell__text">
+            <span class="pdp-upsell__title">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
+            <span class="pdp-upsell__sub">{{ 'products.v2.upsell_save' | t: percent: pct }}</span>
+          </span>
+          <span class="pdp-upsell__price">
+            <span class="pdp-upsell__total" data-upsell-total></span>
+            <s class="pdp-upsell__compare" data-upsell-compare></s>
+            <span class="pdp-upsell__saving"><span data-upsell-saving-text>{{ 'products.v2.upsell_you_save' | t: amount: '__AMOUNT__' }}</span></span>
+          </span>
+        </button>
+      {%- endfor -%}
+    </div>
+    <div class="pdp-upsell__pickers" data-upsell-pickers hidden></div>
+    <script type="application/json" data-upsell-product>
+      {
+        "options": {{ upsell.options_with_values | json }},
+        "variants": [
+          {%- for v in upsell.variants -%}
+            { "id": {{ v.id }}, "price": {{ v.price }}, "available": {{ v.available }}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+    <script type="application/json" data-host-variants>
+      [{%- for v in product.variants -%}{ "id": {{ v.id }}, "price": {{ v.price }}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}{%- endfor -%}]
+    </script>
+  </div>
+  <script src="{{ 'pdp-upsell.js' | asset_url }}" defer></script>
+{%- endif -%}

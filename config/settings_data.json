@@ -9,27 +9,12 @@
  */
 {
   "current": {
-    "pdp_desktop_layout": "gallery",
     "product_colors": "Wit | White\nJongen | Boy\nMeisje | Girl\nGekleurd | Colored\nEffen | Plain\nGlanzend | Glossy\nWit V1 | White V1\nWit V2 | White V2\nWit/Zilver | White/Silver\nWit/Zwart | White/Black\nWit/Oranje | White/Orange\nWit/Geel | White/Yellow\nLogowit | Logowhite\nhelemaal wit | Allwhite\nZwart | Black\nhelemaal zwart | Allblack\nZwart/Goud | Black/Gold\nZwart/Goud | Black/Gold\nZwart/Wit | Black/White\nZwart/Grijs | Black/Grey\nZwart/Groen | Black/Green\nDonker | Dark\nGeel | Yellow\nModder | Mud\nDen | Pine\nCommute | Communte\nBlauw | Blue\nGrijs | Grey\nOranje | Orange\nSalie | Sage\nSomber | Murk\nSchors | Bark\nBeige | Beige\nGroen | Green\nBruin | Brown\nOranje | Orange\nGirasole | Girasole\nBonnie Blue | Bonnie Blue\nLamswol | Lamb's Wool\nTarroco | Tarroco\nOlijf | Oliva\nPansé | Pansé\nStaal | Acero\nBlauw | Blue\nItalië | Italy\nFrankrijk | France\nDuitsland | Germany\nBelgië | Belgium\nEuropa | Europe\nNederland | Netherlands\nWerelden | Worlds\nBordeauxrood | Bordeaux red\nNacht | Notte\nStandard | Standard\nBEAT | BEAT\nLSRF | LSRF\nCanyon | Canyon\nLa Machine | La Machine\nS-Bikes | S-Bikes\nSRAM | SRAM",
     "one_day_shipment": "Netherlands, Belgium",
     "two_days_shipment": "Germany, Austria, France",
     "three_five_days_shipment": "Bulgaria, Croatia, Cyprus, Czechia, Denmark, Estonia, Finland, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden",
     "five_seven_days_shipment": "Switzerland, United Kingdom, Norway",
     "ten_fourteen_days_shipment": "South Africa, Uruguay",
-    "gate_enabled": true,
-    "gate_collection": "awe-26",
-    "gate_password": "breakaway26",
-    "gate_scope": "tagged",
-    "gate_tag": "early-access-26",
-    "gate_days": 0,
-    "gate_kicker": "All Weather Essentials '26",
-    "gate_heading": "Breakaway members only.",
-    "gate_text": "enter password",
-    "gate_placeholder": "Password",
-    "gate_button": "Get access",
-    "gate_error": "That password is not right.",
-    "gate_signup_text": "No Breakaway member? Join here.",
-    "gate_signup_url": "/pages/awe-26",
     "colors_solid_button_labels": "#ffffff",
     "colors_accent_1": "#000000",
     "gradient_accent_1": "",
@@ -197,22 +182,22 @@
               "link": ""
             }
           },
-          "announcement_4": {
+          "announcement_3": {
             "type": "announcement",
             "settings": {
-              "text": "Free socks on orders > €150",
-              "usd_text": "Free socks on orders > $150",
+              "text": "100% satisfaction guarantee",
+              "usd_text": "100% satisfaction guarantee",
               "text_alignment": "center",
               "bg_color": "#1a1a1a",
               "font_color": "#ffffff",
               "link": ""
             }
           },
-          "announcement_3": {
+          "announcement_4": {
             "type": "announcement",
             "settings": {
-              "text": "100% Satisfaction guarantee",
-              "usd_text": "100% Satisfaction guarantee",
+              "text": "Customer is king",
+              "usd_text": "Customer is king",
               "text_alignment": "center",
               "bg_color": "#1a1a1a",
               "font_color": "#ffffff",
@@ -223,8 +208,8 @@
         "block_order": [
           "announcement_1",
           "announcement_2",
-          "announcement_4",
-          "announcement_3"
+          "announcement_3",
+          "announcement_4"
         ],
         "settings": {
           "sale_mode": false,
@@ -636,12 +621,12 @@
         "settings": {
           "copyright": "Sockeloen Netherlands - Sockeloen",
           "footer_list": "footer",
-          "show_newsletter": false,
           "newsletter_text": "Subscribe to our NEWSLETTER",
           "klaviyo_id": "UmGHP8",
           "footer_logo": "shopify://shop_images/Worn_by_champions_KNWU_export_white.png",
           "logo_width": 200,
-          "logo_width_monile": 200
+          "logo_width_monile": 200,
+          "show_newsletter": false
         }
       },
       "main-password-header": {

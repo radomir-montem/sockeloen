@@ -17,7 +17,6 @@
         "poster": "shopify://shop_images/Scherm_afbeelding_2026-09-21_om_23.40.35.png",
         "video_position": "center",
         "overlay_opacity": 50,
-        "media_blur": 0,
         "min_height": 100,
         "kicker": "Black Friday '26",
         "heading": "Don't miss the early break away",
@@ -51,7 +50,9 @@
         "phone_error": "Please enter a valid mobile number and tick the box.",
         "success_heading": "You're in the break away",
         "success_text": "Keep an eye on your inbox. You'll get the Black Friday deals before they go public.",
-        "success_button": "Done"
+        "success_button": "Done",
+        "media_blur": 0,
+        "phone_channel": "whatsapp"
       }
     }
   },

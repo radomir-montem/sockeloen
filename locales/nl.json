@@ -196,6 +196,16 @@
       "bis_success": "Gelukt! We mailen je zodra het weer op voorraad is.",
       "size_guide_title": "Maattabel",
       "size_guide_link": "Twijfel je over je maat?",
+      "upsell_group": "Voeg {{ label }} toe",
+      "upsell_only": "Alleen de {{ product }}",
+      "upsell_add": {
+        "one": "+ {{ count }} paar {{ label }}",
+        "other": "+ {{ count }} paar {{ label }}"
+      },
+      "upsell_save": "Bespaar {{ percent }}% op de sokken",
+      "upsell_you_save": "Je bespaart {{ amount }}",
+      "upsell_badge_popular": "Meest gekozen",
+      "upsell_badge_value": "Beste deal",
       "size_guide_full_link": "Bekijk de volledige maattabel",
       "size_guide_socks_intro": "Vind je sokmaat op basis van je schoenmaat.",
       "size_guide_gloves_intro": "Meet de breedte van je wijsvinger om je handschoenmaat te vinden.",
@@ -535,14 +545,6 @@
       "delivery_options": {
         "ship": "Verzending",
         "pick_up": "Afhalen"
-      },
-      "marketing": {
-        "accept_whatsapp_marketing_checkbox_label": "Stuur me via WhatsApp updates over mijn bestelling, nieuws en aanbiedingen",
-        "whatsapp": {
-          "disclaimer": {
-            "description_html": "Door je aan te melden via WhatsApp ga je akkoord met het ontvangen van WhatsApp-berichten over je bestelling (zoals orderbevestiging en verzendupdates) en marketingberichten op het opgegeven telefoonnummer. Toestemming is geen voorwaarde voor aankoop. Antwoord STOP om je af te melden. De berichtfrequentie varieert. Er kunnen bericht- en datatarieven van toepassing zijn. Bekijk ons %{privacy_policy_link} en onze %{terms_of_service_link}."
-          }
-        }
       }
     }
   },

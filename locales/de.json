@@ -229,6 +229,16 @@
       "bis_success": "Geschafft! Wir schreiben dir, sobald der Artikel wieder verfügbar ist.",
       "size_guide_title": "Größentabelle",
       "size_guide_link": "Nicht sicher bei der Größe?",
+      "upsell_group": "{{ label }} hinzufügen",
+      "upsell_only": "Nur {{ product }}",
+      "upsell_add": {
+        "one": "+ {{ count }} Paar {{ label }}",
+        "other": "+ {{ count }} Paar {{ label }}"
+      },
+      "upsell_save": "Spare {{ percent }}% auf die Socken",
+      "upsell_you_save": "Du sparst {{ amount }}",
+      "upsell_badge_popular": "Am beliebtesten",
+      "upsell_badge_value": "Bester Preis",
       "size_guide_full_link": "Vollständige Größentabelle ansehen",
       "size_guide_socks_intro": "Finde deine Sockengröße anhand deiner Schuhgröße.",
       "size_guide_gloves_intro": "Miss die Breite deines Zeigefingers, um deine Handschuhgröße zu finden.",
@@ -518,14 +528,6 @@
       },
       "payment_errors": {
         "payment_method_not_applicable": "Diese Zahlungsmethode ist nicht anwendbar. Verwenden Sie eine andere Zahlungsmethode."
-      },
-      "marketing": {
-        "accept_whatsapp_marketing_checkbox_label": "Schick mir per WhatsApp Bestell-Updates, Neuigkeiten und Angebote",
-        "whatsapp": {
-          "disclaimer": {
-            "description_html": "Mit der Anmeldung über WhatsApp stimmst du zu, WhatsApp-Nachrichten zu deiner Bestellung (z. B. Bestellbestätigung und Versand-Updates) sowie Marketingnachrichten an die angegebene Telefonnummer zu erhalten. Die Einwilligung ist keine Kaufbedingung. Antworte mit STOP, um dich abzumelden. Die Nachrichtenhäufigkeit variiert. Es können Nachrichten- und Datengebühren anfallen. Sieh dir unsere %{privacy_policy_link} und %{terms_of_service_link} an."
-          }
-        }
       }
     },
     "page_titles": {
