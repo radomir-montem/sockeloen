@@ -446,6 +446,22 @@
   body.template--product .product-v2--gallery .pdp-tile .color-input--thumbs .color-thumb {
     background: rgba(0, 0, 0, 0.08);
   }
+  /* upsell tiles (snippets/product-upsell-tiles.liquid): the same tint as the size chips */
+  body.template--product .product-v2--gallery .pdp-tile .pdp-upsell__tile {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: transparent;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .pdp-upsell__tile:hover { background: rgba(0, 0, 0, 0.13); }
+  body.template--product .product-v2--gallery .pdp-tile .pdp-upsell__tile.is-selected {
+    background: rgba(0, 0, 0, 0.13);
+    border-color: #0395F6;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .pdp-upsell__img img + img { box-shadow: -2px 0 0 rgba(255, 255, 255, 0.6); }
+  body.template--product .product-v2--gallery .pdp-tile .pdp-upsell__select {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-color: transparent;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .pdp-upsell { margin-bottom: 12px; }
   /* bundle offers (Avada volume discount app): the same tint as the size chips */
   body.template--product .product-v2--gallery .pdp-tile .Avada-Volume__Item {
     background: rgba(0, 0, 0, 0.08) !important;

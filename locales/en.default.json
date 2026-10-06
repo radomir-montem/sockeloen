@@ -197,6 +197,13 @@
       "bis_success": "You're in! We'll email you as soon as it's back in stock.",
       "size_guide_title": "Size guide",
       "size_guide_link": "Not sure about your size?",
+      "upsell_group": "Add {{ label }}",
+      "upsell_only": "{{ product }} only",
+      "upsell_add": {
+        "one": "+ {{ count }} pair {{ label }}",
+        "other": "+ {{ count }} pairs {{ label }}"
+      },
+      "upsell_save": "Save {{ percent }}% on the socks",
       "size_guide_full_link": "View full size guide",
       "size_guide_socks_intro": "Find your sock size based on your shoe size.",
       "size_guide_gloves_intro": "Measure the width of your index finger to find your glove size.",
