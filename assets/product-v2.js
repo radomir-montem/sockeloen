@@ -36,19 +36,23 @@ if (!customElements.get('sticky-atc-v2')) {
       // above the viewport): while it is still further down the page the bar
       // would sit on top of the content and compete with the real button.
       const phone = window.matchMedia('(max-width: 989px)');
-      new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          const scrolledPast = entry.boundingClientRect.bottom <= 0;
-          const show = !entry.isIntersecting && (!phone.matches || scrolledPast);
-          if (show) {
-            this.classList.add('show');
-            this.classList.remove('hidden');
-          } else {
-            this.classList.remove('show');
-            this.classList.add('hidden');
-          }
-        });
-      }, { threshold: 0 }).observe(observeTarget);
+      const update = () => {
+        const rect = observeTarget.getBoundingClientRect();
+        const inView = rect.bottom > 0 && rect.top < window.innerHeight;
+        const scrolledPast = rect.bottom <= 0;
+        const show = !inView && (!phone.matches || scrolledPast);
+        this.classList.toggle('show', show);
+        this.classList.toggle('hidden', !show);
+      };
+      new IntersectionObserver(update, { threshold: 0 }).observe(observeTarget);
+      // a jump from below the button to above it (back-to-top, anchor) skips the
+      // observer, so phones also re-check on scroll
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!phone.matches || ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { ticking = false; update(); });
+      }, { passive: true });
 
       // Click handler — different behavior based on size options
       this.atcButton.addEventListener('click', () => this._handleAtcClick());
