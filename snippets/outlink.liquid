@@ -1076,11 +1076,20 @@ function OutlinkButtonClick()
 
 {% if shop.metafields.outlink["islinkmaskingon"] != blank and shop.metafields.outlink["islinkmaskingon"] !=  0 %}
 
-{% render 'outlink-masking', outlinkproductres: {{product | json}}  %}
+{% render 'outlink-masking', outlinkproductres: product %}
 
 {% endif %}
 
 </script>
 
 {% endif %}
-{% endif %}
+{% endif %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'outlink-masking', outlinkproductres: {{product | json}}  %}"
+  to: "{% render 'outlink-masking', outlinkproductres: product %}"
+  position: 27939..27997
+{%- endcomment -%}
