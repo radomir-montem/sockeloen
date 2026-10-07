@@ -2211,16 +2211,24 @@
       });
       io.observe(v);
     });
-    /* the strip slides sideways on scroll without crossing a threshold: re-check */
+    /* the strip slides sideways (thumbnail, arrow, trackpad, scroll) without
+       crossing an intersection threshold: re-check on scroll and whenever the
+       strip's transform or active photo changes */
     var ticking = false;
-    window.addEventListener('scroll', function () {
+    function recheck() {
       if (!inGallery() || ticking) return;
       ticking = true;
       requestAnimationFrame(function () {
         ticking = false;
         Array.prototype.forEach.call(videos, apply);
       });
-    }, { passive: true });
+    }
+    window.addEventListener('scroll', recheck, { passive: true });
+    var list = section.querySelector('.product__media-list');
+    if (list) {
+      list.addEventListener('transitionend', recheck);
+      new MutationObserver(recheck).observe(list, { attributes: true, attributeFilter: ['style', 'class'], subtree: true });
+    }
   })();
 </script>
 
