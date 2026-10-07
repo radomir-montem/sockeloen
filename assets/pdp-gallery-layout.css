@@ -102,12 +102,6 @@
     border-radius: 0 !important;
     border: 0 !important;
   }
-  /* a video on the right (behind the info tiles) is a backdrop only: blurred in
-     the video itself, since Safari's backdrop-filter leaves <video> layers sharp */
-  body.template--product .product-v2--gallery .product__media-item .product__media video.pdp-video--backdrop {
-    filter: blur(14px) saturate(140%);
-    transform: scale(1.08);
-  }
   body.template--product .product-v2--gallery .product__media-item .product__media img,
   body.template--product .product-v2--gallery .product__media-item .product__media video {
     position: absolute !important;
