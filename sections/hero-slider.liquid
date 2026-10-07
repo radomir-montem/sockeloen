@@ -188,6 +188,11 @@
 }
 #Banner-{{ section.id }} .hero-slider__slide .banner__media img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
 #Banner-{{ section.id }} .hero-slider__slide .banner__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+/* "Darken image" on a video slide: browsers paint a playing <video> on its own
+   layer where the dark overlay does not always reach, so the video itself is
+   dimmed by the same amount and the overlay is left off for that slide */
+#Banner-{{ section.id }} .hero-slider__slide .banner__media video { filter: brightness(calc(1 - var(--ov, 0))); }
+#Banner-{{ section.id }} .hero-slider__slide:has(.banner__media video)::after { display: none; }
 /* after a swipe the track glides 300ms like the product-page photo slider */
 #Banner-{{ section.id }} .hero-slider__track.is-gliding { transition: transform 300ms cubic-bezier(.4, 0, .2, 1); }
 #Banner-{{ section.id }} .hero-slider__slide .banner__content { margin-top: auto; }
@@ -682,7 +687,7 @@
         { "type": "image_picker", "id": "image_mobile", "label": "Image (mobile)" },
         { "type": "video", "id": "video", "label": "Video (desktop)", "info": "Replaces the desktop image. Plays muted, looping, without controls, like the product-page video." },
         { "type": "video", "id": "video_mobile", "label": "Video (mobile)", "info": "Optional. Without it phones show the mobile image, or else the desktop video." },
-        { "type": "range", "id": "image_overlay_opacity", "min": 0, "max": 100, "step": 10, "unit": "%", "label": "Darken image", "default": 20 },
+        { "type": "range", "id": "image_overlay_opacity", "min": 0, "max": 100, "step": 10, "unit": "%", "label": "Darken image / video", "default": 20 },
         { "type": "text", "id": "heading", "label": "Title", "default": "Best shoecovers on the planet?" },
         { "type": "checkbox", "id": "use_h1_tag", "label": "Use H1 tag (first slide only)", "default": false },
         { "type": "text", "id": "text", "label": "Subtitle", "default": "Keep your feet dry, clean and look stylish." },
