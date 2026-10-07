@@ -2195,9 +2195,6 @@
     function apply(v) {
       var left = leftOk(v);
       if (v._onScreen && left) play(v); else v.pause();
-      /* behind the product info the video is only a backdrop: blur it itself,
-         because Safari's backdrop-filter does not blur a <video> layer */
-      v.classList.toggle('pdp-video--backdrop', inGallery() && !left);
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
