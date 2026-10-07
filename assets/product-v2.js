@@ -31,10 +31,16 @@ if (!customElements.get('sticky-atc-v2')) {
       const observeTarget = realAtcBtn || this.productSection;
       if (!observeTarget) return;
 
-      // Show sticky bar whenever the real ATC button is NOT visible in the viewport
+      // Show the sticky bar whenever the real ATC button is NOT visible in the
+      // viewport. On phones only once the button has been scrolled PAST (it is
+      // above the viewport): while it is still further down the page the bar
+      // would sit on top of the content and compete with the real button.
+      const phone = window.matchMedia('(max-width: 989px)');
       new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
+          const scrolledPast = entry.boundingClientRect.bottom <= 0;
+          const show = !entry.isIntersecting && (!phone.matches || scrolledPast);
+          if (show) {
             this.classList.add('show');
             this.classList.remove('hidden');
           } else {
