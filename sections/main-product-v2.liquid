@@ -2179,6 +2179,7 @@
     if (!videos.length) return;
     function play(v) {
       v.muted = true;
+      v._played = true;
       var p = v.play();
       if (p && p.catch) p.catch(function () {});
     }
@@ -2194,7 +2195,13 @@
     }
     function apply(v) {
       var left = leftOk(v);
-      if (v._onScreen && left) play(v); else v.pause();
+      if (v._onScreen && left) { play(v); return; }
+      v.pause();
+      /* Behind the info tiles (desktop gallery) the video must show its poster
+         image again, not a paused frame: Safari paints decoded video on a layer
+         the tiles' backdrop blur cannot reach, while a poster blurs like a
+         photo. load() resets the element to the poster. */
+      if (inGallery() && v._played) { v._played = false; v.load(); }
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -2207,6 +2214,9 @@
       v.muted = true;
       v.setAttribute('playsinline', '');
       v.removeAttribute('controls');
+      /* the script decides when a video plays; the autoplay attribute would
+         start a video that sits behind the info tiles and leave a sharp frame */
+      if (inGallery()) { v.autoplay = false; v.removeAttribute('autoplay'); if (!v.paused || v.currentTime > 0) { v.pause(); v.load(); } }
       v.addEventListener('pause', function () {
         if (v._onScreen && leftOk(v)) requestAnimationFrame(function () { if (v._onScreen && leftOk(v)) play(v); });
       });
