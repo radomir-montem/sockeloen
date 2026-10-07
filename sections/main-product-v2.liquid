@@ -310,9 +310,9 @@
             {%- endif -%}
             {%- for media in product.media -%}
               {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
-                {%- comment -%} alt = product title (what a video without alt text reports): shown for every colour {%- endcomment -%}
+                {%- comment -%} a video without alt text (Liquid then reports the product title) is shown for every colour; images keep the colour filter {%- endcomment -%}
                 {%- assign media_all = false -%}
-                {%- if media.alt == product.title -%}{%- assign media_all = true -%}{%- endif -%}
+                {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}{%- if media.alt == product.title -%}{%- assign media_all = true -%}{%- endif -%}{%- endif -%}
                 <li
                   data-variant-alt="{{ media.alt | escape }}"
                   {% if media_all %}data-media-all{% endif %}
@@ -453,7 +453,7 @@
                     data-target="{{ section.id }}-{{ media.id }}"
                     data-media-position="{{ media_index }}"
                     {%- assign media_all = false -%}
-                    {%- if media.alt == product.title -%}{%- assign media_all = true -%}{%- endif -%}
+                    {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}{%- if media.alt == product.title -%}{%- assign media_all = true -%}{%- endif -%}{%- endif -%}
                     data-variant-alt="{{ media.alt | escape }}"
                     {% if media_all %}data-media-all{% endif %}
                     {% if product.variants.size > 1 and media.alt != blank and media_all == false and media.alt != product.selected_or_first_available_variant.featured_media.alt %}
