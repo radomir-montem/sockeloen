@@ -2216,7 +2216,7 @@
       v.removeAttribute('controls');
       /* the script decides when a video plays; the autoplay attribute would
          start a video that sits behind the info tiles and leave a sharp frame */
-      if (section.querySelector('.product-v2--gallery')) { v.autoplay = false; v.removeAttribute('autoplay'); if (desktop.matches && (!v.paused || v.currentTime > 0)) { v.pause(); v.load(); } }
+      if (inGallery()) { v.autoplay = false; v.removeAttribute('autoplay'); if (!v.paused || v.currentTime > 0) { v.pause(); v.load(); } }
       v.addEventListener('pause', function () {
         if (v._onScreen && leftOk(v)) requestAnimationFrame(function () { if (v._onScreen && leftOk(v)) play(v); });
       });
