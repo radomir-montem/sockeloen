@@ -2182,11 +2182,24 @@
       var p = v.play();
       if (p && p.catch) p.catch(function () {});
     }
+    /* Desktop gallery layout: two photos side by side, the buy box over the
+       right one. A video only plays while it is the LEFT photo (fully in view),
+       not while it sits behind the product info on the right. */
+    var desktop = window.matchMedia('(min-width: 990px)');
+    function inGallery() { return desktop.matches && !!section.querySelector('.product-v2--gallery'); }
+    function leftOk(v) {
+      if (!inGallery()) return true;
+      var r = v.getBoundingClientRect();
+      return r.left < window.innerWidth * 0.25 && r.right > window.innerWidth * 0.25;
+    }
+    function apply(v) {
+      if (v._onScreen && leftOk(v)) play(v); else v.pause();
+    }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         var v = entry.target;
         v._onScreen = entry.isIntersecting && entry.intersectionRatio >= 0.5;
-        if (v._onScreen) play(v); else v.pause();
+        apply(v);
       });
     }, { threshold: [0, 0.5, 1] });
     Array.prototype.forEach.call(videos, function (v) {
@@ -2194,10 +2207,28 @@
       v.setAttribute('playsinline', '');
       v.removeAttribute('controls');
       v.addEventListener('pause', function () {
-        if (v._onScreen) requestAnimationFrame(function () { if (v._onScreen) play(v); });
+        if (v._onScreen && leftOk(v)) requestAnimationFrame(function () { if (v._onScreen && leftOk(v)) play(v); });
       });
       io.observe(v);
     });
+    /* the strip slides sideways (thumbnail, arrow, trackpad, scroll) without
+       crossing an intersection threshold: re-check on scroll and whenever the
+       strip's transform or active photo changes */
+    var ticking = false;
+    function recheck() {
+      if (!inGallery() || ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        Array.prototype.forEach.call(videos, apply);
+      });
+    }
+    window.addEventListener('scroll', recheck, { passive: true });
+    var list = section.querySelector('.product__media-list');
+    if (list) {
+      list.addEventListener('transitionend', recheck);
+      new MutationObserver(recheck).observe(list, { attributes: true, attributeFilter: ['style', 'class'], subtree: true });
+    }
   })();
 </script>
 
