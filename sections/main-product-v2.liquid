@@ -310,11 +310,14 @@
             {%- endif -%}
             {%- for media in product.media -%}
               {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
+                {%- comment -%} a video without alt text reports the product title as alt: treat it as "all colours" {%- endcomment -%}
+                {%- assign media_alt = media.alt | default: '' -%}
+                {%- if media_alt == product.title -%}{%- assign media_alt = '' -%}{%- endif -%}
                 <li
-                  data-variant-alt="{{ media.alt | escape }}"
+                  data-variant-alt="{{ media_alt | escape }}"
                   {% assign variants_size = product.variants | size %}
-                  {% if variants_size > 1 and media.alt != blank %}
-                    {% unless media.alt == product.selected_or_first_available_variant.featured_media.alt -%}
+                  {% if variants_size > 1 and media_alt != blank %}
+                    {% unless media_alt == product.selected_or_first_available_variant.featured_media.alt -%}
                       style="display: none"
                     {%- endunless %}
                   {% endif %}
@@ -448,8 +451,10 @@
                     class="thumbnail-list__item slider__slide{% if section.settings.hide_variants and variant_images contains media.src %} thumbnail-list_item--variant{% endif %}"
                     data-target="{{ section.id }}-{{ media.id }}"
                     data-media-position="{{ media_index }}"
-                    data-variant-alt="{{ media.alt | escape }}"
-                    {% if product.variants.size > 1 and media.alt != blank and media.alt != product.selected_or_first_available_variant.featured_media.alt %}
+                    {%- assign media_alt = media.alt | default: '' -%}
+                    {%- if media_alt == product.title -%}{%- assign media_alt = '' -%}{%- endif -%}
+                    data-variant-alt="{{ media_alt | escape }}"
+                    {% if product.variants.size > 1 and media_alt != blank and media_alt != product.selected_or_first_available_variant.featured_media.alt %}
                       style="display: none"
                     {% endif %}
                   >
@@ -1813,8 +1818,10 @@
         if (!section || !section.querySelector('.product-v2')) return;
 
         /* Filter main media items by alt text */
+        /* media without a colour alt (e.g. the product video) stays visible for every colour */
         section.querySelectorAll('.product__media-item[data-variant-alt]').forEach(function(item) {
-          item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
+          var a = item.getAttribute('data-variant-alt');
+          item.style.display = (!a || a === selectedAlt) ? '' : 'none';
         });
         section.querySelectorAll('.product__media-item:not([data-variant-alt])').forEach(function(item) {
           item.style.display = '';
@@ -1822,7 +1829,8 @@
 
         /* Filter thumbnails */
         section.querySelectorAll('.thumbnail-list__item[data-variant-alt]').forEach(function(item) {
-          item.style.display = (item.getAttribute('data-variant-alt') === selectedAlt) ? '' : 'none';
+          var a = item.getAttribute('data-variant-alt');
+          item.style.display = (!a || a === selectedAlt) ? '' : 'none';
         });
 
         /* Re-call setActiveMedia so slider resets pages with correct visible items.
