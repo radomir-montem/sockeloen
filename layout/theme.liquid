@@ -67,7 +67,7 @@
         });
       })();
     </script>
-    <!-- OutlinkStickyBtn CODE Start -->{% if template.name == 'product'%}{% render('outlink-sticky') %}{% endif %}<!-- OutlinkStickyBtn END --> {{ content_for_header }}
+    <!-- OutlinkStickyBtn CODE Start -->{% if template.name == 'product'%}{% render 'outlink-sticky' %}{% endif %}<!-- OutlinkStickyBtn END --> {{ content_for_header }}
 
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
@@ -432,6 +432,7 @@ if (window.location.href.indexOf("https://sockeloen.com/nl/products/custom-cycli
 
 <script src="https://analytics.ahrefs.com/analytics.js" data-key="amsQIhRcFTOzdBfmh9aXaw" async></script>
     
+{% render 'collection-gate-head' %}
 </head>
 
   <body class="gradient template--{{ template.name }} template--{{ template.suffix }}">
@@ -633,6 +634,19 @@ window.Futy = { key: '64db5abbdb94c' };
 <script src="{{ 'custom-quick-add.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'ipinfo.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'card-color-row.js' | asset_url }}" defer></script>
+{% comment %} exit-intent popup: the snippet is managed from the sockeloen-dashboards repo (scripts/deploy-exit-intent.sh writes snippets/sk-exit-intent.liquid straight to the live theme); keep this render line, it is what the live theme has {% endcomment %}
 {% render 'sk-exit-intent' %}
+{% render 'klaviyo-form-blur' %}
+{% render 'collection-gate' %}
 </body>
 </html>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render('outlink-sticky') %}"
+  to: "{% render 'outlink-sticky' %}"
+  position: 3140..3169
+{% endcomment %}
