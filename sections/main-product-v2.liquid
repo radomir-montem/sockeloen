@@ -2180,6 +2180,7 @@
     function play(v) {
       v.muted = true;
       v._played = true;
+      if (v.preload === 'none') v.preload = 'auto';
       var p = v.play();
       if (p && p.catch) p.catch(function () {});
     }
@@ -2210,10 +2211,23 @@
         apply(v);
       });
     }, { threshold: [0, 0.5, 1] });
+    /* Browsers without native HLS (Chrome, Firefox, Edge) would otherwise take
+       the first MP4 in the list: give them one file that fits the screen. */
+    var nativeHls = document.createElement('video').canPlayType('application/vnd.apple.mpegurl') !== '';
+    function pickMp4(v) {
+      if (nativeHls || v.dataset.pdpSrcPicked) return;
+      var want = desktop.matches ? 1080 : 720;
+      var heights = Object.keys(v.dataset).filter(function (k) { return k.indexOf('mp4') === 0; }).map(function (k) { return parseInt(k.slice(3), 10); }).sort(function (a, b) { return a - b; });
+      if (!heights.length) return;
+      var h = heights.filter(function (x) { return x >= want; })[0] || heights[heights.length - 1];
+      v.dataset.pdpSrcPicked = '1';
+      v.src = v.dataset['mp4' + h];
+    }
     Array.prototype.forEach.call(videos, function (v) {
       v.muted = true;
       v.setAttribute('playsinline', '');
       v.removeAttribute('controls');
+      pickMp4(v);
       /* the script decides when a video plays; the autoplay attribute would
          start a video that sits behind the info tiles and leave a sharp frame */
       if (inGallery()) { v.autoplay = false; v.removeAttribute('autoplay'); if (!v.paused || v.currentTime > 0) { v.pause(); v.load(); } }
