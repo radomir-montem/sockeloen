@@ -46,13 +46,20 @@
 
 {%- if inline_video and media.media_type == 'video' -%}
   <div class="product__media media media--transparent gradient global-media-settings product__media--inline-video" style="padding-top: 125%;">
-    {%- comment -%} adaptive stream first (Safari and iOS pick the quality that fits the connection), then the MP4 files for other browsers {%- endcomment -%}
-    <video class="pdp-inline-video" autoplay muted loop playsinline preload="metadata" poster="{{ media.preview_image | image_url: width: 1100 }}"{% if media.alt != blank %} aria-label="{{ media.alt | escape }}"{% endif %}>
+    {%- comment -%}
+      Nothing is downloaded until the script (main-product-v2) starts the video:
+      preload="none", no autoplay attribute. Safari and iOS get the adaptive
+      stream (m3u8); other browsers get one MP4 picked by the script from the
+      data-mp4-* urls (720p on phones, 1080p on desktop) instead of the
+      biggest file. The MP4s are listed smallest first as a no-script fallback.
+    {%- endcomment -%}
+    {%- assign mp4s = media.sources | where: 'format', 'mp4' | sort: 'height' -%}
+    <video class="pdp-inline-video" muted loop playsinline preload="none" poster="{{ media.preview_image | image_url: width: 1100 }}"{% if media.alt != blank %} aria-label="{{ media.alt | escape }}"{% endif %}{% for source in mp4s %} data-mp4-{{ source.height }}="{{ source.url }}"{% endfor %}>
       {%- for source in media.sources -%}
         {%- if source.format == 'm3u8' -%}<source src="{{ source.url }}" type="{{ source.mime_type }}">{%- endif -%}
       {%- endfor -%}
-      {%- for source in media.sources -%}
-        {%- if source.format == 'mp4' -%}<source src="{{ source.url }}" type="{{ source.mime_type }}">{%- endif -%}
+      {%- for source in mp4s -%}
+        {%- if source.height <= 1080 -%}<source src="{{ source.url }}" type="{{ source.mime_type }}">{%- endif -%}
       {%- endfor -%}
     </video>
   </div>
