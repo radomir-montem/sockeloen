@@ -2153,12 +2153,16 @@ body[class*="template--v2"] .bot-swiper .swiper-wrapper {
    photo. While the first frames are loading the disc shows a spinning ring;
    once the video plays the badge fades out. Same glass as the badges. */
 .product__media--inline-video { position: relative; }
+/* the theme's .media > * rule stretches children to the full box: pin the badge's size and corner */
 .pdp-video-badge {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  width: 36px;
-  height: 36px;
+  position: absolute !important;
+  right: 12px !important;
+  bottom: 12px !important;
+  top: auto !important;
+  left: auto !important;
+  width: 36px !important;
+  height: 36px !important;
+  max-width: none !important;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.55);
   -webkit-backdrop-filter: blur(21px) saturate(180%);
@@ -2187,3 +2191,8 @@ body[class*="template--v2"] .bot-swiper .swiper-wrapper {
 .product__media--inline-video.is-loading .pdp-video-badge__play { opacity: 0.6; }
 .product__media--inline-video.is-playing .pdp-video-badge { opacity: 0; }
 @keyframes pdp-video-spin { to { transform: rotate(360deg); } }
+/* desktop: no badge on the large video (an unselected video on the right is just
+   its poster); the thumbnails keep their small play mark */
+@media screen and (min-width: 990px) {
+  .product-v2 .pdp-video-badge { display: none !important; }
+}
