@@ -62,6 +62,8 @@
         {%- if source.height <= 1080 -%}<source src="{{ source.url }}" type="{{ source.mime_type }}">{%- endif -%}
       {%- endfor -%}
     </video>
+    {%- comment -%} video badge: play glyph on the poster, a spinning ring while the first frames load, gone once it plays {%- endcomment -%}
+    <span class="pdp-video-badge" aria-hidden="true"><svg viewBox="0 0 24 24" class="pdp-video-badge__play"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
   </div>
 {%- else -%}
 <noscript>

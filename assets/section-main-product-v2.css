@@ -2147,3 +2147,43 @@ body[class*="template--v2"] .bot-swiper .swiper-wrapper {
     padding-left: 16px;
   }
 }
+
+/* ---------- Video badge (inline product videos) ----------
+   A small glass disc with a play glyph tells that this is a video, not a
+   photo. While the first frames are loading the disc shows a spinning ring;
+   once the video plays the badge fades out. Same glass as the badges. */
+.product__media--inline-video { position: relative; }
+.pdp-video-badge {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
+          backdrop-filter: blur(21px) saturate(180%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.pdp-video-badge__play { width: 18px; height: 18px; display: block; margin-left: 2px; }
+.pdp-video-badge::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.product__media--inline-video.is-loading .pdp-video-badge::after { opacity: 1; animation: pdp-video-spin 0.9s linear infinite; }
+.product__media--inline-video.is-loading .pdp-video-badge__play { opacity: 0.6; }
+.product__media--inline-video.is-playing .pdp-video-badge { opacity: 0; }
+@keyframes pdp-video-spin { to { transform: rotate(360deg); } }

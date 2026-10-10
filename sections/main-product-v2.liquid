@@ -2228,6 +2228,13 @@
       v.setAttribute('playsinline', '');
       v.removeAttribute('controls');
       pickMp4(v);
+      /* badge: loading ring from the play request until the first frames, hidden while playing */
+      var box = v.parentElement;
+      v.addEventListener('play', function () { box.classList.add('is-loading'); });
+      v.addEventListener('waiting', function () { box.classList.add('is-loading'); });
+      v.addEventListener('playing', function () { box.classList.remove('is-loading'); box.classList.add('is-playing'); });
+      v.addEventListener('pause', function () { box.classList.remove('is-loading', 'is-playing'); });
+      v.addEventListener('emptied', function () { box.classList.remove('is-loading', 'is-playing'); });
       /* the script decides when a video plays; the autoplay attribute would
          start a video that sits behind the info tiles and leave a sharp frame */
       if (inGallery()) { v.autoplay = false; v.removeAttribute('autoplay'); if (!v.paused || v.currentTime > 0) { v.pause(); v.load(); } }
@@ -2253,6 +2260,21 @@
     if (list) {
       list.addEventListener('transitionend', recheck);
       new MutationObserver(recheck).observe(list, { attributes: true, attributeFilter: ['style', 'class'], subtree: true });
+    }
+    /* Head start: once the page is idle, the video of the selected colour (the
+       one a visitor can swipe to) fetches its manifest / first bytes, so it
+       starts almost at once. Only that one; the other colours stay untouched. */
+    function warm() {
+      var v = Array.prototype.filter.call(videos, function (x) {
+        var li = x.closest('.product__media-item');
+        return li && li.style.display !== 'none';
+      })[0];
+      if (v && v.preload === 'none' && !v._played) v.preload = 'metadata';
+    }
+    if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 3000 }); else setTimeout(warm, 2000);
+    form_change_warm: {
+      var pf = section.querySelector('product-form form');
+      if (pf) pf.addEventListener('change', function () { setTimeout(warm, 800); });
     }
   })();
 </script>

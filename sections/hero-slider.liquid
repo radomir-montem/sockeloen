@@ -193,6 +193,17 @@
    dimmed by the same amount and the overlay is left off for that slide */
 #Banner-{{ section.id }} .hero-slider__slide .banner__media video { filter: brightness(calc(1 - var(--ov, 0))); }
 #Banner-{{ section.id }} .hero-slider__slide:has(.banner__media video)::after { display: none; }
+/* video badge: play glyph while the video has not started, spinning ring while loading, gone once it plays */
+#Banner-{{ section.id }} .hero-slider__video-badge {
+  position: absolute; left: 16px; bottom: 16px; width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55); -webkit-backdrop-filter: blur(21px) saturate(180%); backdrop-filter: blur(21px) saturate(180%);
+  color: #fff; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 2; transition: opacity 0.25s ease;
+}
+#Banner-{{ section.id }} .hero-slider__video-badge svg { width: 18px; height: 18px; margin-left: 2px; }
+#Banner-{{ section.id }} .hero-slider__video-badge::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid transparent; border-top-color: #fff; opacity: 0; }
+#Banner-{{ section.id }} .hero-slider__video.is-loading .hero-slider__video-badge::after { opacity: 1; animation: hero-video-spin 0.9s linear infinite; }
+#Banner-{{ section.id }} .hero-slider__video.is-playing .hero-slider__video-badge { opacity: 0; }
+@keyframes hero-video-spin { to { transform: rotate(360deg); } }
 /* after a swipe the track glides 300ms like the product-page photo slider */
 #Banner-{{ section.id }} .hero-slider__track.is-gliding { transition: transform 300ms cubic-bezier(.4, 0, .2, 1); }
 #Banner-{{ section.id }} .hero-slider__slide .banner__content { margin-top: auto; }
@@ -275,7 +286,8 @@
         -%}
         {%- if bl.video != blank -%}
           <div class="banner__media media hero-slider__video{% if has_mobile_media %} hidden md:!block{% endif %}">
-            {{ bl.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1500x' }}
+            {{ bl.video | video_tag: autoplay: false, loop: true, muted: true, controls: false, playsinline: true, preload: 'none', image_size: '1500x' }}
+            <span class="hero-slider__video-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
           </div>
         {%- elsif bl.image != blank -%}
           <div class="banner__media media{% if has_mobile_media %} hidden md:!block{% endif %}">
@@ -297,7 +309,8 @@
         {%- endif -%}
         {%- if bl.video_mobile != blank -%}
           <div class="banner__media media hero-slider__video md:hidden">
-            {{ bl.video_mobile | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1000x' }}
+            {{ bl.video_mobile | video_tag: autoplay: false, loop: true, muted: true, controls: false, playsinline: true, preload: 'none', image_size: '1000x' }}
+            <span class="hero-slider__video-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
           </div>
         {%- elsif bl.image_mobile != blank -%}
           <div class="banner__media media md:hidden">
@@ -444,6 +457,7 @@
       idx = i; pos = i + 1;
       animating = !!animate;
       setX(pos, animate, glide);
+      if (typeof syncVideos === 'function') requestAnimationFrame(syncVideos);
       slides.forEach(function (sl, k) { sl.classList.toggle('is-active', k === ((i % n) + n) % n); });
       if (!animate) animating = false;
       restart();
@@ -539,6 +553,66 @@
     window.addEventListener('pointercancel', endDrag);
     /* a swipe must not count as a click on a button */
     track.addEventListener('click', function (e) { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
+
+    /* Videos: only the slide on screen plays; the others wait with their
+       poster (metadata only) and start the moment they slide in, so the first
+       video gets the whole connection. A video hidden for this screen size
+       (desktop vs mobile file) loads nothing. Badge: loading ring until the
+       first frames, hidden while playing. */
+    function videoBoxes() { return Array.prototype.slice.call(root.querySelectorAll('.hero-slider__video')); }
+    /* A video only has its sources attached while it is on screen or is the
+       next slide (which then fetches just its metadata). Everything else shows
+       its poster and costs nothing, whatever the browser's preload habits. */
+    function detachSources(v) {
+      if (v._detached) return;
+      v._sources = Array.prototype.slice.call(v.querySelectorAll('source'));
+      v._sources.forEach(function (sEl) { sEl.remove(); });
+      v.removeAttribute('src');
+      v._detached = true;
+      try { v.load(); } catch (e) {}
+    }
+    function attachSources(v, preload) {
+      if (!v._detached) { if (preload) v.preload = preload; return; }
+      v.preload = preload || 'metadata';
+      (v._sources || []).forEach(function (sEl) { v.appendChild(sEl); });
+      v._detached = false;
+      try { v.load(); } catch (e) {}
+    }
+    function bindVideo(v) {
+      if (v._heroBound) return; v._heroBound = true;
+      var box = v.parentElement;
+      v.muted = true;
+      v.autoplay = false; v.removeAttribute('autoplay');
+      v.addEventListener('waiting', function () { box.classList.add('is-loading'); });
+      v.addEventListener('playing', function () { box.classList.remove('is-loading'); box.classList.add('is-playing'); });
+      v.addEventListener('pause', function () { box.classList.remove('is-loading', 'is-playing'); });
+      v.addEventListener('emptied', function () { box.classList.remove('is-loading', 'is-playing'); });
+      detachSources(v);
+    }
+    function syncVideos() {
+      var w = root.clientWidth || 1;
+      videoBoxes().forEach(function (box) {
+        var v = box.querySelector('video'); if (!v) return;
+        bindVideo(v);
+        if (getComputedStyle(box).display === 'none') { detachSources(v); return; }
+        var r = box.closest('.hero-slider__slide').getBoundingClientRect();
+        var onScreen = r.right > w * 0.1 && r.left < w * 0.9;
+        var next = !onScreen && r.left >= w * 0.9 && r.left < w * 1.9;
+        if (onScreen) {
+          attachSources(v, 'auto');
+          if (v.paused) { box.classList.add('is-loading'); var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        } else if (next) {
+          if (!v.paused) v.pause();
+          attachSources(v, 'metadata');
+        } else {
+          if (!v.paused) v.pause();
+          detachSources(v);
+        }
+      });
+    }
+    syncVideos();
+    track.addEventListener('transitionend', function (e) { if (e.target === track) syncVideos(); });
+    window.addEventListener('resize', syncVideos);
 
     if (inEditor) {
       document.addEventListener('shopify:block:select', function (e) {
