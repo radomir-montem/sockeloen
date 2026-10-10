@@ -135,8 +135,13 @@
         });
       });
     }
+    /* the tile shows the first photo of the selected colour (not the photo
+       the visitor happens to be looking at) */
     function renderHostImage() {
-      var active = document.querySelector('.product-v2 .product__media-item.is-active img') || document.querySelector('.product-v2 .product__media-item:not([style*="display: none"]) img');
+      var first = Array.prototype.find.call(document.querySelectorAll('.product-v2 .product__media-item:not(.pdp-clone)'), function (li) {
+        return li.style.display !== 'none' && li.querySelector('img');
+      });
+      var active = first ? first.querySelector('img') : null;
       if (!active) return;
       var src = active.currentSrc || active.src;
       if (!src) return;
