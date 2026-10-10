@@ -2155,19 +2155,19 @@ body[class*="template--v2"] .bot-swiper .swiper-wrapper {
 .product__media--inline-video { position: relative; }
 /* the theme's .media > * rule stretches children to the full box: pin the badge's size and corner */
 .pdp-video-badge {
+  /* bottom LEFT: the benefit tag ("No more wet feet") owns the bottom-right corner on phones */
   position: absolute !important;
-  right: 12px !important;
+  left: 12px !important;
   bottom: 12px !important;
   top: auto !important;
-  left: auto !important;
+  right: auto !important;
   width: 36px !important;
   height: 36px !important;
   max-width: none !important;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.55);
-  -webkit-backdrop-filter: blur(21px) saturate(180%);
-          backdrop-filter: blur(21px) saturate(180%);
+  background: none;
   color: #fff;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45));
   display: flex !important;
   align-items: center;
   justify-content: center;
@@ -2176,7 +2176,7 @@ body[class*="template--v2"] .bot-swiper .swiper-wrapper {
   opacity: 1;
   transition: opacity 0.25s ease;
 }
-.pdp-video-badge__play { width: 18px; height: 18px; display: block; margin-left: 2px; }
+.pdp-video-badge__play { width: 22px; height: 22px; display: block; margin-left: 3px; }
 .pdp-video-badge::after {
   content: "";
   position: absolute;
