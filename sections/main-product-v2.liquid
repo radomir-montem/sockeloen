@@ -460,15 +460,6 @@
                       style="display: none"
                     {% endif %}
                   >
-                    {%- if media.media_type == 'model' -%}
-                      <span class="thumbnail__badge" aria-hidden="true">
-                        {%- render 'icon-3d-model' -%}
-                      </span>
-                    {%- elsif media.media_type == 'video' or media.media_type == 'external_video' -%}
-                      <span class="thumbnail__badge" aria-hidden="true">
-                        {%- render 'icon-play' -%}
-                      </span>
-                    {%- endif -%}
                     <button
                       class="thumbnail global-media-settings global-media-settings--no-shadow {% if media.preview_image.aspect_ratio > 1 %}thumbnail--wide{% else %}thumbnail--narrow{% endif %}"
                       aria-label="{%- if media.media_type == 'image' -%}{{ 'products.product.media.load_image' | t: index: media_index }}{%- elsif media.media_type == 'model' -%}{{ 'products.product.media.load_model' | t: index: media_index }}{%- elsif media.media_type == 'video' or media.media_type == 'external_video' -%}{{ 'products.product.media.load_video' | t: index: media_index }}{%- endif -%}"
@@ -497,6 +488,12 @@
                         width="200"
                         loading="lazy"
                       >
+                      {%- comment -%} the play / 3D mark sits inside the button so it aligns with the image, not with the taller list item {%- endcomment -%}
+                      {%- if media.media_type == 'model' -%}
+                        <span class="thumbnail__badge" aria-hidden="true">{%- render 'icon-3d-model' -%}</span>
+                      {%- elsif media.media_type == 'video' or media.media_type == 'external_video' -%}
+                        <span class="thumbnail__badge" aria-hidden="true">{%- render 'icon-play' -%}</span>
+                      {%- endif -%}
                     </button>
                   </li>
                 {%- endunless -%}
