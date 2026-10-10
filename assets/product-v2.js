@@ -26,19 +26,34 @@ if (!customElements.get('sticky-atc-v2')) {
       // Detect if product has a size option (more than 1 value)
       this.hasSizeOption = this._detectSizeOption();
 
-      // Find the real ATC button in the product form
+      // Find the real ATC button in the product form. No normal button (custom /
+      // request products, forms without add to cart) = no sticky bar at all.
       const realAtcBtn = document.querySelector('.product-v2 product-form button[name="add"]');
-      const observeTarget = realAtcBtn || this.productSection;
-      if (!observeTarget) return;
+      if (!realAtcBtn) { this.classList.remove('show'); this.classList.add('hidden'); return; }
+      const observeTarget = realAtcBtn;
+      const notifyBtn = document.querySelector('.product-v2 #out-of-stock, .product-v2 .klaviyo-bis-trigger');
+
+      // The bar only makes sense while the real button can be used: not when the
+      // variant is sold out / coming soon (the "notify me" button is shown
+      // instead), disabled, or hidden.
+      const canBuy = () => {
+        if (realAtcBtn.disabled || realAtcBtn.getAttribute('aria-disabled') === 'true') return false;
+        if (realAtcBtn.offsetParent === null) return false;
+        if (notifyBtn && notifyBtn.offsetParent !== null) return false;
+        return true;
+      };
 
       // Show the sticky bar only once the real ATC button has been scrolled
       // PAST (it is above the viewport). While it is still further down the
       // page the bar would sit on top of the content and compete with it.
       const update = () => {
-        const show = observeTarget.getBoundingClientRect().bottom <= 0;
+        const show = canBuy() && observeTarget.getBoundingClientRect().bottom <= 0;
         this.classList.toggle('show', show);
         this.classList.toggle('hidden', !show);
       };
+      // variant change: the real button may become (un)available a moment later
+      const formEl = realAtcBtn.closest('form');
+      if (formEl) formEl.addEventListener('change', () => { setTimeout(update, 50); setTimeout(update, 600); });
       new IntersectionObserver(update, { threshold: 0 }).observe(observeTarget);
       // a jump from below the button to above it (back-to-top, anchor) skips the
       // observer, so also re-check on scroll
