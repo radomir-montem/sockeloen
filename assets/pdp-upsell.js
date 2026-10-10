@@ -135,8 +135,13 @@
         });
       });
     }
+    /* the tile shows the first photo of the selected colour (not the photo
+       the visitor happens to be looking at) */
     function renderHostImage() {
-      var active = document.querySelector('.product-v2 .product__media-item.is-active img') || document.querySelector('.product-v2 .product__media-item:not([style*="display: none"]) img');
+      var first = Array.prototype.find.call(document.querySelectorAll('.product-v2 .product__media-item:not(.pdp-clone)'), function (li) {
+        return li.style.display !== 'none' && li.querySelector('img');
+      });
+      var active = first ? first.querySelector('img') : null;
       if (!active) return;
       var src = active.currentSrc || active.src;
       if (!src) return;
@@ -208,6 +213,15 @@
       renderPrices();
     });
     document.addEventListener('variant:change', renderPrices);
+    /* the colour filter shows/hides photos a moment after the form change: follow it */
+    var mediaList = document.querySelector('.product-v2 .product__media-list');
+    if (mediaList && window.MutationObserver) {
+      var hostImgTimer = null;
+      new MutationObserver(function () {
+        clearTimeout(hostImgTimer);
+        hostImgTimer = setTimeout(renderHostImage, 60);
+      }).observe(mediaList, { attributes: true, attributeFilter: ['style', 'class'], subtree: true, childList: true });
+    }
     /* the tile preselected in the markup (custom.upsell_default_qty) */
     var preselected = tiles.find(function (t) { return t.classList.contains('is-selected'); });
     if (preselected) {
