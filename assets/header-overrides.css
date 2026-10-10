@@ -6104,18 +6104,16 @@ body.template--product .product-v2 .thumbnail-list .thumbnail__badge {
   left: auto;
   width: 16px;
   height: 16px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.55);
-  -webkit-backdrop-filter: blur(21px) saturate(180%);
-          backdrop-filter: blur(21px) saturate(180%);
+  background: none;
   color: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
   pointer-events: none;
   z-index: 2;
 }
 body.template--product .product-v2 .thumbnail-list .thumbnail__badge .icon,
 body.template--product .product-v2 .thumbnail-list .thumbnail__badge svg {
-  width: 7px;
-  height: 7px;
+  width: 9px;
+  height: 9px;
   margin-left: 1px;
   fill: #fff;
   color: #fff;
