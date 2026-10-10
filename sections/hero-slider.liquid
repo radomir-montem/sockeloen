@@ -560,6 +560,24 @@
        (desktop vs mobile file) loads nothing. Badge: loading ring until the
        first frames, hidden while playing. */
     function videoBoxes() { return Array.prototype.slice.call(root.querySelectorAll('.hero-slider__video')); }
+    /* A video only has its sources attached while it is on screen or is the
+       next slide (which then fetches just its metadata). Everything else shows
+       its poster and costs nothing, whatever the browser's preload habits. */
+    function detachSources(v) {
+      if (v._detached) return;
+      v._sources = Array.prototype.slice.call(v.querySelectorAll('source'));
+      v._sources.forEach(function (sEl) { sEl.remove(); });
+      v.removeAttribute('src');
+      v._detached = true;
+      try { v.load(); } catch (e) {}
+    }
+    function attachSources(v, preload) {
+      if (!v._detached) { if (preload) v.preload = preload; return; }
+      v.preload = preload || 'metadata';
+      (v._sources || []).forEach(function (sEl) { v.appendChild(sEl); });
+      v._detached = false;
+      try { v.load(); } catch (e) {}
+    }
     function bindVideo(v) {
       if (v._heroBound) return; v._heroBound = true;
       var box = v.parentElement;
@@ -568,21 +586,26 @@
       v.addEventListener('waiting', function () { box.classList.add('is-loading'); });
       v.addEventListener('playing', function () { box.classList.remove('is-loading'); box.classList.add('is-playing'); });
       v.addEventListener('pause', function () { box.classList.remove('is-loading', 'is-playing'); });
-      if (getComputedStyle(box).display === 'none') { v.preload = 'none'; v.pause(); try { v.load(); } catch (e) {} }
+      detachSources(v);
     }
     function syncVideos() {
       var w = root.clientWidth || 1;
       videoBoxes().forEach(function (box) {
         var v = box.querySelector('video'); if (!v) return;
         bindVideo(v);
-        if (getComputedStyle(box).display === 'none') return;
+        if (getComputedStyle(box).display === 'none') { detachSources(v); return; }
         var r = box.closest('.hero-slider__slide').getBoundingClientRect();
         var onScreen = r.right > w * 0.1 && r.left < w * 0.9;
+        var next = !onScreen && r.left >= w * 0.9 && r.left < w * 1.9;
         if (onScreen) {
-          if (v.paused) { box.classList.add('is-loading'); if (v.preload === 'none') v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          attachSources(v, 'auto');
+          if (v.paused) { box.classList.add('is-loading'); var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        } else if (next) {
+          if (!v.paused) v.pause();
+          attachSources(v, 'metadata');
         } else {
           if (!v.paused) v.pause();
-          if (v.preload === 'none') v.preload = 'metadata';
+          detachSources(v);
         }
       });
     }
