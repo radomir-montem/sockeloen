@@ -6120,7 +6120,7 @@ body.template--product .product-v2 .thumbnail-list .thumbnail__badge svg {
   fill: #fff;
   color: #fff;
 }
-body.template--product .product-v2 .thumbnail-list__item { position: relative; }
+body.template--product .product-v2 .thumbnail-list__item .thumbnail { position: relative; }
 
 /* Header (desktop): the logo sat 3.75px left of the page centre (its link
    is wider than the grid's middle column and was pulled left). Centre the
