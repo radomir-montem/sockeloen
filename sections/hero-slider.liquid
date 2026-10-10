@@ -457,6 +457,7 @@
       idx = i; pos = i + 1;
       animating = !!animate;
       setX(pos, animate, glide);
+      if (typeof syncVideos === 'function') requestAnimationFrame(syncVideos);
       slides.forEach(function (sl, k) { sl.classList.toggle('is-active', k === ((i % n) + n) % n); });
       if (!animate) animating = false;
       restart();
@@ -553,14 +554,41 @@
     /* a swipe must not count as a click on a button */
     track.addEventListener('click', function (e) { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
 
-    /* video badges: loading ring until the first frames, hidden while playing */
-    root.querySelectorAll('.hero-slider__video video').forEach(function (v) {
+    /* Videos: only the slide on screen plays; the others wait with their
+       poster (metadata only) and start the moment they slide in, so the first
+       video gets the whole connection. A video hidden for this screen size
+       (desktop vs mobile file) loads nothing. Badge: loading ring until the
+       first frames, hidden while playing. */
+    function videoBoxes() { return Array.prototype.slice.call(root.querySelectorAll('.hero-slider__video')); }
+    function bindVideo(v) {
+      if (v._heroBound) return; v._heroBound = true;
       var box = v.parentElement;
-      if (!v.paused && v.readyState >= 3) box.classList.add('is-playing'); else box.classList.add('is-loading');
+      v.muted = true;
+      v.autoplay = false; v.removeAttribute('autoplay');
       v.addEventListener('waiting', function () { box.classList.add('is-loading'); });
       v.addEventListener('playing', function () { box.classList.remove('is-loading'); box.classList.add('is-playing'); });
       v.addEventListener('pause', function () { box.classList.remove('is-loading', 'is-playing'); });
-    });
+      if (getComputedStyle(box).display === 'none') { v.preload = 'none'; v.pause(); try { v.load(); } catch (e) {} }
+    }
+    function syncVideos() {
+      var w = root.clientWidth || 1;
+      videoBoxes().forEach(function (box) {
+        var v = box.querySelector('video'); if (!v) return;
+        bindVideo(v);
+        if (getComputedStyle(box).display === 'none') return;
+        var r = box.closest('.hero-slider__slide').getBoundingClientRect();
+        var onScreen = r.right > w * 0.1 && r.left < w * 0.9;
+        if (onScreen) {
+          if (v.paused) { box.classList.add('is-loading'); if (v.preload === 'none') v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        } else {
+          if (!v.paused) v.pause();
+          if (v.preload === 'none') v.preload = 'metadata';
+        }
+      });
+    }
+    syncVideos();
+    track.addEventListener('transitionend', function (e) { if (e.target === track) syncVideos(); });
+    window.addEventListener('resize', syncVideos);
 
     if (inEditor) {
       document.addEventListener('shopify:block:select', function (e) {
