@@ -6091,11 +6091,36 @@ body.template--product .product-v2 .product__media--inline-video video {
   display: block;
   pointer-events: none;
 }
-/* its thumbnail is a plain still like the photo thumbnails (the theme's
-   play badge was unstyled here and covered the strip) */
+/* a video thumbnail carries a tiny play mark (16px glass disc, bottom right)
+   so it is recognisable as a video among the photo thumbnails */
 body.template--product .product-v2 .thumbnail-list .thumbnail__badge {
-  display: none !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  top: auto;
+  left: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
+          backdrop-filter: blur(21px) saturate(180%);
+  color: #fff;
+  pointer-events: none;
+  z-index: 2;
 }
+body.template--product .product-v2 .thumbnail-list .thumbnail__badge .icon,
+body.template--product .product-v2 .thumbnail-list .thumbnail__badge svg {
+  width: 7px;
+  height: 7px;
+  margin-left: 1px;
+  fill: #fff;
+  color: #fff;
+}
+body.template--product .product-v2 .thumbnail-list__item { position: relative; }
 
 /* Header (desktop): the logo sat 3.75px left of the page centre (its link
    is wider than the grid's middle column and was pulled left). Centre the
