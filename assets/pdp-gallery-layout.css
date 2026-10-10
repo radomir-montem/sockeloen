@@ -578,6 +578,19 @@
   body.template--product .product-v2--gallery .pdp-tile--links .product__accordion:last-child summary {
     border-bottom: 0 !important;
   }
+  /* ---- sold out / coming soon: the notify-me button takes exactly the add-to-
+     cart button's place (same height, no extra margin, no sub-line), so
+     switching between an available and a sold-out variant does not move the
+     rest of the tiles ---- */
+  body.template--product .product-v2--gallery .pdp-tile #out-of-stock,
+  body.template--product .product-v2--gallery .pdp-tile .klaviyo-bis-trigger {
+    margin-top: 0 !important;
+    min-height: 46px !important;
+    height: 46px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .product-v2__notify-sub { display: none !important; }
   /* ---- size guide pop-up: centred on the page, the page blurred behind it
      (the blur of the Klaviyo and exit-intent pop-ups), the panel in the
      tiles' glass ---- */
