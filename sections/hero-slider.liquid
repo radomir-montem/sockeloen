@@ -586,6 +586,7 @@
       v.addEventListener('waiting', function () { box.classList.add('is-loading'); });
       v.addEventListener('playing', function () { box.classList.remove('is-loading'); box.classList.add('is-playing'); });
       v.addEventListener('pause', function () { box.classList.remove('is-loading', 'is-playing'); });
+      v.addEventListener('emptied', function () { box.classList.remove('is-loading', 'is-playing'); });
       detachSources(v);
     }
     function syncVideos() {
