@@ -196,10 +196,10 @@
 /* video badge: play glyph while the video has not started, spinning ring while loading, gone once it plays */
 #Banner-{{ section.id }} .hero-slider__video-badge {
   position: absolute; left: 16px; bottom: 16px; width: 36px; height: 36px; border-radius: 50%;
-  background: rgba(0, 0, 0, 0.55); -webkit-backdrop-filter: blur(21px) saturate(180%); backdrop-filter: blur(21px) saturate(180%);
+  background: none; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45));
   color: #fff; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 2; transition: opacity 0.25s ease;
 }
-#Banner-{{ section.id }} .hero-slider__video-badge svg { width: 18px; height: 18px; margin-left: 2px; }
+#Banner-{{ section.id }} .hero-slider__video-badge svg { width: 22px; height: 22px; margin-left: 3px; }
 #Banner-{{ section.id }} .hero-slider__video-badge::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid transparent; border-top-color: #fff; opacity: 0; }
 #Banner-{{ section.id }} .hero-slider__video.is-loading .hero-slider__video-badge::after { opacity: 1; animation: hero-video-spin 0.9s linear infinite; }
 #Banner-{{ section.id }} .hero-slider__video.is-playing .hero-slider__video-badge { opacity: 0; }
