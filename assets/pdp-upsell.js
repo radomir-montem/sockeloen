@@ -213,6 +213,15 @@
       renderPrices();
     });
     document.addEventListener('variant:change', renderPrices);
+    /* the colour filter shows/hides photos a moment after the form change: follow it */
+    var mediaList = document.querySelector('.product-v2 .product__media-list');
+    if (mediaList && window.MutationObserver) {
+      var hostImgTimer = null;
+      new MutationObserver(function () {
+        clearTimeout(hostImgTimer);
+        hostImgTimer = setTimeout(renderHostImage, 60);
+      }).observe(mediaList, { attributes: true, attributeFilter: ['style', 'class'], subtree: true, childList: true });
+    }
     /* the tile preselected in the markup (custom.upsell_default_qty) */
     var preselected = tiles.find(function (t) { return t.classList.contains('is-selected'); });
     if (preselected) {
