@@ -2168,7 +2168,7 @@ body[class*="template--v2"] .bot-swiper .swiper-wrapper {
   -webkit-backdrop-filter: blur(21px) saturate(180%);
           backdrop-filter: blur(21px) saturate(180%);
   color: #fff;
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   pointer-events: none;
