@@ -286,7 +286,7 @@
         -%}
         {%- if bl.video != blank -%}
           <div class="banner__media media hero-slider__video{% if has_mobile_media %} hidden md:!block{% endif %}">
-            {{ bl.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1500x' }}
+            {{ bl.video | video_tag: autoplay: false, loop: true, muted: true, controls: false, playsinline: true, preload: 'none', image_size: '1500x' }}
             <span class="hero-slider__video-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
           </div>
         {%- elsif bl.image != blank -%}
@@ -309,7 +309,7 @@
         {%- endif -%}
         {%- if bl.video_mobile != blank -%}
           <div class="banner__media media hero-slider__video md:hidden">
-            {{ bl.video_mobile | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1000x' }}
+            {{ bl.video_mobile | video_tag: autoplay: false, loop: true, muted: true, controls: false, playsinline: true, preload: 'none', image_size: '1000x' }}
             <span class="hero-slider__video-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
           </div>
         {%- elsif bl.image_mobile != blank -%}
