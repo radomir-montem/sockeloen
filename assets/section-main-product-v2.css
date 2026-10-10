@@ -2195,4 +2195,6 @@ body[class*="template--v2"] .bot-swiper .swiper-wrapper {
    its poster); the thumbnails keep their small play mark */
 @media screen and (min-width: 990px) {
   .product-v2 .pdp-video-badge { display: none !important; }
+  /* …except while the selected video is loading: then the play glyph with the spinning ring shows */
+  .product-v2 .product__media--inline-video.is-loading .pdp-video-badge { display: flex !important; }
 }
