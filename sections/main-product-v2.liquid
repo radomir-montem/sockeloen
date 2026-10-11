@@ -1145,7 +1145,10 @@
 
               <div class="variant-notes">
                 {% for variant in product.variants %}
-                  {% if variant.metafields.custom.note != blank %}
+                  {%- assign variant_note_html = variant.metafields.custom.note | metafield_tag -%}
+                  {% if variant.metafields.custom.note != blank and variant_note_html contains 'toe cover will fit' %}
+                    {%- comment -%} toe-cover size note is shown inside the size guide pop-up instead {%- endcomment -%}
+                  {% elsif variant.metafields.custom.note != blank %}
                     <div class="font-roboto font-normal text-2xl py-[10px] break-words !m-0 {% unless variant.id == product.selected_or_first_available_variant.id %}hidden{% endunless %}" data-id="{{ variant.id }}">
                       {{ variant.metafields.custom.note | metafield_tag }}
                     </div>
