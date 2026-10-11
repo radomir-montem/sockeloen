@@ -21,7 +21,7 @@
     assign guide_type = 'socks'
     if p_text contains 'base-layer' or p_text contains 'base layer' or p_text contains 'baselayer'
       assign guide_type = 'baselayer'
-    elsif p_text contains 'glove' or p_text contains 'handschoen' or p_text contains 'handschuh' or p_text contains 'gant'
+    elsif p_text contains 'glove' or p_text contains 'handschoen' or p_text contains 'handschuh'
       assign guide_type = 'gloves'
     elsif p_text contains 'toe-cover' or p_text contains 'toe cover' or p_text contains 'toecover' or p_text contains 'teenbeschermer' or p_text contains 'zehen'
       assign guide_type = 'toecovers'
