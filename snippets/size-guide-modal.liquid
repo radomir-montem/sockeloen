@@ -43,6 +43,9 @@
     </div>
 
     <div class="size-guide-modal__body">
+      {%- comment -%} EU -> US (men) -> UK conversion used for overshoes and toe covers {%- endcomment -%}
+      {%- assign shoe_map = '35:3.5:2.5,36:4:3.5,37:5:4,38:5.5:5,39:6.5:5.5,40:7:6,41:8:7,42:8.5:7.5,43:9.5:8.5,44:10:9,45:11:10,46:11.5:10.5,47:12.5:11.5,48:13:12,49:14:13,50:15:14' | split: ',' -%}
+
       {% case guide_type %}
 
         {% when 'socks' %}
@@ -58,51 +61,37 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><strong>39-46</strong></td>
-                <td>One Size</td>
-                <td>8-13.5</td>
-                <td>9.5-15</td>
-                <td>6.5-12</td>
-              </tr>
-              <tr>
-                <td><strong>35-40</strong></td>
-                <td>XS</td>
-                <td>4.5-8.5</td>
-                <td>6-10</td>
-                <td>3-7</td>
-              </tr>
-              <tr>
-                <td><strong>36-42</strong></td>
-                <td>S</td>
-                <td>5.5-10</td>
-                <td>7-11.5</td>
-                <td>4-8.5</td>
-              </tr>
-              <tr>
-                <td><strong>40-45</strong></td>
-                <td>M</td>
-                <td>8.5-12.5</td>
-                <td>10-14</td>
-                <td>7-11</td>
-              </tr>
-              <tr>
-                <td><strong>43-48</strong></td>
-                <td>L</td>
-                <td>10.5-15</td>
-                <td>12-16.5</td>
-                <td>9-13.5</td>
-              </tr>
-              <tr>
-                <td><strong>45-50</strong></td>
-                <td>XL</td>
-                <td>12.5-16.5</td>
-                <td>14-18</td>
-                <td>11-15</td>
-              </tr>
+              <tr><td><strong>39-46</strong></td><td>One Size</td><td>8-13.5</td><td>9.5-15</td><td>6.5-12</td></tr>
+              <tr><td><strong>35-40</strong></td><td>XS</td><td>4.5-8.5</td><td>6-10</td><td>3-7</td></tr>
+              <tr><td><strong>36-42</strong></td><td>S</td><td>5.5-10</td><td>7-11.5</td><td>4-8.5</td></tr>
+              <tr><td><strong>40-45</strong></td><td>M</td><td>8.5-12.5</td><td>10-14</td><td>7-11</td></tr>
+              <tr><td><strong>43-48</strong></td><td>L</td><td>10.5-15</td><td>12-16.5</td><td>9-13.5</td></tr>
+              <tr><td><strong>45-50</strong></td><td>XL</td><td>12.5-16.5</td><td>14-18</td><td>11-15</td></tr>
             </tbody>
           </table>
+          <p class="size-guide-modal__note">{{ 'products.v2.size_guide_half_size' | t }}</p>
           <p class="size-guide-modal__note">{{ 'products.v2.size_guide_socks_between' | t }}</p>
+          <details class="size-guide-modal__details">
+            <summary>{{ 'products.v2.size_guide_heights_title' | t }}</summary>
+            <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_heights_intro' | t }}</p>
+            <table class="size-guide-table">
+              <thead><tr><th>{{ 'products.v2.size_guide_sock_type' | t }}</th><th>cm</th><th>inch</th></tr></thead>
+              <tbody>
+                <tr><td><strong>{{ 'products.v2.size_guide_height_aero' | t }}</strong></td><td>17 (36-42) / 19 (43-48)</td><td>6.7 / 7.5</td></tr>
+                <tr><td><strong>{{ 'products.v2.size_guide_height_cycling' | t }}</strong></td><td>19</td><td>7.5</td></tr>
+                <tr><td><strong>{{ 'products.v2.size_guide_height_casual' | t }}</strong></td><td>19</td><td>7.5</td></tr>
+                <tr><td><strong>{{ 'products.v2.size_guide_height_printed' | t }}</strong></td><td>17 (36-42) / 19 (43-48)</td><td>6.7 / 7.5</td></tr>
+                <tr><td><strong>{{ 'products.v2.size_guide_height_low_compression' | t }}</strong></td><td>19</td><td>7.5</td></tr>
+                <tr><td><strong>{{ 'products.v2.size_guide_height_high_compression' | t }}</strong></td><td>31</td><td>12.2</td></tr>
+              </tbody>
+            </table>
+          </details>
+          <details class="size-guide-modal__details">
+            <summary>{{ 'products.v2.size_guide_faq_title' | t }}</summary>
+            <p><strong>{{ 'products.v2.size_guide_faq_fit_q' | t }}</strong><br>{{ 'products.v2.size_guide_faq_fit_a' | t }}</p>
+            <p><strong>{{ 'products.v2.size_guide_faq_onesize_q' | t }}</strong><br>{{ 'products.v2.size_guide_faq_onesize_a' | t }}</p>
+            <p><strong>{{ 'products.v2.size_guide_faq_wrong_q' | t }}</strong><br>{{ 'products.v2.size_guide_faq_wrong_a' | t }}</p>
+          </details>
 
         {% when 'gloves' %}
           <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_gloves_intro' | t }}</p>
@@ -130,12 +119,7 @@
               <thead>
                 <tr>
                   <th>{{ 'products.v2.size_guide_measurement' | t }}</th>
-                  <th>XS</th>
-                  <th>S</th>
-                  <th>M</th>
-                  <th>L</th>
-                  <th>XL</th>
-                  <th>XXL</th>
+                  <th>XS</th><th>S</th><th>M</th><th>L</th><th>XL</th><th>XXL</th>
                 </tr>
               </thead>
               <tbody>
@@ -160,28 +144,63 @@
                 assign size_values = opt.values
               endif
             endfor
+            if size_values == blank
+              assign size_values = '39-42,43-45,46-48' | split: ','
+            endif
           -%}
           <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_overshoes_intro' | t }}</p>
+          <div class="size-guide-table-scroll">
           <table class="size-guide-table">
             <thead>
               <tr>
                 <th>{{ 'products.v2.size_guide_overshoe_size' | t }}</th>
-                <th>{{ 'products.v2.size_guide_eu_cycling_shoe_size' | t }}</th>
+                <th>EU</th>
+                <th>US</th>
+                <th>UK</th>
               </tr>
             </thead>
             <tbody>
-              {%- if size_values != blank -%}
-                {%- for v in size_values -%}
-                  {%- assign shoe = v | replace: '-', ' - ' | replace: '  ', ' ' -%}
-                  <tr><td><strong>{{ v }}</strong></td><td>{{ shoe }}</td></tr>
-                {%- endfor -%}
-              {%- else -%}
-                <tr><td><strong>39-42</strong></td><td>39 - 42</td></tr>
-                <tr><td><strong>43-45</strong></td><td>43 - 45</td></tr>
-                <tr><td><strong>46-48</strong></td><td>46 - 48</td></tr>
-              {%- endif -%}
+              {%- for v in size_values -%}
+                {%- liquid
+                  assign parts = v | split: '-'
+                  assign lo = parts | first | strip
+                  assign hi = parts | last | strip
+                  assign us_lo = ''
+                  assign us_hi = ''
+                  assign uk_lo = ''
+                  assign uk_hi = ''
+                  for m in shoe_map
+                    assign mp = m | split: ':'
+                    if mp[0] == lo
+                      assign us_lo = mp[1]
+                      assign uk_lo = mp[2]
+                    endif
+                    if mp[0] == hi
+                      assign us_hi = mp[1]
+                      assign uk_hi = mp[2]
+                    endif
+                  endfor
+                  if lo == hi
+                    assign eu_txt = lo
+                    assign us_txt = us_lo
+                    assign uk_txt = uk_lo
+                  else
+                    assign eu_txt = lo | append: ' - ' | append: hi
+                    assign us_txt = us_lo | append: ' - ' | append: us_hi
+                    assign uk_txt = uk_lo | append: ' - ' | append: uk_hi
+                  endif
+                  if us_lo == '' or us_hi == ''
+                    assign us_txt = '–'
+                    assign uk_txt = '–'
+                  endif
+                -%}
+                <tr><td><strong>{{ v }}</strong></td><td>{{ eu_txt }}</td><td>{{ us_txt }}</td><td>{{ uk_txt }}</td></tr>
+              {%- endfor -%}
             </tbody>
           </table>
+          </div>
+          <p class="size-guide-modal__hint">{{ 'products.v2.size_guide_intl_note' | t }}</p>
+          <p class="size-guide-modal__note">{{ 'products.v2.size_guide_half_size' | t }}</p>
           <p class="size-guide-modal__note">{{ 'products.v2.size_guide_overshoes_between' | t }}</p>
 
         {% when 'toecovers' %}
@@ -189,24 +208,80 @@
             assign size_values = blank
             for opt in product.options_with_values
               assign opt_name = opt.name | downcase
-              if opt_name == 'size'
+              if opt_name == 'size' or opt_name == 'maat' or opt_name == 'größe' or opt_name == 'taille'
                 assign size_values = opt.values
               endif
             endfor
           -%}
           <p class="size-guide-modal__intro">{{ 'products.v2.size_guide_toecovers_intro' | t }}</p>
           {%- if size_values != blank -%}
+          <div class="size-guide-table-scroll">
           <table class="size-guide-table">
-            <thead><tr><th>{{ 'products.v2.size_guide_toecover_size' | t }}</th></tr></thead>
+            <thead><tr><th>{{ 'products.v2.size_guide_size' | t }}</th><th>EU</th><th>US</th><th>UK</th></tr></thead>
             <tbody>
-              {%- for v in size_values -%}<tr><td><strong>{{ v }}</strong></td></tr>{%- endfor -%}
+              {%- for v in size_values -%}
+                {%- liquid
+                  comment
+                    The EU range lives in the variant note ("This toe cover will fit sizes from size 37 up to size 41 ...") so it stays editable per variant in the admin.
+                  endcomment
+                  assign lo = ''
+                  assign hi = ''
+                  for variant in product.variants
+                    if lo == '' and variant.metafields.custom.note != blank
+                      assign in_size = false
+                      for so in variant.options
+                        if so == v
+                          assign in_size = true
+                        endif
+                      endfor
+                      if in_size
+                        assign note_txt = variant.metafields.custom.note | metafield_tag | strip_html
+                        if note_txt contains 'from size '
+                          assign after = note_txt | split: 'from size ' | last
+                          assign lo = after | split: ' ' | first | remove: '.' | remove: ','
+                          if after contains 'up to size '
+                            assign hi = after | split: 'up to size ' | last | split: ' ' | first | remove: '.' | remove: ','
+                          endif
+                        endif
+                      endif
+                    endif
+                  endfor
+                  assign us_lo = ''
+                  assign us_hi = ''
+                  assign uk_lo = ''
+                  assign uk_hi = ''
+                  for m in shoe_map
+                    assign mp = m | split: ':'
+                    if mp[0] == lo
+                      assign us_lo = mp[1]
+                      assign uk_lo = mp[2]
+                    endif
+                    if mp[0] == hi
+                      assign us_hi = mp[1]
+                      assign uk_hi = mp[2]
+                    endif
+                  endfor
+                  if lo != '' and hi != ''
+                    assign eu_txt = lo | append: ' - ' | append: hi
+                    assign us_txt = us_lo | append: ' - ' | append: us_hi
+                    assign uk_txt = uk_lo | append: ' - ' | append: uk_hi
+                  else
+                    assign eu_txt = '–'
+                    assign us_txt = '–'
+                    assign uk_txt = '–'
+                  endif
+                -%}
+                <tr><td><strong>{{ v }}</strong></td><td>{{ eu_txt }}</td><td>{{ us_txt }}</td><td>{{ uk_txt }}</td></tr>
+              {%- endfor -%}
             </tbody>
           </table>
+          </div>
           {%- endif -%}
+          <p class="size-guide-modal__hint">{{ 'products.v2.size_guide_intl_note' | t }}</p>
+          <p class="size-guide-modal__note">{{ 'products.v2.size_guide_toecovers_overlap' | t }}</p>
+          <p class="size-guide-modal__note">{{ 'products.v2.size_guide_toecovers_shoe' | t }}</p>
 
       {% endcase %}
     </div>
-
-    <a href="/pages/size-guide" class="size-guide-modal__link">{{ 'products.v2.size_guide_full_link' | t }}</a>
   </div>
 </div>
