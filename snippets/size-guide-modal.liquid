@@ -10,17 +10,22 @@
   assign guide_type = guide_type_override | default: ''
 
   if guide_type == '' or guide_type == 'auto'
+    comment
+      Title and type are translated per locale (NL: "Overschoen", DE: "Überschuh"), so the handle (never translated) is the primary signal; the English/NL/DE words are a fallback.
+    endcomment
+    assign p_handle = product.handle | downcase
     assign p_type = product.type | downcase
     assign p_title = product.title | downcase
+    assign p_text = p_handle | append: ' ' | append: p_type | append: ' ' | append: p_title
 
     assign guide_type = 'socks'
-    if p_type contains 'base' or p_type contains 'accessoires' and p_title contains 'base layer'
+    if p_text contains 'base-layer' or p_text contains 'base layer' or p_text contains 'baselayer'
       assign guide_type = 'baselayer'
-    elsif p_title contains 'glove'
+    elsif p_text contains 'glove' or p_text contains 'handschoen' or p_text contains 'handschuh' or p_text contains 'gant'
       assign guide_type = 'gloves'
-    elsif p_title contains 'toe cover'
+    elsif p_text contains 'toe-cover' or p_text contains 'toe cover' or p_text contains 'toecover' or p_text contains 'teenbeschermer' or p_text contains 'zehen'
       assign guide_type = 'toecovers'
-    elsif p_type contains 'shoe cover' or p_type contains 'overshoe' or p_title contains 'overshoe' or p_title contains 'shoecover' or p_title contains 'shoe cover'
+    elsif p_text contains 'overshoe' or p_text contains 'shoecover' or p_text contains 'shoe-cover' or p_text contains 'shoe cover' or p_text contains 'overschoen' or p_text contains 'überschuh' or p_text contains 'couvre-chaussure' or p_text contains 'sur-chaussure'
       assign guide_type = 'overshoes'
     endif
   endif
