@@ -620,6 +620,22 @@ if (window.location.href.indexOf("https://sockeloen.com/nl/products/custom-cycli
     });
   </script>
   {{ "//cdn.shopify.com/s/files/1/0644/2975/2553/t/2/assets/sockeloen.js" | script_tag}}	  
+{%- comment -%} Futy WhatsApp leadbot. Futy's own rules hide it on sockeloen.com except on the custom pages, but those rules key on the domain, so on preview/editor hosts (myshopify.com, shopifypreview.com) it appeared everywhere. Load it only on the live domain or on the custom pages so previews behave like live. {%- endcomment -%}
+{%- liquid
+  assign futy_paths = '/pages/custom-made,/collections/custom-socks,/collections/custom-knitted-socks,/collections/custom-sock-examples,/collections/pre-order,/products/custom-cycling-socks,/products/custom-cycling-aero-socks,/products/custom-sport-socks,/products/custom-casual-socks,/products/custom-aero-cycling-socks-examples' | split: ','
+  assign futy_load = false
+  if request.host contains 'sockeloen.com'
+    assign futy_load = true
+  else
+    for futy_path in futy_paths
+      if request.path contains futy_path
+        assign futy_load = true
+        break
+      endif
+    endfor
+  endif
+-%}
+{%- if futy_load -%}
     <script>
 window.Futy = { key: '64db5abbdb94c' };
 (function (e, t) {
@@ -631,6 +647,7 @@ window.Futy = { key: '64db5abbdb94c' };
     r.parentNode.insertBefore(n, r);
 })(document, 'script');
 </script>
+{%- endif -%}
 <script src="{{ 'custom-quick-add.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'ipinfo.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'card-color-row.js' | asset_url }}" defer></script>
@@ -640,13 +657,3 @@ window.Futy = { key: '64db5abbdb94c' };
 {% render 'collection-gate' %}
 </body>
 </html>
-{% comment %}
-
-This file has been rewritten to preserve the original behavior.
-
----
-Changes:
-- from: "{% render('outlink-sticky') %}"
-  to: "{% render 'outlink-sticky' %}"
-  position: 3140..3169
-{% endcomment %}
