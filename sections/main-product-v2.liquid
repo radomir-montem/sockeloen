@@ -1503,6 +1503,8 @@
               <script>
                 (function() {
                   var isNl = window.location.pathname.indexOf('/nl') !== -1;
+                  var isDe = window.location.pathname.indexOf('/de') === 0;
+                  var isFr = window.location.pathname.indexOf('/fr') === 0;
                   var cutoffHour = 15;
 
                   function getNLTime() {
@@ -1526,7 +1528,13 @@
                     if (day % 10 === 1 && day !== 11) s = 'st';
                     else if (day % 10 === 2 && day !== 12) s = 'nd';
                     else if (day % 10 === 3 && day !== 13) s = 'rd';
+                    var dDE = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+                    var mDE = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+                    var dFR = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+                    var mFR = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
                     if (isNl) return dNL[date.getDay()] + ', ' + day + ' ' + mNL[date.getMonth()];
+                    if (isDe) return dDE[date.getDay()] + ', ' + day + '. ' + mDE[date.getMonth()];
+                    if (isFr) return dFR[date.getDay()] + ' ' + (day === 1 ? '1er' : day) + ' ' + mFR[date.getMonth()];
                     return dEN[date.getDay()] + ', ' + day + s + ' of ' + mEN[date.getMonth()];
                   }
 
@@ -1607,6 +1615,14 @@
                         el.innerHTML = free
                           ? 'Bestel binnen ' + timeStr + ', <span class="ship-free">gratis verzending vandaag</span>'
                           : 'Bestel binnen ' + timeStr + ', wordt <span class="ship-date">vandaag</span> verzonden';
+                      } else if (isDe) {
+                        el.innerHTML = free
+                          ? 'Bestelle innerhalb von ' + timeStr + ', <span class="ship-free">kostenloser Versand heute</span>'
+                          : 'Bestelle innerhalb von ' + timeStr + ', Versand <span class="ship-date">heute</span>';
+                      } else if (isFr) {
+                        el.innerHTML = free
+                          ? 'Commandez dans les ' + timeStr + ', <span class="ship-free">livraison gratuite aujourd\'hui</span>'
+                          : 'Commandez dans les ' + timeStr + ', expédié <span class="ship-date">aujourd\'hui</span>';
                       } else {
                         el.innerHTML = free
                           ? 'Order within ' + timeStr + ', <span class="ship-free">free shipping today</span>'
@@ -1618,6 +1634,14 @@
                         el.innerHTML = free
                           ? 'Voor <strong>15u00</strong> besteld, <span class="ship-free">gratis verzonden</span> op <span class="ship-date">' + f + '</span>'
                           : 'Voor <strong>15u00</strong> besteld, wordt verzonden op <span class="ship-date">' + f + '</span>';
+                      } else if (isDe) {
+                        el.innerHTML = free
+                          ? 'Vor <strong>15:00 Uhr</strong> bestellt, <span class="ship-free">kostenloser Versand</span> am <span class="ship-date">' + f + '</span>'
+                          : 'Vor <strong>15:00 Uhr</strong> bestellt, Versand am <span class="ship-date">' + f + '</span>';
+                      } else if (isFr) {
+                        el.innerHTML = free
+                          ? 'Commandé avant <strong>15h00</strong>, <span class="ship-free">livraison gratuite</span> le <span class="ship-date">' + f + '</span>'
+                          : 'Commandé avant <strong>15h00</strong>, expédié le <span class="ship-date">' + f + '</span>';
                       } else {
                         el.innerHTML = free
                           ? 'Ordered before <strong>15hr00</strong>, <span class="ship-free">free shipping</span> on <span class="ship-date">' + f + '</span>'
