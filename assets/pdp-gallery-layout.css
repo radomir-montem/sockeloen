@@ -615,6 +615,7 @@
   body:has(.product-v2--gallery) .size-guide-modal__title { color: #121212; }
   body:has(.product-v2--gallery) .size-guide-modal__close { color: #121212; }
   body:has(.product-v2--gallery) .size-guide-modal__intro { color: #1a1a1a; }
+  body:has(.product-v2--gallery) .size-guide-modal__note { background: rgba(0,0,0,.06); }
   body:has(.product-v2--gallery) .size-guide-table th {
     background: rgba(0, 0, 0, 0.08);
     border-bottom: 0;
