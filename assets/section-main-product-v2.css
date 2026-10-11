@@ -1390,6 +1390,16 @@ a.product-v2__sp-avatar {
   line-height: 1.5;
 }
 
+.size-guide-modal__note {
+  font-size: 13px;
+  color: #1a1a1a;
+  margin: 14px 0 0;
+  line-height: 1.5;
+  padding: 10px 12px;
+  background: #f5f5f5;
+  border-radius: 6px;
+}
+
 .size-guide-table-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
