@@ -170,6 +170,7 @@
         "column_cnffC9",
         "column_irg7DF"
       ],
+      "disabled": true,
       "settings": {
         "eme_banners": true,
         "scroll_effect": "sticky_label",
