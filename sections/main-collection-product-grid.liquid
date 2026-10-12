@@ -273,6 +273,18 @@
               }
             </style>
             {%- endif -%}
+            {%- if section.settings.disable_image_hover -%}
+            <style>
+              /* no photo change on hover (after the checkerboard rules on purpose: same specificity, later wins): each card keeps the photo it opened with (also for the checkerboard cards) */
+              @media screen and (min-width: 990px) {
+                #product-grid .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) { opacity: 1; display: block; transform: none; }
+                #product-grid .card-wrapper:hover .media.media--hover-effect > img + img { opacity: 0; transform: none; }
+                #product-grid .card-swap-d .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) { opacity: 0; }
+                #product-grid .card-swap-d .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img + img { opacity: 1; }
+                #product-grid .card-wrapper:hover .media.media--hover-effect > img:only-child { transform: none; }
+              }
+            </style>
+            {%- endif -%}
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
@@ -508,6 +520,12 @@
       "label": "Also show sold-out products and colours",
       "default": false,
       "info": "Normally a product or colour without stock is left out of the grid."
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_image_hover",
+      "label": "No photo change on hover",
+      "default": false
     },
     {
       "type": "checkbox",
