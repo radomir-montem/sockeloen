@@ -51,7 +51,14 @@
 
     @media screen and (min-width: 750px) {
       #Banner-{{ section.id }} {
-        min-height: {{ section.settings.banner_image_height }}px;
+        /* never taller than the screen, so a "middle" content position is really in the middle of what you see */
+        min-height: min({{ section.settings.banner_image_height }}px, 100svh);
+      }
+      /* the fixed header + announcement bar cover the top ~92px of the banner: centre the content in the part below them */
+      #Banner-{{ section.id }} .banner__content--middle-left,
+      #Banner-{{ section.id }} .banner__content--middle-center,
+      #Banner-{{ section.id }} .banner__content--middle-right {
+        padding-top: calc(50px + 92px);
       }
     }
   {% endunless %}
