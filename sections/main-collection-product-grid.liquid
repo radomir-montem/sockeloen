@@ -277,7 +277,6 @@
                 {% assign show_color_swatches_for_collection = false %}
               {% endif %}
               {%- assign card_n = 0 -%}
-              <!-- grid debug: count={{ collection.products_count }} all={{ collection.all_products_count }} liquid={{ collection.products.size }} sold_out_setting={{ section.settings.show_sold_out }} handles={% for p in collection.products %}{{ p.handle }},{% endfor %} -->
               {%- for product in collection.products -%}
                 {% assign lazy_load = false %}
                 {% assign coming_soon = product.metafields.custom.coming_soon | default: false %}
