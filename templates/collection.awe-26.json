@@ -63,72 +63,26 @@
         "padding_bottom": 0
       }
     },
-    "rich_text_fC8NDW": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_xyXjzD": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "heading": "<p>Talk about your brand</p>",
-            "heading_size": "h1"
-          }
-        },
-        "text_CebXkd": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
-          }
-        },
-        "button_TzWjb9": {
-          "type": "button",
-          "settings": {
-            "button_label": "explore more",
-            "button_link": "shopify://collections/all-products",
-            "button_style_secondary": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_xyXjzD",
-        "text_CebXkd",
-        "button_TzWjb9"
-      ],
-      "disabled": true,
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "background-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
     "two_cols_awe": {
       "type": "two-cols-swap",
       "blocks": {
         "col_a": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/tibor.banner.Collection_banner_MOBILE_909e470e-6ce7-47b8-a476-745a72765356.png",
+            "image": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23876.jpg",
             "color": "",
             "text_color": "#ffffff",
             "font_size": 40,
-            "heading": "KNWU x SOCKELOEN",
+            "heading": "",
             "description": "",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
             "button_disclaimer": "",
             "button_text": "shop here",
-            "button_url": "shopify://collections/sockeloen-x-knwu",
+            "button_url": "",
             "button_pos": "mt-0",
-            "mobile_collection": "sockeloen-x-knwu",
-            "mobile_collection_title": "KNWU x SOCKELOEN",
+            "mobile_collection": "",
+            "mobile_collection_title": "",
             "mobile_collection_limit": 4,
             "mobile_variant_filter": "KNWU"
           }
@@ -136,11 +90,11 @@
         "col_b": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/AWE_Instagram_slidepost_V2_2.jpg",
+            "image": "shopify://shop_images/3_winter_gloves.png",
             "color": "#0e112e",
             "text_color": "#ffffff",
             "font_size": 40,
-            "heading": "Gloves",
+            "heading": "",
             "description": "",
             "vertical_pos": "justify-center",
             "horizontal_pos": "items-center",
@@ -187,6 +141,52 @@
         "background_color": "#ffffff",
         "padding_top": 40,
         "padding_bottom": 40
+      }
+    },
+    "rich_text_fC8NDW": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_xyXjzD": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "<p>Talk about your brand</p>",
+            "heading_size": "h1"
+          }
+        },
+        "text_CebXkd": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+          }
+        },
+        "button_TzWjb9": {
+          "type": "button",
+          "settings": {
+            "button_label": "explore more",
+            "button_link": "shopify://collections/all-products",
+            "button_style_secondary": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_xyXjzD",
+        "text_CebXkd",
+        "button_TzWjb9"
+      ],
+      "disabled": true,
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     }
   },
