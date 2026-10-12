@@ -256,6 +256,23 @@
           <div class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}">
             <div class="loading-overlay gradient"></div>
 
+            {%- if section.settings.alternate_second_image -%}
+            <style>
+              /* checkerboard cards: .card-swap-d (4-column layout, from 768px) / .card-swap-m (2 columns below) open with the 2nd photo and show the 1st on hover */
+              @media screen and (min-width: 768px) {
+                #product-grid .card-swap-d .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) { opacity: 0; }
+                #product-grid .card-swap-d .media.media--hover-effect:not(.no-has-second-image) > img + img { opacity: 1; }
+              }
+              @media screen and (min-width: 990px) {
+                #product-grid .card-swap-d .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) { opacity: 1; display: block; transform: scale(1.03); transition: transform var(--duration-long) ease; }
+                #product-grid .card-swap-d .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img + img { opacity: 0; }
+              }
+              @media screen and (max-width: 767px) {
+                #product-grid .card-swap-m .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) { opacity: 0; }
+                #product-grid .card-swap-m .media.media--hover-effect:not(.no-has-second-image) > img + img { opacity: 1; }
+              }
+            </style>
+            {%- endif -%}
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
@@ -292,12 +309,18 @@
                   {% if optionByName.values == null or optionByName.values.size == 1 %}
                     {% if shop.metafields.soldout_variants.enable or product.available or coming_soon or section.settings.show_sold_out %}
                       {%- assign card_n = card_n | plus: 1 -%}
-                      {%- assign swap_card = false -%}
-                      {%- if section.settings.alternate_second_image -%}{%- assign card_mod = card_n | modulo: 2 -%}{%- if card_mod == 0 -%}{%- assign swap_card = true -%}{%- endif -%}{%- endif -%}
-                      <li id="product" class="w-full">
+                      {%- assign swap_cls = '' -%}
+                      {%- if section.settings.alternate_second_image -%}
+                        {%- comment -%} checkerboard: 4 columns from 768px, 2 columns below; a card opens with its 2nd photo when row + column is odd {%- endcomment -%}
+                        {%- assign i0 = card_n | minus: 1 -%}
+                        {%- assign d_sum = i0 | modulo: 4 | plus: 1 -%}{%- assign d_row = i0 | divided_by: 4 | plus: 1 -%}{%- assign d_sum = d_sum | plus: d_row | modulo: 2 -%}
+                        {%- assign m_sum = i0 | modulo: 2 | plus: 1 -%}{%- assign m_row = i0 | divided_by: 2 | plus: 1 -%}{%- assign m_sum = m_sum | plus: m_row | modulo: 2 -%}
+                        {%- if d_sum == 1 -%}{%- assign swap_cls = swap_cls | append: ' card-swap-d' -%}{%- endif -%}
+                        {%- if m_sum == 1 -%}{%- assign swap_cls = swap_cls | append: ' card-swap-m' -%}{%- endif -%}
+                      {%- endif -%}
+                      <li id="product" class="w-full{{ swap_cls }}">
                         {% render 'card-product',
                           card_product: product,
-                          swap_images: swap_card,
                           product_title: product.title,
                           media_aspect_ratio: section.settings.image_ratio,
                           show_secondary_image: section.settings.show_secondary_image,
@@ -365,12 +388,18 @@
                       {% unless colorlist contains color %}
                         {% if shop.metafields.soldout_variants.enable or variant.available or coming_soon or section.settings.show_sold_out %}
                           {%- assign card_n = card_n | plus: 1 -%}
-                      {%- assign swap_card = false -%}
-                      {%- if section.settings.alternate_second_image -%}{%- assign card_mod = card_n | modulo: 2 -%}{%- if card_mod == 0 -%}{%- assign swap_card = true -%}{%- endif -%}{%- endif -%}
-                      <li id="product" class="w-full relative">
+                      {%- assign swap_cls = '' -%}
+                      {%- if section.settings.alternate_second_image -%}
+                        {%- comment -%} checkerboard: 4 columns from 768px, 2 columns below; a card opens with its 2nd photo when row + column is odd {%- endcomment -%}
+                        {%- assign i0 = card_n | minus: 1 -%}
+                        {%- assign d_sum = i0 | modulo: 4 | plus: 1 -%}{%- assign d_row = i0 | divided_by: 4 | plus: 1 -%}{%- assign d_sum = d_sum | plus: d_row | modulo: 2 -%}
+                        {%- assign m_sum = i0 | modulo: 2 | plus: 1 -%}{%- assign m_row = i0 | divided_by: 2 | plus: 1 -%}{%- assign m_sum = m_sum | plus: m_row | modulo: 2 -%}
+                        {%- if d_sum == 1 -%}{%- assign swap_cls = swap_cls | append: ' card-swap-d' -%}{%- endif -%}
+                        {%- if m_sum == 1 -%}{%- assign swap_cls = swap_cls | append: ' card-swap-m' -%}{%- endif -%}
+                      {%- endif -%}
+                      <li id="product" class="w-full relative{{ swap_cls }}">
                             {% render 'card-product-variant',
                               card_product: variant,
-                              swap_images: swap_card,
                               tags: product.tags,
                               title: product.title,
                               color: color,
@@ -481,9 +510,9 @@
     {
       "type": "checkbox",
       "id": "alternate_second_image",
-      "label": "Every 2nd card shows the 2nd photo first",
+      "label": "Alternate the first photo per card (checkerboard)",
       "default": false,
-      "info": "Cards 2, 4, 6… open with the colour's second photo (the one shown on hover) and show the first photo on hover."
+      "info": "Checkerboard: on desktop (4 columns) cards 2, 4, 5, 7… open with the colour's second photo, on phones (2 columns) cards 2, 3, 6, 7…; the first photo then shows on hover."
     },
     {
       "type": "select",
