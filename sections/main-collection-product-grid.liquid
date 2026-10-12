@@ -256,18 +256,6 @@
           <div class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}">
             <div class="loading-overlay gradient"></div>
 
-            {%- if section.settings.disable_image_hover -%}
-            <style>
-              /* no photo change on hover: each card keeps the photo it opened with (also for the checkerboard cards) */
-              @media screen and (min-width: 990px) {
-                #product-grid .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) { opacity: 1; display: block; transform: none; }
-                #product-grid .card-wrapper:hover .media.media--hover-effect > img + img { opacity: 0; transform: none; }
-                #product-grid .card-swap-d .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) { opacity: 0; }
-                #product-grid .card-swap-d .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img + img { opacity: 1; }
-                #product-grid .card-wrapper:hover .media.media--hover-effect > img:only-child { transform: none; }
-              }
-            </style>
-            {%- endif -%}
             {%- if section.settings.alternate_second_image -%}
             <style>
               /* checkerboard cards: .card-swap-d (4-column layout, from 768px) / .card-swap-m (2 columns below) open with the 2nd photo and show the 1st on hover */
@@ -282,6 +270,18 @@
               @media screen and (max-width: 767px) {
                 #product-grid .card-swap-m .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) { opacity: 0; }
                 #product-grid .card-swap-m .media.media--hover-effect:not(.no-has-second-image) > img + img { opacity: 1; }
+              }
+            </style>
+            {%- endif -%}
+            {%- if section.settings.disable_image_hover -%}
+            <style>
+              /* no photo change on hover (after the checkerboard rules on purpose: same specificity, later wins): each card keeps the photo it opened with (also for the checkerboard cards) */
+              @media screen and (min-width: 990px) {
+                #product-grid .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) { opacity: 1; display: block; transform: none; }
+                #product-grid .card-wrapper:hover .media.media--hover-effect > img + img { opacity: 0; transform: none; }
+                #product-grid .card-swap-d .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) { opacity: 0; }
+                #product-grid .card-swap-d .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img + img { opacity: 1; }
+                #product-grid .card-wrapper:hover .media.media--hover-effect > img:only-child { transform: none; }
               }
             </style>
             {%- endif -%}
