@@ -59,8 +59,12 @@ new carouselInlineWidget('reviewsio-carousel-widget',{
           enable_product_name: true,
           /*Show only reviews which have specific tags (multiple semicolon separated tags allowed i.e tag1;tag2)*/
           tags: "custom",
-          /*Show branch, only one input*/
-          branch: "",
+          /*Show branch, only one input.
+            Reviews.io's carousel script only sends min_review_percent as &minRating= when review_type is
+            'company' alone; with 'company, product' it drops the filter, so 1-2 star reviews showed up. The
+            branch value is appended to the API URL unencoded, so an empty branch plus &minRating=4 here keeps
+            product reviews and still hides everything under 4 stars (the API honours it, verified 2026-10-12). */
+          branch: "&minRating=4",
           enable_branch_name: false,
         },
         popups: {
