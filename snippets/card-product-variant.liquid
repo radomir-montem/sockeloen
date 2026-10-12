@@ -463,6 +463,15 @@
           and the raw metafield texts must never resurface.
         {%- endcomment -%}
         <div class="absolute top-[15px] left-[12px] card-badge product-variant">
+          {%- comment -%} "New" badge for every product in the collection chosen in theme settings {%- endcomment -%}
+          {%- if settings.new_badge_collection != blank -%}
+            {%- for new_c in product.collections -%}
+              {%- if new_c.handle == settings.new_badge_collection.handle -%}
+                <span class="badge badge--bottom-left uppercase mr-[6px] badge--new">{{ settings.new_badge_text | default: 'New' }}</span>
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
           {%- unless soldout -%}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
@@ -513,13 +522,27 @@
               assign percent = save_price | times: 100.0 | divided_by: product.compare_at_price | ceil
             endif
           %}
-          {% comment %} Discount badge only from 10% up: small percentages signal little and clutter the tile. {% endcomment %}
+          {% comment %} Sale badge only from 10% off: small discounts signal little and clutter the tile. Bundles say "Bundle sale". {% endcomment %}
           {% if percent >= 10 %}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left uppercase mr-[6px]"
               style="background-color: #C0543F;"
-            >-{{ percent }}%</span>
+            >{%- liquid
+                assign is_bundle = false
+                for bt in product.tags
+                  assign btl = bt | downcase
+                  if btl contains 'bundle' or btl contains 'bundel'
+                    assign is_bundle = true
+                    break
+                  endif
+                endfor
+                if is_bundle
+                  echo 'products.product.bundle_sale_badge' | t
+                else
+                  echo 'products.product.sale_badge' | t
+                endif
+              -%}</span>
           {% endif %}
         </div>
       </div>

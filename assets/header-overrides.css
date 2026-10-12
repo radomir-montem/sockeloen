@@ -6151,3 +6151,12 @@ body.template--product .product-v2 .thumbnail-list__item .thumbnail { position: 
   margin-bottom: auto;
   margin-left: 8px;
 }
+
+/* Product-card badges stack vertically when a card has more than one (New + Sale, Sold out + New, …) */
+.card-wrapper .card-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.card-wrapper .card-badge .badge { margin-right: 0 !important; }

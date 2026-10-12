@@ -122,6 +122,8 @@
       "add_to_cart": "In den Warenkorb legen",
       "description": "Beschreibung",
       "on_sale": "SALE",
+      "sale_badge": "Sale",
+      "bundle_sale_badge": "Bundle sale",
       "product_variants": "Produktvarianten",
       "quantity": {
         "label": "Anzahl",

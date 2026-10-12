@@ -2725,6 +2725,31 @@
   })();
 </script>
 
+<script>
+  /* Recently viewed: v2 product pages record the product in the same localStorage list the
+     "Product Carousel" section (recently viewed source) reads; the old template did this in sections/recently-viewed.liquid. */
+  (function () {
+    try {
+      var item = {
+        productTitle: {{ product.title | json }},
+        productHandle: {{ product.handle | json }},
+        productImg: {{ product.featured_media | image_url: width: 600 | json }},
+        imgWidth: {{ product.featured_media.width | json }},
+        imgHeight: {{ product.featured_media.height | json }},
+        price: {{ product.price | money | json }},
+        productUrl: {{ product.url | json }},
+        productImageAltText: {{ product.featured_media.alt | json }}
+      };
+      var list = [];
+      try { list = JSON.parse(localStorage.getItem('recentlyViewedProduct') || '[]') || []; } catch (e) { list = []; }
+      list = list.filter(function (p) { return p && p.productHandle !== item.productHandle; });
+      list.push(item);
+      while (list.length > 12) list.shift();
+      localStorage.setItem('recentlyViewedProduct', JSON.stringify(list));
+    } catch (e) {}
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Product Hero V2",

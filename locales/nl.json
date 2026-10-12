@@ -122,6 +122,8 @@
       "add_to_cart": "Add to cart",
       "description": "Beschrijving",
       "on_sale": "SALE ",
+      "sale_badge": "Sale",
+      "bundle_sale_badge": "Bundle sale",
       "product_variants": "Productvarianten",
       "quantity": {
         "label": "Aantal",
