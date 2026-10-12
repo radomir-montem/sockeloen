@@ -95,6 +95,31 @@
                 {% assign color_to_search = product_color | strip | strip_newlines %}
               {% endif %}
               {% assign second_variant_image = blank %}
+              {%- comment -%}
+                2nd photo of the colour group: the first photo after the variant's own photo that carries the
+                same alt text (photos are grouped per colour by alt, whatever the alt says, e.g. "RAINOVERSHOES25").
+                Falls back to the old rule (last photo whose alt contains the colour name) when the alt is empty.
+              {%- endcomment -%}
+              {%- assign group_alt = featured_media.alt | downcase | strip -%}
+              {%- if group_alt != blank -%}
+                {%- assign featured_src = featured_media | image_url -%}
+                {%- assign seen_featured = false -%}
+                {%- for image in product.images -%}
+                  {%- assign image_src = image | image_url -%}
+                  {%- if image_src == featured_src -%}
+                    {%- assign seen_featured = true -%}
+                    {%- continue -%}
+                  {%- endif -%}
+                  {%- if seen_featured -%}
+                    {%- assign image_alt = image.alt | downcase | strip -%}
+                    {%- if image_alt == group_alt -%}
+                      {%- assign second_variant_image = image -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {% if second_variant_image == blank %}
               {% for image in product.images %}
                 {% unless image.attached_to_variant? %}
                   {% assign image_alt_parsed = image.alt
@@ -110,6 +135,26 @@
                   {% endif %}
                 {% endunless %}
               {% endfor %}
+              {% endif %}
+              {%- comment -%}
+                swap_images: the colour's 2nd photo (first non-variant photo whose alt names the colour) becomes the card photo and the variant photo moves to the hover (collection grids that alternate the first photo per card)
+              {%- endcomment -%}
+              {% if swap_images %}
+                {% assign swap_image = blank %}
+                {% for image in product.images %}
+                  {% unless image.attached_to_variant? %}
+                    {% assign image_alt_parsed = image.alt | replace: "'", '' | replace: '"', '' | replace: '-', ' ' | downcase | strip %}
+                    {% if image_alt_parsed contains color_to_search %}
+                      {% assign swap_image = image %}
+                      {% break %}
+                    {% endif %}
+                  {% endunless %}
+                {% endfor %}
+                {% if swap_image != blank %}
+                  {% assign second_variant_image = featured_media %}
+                  {% assign featured_media = swap_image %}
+                {% endif %}
+              {% endif %}
             <div class="media media--transparent media--hover-effect{% if second_variant_image == blank %} no-has-second-image{% endif %}">
               {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
               <img
