@@ -205,6 +205,23 @@
         "type": "url",
         "id": "gate_signup_url",
         "label": "Sign-up link"
+      },
+      {
+        "type": "header",
+        "content": "New badge"
+      },
+      {
+        "type": "text",
+        "id": "new_badge_tag",
+        "label": "Product tag that gets a 'New' badge",
+        "default": "new",
+        "info": "Every product with this tag shows the badge on its product cards, everywhere on the site."
+      },
+      {
+        "type": "text",
+        "id": "new_badge_text",
+        "label": "Badge text",
+        "default": "New"
       }
     ]
   },

@@ -762,8 +762,8 @@
     "gate_error": "That password is not right.",
     "gate_signup_text": "No password yet? Join the early breakaway",
     "gate_signup_url": "/pages/awe-26",
-    "new_badge_collection": "awe-26",
-    "new_badge_text": "New"
+    "new_badge_text": "New",
+    "new_badge_tag": "early-access-26"
   },
   "presets": {
     "Default": {

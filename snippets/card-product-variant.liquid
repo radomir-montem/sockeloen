@@ -463,10 +463,12 @@
           and the raw metafield texts must never resurface.
         {%- endcomment -%}
         <div class="absolute top-[15px] left-[12px] card-badge product-variant">
-          {%- comment -%} "New" badge for every product in the collection chosen in theme settings {%- endcomment -%}
-          {%- if settings.new_badge_collection != blank -%}
-            {%- for new_c in product.collections -%}
-              {%- if new_c.handle == settings.new_badge_collection.handle -%}
+          {%- comment -%} "New" badge for every product carrying the tag chosen in theme settings {%- endcomment -%}
+          {%- if settings.new_badge_tag != blank -%}
+            {%- assign new_tag = settings.new_badge_tag | downcase | strip -%}
+            {%- for new_t in product.tags -%}
+              {%- assign new_tl = new_t | downcase | strip -%}
+              {%- if new_tl == new_tag -%}
                 <span class="badge badge--bottom-left uppercase mr-[6px] badge--new">{{ settings.new_badge_text | default: 'New' }}</span>
                 {%- break -%}
               {%- endif -%}
