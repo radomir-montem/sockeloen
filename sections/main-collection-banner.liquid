@@ -62,9 +62,20 @@
     opacity: {{ banner_image_overlay_opacity | divided_by: 100.0 }};
   }
 {%- endstyle -%}
-{% if banner_image != blank %}
+{% if banner_image != blank or section.settings.video != blank %}
 <div id="Banner-{{ section.id }}" class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} {% if section.settings.stack_images_on_mobile and banner_image != blank and banner_image_2 != blank %} banner--stacked{% endif %}{% if section.settings.adapt_height_first_image and banner_image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}">
-  {%- if banner_image != blank and banner_image_mobile == blank -%}
+  {%- if section.settings.video != blank -%}
+    {%- comment -%} Video on top of the collection (section setting), optional separate phone video; silent autoplay like the hero slider {%- endcomment -%}
+    <div class="banner__media media banner__media--video{% if section.settings.video_mobile != blank %} hidden md:!block{% endif %}">
+      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1500x' }}
+    </div>
+    {%- if section.settings.video_mobile != blank -%}
+      <div class="banner__media media banner__media--video md:hidden">
+        {{ section.settings.video_mobile | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', image_size: '1000x' }}
+      </div>
+    {%- endif -%}
+    <style>#Banner-{{ section.id }} .banner__media--video video { width: 100%; height: 100%; object-fit: cover; }</style>
+  {%- elsif banner_image != blank and banner_image_mobile == blank -%}
     <div class="banner__media media{% if banner_image == blank %} placeholder{% endif %}">
       {%-liquid
         assign image_height = banner_image.width | divided_by: banner_image.aspect_ratio
@@ -169,6 +180,18 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video (desktop)",
+      "info": "Optional. Replaces the collection image at the top; plays silently in a loop."
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Video (mobile)",
+      "info": "Optional. Without it phones show the desktop video."
+    },
     {
       "type": "range",
       "id": "image_overlay_opacity",

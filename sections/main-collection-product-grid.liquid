@@ -273,6 +273,10 @@
               {% if collection.metafields.custom.show_color_swatches == false %}
                 {% assign show_color_swatches_for_collection = false %}
               {% endif %}
+              {% if section.settings.force_variant_cards %}
+                {% assign show_color_swatches_for_collection = false %}
+              {% endif %}
+              {%- assign card_n = 0 -%}
               {%- for product in collection.products -%}
                 {% assign lazy_load = false %}
                 {% assign coming_soon = product.metafields.custom.coming_soon | default: false %}
@@ -287,9 +291,13 @@
                   {% endif %}
                   {% if optionByName.values == null or optionByName.values.size == 1 %}
                     {% if shop.metafields.soldout_variants.enable or product.available or coming_soon %}
+                      {%- assign card_n = card_n | plus: 1 -%}
+                      {%- assign swap_card = false -%}
+                      {%- if section.settings.alternate_second_image -%}{%- assign card_mod = card_n | modulo: 2 -%}{%- if card_mod == 0 -%}{%- assign swap_card = true -%}{%- endif -%}{%- endif -%}
                       <li id="product" class="w-full">
                         {% render 'card-product',
                           card_product: product,
+                          swap_images: swap_card,
                           product_title: product.title,
                           media_aspect_ratio: section.settings.image_ratio,
                           show_secondary_image: section.settings.show_secondary_image,
@@ -356,9 +364,13 @@
                       {% endif %}
                       {% unless colorlist contains color %}
                         {% if shop.metafields.soldout_variants.enable or variant.available or coming_soon %}
-                          <li id="product" class="w-full relative">
+                          {%- assign card_n = card_n | plus: 1 -%}
+                      {%- assign swap_card = false -%}
+                      {%- if section.settings.alternate_second_image -%}{%- assign card_mod = card_n | modulo: 2 -%}{%- if card_mod == 0 -%}{%- assign swap_card = true -%}{%- endif -%}{%- endif -%}
+                      <li id="product" class="w-full relative">
                             {% render 'card-product-variant',
                               card_product: variant,
+                              swap_images: swap_card,
                               tags: product.tags,
                               title: product.title,
                               color: color,
@@ -451,6 +463,20 @@
     {
       "type": "header",
       "content": "t:sections.main-collection-product-grid.settings.header__3.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "force_variant_cards",
+      "label": "Show every colour as its own card",
+      "default": false,
+      "info": "Overrides the colour swatches: a product with three colours gets three cards."
+    },
+    {
+      "type": "checkbox",
+      "id": "alternate_second_image",
+      "label": "Every 2nd card shows the 2nd photo first",
+      "default": false,
+      "info": "Cards 2, 4, 6… open with the colour's second photo (the one shown on hover) and show the first photo on hover."
     },
     {
       "type": "select",
