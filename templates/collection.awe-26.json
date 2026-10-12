@@ -121,6 +121,7 @@
     },
     "recently_viewed_awe": {
       "type": "bought-often-together",
+      "disabled": true,
       "name": "Recently viewed",
       "settings": {
         "product_source": "recently_viewed",
