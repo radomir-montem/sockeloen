@@ -124,6 +124,8 @@
       "choose_product_options": "Choose options for {{ product_name }}",
       "description": "Description",
       "on_sale": "SALE",
+      "sale_badge": "Sale",
+      "bundle_sale_badge": "Bundle sale",
       "product_variants": "Product variants",
       "media": {
         "gallery_viewer": "Gallery Viewer",

@@ -75,40 +75,51 @@
         style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
       >
         {%- if card_product.featured_media -%}
+          {%- liquid
+            comment
+              swap_images: show the product's 2nd photo first and the featured photo on hover (used by collection grids that alternate the first photo per card)
+            endcomment
+            assign card_main = card_product.featured_media
+            assign card_hover = card_product.media[1]
+            if swap_images and card_hover != null
+              assign card_main = card_product.media[1]
+              assign card_hover = card_product.featured_media
+            endif
+          -%}
           <div class="card__media w-full relative">
             {% comment %} {{ card_product }} {% endcomment %}
-            <div class="media media--transparent media--hover-effect{% if card_product.media[1] == null %} no-has-second-image{% endif %}">
+            <div class="media media--transparent media--hover-effect{% if card_hover == null %} no-has-second-image{% endif %}">
               {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
               <img
-                src="{{ card_product.featured_media | image_url: width: 533 }}"
-                alt="{{ card_product.featured_media.alt | escape }}"
+                src="{{ card_main | image_url: width: 533 }}"
+                alt="{{ card_main.alt | escape }}"
                 class="motion-reduce"
                 {% unless lazy_load == false %}
                   loading="lazy"
                 {% endunless %}
-                width="{{ card_product.featured_media.width }}"
-                height="{{ card_product.featured_media.height }}"
+                width="{{ card_main.width }}"
+                height="{{ card_main.height }}"
               >
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
-              {%- if card_product.media[1] != null and show_secondary_image -%}
+              {%- if card_hover != null and show_secondary_image -%}
                 <img
                   srcset="
-                    {%- if card_product.media[1].width >= 165 -%}{{ card_product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}
-                    {%- if card_product.media[1].width >= 360 -%}{{ card_product.media[1] | image_url: width: 360 }} 360w,{%- endif -%}
-                    {%- if card_product.media[1].width >= 533 -%}{{ card_product.media[1] | image_url: width: 533 }} 533w,{%- endif -%}
-                    {%- if card_product.media[1].width >= 720 -%}{{ card_product.media[1] | image_url: width: 720 }} 720w,{%- endif -%}
-                    {%- if card_product.media[1].width >= 940 -%}{{ card_product.media[1] | image_url: width: 940 }} 940w,{%- endif -%}
-                    {%- if card_product.media[1].width >= 1066 -%}{{ card_product.media[1] | image_url: width: 1066 }} 1066w,{%- endif -%}
-                    {{ card_product.media[1] | image_url }} {{ card_product.media[1].width }}w
+                    {%- if card_hover.width >= 165 -%}{{ card_hover | image_url: width: 165 }} 165w,{%- endif -%}
+                    {%- if card_hover.width >= 360 -%}{{ card_hover | image_url: width: 360 }} 360w,{%- endif -%}
+                    {%- if card_hover.width >= 533 -%}{{ card_hover | image_url: width: 533 }} 533w,{%- endif -%}
+                    {%- if card_hover.width >= 720 -%}{{ card_hover | image_url: width: 720 }} 720w,{%- endif -%}
+                    {%- if card_hover.width >= 940 -%}{{ card_hover | image_url: width: 940 }} 940w,{%- endif -%}
+                    {%- if card_hover.width >= 1066 -%}{{ card_hover | image_url: width: 1066 }} 1066w,{%- endif -%}
+                    {{ card_hover | image_url }} {{ card_hover.width }}w
                   "
-                  src="{{ card_product.media[1] | image_url: width: 533 }}"
+                  src="{{ card_hover | image_url: width: 533 }}"
                   sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
                   alt=""
                   class="motion-reduce"
                   loading="lazy"
-                  width="{{ card_product.media[1].width }}"
-                  height="{{ card_product.media[1].height }}"
+                  width="{{ card_hover.width }}"
+                  height="{{ card_hover.height }}"
                 >
               {%- endif -%}
             </div>
@@ -282,6 +293,15 @@
           and the raw metafield texts must never resurface.
         {%- endcomment -%}
         <div class="absolute top-[15px] left-[12px] card-badge">
+          {%- comment -%} "New" badge for every product in the collection chosen in theme settings {%- endcomment -%}
+          {%- if settings.new_badge_collection != blank -%}
+            {%- for new_c in card_product.collections -%}
+              {%- if new_c.handle == settings.new_badge_collection.handle -%}
+                <span class="badge badge--bottom-left uppercase mr-[6px] badge--new">{{ settings.new_badge_text | default: 'New' }}</span>
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
           {%- if soldout == false -%}
             {% assign renderComingSoon = card_product.metafields.custom.coming_soon | default: false %}
               <span
@@ -305,9 +325,27 @@
               {% endif %}
             {% endfor %}
           {%- endif -%}
+          {%- liquid
+            assign percent = 0
+            if card_product.compare_at_price > card_product.price and card_product.metafields.custom.show_from_text == blank
+              assign save_price = card_product.compare_at_price | minus: card_product.price
+              assign percent = save_price | times: 100.0 | divided_by: card_product.compare_at_price | ceil
+            endif
+            assign is_bundle = false
+            for bt in card_product.tags
+              assign btl = bt | downcase
+              if btl contains 'bundle' or btl contains 'bundel'
+                assign is_bundle = true
+                break
+              endif
+            endfor
+          -%}
           {% for badge in card_product.metafields.custom.badge.value %}
             {%- assign badge_prefix = badge | slice: 0, 3 | downcase -%}
             {%- if badge_prefix == 'uci' -%}{% continue %}{%- endif -%}
+            {%- comment -%} the metafield "Bundle" badge is dropped when the "Bundle sale" badge already says it {%- endcomment -%}
+            {%- assign badge_lc = badge | downcase | strip -%}
+            {%- if badge_lc == 'bundle' and is_bundle and percent >= 10 -%}{% continue %}{%- endif -%}
             {% unless badge contains '-' and badge contains '%' %}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
@@ -326,20 +364,19 @@
               </span>
             {% endunless %}
           {% endfor %}
-          {% liquid
-            assign percent = 0
-            if card_product.compare_at_price > card_product.price and card_product.metafields.custom.show_from_text == blank
-              assign save_price = card_product.compare_at_price | minus: card_product.price
-              assign percent = save_price | times: 100.0 | divided_by: card_product.compare_at_price | ceil
-            endif
-          %}
-          {% comment %} Discount badge only from 10% up: small percentages signal little and clutter the tile. {% endcomment %}
+          {% comment %} Sale badge only from 10% off: small discounts signal little and clutter the tile. Bundles say "Bundle sale". {% endcomment %}
           {% if percent >= 10 %}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
               class="badge badge--bottom-left uppercase mr-[6px]"
               style="background-color: #C0543F;"
-            >-{{ percent }}%</span>
+            >{%- liquid
+                if is_bundle
+                  echo 'products.product.bundle_sale_badge' | t
+                else
+                  echo 'products.product.sale_badge' | t
+                endif
+              -%}</span>
           {% endif %}
         </div>
       </div>

@@ -201,6 +201,8 @@
       "add_to_cart": "Ajouter au panier",
       "description": "Description",
       "on_sale": "Vente",
+      "sale_badge": "Sale",
+      "bundle_sale_badge": "Bundle sale",
       "product_variants": "Variantes de produits",
       "quantity": {
         "label": "Quantité",
