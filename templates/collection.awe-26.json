@@ -90,7 +90,7 @@
         "col_b": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/3_winter_gloves.png",
+            "image": "shopify://shop_images/5_winter_gloves.png",
             "color": "#0e112e",
             "text_color": "#ffffff",
             "font_size": 40,
@@ -112,6 +112,62 @@
       "block_order": [
         "col_a",
         "col_b"
+      ],
+      "settings": {
+        "eme_banners": true,
+        "scroll_effect": "sticky_label",
+        "grids_on_desktop": true
+      }
+    },
+    "two_cols_swap_aHttrW": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "column_97F9Qf": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/1_white_rain_shoecover.png",
+            "color": "",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "shop here",
+            "button_url": "",
+            "button_pos": "mt-0",
+            "mobile_collection": "",
+            "mobile_collection_title": "",
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": "KNWU"
+          }
+        },
+        "column_dTFwXW": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/2_neckwarmer.png",
+            "color": "#0e112e",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "Shop Here",
+            "button_url": "shopify://collections/cycling-gloves",
+            "button_pos": "mt-0",
+            "mobile_collection": "",
+            "mobile_collection_title": "",
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_97F9Qf",
+        "column_dTFwXW"
       ],
       "settings": {
         "eme_banners": true,
@@ -195,6 +251,7 @@
     "banner",
     "product-grid",
     "two_cols_awe",
+    "two_cols_swap_aHttrW",
     "recently_viewed_awe",
     "rich_text_fC8NDW"
   ]
