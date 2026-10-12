@@ -49,6 +49,7 @@
         "variant_first_rules": "sockeloen-x-knwu:KNWU, knwu:KNWU",
         "force_variant_cards": true,
         "show_sold_out": true,
+        "disable_image_hover": true,
         "alternate_second_image": true,
         "image_ratio": "portrait",
         "show_secondary_image": true,
@@ -60,8 +61,143 @@
         "enable_sorting": false,
         "columns_mobile": "2",
         "padding_top": 0,
-        "padding_bottom": 0,
-        "disable_image_hover": true
+        "padding_bottom": 0
+      }
+    },
+    "two_cols_swap_7Pb9fx": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "column_xjJnR3": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/4_winter_gloves.png",
+            "color": "",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "shop here",
+            "button_url": "shopify://collections/sockeloen-x-knwu",
+            "button_pos": "mt-0",
+            "mobile_collection": "",
+            "mobile_collection_title": "KNWU x SOCKELOEN",
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": "KNWU"
+          }
+        },
+        "column_3gnbV8": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/2_neckwarmer.png",
+            "color": "#0e112e",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "Shop Here",
+            "button_url": "shopify://collections/cycling-gloves",
+            "button_pos": "mt-0",
+            "mobile_collection": "",
+            "mobile_collection_title": "",
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_xjJnR3",
+        "column_3gnbV8"
+      ],
+      "settings": {
+        "eme_banners": true,
+        "scroll_effect": "sticky_label",
+        "grids_on_desktop": true
+      }
+    },
+    "two_cols_swap_C8zCQ4": {
+      "type": "two-cols-swap",
+      "blocks": {
+        "column_cnffC9": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/2.1_neckwarmer.png",
+            "color": "",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "shop here",
+            "button_url": "shopify://collections/sockeloen-x-knwu",
+            "button_pos": "mt-0",
+            "mobile_collection": "",
+            "mobile_collection_title": "KNWU x SOCKELOEN",
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": "KNWU"
+          }
+        },
+        "column_irg7DF": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/5_winter_gloves.png",
+            "color": "#0e112e",
+            "text_color": "#ffffff",
+            "font_size": 40,
+            "heading": "",
+            "description": "",
+            "vertical_pos": "justify-center",
+            "horizontal_pos": "items-center",
+            "button_disclaimer": "",
+            "button_text": "Shop Here",
+            "button_url": "shopify://collections/cycling-gloves",
+            "button_pos": "mt-0",
+            "mobile_collection": "",
+            "mobile_collection_title": "",
+            "mobile_collection_limit": 4,
+            "mobile_variant_filter": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_cnffC9",
+        "column_irg7DF"
+      ],
+      "settings": {
+        "eme_banners": true,
+        "scroll_effect": "sticky_label",
+        "grids_on_desktop": true
+      }
+    },
+    "recently_viewed_awe": {
+      "type": "bought-often-together",
+      "name": "Recently viewed",
+      "settings": {
+        "product_source": "recently_viewed",
+        "product_list": [],
+        "collection": "",
+        "max_products": 8,
+        "heading": "recently",
+        "heading_italic": "Viewed",
+        "heading_size": 30,
+        "heading_weight": "800",
+        "heading_color": "#000000",
+        "heading_italic_color": "#f76503",
+        "heading_alignment": "center",
+        "image_ratio": "portrait",
+        "layout": "carousel",
+        "desktop_columns": 4,
+        "mobile_columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     },
     "rich_text_fC8NDW": {
@@ -109,92 +245,13 @@
         "padding_top": 40,
         "padding_bottom": 52
       }
-    },
-    "two_cols_awe": {
-      "type": "two-cols-swap",
-      "blocks": {
-        "col_a": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/tibor.banner.Collection_banner_MOBILE_909e470e-6ce7-47b8-a476-745a72765356.png",
-            "color": "",
-            "text_color": "#ffffff",
-            "font_size": 40,
-            "heading": "KNWU x SOCKELOEN",
-            "description": "",
-            "vertical_pos": "justify-center",
-            "horizontal_pos": "items-center",
-            "button_disclaimer": "",
-            "button_text": "shop here",
-            "button_url": "shopify://collections/sockeloen-x-knwu",
-            "button_pos": "mt-0",
-            "mobile_collection": "sockeloen-x-knwu",
-            "mobile_collection_title": "KNWU x SOCKELOEN",
-            "mobile_collection_limit": 4,
-            "mobile_variant_filter": "KNWU"
-          }
-        },
-        "col_b": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/AWE_Instagram_slidepost_V2_2.jpg",
-            "color": "#0e112e",
-            "text_color": "#ffffff",
-            "font_size": 40,
-            "heading": "Gloves",
-            "description": "",
-            "vertical_pos": "justify-center",
-            "horizontal_pos": "items-center",
-            "button_disclaimer": "",
-            "button_text": "Shop Here",
-            "button_url": "shopify://collections/cycling-gloves",
-            "button_pos": "mt-0",
-            "mobile_collection": "",
-            "mobile_collection_title": "",
-            "mobile_collection_limit": 4,
-            "mobile_variant_filter": ""
-          }
-        }
-      },
-      "block_order": [
-        "col_a",
-        "col_b"
-      ],
-      "settings": {
-        "eme_banners": true,
-        "scroll_effect": "sticky_label",
-        "grids_on_desktop": true
-      }
-    },
-    "recently_viewed_awe": {
-      "type": "bought-often-together",
-      "name": "Recently viewed",
-      "settings": {
-        "product_source": "recently_viewed",
-        "product_list": [],
-        "collection": "",
-        "max_products": 8,
-        "heading": "recently",
-        "heading_italic": "Viewed",
-        "heading_size": 30,
-        "heading_weight": "800",
-        "heading_color": "#000000",
-        "heading_italic_color": "#f76503",
-        "heading_alignment": "center",
-        "image_ratio": "portrait",
-        "layout": "carousel",
-        "desktop_columns": 4,
-        "mobile_columns": 2,
-        "background_color": "#ffffff",
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
     }
   },
   "order": [
     "banner",
     "product-grid",
-    "two_cols_awe",
+    "two_cols_swap_7Pb9fx",
+    "two_cols_swap_C8zCQ4",
     "recently_viewed_awe",
     "rich_text_fC8NDW"
   ]
