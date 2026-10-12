@@ -82,6 +82,7 @@
   #Banner-{{ section.id }} .banner__text {
     {%- if ts.text_font_size_desktop > 0 %} font-size: {{ ts.text_font_size_desktop }}px;{% endif -%}
     {%- if ts.text_line_height_desktop > 0 %} line-height: {{ ts.text_line_height_desktop }};{% endif -%}
+    {%- if ts.text_hide_desktop %} display: none !important;{% endif -%}
   }
 }
 @media screen and (max-width: 749px) {
@@ -707,6 +708,7 @@
     { "type": "select", "id": "heading_text_transform", "label": "Text case", "options": [ { "value": "default", "label": "As typed" }, { "value": "uppercase", "label": "UPPERCASE" }, { "value": "lowercase", "label": "lowercase" }, { "value": "capitalize", "label": "Capitalize Each Word" } ], "default": "default" },
     { "type": "header", "content": "Subtitle typography" },
     { "type": "select", "id": "text_style", "options": [ { "value": "body", "label": "Body" }, { "value": "subtitle", "label": "Subtitle" }, { "value": "caption-with-letter-spacing", "label": "Caption" } ], "default": "subtitle", "label": "Text style" },
+    { "type": "checkbox", "id": "text_hide_desktop", "label": "Hide subtitle on desktop", "default": false },
     { "type": "checkbox", "id": "text_hide_mobile", "label": "Hide subtitle on mobile", "default": true },
     { "type": "range", "id": "text_max_width", "min": 0, "max": 1000, "step": 10, "unit": "px", "label": "Max width", "default": 0 },
     { "type": "select", "id": "text_align_desktop", "label": "Alignment (desktop)", "options": [ { "value": "inherit", "label": "Follow section" }, { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "inherit" },
