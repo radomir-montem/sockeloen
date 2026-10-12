@@ -56,6 +56,9 @@
       "settings": {
         "navigation": "collection-navigation",
         "products_per_page": 24,
+        "variant_first_rules": "sockeloen-x-knwu:KNWU, knwu:KNWU",
+        "force_variant_cards": true,
+        "alternate_second_image": true,
         "image_ratio": "portrait",
         "show_secondary_image": true,
         "show_vendor": false,
@@ -66,10 +69,7 @@
         "enable_sorting": false,
         "columns_mobile": "2",
         "padding_top": 0,
-        "padding_bottom": 0,
-        "variant_first_rules": "sockeloen-x-knwu:KNWU, knwu:KNWU",
-        "force_variant_cards": true,
-        "alternate_second_image": true
+        "padding_bottom": 0
       }
     },
     "rich_text_fC8NDW": {
