@@ -368,6 +368,8 @@
                     {% if vf_done %}{% break %}{% endif %}
                     {% if vf_pass == 1 and vf_needle == blank %}{% continue %}{% endif %}
                     {% for variant in product.variants %}
+                      {%- comment -%} variant metafield custom.disable = true hides the colour from the grid, like it hides it on the product page {%- endcomment -%}
+                      {%- if variant.metafields.custom.disable -%}{% continue %}{%- endif -%}
                       {%- if vf_pass == 1 -%}
                         {%- assign vf_title = variant.title | downcase -%}
                         {%- unless vf_title contains vf_needle -%}{% continue %}{%- endunless -%}
