@@ -115,6 +115,9 @@
     -webkit-user-drag: none;
   }
   body.template--product .product-v2--gallery .product__media-toggle { cursor: inherit; }
+  /* the photos are clickable (page turn), see main-product-v2.liquid */
+  body.template--product .product-v2--gallery .product__media-item:not(.pdp-clone) { cursor: pointer; }
+  body.template--product .product-v2--gallery.is-dragging .product__media-item { cursor: grabbing; }
 
   /* visual photo order (set by the script: photos 3/4 and 7/8 swapped), for the strip and the rail */
   body.template--product .product-v2--gallery [data-pdp-order="0"] { order: 0; }

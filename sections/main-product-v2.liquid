@@ -2693,6 +2693,33 @@
       if (on() && suppressClick) { e.preventDefault(); e.stopPropagation(); }
     }, true);
 
+    /* click to turn the page (some visitors do not swipe on desktop): the right half of the left
+       photo goes one photo on, the left half one back; a click on the right photo brings it to the
+       left; the copy of the first photo at the end goes back to the start. Drags are not clicks
+       (suppressClick), and the zoom modal stays closed. */
+    list.addEventListener('click', function (e) {
+      if (!on() || suppressClick) return;
+      var li = e.target.closest('.product__media-item');
+      if (!li) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (li.classList.contains('pdp-clone')) { slideTo(0, SPEED, true); return; }
+      var all = items();
+      var i = all.indexOf(li);
+      if (i < 0) return;
+      if (i === index) {
+        var r = li.getBoundingClientRect();
+        var rightHalf = (e.clientX - r.left) > r.width / 2;
+        if (rightHalf) {
+          slideTo(index >= maxIndex() ? 0 : index + 1, SPEED, true);
+        } else if (index > 0) {
+          slideTo(index - 1, SPEED, true);
+        }
+      } else {
+        slideTo(i, SPEED, true);
+      }
+    }, true);
+
     /* sideways trackpad swipe: one photo per gesture */
     var wheelLock = 0;
     list.addEventListener('wheel', function (e) {
