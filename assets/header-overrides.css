@@ -6572,3 +6572,29 @@ body.template--product .product-v2 .product-v2__benefit svg path {
   stroke-width: 0.6px;
   stroke-linejoin: round;
 }
+
+/* Phones, first tile: the Avada bundle block (Buy 3 get 1 etc.) brought 24px margins of its own (40px under the
+   sizes); in the tile it follows the same 16px rhythm as the Sockeloen bundle tiles. */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .pdp-tile .Avada-Bundle-Volume__Container {
+    margin-top: 0 !important;
+    margin-bottom: 16px !important;
+  }
+  /* the tile is 24px narrower than the old full-width box: the 3+1 row (photos, label, price) overflowed the
+     card by 32px. Tighter side padding and slightly smaller photo stack keep the price inside. */
+  body.template--product .product-v2 .pdp-tile .Avada-ItemTier {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  body.template--product .product-v2 .pdp-tile .Avada-Volume__Content { padding-left: 0 !important; }
+  body.template--product .product-v2 .pdp-tile .avada-img-stack { zoom: 0.85; }
+}
+
+/* "Most popular" / "Best value" labels on the bundle tiles (Sockeloen upsell and Avada): the same grey as before
+   (55% black over the grey tile = #6e6e6c), but solid, so the tile border no longer shows through the label */
+body.template--product .product-v2 .pdp-upsell__badge,
+body.template--product .product-v2 .Avada-VolumeBoxBadge {
+  background: #6e6e6c !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
