@@ -208,7 +208,7 @@
       "description": "Description",
       "on_sale": "Vente",
       "sale_badge": "Sale",
-      "bundle_sale_badge": "Bundle sale",
+      "bundle_sale_badge": "Bundle",
       "product_variants": "Variantes de produits",
       "quantity": {
         "label": "Quantité",

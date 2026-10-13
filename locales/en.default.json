@@ -125,7 +125,7 @@
       "description": "Description",
       "on_sale": "SALE",
       "sale_badge": "Sale",
-      "bundle_sale_badge": "Bundle sale",
+      "bundle_sale_badge": "Bundle",
       "product_variants": "Product variants",
       "media": {
         "gallery_viewer": "Gallery Viewer",
