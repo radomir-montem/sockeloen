@@ -1,0 +1,113 @@
+{%- comment -%}
+  Smart product lists, no metafields. Outputs comma-separated product handles.
+    mode:    'new'  = products published in the last `days` days, best selling first (the source
+                      collection must be sorted by best selling); when fewer than `limit`, the most
+                      recently published older products fill up, so the list is always `limit` long.
+             'sale' = products with a compare-at price above the price, ranked by sales with the
+                      discount as a bonus: score = sales position × 10 − discount % × 2
+                      (25% off moves a product up five places).
+    source:  collection to read from (in stock, sorted by best selling), e.g. collections['complete-the-look'].
+             Loop it inside {% paginate source.products by 250 %} when it holds more than 50 products.
+    limit:   number of handles (0 = all).
+    days:    window for 'new' (default 90).
+    exclude: a handle to leave out (the viewed product).
+  Products behind the early-access gate (settings.gate_tag) are left out while the gate is on.
+{%- endcomment -%}
+{%- liquid
+  assign lim = limit | default: 0 | plus: 0
+  assign win = days | default: 90 | plus: 0
+  assign now_s = 'now' | date: '%s' | plus: 0
+  assign cutoff = win | times: 86400
+  assign cutoff = now_s | minus: cutoff
+  assign gate_tag = ''
+  if settings.gate_enabled and settings.gate_tag != blank
+    assign gate_tag = settings.gate_tag | downcase | strip
+  endif
+  assign primary = ''
+  assign fill = ''
+  assign pos = 0
+  for p in source.products
+    if p.handle == exclude
+      continue
+    endif
+    assign is_coming = p.metafields.custom.coming_soon | default: false
+    if mode == 'sale' and p.available == false
+      continue
+    endif
+    if mode == 'new' and p.available == false and is_coming != true
+      continue
+    endif
+    if gate_tag != ''
+      assign ptags = p.tags | join: ',' | downcase | split: ','
+      if ptags contains gate_tag
+        continue
+      endif
+    endif
+    if mode == 'new'
+      assign pub = p.published_at | date: '%s' | plus: 0
+      if pub >= cutoff
+        assign score = pos | plus: 100000
+        assign entry = score | append: '|' | append: p.handle
+        if primary == ''
+          assign primary = entry
+        else
+          assign primary = primary | append: ';' | append: entry
+        endif
+      elsif pub > 0
+        assign age = 9999999999 | minus: pub
+        assign entry = age | append: '|' | append: p.handle
+        if fill == ''
+          assign fill = entry
+        else
+          assign fill = fill | append: ';' | append: entry
+        endif
+      endif
+    elsif mode == 'sale'
+      if p.compare_at_price != blank and p.compare_at_price > p.price
+        assign off = p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price
+        assign score = pos | times: 10 | plus: 200 | minus: off | minus: off | plus: 100000
+        assign entry = score | append: '|' | append: p.handle
+        if primary == ''
+          assign primary = entry
+        else
+          assign primary = primary | append: ';' | append: entry
+        endif
+      endif
+    endif
+    assign pos = pos | plus: 1
+  endfor
+  assign out = ''
+  assign n = 0
+  assign primary_arr = primary | split: ';' | sort
+  for e in primary_arr
+    if e == ''
+      continue
+    endif
+    if lim > 0 and n >= lim
+      break
+    endif
+    assign h = e | split: '|' | last
+    if out == ''
+      assign out = h
+    else
+      assign out = out | append: ',' | append: h
+    endif
+    assign n = n | plus: 1
+  endfor
+  if mode == 'new' and lim > 0 and n < lim
+    assign fill_arr = fill | split: ';' | sort
+    for e in fill_arr
+      if e == '' or n >= lim
+        continue
+      endif
+      assign h = e | split: '|' | last
+      if out == ''
+        assign out = h
+      else
+        assign out = out | append: ',' | append: h
+      endif
+      assign n = n | plus: 1
+    endfor
+  endif
+  echo out
+-%}
