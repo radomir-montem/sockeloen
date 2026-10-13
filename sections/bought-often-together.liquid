@@ -167,7 +167,8 @@
   .{{ swiper_id }}.bot-grid .swiper-wrapper {
     display: grid !important;
     grid-template-columns: repeat({{ section.settings.mobile_columns }}, minmax(0, 1fr));
-    gap: 12px !important;
+    column-gap: 12px !important;
+    row-gap: 0 !important;
     transform: none !important;
     height: auto;
   }
