@@ -6589,3 +6589,12 @@ body.template--product .product-v2 .product-v2__benefit svg path {
   body.template--product .product-v2 .pdp-tile .Avada-Volume__Content { padding-left: 0 !important; }
   body.template--product .product-v2 .pdp-tile .avada-img-stack { zoom: 0.85; }
 }
+
+/* "Most popular" / "Best value" labels on the bundle tiles (Sockeloen upsell and Avada): the same grey as before
+   (55% black over the grey tile = #6e6e6c), but solid, so the tile border no longer shows through the label */
+body.template--product .product-v2 .pdp-upsell__badge,
+body.template--product .product-v2 .Avada-VolumeBoxBadge {
+  background: #6e6e6c !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
