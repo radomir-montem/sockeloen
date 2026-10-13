@@ -117,7 +117,17 @@
     };
     probe.src = src;
   }
+  /* the row is rendered under the title; it is shown over the bottom of the product photo, so it
+     moves into the photo box (position: relative) where it cannot collide with the text or the badges */
+  function placeRows(root) {
+    (root || document).querySelectorAll('.card__content > .ccr').forEach(function (row) {
+      var card = row.closest('.card-wrapper, .card');
+      var media = card && card.querySelector('.card__media');
+      if (media) media.appendChild(row);
+    });
+  }
   function sampleAll(root) {
+    placeRows(root);
     (root || document).querySelectorAll('.ccr__swatch:not([style*="background"]):not(.is-sampled), .product-v2 .color-dot--swatch.color-dot--image:not(.is-sampled)').forEach(sampleSwatch);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { sampleAll(); });
