@@ -6513,8 +6513,9 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
   body.template--product .product-v2 .pdp-tile--trust > * + * { margin-top: 10px !important; }
   body.template--product .product-v2 .pdp-tile--trust > :last-child,
   body.template--product .product-v2 .pdp-tile--trust > :last-child > * { margin-bottom: 0 !important; padding-bottom: 0 !important; }
-  body.template--product .product-v2 .pdp-tile--trust * {
-    font-size: 14px !important;
+  body.template--product .product-v2 .pdp-tile--trust .product-v2__trust-row,
+  body.template--product .product-v2 .pdp-tile--trust .product-v2__trust-row * {
+    font-size: 14px;
     line-height: 1.4 !important;
     letter-spacing: 0.2px !important;
   }
