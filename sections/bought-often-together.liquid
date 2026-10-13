@@ -80,17 +80,25 @@
       comment
         "Complete the look" order, no metafields needed: the collection is sorted by best selling
         (automatic collection). Products of OTHER families than the viewed product come first,
-        mixed per row (round robin over the families, each family in best-selling order), so a
-        row shows e.g. gloves + socks + base layer instead of three socks. Products of the SAME
-        family (alternatives) fill the remaining slots, also best selling first.
+        mixed (see the score below), so a row shows e.g. socks + gloves + base layer instead of
+        three socks. Products of the SAME family (alternatives) fill the remaining slots, also
+        best selling first.
       endcomment
       capture cur_family
         render 'product-family', type: product.type, title: product.title
       endcapture
       assign cur_family = cur_family | strip
+      comment
+        Score per complementary product = (position within its family × 6) + (position in the
+        best-selling collection). Low score first. So the best product of each family comes early
+        (first row mixes families), but a family's second product still beats the first product of
+        a family that hardly sells.
+      endcomment
       assign fam_keys = ''
-      assign fam_lists = ''
+      assign fam_counts = ''
+      assign scored = ''
       assign same_list = ''
+      assign pos = 0
       for col_product in section.settings.collection.products
         if col_product.handle == product.handle or col_product.available == false
           continue
@@ -118,6 +126,7 @@
           endif
         else
           assign key_arr = fam_keys | split: ','
+          assign count_arr = fam_counts | split: ','
           assign fam_index = -1
           for k in key_arr
             if k == fam
@@ -125,52 +134,55 @@
               break
             endif
           endfor
+          assign fam_pos = 0
           if fam_index == -1
             if fam_keys == ''
               assign fam_keys = fam
-              assign fam_lists = col_product.handle
+              assign fam_counts = '1'
             else
               assign fam_keys = fam_keys | append: ',' | append: fam
-              assign fam_lists = fam_lists | append: '|' | append: col_product.handle
+              assign fam_counts = fam_counts | append: ',1'
             endif
           else
-            assign list_arr = fam_lists | split: '|'
-            assign fam_lists = ''
-            for l in list_arr
-              assign entry = l
+            assign fam_pos = count_arr[fam_index] | plus: 0
+            assign fam_counts = ''
+            for c in count_arr
+              assign entry = c
               if forloop.index0 == fam_index
-                assign entry = l | append: ';' | append: col_product.handle
+                assign entry = c | plus: 1
               endif
               if forloop.first
-                assign fam_lists = entry
+                assign fam_counts = entry | append: ''
               else
-                assign fam_lists = fam_lists | append: '|' | append: entry
+                assign fam_counts = fam_counts | append: ',' | append: entry
               endif
             endfor
           endif
+          assign score = fam_pos | times: 6 | plus: pos | plus: 10000
+          assign entry = score | append: '|' | append: col_product.handle
+          if scored == ''
+            assign scored = entry
+          else
+            assign scored = scored | append: ';' | append: entry
+          endif
         endif
+        assign pos = pos | plus: 1
       endfor
-      assign list_arr = fam_lists | split: '|'
-      assign rounds = max_items | plus: 1
-      for round in (1..rounds)
+      assign scored_arr = scored | split: ';' | sort
+      for entry in scored_arr
         if combined_count >= max_items
           break
         endif
-        assign r = round | minus: 1
-        for l in list_arr
-          if combined_count >= max_items
-            break
-          endif
-          assign items = l | split: ';'
-          if items.size > r
-            if combined_handles == ''
-              assign combined_handles = items[r]
-            else
-              assign combined_handles = combined_handles | append: ',' | append: items[r]
-            endif
-            assign combined_count = combined_count | plus: 1
-          endif
-        endfor
+        if entry == ''
+          continue
+        endif
+        assign h = entry | split: '|' | last
+        if combined_handles == ''
+          assign combined_handles = h
+        else
+          assign combined_handles = combined_handles | append: ',' | append: h
+        endif
+        assign combined_count = combined_count | plus: 1
       endfor
       if same_list != ''
         assign same_arr = same_list | split: ';'
