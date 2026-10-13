@@ -2836,11 +2836,11 @@
      with a mirrored copy of the photo's top edge; the top 3% of the photo is sampled on a tiny canvas
      (the CDN allows CORS) and, when it is not a flat studio background, the strip is blurred. */
   (function () {
-    if (!window.matchMedia('(max-width: 989px)').matches) return;
     var root = document.querySelector('.product-v2');
-    if (!root || root.classList.contains('has-pdp-topper')) return;
+    if (!root || root.classList.contains('has-pdp-topper') || root.classList.contains('has-pdp-dots')) return;
     var items = root.querySelectorAll('.product__media-list .product__media-item');
     if (!items.length) return;
+    var isPhone = window.matchMedia('(max-width: 989px)').matches;
     function sample(src, done) {
       var im = new Image();
       im.crossOrigin = 'anonymous';
@@ -2863,7 +2863,7 @@
       im.onerror = function () { done('photo', 0.8); };
       im.src = src;
     }
-    items.forEach(function (item) {
+    if (isPhone) items.forEach(function (item) {
       if (item.querySelector('.pdp-topper')) return;
       var topper = document.createElement('div');
       topper.className = 'pdp-topper';
@@ -2887,7 +2887,7 @@
         mirror.style.left = Math.round((boxW - w) / 2) + 'px';
       });
     });
-    root.classList.add('has-pdp-topper');
+    root.classList.add(isPhone ? 'has-pdp-topper' : 'has-pdp-dots');
 
     /* page dots over the photo (iOS page-control look): one dot per visible slide of the selected colour, the active one grows */
     var wrapper = root.querySelector('.product-v2__media-wrapper');
@@ -2898,14 +2898,19 @@
       wrapper.appendChild(dots);
       var lastCount = -1;
       function slides() {
-        return Array.prototype.slice.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)')).filter(function (s) { return s.style.display !== 'none'; });
+        var all = Array.prototype.slice.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)')).filter(function (s) { return s.style.display !== 'none'; });
+        /* the desktop gallery shows the photos in its own visual order (data-pdp-order) */
+        if (all.length && all[0].hasAttribute('data-pdp-order')) {
+          all.sort(function (a, b) { return a.getAttribute('data-pdp-order') - b.getAttribute('data-pdp-order'); });
+        }
+        return all;
       }
       var scroller = root.querySelector('slider-component.slider-mobile-gutter') || list;
       function activeIndex(all) {
         /* the slide nearest the scroll position; the scroll container differs per browser (ul or slider-component),
            and when neither has scrolled the is-active class decides */
         var x = Math.max(scroller.scrollLeft || 0, list.scrollLeft || 0), best = 0, bestD = Infinity;
-        if (x <= 0) { var a = all.findIndex(function (s) { return s.classList.contains('is-active'); }); return a < 0 ? 0 : a; }
+        if (!isPhone || x <= 0) { var a = all.findIndex(function (s) { return s.classList.contains('is-active'); }); return a < 0 ? 0 : a; }
         all.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - x); if (d < bestD) { bestD = d; best = i; } });
         return best;
       }
@@ -2923,7 +2928,7 @@
         }
         Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle('is-active', i === active); });
       }
-      new MutationObserver(renderDots).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+      new MutationObserver(renderDots).observe(list, { attributes: true, attributeFilter: ['class', 'style', 'data-pdp-order'], subtree: true });
       var raf = null;
       function onScroll() { if (raf) return; raf = requestAnimationFrame(function () { raf = null; renderDots(); }); }
       scroller.addEventListener('scroll', onScroll, { passive: true });

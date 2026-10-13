@@ -6241,34 +6241,37 @@ body.template--product .product-v2 .thumbnail-list__item .thumbnail { position: 
   }
   body.template--product .product-v2.has-pdp-topper .pdp-tag.is-visible { display: inline-block; }
   body.template--product .product-v2 .pdp-dots {
-    position: absolute;
     left: 50%;
     top: calc(44px + 125vw - 12px - 36px - 12px); /* photo bottom − gap − pill height − gap */
     transform: translate(-50%, -100%);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 9px;
-    border-radius: 999px;
-    background: rgba(40, 40, 40, 0.55);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    z-index: 2;
-    pointer-events: none;
-  }
-  body.template--product .product-v2 .pdp-dots.is-hidden { display: none; }
-  body.template--product .product-v2 .pdp-dots__dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    transition: transform 0.25s cubic-bezier(.2,.8,.2,1), background-color 0.25s ease;
-  }
-  body.template--product .product-v2 .pdp-dots__dot.is-active {
-    background: #fff;
-    transform: scale(1.4);
   }
 }
-@media screen and (min-width: 750px) {
+/* page dots capsule (phones: over the slider; desktop gallery: over the left photo, positioned in pdp-gallery-layout.css) */
+body.template--product .product-v2 .pdp-dots {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  border-radius: 999px;
+  background: rgba(40, 40, 40, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  z-index: 2;
+  pointer-events: none;
+}
+body.template--product .product-v2 .pdp-dots.is-hidden { display: none; }
+body.template--product .product-v2 .pdp-dots__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: transform 0.25s cubic-bezier(.2,.8,.2,1), background-color 0.25s ease;
+}
+body.template--product .product-v2 .pdp-dots__dot.is-active {
+  background: #fff;
+  transform: scale(1.4);
+}
+@media screen and (min-width: 750px) and (max-width: 989px) {
   body.template--product .product-v2 .pdp-dots { display: none; }
 }
