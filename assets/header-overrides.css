@@ -6520,3 +6520,31 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
     letter-spacing: 0.2px !important;
   }
 }
+
+/* Phones, first tile: one vertical rhythm. 16px between groups (social proof, title+price, benefits,
+   colour, size, bundles, button), 4–8px inside a group (title→price, label→swatches), 12px button→size link. */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .pdp-tile .product-v2__social-proof,
+  body.template--product .product-v2 .pdp-tile .product-v2__reviews-bar { margin-bottom: 16px !important; }
+  body.template--product .product-v2 .pdp-tile .product-v2__title { padding-bottom: 4px !important; }
+  body.template--product .product-v2 .pdp-tile .product-v2__price { margin: 0 0 16px !important; }
+  body.template--product .product-v2 .pdp-tile .product-v2__benefits { margin: 0 0 16px !important; }
+  body.template--product .product-v2 .pdp-tile .product-form__input { margin: 0 0 16px !important; }
+  body.template--product .product-v2 .pdp-tile .color-input--thumbs .color-input__selected-name { margin-bottom: 8px !important; }
+  body.template--product .product-v2 .pdp-tile .pdp-upsell { margin: 0 0 16px !important; }
+  body.template--product .product-v2 .pdp-tile .product-form-wrapper { margin-top: 0 !important; margin-bottom: 12px !important; }
+}
+
+/* Add to cart on the v2 page: the cart icon global.js puts before the label was painted in the button colour,
+   so the label sat off-centre; on hover the theme also changed the side padding. No icon, fixed padding. */
+body.template--product .product-v2 button[name="add"] span svg,
+body.template--product .product-v2 .product-form__submit span svg,
+body.template--product .product-v2-sticky-bar__atc-btn span svg { display: none !important; }
+body.template--product .product-v2 button[name="add"],
+body.template--product .product-v2 button[name="add"]:hover,
+body.template--product .product-v2 .product-form__submit,
+body.template--product .product-v2 .product-form__submit:hover {
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+  background-position: center !important;
+}
