@@ -5212,11 +5212,17 @@ body.template--collection .breadcrumbs {
   grid-column: auto;
 }
 .card__content > .ccr .ccr__swatch { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.15); }
-/* tighter tiles in the 6-column grid */
+/* tighter tiles in the 6-column grid, and narrow-card text: the title wraps by word on its own line(s),
+   the colour name goes under it, the price stays on the right */
 body.template--collection #product-grid.product-grid--6 {
   column-gap: 6px !important;
   row-gap: 6px !important;
 }
+#product-grid.product-grid--6 .product-card-wrapper .card__information { align-items: flex-start; }
+#product-grid.product-grid--6 .product-card-wrapper .card__information > h2 { flex: 1 1 auto; min-width: 0; }
+#product-grid.product-grid--6 .product-card-wrapper .card-title { display: block; white-space: normal; overflow-wrap: normal; word-break: normal; }
+#product-grid.product-grid--6 .product-card-wrapper .card-title .card-title-color { display: block; margin-top: 1px; }
+#product-grid.product-grid--6 .product-card-wrapper .card__content .card-information { flex: 0 0 auto; white-space: nowrap; }
 
 /* Product page colour picker: the same swatch as on the cards (16px
    here, it is the primary control), 3px corners, hairline, inset ring
