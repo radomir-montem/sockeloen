@@ -304,7 +304,9 @@
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
-          {%- if soldout == false -%}
+          {%- if coming_soon -%}
+            <span class="badge badge--bottom-left badge--coming-soon" style="background-color: {{ settings.sold_out_badge_color }};">{{- 'products.product.coming_soon' | t -}}</span>
+          {%- elsif soldout == false -%}
             {% assign renderComingSoon = card_product.metafields.custom.coming_soon | default: false %}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
