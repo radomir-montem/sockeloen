@@ -6554,6 +6554,21 @@ body.template--product .product-v2 .product-form__submit:hover {
 @media screen and (max-width: 989px) {
   body.template--product .product-v2 .product-v2__price .product-save-badge {
     position: relative;
-    top: -6.5px;
+    top: -5px; /* -6.5px puts the box edge on the baseline; the rounded corners and the digits' overshoot
+                  below the baseline made it look 1.5px high, so the optical bottom sits 1.5px lower */
   }
+}
+
+/* Phones, first tile: bundles in the same 16px rhythm as the rest (the list had 16px padding on top, so the
+   gap under the sizes looked like 32px, and 20px between the cards); slightly bolder benefit check marks. */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .pdp-tile .pdp-upsell__tiles {
+    padding-top: 0 !important;
+    gap: 16px !important;
+  }
+}
+body.template--product .product-v2 .product-v2__benefit svg path {
+  stroke: currentColor;
+  stroke-width: 0.6px;
+  stroke-linejoin: round;
 }
