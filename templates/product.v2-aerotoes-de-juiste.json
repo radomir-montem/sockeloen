@@ -117,7 +117,7 @@
         "heading_alignment": "center",
         "image_ratio": "portrait",
         "desktop_columns": 6,
-        "mobile_columns": 3,
+        "mobile_columns": 2,
         "background_color": "#ffffff",
         "padding_top": 20,
         "padding_bottom": 0
@@ -297,7 +297,7 @@
         "heading_alignment": "center",
         "image_ratio": "portrait",
         "desktop_columns": 6,
-        "mobile_columns": 3,
+        "mobile_columns": 2,
         "background_color": "#ffffff",
         "padding_top": 20,
         "padding_bottom": 0
@@ -413,7 +413,7 @@
         "heading_alignment": "center",
         "image_ratio": "portrait",
         "desktop_columns": 6,
-        "mobile_columns": 3,
+        "mobile_columns": 2,
         "background_color": "#ffffff",
         "padding_top": 20,
         "padding_bottom": 0
