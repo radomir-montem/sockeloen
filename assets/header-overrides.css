@@ -5201,6 +5201,10 @@ body.template--collection .breadcrumbs {
   grid-row-start: 3;
   grid-column: 1 / -1;
   align-self: start;
+  /* centred at the bottom of the card (was left-aligned under the title) */
+  justify-content: center;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 /* Product page colour picker: the same swatch as on the cards (16px
