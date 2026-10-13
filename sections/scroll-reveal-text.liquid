@@ -144,18 +144,25 @@
             {%- assign l = line | strip -%}
             {%- if l == blank -%}{%- continue -%}{%- endif -%}
             <span class="srt__line">
-              {%- assign words = l | split: ' ' -%}
-              {%- for w in words -%}
-                {%- if w == blank -%}{%- continue -%}{%- endif -%}
-                {%- assign first = w | slice: 0 -%}
-                {%- assign last = w | slice: -1 -%}
-                {%- if first == '*' and last == '*' and w.size > 2 -%}
-                  {%- assign inner = w | remove: '*' -%}
-                  <span class="srt__word"><em>{{ inner | escape }}</em></span>
-                {%- else -%}
-                  <span class="srt__word">{{ w | escape }}</span>
-                {%- endif -%}
-                {%- unless forloop.last %} {% endunless -%}
+              {%- comment -%} *asterisks* mark the italic accent; the parts between them alternate normal / italic.
+                Spaces are real text between the word spans, so "home*." keeps its full stop attached. {%- endcomment -%}
+              {%- assign parts = l | split: '*' -%}
+              {%- assign pending = false -%}
+              {%- assign any = false -%}
+              {%- for part in parts -%}
+                {%- assign is_em = forloop.index0 | modulo: 2 -%}
+                {%- assign lead = part | slice: 0 -%}
+                {%- assign trail = part | slice: -1 -%}
+                {%- assign ws = part | strip | split: ' ' -%}
+                {%- for w in ws -%}
+                  {%- if w == blank -%}{%- continue -%}{%- endif -%}
+                  {%- if any -%}
+                    {%- if forloop.first == false or lead == ' ' or pending -%}{{ ' ' }}{%- endif -%}
+                  {%- endif -%}
+                  {%- if is_em == 1 -%}<span class="srt__word"><em>{{ w | escape }}</em></span>{%- else -%}<span class="srt__word">{{ w | escape }}</span>{%- endif -%}
+                  {%- assign any = true -%}
+                {%- endfor -%}
+                {%- if trail == ' ' -%}{%- assign pending = true -%}{%- else -%}{%- assign pending = false -%}{%- endif -%}
               {%- endfor -%}
             </span>
           {%- endfor -%}
