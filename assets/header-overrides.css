@@ -6578,6 +6578,6 @@ body.template--product .product-v2 .product-v2__benefit svg path {
 @media screen and (max-width: 989px) {
   body.template--product .product-v2 .pdp-tile .Avada-Bundle-Volume__Container {
     margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 16px !important;
   }
 }
