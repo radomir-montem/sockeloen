@@ -2206,7 +2206,7 @@
     /* thumbnail tap / variant change / variant photo filter -> the row follows */
     new MutationObserver(function (records) {
       if (selfChange || drag) return;
-      var filtered = records.some(function (r) { return r.attributeName === 'style' && r.target !== list; });
+      var filtered = records.some(function (r) { return (r.attributeName === 'style' && r.target !== list) || r.attributeName === 'data-pdp-order'; });
       var active = records.some(function (r) { return r.attributeName === 'class'; });
       if (filtered) sync(0); else if (active && activeIndex() !== index) sync(SPEED);
     }).observe(list, { attributes: true, attributeFilter: ['class', 'style', 'data-pdp-order'], subtree: true });
