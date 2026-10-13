@@ -877,11 +877,14 @@
                                   {%- endif -%}
                                 {%- endfor -%}
                                 {%- comment -%}
-                                  Swatch photo = the 4th photo of the colour's group (photos sharing the variant photo's alt,
-                                  in admin order; a video counts as a position but is skipped for the next photo). Falls
-                                  back to the variant photo when the group has fewer than 4.
+                                  Overshoes only: swatch photo = the 4th photo of the colour's group (photos sharing the
+                                  variant photo's alt, in admin order; a video counts as a position but is skipped for the
+                                  next photo), the front view where the logo colour shows. Falls back to the variant photo
+                                  when the group has fewer than 4. Socks keep the first photo (their 4th is a cuff close-up).
                                 {%- endcomment -%}
-                                {%- if swatch_img and swatch_img.alt != blank -%}
+                                {%- capture sw_family -%}{% render 'product-family', type: product.type, title: product.title %}{%- endcapture -%}
+                                {%- assign sw_family = sw_family | strip -%}
+                                {%- if sw_family == 'overshoes' and swatch_img and swatch_img.alt != blank -%}
                                   {%- assign sw_alt = swatch_img.alt -%}
                                   {%- assign sw_n = 0 -%}
                                   {%- for sw_m in product.media -%}
