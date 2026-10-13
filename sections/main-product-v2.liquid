@@ -210,7 +210,7 @@
                  (3/4, 7/8, 9/10 … swapped), so there the active photo's admin index is looked up; phones show
                  the admin order as is — the same photo carries the same text on both. */
               var adminIndex = active;
-              if (!phone && slides[active]) {
+              if (slides[active]) {
                 var domOrder = Array.prototype.slice.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)')).filter(function (s) { return s.style.display !== 'none'; });
                 adminIndex = domOrder.indexOf(slides[active]);
                 if (adminIndex < 0) adminIndex = active;
@@ -2147,9 +2147,15 @@
     var index = 0, translate = 0, drag = null, selfChange = false;
 
     function items() {
-      return Array.prototype.filter.call(list.querySelectorAll('.product__media-item'), function (li) {
+      var all = Array.prototype.filter.call(list.querySelectorAll('.product__media-item'), function (li) {
         return li.style.display !== 'none';
       });
+      /* the v2 gallery order (photos 3/4, 7/8, 9/10 … swapped, set as data-pdp-order by the desktop
+         script and applied through CSS order) also holds on phones, so both show the same sequence */
+      if (all.length && all[0].hasAttribute('data-pdp-order')) {
+        all.sort(function (a, b) { return a.getAttribute('data-pdp-order') - b.getAttribute('data-pdp-order'); });
+      }
+      return all;
     }
     function width() { return list.clientWidth || 1; }
     function setTranslate(x, ms) {
@@ -2200,10 +2206,10 @@
     /* thumbnail tap / variant change / variant photo filter -> the row follows */
     new MutationObserver(function (records) {
       if (selfChange || drag) return;
-      var filtered = records.some(function (r) { return r.attributeName === 'style' && r.target !== list; });
+      var filtered = records.some(function (r) { return (r.attributeName === 'style' && r.target !== list) || r.attributeName === 'data-pdp-order'; });
       var active = records.some(function (r) { return r.attributeName === 'class'; });
       if (filtered) sync(0); else if (active && activeIndex() !== index) sync(SPEED);
-    }).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+    }).observe(list, { attributes: true, attributeFilter: ['class', 'style', 'data-pdp-order'], subtree: true });
 
     function point(e) {
       var t = e.touches ? e.touches[0] : e;
@@ -2510,9 +2516,10 @@
       if (value === null) { if (el.hasAttribute('data-pdp-order')) el.removeAttribute('data-pdp-order'); return; }
       if (el.getAttribute('data-pdp-order') !== String(value)) el.setAttribute('data-pdp-order', value);
     }
+    function orderOn() { return root.classList.contains('product-v2--gallery'); }
     function applyOrder() {
       var thumbs = section.querySelectorAll('.thumbnail-list__item');
-      if (!on()) {
+      if (!orderOn()) {
         list.querySelectorAll('[data-pdp-order]').forEach(function (el) { setOrder(el, null); });
         thumbs.forEach(function (el) { setOrder(el, null); });
         return;
@@ -2623,8 +2630,13 @@
     }
 
     new MutationObserver(function (records) {
-      if (selfChange || drag || !on()) return;
+      if (selfChange || drag) return;
       if (records.every(function (r) { return r.target.classList && r.target.classList.contains('pdp-clone'); })) return;
+      if (!on()) {
+        /* phones: only keep the visual order up to date (after variant photo filtering) */
+        if (records.some(function (r) { return r.attributeName === 'style'; })) applyOrder();
+        return;
+      }
       if (restoreKept()) return;
       var filtered = records.some(function (r) { return r.attributeName === 'style' && r.target !== list; });
       if (filtered) { index = 0; sync(0); } else sync(SPEED);
