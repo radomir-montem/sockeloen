@@ -6330,3 +6330,9 @@ body.template--product .product-v2 .pdp-dots__dot.is-active {
 /* product-page carousels (other riders also bought, recently viewed): no colour name on the cards */
 .bot-swiper .product-card-wrapper .card-title > .card-title-color { display: none !important; }
 .bot-swiper .product-card-wrapper .card-title > span:not(.card-title-color) { max-width: 100%; }
+
+/* product-page grid carousels on phones: 9 products (3 x 3) instead of 12, and no colour picker on the cards */
+@media screen and (max-width: 767px) {
+  .bot-swiper.bot-grid .swiper-slide:nth-child(n+10) { display: none !important; }
+  .bot-swiper .card__media > .ccr { display: none !important; }
+}
