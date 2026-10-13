@@ -76,7 +76,48 @@
     comment
       Step 3: Fill remaining slots from collection
     endcomment
-    if section.settings.collection != blank and combined_count < max_items and section.settings.smart_order
+    assign smart_mode = section.settings.smart_mode | default: 'none'
+    if section.settings.smart_order and smart_mode == 'none'
+      assign smart_mode = 'complete'
+    endif
+    if section.settings.collection != blank and combined_count < max_items and smart_mode == 'new' or smart_mode == 'sale'
+      comment
+        "New" / "Sale" lists, see snippets/smart-product-list.liquid. The source collection can hold
+        more than 50 products, so it is read inside a paginate.
+      endcomment
+      assign smart_src = section.settings.collection
+      paginate smart_src.products by 250
+        capture smart_handles
+          render 'smart-product-list', mode: smart_mode, source: smart_src, limit: max_items, days: section.settings.smart_days, exclude: product.handle
+        endcapture
+      endpaginate
+      assign smart_arr = smart_handles | strip | split: ','
+      for h in smart_arr
+        if combined_count >= max_items
+          break
+        endif
+        if h == ''
+          continue
+        endif
+        assign already_added = false
+        assign handle_check = combined_handles | split: ','
+        for hc in handle_check
+          if hc == h
+            assign already_added = true
+            break
+          endif
+        endfor
+        if already_added
+          continue
+        endif
+        if combined_handles == ''
+          assign combined_handles = h
+        else
+          assign combined_handles = combined_handles | append: ',' | append: h
+        endif
+        assign combined_count = combined_count | plus: 1
+      endfor
+    elsif section.settings.collection != blank and combined_count < max_items and smart_mode == 'complete'
       comment
         "Complete the look" order, no metafields needed: the collection is sorted by best selling
         (automatic collection). Products of OTHER families than the viewed product come first,
@@ -593,10 +634,32 @@
       "info": "Used to fill remaining carousel slots after metafield products."
     },
     {
+      "type": "select",
+      "id": "smart_mode",
+      "label": "Smart order",
+      "options": [
+        { "value": "none", "label": "Off (collection order)" },
+        { "value": "complete", "label": "Complete the look" },
+        { "value": "new", "label": "New (last X days)" },
+        { "value": "sale", "label": "Sale (discounted)" }
+      ],
+      "default": "none",
+      "info": "Complete the look: other product families first, then alternatives. New: published in the last X days, best selling first. Sale: discounted products ranked by sales and discount. Use a collection sorted by best selling. No metafields needed."
+    },
+    {
+      "type": "range",
+      "id": "smart_days",
+      "label": "'New' window (days)",
+      "min": 14,
+      "max": 364,
+      "step": 7,
+      "default": 91
+    },
+    {
       "type": "checkbox",
       "id": "smart_order",
-      "label": "Complete the look order",
-      "info": "Other product families than the viewed product first (mixed per row, best selling first), then products of the same family. Use with a collection sorted by best selling.",
+      "label": "(old) Complete the look order",
+      "info": "Replaced by 'Smart order' above; still works when that is Off.",
       "default": false
     },
     {

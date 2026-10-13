@@ -286,6 +286,11 @@
             </style>
             {%- endif -%}
             {%- assign grid_cols = section.settings.columns_desktop | default: 4 | plus: 0 -%}
+            {%- if grid_cols == 3 -%}
+            <style>
+              @media screen and (min-width: 990px) { #product-grid.product-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+            </style>
+            {%- endif -%}
             {%- if grid_cols == 6 -%}
             <style>
               @media screen and (min-width: 990px) { #product-grid.product-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
@@ -294,7 +299,7 @@
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
-              class="grid grid-cols-2 md:grid-cols-4{% if grid_cols == 6 %} product-grid--6{% endif %}"
+              class="grid grid-cols-2 md:grid-cols-4{% if grid_cols == 6 %} product-grid--6{% elsif grid_cols == 3 %} product-grid--3{% endif %}"
             >
               {%- comment -%}
                 On by default everywhere. Set the collection's
@@ -312,7 +317,25 @@
                 {% assign show_color_swatches_for_collection = false %}
               {% endif %}
               {%- assign card_n = 0 -%}
-              {%- for product in collection.products -%}
+              {%- comment -%}
+                Smart lists (no metafields): 'new' = published in the last X days, best selling first,
+                always exactly `smart_limit` products; 'sale' = discounted products ranked by sales and
+                discount. The page's own collection is the source (sorted by best selling, in stock), see
+                snippets/smart-product-list.liquid. Pagination is off in that case.
+              {%- endcomment -%}
+              {%- assign smart_mode = section.settings.smart_mode | default: 'none' -%}
+              {%- assign grid_products = collection.products -%}
+              {%- if smart_mode == 'new' or smart_mode == 'sale' -%}
+                {%- capture smart_handles -%}{%- render 'smart-product-list', mode: smart_mode, source: collection, limit: section.settings.smart_limit, days: section.settings.smart_days -%}{%- endcapture -%}
+                {%- assign smart_arr = smart_handles | strip | split: ',' -%}
+                {%- assign grid_products = '' | split: '' -%}
+                {%- for h in smart_arr -%}
+                  {%- if h == '' -%}{%- continue -%}{%- endif -%}
+                  {%- assign hit = collection.products | where: 'handle', h -%}
+                  {%- assign grid_products = grid_products | concat: hit -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- for product in grid_products -%}
                 {% assign lazy_load = false %}
                 {% assign coming_soon = product.metafields.custom.coming_soon | default: false %}
                 {%- if forloop.index > 2 -%}
@@ -459,7 +482,7 @@
               {%- endfor -%}
             </ul>
 
-            {%- if paginate.next -%}
+            {%- if paginate.next and smart_mode == 'none' -%}
               {% comment %} {% render 'pagination', paginate: paginate, anchor: '' %} {% endcomment %}
 
               <a href="{{ paginate.next.url }}" id="more" class="pointer-events-none w-full text-center"></a>
@@ -519,8 +542,35 @@
       "type": "select",
       "id": "columns_desktop",
       "label": "Products per row (desktop)",
-      "options": [ { "value": "4", "label": "4" }, { "value": "6", "label": "6" } ],
+      "options": [ { "value": "3", "label": "3" }, { "value": "4", "label": "4" }, { "value": "6", "label": "6" } ],
       "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "smart_mode",
+      "label": "Smart list",
+      "options": [
+        { "value": "none", "label": "Off (collection order)" },
+        { "value": "new", "label": "New (last X days)" },
+        { "value": "sale", "label": "Sale (discounted)" }
+      ],
+      "default": "none",
+      "info": "New: published in the last X days, best selling first, exactly N products. Sale: discounted products ranked by sales and discount. This collection is the source: give it all products in stock, sorted by best selling. Filters, sorting and pagination are ignored."
+    },
+    {
+      "type": "number",
+      "id": "smart_limit",
+      "label": "Smart list: number of products (0 = all)",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "smart_days",
+      "label": "Smart list: 'New' window (days)",
+      "min": 14,
+      "max": 364,
+      "step": 7,
+      "default": 91
     },
     {
       "type": "checkbox",
