@@ -2818,6 +2818,58 @@
   })();
 </script>
 
+<script>
+  /* Mobile gallery topper: see the note in header-overrides.css. Each photo slide gets a strip above it
+     with a mirrored copy of the photo's top edge; the top 3% of the photo is sampled on a tiny canvas
+     (the CDN allows CORS) and, when it is not a flat studio background, the strip is blurred. */
+  (function () {
+    if (!window.matchMedia('(max-width: 989px)').matches) return;
+    var root = document.querySelector('.product-v2');
+    if (!root || root.classList.contains('has-pdp-topper')) return;
+    var items = root.querySelectorAll('.product__media-list .product__media-item');
+    if (!items.length) return;
+    function sample(src, done) {
+      var im = new Image();
+      im.crossOrigin = 'anonymous';
+      im.onload = function () {
+        try {
+          var c = document.createElement('canvas'); c.width = 40; c.height = 4;
+          var ctx = c.getContext('2d');
+          ctx.drawImage(im, 0, 0, im.naturalWidth, Math.max(1, Math.round(im.naturalHeight * 0.03)), 0, 0, 40, 4);
+          var d = ctx.getImageData(0, 0, 40, 4).data, n = d.length / 4, r = 0, g = 0, b = 0, a = 0;
+          for (var i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; a += d[i + 3]; }
+          r /= n; g /= n; b /= n; a /= n;
+          /* studio renders are PNGs with a transparent top: the grey comes from the box gradient, which the topper already carries */
+          if (a < 250) { done('flat'); return; }
+          var dev = 0;
+          for (var j = 0; j < d.length; j += 4) { dev = Math.max(dev, Math.abs(d[j] - r), Math.abs(d[j + 1] - g), Math.abs(d[j + 2] - b)); }
+          var lum = 0.299 * r + 0.587 * g + 0.114 * b;
+          done(dev <= 22 && lum >= 190 ? 'flat' : 'photo');
+        } catch (e) { done('photo'); }
+      };
+      im.onerror = function () { done('photo'); };
+      im.src = src;
+    }
+    items.forEach(function (item) {
+      if (item.querySelector('.pdp-topper')) return;
+      var topper = document.createElement('div');
+      topper.className = 'pdp-topper';
+      item.insertBefore(topper, item.firstChild);
+      var img = item.querySelector('.product__media img');
+      var src = img ? (img.currentSrc || img.getAttribute('src')) : '';
+      if (!src) return;
+      var mirror = document.createElement('img');
+      mirror.alt = ''; mirror.setAttribute('aria-hidden', 'true'); mirror.decoding = 'async';
+      mirror.src = src;
+      topper.appendChild(mirror);
+      sample(src.replace(/([?&])width=\d+/, '$1width=200'), function (kind) {
+        if (kind === 'photo') topper.classList.add('is-blur');
+      });
+    });
+    root.classList.add('has-pdp-topper');
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Product Hero V2",

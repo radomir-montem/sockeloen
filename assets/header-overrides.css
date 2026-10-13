@@ -6160,3 +6160,47 @@ body.template--product .product-v2 .thumbnail-list__item .thumbnail { position: 
   gap: 4px;
 }
 .card-wrapper .card-badge .badge { margin-right: 0 !important; }
+
+/* Mobile product gallery: the photo "continues" up to the top of the screen, behind the
+   announcement bar and the glass header pill. The section's 44px top padding moves into each
+   slide as padding, and a topper fills it with a mirrored copy of the photo's top strip
+   (main-product-v2.liquid builds it): unblurred for studio shots with a flat background, so the
+   grey matches exactly; blurred for lifestyle photos, so the colours flow on without a hard edge. */
+@media screen and (max-width: 989px) {
+  body.template--product #MainContent > .shopify-section.bg-pdpbg:first-child:has(.product-v2.has-pdp-topper) {
+    padding-top: 0 !important;
+  }
+  body.template--product .product-v2.has-pdp-topper .product__media-list .product__media-item {
+    position: relative;
+    padding-top: 44px !important;
+  }
+  body.template--product .product-v2.has-pdp-topper .pdp-topper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 44px;
+    overflow: hidden;
+    background: linear-gradient(to right, #ECECEC, #E2E2E2);
+    pointer-events: none;
+  }
+  body.template--product .product-v2.has-pdp-topper .pdp-topper img {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    max-width: none;
+    transform: scaleY(-1);
+    transform-origin: center;
+    display: block;
+  }
+  body.template--product .product-v2.has-pdp-topper .pdp-topper.is-blur img {
+    left: -6%;
+    width: 112%;
+    filter: blur(12px) saturate(1.05);
+  }
+  body.template--product .product-v2.has-pdp-topper .product-v2__media-wrapper .breadcrumb-overlay {
+    top: 104px !important;
+  }
+}
