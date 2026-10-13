@@ -6598,3 +6598,18 @@ body.template--product .product-v2 .Avada-VolumeBoxBadge {
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
+
+/* Phones: the thumbnail strip ends 12px from the right edge too (8px gap + 4px spacer), so the last thumbs line up
+   with the tile's right edge when the strip is scrolled to the end */
+@media screen and (max-width: 989px) {
+  /* the list's own 12px right padding already gives the end space; the spacer cancels the 8px gap before it */
+  body.template--product .product-v2 .thumbnail-list::after { flex: 0 0 0; width: 0; margin: 0 0 0 -8px !important; }
+}
+
+/* Phones, Avada bundle block in the tile: 16px between the "Autumn Sale" header and the first option and between
+   the options, like the rest of the tile (was 24px = 12px margin + 12px flex gap, and 20px between options) */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .pdp-tile .Avada-Bundle-Volume__Container { gap: 16px !important; }
+  body.template--product .product-v2 .pdp-tile .Avada-Volume__Header { margin-bottom: 0 !important; }
+  body.template--product .product-v2 .pdp-tile .Avada-VolumeItem__Container { gap: 16px !important; }
+}
