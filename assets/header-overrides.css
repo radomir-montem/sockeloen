@@ -6369,11 +6369,23 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
    let them wrap to two lines at ~60% of the tile and hug the text, so they sit beside the product instead of over it */
 #MainContent .card-wrapper .card-badge .badge,
 #MainContent .card-wrapper .card-bottom-badge .badge {
-  max-width: 62%;
   width: max-content;
-  white-space: normal;
   text-align: left;
   line-height: 1.25;
   padding: 4px 7px !important;
   letter-spacing: 0.4px;
+}
+@media screen and (max-width: 749px) {
+  /* phones: tiles are ~170px, so a long badge wraps after ~11 characters ("As seen on / instagram") */
+  #MainContent .card-wrapper .card-badge .badge,
+  #MainContent .card-wrapper .card-bottom-badge .badge {
+    max-width: 11.5ch;
+    white-space: normal;
+  }
+}
+@media screen and (min-width: 750px) {
+  #MainContent .card-wrapper .card-badge .badge,
+  #MainContent .card-wrapper .card-bottom-badge .badge {
+    white-space: nowrap;
+  }
 }
