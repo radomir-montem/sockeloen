@@ -163,7 +163,11 @@
   {%- endif -%}
 }
 @media screen and (min-width: 750px) {
+  {%- if s.banner_image_height_mode == 'screen' -%}
+  #Banner-{{ section.id }}, #Banner-{{ section.id }} .hero-slider__slide { min-height: {{ s.banner_image_height_percent }}vh; min-height: {{ s.banner_image_height_percent }}svh; }
+  {%- else -%}
   #Banner-{{ section.id }}, #Banner-{{ section.id }} .hero-slider__slide { min-height: {{ s.banner_image_height }}px; }
+  {%- endif -%}
 }
 
 /* ---------- Slider mechanics ---------- */
@@ -682,6 +686,8 @@
     { "type": "color", "id": "controls_color", "label": "Controls colour", "default": "#ffffff" },
     { "type": "header", "content": "Size" },
     { "type": "range", "id": "banner_image_height", "default": 700, "min": 50, "max": 1000, "step": 50, "unit": "px", "label": "Banner height (desktop)" },
+    { "type": "select", "id": "banner_image_height_mode", "label": "Desktop height unit", "options": [ { "value": "px", "label": "Pixels (setting above)" }, { "value": "screen", "label": "% of the screen height (setting below)" } ], "default": "px", "info": "A share of the screen height fills the same part of every monitor; below 100% the next section peeks in under the banner, which invites scrolling." },
+    { "type": "range", "id": "banner_image_height_percent", "min": 40, "max": 100, "step": 5, "unit": "%", "label": "Banner height (desktop, % of screen)", "default": 80 },
     { "type": "range", "id": "image_height_mobile", "default": 650, "min": 50, "max": 750, "step": 50, "unit": "px", "label": "Banner height (mobile)" },
     { "type": "select", "id": "image_height_mobile_mode", "label": "Mobile height unit", "options": [ { "value": "px", "label": "Pixels (setting above)" }, { "value": "screen", "label": "% of the screen height (setting below)" } ], "default": "px", "info": "Pixels look different per phone; a share of the screen height fills the same part of every phone. Desktop is not affected." },
     { "type": "range", "id": "image_height_mobile_percent", "min": 40, "max": 100, "step": 5, "unit": "%", "label": "Banner height (mobile, % of screen)", "default": 80 },
