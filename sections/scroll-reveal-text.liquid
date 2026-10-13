@@ -1,0 +1,263 @@
+{%- comment -%}
+  Scroll reveal text: a full-screen block that stays in place while the page scrolls past it; the words light
+  up one by one from dim to full as you scroll. Optional background photo (separate desktop and phone image)
+  behind the text with a dark layer, and an optional button that fades in at the end.
+  Text: one line per row in the "Text" box; wrap a word in *asterisks* for the italic Sockeloen accent.
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = 'ScrollReveal-' | append: section.id
+  assign lines = section.settings.text | newline_to_br | split: '<br />'
+  assign has_bg = false
+  if section.settings.image_desktop != blank or section.settings.image_mobile != blank
+    assign has_bg = true
+  endif
+  assign img_d = section.settings.image_desktop | default: section.settings.image_mobile
+  assign img_m = section.settings.image_mobile | default: section.settings.image_desktop
+-%}
+
+{%- style -%}
+  #{{ sid }} {
+    position: relative;
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+  }
+  #{{ sid }} .srt__track {
+    position: relative;
+    height: {{ section.settings.scroll_length }}vh;
+  }
+  #{{ sid }} .srt__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #{{ sid }} .srt__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  #{{ sid }} .srt__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  #{{ sid }} .srt__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  }
+  #{{ sid }} .srt__bg--mobile { display: none; }
+  #{{ sid }} .srt__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1100px;
+    padding: 0 48px;
+    text-align: {{ section.settings.alignment }};
+  }
+  #{{ sid }} .srt__text {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-size: {{ section.settings.font_size_desktop }}px;
+    font-weight: {{ section.settings.font_weight }};
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: inherit;
+    {%- if section.settings.uppercase %} text-transform: uppercase;{% endif %}
+  }
+  #{{ sid }} .srt__line { display: block; }
+  #{{ sid }} .srt__line + .srt__line { margin-top: 0.45em; }
+  #{{ sid }} .srt__word {
+    display: inline-block;
+    opacity: {{ section.settings.dim_opacity | divided_by: 100.0 }};
+    transition: opacity 0.18s ease-out;
+    will-change: opacity;
+  }
+  #{{ sid }} .srt__word em {
+    font-style: italic;
+    color: {{ section.settings.accent_color }};
+  }
+  #{{ sid }} .srt__button-wrap {
+    margin-top: 40px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    pointer-events: none;
+  }
+  #{{ sid }} .srt__button-wrap.is-visible {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  #{{ sid }} .srt__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 32px;
+    border-radius: 8px;
+    background: {{ section.settings.button_color }};
+    color: {{ section.settings.button_text_color }};
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  @media screen and (max-width: 749px) {
+    #{{ sid }} .srt__bg--desktop { display: none; }
+    #{{ sid }} .srt__bg--mobile { display: block; }
+    #{{ sid }} .srt__content { padding: 0 24px; }
+    #{{ sid }} .srt__text { font-size: {{ section.settings.font_size_mobile }}px; }
+    #{{ sid }} .srt__button-wrap { margin-top: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #{{ sid }} .srt__track { height: auto; }
+    #{{ sid }} .srt__sticky { position: relative; height: auto; min-height: 100svh; }
+    #{{ sid }} .srt__word { opacity: 1 !important; transition: none; }
+    #{{ sid }} .srt__button-wrap { opacity: 1; transform: none; pointer-events: auto; }
+  }
+{%- endstyle -%}
+
+<div id="{{ sid }}" class="srt" data-dim="{{ section.settings.dim_opacity | divided_by: 100.0 }}">
+  <div class="srt__track">
+    <div class="srt__sticky">
+      {%- if has_bg -%}
+        <div class="srt__bg srt__bg--desktop" aria-hidden="true">
+          {{ img_d | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '1000, 1600, 2000, 2400', alt: '' }}
+        </div>
+        <div class="srt__bg srt__bg--mobile" aria-hidden="true">
+          {{ img_m | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '100vw', widths: '600, 900, 1200', alt: '' }}
+        </div>
+      {%- endif -%}
+      <div class="srt__content">
+        <h2 class="srt__text">
+          {%- for line in lines -%}
+            {%- assign l = line | strip -%}
+            {%- if l == blank -%}{%- continue -%}{%- endif -%}
+            <span class="srt__line">
+              {%- comment -%} *asterisks* mark the italic accent; the parts between them alternate normal / italic.
+                Spaces are real text between the word spans, so "home*." keeps its full stop attached. {%- endcomment -%}
+              {%- assign parts = l | split: '*' -%}
+              {%- assign pending = false -%}
+              {%- assign any = false -%}
+              {%- for part in parts -%}
+                {%- assign is_em = forloop.index0 | modulo: 2 -%}
+                {%- assign lead = part | slice: 0 -%}
+                {%- assign trail = part | slice: -1 -%}
+                {%- assign ws = part | strip | split: ' ' -%}
+                {%- for w in ws -%}
+                  {%- if w == blank -%}{%- continue -%}{%- endif -%}
+                  {%- if any -%}
+                    {%- if forloop.first == false or lead == ' ' or pending -%}{{ ' ' }}{%- endif -%}
+                  {%- endif -%}
+                  {%- if is_em == 1 -%}<span class="srt__word"><em>{{ w | escape }}</em></span>{%- else -%}<span class="srt__word">{{ w | escape }}</span>{%- endif -%}
+                  {%- assign any = true -%}
+                {%- endfor -%}
+                {%- if trail == ' ' -%}{%- assign pending = true -%}{%- else -%}{%- assign pending = false -%}{%- endif -%}
+              {%- endfor -%}
+            </span>
+          {%- endfor -%}
+        </h2>
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          <div class="srt__button-wrap">
+            <a class="srt__button" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('{{ sid }}');
+    if (!root) return;
+    var track = root.querySelector('.srt__track');
+    var words = root.querySelectorAll('.srt__word');
+    var button = root.querySelector('.srt__button-wrap');
+    var dim = parseFloat(root.getAttribute('data-dim')) || 0.12;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var r = track.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var range = r.height - vh;
+      /* 0 when the block reaches the top of the screen, 1 when it is about to leave; the words finish at 85%
+         so the full text and the button stay on screen for the last part of the scroll */
+      var p = range > 0 ? -r.top / range : (r.top < vh * 0.5 ? 1 : 0);
+      p = Math.max(0, Math.min(1, p / 0.85));
+      var lit = p * words.length;
+      for (var i = 0; i < words.length; i++) {
+        var f = Math.max(0, Math.min(1, lit - i));
+        words[i].style.opacity = (dim + (1 - dim) * f).toFixed(3);
+      }
+      if (button) button.classList.toggle('is-visible', p >= 1);
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Scroll reveal text",
+  "tag": "section",
+  "class": "section section-scroll-reveal",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Wind. Rain. Zero degrees.\nMost riders stay *home*.\nYou don't.",
+      "info": "One line per row. Wrap a word in *asterisks* for the italic accent."
+    },
+    { "type": "header", "content": "Background" },
+    { "type": "image_picker", "id": "image_desktop", "label": "Background image (desktop)" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Background image (mobile)", "info": "Falls back to the desktop image." },
+    { "type": "range", "id": "overlay_opacity", "label": "Dark layer over the image", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 45 },
+    { "type": "color", "id": "background_color", "label": "Background colour (without image)", "default": "#000000" },
+    { "type": "header", "content": "Text style" },
+    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#ffffff" },
+    { "type": "color", "id": "accent_color", "label": "Italic accent colour", "default": "#ffffff" },
+    { "type": "range", "id": "font_size_desktop", "label": "Font size (desktop)", "min": 24, "max": 96, "step": 2, "unit": "px", "default": 56 },
+    { "type": "range", "id": "font_size_mobile", "label": "Font size (mobile)", "min": 20, "max": 56, "step": 2, "unit": "px", "default": 32 },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [ { "value": "700", "label": "Bold" }, { "value": "800", "label": "Extra bold" }, { "value": "900", "label": "Black" } ],
+      "default": "800"
+    },
+    { "type": "checkbox", "id": "uppercase", "label": "Uppercase", "default": false },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Centre" } ],
+      "default": "center"
+    },
+    { "type": "range", "id": "dim_opacity", "label": "Words before they light up", "min": 5, "max": 50, "step": 1, "unit": "%", "default": 15 },
+    { "type": "range", "id": "scroll_length", "label": "Scroll length", "min": 150, "max": 400, "step": 10, "unit": "vh", "default": 250, "info": "How far you scroll before the whole text is lit (100 = one screen)." },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color", "id": "button_color", "label": "Button colour", "default": "#ffffff" },
+    { "type": "color", "id": "button_text_color", "label": "Button text colour", "default": "#000000" }
+  ],
+  "presets": [ { "name": "Scroll reveal text" } ]
+}
+{% endschema %}
