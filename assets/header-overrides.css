@@ -6580,4 +6580,12 @@ body.template--product .product-v2 .product-v2__benefit svg path {
     margin-top: 0 !important;
     margin-bottom: 16px !important;
   }
+  /* the tile is 24px narrower than the old full-width box: the 3+1 row (photos, label, price) overflowed the
+     card by 32px. Tighter side padding and slightly smaller photo stack keep the price inside. */
+  body.template--product .product-v2 .pdp-tile .Avada-ItemTier {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  body.template--product .product-v2 .pdp-tile .Avada-Volume__Content { padding-left: 0 !important; }
+  body.template--product .product-v2 .pdp-tile .avada-img-stack { zoom: 0.85; }
 }
