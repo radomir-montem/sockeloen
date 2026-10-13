@@ -1889,14 +1889,20 @@ body.template--custom-made .card__content {
   border-radius: 0 !important;
   overflow: hidden;
 }
-.card-wrapper:hover,
-.card:hover,
 .card-wrapper:focus-within,
-.card:focus-within,
-.product-card-wrapper:hover,
-.product-card:hover {
+.card:focus-within {
   border-radius: 0 !important;
   overflow: hidden !important;
+}
+@media (hover: hover) {
+  /* real pointers only (touch devices must not get a hover state on the first tap) */
+  .card-wrapper:hover,
+  .card:hover,
+  .product-card-wrapper:hover,
+  .product-card:hover {
+    border-radius: 0 !important;
+    overflow: hidden !important;
+  }
 }
 
 /* Preserve 0 radius on :hover / :focus-within — cards stay squared under
@@ -5172,10 +5178,12 @@ body.template--collection .breadcrumbs {
   object-position: center;
 }
 .ccr__swatch::after { inset: -8px; }
-.ccr__swatch:hover,
 .ccr__swatch:focus-visible {
   box-shadow: inset 0 0 0 1px #999, inset 0 0 0 2px #fff;
   outline: none;
+}
+@media (hover: hover) {
+  .ccr__swatch:hover { box-shadow: inset 0 0 0 1px #999, inset 0 0 0 2px #fff; outline: none; }
 }
 /* selected: ring drawn inside the tile, so the swatch never grows */
 .ccr__swatch.is-selected {
