@@ -1416,6 +1416,74 @@
                 >
                   {{ 'products.v2.notify_me_sub' | t }}
                 </div>
+                {%- if bis_coming_soon -%}
+                  {%- comment -%}
+                    Coming soon: no back-in-stock flow. The add-to-cart and notify-me controls are hidden with
+                    !important (global.js keeps toggling them on variant change) and this block shows a
+                    "Coming soon" button that opens an e-mail sign-up posting to the Klaviyo early-breakaway list
+                    (theme settings coming_soon_klaviyo_company / _list, same client API as the AWE sign-up page).
+                  {%- endcomment -%}
+                  <style>
+                    #product-form-{{ section.id }} button[name="add"], #out-of-stock, #notify-sub-{{ section.id }} { display: none !important; }
+                    .pv2-cs { margin: 0; }
+                    .pv2-cs__btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 49px; background: #111; color: #fff; border: 0; border-radius: 6px; font-size: 13px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; cursor: pointer; }
+                    .pv2-cs__btn:hover { background: #333; }
+                    .pv2-cs__sub { margin: 8px 0 0; font-size: 12px; line-height: 1.5; color: #555; }
+                    .pv2-cs__form { display: none; margin-top: 10px; gap: 8px; }
+                    .pv2-cs.is-open .pv2-cs__form { display: flex; }
+                    .pv2-cs.is-open .pv2-cs__btn { display: none; }
+                    .pv2-cs__input { flex: 1 1 auto; min-width: 0; height: 46px; padding: 0 14px; font-size: 15px; border: 1px solid #cfcfcf; border-radius: 6px; background: #fff; color: #111; }
+                    .pv2-cs__input:focus { outline: none; border-color: #111; }
+                    .pv2-cs__input[aria-invalid="true"] { border-color: #d9202a; }
+                    .pv2-cs__submit { flex: 0 0 auto; height: 46px; padding: 0 18px; background: #111; color: #fff; border: 0; border-radius: 6px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; }
+                    .pv2-cs__submit[disabled] { opacity: .6; cursor: default; }
+                    .pv2-cs__error { display: none; margin: 6px 0 0; font-size: 12px; color: #d9202a; }
+                    .pv2-cs.is-error .pv2-cs__error { display: block; }
+                    .pv2-cs__success { display: none; margin: 0; min-height: 49px; padding: 14px 16px; border-radius: 6px; background: #eef7ef; color: #1f5f2a; font-size: 13px; line-height: 1.5; }
+                    .pv2-cs.is-done .pv2-cs__success { display: block; }
+                    .pv2-cs.is-done .pv2-cs__form, .pv2-cs.is-done .pv2-cs__btn, .pv2-cs.is-done .pv2-cs__sub { display: none; }
+                  </style>
+                  <div class="pv2-cs" id="pv2-cs-{{ section.id }}" data-company="{{ settings.coming_soon_klaviyo_company | escape }}" data-list="{{ settings.coming_soon_klaviyo_list | escape }}" data-source="Coming soon: {{ product.title | escape }}">
+                    <button type="button" class="pv2-cs__btn" data-cs-open>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                      <span>{{ 'products.v2.coming_soon_button' | t }}</span>
+                    </button>
+                    <form class="pv2-cs__form" novalidate data-cs-form>
+                      <input class="pv2-cs__input" type="email" name="email" autocomplete="email" placeholder="{{ 'products.v2.coming_soon_placeholder' | t | escape }}" aria-label="{{ 'products.v2.coming_soon_placeholder' | t | escape }}" required>
+                      <button type="submit" class="pv2-cs__submit" data-cs-submit>{{ 'products.v2.coming_soon_submit' | t }}</button>
+                    </form>
+                    <p class="pv2-cs__error">{{ 'products.v2.coming_soon_error' | t }}</p>
+                    <p class="pv2-cs__success">{{ 'products.v2.coming_soon_success' | t }}</p>
+                    <p class="pv2-cs__sub">{{ 'products.v2.coming_soon_sub' | t }}</p>
+                  </div>
+                  <script>
+                    (function () {
+                      var root = document.getElementById('pv2-cs-{{ section.id }}');
+                      if (!root) return;
+                      var form = root.querySelector('[data-cs-form]'), input = form.querySelector('input'), submit = root.querySelector('[data-cs-submit]');
+                      var listId = root.getAttribute('data-list'), company = root.getAttribute('data-company'), source = root.getAttribute('data-source');
+                      root.querySelector('[data-cs-open]').addEventListener('click', function () { root.classList.add('is-open'); setTimeout(function () { input.focus(); }, 50); });
+                      input.addEventListener('input', function () { root.classList.remove('is-error'); input.removeAttribute('aria-invalid'); });
+                      form.addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        var email = (input.value || '').trim();
+                        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !listId || !company) { root.classList.add('is-error'); input.setAttribute('aria-invalid', 'true'); input.focus(); return; }
+                        submit.disabled = true;
+                        fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(company), {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json', 'revision': '2026-07-15' },
+                          body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: source, profile: { data: { type: 'profile', attributes: { email: email, subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } }, properties: { coming_soon_product: {{ product.title | json }} } } } } }, relationships: { list: { data: { type: 'list', id: listId } } } } })
+                        }).then(function (res) {
+                          if (!res.ok) throw new Error('klaviyo ' + res.status);
+                          if (window.klaviyo && window.klaviyo.push) window.klaviyo.push(['identify', { $email: email }]);
+                          root.classList.add('is-done');
+                        }).catch(function () {
+                          root.classList.add('is-error'); input.setAttribute('aria-invalid', 'true');
+                        }).then(function () { submit.disabled = false; });
+                      });
+                    })();
+                  </script>
+                {%- endif -%}
                 <script>
                   (function() {
                     /* Keep the merged CTA in sync: when the back-in-stock button is

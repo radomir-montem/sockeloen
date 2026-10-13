@@ -222,6 +222,24 @@
         "id": "new_badge_text",
         "label": "Badge text",
         "default": "New"
+      },
+      {
+        "type": "header",
+        "content": "Coming soon sign-up",
+        "info": "Products with the metafield custom.coming_soon show a 'Coming soon' button with an e-mail sign-up instead of the back-in-stock button."
+      },
+      {
+        "type": "text",
+        "id": "coming_soon_klaviyo_company",
+        "label": "Klaviyo company ID",
+        "default": "S82fvg"
+      },
+      {
+        "type": "text",
+        "id": "coming_soon_klaviyo_list",
+        "label": "Klaviyo list ID",
+        "default": "X9jRAb",
+        "info": "Sign-ups are added to this list (early breakaway)."
       }
     ]
   },
