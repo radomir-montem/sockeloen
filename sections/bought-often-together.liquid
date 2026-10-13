@@ -217,18 +217,21 @@
       flex-basis: calc((100% - {{ section.settings.desktop_columns | minus: 1 | times: 12 }}px) / {{ section.settings.desktop_columns }}) !important;
     }
   }
-  /* Hover: crossfade to second image */
-  .bot-section-{{ section.id }} .media.media--hover-effect > img {
-    transition: opacity 0.35s ease;
-  }
-  .bot-section-{{ section.id }} .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) {
-    opacity: 0;
-  }
-  .bot-section-{{ section.id }} .card-wrapper:hover .media.media--hover-effect > img + img {
-    opacity: 1;
-  }
-  .bot-section-{{ section.id }} .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child {
-    display: block !important;
+  /* Hover: crossfade to second image. Real pointers only: on touch the crossfade showed up when a
+     tile was touched, and iOS Safari spent the first tap on this "hover" (product opened on tap two). */
+  @media (hover: hover) {
+    .bot-section-{{ section.id }} .media.media--hover-effect > img {
+      transition: opacity 0.35s ease;
+    }
+    .bot-section-{{ section.id }} .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child:not(:only-child) {
+      opacity: 0;
+    }
+    .bot-section-{{ section.id }} .card-wrapper:hover .media.media--hover-effect > img + img {
+      opacity: 1;
+    }
+    .bot-section-{{ section.id }} .card-wrapper:hover .media.media--hover-effect:not(.no-has-second-image) > img:first-child {
+      display: block !important;
+    }
   }
 {%- endstyle -%}
 
