@@ -2238,7 +2238,10 @@
       if (x > min) x = min - 1 + Math.pow(-min + drag.from + dx, RESISTANCE);
       else if (x < max) x = max + 1 - Math.pow(max - drag.from - dx, RESISTANCE);
       setTranslate(x, 0);
-      if (e.cancelable && !e.touches) e.preventDefault();
+      /* a sideways swipe is only a swipe: the page must not scroll along on a slanted finger
+         (touchmove is registered non-passive for this; the browser can still be cancelled here
+         because the decision falls on the first move past the 5px threshold) */
+      if (e.cancelable) e.preventDefault();
     }
     function end() {
       if (!drag) return;
@@ -2264,7 +2267,7 @@
     }
 
     list.addEventListener('touchstart', start, { passive: true });
-    list.addEventListener('touchmove', move, { passive: true });
+    list.addEventListener('touchmove', move, { passive: false });
     list.addEventListener('touchend', end, { passive: true });
     list.addEventListener('touchcancel', end, { passive: true });
     /* mouse drag in a narrow desktop window */
@@ -2691,6 +2694,33 @@
     list.addEventListener('dragstart', function (e) { if (on()) e.preventDefault(); });
     list.addEventListener('click', function (e) {
       if (on() && suppressClick) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+
+    /* click to turn the page (some visitors do not swipe on desktop): the right half of the left
+       photo goes one photo on, the left half one back; a click on the right photo brings it to the
+       left; the copy of the first photo at the end goes back to the start. Drags are not clicks
+       (suppressClick), and the zoom modal stays closed. */
+    list.addEventListener('click', function (e) {
+      if (!on() || suppressClick) return;
+      var li = e.target.closest('.product__media-item');
+      if (!li) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (li.classList.contains('pdp-clone')) { slideTo(0, SPEED, true); return; }
+      var all = items();
+      var i = all.indexOf(li);
+      if (i < 0) return;
+      if (i === index) {
+        var r = li.getBoundingClientRect();
+        var rightHalf = (e.clientX - r.left) > r.width / 2;
+        if (rightHalf) {
+          slideTo(index >= maxIndex() ? 0 : index + 1, SPEED, true);
+        } else if (index > 0) {
+          slideTo(index - 1, SPEED, true);
+        }
+      } else {
+        slideTo(i, SPEED, true);
+      }
     }, true);
 
     /* sideways trackpad swipe: one photo per gesture */
