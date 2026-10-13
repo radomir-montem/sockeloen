@@ -302,13 +302,16 @@
             {%- assign new_pub = card_product.published_at | date: '%s' | plus: 0 -%}
             {%- if new_pub >= new_cut -%}{%- assign is_new = true -%}{%- endif -%}
           {%- endif -%}
+          {%- assign new_shown = false -%}
           {%- if is_new -%}
+            {%- assign new_shown = true -%}
             <span class="badge badge--bottom-left uppercase mr-[6px] badge--new">{{ settings.new_badge_text | default: 'New' }}</span>
           {%- elsif settings.new_badge_tag != blank and coming_soon != true -%}
             {%- assign new_tag = settings.new_badge_tag | downcase | strip -%}
             {%- for new_t in card_product.tags -%}
               {%- assign new_tl = new_t | downcase | strip -%}
               {%- if new_tl == new_tag -%}
+                {%- assign new_shown = true -%}
                 <span class="badge badge--bottom-left uppercase mr-[6px] badge--new">{{ settings.new_badge_text | default: 'New' }}</span>
                 {%- break -%}
               {%- endif -%}
@@ -360,6 +363,9 @@
             {%- comment -%} the metafield "Bundle" badge is dropped when the "Bundle sale" badge already says it {%- endcomment -%}
             {%- assign badge_lc = badge | downcase | strip -%}
             {%- if badge_lc == 'bundle' and is_bundle and percent >= 10 -%}{% continue %}{%- endif -%}
+            {%- comment -%} a metafield "New" badge is dropped when the automatic / tag New badge is already shown {%- endcomment -%}
+            {%- assign new_text_lc = settings.new_badge_text | default: 'New' | downcase | strip -%}
+            {%- if new_shown and badge_lc == new_text_lc or new_shown and badge_lc == 'new' -%}{% continue %}{%- endif -%}
             {% unless badge contains '-' and badge contains '%' %}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
