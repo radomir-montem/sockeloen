@@ -6364,3 +6364,16 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
   border-top: 1px solid rgba(255,255,255,.1);
   box-shadow: 0 -2px 10px rgba(0,0,0,.08);
 }
+
+/* Long badges ("As seen on instagram") covered most of the photo: keep them top-left in the empty corner,
+   let them wrap to two lines at ~60% of the tile and hug the text, so they sit beside the product instead of over it */
+#MainContent .card-wrapper .card-badge .badge,
+#MainContent .card-wrapper .card-bottom-badge .badge {
+  max-width: 62%;
+  width: max-content;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.25;
+  padding: 4px 7px !important;
+  letter-spacing: 0.4px;
+}
