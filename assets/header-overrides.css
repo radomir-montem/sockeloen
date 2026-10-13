@@ -6404,20 +6404,25 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
 @media screen and (max-width: 767px) {
   [class*="bot-section-"] .bot-swiper.bot-grid .swiper-wrapper { row-gap: 12px !important; padding-bottom: 7px; }
   .bot-swiper.bot-grid .card-wrapper .card { position: relative; }
+  /* the content block stays static (the Sale / New badges inside it are positioned against the card),
+     only the price is lifted onto the photo */
   .bot-swiper.bot-grid .card__content {
     display: block !important;
+    position: static;
+    height: 0;
+    min-height: 0;
+    overflow: visible;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .bot-swiper.bot-grid .card__information { margin: 0 !important; padding: 0 !important; }
+  .bot-swiper.bot-grid .card-information .price {
     position: absolute;
     right: 8px;
     bottom: 8px;
-    left: auto;
-    top: auto;
-    width: auto;
-    margin: 0 !important;
-    padding: 0 !important;
     z-index: 2;
     pointer-events: none;
   }
-  .bot-swiper.bot-grid .card__information { margin: 0 !important; padding: 0 !important; }
   .bot-swiper.bot-grid .card__information h2,
   .bot-swiper.bot-grid .card__information .caption-large,
   .bot-swiper.bot-grid .card__information small.caption { display: none !important; }
@@ -6439,6 +6444,7 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
   .bot-swiper.bot-grid .price__regular,
   .bot-swiper.bot-grid .price__sale { display: flex; align-items: baseline; gap: 4px; margin: 0; }
   .bot-swiper.bot-grid .price--on-sale .price__regular { display: none !important; }
+  .bot-swiper.bot-grid .price--on-sale .price__sale { display: flex !important; }
   .bot-swiper.bot-grid .price:not(.price--on-sale) .price__sale { display: none !important; }
   .bot-swiper.bot-grid .price .regular-text,
   .bot-swiper.bot-grid .price .real-price {
