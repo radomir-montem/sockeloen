@@ -296,6 +296,32 @@
     }
     if (isGrid) {
       killSwiper();
+      /* iOS Safari needed two taps on a tile here: the first tap was spent as a "hover". A clean tap
+         (no movement, under half a second) on a card therefore navigates straight away, so the
+         synthetic mouse events never get a say. Swatches keep their own click handling. */
+      var tapEl = document.querySelector('.' + swiperId);
+      if (tapEl && 'ontouchstart' in window) {
+        var tap = null;
+        tapEl.addEventListener('touchstart', function (e) {
+          var t = e.touches[0];
+          tap = t ? { x: t.clientX, y: t.clientY, time: Date.now() } : null;
+        }, { passive: true });
+        tapEl.addEventListener('touchmove', function (e) {
+          if (!tap) return;
+          var t = e.touches[0];
+          if (t && (Math.abs(t.clientX - tap.x) > 10 || Math.abs(t.clientY - tap.y) > 10)) tap = null;
+        }, { passive: true });
+        tapEl.addEventListener('touchend', function (e) {
+          if (!tap || Date.now() - tap.time > 500) { tap = null; return; }
+          tap = null;
+          if (e.target.closest('.ccr, button, input, select, form')) return;
+          var card = e.target.closest('a.card-wrapper[href], .card-wrapper a[href]');
+          if (!card) return;
+          if (e.cancelable) e.preventDefault();
+          window.location.href = card.href;
+        }, { passive: false });
+        tapEl.addEventListener('touchcancel', function () { tap = null; }, { passive: true });
+      }
       document.addEventListener('DOMContentLoaded', killSwiper);
       window.addEventListener('load', killSwiper);
       var gridEl = document.querySelector('.' + swiperId);

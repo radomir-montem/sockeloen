@@ -6398,8 +6398,11 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
   }
 }
 
-/* TRIAL (phones): no product names in the 3-column product grids on the product page, only the price */
+/* TRIAL (phones): no product names and no prices in the 3-column product grids on the product page: photos only */
 @media screen and (max-width: 767px) {
   .bot-swiper.bot-grid .card__information h2,
-  .bot-swiper.bot-grid .card__information .card-title { display: none !important; }
+  .bot-swiper.bot-grid .card__information .card-title,
+  .bot-swiper.bot-grid .card__information .card-information,
+  .bot-swiper.bot-grid .card__content { display: none !important; }
+  .bot-swiper.bot-grid .swiper-wrapper { row-gap: 12px !important; }
 }
