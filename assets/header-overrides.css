@@ -6227,16 +6227,18 @@ body.template--product .product-v2 .thumbnail-list__item .thumbnail { position: 
   }
   body.template--product .product-v2.has-pdp-topper .pdp-tag {
     display: none;
-    background: rgba(255, 255, 255, 0.72);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    backdrop-filter: blur(14px) saturate(140%);
+    /* the same glass as the desktop info tiles (.pdp-tile) */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12));
+    -webkit-backdrop-filter: blur(21px) saturate(180%);
+    backdrop-filter: blur(21px) saturate(180%);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     color: #111;
     font-size: 13px;
     font-weight: 600;
     line-height: 1.2;
     padding: 10px 16px;
     border-radius: 8px; /* same radius as the tiles, buttons and colour thumbs */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     max-width: 100%;
   }
   body.template--product .product-v2.has-pdp-topper .pdp-tag.is-visible { display: inline-block; }

@@ -149,14 +149,26 @@
         endif
         assign tag4 = product.metafields.custom.custom_benefit_4.value | default: product.metafields.custom.custom_benefit_4
         assign tag5 = product.metafields.custom.custom_benefit_5.value | default: product.metafields.custom.custom_benefit_5
+        assign tag6 = product.metafields.custom.custom_benefit_6.value | default: product.metafields.custom.custom_benefit_6
+        assign tag7 = product.metafields.custom.custom_benefit_7.value | default: product.metafields.custom.custom_benefit_7
+        assign tag8 = product.metafields.custom.custom_benefit_8.value | default: product.metafields.custom.custom_benefit_8
+        assign tag9 = product.metafields.custom.custom_benefit_9.value | default: product.metafields.custom.custom_benefit_9
+        assign tag10 = product.metafields.custom.custom_benefit_10.value | default: product.metafields.custom.custom_benefit_10
+        assign tag11 = product.metafields.custom.custom_benefit_11.value | default: product.metafields.custom.custom_benefit_11
       -%}
-      {%- if tag1 != blank or tag2 != blank or tag3 != blank or tag4 != blank or tag5 != blank -%}
+      {%- if tag1 != blank or tag2 != blank or tag3 != blank or tag4 != blank or tag5 != blank or tag6 != blank or tag7 != blank or tag8 != blank or tag9 != blank or tag10 != blank or tag11 != blank -%}
         <div class="pdp-tags" aria-hidden="true" id="PdpTags-{{ section.id }}">
           {%- if tag1 != blank -%}<span class="pdp-tag is-visible" data-photo="0">{{ tag1 | strip | remove: '.' }}</span>{%- endif -%}
           {%- if tag2 != blank -%}<span class="pdp-tag" data-photo="1">{{ tag2 | strip | remove: '.' }}</span>{%- endif -%}
           {%- if tag3 != blank -%}<span class="pdp-tag" data-photo="2">{{ tag3 | strip | remove: '.' }}</span>{%- endif -%}
           {%- if tag4 != blank -%}<span class="pdp-tag" data-photo="3">{{ tag4 | strip | remove: '.' }}</span>{%- endif -%}
           {%- if tag5 != blank -%}<span class="pdp-tag" data-photo="4">{{ tag5 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag6 != blank -%}<span class="pdp-tag" data-photo="5">{{ tag6 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag7 != blank -%}<span class="pdp-tag" data-photo="6">{{ tag7 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag8 != blank -%}<span class="pdp-tag" data-photo="7">{{ tag8 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag9 != blank -%}<span class="pdp-tag" data-photo="8">{{ tag9 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag10 != blank -%}<span class="pdp-tag" data-photo="9">{{ tag10 | strip | remove: '.' }}</span>{%- endif -%}
+          {%- if tag11 != blank -%}<span class="pdp-tag" data-photo="10">{{ tag11 | strip | remove: '.' }}</span>{%- endif -%}
         </div>
         <script>
           /* One benefit per photo: the tag shown follows the active slide
@@ -183,7 +195,8 @@
               }
               var active = slides.findIndex(function (s) { return s.classList.contains('is-active'); });
               if (active < 0) active = 0;
-              if (window.matchMedia('(max-width: 749px)').matches) {
+              var phone = window.matchMedia('(max-width: 749px)').matches;
+              if (phone) {
                 /* phones: the slide nearest the scroll position (the is-active class lags behind the swipe);
                    the scroll container differs per browser (the <ul> or the slider-component), so read both */
                 var scroller = document.querySelector('.product-v2 slider-component.slider-mobile-gutter');
@@ -193,7 +206,17 @@
                   slides.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - x); if (d < bestD) { bestD = d; active = i; } });
                 }
               }
-              /* photo 1 > benefit 1, photo 2 > benefit 2, ...; later photos show none */
+              /* benefit n belongs to the photo that sits at position n in the desktop gallery (there photos 3/4,
+                 7/8, 9/10, … swap places; 5/6 stay). Phones show the admin order, so the phone's photo index is
+                 translated to that desktop position before picking the benefit — the same photo gets the same text. */
+              if (phone && document.querySelector('.product-v2--gallery')) {
+                var order = slides.map(function (_, i) { return i; });
+                for (var k = 2; k + 1 < order.length; k += 2) {
+                  if (k === 4) continue;
+                  var tmp = order[k]; order[k] = order[k + 1]; order[k + 1] = tmp;
+                }
+                active = order.indexOf(active);
+              }
               items.forEach(function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === active); });
             }
             new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style', 'data-pdp-order'], subtree: true });
@@ -2919,9 +2942,15 @@
       function renderDots() {
         var all = slides();
         var active = activeIndex(all);
-        /* the benefit pill follows the same index */
+        /* the benefit pill follows the same photo; on phones the index is translated to the desktop position (see the tag script) */
+        var tagIndex = active;
+        if (isPhone && root.classList.contains('product-v2--gallery')) {
+          var order = all.map(function (_, i) { return i; });
+          for (var k = 2; k + 1 < order.length; k += 2) { if (k === 4) continue; var tmp = order[k]; order[k] = order[k + 1]; order[k + 1] = tmp; }
+          tagIndex = order.indexOf(active);
+        }
         var tags = root.querySelectorAll('.pdp-tag');
-        Array.prototype.forEach.call(tags, function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === active); });
+        Array.prototype.forEach.call(tags, function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === tagIndex); });
         if (all.length !== lastCount) {
           lastCount = all.length;
           dots.innerHTML = '';
