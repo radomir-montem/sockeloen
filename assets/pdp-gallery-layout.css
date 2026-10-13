@@ -72,7 +72,7 @@
     transition-property: transform;
     transition-timing-function: ease;
     will-change: transform;
-    cursor: grab;
+    cursor: pointer; /* the photos turn the page on click; dragging still works */
     touch-action: pan-y; /* touch screens: sideways drags move the strip, vertical ones scroll the page */
     -webkit-user-select: none;
             user-select: none;

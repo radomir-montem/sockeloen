@@ -2668,7 +2668,9 @@
       var d = drag;
       drag = null;
       root.classList.remove('is-dragging');
-      if (!d.moving) { slideTo(index, SPEED, false); return; }
+      /* a click with a little hand movement (under 12px, quick) is still a click: no swipe, and
+         the click handler below turns the page */
+      if (!d.moving || (Math.abs(d.dx) < 12 && Date.now() - d.time < 300)) { slideTo(index, SPEED, false); return; }
       var w = slideWidth();
       var pos = Math.max(0, Math.min(-translate, maxIndex() * w));
       var stop = Math.min(Math.floor(pos / w), maxIndex());
