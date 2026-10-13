@@ -5197,32 +5197,36 @@ body.template--collection .breadcrumbs {
 /* .card__content is a 3-row grid (spacer / information / spacer); the
    information block is pinned to row 2, so the colour row goes in row 3
    to sit under the title and price. */
-.card-wrapper .card__content { position: relative; overflow: visible !important; } /* the swatch row sits above this box, over the photo */
-.card__content > .ccr {
-  /* over the bottom of the product photo, centred (the content block starts right under the photo) */
+/* the colour row is moved into the photo box by card-color-row.js: centred, 12px above the photo's bottom edge */
+.card__media > .ccr {
   position: absolute;
-  top: -24px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   margin: 0;
   padding: 0;
   z-index: 2;
   justify-content: center;
-  grid-row: auto;
-  grid-column: auto;
 }
-.card__content > .ccr .ccr__swatch { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.15); }
+.card__media > .ccr .ccr__swatch { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.15); }
+/* until the script has moved it, keep the server-rendered row centred under the title */
+.card__content > .ccr { justify-content: center; margin-left: 0; margin-right: 0; }
 /* tighter tiles in the 6-column grid, and narrow-card text: the title wraps by word on its own line(s),
    the colour name goes under it, the price stays on the right */
 body.template--collection #product-grid.product-grid--6 {
   column-gap: 6px !important;
   row-gap: 6px !important;
 }
-#product-grid.product-grid--6 .product-card-wrapper .card__information { align-items: flex-start; }
-#product-grid.product-grid--6 .product-card-wrapper .card__information > h2 { flex: 1 1 auto; min-width: 0; }
-#product-grid.product-grid--6 .product-card-wrapper .card-title { display: block; white-space: normal; overflow-wrap: normal; word-break: normal; }
-#product-grid.product-grid--6 .product-card-wrapper .card-title .card-title-color { display: block; margin-top: 1px; }
 #product-grid.product-grid--6 .product-card-wrapper .card__content .card-information { flex: 0 0 auto; white-space: nowrap; }
+
+/* Card title row, every grid: "Title  Colour" on one line, price on the right. Both texts get a
+   maximum width and are cut with an ellipsis, so a long title or colour never wraps per letter. */
+.product-card-wrapper .card__content .card__information > h2 { flex: 1 1 auto; min-width: 0; }
+.product-card-wrapper .card-title { display: flex; align-items: baseline; gap: 5px; min-width: 0; white-space: nowrap; }
+.product-card-wrapper .card-title > span { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.product-card-wrapper .card-title > span:not(.card-title-color) { max-width: 70%; }
+.product-card-wrapper .card-title > .card-title-color { max-width: 45%; }
+.product-card-wrapper .card__content .card-information { flex: 0 0 auto; }
 
 /* Product page colour picker: the same swatch as on the cards (16px
    here, it is the primary control), 3px corners, hairline, inset ring
