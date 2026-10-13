@@ -122,6 +122,12 @@
     "v2": {
       "notify_me": "Prévenez-moi dès le retour en stock",
       "notify_me_sub": "Épuisé pour le moment — un seul e-mail dès son retour. Pas de spam.",
+      "coming_soon_button": "Coming soon — tenez-moi informé",
+      "coming_soon_sub": "Pas encore en vente. Laissez votre e-mail et nous vous prévenons dès la mise en ligne. Vous rejoignez l'early breakaway.",
+      "coming_soon_placeholder": "Adresse e-mail",
+      "coming_soon_submit": "M'inscrire",
+      "coming_soon_success": "Vous êtes dans la breakaway. Nous vous écrirons dès que ce produit sera en ligne.",
+      "coming_soon_error": "Veuillez saisir une adresse e-mail valide.",
       "bis_body": "Cet article est actuellement épuisé. Laissez votre e-mail et nous vous préviendrons dès son retour en stock.",
       "bis_email_label": "Adresse e-mail",
       "bis_button": "Prévenez-moi de son retour",
