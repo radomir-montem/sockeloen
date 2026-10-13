@@ -139,6 +139,7 @@
       },
       "share": "Dieses Produkt teilen",
       "sold_out": "Ausverkauft",
+      "coming_soon": "Demnächst",
       "unavailable": "Nicht verfügbar",
       "vendor": "Anbieter",
       "video_exit_message": "{{ title }} öffnet das Video auf derselben Seite im Vollbildmodus.",

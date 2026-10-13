@@ -139,6 +139,7 @@
       },
       "share": "Dit product delen",
       "sold_out": "Uitverkocht",
+      "coming_soon": "Binnenkort",
       "unavailable": "Niet beschikbaar",
       "vendor": "Vendor",
       "video_exit_message": "{{ title }} opent een video op volledig scherm in hetzelfde venster.",

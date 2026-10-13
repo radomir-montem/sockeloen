@@ -161,6 +161,7 @@
       "custom": "",
       "share": "Share this product",
       "sold_out": "SOLD OUT",
+      "coming_soon": "Coming soon",
       "unavailable": "Unavailable",
       "vendor": "Vendor",
       "video_exit_message": "{{ title }} opens full screen video in same window.",
