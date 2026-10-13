@@ -2880,10 +2880,19 @@
       function slides() {
         return Array.prototype.slice.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)')).filter(function (s) { return s.style.display !== 'none'; });
       }
+      var scroller = root.querySelector('slider-component.slider-mobile-gutter') || list;
+      function activeIndex(all) {
+        /* the slide nearest the scroll position (the is-active class lags behind on programmatic scrolls) */
+        var x = scroller.scrollLeft || list.scrollLeft || 0, best = 0, bestD = Infinity;
+        all.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - x); if (d < bestD) { bestD = d; best = i; } });
+        return best;
+      }
       function renderDots() {
         var all = slides();
-        var active = all.findIndex(function (s) { return s.classList.contains('is-active'); });
-        if (active < 0) active = 0;
+        var active = activeIndex(all);
+        /* the benefit pill follows the same index */
+        var tags = root.querySelectorAll('.pdp-tag');
+        Array.prototype.forEach.call(tags, function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === active); });
         if (all.length !== lastCount) {
           lastCount = all.length;
           dots.innerHTML = '';
@@ -2893,8 +2902,11 @@
         Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle('is-active', i === active); });
       }
       new MutationObserver(renderDots).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
-      var sc = root.querySelector('slider-component');
-      if (sc) sc.addEventListener('slideChanged', function () { setTimeout(renderDots, 30); });
+      var raf = null;
+      function onScroll() { if (raf) return; raf = requestAnimationFrame(function () { raf = null; renderDots(); }); }
+      scroller.addEventListener('scroll', onScroll, { passive: true });
+      if (scroller !== list) list.addEventListener('scroll', onScroll, { passive: true });
+      scroller.addEventListener('slideChanged', function () { setTimeout(renderDots, 30); });
       renderDots();
     }
   })();
