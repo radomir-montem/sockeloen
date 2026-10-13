@@ -69,9 +69,9 @@
         "padding_bottom": 0,
         "variant_first_rules": "sockeloen-x-knwu:KNWU, knwu:KNWU",
         "smart_mode": "new",
-        "smart_limit": 9,
+        "smart_limit": 8,
         "smart_days": 91,
-        "columns_desktop": "3"
+        "columns_desktop": "4"
       }
     },
     "rich_text_fC8NDW": {
