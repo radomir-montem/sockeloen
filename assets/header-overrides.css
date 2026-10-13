@@ -6389,3 +6389,9 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
     white-space: nowrap;
   }
 }
+
+/* TRIAL (phones): no product names in the 3-column product grids on the product page, only the price */
+@media screen and (max-width: 767px) {
+  .bot-swiper.bot-grid .card__information h2,
+  .bot-swiper.bot-grid .card__information .card-title { display: none !important; }
+}
