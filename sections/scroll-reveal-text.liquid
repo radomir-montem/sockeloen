@@ -8,12 +8,28 @@
 {%- liquid
   assign sid = 'ScrollReveal-' | append: section.id
   assign lines = section.settings.text | newline_to_br | split: '<br />'
-  assign has_bg = false
-  if section.settings.image_desktop != blank or section.settings.image_mobile != blank
-    assign has_bg = true
-  endif
+  comment
+    Background per screen: desktop = desktop video, else desktop image (else the mobile image).
+    Phone = phone video, else phone image, else the desktop video, else the desktop image.
+  endcomment
+  assign vid_d = section.settings.video_desktop
+  assign vid_m = section.settings.video_mobile
   assign img_d = section.settings.image_desktop | default: section.settings.image_mobile
-  assign img_m = section.settings.image_mobile | default: section.settings.image_desktop
+  assign img_m = section.settings.image_mobile
+  if vid_m == blank and img_m == blank
+    assign vid_m = vid_d
+  endif
+  if img_m == blank
+    assign img_m = section.settings.image_desktop
+  endif
+  assign has_bg_d = false
+  if vid_d != blank or img_d != blank
+    assign has_bg_d = true
+  endif
+  assign has_bg_m = false
+  if vid_m != blank or img_m != blank
+    assign has_bg_m = true
+  endif
 -%}
 
 {%- style -%}
@@ -41,7 +57,8 @@
     inset: 0;
     z-index: 0;
   }
-  #{{ sid }} .srt__bg img {
+  #{{ sid }} .srt__bg img,
+  #{{ sid }} .srt__bg video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -130,12 +147,23 @@
 <div id="{{ sid }}" class="srt" data-dim="{{ section.settings.dim_opacity | divided_by: 100.0 }}">
   <div class="srt__track">
     <div class="srt__sticky">
-      {%- if has_bg -%}
+      {%- comment -%} videos load nothing until the block is near the screen, and only the one for the current screen plays {%- endcomment -%}
+      {%- if has_bg_d -%}
         <div class="srt__bg srt__bg--desktop" aria-hidden="true">
-          {{ img_d | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '1000, 1600, 2000, 2400', alt: '' }}
+          {%- if vid_d != blank -%}
+            {{ vid_d | video_tag: autoplay: false, loop: true, muted: true, controls: false, playsinline: true, preload: 'none', image_size: '1600x' }}
+          {%- else -%}
+            {{ img_d | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '1000, 1600, 2000, 2400', alt: '' }}
+          {%- endif -%}
         </div>
+      {%- endif -%}
+      {%- if has_bg_m -%}
         <div class="srt__bg srt__bg--mobile" aria-hidden="true">
-          {{ img_m | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '100vw', widths: '600, 900, 1200', alt: '' }}
+          {%- if vid_m != blank -%}
+            {{ vid_m | video_tag: autoplay: false, loop: true, muted: true, controls: false, playsinline: true, preload: 'none', image_size: '900x' }}
+          {%- else -%}
+            {{ img_m | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '100vw', widths: '600, 900, 1200', alt: '' }}
+          {%- endif -%}
         </div>
       {%- endif -%}
       <div class="srt__content">
@@ -185,6 +213,33 @@
     var words = root.querySelectorAll('.srt__word');
     var button = root.querySelector('.srt__button-wrap');
     var dim = parseFloat(root.getAttribute('data-dim')) || 0.12;
+    /* background video: only the one shown on this screen plays, and only while the block is near the screen */
+    var videos = root.querySelectorAll('.srt__bg video');
+    var near = false;
+    function syncVideos() {
+      videos.forEach(function (v) {
+        var shown = v.offsetParent !== null;
+        if (shown && near) {
+          if (v.preload !== 'auto') v.preload = 'auto';
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        } else if (!v.paused) {
+          v.pause();
+        }
+      });
+    }
+    if (videos.length) {
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          near = entries[0].isIntersecting;
+          syncVideos();
+        }, { rootMargin: '300px 0px' }).observe(root);
+      } else {
+        near = true;
+        syncVideos();
+      }
+      window.addEventListener('resize', syncVideos);
+    }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var ticking = false;
     function update() {
@@ -226,6 +281,8 @@
       "info": "One line per row. Wrap a word in *asterisks* for the italic accent."
     },
     { "type": "header", "content": "Background" },
+    { "type": "video", "id": "video_desktop", "label": "Background video (desktop)", "info": "Plays silently on a loop. Takes the place of the desktop image." },
+    { "type": "video", "id": "video_mobile", "label": "Background video (mobile)", "info": "Optional. Without it phones show the mobile image, or else the desktop video." },
     { "type": "image_picker", "id": "image_desktop", "label": "Background image (desktop)" },
     { "type": "image_picker", "id": "image_mobile", "label": "Background image (mobile)", "info": "Falls back to the desktop image." },
     { "type": "range", "id": "overlay_opacity", "label": "Dark layer over the image", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 45 },
