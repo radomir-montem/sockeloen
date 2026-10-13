@@ -85,7 +85,7 @@
         family (alternatives) fill the remaining slots, also best selling first.
       endcomment
       capture cur_family
-        render 'product-family', type: product.type
+        render 'product-family', type: product.type, title: product.title
       endcapture
       assign cur_family = cur_family | strip
       assign fam_keys = ''
@@ -107,7 +107,7 @@
           continue
         endif
         capture fam
-          render 'product-family', type: col_product.type
+          render 'product-family', type: col_product.type, title: col_product.title
         endcapture
         assign fam = fam | strip
         if fam == cur_family
