@@ -85,10 +85,9 @@
         "New" / "Sale" lists, see snippets/smart-product-list.liquid. The source collection can hold
         more than 50 products, so it is read inside a paginate.
       endcomment
-      assign smart_src = section.settings.collection
-      paginate smart_src.products by 1000
+      paginate section.settings.collection.products by 1000
         capture smart_handles
-          render 'smart-product-list', mode: smart_mode, source: smart_src, limit: max_items, days: section.settings.smart_days, exclude: product.handle
+          render 'smart-product-list', mode: smart_mode, source: section.settings.collection, limit: max_items, days: section.settings.smart_days, exclude: product.handle
         endcapture
       endpaginate
       assign smart_arr = smart_handles | strip | split: ','
