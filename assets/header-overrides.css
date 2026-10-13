@@ -6337,14 +6337,16 @@ body.template--product .product-v2 .pdp-dots__dot.is-active {
   .bot-swiper .card__media > .ccr { display: none !important; }
 }
 
-/* Product-tile badges in the same glass as the info tiles and the benefit pill */
+/* Product-tile badges in the glass look of the info tiles and the benefit pill, but WITHOUT
+   backdrop-filter: 40+ blurred badges inside a scrolling grid made the browser drop the backdrop
+   while scrolling (tiles/header flashed white on desktop). On the flat studio photos the blur
+   was invisible anyway, so a semi-transparent gradient gives the same look. */
 #MainContent .card-wrapper .card-badge .badge,
 #MainContent .card-wrapper .card-bottom-badge .badge {
-  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12)) !important;
-  -webkit-backdrop-filter: blur(21px) saturate(180%);
-  backdrop-filter: blur(21px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.45)) !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
   color: #111 !important;
 }
 /* no white line between the product rows: the columns keep their gap, the rows touch */
