@@ -692,10 +692,10 @@
             function stripEuro(root){
               if (_stripping) return;
               _stripping = true;
-              /* the desktop gallery layout shows the price with its € sign, next to the title */
-              var keepEuro = window.matchMedia('(min-width: 990px)').matches;
+              /* the buy box price keeps its € sign on every screen: stripping it after a variant change made the
+                 price jump sideways (it came back from the server with €, then lost it) */
               root.querySelectorAll('.regular-text, .price-item, .real-price, .product-v2-sticky-bar__price').forEach(function(el){
-                if (keepEuro && el.closest('.product-v2--gallery .product-v2__price')) return;
+                if (el.closest('.product-v2__price')) return;
                 el.childNodes.forEach(function(n){
                   if(n.nodeType===3) n.textContent = n.textContent.replace(/€\s*/g,'');
                 });
@@ -876,6 +876,24 @@
                                     {%- break -%}
                                   {%- endif -%}
                                 {%- endfor -%}
+                                {%- comment -%}
+                                  Swatch photo = the 4th photo of the colour's group (photos sharing the variant photo's alt,
+                                  in admin order; a video counts as a position but is skipped for the next photo). Falls
+                                  back to the variant photo when the group has fewer than 4.
+                                {%- endcomment -%}
+                                {%- if swatch_img and swatch_img.alt != blank -%}
+                                  {%- assign sw_alt = swatch_img.alt -%}
+                                  {%- assign sw_n = 0 -%}
+                                  {%- for sw_m in product.media -%}
+                                    {%- if sw_m.alt == sw_alt -%}
+                                      {%- assign sw_n = sw_n | plus: 1 -%}
+                                      {%- if sw_n >= 4 and sw_m.media_type == 'image' -%}
+                                        {%- assign swatch_img = sw_m.preview_image -%}
+                                        {%- break -%}
+                                      {%- endif -%}
+                                    {%- endif -%}
+                                  {%- endfor -%}
+                                {%- endif -%}
                                 {%- capture swatch_bg -%}{% render 'color-swatch-hex', name: value %}{%- endcapture -%}
                                 {%- assign swatch_bg = swatch_bg | strip -%}
                                 {%- if swatch_style == 'images' and swatch_img -%}
