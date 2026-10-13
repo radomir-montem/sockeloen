@@ -123,7 +123,7 @@
       "description": "Beschreibung",
       "on_sale": "SALE",
       "sale_badge": "Sale",
-      "bundle_sale_badge": "Bundle sale",
+      "bundle_sale_badge": "Bundle",
       "product_variants": "Produktvarianten",
       "quantity": {
         "label": "Anzahl",
