@@ -183,10 +183,18 @@
               }
               var active = slides.findIndex(function (s) { return s.classList.contains('is-active'); });
               if (active < 0) active = 0;
+              if (window.matchMedia('(max-width: 749px)').matches) {
+                /* phones: the slide nearest the scroll position (the is-active class lags behind the swipe) */
+                var scroller = document.querySelector('.product-v2 slider-component.slider-mobile-gutter') || list;
+                var x = scroller.scrollLeft || list.scrollLeft || 0, bestD = Infinity;
+                slides.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - x); if (d < bestD) { bestD = d; active = i; } });
+              }
               /* photo 1 > benefit 1, photo 2 > benefit 2, ...; later photos show none */
               items.forEach(function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === active); });
             }
             new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style', 'data-pdp-order'], subtree: true });
+            var tagScroller = document.querySelector('.product-v2 slider-component.slider-mobile-gutter');
+            if (tagScroller) tagScroller.addEventListener('scroll', function () { requestAnimationFrame(update); }, { passive: true });
             update();
           })();
         </script>
@@ -2856,7 +2864,8 @@
       topper.className = 'pdp-topper';
       item.insertBefore(topper, item.firstChild);
       var img = item.querySelector('.product__media img');
-      var src = img ? (img.currentSrc || img.getAttribute('src')) : '';
+      var video = item.querySelector('.product__media video');
+      var src = img ? (img.currentSrc || img.getAttribute('src')) : (video ? video.getAttribute('poster') : '');
       if (!src) return;
       var mirror = document.createElement('img');
       mirror.alt = ''; mirror.setAttribute('aria-hidden', 'true'); mirror.decoding = 'async';
@@ -2867,6 +2876,47 @@
       });
     });
     root.classList.add('has-pdp-topper');
+
+    /* page dots over the photo (iOS page-control look): one dot per visible slide of the selected colour, the active one grows */
+    var wrapper = root.querySelector('.product-v2__media-wrapper');
+    var list = root.querySelector('.product__media-list');
+    if (wrapper && list) {
+      var dots = document.createElement('div');
+      dots.className = 'pdp-dots'; dots.setAttribute('aria-hidden', 'true');
+      wrapper.appendChild(dots);
+      var lastCount = -1;
+      function slides() {
+        return Array.prototype.slice.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)')).filter(function (s) { return s.style.display !== 'none'; });
+      }
+      var scroller = root.querySelector('slider-component.slider-mobile-gutter') || list;
+      function activeIndex(all) {
+        /* the slide nearest the scroll position (the is-active class lags behind on programmatic scrolls) */
+        var x = scroller.scrollLeft || list.scrollLeft || 0, best = 0, bestD = Infinity;
+        all.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - x); if (d < bestD) { bestD = d; best = i; } });
+        return best;
+      }
+      function renderDots() {
+        var all = slides();
+        var active = activeIndex(all);
+        /* the benefit pill follows the same index */
+        var tags = root.querySelectorAll('.pdp-tag');
+        Array.prototype.forEach.call(tags, function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === active); });
+        if (all.length !== lastCount) {
+          lastCount = all.length;
+          dots.innerHTML = '';
+          for (var i = 0; i < all.length; i++) { var d = document.createElement('span'); d.className = 'pdp-dots__dot'; dots.appendChild(d); }
+          dots.classList.toggle('is-hidden', all.length < 2);
+        }
+        Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle('is-active', i === active); });
+      }
+      new MutationObserver(renderDots).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+      var raf = null;
+      function onScroll() { if (raf) return; raf = requestAnimationFrame(function () { raf = null; renderDots(); }); }
+      scroller.addEventListener('scroll', onScroll, { passive: true });
+      if (scroller !== list) list.addEventListener('scroll', onScroll, { passive: true });
+      scroller.addEventListener('slideChanged', function () { setTimeout(renderDots, 30); });
+      renderDots();
+    }
   })();
 </script>
 
