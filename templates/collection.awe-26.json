@@ -266,7 +266,9 @@
         "button_label": "Shop All Weather Essentials",
         "button_link": "#ProductGridContainer",
         "button_color": "#ffffff",
-        "button_text_color": "#000000"
+        "button_text_color": "#000000",
+        "image_desktop": "shopify://shop_images/4_winter_gloves.png",
+        "image_mobile": "shopify://shop_images/2_neckwarmer.png"
       }
     }
   },
