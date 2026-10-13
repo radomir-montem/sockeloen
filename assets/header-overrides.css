@@ -6379,7 +6379,7 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
   /* phones: tiles are ~170px, so a long badge wraps after ~11 characters ("As seen on / instagram") */
   #MainContent .card-wrapper .card-badge .badge,
   #MainContent .card-wrapper .card-bottom-badge .badge {
-    max-width: 11.5ch;
+    max-width: 13.5ch;
     white-space: normal;
   }
 }
