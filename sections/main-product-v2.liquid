@@ -184,10 +184,14 @@
               var active = slides.findIndex(function (s) { return s.classList.contains('is-active'); });
               if (active < 0) active = 0;
               if (window.matchMedia('(max-width: 749px)').matches) {
-                /* phones: the slide nearest the scroll position (the is-active class lags behind the swipe) */
-                var scroller = document.querySelector('.product-v2 slider-component.slider-mobile-gutter') || list;
-                var x = scroller.scrollLeft || list.scrollLeft || 0, bestD = Infinity;
-                slides.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - x); if (d < bestD) { bestD = d; active = i; } });
+                /* phones: the slide nearest the scroll position (the is-active class lags behind the swipe);
+                   the scroll container differs per browser (the <ul> or the slider-component), so read both */
+                var scroller = document.querySelector('.product-v2 slider-component.slider-mobile-gutter');
+                var x = Math.max(scroller ? scroller.scrollLeft : 0, list.scrollLeft || 0);
+                if (x > 0) {
+                  var bestD = Infinity;
+                  slides.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - x); if (d < bestD) { bestD = d; active = i; } });
+                }
               }
               /* photo 1 > benefit 1, photo 2 > benefit 2, ...; later photos show none */
               items.forEach(function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === active); });
@@ -195,6 +199,7 @@
             new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style', 'data-pdp-order'], subtree: true });
             var tagScroller = document.querySelector('.product-v2 slider-component.slider-mobile-gutter');
             if (tagScroller) tagScroller.addEventListener('scroll', function () { requestAnimationFrame(update); }, { passive: true });
+            list.addEventListener('scroll', function () { requestAnimationFrame(update); }, { passive: true });
             update();
           })();
         </script>
@@ -2848,14 +2853,14 @@
           for (var i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; a += d[i + 3]; }
           r /= n; g /= n; b /= n; a /= n;
           /* studio renders are PNGs with a transparent top: the grey comes from the box gradient, which the topper already carries */
-          if (a < 250) { done('flat'); return; }
+          if (a < 250) { done('flat', im.naturalWidth / im.naturalHeight); return; }
           var dev = 0;
           for (var j = 0; j < d.length; j += 4) { dev = Math.max(dev, Math.abs(d[j] - r), Math.abs(d[j + 1] - g), Math.abs(d[j + 2] - b)); }
           var lum = 0.299 * r + 0.587 * g + 0.114 * b;
-          done(dev <= 22 && lum >= 190 ? 'flat' : 'photo');
-        } catch (e) { done('photo'); }
+          done(dev <= 22 && lum >= 190 ? 'flat' : 'photo', im.naturalWidth / im.naturalHeight);
+        } catch (e) { done('photo', im.naturalWidth / im.naturalHeight); }
       };
-      im.onerror = function () { done('photo'); };
+      im.onerror = function () { done('photo', 0.8); };
       im.src = src;
     }
     items.forEach(function (item) {
@@ -2871,8 +2876,15 @@
       mirror.alt = ''; mirror.setAttribute('aria-hidden', 'true'); mirror.decoding = 'async';
       mirror.src = src;
       topper.appendChild(mirror);
-      sample(src.replace(/([?&])width=\d+/, '$1width=200'), function (kind) {
-        if (kind === 'photo') topper.classList.add('is-blur');
+      sample(src.replace(/([?&])width=\d+/, '$1width=200'), function (kind, ratio) {
+        if (kind !== 'photo') return;
+        topper.classList.add('is-blur');
+        /* the photo sits "contained" in the 4:5 box: size the mirror to the photo's rendered width so the
+           strip lines up with the photo's top edge (a 9:16 video poster is narrower than the box) */
+        var boxW = item.clientWidth || window.innerWidth, boxH = boxW * 1.25;
+        var w = ratio >= 0.8 ? boxW : Math.round(boxH * ratio);
+        mirror.style.width = w + 'px';
+        mirror.style.left = Math.round((boxW - w) / 2) + 'px';
       });
     });
     root.classList.add('has-pdp-topper');
@@ -2890,8 +2902,10 @@
       }
       var scroller = root.querySelector('slider-component.slider-mobile-gutter') || list;
       function activeIndex(all) {
-        /* the slide nearest the scroll position (the is-active class lags behind on programmatic scrolls) */
-        var x = scroller.scrollLeft || list.scrollLeft || 0, best = 0, bestD = Infinity;
+        /* the slide nearest the scroll position; the scroll container differs per browser (ul or slider-component),
+           and when neither has scrolled the is-active class decides */
+        var x = Math.max(scroller.scrollLeft || 0, list.scrollLeft || 0), best = 0, bestD = Infinity;
+        if (x <= 0) { var a = all.findIndex(function (s) { return s.classList.contains('is-active'); }); return a < 0 ? 0 : a; }
         all.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - x); if (d < bestD) { bestD = d; best = i; } });
         return best;
       }
