@@ -2856,7 +2856,8 @@
       topper.className = 'pdp-topper';
       item.insertBefore(topper, item.firstChild);
       var img = item.querySelector('.product__media img');
-      var src = img ? (img.currentSrc || img.getAttribute('src')) : '';
+      var video = item.querySelector('.product__media video');
+      var src = img ? (img.currentSrc || img.getAttribute('src')) : (video ? video.getAttribute('poster') : '');
       if (!src) return;
       var mirror = document.createElement('img');
       mirror.alt = ''; mirror.setAttribute('aria-hidden', 'true'); mirror.decoding = 'async';
@@ -2867,6 +2868,35 @@
       });
     });
     root.classList.add('has-pdp-topper');
+
+    /* page dots over the photo (iOS page-control look): one dot per visible slide of the selected colour, the active one grows */
+    var wrapper = root.querySelector('.product-v2__media-wrapper');
+    var list = root.querySelector('.product__media-list');
+    if (wrapper && list) {
+      var dots = document.createElement('div');
+      dots.className = 'pdp-dots'; dots.setAttribute('aria-hidden', 'true');
+      wrapper.appendChild(dots);
+      var lastCount = -1;
+      function slides() {
+        return Array.prototype.slice.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)')).filter(function (s) { return s.style.display !== 'none'; });
+      }
+      function renderDots() {
+        var all = slides();
+        var active = all.findIndex(function (s) { return s.classList.contains('is-active'); });
+        if (active < 0) active = 0;
+        if (all.length !== lastCount) {
+          lastCount = all.length;
+          dots.innerHTML = '';
+          for (var i = 0; i < all.length; i++) { var d = document.createElement('span'); d.className = 'pdp-dots__dot'; dots.appendChild(d); }
+          dots.classList.toggle('is-hidden', all.length < 2);
+        }
+        Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle('is-active', i === active); });
+      }
+      new MutationObserver(renderDots).observe(list, { attributes: true, attributeFilter: ['class', 'style'], subtree: true });
+      var sc = root.querySelector('slider-component');
+      if (sc) sc.addEventListener('slideChanged', function () { setTimeout(renderDots, 30); });
+      renderDots();
+    }
   })();
 </script>
 
