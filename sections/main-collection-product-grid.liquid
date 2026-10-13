@@ -285,10 +285,16 @@
               }
             </style>
             {%- endif -%}
+            {%- assign grid_cols = section.settings.columns_desktop | default: 4 | plus: 0 -%}
+            {%- if grid_cols == 6 -%}
+            <style>
+              @media screen and (min-width: 990px) { #product-grid.product-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+            </style>
+            {%- endif -%}
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
-              class="grid grid-cols-2 md:grid-cols-4"
+              class="grid grid-cols-2 md:grid-cols-4{% if grid_cols == 6 %} product-grid--6{% endif %}"
             >
               {%- comment -%}
                 On by default everywhere. Set the collection's
@@ -323,9 +329,9 @@
                       {%- assign card_n = card_n | plus: 1 -%}
                       {%- assign swap_cls = '' -%}
                       {%- if section.settings.alternate_second_image -%}
-                        {%- comment -%} checkerboard: 4 columns from 768px, 2 columns below; a card opens with its 2nd photo when row + column is odd {%- endcomment -%}
+                        {%- comment -%} checkerboard over the desktop column count (4 or 6), 2 columns on phones; a card opens with its 2nd photo when row + column is odd {%- endcomment -%}
                         {%- assign i0 = card_n | minus: 1 -%}
-                        {%- assign d_sum = i0 | modulo: 4 | plus: 1 -%}{%- assign d_row = i0 | divided_by: 4 | plus: 1 -%}{%- assign d_sum = d_sum | plus: d_row | modulo: 2 -%}
+                        {%- assign d_sum = i0 | modulo: grid_cols | plus: 1 -%}{%- assign d_row = i0 | divided_by: grid_cols | plus: 1 -%}{%- assign d_sum = d_sum | plus: d_row | modulo: 2 -%}
                         {%- assign m_sum = i0 | modulo: 2 | plus: 1 -%}{%- assign m_row = i0 | divided_by: 2 | plus: 1 -%}{%- assign m_sum = m_sum | plus: m_row | modulo: 2 -%}
                         {%- if d_sum == 1 -%}{%- assign swap_cls = swap_cls | append: ' card-swap-d' -%}{%- endif -%}
                         {%- if m_sum == 1 -%}{%- assign swap_cls = swap_cls | append: ' card-swap-m' -%}{%- endif -%}
@@ -404,9 +410,9 @@
                           {%- assign card_n = card_n | plus: 1 -%}
                       {%- assign swap_cls = '' -%}
                       {%- if section.settings.alternate_second_image -%}
-                        {%- comment -%} checkerboard: 4 columns from 768px, 2 columns below; a card opens with its 2nd photo when row + column is odd {%- endcomment -%}
+                        {%- comment -%} checkerboard over the desktop column count (4 or 6), 2 columns on phones; a card opens with its 2nd photo when row + column is odd {%- endcomment -%}
                         {%- assign i0 = card_n | minus: 1 -%}
-                        {%- assign d_sum = i0 | modulo: 4 | plus: 1 -%}{%- assign d_row = i0 | divided_by: 4 | plus: 1 -%}{%- assign d_sum = d_sum | plus: d_row | modulo: 2 -%}
+                        {%- assign d_sum = i0 | modulo: grid_cols | plus: 1 -%}{%- assign d_row = i0 | divided_by: grid_cols | plus: 1 -%}{%- assign d_sum = d_sum | plus: d_row | modulo: 2 -%}
                         {%- assign m_sum = i0 | modulo: 2 | plus: 1 -%}{%- assign m_row = i0 | divided_by: 2 | plus: 1 -%}{%- assign m_sum = m_sum | plus: m_row | modulo: 2 -%}
                         {%- if d_sum == 1 -%}{%- assign swap_cls = swap_cls | append: ' card-swap-d' -%}{%- endif -%}
                         {%- if m_sum == 1 -%}{%- assign swap_cls = swap_cls | append: ' card-swap-m' -%}{%- endif -%}
@@ -506,6 +512,13 @@
     {
       "type": "header",
       "content": "t:sections.main-collection-product-grid.settings.header__3.content"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Products per row (desktop)",
+      "options": [ { "value": "4", "label": "4" }, { "value": "6", "label": "6" } ],
+      "default": "4"
     },
     {
       "type": "checkbox",
