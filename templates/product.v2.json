@@ -106,6 +106,7 @@
         "product_list": [],
         "collection": "complete-the-look",
         "smart_order": true,
+        "smart_mode": "complete",
         "max_products": 12,
         "heading": "Complete the",
         "heading_italic": "look",
@@ -295,7 +296,8 @@
       "settings": {
         "product_source": "none",
         "product_list": [],
-        "collection": "sale",
+        "collection": "complete-the-look",
+        "smart_mode": "sale",
         "layout": "grid",
         "max_products": 12,
         "heading": "currently on",
