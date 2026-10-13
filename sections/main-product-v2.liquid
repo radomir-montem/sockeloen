@@ -2238,7 +2238,10 @@
       if (x > min) x = min - 1 + Math.pow(-min + drag.from + dx, RESISTANCE);
       else if (x < max) x = max + 1 - Math.pow(max - drag.from - dx, RESISTANCE);
       setTranslate(x, 0);
-      if (e.cancelable && !e.touches) e.preventDefault();
+      /* a sideways swipe is only a swipe: the page must not scroll along on a slanted finger
+         (touchmove is registered non-passive for this; the browser can still be cancelled here
+         because the decision falls on the first move past the 5px threshold) */
+      if (e.cancelable) e.preventDefault();
     }
     function end() {
       if (!drag) return;
@@ -2264,7 +2267,7 @@
     }
 
     list.addEventListener('touchstart', start, { passive: true });
-    list.addEventListener('touchmove', move, { passive: true });
+    list.addEventListener('touchmove', move, { passive: false });
     list.addEventListener('touchend', end, { passive: true });
     list.addEventListener('touchcancel', end, { passive: true });
     /* mouse drag in a narrow desktop window */
