@@ -4498,7 +4498,7 @@ body.template--index .taggbox .tb_rt_image_wrap_ { border-radius: 4px !important
    Eme-style category banners (two-cols-swap "eme_banners")
    ============================================================ */
 .tcs-eme { display: flex; flex-direction: column; background: #fff; }
-.tcs-eme__item { position: relative; display: block; width: 100%; height: 80vh; height: 80svh; /* was 630px: a share of the screen height, like the hero (80% on phones) */ overflow: visible; color: #fff; text-decoration: none; }
+.tcs-eme__item { position: relative; display: block; width: 100%; height: 80vh; height: var(--tcs-h-mobile, 80svh); /* section setting, share of the screen height (was 630px) */ overflow: visible; color: #fff; text-decoration: none; }
 .tcs-eme__media { position: absolute; inset: 0; overflow: hidden; }
 .tcs-eme__img, .tcs-eme__media img { width: 100% !important; height: 100% !important; object-fit: cover; display: block; border-radius: 0 !important; }
 /* the overlay ends at the banner's midpoint (+ half the label box), so the
@@ -4520,7 +4520,7 @@ body.template--index #MainContent .tcs-eme__label { text-transform: capitalize !
 .tcs-eme__mobile-collection { display: block; background: #fff; padding-bottom: 12px; }
 @media screen and (min-width: 640px) {
   .tcs-eme { flex-direction: row; flex-wrap: wrap; }
-  .tcs-eme__item { width: 50%; height: 75vh; height: 75svh; /* was 695px: 75% of the screen, like the hero on desktop */ }
+  .tcs-eme__item { width: 50%; height: 75vh; height: var(--tcs-h-desktop, 75svh); /* section setting (was 695px) */ }
   .tcs-eme__sticky { padding: 30px 0; top: calc(50svh - 51px); }
   .tcs-eme__overlay { height: calc(50% + 51px); }
   /* The banners' collection grids: full width, after the banner row */

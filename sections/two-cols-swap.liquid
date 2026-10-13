@@ -39,7 +39,7 @@
     endif
   endfor
 -%}
-<section class="tcs-eme{% if pinned %} tcs-eme--pinned{% endif %}{% if section.settings.grids_on_desktop == false %} tcs-eme--grids-mobile-only{% endif %}{% if pinned and first_has_grid == false and section.blocks.size > 1 %} tcs-eme--no-grid-1{% endif %}{% if pinned and last_has_grid == false %} tcs-eme--open-end{% endif %}">
+<section class="tcs-eme{% if pinned %} tcs-eme--pinned{% endif %}{% if section.settings.grids_on_desktop == false %} tcs-eme--grids-mobile-only{% endif %}{% if pinned and first_has_grid == false and section.blocks.size > 1 %} tcs-eme--no-grid-1{% endif %}{% if pinned and last_has_grid == false %} tcs-eme--open-end{% endif %}" style="--tcs-h-desktop: {{ section.settings.height_desktop | default: 75 }}svh; --tcs-h-mobile: {{ section.settings.height_mobile | default: 80 }}svh;">
   {%- if pinned -%}
     <div class="tcs-eme__box">
       <div class="tcs-eme__stage">
@@ -308,7 +308,10 @@
       "id": "grids_on_desktop",
       "label": "Show the collection grids on desktop too",
       "default": true
-    }
+    },
+    { "type": "header", "content": "Banner height", "info": "As a share of the screen height, like the hero. Not used by the 'pinned' scroll effect, which always spans the screen." },
+    { "type": "range", "id": "height_desktop", "min": 40, "max": 100, "step": 5, "unit": "%", "label": "Height (desktop, % of screen)", "default": 75 },
+    { "type": "range", "id": "height_mobile", "min": 40, "max": 100, "step": 5, "unit": "%", "label": "Height (mobile, % of screen)", "default": 80 }
   ]
 }
 {% endschema %}
