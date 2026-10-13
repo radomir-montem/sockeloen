@@ -294,7 +294,7 @@
         {%- endcomment -%}
         <div class="absolute top-[15px] left-[12px] card-badge">
           {%- comment -%} "New" badge for every product carrying the tag chosen in theme settings {%- endcomment -%}
-          {%- if settings.new_badge_tag != blank -%}
+          {%- if settings.new_badge_tag != blank and coming_soon != true -%}
             {%- assign new_tag = settings.new_badge_tag | downcase | strip -%}
             {%- for new_t in card_product.tags -%}
               {%- assign new_tl = new_t | downcase | strip -%}
