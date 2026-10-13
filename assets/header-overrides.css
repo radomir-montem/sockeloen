@@ -6222,7 +6222,7 @@ body.template--product .product-v2 .thumbnail-list__item .thumbnail { position: 
     text-align: center;
     max-width: none;
     padding: 0 24px;
-    top: calc(44px + 125vw - 28px);
+    top: calc(44px + 125vw - 12px); /* 12px above the photo bottom, the same gap as between the dots and the pill */
     transform: translateY(-100%);
   }
   body.template--product .product-v2.has-pdp-topper .pdp-tag {
@@ -6243,7 +6243,7 @@ body.template--product .product-v2 .thumbnail-list__item .thumbnail { position: 
   body.template--product .product-v2 .pdp-dots {
     position: absolute;
     left: 50%;
-    top: calc(44px + 125vw - 28px - 38px - 12px);
+    top: calc(44px + 125vw - 12px - 36px - 12px); /* photo bottom − gap − pill height − gap */
     transform: translate(-50%, -100%);
     display: flex;
     align-items: center;
