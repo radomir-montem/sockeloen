@@ -155,7 +155,12 @@
 
 /* ---------- Heights ---------- */
 @media screen and (max-width: 749px) {
+  {%- if s.image_height_mobile_mode == 'screen' -%}
+  /* a share of the phone's screen height instead of fixed pixels, so the banner fills the same part of every phone; svh = the height with the browser bars shown, so nothing jumps while scrolling */
+  #Banner-{{ section.id }}, #Banner-{{ section.id }} .hero-slider__slide { min-height: {{ s.image_height_mobile_percent }}vh; min-height: {{ s.image_height_mobile_percent }}svh; }
+  {%- else -%}
   #Banner-{{ section.id }}, #Banner-{{ section.id }} .hero-slider__slide { min-height: {{ s.image_height_mobile }}px; }
+  {%- endif -%}
 }
 @media screen and (min-width: 750px) {
   #Banner-{{ section.id }}, #Banner-{{ section.id }} .hero-slider__slide { min-height: {{ s.banner_image_height }}px; }
@@ -678,6 +683,8 @@
     { "type": "header", "content": "Size" },
     { "type": "range", "id": "banner_image_height", "default": 700, "min": 50, "max": 1000, "step": 50, "unit": "px", "label": "Banner height (desktop)" },
     { "type": "range", "id": "image_height_mobile", "default": 650, "min": 50, "max": 750, "step": 50, "unit": "px", "label": "Banner height (mobile)" },
+    { "type": "select", "id": "image_height_mobile_mode", "label": "Mobile height unit", "options": [ { "value": "px", "label": "Pixels (setting above)" }, { "value": "screen", "label": "% of the screen height (setting below)" } ], "default": "px", "info": "Pixels look different per phone; a share of the screen height fills the same part of every phone. Desktop is not affected." },
+    { "type": "range", "id": "image_height_mobile_percent", "min": 40, "max": 100, "step": 5, "unit": "%", "label": "Banner height (mobile, % of screen)", "default": 80 },
     { "type": "header", "content": "Content block (desktop)", "info": "Position places the whole block of title, subtitle, buttons and social proof. Alignment is the default for the elements inside it." },
     { "type": "select", "id": "desktop_content_position", "options": [
       { "value": "top-left", "label": "Top left" }, { "value": "top-center", "label": "Top center" }, { "value": "top-right", "label": "Top right" },
