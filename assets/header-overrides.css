@@ -6548,3 +6548,10 @@ body.template--product .product-v2 .product-form__submit:hover {
   padding-right: 30px !important;
   background-position: center !important;
 }
+
+/* v2 price row: the SAVE badge sits on the price baseline, so its bottom hung 6.5px below the digits
+   (its own line-height + padding). Lift it so its bottom edge lines up with the bottom of the prices. */
+body.template--product .product-v2 .product-v2__price .product-save-badge {
+  position: relative;
+  top: -6.5px;
+}
