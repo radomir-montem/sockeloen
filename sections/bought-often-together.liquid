@@ -14,7 +14,7 @@
   assign max_items = section.settings.max_products
   assign metafield_limit = 3
   assign is_grid = false
-  if section.settings.layout == 'grid' and section.settings.product_source != 'recently_viewed'
+  if section.settings.layout == 'grid'
     assign is_grid = true
   endif
 
