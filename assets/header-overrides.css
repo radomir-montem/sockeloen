@@ -6336,3 +6336,20 @@ body.template--product .product-v2 .pdp-dots__dot.is-active {
   .bot-swiper.bot-grid .swiper-slide:nth-child(n+10) { display: none !important; }
   .bot-swiper .card__media > .ccr { display: none !important; }
 }
+
+/* Product-tile badges in the same glass as the info tiles and the benefit pill */
+#MainContent .card-wrapper .card-badge .badge,
+#MainContent .card-wrapper .card-bottom-badge .badge {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12)) !important;
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
+  backdrop-filter: blur(21px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  color: #111 !important;
+}
+/* no white line between the product rows: the columns keep their gap, the rows touch */
+body.template--collection #product-grid,
+body.template--search #product-grid,
+.bot-swiper.bot-grid .swiper-wrapper {
+  row-gap: 0 !important;
+}
