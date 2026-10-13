@@ -5197,7 +5197,7 @@ body.template--collection .breadcrumbs {
 /* .card__content is a 3-row grid (spacer / information / spacer); the
    information block is pinned to row 2, so the colour row goes in row 3
    to sit under the title and price. */
-.card-wrapper .card__content { position: relative; }
+.card-wrapper .card__content { position: relative; overflow: visible !important; } /* the swatch row sits above this box, over the photo */
 .card__content > .ccr {
   /* over the bottom of the product photo, centred (the content block starts right under the photo) */
   position: absolute;
