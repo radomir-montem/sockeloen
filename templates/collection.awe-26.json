@@ -73,7 +73,7 @@
       "settings": {
         "text": "SOCKELOEN",
         "video_desktop": "shopify://files/videos/SOCKELOEN_Sven2_FULL_4K.mp4",
-        "overlay_opacity": 0,
+        "overlay_opacity": 15,
         "background_color": "#000000",
         "text_color": "#ffffff",
         "accent_color": "#ffffff",
