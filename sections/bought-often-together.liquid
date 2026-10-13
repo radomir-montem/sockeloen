@@ -411,8 +411,21 @@
   <div class="{{ swiper_id }} bot-swiper overflow-hidden relative{% if is_grid %} bot-grid{% endif %}">
     <div class="swiper-wrapper">
       {%- unless is_recently_viewed -%}
+        {%- comment -%}
+          Product objects come from the source collection (read inside a paginate, so a big
+          collection is fully visible); all_products is only the fallback for products that are
+          not in it. Shopify allows just 20 all_products lookups per page, and two 12-product grids
+          went over that: the extra tiles then repeated the last product.
+        {%- endcomment -%}
+        {%- paginate section.settings.collection.products by 1000 -%}
         {%- for handle in combined_handle_array -%}
-          {%- assign carouselProduct = all_products[handle] -%}
+          {%- assign carouselProduct = blank -%}
+          {%- if section.settings.collection != blank -%}
+            {%- assign carouselProduct = section.settings.collection.products | where: 'handle', handle | first -%}
+          {%- endif -%}
+          {%- if carouselProduct == blank -%}
+            {%- assign carouselProduct = all_products[handle] -%}
+          {%- endif -%}
           {%- if carouselProduct != blank -%}
             <div class="swiper-slide">
               {% render 'card-product',
@@ -424,6 +437,7 @@
             </div>
           {%- endif -%}
         {%- endfor -%}
+        {%- endpaginate -%}
       {%- endunless -%}
     </div>
     <div class="{{ swiper_id }}-next bot-swiper-next">
