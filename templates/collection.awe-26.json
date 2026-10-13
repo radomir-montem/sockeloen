@@ -47,6 +47,10 @@
         "navigation": "collection-navigation",
         "products_per_page": 24,
         "variant_first_rules": "sockeloen-x-knwu:KNWU, knwu:KNWU",
+        "columns_desktop": "6",
+        "smart_mode": "none",
+        "smart_limit": 9,
+        "smart_days": 91,
         "force_variant_cards": true,
         "show_sold_out": true,
         "disable_image_hover": true,
@@ -61,8 +65,29 @@
         "enable_sorting": false,
         "columns_mobile": "2",
         "padding_top": 0,
-        "padding_bottom": 0,
-        "columns_desktop": "6"
+        "padding_bottom": 0
+      }
+    },
+    "scroll_reveal_awe": {
+      "type": "scroll-reveal-text",
+      "settings": {
+        "text": "SOCKELOEN",
+        "video_desktop": "shopify://files/videos/SOCKELOEN_Sven2_FULL_4K.mp4",
+        "overlay_opacity": 0,
+        "background_color": "#000000",
+        "text_color": "#ffffff",
+        "accent_color": "#ffffff",
+        "font_size_desktop": 96,
+        "font_size_mobile": 32,
+        "font_weight": "700",
+        "uppercase": false,
+        "alignment": "center",
+        "dim_opacity": 5,
+        "scroll_length": 200,
+        "button_label": "",
+        "button_link": "#ProductGridContainer",
+        "button_color": "#ffffff",
+        "button_text_color": "#000000"
       }
     },
     "two_cols_swap_7Pb9fx": {
@@ -118,7 +143,9 @@
       "settings": {
         "eme_banners": true,
         "scroll_effect": "sticky_label",
-        "grids_on_desktop": true
+        "grids_on_desktop": true,
+        "height_desktop": 75,
+        "height_mobile": 80
       }
     },
     "two_cols_swap_C8zCQ4": {
@@ -175,7 +202,9 @@
       "settings": {
         "eme_banners": true,
         "scroll_effect": "sticky_label",
-        "grids_on_desktop": true
+        "grids_on_desktop": true,
+        "height_desktop": 75,
+        "height_mobile": 80
       }
     },
     "recently_viewed_awe": {
@@ -185,6 +214,9 @@
         "product_source": "recently_viewed",
         "product_list": [],
         "collection": "",
+        "smart_mode": "none",
+        "smart_days": 91,
+        "smart_order": false,
         "max_products": 12,
         "heading": "Recently viewed",
         "heading_italic": "",
@@ -246,27 +278,6 @@
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 52
-      }
-    },
-    "scroll_reveal_awe": {
-      "type": "scroll-reveal-text",
-      "settings": {
-        "text": "Wind. Rain. Zero degrees.\nMost riders stay *home*.\nYou don't.",
-        "overlay_opacity": 45,
-        "background_color": "#000000",
-        "text_color": "#ffffff",
-        "accent_color": "#ffffff",
-        "font_size_desktop": 56,
-        "font_size_mobile": 32,
-        "font_weight": "700",
-        "uppercase": true,
-        "alignment": "center",
-        "dim_opacity": 15,
-        "scroll_length": 250,
-        "button_label": "Shop All Weather Essentials",
-        "button_link": "#ProductGridContainer",
-        "button_color": "#ffffff",
-        "button_text_color": "#000000"
       }
     }
   },
