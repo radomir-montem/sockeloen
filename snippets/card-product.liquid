@@ -180,7 +180,7 @@
             {% endunless %}
           </div>
         </div>
-        {% render 'card-color-row', product: card_product, current_variant: card_product.selected_or_first_available_variant %}
+        {% unless hide_color_row %}{% render 'card-color-row', product: card_product, current_variant: card_product.selected_or_first_available_variant %}{% endunless %}
         {%- if show_quick_add -%}
           <div class="quick-add no-js-hidden">
             {%- assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id -%}

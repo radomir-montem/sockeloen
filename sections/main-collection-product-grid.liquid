@@ -339,6 +339,7 @@
                       <li id="product" class="w-full{{ swap_cls }}">
                         {% render 'card-product',
                           card_product: product,
+                          hide_color_row: section.settings.force_variant_cards,
                           product_title: product.title,
                           media_aspect_ratio: section.settings.image_ratio,
                           show_secondary_image: section.settings.show_secondary_image,
@@ -420,6 +421,7 @@
                       <li id="product" class="w-full relative{{ swap_cls }}">
                             {% render 'card-product-variant',
                               card_product: variant,
+                              hide_color_row: section.settings.force_variant_cards,
                               tags: product.tags,
                               title: product.title,
                               color: color,
