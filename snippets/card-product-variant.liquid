@@ -474,7 +474,9 @@
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
-          {%- unless soldout -%}
+          {%- if coming_soon -%}
+            <span class="badge badge--bottom-left badge--coming-soon" style="background-color: {{ settings.sold_out_badge_color }};">{{- 'products.product.coming_soon' | t -}}</span>
+          {%- elsif soldout == false -%}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left"
@@ -495,7 +497,7 @@
                 {% break %}
               {% endif %}
             {% endfor %}
-          {%- endunless -%}
+          {%- endif -%}
           {%- liquid
             assign percent = 0
             if product.compare_at_price > product.price and product.metafields.custom.show_from_text == blank
