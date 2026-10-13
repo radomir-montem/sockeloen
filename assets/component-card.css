@@ -185,7 +185,14 @@
   z-index: 2;
 }
 
-.card-wrapper:hover .card-color-swatches,
+/* real pointers only: on iOS a :hover rule that reveals content turns the first tap into a hover,
+   so the product only opened on the second tap */
+@media (hover: hover) {
+  .card-wrapper:hover .card-color-swatches {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
 .card-wrapper:focus-within .card-color-swatches {
   opacity: 1;
   pointer-events: auto;
