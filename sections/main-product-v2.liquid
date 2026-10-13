@@ -2836,9 +2836,11 @@
           var c = document.createElement('canvas'); c.width = 40; c.height = 4;
           var ctx = c.getContext('2d');
           ctx.drawImage(im, 0, 0, im.naturalWidth, Math.max(1, Math.round(im.naturalHeight * 0.03)), 0, 0, 40, 4);
-          var d = ctx.getImageData(0, 0, 40, 4).data, n = d.length / 4, r = 0, g = 0, b = 0;
-          for (var i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; }
-          r /= n; g /= n; b /= n;
+          var d = ctx.getImageData(0, 0, 40, 4).data, n = d.length / 4, r = 0, g = 0, b = 0, a = 0;
+          for (var i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; a += d[i + 3]; }
+          r /= n; g /= n; b /= n; a /= n;
+          /* studio renders are PNGs with a transparent top: the grey comes from the box gradient, which the topper already carries */
+          if (a < 250) { done('flat'); return; }
           var dev = 0;
           for (var j = 0; j < d.length; j += 4) { dev = Math.max(dev, Math.abs(d[j] - r), Math.abs(d[j + 1] - g), Math.abs(d[j + 2] - b)); }
           var lum = 0.299 * r + 0.587 * g + 0.114 * b;
