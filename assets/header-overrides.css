@@ -6404,5 +6404,5 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
   .bot-swiper.bot-grid .card__information .card-title,
   .bot-swiper.bot-grid .card__information .card-information,
   .bot-swiper.bot-grid .card__content { display: none !important; }
-  .bot-swiper.bot-grid .swiper-wrapper { row-gap: 12px !important; }
+  [class*="bot-section-"] .bot-swiper.bot-grid .swiper-wrapper { row-gap: 12px !important; }
 }
