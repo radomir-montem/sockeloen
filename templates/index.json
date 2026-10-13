@@ -142,7 +142,9 @@
         "sp_text_color": "#ffffff",
         "sp_spacing_top": 26,
         "sp_align_desktop": "left",
-        "sp_align_mobile": "left"
+        "sp_align_mobile": "left",
+        "image_height_mobile_mode": "screen",
+        "image_height_mobile_percent": 80
       }
     },
     "featured_collection": {
