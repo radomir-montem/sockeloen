@@ -114,8 +114,8 @@
         "heading_italic_color": "#f76503",
         "heading_alignment": "center",
         "image_ratio": "portrait",
-        "desktop_columns": 4,
-        "mobile_columns": 2,
+        "desktop_columns": 6,
+        "mobile_columns": 3,
         "background_color": "#ffffff",
         "padding_top": 20,
         "padding_bottom": 0
