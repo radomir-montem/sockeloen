@@ -247,11 +247,33 @@
         "padding_top": 40,
         "padding_bottom": 52
       }
+    },
+    "scroll_reveal_awe": {
+      "type": "scroll-reveal-text",
+      "settings": {
+        "text": "Wind. Rain. Zero degrees.\nMost riders stay *home*.\nYou don't.",
+        "overlay_opacity": 45,
+        "background_color": "#000000",
+        "text_color": "#ffffff",
+        "accent_color": "#ffffff",
+        "font_size_desktop": 56,
+        "font_size_mobile": 32,
+        "font_weight": "800",
+        "uppercase": false,
+        "alignment": "center",
+        "dim_opacity": 15,
+        "scroll_length": 250,
+        "button_label": "Shop All Weather Essentials",
+        "button_link": "#ProductGridContainer",
+        "button_color": "#ffffff",
+        "button_text_color": "#000000"
+      }
     }
   },
   "order": [
     "banner",
     "product-grid",
+    "scroll_reveal_awe",
     "two_cols_swap_7Pb9fx",
     "two_cols_swap_C8zCQ4",
     "recently_viewed_awe",
