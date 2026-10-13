@@ -712,3 +712,48 @@
     border-bottom: 0 !important;
   }
 }
+
+/* the gallery photo order (data-pdp-order, see main-product-v2.liquid) holds on phones too: the phone
+   slider and its thumbnail strip show the same sequence as the desktop gallery */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2--gallery [data-pdp-order="0"] { order: 0; }
+  body.template--product .product-v2--gallery [data-pdp-order="1"] { order: 1; }
+  body.template--product .product-v2--gallery [data-pdp-order="2"] { order: 2; }
+  body.template--product .product-v2--gallery [data-pdp-order="3"] { order: 3; }
+  body.template--product .product-v2--gallery [data-pdp-order="4"] { order: 4; }
+  body.template--product .product-v2--gallery [data-pdp-order="5"] { order: 5; }
+  body.template--product .product-v2--gallery [data-pdp-order="6"] { order: 6; }
+  body.template--product .product-v2--gallery [data-pdp-order="7"] { order: 7; }
+  body.template--product .product-v2--gallery [data-pdp-order="8"] { order: 8; }
+  body.template--product .product-v2--gallery [data-pdp-order="9"] { order: 9; }
+  body.template--product .product-v2--gallery [data-pdp-order="10"] { order: 10; }
+  body.template--product .product-v2--gallery [data-pdp-order="11"] { order: 11; }
+  body.template--product .product-v2--gallery [data-pdp-order="12"] { order: 12; }
+  body.template--product .product-v2--gallery [data-pdp-order="13"] { order: 13; }
+  body.template--product .product-v2--gallery [data-pdp-order="14"] { order: 14; }
+  body.template--product .product-v2--gallery [data-pdp-order="15"] { order: 15; }
+  body.template--product .product-v2--gallery [data-pdp-order="16"] { order: 16; }
+  body.template--product .product-v2--gallery [data-pdp-order="17"] { order: 17; }
+  body.template--product .product-v2--gallery [data-pdp-order="18"] { order: 18; }
+  body.template--product .product-v2--gallery [data-pdp-order="19"] { order: 19; }
+  body.template--product .product-v2--gallery [data-pdp-order="20"] { order: 20; }
+  body.template--product .product-v2--gallery [data-pdp-order="21"] { order: 21; }
+  body.template--product .product-v2--gallery [data-pdp-order="22"] { order: 22; }
+  body.template--product .product-v2--gallery [data-pdp-order="23"] { order: 23; }
+  body.template--product .product-v2--gallery [data-pdp-order="24"] { order: 24; }
+  body.template--product .product-v2--gallery [data-pdp-order="25"] { order: 25; }
+  body.template--product .product-v2--gallery [data-pdp-order="26"] { order: 26; }
+  body.template--product .product-v2--gallery [data-pdp-order="27"] { order: 27; }
+  body.template--product .product-v2--gallery [data-pdp-order="28"] { order: 28; }
+  body.template--product .product-v2--gallery [data-pdp-order="29"] { order: 29; }
+  body.template--product .product-v2--gallery [data-pdp-order="30"] { order: 30; }
+  body.template--product .product-v2--gallery [data-pdp-order="31"] { order: 31; }
+  body.template--product .product-v2--gallery [data-pdp-order="32"] { order: 32; }
+  body.template--product .product-v2--gallery [data-pdp-order="33"] { order: 33; }
+  body.template--product .product-v2--gallery [data-pdp-order="34"] { order: 34; }
+  body.template--product .product-v2--gallery [data-pdp-order="35"] { order: 35; }
+  body.template--product .product-v2--gallery [data-pdp-order="36"] { order: 36; }
+  body.template--product .product-v2--gallery [data-pdp-order="37"] { order: 37; }
+  body.template--product .product-v2--gallery [data-pdp-order="38"] { order: 38; }
+  body.template--product .product-v2--gallery [data-pdp-order="39"] { order: 39; }
+}
