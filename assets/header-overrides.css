@@ -6447,7 +6447,8 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
     scroll-padding-left: 12px;
   }
   body.template--product .product-v2 .thumbnail-list__item { height: auto !important; }
-  body.template--product .product-v2 .product-v2__info-wrapper { padding-top: 12px !important; }
+  /* 6px under the thumbnail inside its list item + 4px flex gap above the info: 2px more makes 12px */
+  body.template--product .product-v2 .product-v2__info-wrapper { padding-top: 2px !important; }
 
   /* ---- one calm type scale and rhythm inside the buy and trust tiles (same rhythm as the desktop tiles) ---- */
   body.template--product .product-v2 .pdp-tile--buy,
