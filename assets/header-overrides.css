@@ -5226,6 +5226,9 @@ body.template--collection #product-grid.product-grid--6 {
 .product-card-wrapper .card-title > span { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .product-card-wrapper .card-title > span:not(.card-title-color) { max-width: 70%; }
 .product-card-wrapper .card-title > .card-title-color { max-width: 45%; }
+/* collection grids: no colour name on the cards (the title gets the whole line) */
+#product-grid .product-card-wrapper .card-title > .card-title-color { display: none !important; }
+#product-grid .product-card-wrapper .card-title > span:not(.card-title-color) { max-width: 100%; }
 /* phones too: base.css stacks the colour under the title there; keep it on the same line */
 @media screen and (max-width: 749px) {
   .product-card-wrapper .card-title { flex-direction: row; flex-wrap: nowrap; align-items: baseline; gap: 5px; }
