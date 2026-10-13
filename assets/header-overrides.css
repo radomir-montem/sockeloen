@@ -6399,3 +6399,36 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
   }
 }
 
+
+/* Mobile v2 product page (below the desktop gallery breakpoint): the buy box in the same three tiles as on
+   desktop (social proof → buy button, shipping/payment lines, info links incl. description). Tiles in the
+   page grey, the area around them white, tile edges 12px from the screen edge like the header pill. */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .product-v2__info-wrapper {
+    background: #fff !important;
+    padding: 12px 12px 12px !important;
+  }
+  body.template--product .product-v2 .product-v2__info-wrapper > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  body.template--product .product-v2 .pdp-tile {
+    display: block;
+    background: #f4f4f1;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  body.template--product .product-v2 .pdp-tile:empty { display: none; }
+  body.template--product .product-v2 .pdp-tile > :first-child { margin-top: 0 !important; }
+  body.template--product .product-v2 .pdp-tile > :last-child { margin-bottom: 0 !important; }
+  body.template--product .product-v2 .pdp-tile .product-v2__social-proof,
+  body.template--product .product-v2 .pdp-tile .product-v2__reviews-bar {
+    background: none !important;
+    box-shadow: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
