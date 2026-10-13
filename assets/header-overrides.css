@@ -6261,6 +6261,16 @@ body.template--product .product-v2 .pdp-dots {
   pointer-events: none;
 }
 body.template--product .product-v2 .pdp-dots.is-hidden { display: none; }
+/* dots inside the benefit container: stacked above the pill with a fixed 12px gap, so a two-line benefit cannot overlap them */
+body.template--product .product-v2 .pdp-tags { gap: 12px; }
+body.template--product .product-v2 .pdp-tags .pdp-dots {
+  position: static !important;
+  top: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  margin: 0;
+}
 body.template--product .product-v2 .pdp-dots__dot {
   width: 6px;
   height: 6px;

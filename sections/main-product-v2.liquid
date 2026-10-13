@@ -2895,7 +2895,9 @@
     if (wrapper && list) {
       var dots = document.createElement('div');
       dots.className = 'pdp-dots'; dots.setAttribute('aria-hidden', 'true');
-      wrapper.appendChild(dots);
+      /* inside the benefit container when there is one: the dots then sit 12px above the pill whatever its height */
+      var tagsBox = root.querySelector('.pdp-tags');
+      if (tagsBox) tagsBox.insertBefore(dots, tagsBox.firstChild); else wrapper.appendChild(dots);
       var lastCount = -1;
       function slides() {
         var all = Array.prototype.slice.call(list.querySelectorAll('.product__media-item:not(.pdp-clone)')).filter(function (s) { return s.style.display !== 'none'; });
