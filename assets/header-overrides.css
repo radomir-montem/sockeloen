@@ -6444,7 +6444,7 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
   .bot-swiper.bot-grid .price__regular,
   .bot-swiper.bot-grid .price__sale { display: flex; align-items: baseline; gap: 4px; margin: 0; }
   .bot-swiper.bot-grid .price--on-sale .price__regular { display: none !important; }
-  .bot-swiper.bot-grid .price--on-sale .price__sale { display: flex !important; }
+  .bot-swiper.bot-grid .price--on-sale .price__sale { display: flex !important; flex-direction: row-reverse; justify-content: flex-end; }
   .bot-swiper.bot-grid .price:not(.price--on-sale) .price__sale { display: none !important; }
   .bot-swiper.bot-grid .price .regular-text,
   .bot-swiper.bot-grid .price .real-price {
@@ -6454,7 +6454,7 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
     margin: 0 !important;
     white-space: nowrap;
   }
-  .bot-swiper.bot-grid .price .real-price { font-weight: 700 !important; order: -1; }
+  .bot-swiper.bot-grid .price .real-price { font-weight: 700 !important; }
   .bot-swiper.bot-grid .price__sale > span:not(.real-price) .regular-text {
     font-size: 10px !important;
     font-weight: 400;
