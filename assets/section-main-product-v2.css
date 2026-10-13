@@ -1756,20 +1756,25 @@ sticky-atc-v2.hidden {
   }
 }
 
-/* ---------- Product Carousel — prevent vertical scroll on mobile ---------- */
+/* ---------- Product Carousel — prevent vertical scroll on mobile ----------
+   Sliders only: the grid layout (.bot-grid) is plain rows, and pan-x there
+   blocked vertical page scrolling, so people got stuck on that block. */
 @media screen and (max-width: 749px) {
-  [class*="bot-section-"] .bot-swiper {
+  [class*="bot-section-"] .bot-swiper:not(.bot-grid) {
     overflow: hidden !important;
     -webkit-overflow-scrolling: auto !important;
     touch-action: pan-x !important;
   }
+  [class*="bot-section-"] .bot-swiper.bot-grid {
+    touch-action: auto !important;
+  }
 
-  [class*="bot-section-"] .swiper-wrapper {
+  [class*="bot-section-"] .bot-swiper:not(.bot-grid) .swiper-wrapper {
     flex-wrap: nowrap !important;
     overflow: visible !important;
   }
 
-  [class*="bot-section-"] .swiper-slide {
+  [class*="bot-section-"] .bot-swiper:not(.bot-grid) .swiper-slide {
     flex-shrink: 0 !important;
   }
 }
