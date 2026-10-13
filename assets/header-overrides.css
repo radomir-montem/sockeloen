@@ -6432,3 +6432,89 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
     margin-right: 0 !important;
   }
 }
+
+/* Phones: the sliders' trailing spacer (::after, order 0) sat between the first photo and the rest since the
+   photos got a CSS order on phones: a 4px sliver of photo 2 at the right edge, and a double gap after the
+   first thumbnail. The spacer goes to the end again. */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .product__media-list::after,
+  body.template--product .product-v2 .thumbnail-list::after { order: 9999; }
+
+  /* thumbnail strip: first thumb lined up with the tiles (12px), 12px above and below */
+  body.template--product .product-v2 .thumbnail-slider { padding-top: 0 !important; }
+  body.template--product .product-v2 .thumbnail-list {
+    padding: 12px 12px 0 !important;
+    scroll-padding-left: 12px;
+  }
+  body.template--product .product-v2 .thumbnail-list__item { height: auto !important; }
+  body.template--product .product-v2 .product-v2__info-wrapper { padding-top: 12px !important; }
+
+  /* ---- one calm type scale and rhythm inside the buy and trust tiles (same rhythm as the desktop tiles) ---- */
+  body.template--product .product-v2 .pdp-tile--buy,
+  body.template--product .product-v2 .pdp-tile--trust { letter-spacing: 0.2px; color: #1a1a1a; }
+  body.template--product .product-v2 .pdp-tile .product-v2__social-proof,
+  body.template--product .product-v2 .pdp-tile .product-v2__reviews-bar {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 14px !important;
+  }
+  body.template--product .product-v2 .pdp-tile .product-v2__social-proof * { letter-spacing: 0.2px !important; }
+  body.template--product .product-v2 .pdp-tile .product-v2__title {
+    font-size: 24px !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0 !important;
+    padding-bottom: 6px !important;
+    margin: 0 !important;
+  }
+  body.template--product .product-v2 .pdp-tile .product-v2__price { margin: 0 0 14px !important; }
+  body.template--product .product-v2 .pdp-tile .product-v2__price * { letter-spacing: 0.2px !important; }
+  body.template--product .product-v2 .pdp-tile .product-v2__price .real-price { margin-left: 0 !important; }
+  body.template--product .product-v2 .pdp-tile .product-v2__benefits {
+    margin: 0 0 16px !important;
+    gap: 4px !important;
+  }
+  body.template--product .product-v2 .pdp-tile .product-v2__benefit {
+    margin: 0 !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0.2px !important;
+    color: #1a1a1a !important;
+  }
+  body.template--product .product-v2 .pdp-tile .product-form__input { margin-bottom: 12px !important; }
+  body.template--product .product-v2 .pdp-tile .color-input--thumbs .color-input__selected-name,
+  body.template--product .product-v2 .pdp-tile .color-input--thumbs .color-input__selected-name * {
+    font-size: 14px !important;
+    letter-spacing: 0.2px !important;
+  }
+  body.template--product .product-v2 .pdp-tile .color-input--thumbs .color-input__selected-name { margin-bottom: 8px !important; }
+  body.template--product .product-v2 .pdp-tile .product-form__input.size-input input[type='radio'] + label { letter-spacing: 0.2px !important; }
+  body.template--product .product-v2 .pdp-tile .product-form-wrapper { margin-top: 2px !important; margin-bottom: 12px !important; }
+  body.template--product .product-v2 .pdp-tile .size-guide-link {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 14px !important;
+    letter-spacing: 0.2px !important;
+  }
+  body.template--product .product-v2 .pdp-tile--buy > :last-child,
+  body.template--product .product-v2 .pdp-tile--buy > :last-child > * {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  /* trust tile: same text size as the benefits, 10px between the two lines, no trailing space */
+  body.template--product .product-v2 .pdp-tile--trust .product-v2__trust-row,
+  body.template--product .product-v2 .pdp-tile--trust .product-v2__secure-row {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  body.template--product .product-v2 .pdp-tile--trust > * + * { margin-top: 10px !important; }
+  body.template--product .product-v2 .pdp-tile--trust > :last-child,
+  body.template--product .product-v2 .pdp-tile--trust > :last-child > * { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+  body.template--product .product-v2 .pdp-tile--trust * {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    letter-spacing: 0.2px !important;
+  }
+}
