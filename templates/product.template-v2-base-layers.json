@@ -106,10 +106,11 @@
       "type": "bought-often-together",
       "name": "Product Carousel",
       "settings": {
-        "product_source": "my_fields.product_upsells","layout":"grid",
+        "product_source": "my_fields.product_upsells",
+        "layout": "grid",
         "product_list": [],
         "collection": "best-sellers-1",
-        "max_products": 8,
+        "max_products": 12,
         "heading": "other riders",
         "heading_italic": "Also bought",
         "heading_size": 30,

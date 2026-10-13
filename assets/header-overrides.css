@@ -6326,3 +6326,7 @@ body.template--product .product-v2 .pdp-dots__dot.is-active {
 @media screen and (min-width: 750px) and (max-width: 989px) {
   body.template--product .product-v2 .pdp-dots { display: none; }
 }
+
+/* product-page carousels (other riders also bought, recently viewed): no colour name on the cards */
+.bot-swiper .product-card-wrapper .card-title > .card-title-color { display: none !important; }
+.bot-swiper .product-card-wrapper .card-title > span:not(.card-title-color) { max-width: 100%; }
