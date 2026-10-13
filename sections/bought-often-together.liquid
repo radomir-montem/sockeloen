@@ -178,6 +178,14 @@
     min-width: 0;
     height: auto;
   }
+  /* the grid is no slider: vertical touch scrolling must keep working over it
+     (Swiper's touch-action: pan-x blocked it and people got stuck on this block) */
+  .{{ swiper_id }}.bot-grid,
+  .{{ swiper_id }}.bot-grid .swiper-wrapper,
+  .{{ swiper_id }}.bot-grid .swiper-slide {
+    touch-action: auto !important;
+    cursor: auto;
+  }
   .{{ swiper_id }}.bot-grid .bot-swiper-next,
   .{{ swiper_id }}.bot-grid .bot-swiper-prev {
     display: none !important;
@@ -273,6 +281,30 @@
     var imageRatio = '{{ section.settings.image_ratio }}';
 
     var isGrid = {{ is_grid }};
+
+    /* grid layout: the theme bundle (bundle.js) still runs `new Swiper` on the first .bot-swiper
+       it finds; that instance set touch-action: pan-x and swallowed drags, so the page could not
+       be scrolled over this block. Destroy any instance that lands on the grid. */
+    function killSwiper() {
+      var el = document.querySelector('.' + swiperId);
+      if (!el) return;
+      if (el.swiper && typeof el.swiper.destroy === 'function') {
+        el.swiper.destroy(true, true);
+      }
+      el.classList.remove('swiper-initialized', 'swiper-horizontal', 'swiper-pointer-events', 'swiper-backface-hidden');
+      el.style.touchAction = 'auto';
+    }
+    if (isGrid) {
+      killSwiper();
+      document.addEventListener('DOMContentLoaded', killSwiper);
+      window.addEventListener('load', killSwiper);
+      var gridEl = document.querySelector('.' + swiperId);
+      if (gridEl && window.MutationObserver) {
+        new MutationObserver(function () {
+          if (gridEl.classList.contains('swiper-initialized')) killSwiper();
+        }).observe(gridEl, { attributes: true, attributeFilter: ['class'] });
+      }
+    }
 
     function initSwiper() {
       if (isGrid) return; /* grid layout: plain rows, no slider */
