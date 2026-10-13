@@ -258,17 +258,15 @@
         "accent_color": "#ffffff",
         "font_size_desktop": 56,
         "font_size_mobile": 32,
-        "font_weight": "800",
-        "uppercase": false,
+        "font_weight": "700",
+        "uppercase": true,
         "alignment": "center",
         "dim_opacity": 15,
         "scroll_length": 250,
         "button_label": "Shop All Weather Essentials",
         "button_link": "#ProductGridContainer",
         "button_color": "#ffffff",
-        "button_text_color": "#000000",
-        "video_desktop": "shopify://files/videos/copy_DCA8A2FD-CD03-4931-8601-062B99A8E1C3.MOV",
-        "video_mobile": "shopify://files/videos/SOCKELOEN_Beanie3_FULL_4K.mov"
+        "button_text_color": "#000000"
       }
     }
   },

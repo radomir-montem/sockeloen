@@ -80,18 +80,20 @@
     padding: 0 48px;
     text-align: {{ section.settings.alignment }};
   }
+  /* same type as the SOCKELOEN wordmark in the footer: Roboto, bold, line-height 1, -0.02em */
   #{{ sid }} .srt__text {
     margin: 0;
-    font-family: var(--font-heading-family);
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
     font-size: {{ section.settings.font_size_desktop }}px;
     font-weight: {{ section.settings.font_weight }};
-    line-height: 1.12;
+    line-height: 1;
     letter-spacing: -0.02em;
     color: inherit;
     {%- if section.settings.uppercase %} text-transform: uppercase;{% endif %}
   }
   #{{ sid }} .srt__line { display: block; }
-  #{{ sid }} .srt__line + .srt__line { margin-top: 0.45em; }
+  #{{ sid }} .srt__line + .srt__line { margin-top: 0.2em; }
   #{{ sid }} .srt__word {
     display: inline-block;
     opacity: {{ section.settings.dim_opacity | divided_by: 100.0 }};
@@ -296,10 +298,10 @@
       "type": "select",
       "id": "font_weight",
       "label": "Font weight",
-      "options": [ { "value": "700", "label": "Bold" }, { "value": "800", "label": "Extra bold" }, { "value": "900", "label": "Black" } ],
-      "default": "800"
+      "options": [ { "value": "700", "label": "Bold (as the footer wordmark)" }, { "value": "800", "label": "Extra bold" }, { "value": "900", "label": "Black" } ],
+      "default": "700"
     },
-    { "type": "checkbox", "id": "uppercase", "label": "Uppercase", "default": false },
+    { "type": "checkbox", "id": "uppercase", "label": "Uppercase", "default": true },
     {
       "type": "select",
       "id": "alignment",
