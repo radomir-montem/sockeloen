@@ -1,0 +1,26 @@
+{%- comment -%}
+  Product family for the "Complete the look" ordering: products of the same family are alternatives,
+  other families complete the look. Looks at the type AND the title, because the types are not
+  consistent (gloves live under "Accessoires" and "Cycling Gloves", some products have no type).
+  Usage: {% render 'product-family', type: product.type, title: product.title %}
+{%- endcomment -%}
+{%- liquid
+  assign t = type | append: ' ' | append: title | downcase
+  if t contains 'sock'
+    echo 'socks'
+  elsif t contains 'overshoe' or t contains 'shoe cover' or t contains 'shoecover' or t contains 'toe cover' or t contains 'aero toes' or t contains 'aerotoes'
+    echo 'overshoes'
+  elsif t contains 'glove'
+    echo 'gloves'
+  elsif t contains 'base layer' or t contains 'baselayer'
+    echo 'baselayers'
+  elsif t contains 'arm cover' or t contains 'arm warmer' or t contains 'leg warmer'
+    echo 'warmers'
+  elsif t contains 'neckwarmer' or t contains 'neck warmer' or t contains 'beanie' or t contains 'cap' or t contains 'helmet'
+    echo 'headwear'
+  elsif type != blank
+    echo type | downcase | strip
+  else
+    echo 'other'
+  endif
+-%}

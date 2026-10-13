@@ -76,7 +76,129 @@
     comment
       Step 3: Fill remaining slots from collection
     endcomment
-    if section.settings.collection != blank and combined_count < max_items
+    if section.settings.collection != blank and combined_count < max_items and section.settings.smart_order
+      comment
+        "Complete the look" order, no metafields needed: the collection is sorted by best selling
+        (automatic collection). Products of OTHER families than the viewed product come first,
+        mixed (see the score below), so a row shows e.g. socks + gloves + base layer instead of
+        three socks. Products of the SAME family (alternatives) fill the remaining slots, also
+        best selling first.
+      endcomment
+      capture cur_family
+        render 'product-family', type: product.type, title: product.title
+      endcapture
+      assign cur_family = cur_family | strip
+      comment
+        Score per complementary product = (position within its family × 6) + (position in the
+        best-selling collection). Low score first. So the best product of each family comes early
+        (first row mixes families), but a family's second product still beats the first product of
+        a family that hardly sells.
+      endcomment
+      assign fam_keys = ''
+      assign fam_counts = ''
+      assign scored = ''
+      assign same_list = ''
+      assign pos = 0
+      for col_product in section.settings.collection.products
+        if col_product.handle == product.handle or col_product.available == false
+          continue
+        endif
+        assign already_added = false
+        assign handle_check = combined_handles | split: ','
+        for h in handle_check
+          if h == col_product.handle
+            assign already_added = true
+            break
+          endif
+        endfor
+        if already_added
+          continue
+        endif
+        capture fam
+          render 'product-family', type: col_product.type, title: col_product.title
+        endcapture
+        assign fam = fam | strip
+        if fam == cur_family
+          if same_list == ''
+            assign same_list = col_product.handle
+          else
+            assign same_list = same_list | append: ';' | append: col_product.handle
+          endif
+        else
+          assign key_arr = fam_keys | split: ','
+          assign count_arr = fam_counts | split: ','
+          assign fam_index = -1
+          for k in key_arr
+            if k == fam
+              assign fam_index = forloop.index0
+              break
+            endif
+          endfor
+          assign fam_pos = 0
+          if fam_index == -1
+            if fam_keys == ''
+              assign fam_keys = fam
+              assign fam_counts = '1'
+            else
+              assign fam_keys = fam_keys | append: ',' | append: fam
+              assign fam_counts = fam_counts | append: ',1'
+            endif
+          else
+            assign fam_pos = count_arr[fam_index] | plus: 0
+            assign fam_counts = ''
+            for c in count_arr
+              assign entry = c
+              if forloop.index0 == fam_index
+                assign entry = c | plus: 1
+              endif
+              if forloop.first
+                assign fam_counts = entry | append: ''
+              else
+                assign fam_counts = fam_counts | append: ',' | append: entry
+              endif
+            endfor
+          endif
+          assign score = fam_pos | times: 6 | plus: pos | plus: 10000
+          assign entry = score | append: '|' | append: col_product.handle
+          if scored == ''
+            assign scored = entry
+          else
+            assign scored = scored | append: ';' | append: entry
+          endif
+        endif
+        assign pos = pos | plus: 1
+      endfor
+      assign scored_arr = scored | split: ';' | sort
+      for entry in scored_arr
+        if combined_count >= max_items
+          break
+        endif
+        if entry == ''
+          continue
+        endif
+        assign h = entry | split: '|' | last
+        if combined_handles == ''
+          assign combined_handles = h
+        else
+          assign combined_handles = combined_handles | append: ',' | append: h
+        endif
+        assign combined_count = combined_count | plus: 1
+      endfor
+      if same_list != ''
+        assign same_arr = same_list | split: ';'
+        for h in same_arr
+          if combined_count >= max_items
+            break
+          endif
+          if combined_handles == ''
+            assign combined_handles = h
+          else
+            assign combined_handles = combined_handles | append: ',' | append: h
+          endif
+          assign combined_count = combined_count | plus: 1
+        endfor
+      endif
+    elsif section.settings.collection != blank and combined_count < max_items
       for col_product in section.settings.collection.products
         if combined_count >= max_items
           break
@@ -469,6 +591,13 @@
       "id": "collection",
       "label": "Collection",
       "info": "Used to fill remaining carousel slots after metafield products."
+    },
+    {
+      "type": "checkbox",
+      "id": "smart_order",
+      "label": "Complete the look order",
+      "info": "Other product families than the viewed product first (mixed per row, best selling first), then products of the same family. Use with a collection sorted by best selling.",
+      "default": false
     },
     {
       "type": "range",
