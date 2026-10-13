@@ -44,10 +44,10 @@
     "product-grid": {
       "type": "main-collection-product-grid",
       "settings": {
-        "navigation": "collection-navigation",
+        "navigation": "",
         "products_per_page": 24,
         "variant_first_rules": "sockeloen-x-knwu:KNWU, knwu:KNWU",
-        "columns_desktop": "6",
+        "columns_desktop": "4",
         "smart_mode": "none",
         "smart_limit": 9,
         "smart_days": 91,
