@@ -293,8 +293,18 @@
           and the raw metafield texts must never resurface.
         {%- endcomment -%}
         <div class="absolute top-[15px] left-[12px] card-badge">
-          {%- comment -%} "New" badge for every product carrying the tag chosen in theme settings {%- endcomment -%}
-          {%- if settings.new_badge_tag != blank and coming_soon != true -%}
+          {%- comment -%} "New" badge: tag from theme settings, OR published in the last settings.new_badge_days days {%- endcomment -%}
+          {%- assign is_new = false -%}
+          {%- if settings.new_badge_days > 0 and coming_soon != true and card_product.published_at != blank -%}
+            {%- assign new_cut = settings.new_badge_days | times: 86400 -%}
+            {%- assign new_now = 'now' | date: '%s' | plus: 0 -%}
+            {%- assign new_cut = new_now | minus: new_cut -%}
+            {%- assign new_pub = card_product.published_at | date: '%s' | plus: 0 -%}
+            {%- if new_pub >= new_cut -%}{%- assign is_new = true -%}{%- endif -%}
+          {%- endif -%}
+          {%- if is_new -%}
+            <span class="badge badge--bottom-left uppercase mr-[6px] badge--new">{{ settings.new_badge_text | default: 'New' }}</span>
+          {%- elsif settings.new_badge_tag != blank and coming_soon != true -%}
             {%- assign new_tag = settings.new_badge_tag | downcase | strip -%}
             {%- for new_t in card_product.tags -%}
               {%- assign new_tl = new_t | downcase | strip -%}

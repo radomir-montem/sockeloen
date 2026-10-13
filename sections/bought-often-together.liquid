@@ -76,7 +76,47 @@
     comment
       Step 3: Fill remaining slots from collection
     endcomment
-    if section.settings.collection != blank and combined_count < max_items and section.settings.smart_order
+    assign smart_mode = section.settings.smart_mode | default: 'none'
+    if section.settings.smart_order and smart_mode == 'none'
+      assign smart_mode = 'complete'
+    endif
+    if section.settings.collection != blank and combined_count < max_items and smart_mode == 'new' or smart_mode == 'sale'
+      comment
+        "New" / "Sale" lists, see snippets/smart-product-list.liquid. The source collection can hold
+        more than 50 products, so it is read inside a paginate.
+      endcomment
+      paginate section.settings.collection.products by 1000
+        capture smart_handles
+          render 'smart-product-list', mode: smart_mode, source: section.settings.collection, limit: max_items, days: section.settings.smart_days, exclude: product.handle
+        endcapture
+      endpaginate
+      assign smart_arr = smart_handles | strip | split: ','
+      for h in smart_arr
+        if combined_count >= max_items
+          break
+        endif
+        if h == ''
+          continue
+        endif
+        assign already_added = false
+        assign handle_check = combined_handles | split: ','
+        for hc in handle_check
+          if hc == h
+            assign already_added = true
+            break
+          endif
+        endfor
+        if already_added
+          continue
+        endif
+        if combined_handles == ''
+          assign combined_handles = h
+        else
+          assign combined_handles = combined_handles | append: ',' | append: h
+        endif
+        assign combined_count = combined_count | plus: 1
+      endfor
+    elsif section.settings.collection != blank and combined_count < max_items and smart_mode == 'complete'
       comment
         "Complete the look" order, no metafields needed: the collection is sorted by best selling
         (automatic collection). Products of OTHER families than the viewed product come first,
@@ -371,8 +411,21 @@
   <div class="{{ swiper_id }} bot-swiper overflow-hidden relative{% if is_grid %} bot-grid{% endif %}">
     <div class="swiper-wrapper">
       {%- unless is_recently_viewed -%}
+        {%- comment -%}
+          Product objects come from the source collection (read inside a paginate, so a big
+          collection is fully visible); all_products is only the fallback for products that are
+          not in it. Shopify allows just 20 all_products lookups per page, and two 12-product grids
+          went over that: the extra tiles then repeated the last product.
+        {%- endcomment -%}
+        {%- paginate section.settings.collection.products by 1000 -%}
         {%- for handle in combined_handle_array -%}
-          {%- assign carouselProduct = all_products[handle] -%}
+          {%- assign carouselProduct = blank -%}
+          {%- if section.settings.collection != blank -%}
+            {%- assign carouselProduct = section.settings.collection.products | where: 'handle', handle | first -%}
+          {%- endif -%}
+          {%- if carouselProduct == blank -%}
+            {%- assign carouselProduct = all_products[handle] -%}
+          {%- endif -%}
           {%- if carouselProduct != blank -%}
             <div class="swiper-slide">
               {% render 'card-product',
@@ -384,6 +437,7 @@
             </div>
           {%- endif -%}
         {%- endfor -%}
+        {%- endpaginate -%}
       {%- endunless -%}
     </div>
     <div class="{{ swiper_id }}-next bot-swiper-next">
@@ -593,10 +647,32 @@
       "info": "Used to fill remaining carousel slots after metafield products."
     },
     {
+      "type": "select",
+      "id": "smart_mode",
+      "label": "Smart order",
+      "options": [
+        { "value": "none", "label": "Off (collection order)" },
+        { "value": "complete", "label": "Complete the look" },
+        { "value": "new", "label": "New (last X days)" },
+        { "value": "sale", "label": "Sale (discounted)" }
+      ],
+      "default": "none",
+      "info": "Complete the look: other product families first, then alternatives. New: published in the last X days, best selling first. Sale: discounted products ranked by sales and discount. Use a collection sorted by best selling. No metafields needed."
+    },
+    {
+      "type": "range",
+      "id": "smart_days",
+      "label": "'New' window (days)",
+      "min": 14,
+      "max": 364,
+      "step": 7,
+      "default": 91
+    },
+    {
       "type": "checkbox",
       "id": "smart_order",
-      "label": "Complete the look order",
-      "info": "Other product families than the viewed product first (mixed per row, best selling first), then products of the same family. Use with a collection sorted by best selling.",
+      "label": "(old) Complete the look order",
+      "info": "Replaced by 'Smart order' above; still works when that is Off.",
       "default": false
     },
     {

@@ -211,6 +211,16 @@
         "content": "New badge"
       },
       {
+        "type": "range",
+        "id": "new_badge_days",
+        "label": "'New' badge for products published in the last … days",
+        "min": 0,
+        "max": 365,
+        "step": 5,
+        "default": 60,
+        "info": "Automatic: no tag needed. 0 switches this off; the tag below keeps working."
+      },
+      {
         "type": "text",
         "id": "new_badge_tag",
         "label": "Product tag that gets a 'New' badge",
