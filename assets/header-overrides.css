@@ -5197,14 +5197,25 @@ body.template--collection .breadcrumbs {
 /* .card__content is a 3-row grid (spacer / information / spacer); the
    information block is pinned to row 2, so the colour row goes in row 3
    to sit under the title and price. */
+.card-wrapper .card__content { position: relative; }
 .card__content > .ccr {
-  grid-row-start: 3;
-  grid-column: 1 / -1;
-  align-self: start;
-  /* centred at the bottom of the card (was left-aligned under the title) */
+  /* over the bottom of the product photo, centred (the content block starts right under the photo) */
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0;
+  z-index: 2;
   justify-content: center;
-  margin-left: 0;
-  margin-right: 0;
+  grid-row: auto;
+  grid-column: auto;
+}
+.card__content > .ccr .ccr__swatch { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.15); }
+/* tighter tiles in the 6-column grid */
+body.template--collection #product-grid.product-grid--6 {
+  column-gap: 6px !important;
+  row-gap: 6px !important;
 }
 
 /* Product page colour picker: the same swatch as on the cards (16px
