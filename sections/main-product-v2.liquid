@@ -183,10 +183,18 @@
               }
               var active = slides.findIndex(function (s) { return s.classList.contains('is-active'); });
               if (active < 0) active = 0;
+              if (window.matchMedia('(max-width: 749px)').matches) {
+                /* phones: the slide nearest the scroll position (the is-active class lags behind the swipe) */
+                var scroller = document.querySelector('.product-v2 slider-component.slider-mobile-gutter') || list;
+                var x = scroller.scrollLeft || list.scrollLeft || 0, bestD = Infinity;
+                slides.forEach(function (s, i) { var d = Math.abs(s.offsetLeft - x); if (d < bestD) { bestD = d; active = i; } });
+              }
               /* photo 1 > benefit 1, photo 2 > benefit 2, ...; later photos show none */
               items.forEach(function (t) { t.classList.toggle('is-visible', Number(t.getAttribute('data-photo')) === active); });
             }
             new MutationObserver(update).observe(list, { attributes: true, attributeFilter: ['class', 'style', 'data-pdp-order'], subtree: true });
+            var tagScroller = document.querySelector('.product-v2 slider-component.slider-mobile-gutter');
+            if (tagScroller) tagScroller.addEventListener('scroll', function () { requestAnimationFrame(update); }, { passive: true });
             update();
           })();
         </script>
