@@ -2437,6 +2437,13 @@
       section.querySelectorAll('.product-v2__trust-row').forEach(function (row) {
         var el = textEl(row);
         if (!el) return;
+        /* phones: the lines sit in a tile and wrap at the normal 14px, like the benefits above them */
+        if (window.innerWidth < 990) {
+          row._fitKey = null;
+          row.classList.remove('is-one-line');
+          el.style.removeProperty('font-size');
+          return;
+        }
         /* our own style writes re-trigger the observer: skip when nothing changed */
         var key = el.textContent + '|' + row.clientWidth;
         if (row._fitKey === key) return;
