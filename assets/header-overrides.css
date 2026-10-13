@@ -6572,3 +6572,12 @@ body.template--product .product-v2 .product-v2__benefit svg path {
   stroke-width: 0.6px;
   stroke-linejoin: round;
 }
+
+/* Phones, first tile: the Avada bundle block (Buy 3 get 1 etc.) brought 24px margins of its own (40px under the
+   sizes); in the tile it follows the same 16px rhythm as the Sockeloen bundle tiles. */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .pdp-tile .Avada-Bundle-Volume__Container {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
