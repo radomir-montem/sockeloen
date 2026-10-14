@@ -6620,3 +6620,15 @@ body.template--product .product-v2 .Avada-VolumeBoxBadge {
     background: linear-gradient(to right, #ececec, #e2e2e2) !important;
   }
 }
+
+/* Two-tone section titles ("Complete the look", "Currently on sale", "Frequently asked questions", ...):
+   the accent word keeps its own colour but is upright, site-wide. The scroll-reveal block keeps its italic option. */
+h1 em, h2 em, h3 em, h4 em, h5 em, h6 em,
+.bot-heading em,
+.cart-cross-sells__heading em,
+.product-benefit__heading em,
+[class*="heading"] em,
+[class*="title"] em {
+  font-style: normal !important;
+}
+.srt__text em { font-style: italic !important; }
