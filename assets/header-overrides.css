@@ -6690,3 +6690,8 @@ body .product-v2 .product-v2__info-wrapper > .pdp-tiles-bg,
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
   }
 }
+
+/* Product photo position dots removed on phone and desktop (2026-10-14): the thumbnails right under/next to
+   the photo already show there are more photos and which one is active. The script in main-product-v2 still
+   builds them, so this is a one-line switch back. */
+body .product-v2 .pdp-dots { display: none !important; }
