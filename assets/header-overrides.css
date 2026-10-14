@@ -6652,9 +6652,12 @@ h1 em, h2 em, h3 em, h4 em, h5 em, h6 em,
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 0;
+    /* -1 inside the isolated wrapper: painted right after the wrapper's white background and below everything
+       else, whatever stacking contexts the tiles or Safari create (it showed on top of the tiles on iPhone) */
+    z-index: -1;
     overflow: hidden;
     pointer-events: none;
+    transform: translateZ(0);
   }
   body.template--product .product-v2 .is-tiles-glass .pdp-tiles-bg img {
     width: 100%;
@@ -6667,6 +6670,8 @@ h1 em, h2 em, h3 em, h4 em, h5 em, h6 em,
     z-index: 1;
   }
   body.template--product .product-v2 .is-tiles-glass .pdp-tile {
+    position: relative;
+    z-index: 1;
     background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12)) !important;
     -webkit-backdrop-filter: blur(21px) saturate(180%);
             backdrop-filter: blur(21px) saturate(180%);
