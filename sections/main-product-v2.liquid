@@ -585,11 +585,12 @@
 
             /* Adaptive strength: light products vanished on the white background, dark ones put a smudge behind
                the text. The photo is measured once on a 40px canvas (blurred like the real one), then brightness k
-               and opacity o are chosen so the shape lands near the same light grey on every product (mean ~0.80),
+               and opacity o are chosen so the shape lands near the same light grey on every product (mean over the product ~0.78),
                while its darkest spot behind the text (under the most transparent part of the glass, 12% white)
                never gets darker than 0.62, about 7:1 contrast for the #111 text. */
             function tune() {
-              if (!wrap.classList.contains('is-tiles-glass')) return;
+              /* not gated on is-tiles-glass: the ?tiles= override adds that class after this script runs */
+              if (!window.matchMedia || !window.matchMedia('(max-width: 989px)').matches) return;
               var src = bg.getElementsByTagName('img')[0];
               if (!src) return;
               var im = new Image();
@@ -615,13 +616,14 @@
                   for (var p = 0; p < 3; p++) { ca = box(ca); al = box(al); }
                   var best = null;
                   for (var kk = 100; kk >= 45; kk -= 5) for (var oo = 20; oo <= 100; oo += 5) {
-                    var kv = kk / 100, ov = oo / 100, mn = 1, sum = 0;
+                    var kv = kk / 100, ov = oo / 100, mn = 1, sum = 0, wsum = 0;
                     for (var j = 0; j < n; j++) {
                       var f = 0.88 * (ov * (kv * ca[j] + (1 - al[j])) + (1 - ov)) + 0.12;
-                      if (f < mn) mn = f; sum += f;
+                      if (f < mn) mn = f; sum += f * al[j]; wsum += al[j];
                     }
                     if (mn < 0.62) continue;
-                    var score = Math.abs(sum / n - 0.80);
+                    /* aim at the product itself (alpha-weighted), not the transparent space around it */
+                    var score = Math.abs(sum / Math.max(wsum, 0.001) - 0.78);
                     if (!best || score < best.s) best = { s: score, k: kv, o: ov };
                   }
                   if (best) {
