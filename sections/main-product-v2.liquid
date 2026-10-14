@@ -582,6 +582,63 @@
             }
             new ResizeObserver(fill).observe(wrap);
             window.addEventListener('load', fill);
+
+            /* Adaptive strength: light products vanished on the white background, dark ones put a smudge behind
+               the text. The photo is measured once on a 40px canvas (blurred like the real one), then brightness k
+               and opacity o are chosen so the shape lands near the same light grey on every product (mean over the product ~0.78),
+               while its darkest spot behind the text (under the most transparent part of the glass, 12% white)
+               never gets darker than 0.62, about 7:1 contrast for the #111 text. */
+            function tune() {
+              /* not gated on is-tiles-glass: the ?tiles= override adds that class after this script runs */
+              if (!window.matchMedia || !window.matchMedia('(max-width: 989px)').matches) return;
+              var src = bg.getElementsByTagName('img')[0];
+              if (!src) return;
+              var im = new Image();
+              im.onload = function () {
+                try {
+                  var W = 40, H = Math.max(1, Math.round(W * im.naturalHeight / im.naturalWidth));
+                  var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+                  var cx = cv.getContext('2d'); cx.drawImage(im, 0, 0, W, H);
+                  var px = cx.getImageData(0, 0, W, H).data, n = W * H, ca = new Float32Array(n), al = new Float32Array(n);
+                  for (var i = 0; i < n; i++) {
+                    var a = px[i * 4 + 3] / 255;
+                    var l = (0.2126 * px[i * 4] + 0.7152 * px[i * 4 + 1] + 0.0722 * px[i * 4 + 2]) / 255;
+                    ca[i] = l * a; al[i] = a;
+                  }
+                  /* blur ~ the 21px CSS blur at this scale (three box passes of radius 2) */
+                  function box(arr) {
+                    var out = new Float32Array(n), r = 2, x, y, s, c, k;
+                    for (y = 0; y < H; y++) for (x = 0; x < W; x++) { s = 0; c = 0; for (k = -r; k <= r; k++) { var xx = x + k; if (xx >= 0 && xx < W) { s += arr[y * W + xx]; c++; } } out[y * W + x] = s / c; }
+                    var o2 = new Float32Array(n);
+                    for (x = 0; x < W; x++) for (y = 0; y < H; y++) { s = 0; c = 0; for (k = -r; k <= r; k++) { var yy = y + k; if (yy >= 0 && yy < H) { s += out[yy * W + x]; c++; } } o2[y * W + x] = s / c; }
+                    return o2;
+                  }
+                  for (var p = 0; p < 3; p++) { ca = box(ca); al = box(al); }
+                  /* dark products already show at the 40% default: leave them exactly as they were */
+                  var lsum = 0, asum = 0;
+                  for (var q = 0; q < n; q++) { lsum += ca[q]; asum += al[q]; }
+                  if (lsum / Math.max(asum, 0.001) < 0.4) return;
+                  var best = null;
+                  for (var kk = 100; kk >= 45; kk -= 5) for (var oo = 20; oo <= 100; oo += 5) {
+                    var kv = kk / 100, ov = oo / 100, mn = 1, sum = 0, wsum = 0;
+                    for (var j = 0; j < n; j++) {
+                      var f = 0.88 * (ov * (kv * ca[j] + (1 - al[j])) + (1 - ov)) + 0.12;
+                      if (f < mn) mn = f; sum += f * al[j]; wsum += al[j];
+                    }
+                    if (mn < 0.62) continue;
+                    /* aim at the product itself (alpha-weighted), not the transparent space around it */
+                    var score = Math.abs(sum / Math.max(wsum, 0.001) - 0.78);
+                    if (!best || score < best.s) best = { s: score, k: kv, o: ov };
+                  }
+                  if (best) {
+                    bg.style.setProperty('--tbg-k', best.k);
+                    bg.style.setProperty('--tbg-o', best.o);
+                  }
+                } catch (e) {}
+              };
+              im.src = (src.currentSrc || src.src).replace(/([?&])width=\d+/, '$1width=120');
+            }
+            tune();
           })();
         </script>
       {%- endif -%}
