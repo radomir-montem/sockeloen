@@ -138,6 +138,12 @@
     /* the tile shows the first photo of the selected colour (not the photo
        the visitor happens to be looking at) */
     function renderHostImage() {
+      var variantFirst = window.sockeloenVariantFirstImage && window.sockeloenVariantFirstImage();
+      if (variantFirst) {
+        var vsrc = variantFirst.replace(/width=\d+/, 'width=96');
+        root.querySelectorAll('[data-upsell-host-img]').forEach(function (img) { if (img.src !== vsrc) img.src = vsrc; });
+        return;
+      }
       var first = Array.prototype.find.call(document.querySelectorAll('.product-v2 .product__media-item:not(.pdp-clone)'), function (li) {
         return li.style.display !== 'none' && li.querySelector('img');
       });

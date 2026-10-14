@@ -194,7 +194,11 @@ if (!customElements.get('sticky-atc-v2')) {
   }
 
   function getActiveImageSrc() {
-    // Get the currently active (visible) product image for the selected variant
+    // the chosen variant's first photo (never the slide that happens to be on screen)
+    if (window.sockeloenVariantFirstImage) {
+      var first = window.sockeloenVariantFirstImage();
+      if (first) return first.replace(/width=\d+/, 'width=80');
+    }
     var activeItem = document.querySelector('.product-v2 .product__media-item.is-active img');
     if (!activeItem) activeItem = document.querySelector('.product-v2 .product__media-item:not([style*="display: none"]) img');
     if (!activeItem) activeItem = document.querySelector('.product-v2 .product__media-item img');
@@ -498,8 +502,8 @@ if (!customElements.get('sticky-atc-v2')) {
         fixAvadaPrices();
         setTimeout(function() { fixAvadaPrices(); updateImageStacks(); }, 50);
         setTimeout(fixAvadaPrices, 150);
-        setTimeout(fixAvadaPrices, 300);
-        setTimeout(fixAvadaPrices, 600);
+        setTimeout(function() { fixAvadaPrices(); updateImageStacks(); }, 300);
+        setTimeout(function() { fixAvadaPrices(); updateImageStacks(); }, 600);
       });
     }
   }
