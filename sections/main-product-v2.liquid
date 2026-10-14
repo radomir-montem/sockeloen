@@ -563,6 +563,27 @@
             <img src="{{ tiles_bg | image_url: width: 900 }}" alt="" width="{{ tiles_bg.width }}" height="{{ tiles_bg.height }}" loading="lazy" decoding="async">
           {%- endfor -%}
         </div>
+        <script>
+          /* add copies whenever the tiles grow taller than the photos (long description opened, narrow phone) */
+          (function () {
+            var bg = document.currentScript.previousElementSibling;
+            var wrap = bg && bg.parentElement;
+            if (!bg || !wrap || !window.ResizeObserver) return;
+            function fill() {
+              if (!wrap.classList.contains('is-tiles-glass')) return;
+              var imgs = bg.getElementsByTagName('img');
+              var first = imgs[0];
+              if (!first) return;
+              var h = first.getBoundingClientRect().height;
+              if (!h) return;
+              var need = bg.getBoundingClientRect().height + h;
+              var have = h * imgs.length;
+              for (var n = 0; have < need && n < 20; n++) { bg.appendChild(first.cloneNode(false)); have += h; }
+            }
+            new ResizeObserver(fill).observe(wrap);
+            window.addEventListener('load', fill);
+          })();
+        </script>
       {%- endif -%}
       <script>
         (function () {
