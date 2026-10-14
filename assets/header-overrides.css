@@ -6642,21 +6642,25 @@ h1 em, h2 em, h3 em, h4 em, h5 em, h6 em,
     isolation: isolate;
     background: #fff !important;
   }
+  /* the photo column starts at the top of the first tile (the wrapper's 2px top padding) */
   body.template--product .product-v2 .is-tiles-glass .pdp-tiles-bg {
     display: flex;
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    position: absolute;
+    top: 2px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
     overflow: hidden;
     pointer-events: none;
   }
   body.template--product .product-v2 .is-tiles-glass .pdp-tiles-bg img {
     width: 100%;
-    max-width: 560px;
     height: auto;
     display: block;
+    flex: 0 0 auto;
   }
   body.template--product .product-v2 .is-tiles-glass > div:not(.pdp-tiles-bg) {
     position: relative;
