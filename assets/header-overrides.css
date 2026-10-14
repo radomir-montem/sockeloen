@@ -6613,3 +6613,10 @@ body.template--product .product-v2 .Avada-VolumeBoxBadge {
   body.template--product .product-v2 .pdp-tile .Avada-Volume__Header { margin-bottom: 0 !important; }
   body.template--product .product-v2 .pdp-tile .Avada-VolumeItem__Container { gap: 16px !important; }
 }
+
+/* Phones: the buy box tiles in the same generated background as the product photos (#ECECEC → #E2E2E2) */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .pdp-tile {
+    background: linear-gradient(to right, #ececec, #e2e2e2) !important;
+  }
+}
