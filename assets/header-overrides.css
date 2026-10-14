@@ -6669,11 +6669,12 @@ body .product-v2 .product-v2__info-wrapper > .pdp-tiles-bg,
     height: auto;
     display: block;
     flex: 0 0 auto;
-    -webkit-filter: blur(21px) saturate(180%);
-            filter: blur(21px) saturate(180%);
-    /* 40%: a black product (Winter Gloves) otherwise put a dark smudge behind the text (contrast ~1.6:1);
-       at 40% the darkest spot stays light enough for ~8.8:1 with the #111 text */
-    opacity: 0.4;
+    /* brightness (--tbg-k) and opacity (--tbg-o) are tuned per product photo by the script in main-product-v2:
+       same visible grey on light and dark products, darkest spot never below ~7:1 text contrast. 40% is the
+       safe fallback before the script has run. */
+    -webkit-filter: blur(21px) brightness(var(--tbg-k, 1)) saturate(180%);
+            filter: blur(21px) brightness(var(--tbg-k, 1)) saturate(180%);
+    opacity: var(--tbg-o, 0.4);
   }
   body.template--product .product-v2 .is-tiles-glass > div:not(.pdp-tiles-bg) {
     position: relative;
