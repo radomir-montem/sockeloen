@@ -6408,7 +6408,7 @@ body.template--product sticky-atc-v2 .product-v2-sticky-bar {
     background: #fff !important;
     padding: 12px 12px 12px !important;
   }
-  body.template--product .product-v2 .product-v2__info-wrapper > div {
+  body.template--product .product-v2 .product-v2__info-wrapper > div:not(.pdp-tiles-bg) {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -6635,7 +6635,9 @@ h1 em, h2 em, h3 em, h4 em, h5 em, h6 em,
 
 /* Phone buy box experiment "glass" (.is-tiles-glass, theme setting pdp_mobile_tiles or ?tiles=glass): white
    background with the first product photo centred behind the three tiles; the tiles are the desktop glass. */
-.pdp-tiles-bg { display: none; }
+/* hidden unless the glass experiment is on (it must beat the info wrapper's own `> div` rules) */
+body .product-v2 .product-v2__info-wrapper > .pdp-tiles-bg,
+.pdp-tiles-bg { display: none !important; }
 @media screen and (max-width: 989px) {
   body.template--product .product-v2 .product-v2__info-wrapper.is-tiles-glass {
     position: relative;
@@ -6643,8 +6645,8 @@ h1 em, h2 em, h3 em, h4 em, h5 em, h6 em,
     background: #fff !important;
   }
   /* the photo column starts at the top of the first tile (the wrapper's 2px top padding) */
-  body.template--product .product-v2 .is-tiles-glass .pdp-tiles-bg {
-    display: flex;
+  body.template--product .product-v2 .product-v2__info-wrapper.is-tiles-glass > .pdp-tiles-bg {
+    display: flex !important;
     flex-direction: column;
     align-items: center;
     position: absolute;
@@ -6657,13 +6659,16 @@ h1 em, h2 em, h3 em, h4 em, h5 em, h6 em,
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
-    transform: translateZ(0);
   }
+  /* the photo is blurred itself (the glass look) instead of relying on backdrop-filter, which iOS Safari did
+     not apply here: the photo then showed sharp through the tiles, as if it lay on top of them */
   body.template--product .product-v2 .is-tiles-glass .pdp-tiles-bg img {
     width: 100%;
     height: auto;
     display: block;
     flex: 0 0 auto;
+    -webkit-filter: blur(21px) saturate(180%);
+            filter: blur(21px) saturate(180%);
   }
   body.template--product .product-v2 .is-tiles-glass > div:not(.pdp-tiles-bg) {
     position: relative;
@@ -6673,8 +6678,8 @@ h1 em, h2 em, h3 em, h4 em, h5 em, h6 em,
     position: relative;
     z-index: 1;
     background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12)) !important;
-    -webkit-backdrop-filter: blur(21px) saturate(180%);
-            backdrop-filter: blur(21px) saturate(180%);
+    -webkit-backdrop-filter: none !important;
+            backdrop-filter: none !important;
     border: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
   }
