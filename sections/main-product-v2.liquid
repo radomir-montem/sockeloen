@@ -554,43 +554,18 @@
         Experiment (theme setting "Phone buy box tiles", or ?tiles=glass / ?tiles=classic in the URL): the first
         product photo sits centred behind the three tiles, which turn into glass over a white background.
       {%- endcomment -%}
-      <div class="pdp-tiles-bg" aria-hidden="true"></div>
+      {%- comment -%} glass: the product's first photo behind the tiles, from the top of the first tile; it stays the same for every colour {%- endcomment -%}
+      {%- assign tiles_bg = product.featured_media.preview_image -%}
+      {%- if tiles_bg -%}
+        <div class="pdp-tiles-bg" aria-hidden="true">
+          <img src="{{ tiles_bg | image_url: width: 900 }}" alt="" width="{{ tiles_bg.width }}" height="{{ tiles_bg.height }}" loading="lazy">
+        </div>
+      {%- endif -%}
       <script>
         (function () {
-          var w = document.currentScript.parentElement;
           var m = location.search.match(/[?&]tiles=(glass|classic)/);
-          if (m) w.classList.toggle('is-tiles-glass', m[1] === 'glass');
-          /* glass: the photos of the chosen colour, in the thumbnail strip's order, stacked behind the tiles from
-             the top of the first tile down; rebuilt when the colour (and with it the visible thumbnails) changes */
-          var bg = w.querySelector('.pdp-tiles-bg');
-          var key = '';
-          function build() {
-            if (!w.classList.contains('is-tiles-glass') || window.innerWidth >= 990) return;
-            var list = document.querySelector('#MainProduct-{{ section.id }} .thumbnail-list');
-            if (!list) return;
-            var items = Array.prototype.filter.call(list.children, function (li) {
-              return li.offsetParent !== null && li.querySelector('img');
-            }).sort(function (a, b) { return a.getBoundingClientRect().left - b.getBoundingClientRect().left; });
-            var srcs = items.map(function (li) {
-              var s = li.querySelector('img').currentSrc || li.querySelector('img').src;
-              return s.replace(/([?&])width=\d+/, '$1width=900');
-            });
-            var k = srcs.join('|');
-            if (k === key) return;
-            key = k;
-            bg.innerHTML = srcs.map(function (s) { return '<img src="' + s + '" alt="" loading="lazy">'; }).join('');
-          }
-          function start() {
-            build();
-            var list = document.querySelector('#MainProduct-{{ section.id }} .thumbnail-list');
-            if (list && window.MutationObserver) {
-              var t;
-              new MutationObserver(function () { clearTimeout(t); t = setTimeout(build, 80); })
-                .observe(list, { attributes: true, attributeFilter: ['style', 'class'], subtree: true, childList: true });
-            }
-          }
-          if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
-          window.addEventListener('load', build);
+          if (!m) return;
+          document.currentScript.parentElement.classList.toggle('is-tiles-glass', m[1] === 'glass');
         })();
       </script>
       <div
