@@ -6653,7 +6653,7 @@ body .product-v2 .product-v2__info-wrapper > .pdp-tiles-bg,
     top: 2px;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 12px; /* ends with the description tile (the wrapper has 12px padding below it) */
     /* -1 inside the isolated wrapper: painted right after the wrapper's white background and below everything
        else, whatever stacking contexts the tiles or Safari create (it showed on top of the tiles on iPhone) */
     z-index: -1;
@@ -6662,11 +6662,14 @@ body .product-v2 .product-v2__info-wrapper > .pdp-tiles-bg,
   }
   /* the photo is blurred itself (the glass look) instead of relying on backdrop-filter, which iOS Safari did
      not apply here: the photo then showed sharp through the tiles, as if it lay on top of them */
-  body.template--product .product-v2 .is-tiles-glass .pdp-tiles-bg img {
-    width: 100%;
-    height: auto;
-    display: block;
-    flex: 0 0 auto;
+  /* the first photo repeated top to bottom (full width, natural height), blurred itself for the glass look;
+     the outer block clips the blur at the tile edges */
+  body.template--product .product-v2 .is-tiles-glass .pdp-tiles-bg__fill {
+    position: absolute;
+    inset: 0;
+    background-repeat: repeat-y;
+    background-position: center top;
+    background-size: 100% auto;
     -webkit-filter: blur(21px) saturate(180%);
             filter: blur(21px) saturate(180%);
   }

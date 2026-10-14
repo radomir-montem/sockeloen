@@ -558,7 +558,7 @@
       {%- assign tiles_bg = product.featured_media.preview_image -%}
       {%- if tiles_bg -%}
         <div class="pdp-tiles-bg" aria-hidden="true">
-          <img src="{{ tiles_bg | image_url: width: 900 }}" alt="" width="{{ tiles_bg.width }}" height="{{ tiles_bg.height }}" loading="lazy">
+          <div class="pdp-tiles-bg__fill" style="background-image: url('{{ tiles_bg | image_url: width: 900 }}');"></div>
         </div>
       {%- endif -%}
       <script>
