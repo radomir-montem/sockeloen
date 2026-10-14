@@ -3099,7 +3099,7 @@ body.noscroll .header__menu-item.link-only {
   color: #fff;
   padding: 1px 10px;
   font-size: 13px;
-  text-transform: uppercase;
+  text-transform: none;
   font-weight: 500;
   margin-left: 5px;
   border-radius: 5px;
