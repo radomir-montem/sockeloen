@@ -19,6 +19,10 @@
             "color_swatch_style": "images"
           }
         },
+        "aov_ai_bundle_offer_volume_RqqnNt": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
@@ -51,10 +55,6 @@
             "page": "",
             "logos_size": 26
           }
-        },
-        "aov_ai_bundle_offer_volume_RqqnNt": {
-          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
-          "settings": {}
         }
       },
       "block_order": [
@@ -102,11 +102,11 @@
       "name": "Product Carousel",
       "settings": {
         "product_source": "none",
-        "layout": "grid",
         "product_list": [],
         "collection": "complete-the-look",
-        "smart_order": true,
         "smart_mode": "complete",
+        "smart_days": 91,
+        "smart_order": true,
         "max_products": 12,
         "heading": "Complete the",
         "heading_italic": "look",
@@ -116,6 +116,7 @@
         "heading_italic_color": "#f76503",
         "heading_alignment": "center",
         "image_ratio": "portrait",
+        "layout": "grid",
         "desktop_columns": 6,
         "mobile_columns": 2,
         "background_color": "#ffffff",
@@ -143,7 +144,7 @@
             "image": "shopify://shop_images/WhatsApp_Image_2026-06-02_at_11.16.11.jpg",
             "heading": "This overshoe",
             "heading_italic": "keeps you warm and dry",
-            "description": "<p>Most cyclists own two things they hate: a soggy pair of shoes and an excuse not to ride. We decided to fix both. Sockeloen developed two dedicated overshoes — one built for rain, one built for winter. Not a compromise that does both badly, but two separate solutions that each do their job perfectly. Because the road doesn't care about the weather. Neither should you.</p>"
+            "description": "<p>Most cyclists own two things they hate: a soggy pair of overshoes and an excuse not to ride. We decided to fix both. Sockeloen developed two dedicated overshoes — one built for rain, one built for winter. Not a compromise that does both badly, but two separate solutions that each do their job perfectly. Because the road doesn't care about the weather. Neither should you.</p>"
           }
         },
         "benefit_igt7xh": {
@@ -153,7 +154,7 @@
             "image": "shopify://shop_images/WhatsApp_Image_2026-06-02_at_11.24.44.jpg",
             "heading": "No room",
             "heading_italic": "for compromise",
-            "description": "<p>This overshoe is more than just protection for the serious cyclist. Our design leaves no room for compromise — no loose fits, no soaked feet, no dirty white after one ride. Built for road and off-road use, crafted for those who refuse to sacrifice style for function. When you want to ride comfortable, without pressure points, wet or muddy feet: this overshoe is what you need.</p>"
+            "description": "<p>This overshoe is more than just protection for the serious cyclist. Our design leaves no room for compromise — no loose fit, no soaked feet, no dirty white after one ride. Built for road and off-road use, crafted for those who refuse to sacrifice style for function. When you want to ride comfortable, without pressure points, wet or muddy feet: this overshoe is what you need.</p>"
           }
         }
       },
@@ -189,7 +190,7 @@
             "hotspot_x": 54,
             "hotspot_y": 37,
             "heading": "Sockeloen logo",
-            "description": "<p>The <strong>gold logo </strong>stays looking sharp ride after ride — resistant to fading and peeling even after heavy use in all conditions.</p>",
+            "description": "<p>The <strong>Sockeloen logo </strong>stays looking sharp ride after ride — resistant to fading and peeling even after heavy use in all conditions.</p>",
             "metafield_key": "custom.knit_structure",
             "metafield_fallback": "O-Mesh"
           }
@@ -222,7 +223,7 @@
             "hotspot_x": 29,
             "hotspot_y": 74,
             "heading": "Sockeloen toe cap",
-            "description": "<p><strong>Taped and double-stitched seams</strong>prevent water from seeping in and ensure the overshoe holds up over time — even under heavy use.<br/><br/></p>",
+            "description": "<p><strong>Taped and double-stitched seams </strong>prevent water from seeping in and ensure the overshoe holds up over time — even under heavy use.<br/><br/></p>",
             "metafield_key": "",
             "metafield_fallback": ""
           }
@@ -286,7 +287,8 @@
         "product_list": [],
         "collection": "sale",
         "smart_mode": "sale",
-        "layout": "grid",
+        "smart_days": 91,
+        "smart_order": false,
         "max_products": 12,
         "heading": "currently on",
         "heading_italic": "Sale",
@@ -296,6 +298,7 @@
         "heading_italic_color": "#f76503",
         "heading_alignment": "center",
         "image_ratio": "portrait",
+        "layout": "grid",
         "desktop_columns": 6,
         "mobile_columns": 2,
         "background_color": "#ffffff",
@@ -315,7 +318,7 @@
           "type": "faq",
           "settings": {
             "question": "Which height are these overshoes?",
-            "answer": "<p><strong>This overshoes are 17, 19 and 21cm high. </strong>We optimized our fitt for the perfect looking height on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
+            "answer": "<p><strong>This overshoes are 17, 19 and 21cm high. </strong>We optimized our fit for the perfect looking height on the bike. Chek our <a href=\"/pages/size-guide\" title=\"Size Guide\"><span style=\"text-decoration:underline\"><strong>full size guide</strong></span></a><span style=\"text-decoration:underline\"><strong> </strong></span>to read exactly how we measure.</p>",
             "metafield_key": "custom.height",
             "metafield_fallback": "19cm"
           }
@@ -403,7 +406,9 @@
         "product_source": "recently_viewed",
         "product_list": [],
         "collection": "",
-        "layout": "grid",
+        "smart_mode": "none",
+        "smart_days": 91,
+        "smart_order": false,
         "max_products": 12,
         "heading": "recently",
         "heading_italic": "Viewed",
@@ -413,6 +418,7 @@
         "heading_italic_color": "#f76503",
         "heading_alignment": "center",
         "image_ratio": "portrait",
+        "layout": "grid",
         "desktop_columns": 6,
         "mobile_columns": 2,
         "background_color": "#ffffff",
