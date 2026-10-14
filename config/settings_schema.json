@@ -30,6 +30,17 @@
         ],
         "default": "classic",
         "info": "Phones and tablets are not affected. To compare without changing this setting, add ?pdp=gallery or ?pdp=classic to a product URL."
+      },
+      {
+        "type": "select",
+        "id": "pdp_mobile_tiles",
+        "label": "Phone buy box tiles (v2 product page)",
+        "options": [
+          { "value": "gradient", "label": "Grey, like the product photos" },
+          { "value": "glass", "label": "Glass over the first product photo (experiment)" }
+        ],
+        "default": "gradient",
+        "info": "To compare without changing this setting, add ?tiles=glass or ?tiles=classic to a product URL."
       }
     ]
   },

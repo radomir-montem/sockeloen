@@ -549,7 +549,25 @@
     </div>
 
     {%- comment -%} ========== RIGHT COLUMN: PRODUCT INFO ========== {%- endcomment -%}
-    <div class="product-v2__info-wrapper grid__item">
+    <div class="product-v2__info-wrapper grid__item{% if settings.pdp_mobile_tiles == 'glass' %} is-tiles-glass{% endif %}">
+      {%- comment -%}
+        Experiment (theme setting "Phone buy box tiles", or ?tiles=glass / ?tiles=classic in the URL): the first
+        product photo sits centred behind the three tiles, which turn into glass over a white background.
+      {%- endcomment -%}
+      {%- assign tiles_bg = product.featured_media.preview_image -%}
+      {%- if tiles_bg -%}
+        <div class="pdp-tiles-bg" aria-hidden="true">
+          <img src="{{ tiles_bg | image_url: width: 1200 }}" alt="" width="{{ tiles_bg.width }}" height="{{ tiles_bg.height }}" loading="lazy">
+        </div>
+      {%- endif -%}
+      <script>
+        (function () {
+          var m = location.search.match(/[?&]tiles=(glass|classic)/);
+          if (!m) return;
+          var w = document.currentScript.parentElement;
+          w.classList.toggle('is-tiles-glass', m[1] === 'glass');
+        })();
+      </script>
       <div
         id="ProductInfo-{{ section.id }}"
         class="{% if section.settings.enable_sticky_info %}product-v2__info-container--sticky{% endif %}"
