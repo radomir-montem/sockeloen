@@ -615,9 +615,9 @@
                   }
                   for (var p = 0; p < 3; p++) { ca = box(ca); al = box(al); }
                   /* dark products already show at the 40% default: leave them exactly as they were */
-                  var d0 = 0, w0 = 0;
-                  for (var q = 0; q < n; q++) { d0 += (0.88 * (0.4 * (ca[q] + (1 - al[q])) + 0.6) + 0.12) * al[q]; w0 += al[q]; }
-                  if (d0 / Math.max(w0, 0.001) <= 0.78) return;
+                  var lsum = 0, asum = 0;
+                  for (var q = 0; q < n; q++) { lsum += ca[q]; asum += al[q]; }
+                  if (lsum / Math.max(asum, 0.001) < 0.4) return;
                   var best = null;
                   for (var kk = 100; kk >= 45; kk -= 5) for (var oo = 20; oo <= 100; oo += 5) {
                     var kv = kk / 100, ov = oo / 100, mn = 1, sum = 0, wsum = 0;
