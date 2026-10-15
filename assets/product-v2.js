@@ -444,8 +444,8 @@ if (!customElements.get('sticky-atc-v2')) {
 
         // Calculate and show savings inside the price column (only inject once)
         if (originalPrice && !priceArea.querySelector('.avada-savings-line')) {
-          var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
-          var op = parseFloat(originalPrice.textContent.replace(',', '.'));
+          var dp = parseFloat(discountPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+          var op = parseFloat(originalPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
           var totalSaved = (op - dp);
           if (totalSaved > 0) {
             var savingsEl = document.createElement('div');
