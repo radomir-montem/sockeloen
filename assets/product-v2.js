@@ -170,9 +170,10 @@ if (!customElements.get('sticky-atc-v2')) {
 (function() {
   /**
    * Single function to fix all Avada price formatting:
-   * 1. Strip € symbol
+   * 1. € directly in front of the amount (€24,95), the same as the product price above
    * 2. Replace decimal period with comma (EU format: 12,34 instead of 12.34)
-   * Runs on all Avada price elements + our injected savings lines.
+   * Runs on all Avada price elements + our injected savings lines; any € already
+   * there is stripped first, so each amount ends up with exactly one.
    */
   function fixAvadaPrices() {
     document.querySelectorAll(
@@ -182,6 +183,7 @@ if (!customElements.get('sticky-atc-v2')) {
         if (node.nodeType === 3) {
           var t = node.textContent;
           var fixed = t.replace(/€\s*/g, '').replace(/(\d+)\.(\d{2})/g, '$1,$2');
+          fixed = fixed.replace(/(\d)/, '€$1');
           if (fixed !== t) node.textContent = fixed;
         }
       });
@@ -442,8 +444,8 @@ if (!customElements.get('sticky-atc-v2')) {
 
         // Calculate and show savings inside the price column (only inject once)
         if (originalPrice && !priceArea.querySelector('.avada-savings-line')) {
-          var dp = parseFloat(discountPrice.textContent.replace(',', '.'));
-          var op = parseFloat(originalPrice.textContent.replace(',', '.'));
+          var dp = parseFloat(discountPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+          var op = parseFloat(originalPrice.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
           var totalSaved = (op - dp);
           if (totalSaved > 0) {
             var savingsEl = document.createElement('div');
