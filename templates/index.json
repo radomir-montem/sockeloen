@@ -42,8 +42,8 @@
             "button_label_1": "",
             "button_link_1": "",
             "button_style_secondary_1": false,
-            "button_label_2": "Get early access",
-            "button_link_2": "/pages/awe-26",
+            "button_label_2": "Early access",
+            "button_link_2": "shopify://collections/awe-26",
             "button_style_secondary_2": false
           }
         },
@@ -59,7 +59,7 @@
             "button_link_1": "",
             "button_style_secondary_1": false,
             "button_label_2": "Shop Aero socks",
-            "button_link_2": "shopify://collections/all-socks",
+            "button_link_2": "shopify://products/sockeloen-aero-cycling-socks",
             "button_style_secondary_2": false
           }
         }
@@ -280,7 +280,9 @@
       "settings": {
         "eme_banners": true,
         "scroll_effect": "sticky_label",
-        "grids_on_desktop": true
+        "grids_on_desktop": true,
+        "height_desktop": 75,
+        "height_mobile": 80
       }
     },
     "featured_collection_knwu": {
@@ -354,7 +356,9 @@
       "settings": {
         "eme_banners": true,
         "scroll_effect": "pinned",
-        "grids_on_desktop": true
+        "grids_on_desktop": true,
+        "height_desktop": 75,
+        "height_mobile": 80
       }
     },
     "featured_collection_YRMqEF": {
@@ -758,7 +762,9 @@
       "settings": {
         "eme_banners": false,
         "scroll_effect": "sticky_label",
-        "grids_on_desktop": true
+        "grids_on_desktop": true,
+        "height_desktop": 75,
+        "height_mobile": 80
       }
     },
     "image_text": {
