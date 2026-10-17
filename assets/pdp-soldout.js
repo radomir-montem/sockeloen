@@ -57,17 +57,30 @@
     return String(hostSize).trim().toLowerCase() === String(altSize).trim().toLowerCase() ? 1 : 0;
   }
 
+  function bestVariant(alt, hostSize) {
+    var best = null, bestFit = 0;
+    alt.variants.forEach(function (v) {
+      if (!v.available) return;
+      var f = hostSize === '' ? (v.size === '' || isOneSize(v.size) ? 1 : 0) : fit(hostSize, v.size);
+      if (f > bestFit) { best = v; bestFit = f; }
+    });
+    return best;
+  }
+
+  /* One tile per product first (in metafield order); another colour of a product already shown
+     only fills a slot that is left. */
   function matches(hostSize) {
-    var out = [];
+    var hits = [];
     data.alts.forEach(function (alt) {
-      if (out.length >= MAX_ALTS) return;
-      var best = null, bestFit = 0;
-      alt.variants.forEach(function (v) {
-        if (!v.available) return;
-        var f = hostSize === '' ? (v.size === '' || isOneSize(v.size) ? 1 : 0) : fit(hostSize, v.size);
-        if (f > bestFit) { best = v; bestFit = f; }
-      });
-      if (best) out.push({ alt: alt, variant: best });
+      var v = bestVariant(alt, hostSize);
+      if (v) hits.push({ alt: alt, variant: v });
+    });
+    var out = [], used = {};
+    hits.forEach(function (h) {
+      if (out.length < MAX_ALTS && !used[h.alt.url]) { out.push(h); used[h.alt.url] = true; }
+    });
+    hits.forEach(function (h) {
+      if (out.length < MAX_ALTS && out.indexOf(h) === -1) out.push(h);
     });
     return out;
   }

@@ -8,7 +8,8 @@
     1. a dark text tile like the AOV "Autumn sale" header (Jasper's wording): "Unfortunately sold
        out" + sign up below for a back-in-stock email, or try these similar products in stock in
        size X;
-    2. at most 2 tiles of backup products that have the customer's size in stock. Sizes match when
+    2. at most 2 tiles of backup products that have the customer's size in stock, one per product
+       first (a second colour of the same product only fills a slot that is left). Sizes match when
        they overlap (39-41 matches 39-42); with several overlapping sizes in stock, the one with the
        biggest overlap wins (45-47 -> 46-48 rather than 43-45). Non-numeric sizes (S, M, ...) must be
        identical; a one-size backup always matches. Disabled variants (custom.disable) never show.
@@ -55,6 +56,7 @@
         ],
         "alts": [
           {%- assign first_alt = true -%}
+          {%- assign seen_keys = '|' -%}
           {%- for pick in soldout_alts -%}
             {%- liquid
               assign alt = pick.product
@@ -72,6 +74,17 @@
               {%- capture gate_flag -%}{%- render 'gate-product-check', product: alt -%}{%- endcapture -%}
               {%- if gate_flag contains 'true' -%}{%- continue -%}{%- endif -%}
             {%- endif -%}
+            {%- comment -%}
+              Several picks of the same product + colour (e.g. every size picked) count as one:
+              key = product id + all options except the size.
+            {%- endcomment -%}
+            {%- assign pick_key = alt.id | append: ':' -%}
+            {%- for o in pick.options -%}
+              {%- unless forloop.index0 == alt_size_index -%}{%- assign pick_key = pick_key | append: o | append: '/' -%}{%- endunless -%}
+            {%- endfor -%}
+            {%- assign pick_key_match = '|' | append: pick_key | append: '|' -%}
+            {%- if seen_keys contains pick_key_match -%}{%- continue -%}{%- endif -%}
+            {%- assign seen_keys = seen_keys | append: pick_key | append: '|' -%}
             {%- unless first_alt -%},{%- endunless -%}
             {%- assign first_alt = false -%}
             {
