@@ -1151,10 +1151,20 @@ cart-drawer-items {
 }
 
 .cart-size-picker__option-btn--sold-out {
+  position: relative;
+  overflow: hidden;
   opacity: 0.4;
   cursor: not-allowed;
   text-decoration: line-through;
   pointer-events: none;
+}
+
+.cart-size-picker__option-btn--sold-out::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top right, transparent calc(50% - 1px), #999 calc(50% - 1px), #999 calc(50% + 1px), transparent calc(50% + 1px));
 }
 
 /* Color option buttons with variant image thumbnails */

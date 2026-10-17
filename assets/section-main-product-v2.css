@@ -1192,6 +1192,26 @@ a.product-v2__sp-avatar {
   color: #999;
 }
 
+/* Sold-out size in the selected colour: crossed out but still clickable (notify-me flow).
+   Class set by markSoldOutSizes() in sections/main-product-v2.liquid. */
+.product-v2 .product-form__input.size-input input[type='radio'] + label.is-sold-out {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-v2 .product-form__input.size-input input[type='radio'] + label.is-sold-out::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top right, transparent calc(50% - 1px), #c8c8c8 calc(50% - 1px), #c8c8c8 calc(50% + 1px), transparent calc(50% + 1px));
+}
+
+.product-v2 .product-form__input.size-input input[type='radio'] + label.is-sold-out .size-label-text {
+  color: #999;
+  text-decoration: line-through;
+}
+
 /* Single-value size tile (read-only, pre-selected appearance) */
 .product-v2 .size-input--single {
   pointer-events: none;
