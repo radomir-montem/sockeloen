@@ -210,6 +210,7 @@
                 });
                 btn.classList.add('active');
                 self.selectedOptions[optIndex] = val;
+                self.refreshSoldOut();
                 self.matchVariant();
 
                 if (isColor) {
@@ -241,6 +242,34 @@
         });
     },
 
+    /* Sold out per value given the other selected options (e.g. a size sold out in the chosen colour) */
+    refreshSoldOut: function() {
+      var self = this;
+      var product = self.data;
+      if (!product) return;
+      var optionNames = product.options.map(function(o) { return typeof o === 'string' ? o : o.name; });
+      var buttons = document.querySelectorAll('#cart-size-picker-options .cart-size-picker__option-btn');
+      buttons.forEach(function(btn) {
+        var idx = parseInt(btn.getAttribute('data-option-index'), 10);
+        /* Colours keep their "any size available" state so switching colour stays possible */
+        if (self.isColorOption(optionNames[idx])) return;
+        var val = btn.getAttribute('data-option-value');
+        var available = product.variants.some(function(v) {
+          if (!v.available || v['option' + (idx + 1)] !== val) return false;
+          return Object.keys(self.selectedOptions).every(function(k) {
+            k = parseInt(k, 10);
+            return k === idx || v['option' + (k + 1)] === self.selectedOptions[k];
+          });
+        });
+        btn.classList.toggle('cart-size-picker__option-btn--sold-out', !available);
+        btn.disabled = !available;
+        if (!available && btn.classList.contains('active')) {
+          btn.classList.remove('active');
+          delete self.selectedOptions[idx];
+        }
+      });
+    },
+
     matchVariant: function() {
       var self = this;
       var product = self.data;
@@ -267,7 +296,7 @@
         });
       });
 
-      if (match) {
+      if (match && match.available) {
         self.selectedVariantId = match.id;
         confirmBtn.disabled = false;
 

@@ -1150,6 +1150,36 @@
                               firstVisible.dispatchEvent(new Event('change', { bubbles: true }));
                             }
                           }
+                          markSoldOutSizes();
+                        }
+
+                        /* Cross out sizes whose variant (with the other selected options, e.g. the colour)
+                           is sold out. They stay clickable so the notify-me flow still works.
+                           Disabled variants (custom.disable) keep being hidden by global.js. */
+                        function markSoldOutSizes() {
+                          var picker = document.querySelector('.product-v2 variant-radios');
+                          if (!picker) return;
+                          var variants = {{ product.variants | json }};
+                          var fieldsets = Array.prototype.slice.call(picker.querySelectorAll('fieldset'));
+                          var sizeIndex = -1;
+                          var selected = fieldsets.map(function(fs, i) {
+                            if (fs.classList.contains('size-input')) sizeIndex = i;
+                            var checked = fs.querySelector('input[type="radio"]:checked');
+                            return checked ? checked.value : null;
+                          });
+                          if (sizeIndex === -1) return;
+                          fieldsets[sizeIndex].querySelectorAll('input[type="radio"]').forEach(function(radio) {
+                            var label = radio.nextElementSibling;
+                            if (!label) return;
+                            var match = null;
+                            for (var v = 0; v < variants.length; v++) {
+                              var ok = variants[v].options.every(function(opt, i) {
+                                return i === sizeIndex ? opt === radio.value : opt === selected[i];
+                              });
+                              if (ok) { match = variants[v]; break; }
+                            }
+                            label.classList.toggle('is-sold-out', !!match && !match.available);
+                          });
                         }
 
                         function updateMediaByAlt(targetAlt) {
@@ -1204,6 +1234,9 @@
                           initColorPicker();
                           syncHiddenVariants();
                           initMediaSwitching();
+                          markSoldOutSizes();
+                          var radiosEl = document.querySelector('.product-v2 variant-radios');
+                          if (radiosEl) radiosEl.addEventListener('change', markSoldOutSizes);
                           /* Re-sync after global.js checkAvaiable runs (fires ~500ms after page load) */
                           setTimeout(syncHiddenVariants, 600);
                           setTimeout(syncHiddenVariants, 1200);

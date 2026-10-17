@@ -446,6 +446,10 @@
     background-color: rgba(0, 0, 0, 0.04) !important;
     border-color: transparent !important;
   }
+  /* sold-out size (main-product-v2 markSoldOutSizes): grey border matching the diagonal */
+  body.template--product .product-v2--gallery .pdp-tile .product-form__input.size-input input[type='radio']:not(:checked) + label.is-sold-out {
+    border-color: var(--sold-out-grey) !important;
+  }
   body.template--product .product-v2--gallery .pdp-tile .color-input--thumbs .color-thumb {
     background: rgba(0, 0, 0, 0.08);
   }
