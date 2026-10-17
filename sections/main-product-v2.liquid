@@ -1666,7 +1666,7 @@
             {%- when 'size_guide' -%}
               {%- unless product.has_only_default_variant -%}
                 <div {{ block.shopify_attributes }}>
-                  <a href="#" class="size-guide-link" onclick="event.preventDefault(); document.getElementById('size-guide-overlay').style.display='flex'; document.body.classList.add('noscroll');">{{ 'products.v2.size_guide_link' | t }}</a>
+                  <a href="#" class="size-guide-link" onclick="event.preventDefault(); var sg = document.getElementById('size-guide-overlay'); if (sg.parentElement !== document.body) document.body.appendChild(sg); sg.style.display='flex'; document.body.classList.add('noscroll');">{{ 'products.v2.size_guide_link' | t }}</a>
                   {%- render 'size-guide-modal',
                     product: product,
                     guide_type_override: block.settings.guide_type
