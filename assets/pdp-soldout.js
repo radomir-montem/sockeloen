@@ -157,11 +157,10 @@
     textEl.textContent = '';
     var colours = otherColours(v);
     if (colours.length) {
-      var tpl = (hostSize ? root.dataset.colours.replace('__SIZE__', hostSize) : root.dataset.coloursNosize)
-        .replace('__SAME__', root.dataset.same).split('__COLOURS__');
+      var tpl = root.dataset.colours.split('__COLOURS__');
       textEl.appendChild(document.createTextNode(tpl[0]));
       textEl.appendChild(colourList(colours));
-      textEl.appendChild(document.createTextNode((tpl[1] || '') + ' ' + (found.length ? root.dataset.orBoth : root.dataset.orEmail)));
+      textEl.appendChild(document.createTextNode((tpl[1] || '') + (found.length ? root.dataset.orBoth : root.dataset.orEmail)));
     } else {
       textEl.textContent = found.length ? root.dataset.text : root.dataset.textNone;
     }

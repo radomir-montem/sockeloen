@@ -5,9 +5,10 @@
   product: its colour (all options except the size) is what we offer, the size is matched to the
   sold-out size. When the customer selects a sold-out variant, the upsell tiles (and the AOV bundle
   widget) are replaced by:
-    1. a dark text tile like the AOV "Autumn sale" header: "Sorry, sold out in <size>", other
-       colours of this product in stock in that size (tappable, they switch the colour; only when
-       there are any), then sign up below for the back-in-stock email and/or try the products below;
+    1. a dark text tile like the AOV "Autumn sale" header: "Sold out in <size>", then one short
+       line: "Available in <other colours in stock in that size>" (tappable, they switch the colour;
+       only when there are any) ", or try these:" / "Try these, in stock in your size:" / "Get
+       notified below when it's back.";
     2. at most 2 tiles of backup products that have the customer's size in stock. Sizes match when
        they overlap (39-41 matches 39-42); with several overlapping sizes in stock, the one with the
        biggest overlap wins (45-47 -> 46-48 rather than 43-45). Non-numeric sizes (S, M, ...) must be
@@ -28,28 +29,12 @@
         assign host_color_index = forloop.index0
       endif
     endfor
-    capture host_family
-      render 'product-family', type: product.type, title: product.title
-    endcapture
-    assign host_family = host_family | strip
-    case host_family
-      when 'overshoes'
-        assign same_phrase = 'products.v2.soldout_alt_same_overshoes' | t
-      when 'socks'
-        assign same_phrase = 'products.v2.soldout_alt_same_socks' | t
-      when 'gloves'
-        assign same_phrase = 'products.v2.soldout_alt_same_gloves' | t
-      else
-        assign same_phrase = 'products.v2.soldout_alt_same_default' | t
-    endcase
   -%}
   {{ 'pdp-soldout.css' | asset_url | stylesheet_tag }}
   <div class="pdp-soldout" data-pdp-soldout hidden
     data-title="{{ 'products.v2.soldout_alt_title' | t: size: '__SIZE__' | escape }}"
     data-title-nosize="{{ 'products.v2.soldout_alt_title_nosize' | t | escape }}"
-    data-colours="{{ 'products.v2.soldout_alt_colours' | t: same: '__SAME__', size: '__SIZE__', colours: '__COLOURS__' | escape }}"
-    data-colours-nosize="{{ 'products.v2.soldout_alt_colours_nosize' | t: same: '__SAME__', colours: '__COLOURS__' | escape }}"
-    data-same="{{ same_phrase | escape }}"
+    data-colours="{{ 'products.v2.soldout_alt_colours' | t: colours: '__COLOURS__' | escape }}"
     data-and="{{ 'products.v2.soldout_alt_and' | t | escape }}"
     data-or-both="{{ 'products.v2.soldout_alt_or_both' | t | escape }}"
     data-or-email="{{ 'products.v2.soldout_alt_or_email' | t | escape }}"
