@@ -227,24 +227,6 @@
         "padding_bottom": 52
       }
     },
-    "featured_collection_knwu": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Gloves",
-        "show_title": true,
-        "collection": "cycling-gloves",
-        "variant_filter": "",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "disable_padding": true,
-        "image_ratio": "portrait",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "enable_quick_add": false,
-        "columns_mobile": "2"
-      }
-    },
     "two_cols_swap_jgptyz": {
       "type": "two-cols-swap",
       "blocks": {
@@ -307,9 +289,9 @@
       "type": "featured-collection",
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
-        "title": "overshoes",
+        "title": "A.W.E. '26",
         "show_title": true,
-        "collection": "all-weather-essentials-2025",
+        "collection": "awe-26",
         "variant_filter": "",
         "products_to_show": 4,
         "columns_desktop": 4,
@@ -378,6 +360,24 @@
         "grids_on_desktop": true,
         "height_desktop": 75,
         "height_mobile": 80
+      }
+    },
+    "featured_collection_knwu": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Gloves",
+        "show_title": true,
+        "collection": "cycling-gloves",
+        "variant_filter": "",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "disable_padding": true,
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2"
       }
     },
     "8b0b527a-f477-4927-970f-cc63855e24be": {
@@ -949,10 +949,10 @@
     "featured_collection",
     "rich_text_BAQBfh",
     "rich_text_aqpE7M",
-    "featured_collection_knwu",
     "two_cols_swap_jgptyz",
     "featured_collection_YRMqEF",
     "d87b5960-1f92-48c4-8223-cc52b7b532cf",
+    "featured_collection_knwu",
     "8b0b527a-f477-4927-970f-cc63855e24be",
     "1bee97a8-4b6b-400a-b06f-c4a7cfa384a5",
     "featured_collection_LFbjMC",
