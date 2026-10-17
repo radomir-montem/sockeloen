@@ -60,6 +60,11 @@
               endfor
             -%}
             {%- if alt == blank or alt.id == product.id -%}{%- continue -%}{%- endif -%}
+            {%- comment -%} products behind the early-access gate are left out while the gate is on {%- endcomment -%}
+            {%- if settings.gate_enabled -%}
+              {%- capture gate_flag -%}{%- render 'gate-product-check', product: alt -%}{%- endcapture -%}
+              {%- if gate_flag contains 'true' -%}{%- continue -%}{%- endif -%}
+            {%- endif -%}
             {%- unless first_alt -%},{%- endunless -%}
             {%- assign first_alt = false -%}
             {

@@ -67,6 +67,14 @@
         if alt_p.handle == product.handle or alt_p.available == false
           continue
         endif
+        if settings.gate_enabled
+          capture gate_flag
+            render 'gate-product-check', product: alt_p
+          endcapture
+          if gate_flag contains 'true'
+            continue
+          endif
+        endif
         assign handle_check = combined_handles | split: ','
         if handle_check contains alt_p.handle
           continue
