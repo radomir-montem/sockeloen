@@ -57,6 +57,29 @@
     assign combined_handles = ''
     assign combined_count = 0
 
+    comment
+      "Complete the look" only: the product's sold-out alternatives (variant metafield list
+      custom.soldout_alternatives, see snippets/product-soldout-alternatives.liquid) always come first.
+    endcomment
+    if section.settings.smart_mode == 'complete' or section.settings.smart_order and section.settings.smart_mode == 'none'
+      for alt_v in product.metafields.custom.soldout_alternatives.value
+        assign alt_p = alt_v.product
+        if alt_p.handle == product.handle or alt_p.available == false
+          continue
+        endif
+        assign handle_check = combined_handles | split: ','
+        if handle_check contains alt_p.handle
+          continue
+        endif
+        if combined_handles == ''
+          assign combined_handles = alt_p.handle
+        else
+          assign combined_handles = combined_handles | append: ',' | append: alt_p.handle
+        endif
+        assign combined_count = combined_count | plus: 1
+      endfor
+    endif
+
     if meta_products != blank
       for item in meta_products
         if combined_count >= metafield_limit

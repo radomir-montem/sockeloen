@@ -1,0 +1,83 @@
+/* Sold-out alternatives (snippets/product-soldout-alternatives.liquid, assets/pdp-soldout.js).
+   Header = the AOV "Autumn sale" header (dark glass, white bold title, 70% white text);
+   product tiles = the upsell tiles (2px grey border, 10px corners, 4:5 photo, price right). */
+.pdp-soldout { margin: 0 0 12px; }
+.pdp-soldout[hidden] { display: none !important; }
+.pdp-soldout__tiles { display: flex; flex-direction: column; gap: 20px; padding-top: 16px; }
+
+/* while it shows, it replaces the bundle tiles */
+.pdp-soldout-active .pdp-upsell,
+.pdp-soldout-active .Avada-Bundle-Offer__Volume,
+.pdp-soldout-active .Avada-Bundle-Volume__Container { display: none !important; }
+
+.pdp-soldout__header {
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(21px) saturate(180%);
+  backdrop-filter: blur(21px) saturate(180%);
+  border-radius: 8px;
+  padding: 12px 16px;
+  text-align: left;
+}
+.pdp-soldout__title { margin: 0; font-size: 15px; font-weight: 700; line-height: 1.25; color: #fff; }
+.pdp-soldout__text { margin: 2px 0 0; font-size: 13px; line-height: 1.4; color: rgba(255, 255, 255, 0.7); }
+
+.pdp-soldout__alt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 60px;
+  padding: 12px 16px;
+  border: 2px solid #e5e5e5;
+  border-radius: 10px;
+  background: #fff;
+  color: #1a1a1a;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.pdp-soldout__alt:hover { border-color: #bbb; color: #1a1a1a; }
+.pdp-soldout__alt:focus-visible { outline: none; border-color: #0395F6; }
+.pdp-soldout__img { display: flex; flex: none; --soldout-thumb: 46px; }
+.pdp-soldout__img img {
+  height: var(--soldout-thumb);
+  width: calc(var(--soldout-thumb) * 0.8);
+  object-fit: cover;
+  border-radius: 6px;
+  background: #f5f5f5;
+}
+.pdp-soldout__alt-text { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+.pdp-soldout__alt-title { font-size: 13px; font-weight: 500; line-height: 1.4; color: #1a1a1a; }
+.pdp-soldout__alt-sub { font-size: 12px; font-weight: 600; line-height: 1.3; color: #2e7d32; }
+.pdp-soldout__price { display: flex; flex-direction: column; align-items: flex-end; flex: none; line-height: 1.2; }
+.pdp-soldout__total { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+.pdp-soldout__compare { font-size: 12px; color: #bbb; }
+.pdp-soldout__chevron {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin: 0 2px 0 2px;
+  border-top: 1.75px solid #1a1a1a;
+  border-right: 1.75px solid #1a1a1a;
+  transform: rotate(45deg);
+}
+
+@media screen and (max-width: 749px) {
+  .pdp-soldout__img { --soldout-thumb: 36px; }
+  .pdp-soldout__alt { padding: 12px; gap: 8px; }
+  .pdp-soldout__total { font-size: 13px; }
+}
+
+/* Phones, first tile: the same 16px rhythm as the bundle tiles (header-overrides.css) */
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .pdp-tile .pdp-soldout__tiles { padding-top: 0; gap: 16px; }
+  body.template--product .product-v2 .pdp-tile .pdp-soldout { margin-bottom: 16px; }
+}
+
+/* Desktop gallery layout: tinted tiles like the upsell tiles and size chips (pdp-gallery-layout.css) */
+@media screen and (min-width: 990px) {
+  body.template--product .product-v2--gallery .pdp-tile .pdp-soldout__alt {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: transparent;
+  }
+  body.template--product .product-v2--gallery .pdp-tile .pdp-soldout__alt:hover { background: rgba(0, 0, 0, 0.13); }
+  body.template--product .product-v2--gallery .pdp-tile .pdp-soldout__tiles { padding-top: 8px; }
+}

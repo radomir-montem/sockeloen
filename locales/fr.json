@@ -156,6 +156,12 @@
       "size_guide_link": "Un doute sur votre taille ?",
       "upsell_group": "Ajouter {{ label }}",
       "upsell_only": "{{ product }} uniquement",
+      "soldout_alt_title": "Malheureusement épuisé",
+      "soldout_alt_text": "Inscrivez-vous ci-dessous pour être averti par e-mail du retour en stock, ou essayez ces produits similaires, en stock en taille {{ size }}.",
+      "soldout_alt_text_nosize": "Inscrivez-vous ci-dessous pour être averti par e-mail du retour en stock, ou essayez ces produits similaires en stock.",
+      "soldout_alt_text_none": "Inscrivez-vous ci-dessous, nous vous enverrons un e-mail dès son retour en stock.",
+      "soldout_alt_size": "Taille {{ size }} en stock",
+      "soldout_alt_in_stock": "En stock",
       "upsell_add": {
         "one": "Plus {{ count }} paire {{ label }}",
         "other": "Plus {{ count }} paires {{ label }}"

@@ -1,0 +1,101 @@
+{%- comment -%}
+  Sold-out alternatives on the v2 product page (rendered just before the upsell tiles).
+
+  Product metafield custom.soldout_alternatives (list of variants). Pick one variant per backup
+  product: its colour (all options except the size) is what we offer, the size is matched to the
+  sold-out size. When the customer selects a sold-out variant, the upsell tiles (and the AOV bundle
+  widget) are replaced by:
+    1. a dark text tile like the AOV "Autumn sale" header: sold out, sign up below for the
+       back-in-stock email or try the products below;
+    2. at most 2 tiles of backup products that have the customer's size in stock. Sizes match when
+       they overlap (39-41 matches 39-42); with several overlapping sizes in stock, the one with the
+       biggest overlap wins (45-47 -> 46-48 rather than 43-45). Non-numeric sizes (S, M, ...) must be
+       identical; a one-size backup always matches. Disabled variants (custom.disable) never show.
+  The same products also lead the "Complete the look" list (sections/bought-often-together.liquid).
+  Script: assets/pdp-soldout.js, styles: assets/pdp-soldout.css.
+{%- endcomment -%}
+{%- assign soldout_alts = product.metafields.custom.soldout_alternatives.value -%}
+{%- if soldout_alts != blank -%}
+  {%- liquid
+    assign host_size_index = -1
+    for opt in product.options_with_values
+      assign opt_name = opt.name | downcase
+      if opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe' or opt_name contains 'taille'
+        assign host_size_index = forloop.index0
+      endif
+    endfor
+  -%}
+  {{ 'pdp-soldout.css' | asset_url | stylesheet_tag }}
+  <div class="pdp-soldout" data-pdp-soldout hidden
+    data-text="{{ 'products.v2.soldout_alt_text' | t: size: '__SIZE__' | escape }}"
+    data-text-nosize="{{ 'products.v2.soldout_alt_text_nosize' | t | escape }}"
+    data-text-none="{{ 'products.v2.soldout_alt_text_none' | t | escape }}"
+    data-size-line="{{ 'products.v2.soldout_alt_size' | t: size: '__SIZE__' | escape }}"
+    data-in-stock="{{ 'products.v2.soldout_alt_in_stock' | t | escape }}">
+    <div class="pdp-soldout__tiles">
+      <div class="pdp-soldout__header" role="status">
+        <p class="pdp-soldout__title">{{ 'products.v2.soldout_alt_title' | t }}</p>
+        <p class="pdp-soldout__text" data-soldout-text></p>
+      </div>
+    </div>
+    <script type="application/json" data-soldout-data>
+      {
+        "sizeIndex": {{ host_size_index }},
+        "variants": [
+          {%- for v in product.variants -%}
+            { "id": {{ v.id }}, "available": {{ v.available | json }}, "disabled": {% if v.metafields.custom.disable == true %}true{% else %}false{% endif %}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ],
+        "alts": [
+          {%- assign first_alt = true -%}
+          {%- for pick in soldout_alts -%}
+            {%- liquid
+              assign alt = pick.product
+              assign alt_size_index = -1
+              for opt in alt.options_with_values
+                assign opt_name = opt.name | downcase
+                if opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe' or opt_name contains 'taille'
+                  assign alt_size_index = forloop.index0
+                endif
+              endfor
+            -%}
+            {%- if alt == blank or alt.id == product.id -%}{%- continue -%}{%- endif -%}
+            {%- unless first_alt -%},{%- endunless -%}
+            {%- assign first_alt = false -%}
+            {
+              "title": {{ alt.title | json }},
+              "url": {{ alt.url | json }},
+              "variants": [
+                {%- assign first_v = true -%}
+                {%- for v in alt.variants -%}
+                  {%- liquid
+                    comment
+                      Same colour as the picked variant: every option except the size must match.
+                    endcomment
+                    assign same = true
+                    for o in v.options
+                      if forloop.index0 != alt_size_index and o != pick.options[forloop.index0]
+                        assign same = false
+                      endif
+                    endfor
+                    if v.metafields.custom.disable == true
+                      assign same = false
+                    endif
+                  -%}
+                  {%- if same -%}
+                    {%- unless first_v -%},{%- endunless -%}
+                    {%- assign first_v = false -%}
+                    {%- assign v_img = v.image | default: pick.image | default: alt.featured_image -%}
+                    {%- if alt_size_index >= 0 -%}{%- assign v_size = v.options[alt_size_index] -%}{%- else -%}{%- assign v_size = '' -%}{%- endif -%}
+                    { "id": {{ v.id }}, "size": {{ v_size | json }}, "available": {{ v.available | json }}, "price": {{ v.price | money | json }}, "compare": {% if v.compare_at_price > v.price %}{{ v.compare_at_price | money | json }}{% else %}""{% endif %}, "img": {{ v_img | image_url: width: 96 | json }} }
+                  {%- endif -%}
+                {%- endfor -%}
+              ]
+            }
+          {%- endfor -%}
+        ]
+      }
+    </script>
+  </div>
+  <script src="{{ 'pdp-soldout.js' | asset_url }}" defer></script>
+{%- endif -%}
