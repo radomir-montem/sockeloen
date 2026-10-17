@@ -219,17 +219,13 @@
 
                         {%- if sub_has_coll -%}
                           {%- comment -%}
-                            When the collection has more than 10 products, cap the
-                            product tiles at 9 so the 10th slot becomes the "Shop
-                            all" tile (keeps the grid at a clean 5×2). Smaller
+                            Cap the product tiles at 9 so the "Shop all" tile is
+                            at most the 10th card (keeps the grid at 5×2, also
+                            for collections with exactly 10 products). Smaller
                             collections just get all products followed by the
                             shop-all tile as the last card.
                           {%- endcomment -%}
-                          {%- assign product_tile_limit = 10 -%}
-                          {%- if sub_coll.products.size > 10 -%}
-                            {%- assign product_tile_limit = 9 -%}
-                          {%- endif -%}
-                          {%- for product in sub_coll.products limit: product_tile_limit -%}
+                          {%- for product in sub_coll.products limit: 9 -%}
                             <a class="mega-menu-v2-card" href="{{ product.url }}">
                               <div class="mega-menu-v2-card-img">
                                 {%- if product.featured_image != blank -%}
