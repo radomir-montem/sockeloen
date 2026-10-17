@@ -13,6 +13,7 @@
   var MAX_ALTS = 2;
   var scope = root.closest('.product-v2') || document.body;
   var textEl = root.querySelector('[data-soldout-text]');
+  var titleEl = root.querySelector('[data-soldout-title]');
   var tiles = root.querySelector('.pdp-soldout__tiles');
 
   function selectedVariant() {
@@ -119,6 +120,7 @@
     var found = matches(hostSize);
     root.querySelectorAll('.pdp-soldout__alt').forEach(function (n) { n.remove(); });
     found.forEach(function (m) { tiles.appendChild(tile(m)); });
+    titleEl.textContent = hostSize ? root.dataset.title.replace('__SIZE__', hostSize) : root.dataset.titleNosize;
     if (!found.length) textEl.textContent = root.dataset.textNone;
     else if (hostSize) textEl.textContent = root.dataset.text.replace('__SIZE__', hostSize);
     else textEl.textContent = root.dataset.textNosize;
