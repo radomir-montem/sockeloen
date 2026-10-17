@@ -208,6 +208,12 @@
       "size_guide_link": "Not sure about your size?",
       "upsell_group": "Add {{ label }}",
       "upsell_only": "{{ product }} only",
+      "soldout_alt_title": "Unfortunately sold out",
+      "soldout_alt_text": "Sign up below for a back-in-stock email, or try these similar products, in stock in size {{ size }}.",
+      "soldout_alt_text_nosize": "Sign up below for a back-in-stock email, or try these similar products that are in stock.",
+      "soldout_alt_text_none": "Sign up below and we'll email you as soon as it's back in stock.",
+      "soldout_alt_size": "Size {{ size }} in stock",
+      "soldout_alt_in_stock": "In stock",
       "upsell_add": {
         "one": "Plus {{ count }} pair {{ label }}",
         "other": "Plus {{ count }} pairs {{ label }}"
