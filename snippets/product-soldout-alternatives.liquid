@@ -5,8 +5,9 @@
   product: its colour (all options except the size) is what we offer, the size is matched to the
   sold-out size. When the customer selects a sold-out variant, the upsell tiles (and the AOV bundle
   widget) are replaced by:
-    1. a dark text tile like the AOV "Autumn sale" header: sold out, sign up below for the
-       back-in-stock email or try the products below;
+    1. a dark text tile like the AOV "Autumn sale" header: "Sorry, sold out in <size>", other
+       colours of this product in stock in that size (tappable, they switch the colour; only when
+       there are any), then sign up below for the back-in-stock email and/or try the products below;
     2. at most 2 tiles of backup products that have the customer's size in stock. Sizes match when
        they overlap (39-41 matches 39-42); with several overlapping sizes in stock, the one with the
        biggest overlap wins (45-47 -> 46-48 rather than 43-45). Non-numeric sizes (S, M, ...) must be
@@ -18,29 +19,54 @@
 {%- if soldout_alts != blank -%}
   {%- liquid
     assign host_size_index = -1
+    assign host_color_index = -1
     for opt in product.options_with_values
       assign opt_name = opt.name | downcase
       if opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe' or opt_name contains 'taille'
         assign host_size_index = forloop.index0
+      elsif opt_name contains 'color' or opt_name contains 'colour' or opt_name contains 'kleur' or opt_name contains 'farbe' or opt_name contains 'couleur'
+        assign host_color_index = forloop.index0
       endif
     endfor
+    capture host_family
+      render 'product-family', type: product.type, title: product.title
+    endcapture
+    assign host_family = host_family | strip
+    case host_family
+      when 'overshoes'
+        assign same_phrase = 'products.v2.soldout_alt_same_overshoes' | t
+      when 'socks'
+        assign same_phrase = 'products.v2.soldout_alt_same_socks' | t
+      when 'gloves'
+        assign same_phrase = 'products.v2.soldout_alt_same_gloves' | t
+      else
+        assign same_phrase = 'products.v2.soldout_alt_same_default' | t
+    endcase
   -%}
   {{ 'pdp-soldout.css' | asset_url | stylesheet_tag }}
   <div class="pdp-soldout" data-pdp-soldout hidden
-    data-text="{{ 'products.v2.soldout_alt_text' | t: size: '__SIZE__' | escape }}"
-    data-text-nosize="{{ 'products.v2.soldout_alt_text_nosize' | t | escape }}"
+    data-title="{{ 'products.v2.soldout_alt_title' | t: size: '__SIZE__' | escape }}"
+    data-title-nosize="{{ 'products.v2.soldout_alt_title_nosize' | t | escape }}"
+    data-colours="{{ 'products.v2.soldout_alt_colours' | t: same: '__SAME__', size: '__SIZE__', colours: '__COLOURS__' | escape }}"
+    data-colours-nosize="{{ 'products.v2.soldout_alt_colours_nosize' | t: same: '__SAME__', colours: '__COLOURS__' | escape }}"
+    data-same="{{ same_phrase | escape }}"
+    data-and="{{ 'products.v2.soldout_alt_and' | t | escape }}"
+    data-or-both="{{ 'products.v2.soldout_alt_or_both' | t | escape }}"
+    data-or-email="{{ 'products.v2.soldout_alt_or_email' | t | escape }}"
+    data-text="{{ 'products.v2.soldout_alt_text' | t | escape }}"
     data-text-none="{{ 'products.v2.soldout_alt_text_none' | t | escape }}"
     data-size-line="{{ 'products.v2.soldout_alt_size' | t: size: '__SIZE__' | escape }}"
     data-in-stock="{{ 'products.v2.soldout_alt_in_stock' | t | escape }}">
     <div class="pdp-soldout__tiles">
       <div class="pdp-soldout__header" role="status">
-        <p class="pdp-soldout__title">{{ 'products.v2.soldout_alt_title' | t }}</p>
+        <p class="pdp-soldout__title" data-soldout-title>{{ 'products.v2.soldout_alt_title_nosize' | t }}</p>
         <p class="pdp-soldout__text" data-soldout-text></p>
       </div>
     </div>
     <script type="application/json" data-soldout-data>
       {
         "sizeIndex": {{ host_size_index }},
+        "colorIndex": {{ host_color_index }},
         "variants": [
           {%- for v in product.variants -%}
             { "id": {{ v.id }}, "available": {{ v.available | json }}, "disabled": {% if v.metafields.custom.disable == true %}true{% else %}false{% endif %}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}
