@@ -154,15 +154,15 @@
     root.querySelectorAll('.pdp-soldout__alt').forEach(function (n) { n.remove(); });
     found.forEach(function (m) { tiles.appendChild(tile(m)); });
     titleEl.textContent = hostSize ? root.dataset.title.replace('__SIZE__', hostSize) : root.dataset.titleNosize;
-    textEl.textContent = '';
+    if (!found.length) textEl.textContent = root.dataset.textNone;
+    else if (hostSize) textEl.textContent = root.dataset.text.replace('__SIZE__', hostSize);
+    else textEl.textContent = root.dataset.textNosize;
     var colours = otherColours(v);
     if (colours.length) {
       var tpl = root.dataset.colours.split('__COLOURS__');
-      textEl.appendChild(document.createTextNode(tpl[0]));
+      textEl.appendChild(document.createTextNode(' ' + tpl[0]));
       textEl.appendChild(colourList(colours));
-      textEl.appendChild(document.createTextNode((tpl[1] || '') + (found.length ? root.dataset.orBoth : root.dataset.orEmail)));
-    } else {
-      textEl.textContent = found.length ? root.dataset.text : root.dataset.textNone;
+      textEl.appendChild(document.createTextNode(tpl[1] || ''));
     }
     root.hidden = false;
     scope.classList.add('pdp-soldout-active');

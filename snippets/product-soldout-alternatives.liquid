@@ -5,10 +5,10 @@
   product: its colour (all options except the size) is what we offer, the size is matched to the
   sold-out size. When the customer selects a sold-out variant, the upsell tiles (and the AOV bundle
   widget) are replaced by:
-    1. a dark text tile like the AOV "Autumn sale" header: "Sold out in <size>", then one short
-       line: "Available in <other colours in stock in that size>" (tappable, they switch the colour;
-       only when there are any) ", or try these:" / "Try these, in stock in your size:" / "Get
-       notified below when it's back.";
+    1. a dark text tile like the AOV "Autumn sale" header (Jasper's wording): "Unfortunately sold
+       out" + sign up below for a back-in-stock email, or try these similar products in stock in
+       size X; then "Also available in <other colours in stock in that size>" (tappable, they
+       switch the colour; only when there are any);
     2. at most 2 tiles of backup products that have the customer's size in stock. Sizes match when
        they overlap (39-41 matches 39-42); with several overlapping sizes in stock, the one with the
        biggest overlap wins (45-47 -> 46-48 rather than 43-45). Non-numeric sizes (S, M, ...) must be
@@ -36,9 +36,8 @@
     data-title-nosize="{{ 'products.v2.soldout_alt_title_nosize' | t | escape }}"
     data-colours="{{ 'products.v2.soldout_alt_colours' | t: colours: '__COLOURS__' | escape }}"
     data-and="{{ 'products.v2.soldout_alt_and' | t | escape }}"
-    data-or-both="{{ 'products.v2.soldout_alt_or_both' | t | escape }}"
-    data-or-email="{{ 'products.v2.soldout_alt_or_email' | t | escape }}"
-    data-text="{{ 'products.v2.soldout_alt_text' | t | escape }}"
+    data-text="{{ 'products.v2.soldout_alt_text' | t: size: '__SIZE__' | escape }}"
+    data-text-nosize="{{ 'products.v2.soldout_alt_text_nosize' | t | escape }}"
     data-text-none="{{ 'products.v2.soldout_alt_text_none' | t | escape }}"
     data-size-line="{{ 'products.v2.soldout_alt_size' | t: size: '__SIZE__' | escape }}"
     data-in-stock="{{ 'products.v2.soldout_alt_in_stock' | t | escape }}">
