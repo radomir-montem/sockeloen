@@ -108,39 +108,6 @@
     return a;
   }
 
-  /* Other colours of this product that are in stock in the same size (all other options equal) */
-  function otherColours(v) {
-    var ci = data.colorIndex;
-    if (ci < 0) return [];
-    var seen = {};
-    return data.variants.filter(function (o) {
-      if (!o.available || o.disabled || o.options[ci] === v.options[ci] || seen[o.options[ci]]) return false;
-      var same = o.options.every(function (opt, i) { return i === ci || opt === v.options[i]; });
-      if (same) seen[o.options[ci]] = true;
-      return same;
-    }).map(function (o) { return o.options[ci]; });
-  }
-
-  function selectColour(name) {
-    var radio = Array.prototype.find.call(scope.querySelectorAll('variant-radios fieldset input[type="radio"]'), function (r) {
-      return r.value === name && r.closest('fieldset').classList.contains('color-input');
-    });
-    if (radio && radio.nextElementSibling) radio.nextElementSibling.click();
-  }
-
-  /* "A", "A and B", "A, B and C" as buttons that switch the colour */
-  function colourList(names) {
-    var frag = document.createDocumentFragment();
-    names.forEach(function (n, i) {
-      if (i > 0) frag.appendChild(document.createTextNode(i === names.length - 1 ? ' ' + root.dataset.and + ' ' : ', '));
-      var b = el('button', 'pdp-soldout__colour', n);
-      b.type = 'button';
-      b.addEventListener('click', function () { selectColour(n); });
-      frag.appendChild(b);
-    });
-    return frag;
-  }
-
   function hide() {
     root.hidden = true;
     scope.classList.remove('pdp-soldout-active');
@@ -157,13 +124,6 @@
     if (!found.length) textEl.textContent = root.dataset.textNone;
     else if (hostSize) textEl.textContent = root.dataset.text.replace('__SIZE__', hostSize);
     else textEl.textContent = root.dataset.textNosize;
-    var colours = otherColours(v);
-    if (colours.length) {
-      var tpl = root.dataset.colours.split('__COLOURS__');
-      textEl.appendChild(document.createTextNode(' ' + tpl[0]));
-      textEl.appendChild(colourList(colours));
-      textEl.appendChild(document.createTextNode(tpl[1] || ''));
-    }
     root.hidden = false;
     scope.classList.add('pdp-soldout-active');
   }

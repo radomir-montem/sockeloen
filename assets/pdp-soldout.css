@@ -20,20 +20,6 @@
 }
 .pdp-soldout__title { margin: 0; font-size: 15px; font-weight: 700; line-height: 1.25; color: #fff; }
 .pdp-soldout__text { margin: 2px 0 0; font-size: 13px; line-height: 1.4; color: rgba(255, 255, 255, 0.7); }
-/* other colours in stock: tappable, they switch the colour */
-.pdp-soldout__colour {
-  display: inline;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: #fff;
-  font: inherit;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  cursor: pointer;
-}
 
 .pdp-soldout__alt {
   display: flex;

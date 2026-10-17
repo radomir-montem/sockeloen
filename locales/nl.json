@@ -209,11 +209,9 @@
       "upsell_only": "Alleen de {{ product }}",
       "soldout_alt_title": "Helaas uitverkocht",
       "soldout_alt_title_nosize": "Helaas uitverkocht",
-      "soldout_alt_colours": "Ook verkrijgbaar in {{ colours }}.",
       "soldout_alt_text": "Meld je hieronder aan voor een mail zodra het weer op voorraad is, of probeer deze vergelijkbare producten, op voorraad in maat {{ size }}.",
       "soldout_alt_text_nosize": "Meld je hieronder aan voor een mail zodra het weer op voorraad is, of probeer deze vergelijkbare producten die op voorraad zijn.",
       "soldout_alt_text_none": "Meld je hieronder aan, dan mailen we je zodra het weer op voorraad is.",
-      "soldout_alt_and": "en",
       "soldout_alt_size": "Maat {{ size }} op voorraad",
       "soldout_alt_in_stock": "Op voorraad",
       "upsell_add": {
