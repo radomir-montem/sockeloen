@@ -748,7 +748,7 @@
       }
     },
     "pdp_desktop_layout": "gallery",
-    "gate_enabled": true,
+    "gate_enabled": false,
     "gate_collection": "awe-26",
     "gate_password": "breakaway26",
     "gate_scope": "tagged",
