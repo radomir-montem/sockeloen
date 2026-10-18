@@ -43,7 +43,7 @@
   }
 
   function isOneSize(s) {
-    return !s || /one\s*-?\s*size|onesize|universal/i.test(s);
+    return !s || /one\s*-?\s*size|onesize|universal|e[eé]n\s*maat|einheitsgr|eine\s*gr|taille\s*unique/i.test(s);
   }
 
   /* How well an alternative size fits the sold-out size: 0 = not at all, higher = more overlap */
@@ -67,17 +67,52 @@
     return best;
   }
 
-  /* One tile per product first (in metafield order); another colour of a product already shown
-     only fills a slot that is left. */
-  function matches(hostSize) {
+  /* Picks of the same product + colour form one group (data.alts holds one entry per pick). */
+  function groups() {
+    var out = [], byKey = {};
+    data.alts.forEach(function (a) {
+      var g = byKey[a.key];
+      if (!g) { g = byKey[a.key] = { alt: a, picks: [] }; out.push(g); }
+      g.picks.push(a.pick);
+    });
+    return out;
+  }
+
+  function sameColour(hostColour, altColour) {
+    if (!hostColour || !altColour) return false;
+    var h = hostColour.trim().toLowerCase();
+    return altColour.toLowerCase().split(' / ').some(function (c) { return c.trim() === h; });
+  }
+
+  /* One tile per product first (in metafield order; a backup listed in several colours shows the
+     one named like the sold-out colour); other colours/sizes of a product only fill slots that
+     are left. A one-size sold-out product gets each picked size as its own tile. */
+  function matches(hostSize, hostColour) {
+    var hostOne = isOneSize(hostSize);
     var hits = [];
-    data.alts.forEach(function (alt) {
-      var v = bestVariant(alt, hostSize);
-      if (v) hits.push({ alt: alt, variant: v });
+    groups().forEach(function (g) {
+      if (hostOne) {
+        var n = 0;
+        g.picks.forEach(function (id) {
+          var v = g.alt.variants.find(function (x) { return x.id === id && x.available; });
+          if (v) { hits.push({ alt: g.alt, variant: v }); n++; }
+        });
+        if (!n) {
+          var any = g.alt.variants.find(function (x) { return x.available; });
+          if (any) hits.push({ alt: g.alt, variant: any });
+        }
+      } else {
+        var v = bestVariant(g.alt, hostSize);
+        if (v) hits.push({ alt: g.alt, variant: v });
+      }
     });
     var out = [], used = {};
     hits.forEach(function (h) {
-      if (out.length < MAX_ALTS && !used[h.alt.url]) { out.push(h); used[h.alt.url] = true; }
+      if (out.length >= MAX_ALTS || used[h.alt.url]) return;
+      var same = hits.filter(function (x) { return x.alt.url === h.alt.url; });
+      var pick = same.find(function (x) { return sameColour(hostColour, x.alt.color); }) || same[0];
+      out.push(pick);
+      used[h.alt.url] = true;
     });
     hits.forEach(function (h) {
       if (out.length < MAX_ALTS && out.indexOf(h) === -1) out.push(h);
@@ -130,7 +165,8 @@
     var v = selectedVariant();
     if (!v || v.available || v.disabled) return hide();
     var hostSize = data.sizeIndex >= 0 ? v.options[data.sizeIndex] : '';
-    var found = matches(hostSize);
+    var hostColour = data.colorIndex >= 0 ? v.options[data.colorIndex] : '';
+    var found = matches(hostSize, hostColour);
     root.querySelectorAll('.pdp-soldout__alt').forEach(function (n) { n.remove(); });
     found.forEach(function (m) { tiles.appendChild(tile(m)); });
     titleEl.textContent = hostSize ? root.dataset.title.replace('__SIZE__', hostSize) : root.dataset.titleNosize;
