@@ -86,7 +86,7 @@
 
   /* One tile per product first (in metafield order; a backup listed in several colours shows the
      one named like the sold-out colour); other colours/sizes of a product only fill slots that
-     are left. A one-size sold-out product gets each picked size as its own tile. */
+     are left. A one-size sold-out product gets each picked size as its own tile, in pick order. */
   function matches(hostSize, hostColour) {
     var hostOne = isOneSize(hostSize);
     var hits = [];
@@ -106,6 +106,8 @@
         if (v) hits.push({ alt: g.alt, variant: v });
       }
     });
+    /* one-size product: exactly the pick order (e.g. Classic 36-42 + 43-48 fill both slots) */
+    if (hostOne) return hits.slice(0, MAX_ALTS);
     var out = [], used = {};
     hits.forEach(function (h) {
       if (out.length >= MAX_ALTS || used[h.alt.url]) return;
