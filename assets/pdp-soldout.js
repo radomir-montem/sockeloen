@@ -143,6 +143,8 @@
     var sizeLine = m.variant.size && !isOneSize(m.variant.size)
       ? root.dataset.sizeLine.replace('__SIZE__', m.variant.size)
       : root.dataset.inStock;
+    /* the colour first, so two colours of one product are told apart ("Black · Size 39-42 in stock") */
+    if (m.alt.color) sizeLine = m.alt.color + ' · ' + sizeLine;
     text.appendChild(el('span', 'pdp-soldout__alt-sub', sizeLine));
     var price = el('span', 'pdp-soldout__price');
     price.appendChild(el('span', 'pdp-soldout__total', m.variant.price));
