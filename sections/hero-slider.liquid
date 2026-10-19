@@ -658,12 +658,16 @@
         if (w > 0) box.style.setProperty('--hero-title-w', Math.ceil(w) + 'px');
       });
       if (!progress) return;
-      /* any slide works: all content groups sit at the same place inside their slide */
-      var box = boxes[0], head = box && (box.querySelector('.banner__heading > span') || box.firstElementChild);
+      /* the slide on screen: every slide's content group sits at the same place, so one is enough */
+      var rr = root.getBoundingClientRect(), head = null;
+      Array.prototype.some.call(boxes, function (box) {
+        var r = box.getBoundingClientRect();
+        if (r.width && r.left >= rr.left - 1 && r.left < rr.right) { head = box.querySelector('.banner__heading > span') || box.firstElementChild; }
+        return !!head;
+      });
       if (!head) return;
-      var slide = box.closest('[data-slide]') || root;
       progress.style.setProperty('--hero-content-x', '0px');
-      var x = (head.getBoundingClientRect().left - slide.getBoundingClientRect().left) - (progress.getBoundingClientRect().left - root.getBoundingClientRect().left);
+      var x = head.getBoundingClientRect().left - progress.getBoundingClientRect().left;
       progress.style.setProperty('--hero-content-x', Math.max(0, Math.round(x)) + 'px');
     }
     function later() { clearTimeout(t); t = setTimeout(measure, 80); }
