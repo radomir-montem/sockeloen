@@ -136,8 +136,9 @@
 {%- if s.show_social_proof -%}
   #Banner-{{ section.id }} .banner-social-proof { margin-top: {{ s.sp_spacing_top }}px !important; }
   /* measured from the bottom of the title's letters, not its line box (whose half-leading differs per screen size):
-     --hero-title-drop = how far the letters reach below (+) or stop above (-) the heading box, set by the script below */
-  #Banner-{{ section.id }} .banner__buttons { margin-top: calc({{ s.sp_spacing_top }}px - var(--hero-title-drop, 0px)) !important; }
+     --hero-title-drop = how far the letters reach below (+) or stop above (-) the heading box, set by the script below,
+     so the gap from the letters to the button is exactly the setting */
+  #Banner-{{ section.id }} .banner__buttons { margin-top: calc({{ s.sp_spacing_top }}px + var(--hero-title-drop, 0px)) !important; }
   #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-avatar { width: {{ s.sp_avatar_size }}px; height: {{ s.sp_avatar_size }}px; }
   #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-text {
     {%- if s.sp_text_color != blank %} color: {{ s.sp_text_color }} !important;{% endif -%}
@@ -274,9 +275,44 @@
   #Banner-{{ section.id }} .hero-slider__progress { max-width: 180px; }
   #Banner-{{ section.id }} .hero-slider__arrows { display: none; }
 }
-/* the button is as wide as the title (its widest line) on every screen; --hero-title-w is measured per slide by the script below */
-#Banner-{{ section.id }} .banner__buttons { width: var(--hero-title-w, auto) !important; max-width: 100%; }
+/* the button is as wide as the title (its widest line) on every screen; --hero-title-w is measured per slide by the script below.
+   It sits under the title the way the title is aligned (left / center / right), per screen size. */
+{%- liquid
+  assign hd_align = hs.heading_align_desktop
+  if hd_align == blank or hd_align == 'inherit'
+    assign hd_align = s.desktop_content_alignment
+  endif
+  assign hm_align = hs.heading_align_mobile
+  if hm_align == blank or hm_align == 'inherit'
+    assign hm_align = s.mobile_content_alignment
+  endif
+  case hd_align
+    when 'center'
+      assign hd_ml = 'auto'
+      assign hd_mr = 'auto'
+    when 'right'
+      assign hd_ml = 'auto'
+      assign hd_mr = '0'
+    else
+      assign hd_ml = '0'
+      assign hd_mr = 'auto'
+  endcase
+  case hm_align
+    when 'center'
+      assign hm_ml = 'auto'
+      assign hm_mr = 'auto'
+    when 'right'
+      assign hm_ml = 'auto'
+      assign hm_mr = '0'
+    else
+      assign hm_ml = '0'
+      assign hm_mr = 'auto'
+  endcase
+-%}
+#Banner-{{ section.id }} .banner__buttons { width: var(--hero-title-w, auto) !important; max-width: 100%; align-self: auto !important; }
 #Banner-{{ section.id }} .banner__buttons .button { width: 100% !important; min-width: 0 !important; }
+@media screen and (min-width: 750px) { #Banner-{{ section.id }} .banner__buttons { margin-left: {{ hd_ml }} !important; margin-right: {{ hd_mr }} !important; } }
+@media screen and (max-width: 749px) { #Banner-{{ section.id }} .banner__buttons { margin-left: {{ hm_ml }} !important; margin-right: {{ hm_mr }} !important; } }
 /* the slide timer starts at the same left edge as the title, button and social proof (offset measured by the script) */
 #Banner-{{ section.id }} .hero-slider__progress { margin-left: var(--hero-content-x, 0px); }
 {%- unless s.show_progress %} #Banner-{{ section.id }} .hero-slider__progress { display: none; }{% endunless -%}
