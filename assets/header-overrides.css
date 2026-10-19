@@ -6695,3 +6695,11 @@ body .product-v2 .product-v2__info-wrapper > .pdp-tiles-bg,
    the photo already show there are more photos and which one is active. The script in main-product-v2 still
    builds them, so this is a one-line switch back. */
 body .product-v2 .pdp-dots { display: none !important; }
+
+/* Homepage: the Best sellers sheet keeps square corners while it slides over the hero (2026-10-19).
+   --sheet-radius still sets its inner spacing (title offset, carousel side padding), only the
+   corners are squared. */
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section,
+body.template--index #MainContent > .shopify-section:first-child:has(> .banner) + .shopify-section > *:first-child {
+  border-radius: 0 !important;
+}

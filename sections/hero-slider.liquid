@@ -135,6 +135,7 @@
 /* ---------- Social proof ---------- */
 {%- if s.show_social_proof -%}
   #Banner-{{ section.id }} .banner-social-proof { margin-top: {{ s.sp_spacing_top }}px !important; }
+  #Banner-{{ section.id }} .banner__buttons { margin-top: {{ s.sp_spacing_top }}px !important; }
   #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-avatar { width: {{ s.sp_avatar_size }}px; height: {{ s.sp_avatar_size }}px; }
   #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-text {
     {%- if s.sp_text_color != blank %} color: {{ s.sp_text_color }} !important;{% endif -%}
@@ -271,6 +272,13 @@
   #Banner-{{ section.id }} .hero-slider__progress { max-width: 180px; }
   #Banner-{{ section.id }} .hero-slider__arrows { display: none; }
 }
+@media screen and (min-width: 750px) {
+  /* the button is as wide as the title (its widest line); --hero-title-w is measured per slide by the script below */
+  #Banner-{{ section.id }} .banner__buttons { width: var(--hero-title-w, auto) !important; max-width: 100%; }
+  #Banner-{{ section.id }} .banner__buttons .button { width: 100% !important; }
+}
+/* the slide timer starts at the same left edge as the title, button and social proof (offset measured by the script) */
+#Banner-{{ section.id }} .hero-slider__progress { margin-left: var(--hero-content-x, 0px); }
 {%- unless s.show_progress %} #Banner-{{ section.id }} .hero-slider__progress { display: none; }{% endunless -%}
 {%- unless s.show_arrows %} #Banner-{{ section.id }} .hero-slider__arrows { display: none !important; }{% endunless -%}
 @media (prefers-reduced-motion: reduce) {
@@ -344,14 +352,10 @@
             {%- if bl.text != blank -%}
               <h2 class="banner__text max-w-[438px] {{ ts.text_style }}"><span>{{ bl.text | escape }}</span></h2>
             {%- endif -%}
-            {%- if bl.button_label_1 != blank or bl.button_label_2 != blank -%}
-              <div class="banner__buttons w-full md:w-[unset]{% if bl.button_label_1 != blank and bl.button_label_2 != blank %} banner__buttons--multiple{% endif %}{% if bs.button_style == 'solid' %} banner__buttons--solid{% else %} banner__buttons--glass{% endif %}">
-                {%- if bl.button_label_1 != blank -%}
-                  <a{% if bl.button_link_1 == blank %} role="link" aria-disabled="true"{% else %} href="{{ bl.button_link_1 }}"{% endif %} class="button{% if bl.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %} w-full sm:w-fit" data-slide-link>{{ bl.button_label_1 | escape }}</a>
-                {%- endif -%}
-                {%- if bl.button_label_2 != blank -%}
-                  <a{% if bl.button_link_2 == blank %} role="link" aria-disabled="true"{% else %} href="{{ bl.button_link_2 }}"{% endif %} class="button{% if bl.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %} w-full sm:w-fit" data-slide-link>{{ bl.button_label_2 | escape }}</a>
-                {%- endif -%}
+            {%- comment -%} one button per slide (2026-10-19): a second button split the attention {%- endcomment -%}
+            {%- if bl.button_label_1 != blank -%}
+              <div class="banner__buttons w-full md:w-[unset]{% if bs.button_style == 'solid' %} banner__buttons--solid{% else %} banner__buttons--glass{% endif %}">
+                <a{% if bl.button_link_1 == blank %} role="link" aria-disabled="true"{% else %} href="{{ bl.button_link_1 }}"{% endif %} class="button{% if bl.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %} w-full sm:w-fit" data-slide-link>{{ bl.button_label_1 | escape }}</a>
               </div>
             {%- endif -%}
             {%- if s.show_social_proof -%}
@@ -637,6 +641,43 @@
   })();
 </script>
 
+<script>
+  /* Measures per slide the title's widest line (the button gets that width on desktop) and the content's
+     left edge relative to the slide timer, so the timer lines up with the title, button and social proof. */
+  (function () {
+    var root = document.getElementById('Banner-{{ section.id }}');
+    if (!root) return;
+    var progress = root.querySelector('.hero-slider__progress');
+    var t;
+    function measure() {
+      var boxes = root.querySelectorAll('.banner__box');
+      Array.prototype.forEach.call(boxes, function (box) {
+        var span = box.querySelector('.banner__heading > span');
+        if (!span) { box.style.removeProperty('--hero-title-w'); return; }
+        var w = span.getBoundingClientRect().width;
+        if (w > 0) box.style.setProperty('--hero-title-w', Math.ceil(w) + 'px');
+      });
+      if (!progress) return;
+      /* the slide on screen: every slide's content group sits at the same place, so one is enough */
+      var rr = root.getBoundingClientRect(), head = null;
+      Array.prototype.some.call(boxes, function (box) {
+        var r = box.getBoundingClientRect();
+        if (r.width && r.left >= rr.left - 1 && r.left < rr.right) { head = box.querySelector('.banner__heading > span') || box.firstElementChild; }
+        return !!head;
+      });
+      if (!head) return;
+      progress.style.setProperty('--hero-content-x', '0px');
+      var x = head.getBoundingClientRect().left - progress.getBoundingClientRect().left;
+      progress.style.setProperty('--hero-content-x', Math.max(0, Math.round(x)) + 'px');
+    }
+    function later() { clearTimeout(t); t = setTimeout(measure, 80); }
+    measure();
+    window.addEventListener('resize', later);
+    window.addEventListener('load', later);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
+  })();
+</script>
+
 {%- if template.name == 'index' -%}
 <script>
   /* the content group of every slide docks under the floating header on scroll,
@@ -769,7 +810,7 @@
     { "type": "range", "id": "sp_line_height", "min": 0, "max": 2, "step": 0.1, "label": "Line height", "default": 0 },
     { "type": "select", "id": "sp_font_weight", "label": "Font weight", "options": [ { "value": "default", "label": "Default" }, { "value": "300", "label": "Light (300)" }, { "value": "400", "label": "Regular (400)" }, { "value": "500", "label": "Medium (500)" }, { "value": "600", "label": "Semi-bold (600)" }, { "value": "700", "label": "Bold (700)" } ], "default": "default" },
     { "type": "color", "id": "sp_text_color", "label": "Text colour", "default": "#ffffff" },
-    { "type": "range", "id": "sp_spacing_top", "min": 0, "max": 60, "step": 2, "unit": "px", "label": "Space above", "default": 26 },
+    { "type": "range", "id": "sp_spacing_top", "min": 0, "max": 60, "step": 2, "unit": "px", "label": "Space between title, button and social proof", "default": 20, "info": "The same gap above the button and above the social proof." },
     { "type": "select", "id": "sp_align_desktop", "label": "Alignment (desktop)", "options": [ { "value": "inherit", "label": "Follow section" }, { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
     { "type": "select", "id": "sp_align_mobile", "label": "Alignment (mobile)", "options": [ { "value": "inherit", "label": "Follow section" }, { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" }
   ],
@@ -786,12 +827,9 @@
         { "type": "text", "id": "heading", "label": "Title", "default": "Best shoecovers on the planet?", "info": "| = line break on phones only, || = on every screen." },
         { "type": "checkbox", "id": "use_h1_tag", "label": "Use H1 tag (first slide only)", "default": false },
         { "type": "text", "id": "text", "label": "Subtitle", "default": "Keep your feet dry, clean and look stylish." },
-        { "type": "text", "id": "button_label_1", "label": "Button 1 label" },
-        { "type": "url", "id": "button_link_1", "label": "Button 1 link" },
-        { "type": "checkbox", "id": "button_style_secondary_1", "label": "Button 1 outline style", "default": false },
-        { "type": "text", "id": "button_label_2", "label": "Button 2 label", "default": "Shop now" },
-        { "type": "url", "id": "button_link_2", "label": "Button 2 link" },
-        { "type": "checkbox", "id": "button_style_secondary_2", "label": "Button 2 outline style", "default": false }
+        { "type": "text", "id": "button_label_1", "label": "Button label", "default": "Shop now", "info": "One button per slide. On desktop it is as wide as the title." },
+        { "type": "url", "id": "button_link_1", "label": "Button link" },
+        { "type": "checkbox", "id": "button_style_secondary_1", "label": "Button outline style", "default": false }
       ]
     }
   ],
