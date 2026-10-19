@@ -20,12 +20,9 @@
             "heading": "All Weather Essentials '26",
             "use_h1_tag": false,
             "text": "The new winter collection. Join the early break away and shop it first.",
-            "button_label_1": "",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Shop winter here",
-            "button_link_2": "shopify://collections/awe-26",
-            "button_style_secondary_2": false
+            "button_label_1": "Shop winter here",
+            "button_link_1": "shopify://collections/awe-26",
+            "button_style_secondary_1": false
           }
         },
         "slide_1": {
@@ -39,12 +36,9 @@
             "heading": "Best shoecovers on the planet?",
             "use_h1_tag": false,
             "text": "Keep your feet dry, clean and look stylish with the best shoecovers out there.",
-            "button_label_1": "",
+            "button_label_1": "Shop Shoecovers",
             "button_link_1": "shopify://products/aero-shoe-cover-del-crosso",
-            "button_style_secondary_1": true,
-            "button_label_2": "Shop Shoecovers",
-            "button_link_2": "shopify://products/aero-shoe-cover-del-crosso",
-            "button_style_secondary_2": false
+            "button_style_secondary_1": false
           }
         },
         "slide_3": {
@@ -55,12 +49,9 @@
             "heading": "Worn by world champions",
             "use_h1_tag": false,
             "text": "Aero socks tested in the wind tunnel with TU Eindhoven.",
-            "button_label_1": "",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Shop Aero socks",
-            "button_link_2": "shopify://products/sockeloen-aero-cycling-socks",
-            "button_style_secondary_2": false
+            "button_label_1": "Shop Aero socks",
+            "button_link_1": "shopify://products/sockeloen-aero-cycling-socks",
+            "button_style_secondary_1": false
           }
         }
       },
@@ -146,7 +137,7 @@
         "sp_line_height": 0,
         "sp_font_weight": "default",
         "sp_text_color": "#ffffff",
-        "sp_spacing_top": 26,
+        "sp_spacing_top": 20,
         "sp_align_desktop": "left",
         "sp_align_mobile": "left"
       }
