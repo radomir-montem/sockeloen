@@ -275,7 +275,8 @@
   #Banner-{{ section.id }} .hero-slider__progress { max-width: 180px; }
   #Banner-{{ section.id }} .hero-slider__arrows { display: none; }
 }
-/* the button is as wide as the title (its widest line) on every screen; --hero-title-w is measured per slide by the script below.
+/* the button is as wide as the title (its widest line) on every screen, or as the social proof when that is wider;
+   --hero-title-w is measured per slide by the script below.
    It sits under the title the way the title is aligned (left / center / right), per screen size. */
 {%- liquid
   assign hd_align = hs.heading_align_desktop
@@ -309,7 +310,7 @@
       assign hm_mr = 'auto'
   endcase
 -%}
-#Banner-{{ section.id }} .banner__buttons { width: var(--hero-title-w, auto) !important; max-width: 100%; align-self: auto !important; }
+#Banner-{{ section.id }} .banner__buttons { display: flex !important; width: var(--hero-title-w, auto) !important; max-width: 100%; align-self: auto !important; }
 #Banner-{{ section.id }} .banner__buttons .button { width: 100% !important; min-width: 0 !important; }
 @media screen and (min-width: 750px) { #Banner-{{ section.id }} .banner__buttons { margin-left: {{ hd_ml }} !important; margin-right: {{ hd_mr }} !important; } }
 @media screen and (max-width: 749px) { #Banner-{{ section.id }} .banner__buttons { margin-left: {{ hm_ml }} !important; margin-right: {{ hm_mr }} !important; } }
@@ -691,7 +692,17 @@
         var span = box.querySelector('.banner__heading > span');
         if (!span) { box.style.removeProperty('--hero-title-w'); return; }
         var sr = span.getBoundingClientRect(), hr = span.parentNode.getBoundingClientRect();
-        if (sr.width > 0) box.style.setProperty('--hero-title-w', Math.ceil(sr.width) + 'px');
+        /* the social proof's real width: from its first avatar to the end of its longest text line (the text box itself stretches) */
+        var w = sr.width, sp = box.querySelector('.banner-social-proof .product-v2__social-proof-inner');
+        if (sp && sp.offsetParent) {
+          var left = sp.getBoundingClientRect().left, right = left;
+          Array.prototype.forEach.call(sp.children, function (c) {
+            var rg = document.createRange(); rg.selectNodeContents(c);
+            Array.prototype.forEach.call(rg.getClientRects(), function (q) { if (q.width) right = Math.max(right, q.right); });
+          });
+          w = Math.max(w, right - left);
+        }
+        if (w > 0) box.style.setProperty('--hero-title-w', Math.ceil(w) + 'px');
         if (sr.height > 0) box.style.setProperty('--hero-title-drop', (Math.round((sr.bottom - hr.bottom) * 10) / 10) + 'px');
       });
       if (!progress) return;
