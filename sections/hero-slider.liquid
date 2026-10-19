@@ -135,7 +135,9 @@
 /* ---------- Social proof ---------- */
 {%- if s.show_social_proof -%}
   #Banner-{{ section.id }} .banner-social-proof { margin-top: {{ s.sp_spacing_top }}px !important; }
-  #Banner-{{ section.id }} .banner__buttons { margin-top: {{ s.sp_spacing_top }}px !important; }
+  /* measured from the bottom of the title's letters, not its line box (whose half-leading differs per screen size):
+     --hero-title-drop = how far the letters reach below (+) or stop above (-) the heading box, set by the script below */
+  #Banner-{{ section.id }} .banner__buttons { margin-top: calc({{ s.sp_spacing_top }}px - var(--hero-title-drop, 0px)) !important; }
   #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-avatar { width: {{ s.sp_avatar_size }}px; height: {{ s.sp_avatar_size }}px; }
   #Banner-{{ section.id }} .banner-social-proof .product-v2__sp-text {
     {%- if s.sp_text_color != blank %} color: {{ s.sp_text_color }} !important;{% endif -%}
@@ -272,11 +274,9 @@
   #Banner-{{ section.id }} .hero-slider__progress { max-width: 180px; }
   #Banner-{{ section.id }} .hero-slider__arrows { display: none; }
 }
-@media screen and (min-width: 750px) {
-  /* the button is as wide as the title (its widest line); --hero-title-w is measured per slide by the script below */
-  #Banner-{{ section.id }} .banner__buttons { width: var(--hero-title-w, auto) !important; max-width: 100%; }
-  #Banner-{{ section.id }} .banner__buttons .button { width: 100% !important; }
-}
+/* the button is as wide as the title (its widest line) on every screen; --hero-title-w is measured per slide by the script below */
+#Banner-{{ section.id }} .banner__buttons { width: var(--hero-title-w, auto) !important; max-width: 100%; }
+#Banner-{{ section.id }} .banner__buttons .button { width: 100% !important; min-width: 0 !important; }
 /* the slide timer starts at the same left edge as the title, button and social proof (offset measured by the script) */
 #Banner-{{ section.id }} .hero-slider__progress { margin-left: var(--hero-content-x, 0px); }
 {%- unless s.show_progress %} #Banner-{{ section.id }} .hero-slider__progress { display: none; }{% endunless -%}
@@ -654,8 +654,9 @@
       Array.prototype.forEach.call(boxes, function (box) {
         var span = box.querySelector('.banner__heading > span');
         if (!span) { box.style.removeProperty('--hero-title-w'); return; }
-        var w = span.getBoundingClientRect().width;
-        if (w > 0) box.style.setProperty('--hero-title-w', Math.ceil(w) + 'px');
+        var sr = span.getBoundingClientRect(), hr = span.parentNode.getBoundingClientRect();
+        if (sr.width > 0) box.style.setProperty('--hero-title-w', Math.ceil(sr.width) + 'px');
+        if (sr.height > 0) box.style.setProperty('--hero-title-drop', (Math.round((sr.bottom - hr.bottom) * 10) / 10) + 'px');
       });
       if (!progress) return;
       /* the slide on screen: every slide's content group sits at the same place, so one is enough */
