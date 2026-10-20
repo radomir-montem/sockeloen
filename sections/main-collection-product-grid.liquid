@@ -406,6 +406,9 @@
                     {%- endif -%}
                     {%- assign vf_needle = variant_first | downcase | strip -%}
                     {%- assign vf_done = false -%}
+                    {%- comment -%} variant_first_only: the matched colour is the product's only card, without swatches {%- endcomment -%}
+                    {%- assign vf_only = false -%}
+                    {%- if section.settings.variant_first_only and vf_needle != blank -%}{%- assign vf_only = true -%}{%- endif -%}
                     {% for vf_pass in (1..2) %}
                     {% if vf_done %}{% break %}{% endif %}
                     {% if vf_pass == 1 and vf_needle == blank %}{% continue %}{% endif %}
@@ -442,9 +445,12 @@
                         {%- if m_sum == 1 -%}{%- assign swap_cls = swap_cls | append: ' card-swap-m' -%}{%- endif -%}
                       {%- endif -%}
                       <li id="product" class="w-full relative{{ swap_cls }}">
+                            {%- assign card_hide_row = section.settings.force_variant_cards -%}
+                            {%- assign card_swatches = show_color_swatches_for_collection -%}
+                            {%- if vf_only and vf_pass == 1 -%}{%- assign card_hide_row = true -%}{%- assign card_swatches = false -%}{%- endif -%}
                             {% render 'card-product-variant',
                               card_product: variant,
-                              hide_color_row: section.settings.force_variant_cards,
+                              hide_color_row: card_hide_row,
                               tags: product.tags,
                               title: product.title,
                               color: color,
@@ -457,10 +463,10 @@
                               show_quick_add: section.settings.enable_quick_add,
                               section_id: section.id,
                               atLeastOneAvailable: atLeastOneAvailable,
-                              show_color_swatches: show_color_swatches_for_collection
+                              show_color_swatches: card_swatches
                             %}
                           </li>
-                          {% if show_color_swatches_for_collection %}
+                          {% if show_color_swatches_for_collection or vf_only and vf_pass == 1 %}
                             {%- assign vf_done = true -%}
                             {% break %}
                           {% endif %}
@@ -470,7 +476,7 @@
                       {% endcapture %}
                         {% assign colorlist = tempList %}
                       {% endunless %}
-                                          {%- if vf_pass == 1 and colorlist contains color and show_color_swatches_for_collection -%}
+                                          {%- if vf_pass == 1 and colorlist contains color and show_color_swatches_for_collection or vf_pass == 1 and colorlist contains color and vf_only -%}
                         {%- assign vf_done = true -%}
                       {%- endif -%}
                       {%- if vf_pass == 1 and colorlist contains color -%}{% break %}{%- endif -%}
@@ -578,6 +584,13 @@
       "label": "Show every colour as its own card",
       "default": false,
       "info": "Overrides the colour swatches: a product with three colours gets three cards."
+    },
+    {
+      "type": "checkbox",
+      "id": "variant_first_only",
+      "label": "Only show the 'variant shown first' colour",
+      "default": false,
+      "info": "When a variant-first rule matches (e.g. KNWU), the card shows only that colour: no other colour cards and no colour swatches. Products without a matching colour show as usual."
     },
     {
       "type": "checkbox",
