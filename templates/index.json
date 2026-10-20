@@ -288,7 +288,7 @@
         "columns_desktop": 4,
         "disable_padding": false,
         "image_ratio": "adapt",
-        "show_secondary_image": false,
+        "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
         "enable_quick_add": false,
