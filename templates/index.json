@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "video": "shopify://files/videos/SOCKELOEN_Sven2_FULL_4K.mp4",
-            "image_overlay_opacity": 30,
+            "image_overlay_opacity": 10,
             "heading": "All Weather Essentials '26",
             "use_h1_tag": false,
             "text": "The new winter collection. Join the early break away and shop it first.",
@@ -30,14 +30,14 @@
           "settings": {
             "image": "shopify://shop_images/bg.delcrosso.png",
             "image_mobile": "shopify://shop_images/bg.delcrosso.mobile.png",
-            "video": "shopify://files/videos/641C73D3-35A5-4541-AB17-6F5F4FE129F8.mov",
-            "video_mobile": "shopify://files/videos/SOCKELOEN_Shoecover2_FULL_4K.mov",
-            "image_overlay_opacity": 50,
+            "video": "shopify://files/videos/copy_787AFAB6-BC15-4B55-A061-127379B88621.MOV",
+            "video_mobile": "shopify://files/videos/copy_A55EF493-1994-4E03-8459-668E2D0B0AC3.mov",
+            "image_overlay_opacity": 20,
             "heading": "Best shoecovers on the planet?",
             "use_h1_tag": false,
             "text": "Keep your feet dry, clean and look stylish with the best shoecovers out there.",
             "button_label_1": "Shop Shoecovers",
-            "button_link_1": "shopify://products/aero-shoe-cover-del-crosso",
+            "button_link_1": "shopify://products/rain-overshoes-26",
             "button_style_secondary_1": false
           }
         },
@@ -45,7 +45,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/bg.demi-_1_ead4ac9e-6a7f-4623-a597-6660eae9e59e.png",
-            "image_overlay_opacity": 30,
+            "image_overlay_opacity": 20,
             "heading": "Worn by world champions",
             "use_h1_tag": false,
             "text": "Aero socks tested in the wind tunnel with TU Eindhoven.",
@@ -288,7 +288,7 @@
         "columns_desktop": 4,
         "disable_padding": false,
         "image_ratio": "adapt",
-        "show_secondary_image": false,
+        "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
         "enable_quick_add": false,
