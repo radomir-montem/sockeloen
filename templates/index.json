@@ -31,13 +31,13 @@
             "image": "shopify://shop_images/bg.delcrosso.png",
             "image_mobile": "shopify://shop_images/bg.delcrosso.mobile.png",
             "video": "shopify://files/videos/641C73D3-35A5-4541-AB17-6F5F4FE129F8.mov",
-            "video_mobile": "shopify://files/videos/SOCKELOEN_Shoecover2_FULL_4K.mov",
+            "video_mobile": "shopify://files/videos/SOCKELOEN_Shoecover5_FULL_4K.mov",
             "image_overlay_opacity": 50,
             "heading": "Best shoecovers on the planet?",
             "use_h1_tag": false,
             "text": "Keep your feet dry, clean and look stylish with the best shoecovers out there.",
             "button_label_1": "Shop Shoecovers",
-            "button_link_1": "shopify://products/aero-shoe-cover-del-crosso",
+            "button_link_1": "shopify://products/rain-overshoes-26",
             "button_style_secondary_1": false
           }
         },
