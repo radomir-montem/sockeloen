@@ -316,6 +316,14 @@
 @media screen and (max-width: 749px) { #Banner-{{ section.id }} .banner__buttons { margin-left: {{ hm_ml }} !important; margin-right: {{ hm_mr }} !important; } }
 /* the slide timer starts at the same left edge as the title, button and social proof (offset measured by the script) */
 #Banner-{{ section.id }} .hero-slider__progress { margin-left: var(--hero-content-x, 0px); }
+/* timer as long as the social proof; the arrows' middle sits on the timer line. The row is centred, so it moves
+   down by half an arrow (24px) to keep the timer exactly where it was (40px from the bottom). */
+#Banner-{{ section.id }} .hero-slider__progress { width: var(--hero-timer-w, 100%) !important; max-width: none !important; flex: 0 0 auto; }
+#Banner-{{ section.id }} .hero-slider__ui { align-items: center; bottom: calc(40px - 24px + 0.5px); }
+@media screen and (max-width: 749px) {
+  #Banner-{{ section.id }} .hero-slider__ui { bottom: 18px; }
+  #Banner-{{ section.id }} .hero-slider__progress { max-width: none !important; }
+}
 {%- unless s.show_progress %} #Banner-{{ section.id }} .hero-slider__progress { display: none; }{% endunless -%}
 {%- unless s.show_arrows %} #Banner-{{ section.id }} .hero-slider__arrows { display: none !important; }{% endunless -%}
 @media (prefers-reduced-motion: reduce) {
@@ -687,7 +695,7 @@
     var progress = root.querySelector('.hero-slider__progress');
     var t;
     function measure() {
-      var boxes = root.querySelectorAll('.banner__box');
+      var boxes = root.querySelectorAll('.banner__box'), spW = 0;
       Array.prototype.forEach.call(boxes, function (box) {
         var span = box.querySelector('.banner__heading > span');
         if (!span) { box.style.removeProperty('--hero-title-w'); return; }
@@ -701,6 +709,7 @@
             Array.prototype.forEach.call(rg.getClientRects(), function (q) { if (q.width) right = Math.max(right, q.right); });
           });
           w = Math.max(w, right - left);
+          spW = Math.max(spW, right - left);
         }
         if (w > 0) box.style.setProperty('--hero-title-w', Math.ceil(w) + 'px');
         if (sr.height > 0) box.style.setProperty('--hero-title-drop', (Math.round((sr.bottom - hr.bottom) * 10) / 10) + 'px');
@@ -717,6 +726,9 @@
       progress.style.setProperty('--hero-content-x', '0px');
       var x = head.getBoundingClientRect().left - progress.getBoundingClientRect().left;
       progress.style.setProperty('--hero-content-x', Math.max(0, Math.round(x)) + 'px');
+      /* the timer is as long as the social proof (the same on every slide) */
+      if (spW > 0) progress.style.setProperty('--hero-timer-w', Math.ceil(spW) + 'px');
+      else progress.style.removeProperty('--hero-timer-w');
     }
     function later() { clearTimeout(t); t = setTimeout(measure, 80); }
     measure();
