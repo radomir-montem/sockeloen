@@ -45,12 +45,23 @@
     var state = { root: root, form: form, qty: 0, picks: [], choices: choices };
     states.push(state);
 
-    /* "39-41" -> [39, 41]; "L" -> null */
+    /* Letter sizes (gloves, base layers, arm covers) as a rough EU shoe-size range, so a glove or
+       base layer M gets socks 43-48 and arm covers Medium: XS/S -> 36-42, M/L/XL -> 43-48. */
+    var LETTER_RANGES = { xs: [35, 38], s: [38, 41], m: [42, 45], l: [44, 47], xl: [46, 49], xxl: [47, 50] };
+    function letterKey(label) {
+      var s = String(label || '').trim().toLowerCase().replace(/[\s_]+/g, '-');
+      var map = { 'x-small': 'xs', 'extra-small': 'xs', 'small': 's', 'medium': 'm', 'large': 'l',
+        'x-large': 'xl', 'extra-large': 'xl', 'xx-large': 'xxl' };
+      return LETTER_RANGES[s] ? s : (map[s] || null);
+    }
+    /* "39-41" -> [39, 41]; "L" -> [44, 47]; "One size" -> null */
     function range(label) {
       var m = String(label || '').match(/(\d+)\s*[-–\/]\s*(\d+)/);
       if (m) return [parseInt(m[1], 10), parseInt(m[2], 10)];
       var n = String(label || '').match(/^\s*(\d+)\s*$/);
-      return n ? [parseInt(n[1], 10), parseInt(n[1], 10)] : null;
+      if (n) return [parseInt(n[1], 10), parseInt(n[1], 10)];
+      var k = letterKey(label);
+      return k ? LETTER_RANGES[k] : null;
     }
     /* the add-on size that overlaps most with the main product's size */
     function matchingSize(choice, option) {
