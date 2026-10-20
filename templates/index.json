@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "video": "shopify://files/videos/SOCKELOEN_Sven2_FULL_4K.mp4",
-            "image_overlay_opacity": 30,
+            "image_overlay_opacity": 10,
             "heading": "All Weather Essentials '26",
             "use_h1_tag": false,
             "text": "The new winter collection. Join the early break away and shop it first.",
@@ -32,7 +32,7 @@
             "image_mobile": "shopify://shop_images/bg.delcrosso.mobile.png",
             "video": "shopify://files/videos/copy_787AFAB6-BC15-4B55-A061-127379B88621.MOV",
             "video_mobile": "shopify://files/videos/copy_A55EF493-1994-4E03-8459-668E2D0B0AC3.mov",
-            "image_overlay_opacity": 50,
+            "image_overlay_opacity": 20,
             "heading": "Best shoecovers on the planet?",
             "use_h1_tag": false,
             "text": "Keep your feet dry, clean and look stylish with the best shoecovers out there.",
@@ -45,7 +45,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/bg.demi-_1_ead4ac9e-6a7f-4623-a597-6660eae9e59e.png",
-            "image_overlay_opacity": 30,
+            "image_overlay_opacity": 20,
             "heading": "Worn by world champions",
             "use_h1_tag": false,
             "text": "Aero socks tested in the wind tunnel with TU Eindhoven.",
