@@ -34,8 +34,6 @@
   -%}
   {{ 'pdp-soldout.css' | asset_url | stylesheet_tag }}
   <div class="pdp-soldout" data-pdp-soldout hidden
-    data-title="{{ 'products.v2.soldout_alt_title' | t: size: '__SIZE__' | escape }}"
-    data-title-nosize="{{ 'products.v2.soldout_alt_title_nosize' | t | escape }}"
     data-text="{{ 'products.v2.soldout_alt_text' | t: size: '__SIZE__' | escape }}"
     data-text-nosize="{{ 'products.v2.soldout_alt_text_nosize' | t | escape }}"
     data-text-none="{{ 'products.v2.soldout_alt_text_none' | t | escape }}"
@@ -43,7 +41,6 @@
     data-in-stock="{{ 'products.v2.soldout_alt_in_stock' | t | escape }}">
     <div class="pdp-soldout__tiles">
       <div class="pdp-soldout__header" role="status">
-        <p class="pdp-soldout__title" data-soldout-title>{{ 'products.v2.soldout_alt_title_nosize' | t }}</p>
         <p class="pdp-soldout__text" data-soldout-text></p>
       </div>
     </div>

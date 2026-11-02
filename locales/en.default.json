@@ -208,8 +208,6 @@
       "size_guide_link": "Not sure about your size?",
       "upsell_group": "Add {{ label }}",
       "upsell_only": "{{ product }} only",
-      "soldout_alt_title": "Unfortunately sold out",
-      "soldout_alt_title_nosize": "Unfortunately sold out",
       "soldout_alt_text": "Please check other color variants of this product, or the similar products below to find what you are looking for.",
       "soldout_alt_text_nosize": "Please check other color variants of this product, or the similar products below to find what you are looking for.",
       "soldout_alt_text_none": "Please check other color variants of this product, or sign up below and we'll email you when it's back.",
