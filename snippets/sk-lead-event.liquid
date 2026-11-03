@@ -1,0 +1,20 @@
+{%- comment -%} Sockeloen Meta Lead events (Klaviyo sign-ups -> Shopify analytics sk_lead -> custom pixel "Meta Lead"). Managed from the sockeloen-dashboards repo: edit sockeloen-lead-event-snippet.html and run scripts/deploy-lead-event.sh {%- endcomment -%}
+<script>
+  (function () {
+    var seen = {};
+    function lead(source, email, formId, formName) {
+      var key = source + '|' + (formId || '') + '|' + (email || '');
+      if (seen[key]) return; seen[key] = 1; // Klaviyo can fire submit twice for one sign-up
+      var data = { source: source, form_id: formId || '', form_name: formName || '', email: email || '',
+        event_id: 'lead-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10) };
+      try { window.Shopify && Shopify.analytics && Shopify.analytics.publish('sk_lead', data); } catch (e) {}
+    }
+    window.skLead = function (source, email) { lead(source, email); };
+    window.addEventListener('klaviyoForms', function (e) {
+      var d = e.detail || {};
+      if (d.type !== 'submit') return;
+      var m = d.metaData || {};
+      lead('klaviyo-form', m.$email || m.email || '', d.formId, d.formTitle);
+    });
+  })();
+</script>
