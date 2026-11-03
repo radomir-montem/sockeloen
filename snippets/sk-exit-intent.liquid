@@ -380,7 +380,7 @@
         send({ ev: 'follow', a: 'browsing', sub: 'join' });
         var bb = btn('b'); bb.disabled = true; bb.textContent = '…';
         var done = function (ok) {
-          if (ok) { render('<p>' + t.browseOk + '</p>'); setTimeout(close, 1800); return; }
+          if (ok) { if (window.skLead) window.skLead('exit-intent-browsing', em); render('<p>' + t.browseOk + '</p>'); setTimeout(close, 1800); return; } // Meta Lead via snippets/sk-lead-event.liquid
           bb.disabled = false; bb.textContent = t.browseBtn;
           var er = w.querySelector('small.err'); if (!er) { er = document.createElement('small'); er.className = 'err'; w.querySelector('input[type=email]').insertAdjacentElement('afterend', er); }
           er.textContent = t.browseErr;
