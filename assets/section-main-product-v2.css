@@ -1196,24 +1196,6 @@ a.product-v2__sp-avatar {
   color: #999;
 }
 
-/* Sold-out size in the selected colour: a faint diagonal line, the size stays black and clickable
-   (notify-me flow). Class set by markSoldOutSizes() in sections/main-product-v2.liquid.
-   The line is a translucent black, so it stays just a shade darker than the pill on white
-   (phones) and on the tinted gallery pills (desktop). */
-.product-v2 .product-form__input.size-input input[type='radio'] + label.is-sold-out {
-  --sold-out-line: rgba(0, 0, 0, 0.09);
-  position: relative;
-  overflow: hidden;
-}
-
-.product-v2 .product-form__input.size-input input[type='radio'] + label.is-sold-out::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(to top right, transparent calc(50% - 0.75px), var(--sold-out-line) calc(50% - 0.75px), var(--sold-out-line) calc(50% + 0.75px), transparent calc(50% + 0.75px));
-}
-
 /* Single-value size tile (read-only, pre-selected appearance) */
 .product-v2 .size-input--single {
   pointer-events: none;
