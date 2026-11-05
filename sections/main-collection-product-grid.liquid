@@ -2,7 +2,6 @@
   {%- comment -%} Sold-out cards with the Black Friday banner look: blurred photo + grain, orange translucent badge {%- endcomment -%}
   {%- style -%}
     #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__inner { overflow: hidden; }
-    #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__media { isolation: isolate; } /* keeps the grain under the badge */
     #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__media img {
       filter: blur({{ section.settings.sold_out_blur }}px);
       transform: scale(1.1); /* the blur fades at the edges: scaled up so they stay outside the card */
@@ -18,7 +17,7 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
     #MainContent #shopify-section-{{ section.id }} .card-wrapper .card-badge .badge.badge--sold-out {
-      background-color: rgba(247, 101, 3, 0.8) !important;
+      background: rgba(247, 101, 3, 0.85) !important; /* 'background': the theme layers a white gradient on badges */
       color: #fff !important;
     }
   {%- endstyle -%}
