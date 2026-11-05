@@ -1,0 +1,40 @@
+{%- comment -%}
+  Banner tile inside the collection product grid.
+  Accepts: block (section block), side ('left' or 'right')
+{%- endcomment -%}
+{%- assign b = block.settings -%}
+{%- assign b_image = b.image -%}
+{%- assign b_image_mobile = b.image_mobile | default: b.image -%}
+<li class="grid-banner grid-banner--{{ side }}" {{ block.shopify_attributes }}>
+  <{% if b.link != blank %}a href="{{ b.link }}"{% else %}div{% endif %} class="grid-banner__inner">
+    {%- if b_image != blank -%}
+      <picture class="grid-banner__media">
+        <source
+          media="(min-width: 768px)"
+          srcset="{{ b_image | image_url: width: 800 }} 800w, {{ b_image | image_url: width: 1200 }} 1200w, {{ b_image | image_url: width: 1800 }} 1800w"
+          sizes="50vw"
+        >
+        <img
+          src="{{ b_image_mobile | image_url: width: 800 }}"
+          srcset="{{ b_image_mobile | image_url: width: 500 }} 500w, {{ b_image_mobile | image_url: width: 800 }} 800w, {{ b_image_mobile | image_url: width: 1200 }} 1200w"
+          sizes="100vw"
+          alt="{{ b_image.alt | default: b.heading | escape }}"
+          loading="lazy"
+          width="{{ b_image_mobile.width }}"
+          height="{{ b_image_mobile.height }}"
+        >
+      </picture>
+    {%- else -%}
+      <span class="grid-banner__media grid-banner__media--empty"></span>
+    {%- endif -%}
+    {%- if b.overlay > 0 -%}
+      <span class="grid-banner__overlay" style="opacity: {{ b.overlay | divided_by: 100.0 }};"></span>
+    {%- endif -%}
+    {%- if b.line != blank or b.heading != blank -%}
+      <span class="grid-banner__text">
+        {%- if b.line != blank -%}<span class="grid-banner__line">{{ b.line | escape }}</span>{%- endif -%}
+        {%- if b.heading != blank -%}<span class="grid-banner__heading">{{ b.heading | escape }}</span>{%- endif -%}
+      </span>
+    {%- endif -%}
+  </{% if b.link != blank %}a{% else %}div{% endif %}>
+</li>

@@ -57,6 +57,29 @@
     },
     "product-grid": {
       "type": "main-collection-product-grid",
+      "blocks": {
+        "grid_banner_gloves": {
+          "type": "grid_banner",
+          "settings": {
+            "image": "shopify://shop_images/4_winter_gloves.png",
+            "link": "shopify://collections/cycling-gloves",
+            "line": "BLACK FRIDAY",
+            "heading": "Gloves",
+            "overlay": 10
+          }
+        },
+        "grid_banner_overshoes": {
+          "type": "grid_banner",
+          "settings": {
+            "image": "shopify://shop_images/5_winter_gloves_1.png",
+            "link": "shopify://collections/cycling-overshoes",
+            "line": "BLACK FRIDAY",
+            "heading": "Overshoes",
+            "overlay": 10
+          }
+        }
+      },
+      "block_order": ["grid_banner_gloves", "grid_banner_overshoes"],
       "settings": {
         "navigation": "",
         "products_per_page": 24,
