@@ -37,10 +37,12 @@
       pointer-events: none;
       color: #000;
       font-family: Roboto, sans-serif;
-      font-size: 12px;
+      font-size: 10px; /* same text style as the card badges */
       font-weight: 700;
-      line-height: 1.2;
+      letter-spacing: 0.4px;
+      line-height: 1.25;
       text-transform: uppercase;
+      text-shadow: 0 0 6px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 0.95); /* stays readable over a dark sock */
     }
     #shopify-section-{{ section.id }} .card-sold-out-line > span { flex: none; }
   {%- endstyle -%}
