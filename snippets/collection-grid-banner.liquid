@@ -31,7 +31,7 @@
       <span class="grid-banner__overlay" style="opacity: {{ b.overlay | divided_by: 100.0 }};"></span>
     {%- endif -%}
     {%- if b.line != blank or b.heading != blank -%}
-      <span class="grid-banner__text">
+      <span class="grid-banner__text grid-banner__text--{{ b.text_position | default: 'middle' }}">
         {%- if b.line != blank -%}<span class="grid-banner__line">{{ b.line | escape }}</span>{%- endif -%}
         {%- if b.heading != blank -%}<span class="grid-banner__heading">{{ b.heading | escape }}</span>{%- endif -%}
       </span>
