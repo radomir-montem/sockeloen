@@ -1,11 +1,15 @@
 {%- if section.settings.blur_sold_out -%}
-  {%- comment -%} Sold-out cards with the Black Friday banner look: blurred photo + grain, orange translucent badge {%- endcomment -%}
+  {%- comment -%} Sold-out cards with the Black Friday banner look: blurred photo + grain, no hover, no badges, a SOLD OUT line across the photo {%- endcomment -%}
   {%- style -%}
     #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__inner { overflow: hidden; }
     #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__media img {
       filter: blur({{ section.settings.sold_out_blur }}px);
-      transform: scale(1.1); /* the blur fades at the edges: scaled up so they stay outside the card */
+      transform: none !important;
+      transition: none !important;
     }
+    #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .media > img + img { display: none !important; }
+    #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .media > img:first-child { opacity: 1 !important; }
+    #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .custom-quick-add { display: none !important; }
     #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__media::after {
       content: '';
       position: absolute;
@@ -16,10 +20,31 @@
       mix-blend-mode: overlay;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
-    #MainContent #shopify-section-{{ section.id }} .card-wrapper .card-badge .badge.badge--sold-out {
-      background: rgba(247, 101, 3, 0.85) !important; /* 'background': the theme layers a white gradient on badges */
-      color: #fff !important;
+    #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card-badge,
+    #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card-bottom-badge { display: none !important; }
+    #shopify-section-{{ section.id }} .card-sold-out-line {
+      display: flex !important;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      transform: translateY(-50%);
+      justify-content: center;
+      gap: 0.5em;
+      overflow: hidden;
+      white-space: nowrap;
+      pointer-events: none;
+      color: #000;
+      font-family: Roboto, sans-serif;
+      font-size: 10px; /* same text style as the card badges */
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      line-height: 1.25;
+      text-transform: uppercase;
+      text-shadow: 0 0 6px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 0.95); /* stays readable over a dark sock */
     }
+    #shopify-section-{{ section.id }} .card-sold-out-line > span { flex: none; }
   {%- endstyle -%}
 {%- endif -%}
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
@@ -628,7 +653,7 @@
       "id": "blur_sold_out",
       "label": "Blur sold-out cards",
       "default": false,
-      "info": "Blurs the photo with grain and makes the sold-out badge orange."
+      "info": "Blurs the photo with grain, turns off hover and badges, and shows a SOLD OUT line across the photo."
     },
     {
       "type": "range",

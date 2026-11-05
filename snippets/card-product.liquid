@@ -87,6 +87,12 @@
             endif
           -%}
           <div class="card__media w-full relative">
+            {%- unless soldout or coming_soon -%}
+              {%- comment -%} Shown instead of the badges where the grid setting "Blur sold-out cards" is on {%- endcomment -%}
+              <span class="card-sold-out-line" hidden aria-hidden="true">
+                {%- for i in (1..14) -%}<span>{{ 'products.product.sold_out' | t }}</span>{%- endfor -%}
+              </span>
+            {%- endunless -%}
             {% comment %} {{ card_product }} {% endcomment %}
             <div class="media media--transparent media--hover-effect{% if card_hover == null %} no-has-second-image{% endif %}">
               {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
