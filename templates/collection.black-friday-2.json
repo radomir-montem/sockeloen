@@ -58,17 +58,6 @@
     "product-grid": {
       "type": "main-collection-product-grid",
       "blocks": {
-        "grid_banner_bjifjK": {
-          "type": "grid_banner",
-          "settings": {
-            "image": "shopify://shop_images/6_knwu_AERO_Shoes_Cover_Del_Crosso_White_1_OUTSIDE_R_3D_87452800-bfb9-4da0-9dfe-9bc8ddf3d6b2_1.png",
-            "link": "",
-            "line": "sockeloen",
-            "heading": "WORN BY CHAMPIONS",
-            "text_position": "middle",
-            "overlay": 20
-          }
-        },
         "grid_banner_gloves": {
           "type": "grid_banner",
           "settings": {
@@ -78,6 +67,17 @@
             "heading": "Up to 60%",
             "text_position": "middle",
             "overlay": 10
+          }
+        },
+        "grid_banner_bjifjK": {
+          "type": "grid_banner",
+          "settings": {
+            "image": "shopify://shop_images/6_knwu_AERO_Shoes_Cover_Del_Crosso_White_1_OUTSIDE_R_3D_87452800-bfb9-4da0-9dfe-9bc8ddf3d6b2_1.png",
+            "link": "",
+            "line": "sockeloen",
+            "heading": "WORN BY CHAMPIONS",
+            "text_position": "middle",
+            "overlay": 20
           }
         },
         "grid_banner_rEpWjT": {
@@ -104,8 +104,8 @@
         }
       },
       "block_order": [
-        "grid_banner_bjifjK",
         "grid_banner_gloves",
+        "grid_banner_bjifjK",
         "grid_banner_rEpWjT",
         "grid_banner_overshoes"
       ],
