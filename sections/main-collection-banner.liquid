@@ -151,7 +151,7 @@
         align-items: center;
         justify-content: center;
         gap: {{ section.settings.poster_gap_mobile }}px;
-        padding: 0 16px;
+        padding: 92px 16px 0; /* the fixed header covers the top 92px: centre in the part below it */
         color: #fff;
         text-align: center;
       }
@@ -179,7 +179,7 @@
         letter-spacing: -0.01em;
       }
       @media screen and (min-width: 750px) {
-        #Banner-{{ section.id }} .banner-poster { gap: {{ section.settings.poster_gap_desktop }}px; padding-top: 92px; } /* the fixed header covers the top 92px */
+        #Banner-{{ section.id }} .banner-poster { gap: {{ section.settings.poster_gap_desktop }}px; }
         #Banner-{{ section.id }} .banner-poster__line { font-size: {{ section.settings.poster_line_size_desktop }}px; }
         #Banner-{{ section.id }} .banner-poster__headline { font-size: {{ section.settings.poster_headline_size_desktop }}px; }
         #Banner-{{ section.id }} .banner-poster__brand { font-size: {{ section.settings.poster_brand_size_desktop }}px; }
