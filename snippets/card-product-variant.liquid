@@ -79,6 +79,12 @@
       >
         {%- if featured_media -%}
           <div class="card__media relative">
+            {%- unless soldout or coming_soon -%}
+              {%- comment -%} Shown instead of the badges where the grid setting "Blur sold-out cards" is on {%- endcomment -%}
+              <span class="card-sold-out-line" hidden aria-hidden="true">
+                {%- for i in (1..14) -%}<span>{{ 'products.product.sold_out' | t }}</span>{%- endfor -%}
+              </span>
+            {%- endunless -%}
             {%- if featured_media != null and show_secondary_image -%}
               {% assign color_to_search = card_product.option1
                 | replace: "'", ''
