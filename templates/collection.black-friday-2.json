@@ -15,7 +15,7 @@
         "text_baWdMQ": {
           "type": "text",
           "settings": {
-            "text": "end of winter sale",
+            "text": "up to 60% off",
             "text_style": "body"
           }
         }
@@ -25,7 +25,7 @@
       ],
       "custom_css": [],
       "settings": {
-        "video": "shopify://files/videos/copy_DCA8A2FD-CD03-4931-8601-062B99A8E1C3.MOV",
+        "video": "shopify://files/videos/SOCKELOEN_Beanie3_FULL_4K.mov",
         "video_mobile": "shopify://files/videos/SOCKELOEN_Beanie3_FULL_4K.mov",
         "image_overlay_opacity": 0,
         "banner_image_height": 650,
@@ -52,6 +52,7 @@
         "smart_limit": 9,
         "smart_days": 91,
         "force_variant_cards": true,
+        "variant_first_only": false,
         "show_sold_out": true,
         "disable_image_hover": true,
         "alternate_second_image": true,
@@ -70,6 +71,7 @@
     },
     "scroll_reveal_awe": {
       "type": "scroll-reveal-text",
+      "disabled": true,
       "settings": {
         "text": "SOCKELOEN",
         "video_desktop": "shopify://files/videos/SOCKELOEN_Sven2_FULL_4K.mp4",
@@ -140,6 +142,7 @@
         "column_xjJnR3",
         "column_3gnbV8"
       ],
+      "disabled": true,
       "settings": {
         "eme_banners": true,
         "scroll_effect": "sticky_label",
@@ -198,7 +201,6 @@
         "column_cnffC9",
         "column_irg7DF"
       ],
-      "disabled": true,
       "settings": {
         "eme_banners": true,
         "scroll_effect": "sticky_label",
