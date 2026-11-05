@@ -6,9 +6,10 @@
 {%- assign poster_src = blank -%}
 {%- assign poster_h = 100000 -%}
 {%- for source in video.sources -%}
-  {%- if source.format == 'mp4' and source.height >= 480 and source.height < poster_h -%}
+  {%- assign source_h = source.height | plus: 0 -%}
+  {%- if source.format == 'mp4' and source_h >= 480 and source_h < poster_h -%}
     {%- assign poster_src = source.url -%}
-    {%- assign poster_h = source.height -%}
+    {%- assign poster_h = source_h -%}
   {%- endif -%}
 {%- endfor -%}
 {%- if poster_src == blank -%}
