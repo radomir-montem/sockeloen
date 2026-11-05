@@ -6,7 +6,7 @@
   {%- comment -%} Banner tiles in the grid: 2x2 cards on desktop (alternating left / right), full width on phones {%- endcomment -%}
   {%- style -%}
     #shopify-section-{{ section.id }} #product-grid { grid-auto-flow: dense; }
-    #shopify-section-{{ section.id }} .grid-banner { grid-column: 1 / -1; position: relative; aspect-ratio: 4 / 5; list-style: none; }
+    #shopify-section-{{ section.id }} .grid-banner { grid-column: 1 / -1; position: relative; aspect-ratio: 4 / 5; margin-bottom: 8px; list-style: none; }
     #shopify-section-{{ section.id }} .grid-banner__inner { position: absolute; inset: 0; display: block; overflow: hidden; border-radius: 4px; color: #fff; text-decoration: none; }
     #shopify-section-{{ section.id }} .grid-banner__media,
     #shopify-section-{{ section.id }} .grid-banner__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -16,7 +16,7 @@
     #shopify-section-{{ section.id }} .grid-banner__line { font-family: 'Roboto Mono', monospace; font-weight: 700; font-size: 13px; line-height: 1.25; text-transform: uppercase; }
     #shopify-section-{{ section.id }} .grid-banner__heading { font-family: var(--font-heading-family); font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: -0.01em; }
     @media screen and (min-width: 768px) {
-      #shopify-section-{{ section.id }} .grid-banner { aspect-ratio: auto; grid-row: span 2; }
+      #shopify-section-{{ section.id }} .grid-banner { aspect-ratio: auto; grid-row: span 2; margin-bottom: 0; }
       #shopify-section-{{ section.id }} .grid-banner--left { grid-column: 1 / span {{ gb_span }}; }
       #shopify-section-{{ section.id }} .grid-banner--right { grid-column: {{ gb_right }} / span {{ gb_span }}; }
       #shopify-section-{{ section.id }} .grid-banner__line { font-size: 18px; }
