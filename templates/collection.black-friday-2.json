@@ -69,6 +69,7 @@
         "variant_first_only": false,
         "show_sold_out": true,
         "blur_sold_out": true,
+        "sold_out_blur": 14,
         "disable_image_hover": true,
         "alternate_second_image": false,
         "image_ratio": "portrait",
@@ -193,8 +194,7 @@
         "column_irg7DF": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/5_winter_gloves.png",
-            "color": "#0e112e",
+            "color": "#FFFFFF",
             "text_color": "#ffffff",
             "font_size": 40,
             "heading": "UP TO 60% OFF",
@@ -216,6 +216,7 @@
         "column_cnffC9",
         "column_irg7DF"
       ],
+      "disabled": true,
       "settings": {
         "eme_banners": true,
         "scroll_effect": "sticky_label",
@@ -226,6 +227,7 @@
     },
     "recently_viewed_awe": {
       "type": "bought-often-together",
+      "disabled": true,
       "name": "Recently viewed",
       "settings": {
         "product_source": "recently_viewed",
