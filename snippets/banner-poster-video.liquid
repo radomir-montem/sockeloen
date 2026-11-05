@@ -1,0 +1,19 @@
+{%- comment -%}
+  Blurred background video for the collection banner's poster style.
+  Heavily blurred, so the smallest MP4 from 480p is enough: far less data and decoding than the 4K source.
+  Accepts: video (video object)
+{%- endcomment -%}
+{%- assign poster_src = blank -%}
+{%- assign poster_h = 100000 -%}
+{%- for source in video.sources -%}
+  {%- if source.format == 'mp4' and source.height >= 480 and source.height < poster_h -%}
+    {%- assign poster_src = source.url -%}
+    {%- assign poster_h = source.height -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if poster_src == blank -%}
+  {%- assign poster_src = video.sources | where: 'format', 'mp4' | map: 'url' | first -%}
+{%- endif -%}
+<video autoplay loop muted playsinline preload="metadata" aria-hidden="true" poster="{{ video.preview_image | image_url: width: 640 }}">
+  <source src="{{ poster_src }}" type="video/mp4">
+</video>
