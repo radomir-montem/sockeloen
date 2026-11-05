@@ -118,7 +118,84 @@
     {% render 'image-element', image: banner_image_mobile, class: 'w-full' %}
   </div>
   {%- endif -%}
-  {% if section.settings.show_description %}
+  {% if section.settings.poster_style %}
+    {%- comment -%} Poster style: blurred video + grain, monospace line, big headline, brand name (Black Friday banner) {%- endcomment -%}
+    {%- assign poster_heading_bold = settings.type_header_font | font_modify: 'weight', 'bold' -%}
+    {%- style -%}
+      {{ section.settings.poster_mono_font | font_face: font_display: 'swap' }}
+      {{ poster_heading_bold | font_face: font_display: 'swap' }}
+      #Banner-{{ section.id }} { overflow: hidden; }
+      #Banner-{{ section.id }} .banner__media--video video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: blur({{ section.settings.poster_blur }}px);
+        transform: scale(1.2); /* the blur fades at the edges: scaled up so they stay outside the banner */
+      }
+      #Banner-{{ section.id }} .banner-poster__grain {
+        display: block; /* the theme hides empty divs */
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: {{ section.settings.poster_grain | divided_by: 100.0 }};
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+      #Banner-{{ section.id }} .banner-poster {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: {{ section.settings.poster_gap_mobile }}px;
+        padding: 0 16px;
+        color: #fff;
+        text-align: center;
+      }
+      #Banner-{{ section.id }} .banner-poster > * { margin: 0; color: inherit; }
+      #Banner-{{ section.id }} .banner-poster__line {
+        font-family: {{ section.settings.poster_mono_font.family }}, {{ section.settings.poster_mono_font.fallback_families }}, monospace;
+        font-weight: 700;
+        font-size: {{ section.settings.poster_line_size_mobile }}px;
+        line-height: 1.25;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+      #Banner-{{ section.id }} .banner-poster__headline {
+        font-family: var(--font-heading-family);
+        font-weight: 700;
+        font-size: {{ section.settings.poster_headline_size_mobile }}px;
+        line-height: 1;
+        letter-spacing: -0.01em;
+      }
+      #Banner-{{ section.id }} .banner-poster__brand {
+        font-family: var(--font-heading-family);
+        font-weight: 700;
+        font-size: {{ section.settings.poster_brand_size_mobile }}px;
+        line-height: 1;
+        letter-spacing: -0.01em;
+      }
+      @media screen and (min-width: 750px) {
+        #Banner-{{ section.id }} .banner-poster { gap: {{ section.settings.poster_gap_desktop }}px; padding-top: 92px; } /* the fixed header covers the top 92px */
+        #Banner-{{ section.id }} .banner-poster__line { font-size: {{ section.settings.poster_line_size_desktop }}px; }
+        #Banner-{{ section.id }} .banner-poster__headline { font-size: {{ section.settings.poster_headline_size_desktop }}px; }
+        #Banner-{{ section.id }} .banner-poster__brand { font-size: {{ section.settings.poster_brand_size_desktop }}px; }
+      }
+    {%- endstyle -%}
+    <div class="banner-poster__grain" aria-hidden="true"></div>
+    <div class="banner-poster">
+      {%- if section.settings.poster_line != blank -%}
+        <p class="banner-poster__line">{{ section.settings.poster_line | escape | newline_to_br }}</p>
+      {%- endif -%}
+      <h2 class="banner-poster__headline">{{ section.settings.poster_headline | default: collection.title | escape | newline_to_br }}</h2>
+      {%- if section.settings.poster_brand != blank -%}
+        <p class="banner-poster__brand">{{ section.settings.poster_brand | escape }}</p>
+      {%- endif -%}
+    </div>
+  {% elsif section.settings.show_description %}
     <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width">
       <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
         <h2 class="banner__heading h2">
@@ -198,6 +275,143 @@
       "id": "video_mobile",
       "label": "Video (mobile)",
       "info": "Optional. Without it phones show the desktop video."
+    },
+    {
+      "type": "header",
+      "content": "Poster style"
+    },
+    {
+      "type": "checkbox",
+      "id": "poster_style",
+      "label": "Poster style",
+      "info": "Blurs the video, adds grain and replaces the text box with the texts below. Needs a video.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "poster_blur",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Video blur",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "poster_grain",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Grain",
+      "default": 45
+    },
+    {
+      "type": "textarea",
+      "id": "poster_line",
+      "label": "Small line (monospace)"
+    },
+    {
+      "type": "textarea",
+      "id": "poster_headline",
+      "label": "Headline",
+      "info": "Empty shows the collection title."
+    },
+    {
+      "type": "text",
+      "id": "poster_brand",
+      "label": "Brand name"
+    },
+    {
+      "type": "font_picker",
+      "id": "poster_mono_font",
+      "label": "Font of the small line",
+      "default": "roboto_mono_n7"
+    },
+    {
+      "type": "range",
+      "id": "poster_line_size_desktop",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Small line size (desktop)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "poster_line_size_mobile",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Small line size (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "poster_headline_size_desktop",
+      "min": 30,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Headline size (desktop)",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "poster_headline_size_mobile",
+      "min": 24,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "label": "Headline size (mobile)",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "poster_brand_size_desktop",
+      "min": 14,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Brand name size (desktop)",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "poster_brand_size_mobile",
+      "min": 12,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Brand name size (mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "poster_gap_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Space between texts (desktop)",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "poster_gap_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Space between texts (mobile)",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Banner"
     },
     {
       "type": "range",
