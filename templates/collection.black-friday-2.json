@@ -57,6 +57,31 @@
     },
     "product-grid": {
       "type": "main-collection-product-grid",
+      "blocks": {
+        "grid_banner_gloves": {
+          "type": "grid_banner",
+          "settings": {
+            "image": "shopify://shop_images/1_lobster.png",
+            "link": "shopify://collections/cycling-gloves",
+            "text_position": "bottom",
+            "line": "BLACK FRIDAY",
+            "heading": "Gloves",
+            "overlay": 10
+          }
+        },
+        "grid_banner_overshoes": {
+          "type": "grid_banner",
+          "settings": {
+            "image": "shopify://shop_images/2_rain_shoecover_90cee20c-bafa-4c9c-9750-6c799829c1c9.png",
+            "link": "shopify://collections/cycling-overshoes",
+            "text_position": "middle",
+            "line": "BLACK FRIDAY",
+            "heading": "Overshoes",
+            "overlay": 10
+          }
+        }
+      },
+      "block_order": ["grid_banner_gloves", "grid_banner_overshoes"],
       "settings": {
         "navigation": "",
         "products_per_page": 24,
