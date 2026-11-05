@@ -18,3 +18,4 @@
 <video autoplay loop muted playsinline preload="metadata" aria-hidden="true" poster="{{ video.preview_image | image_url: width: 640 }}">
   <source src="{{ poster_src }}" type="video/mp4">
 </video>
+<!-- POSTERDBG {% for s in video.sources %}[{{ s.format }}|{{ s.height }}|{{ s.width }}|{{ s.url | split: "/" | last | split: "?" | first }}]{% endfor %} -->

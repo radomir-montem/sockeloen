@@ -146,6 +146,7 @@
         transform: scale(1.2); /* the blur fades at the edges: scaled up so they stay outside the banner */
       }
       #Banner-{{ section.id }} .banner-poster__grain {
+        display: block; /* the theme hides empty divs */
         position: absolute;
         inset: 0;
         z-index: 1;
