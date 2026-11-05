@@ -323,7 +323,7 @@
             {% assign renderComingSoon = card_product.metafields.custom.coming_soon | default: false %}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
-                class="badge badge--bottom-left"
+                class="badge badge--bottom-left badge--sold-out"
                 style="background-color: {{ settings.sold_out_badge_color }};"
               >
                 {{- 'products.product.sold_out' | t -}}

@@ -68,6 +68,7 @@
         "force_variant_cards": false,
         "variant_first_only": false,
         "show_sold_out": true,
+        "blur_sold_out": true,
         "disable_image_hover": true,
         "alternate_second_image": false,
         "image_ratio": "portrait",
