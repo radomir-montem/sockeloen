@@ -43,7 +43,7 @@
         "poster_gap_mobile": 38,
         "image_overlay_opacity": 0,
         "banner_image_height": 650,
-        "image_height_mobile": 400,
+        "image_height_mobile": 500,
         "adapt_height_first_image": false,
         "show_description": true,
         "desktop_content_position": "middle-center",
