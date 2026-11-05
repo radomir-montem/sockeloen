@@ -2,6 +2,7 @@
   {%- comment -%} Sold-out cards with the Black Friday banner look: blurred photo + grain, orange translucent badge {%- endcomment -%}
   {%- style -%}
     #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__inner { overflow: hidden; }
+    #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__media { isolation: isolate; } /* keeps the grain under the badge */
     #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__media img {
       filter: blur({{ section.settings.sold_out_blur }}px);
       transform: scale(1.1); /* the blur fades at the edges: scaled up so they stay outside the card */
