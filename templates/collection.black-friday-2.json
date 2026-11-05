@@ -61,8 +61,9 @@
         "grid_banner_gloves": {
           "type": "grid_banner",
           "settings": {
-            "image": "shopify://shop_images/4_winter_gloves.png",
+            "image": "shopify://shop_images/1_lobster.png",
             "link": "shopify://collections/cycling-gloves",
+            "text_position": "bottom",
             "line": "BLACK FRIDAY",
             "heading": "Gloves",
             "overlay": 10
@@ -71,8 +72,9 @@
         "grid_banner_overshoes": {
           "type": "grid_banner",
           "settings": {
-            "image": "shopify://shop_images/5_winter_gloves_1.png",
+            "image": "shopify://shop_images/2_rain_shoecover_90cee20c-bafa-4c9c-9750-6c799829c1c9.png",
             "link": "shopify://collections/cycling-overshoes",
+            "text_position": "middle",
             "line": "BLACK FRIDAY",
             "heading": "Overshoes",
             "overlay": 10
@@ -92,6 +94,7 @@
         "variant_first_only": false,
         "show_sold_out": true,
         "blur_sold_out": true,
+        "sold_out_blur": 14,
         "disable_image_hover": true,
         "alternate_second_image": false,
         "image_ratio": "portrait",
@@ -189,66 +192,9 @@
         "height_mobile": 80
       }
     },
-    "two_cols_swap_C8zCQ4": {
-      "type": "two-cols-swap",
-      "blocks": {
-        "column_cnffC9": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/6_winter_gloves.png",
-            "color": "",
-            "text_color": "#ffffff",
-            "font_size": 40,
-            "heading": "BLACK FRIDAY SALE",
-            "description": "<p>BLACK FRIDAY SALE</p>",
-            "vertical_pos": "justify-center",
-            "horizontal_pos": "items-center",
-            "button_disclaimer": "",
-            "button_text": "shop here",
-            "button_url": "shopify://collections/sockeloen-x-knwu",
-            "button_pos": "mt-0",
-            "mobile_collection": "",
-            "mobile_collection_title": "KNWU x SOCKELOEN",
-            "mobile_collection_limit": 4,
-            "mobile_variant_filter": "KNWU"
-          }
-        },
-        "column_irg7DF": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/5_winter_gloves.png",
-            "color": "#0e112e",
-            "text_color": "#ffffff",
-            "font_size": 40,
-            "heading": "UP TO 60% OFF",
-            "description": "",
-            "vertical_pos": "justify-center",
-            "horizontal_pos": "items-center",
-            "button_disclaimer": "",
-            "button_text": "Shop Here",
-            "button_url": "shopify://collections/cycling-gloves",
-            "button_pos": "mt-0",
-            "mobile_collection": "",
-            "mobile_collection_title": "",
-            "mobile_collection_limit": 4,
-            "mobile_variant_filter": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_cnffC9",
-        "column_irg7DF"
-      ],
-      "settings": {
-        "eme_banners": true,
-        "scroll_effect": "sticky_label",
-        "grids_on_desktop": true,
-        "height_desktop": 75,
-        "height_mobile": 80
-      }
-    },
     "recently_viewed_awe": {
       "type": "bought-often-together",
+      "disabled": true,
       "name": "Recently viewed",
       "settings": {
         "product_source": "recently_viewed",
@@ -326,7 +272,6 @@
     "product-grid",
     "scroll_reveal_awe",
     "two_cols_swap_7Pb9fx",
-    "two_cols_swap_C8zCQ4",
     "recently_viewed_awe",
     "rich_text_fC8NDW"
   ]
