@@ -38,9 +38,9 @@
         "poster_headline_size_desktop": 96,
         "poster_headline_size_mobile": 44,
         "poster_brand_size_desktop": 20,
-        "poster_brand_size_mobile": 20,
+        "poster_brand_size_mobile": 13,
         "poster_gap_desktop": 44,
-        "poster_gap_mobile": 28,
+        "poster_gap_mobile": 38,
         "image_overlay_opacity": 0,
         "banner_image_height": 650,
         "image_height_mobile": 500,
@@ -61,27 +61,54 @@
         "grid_banner_gloves": {
           "type": "grid_banner",
           "settings": {
-            "image": "shopify://shop_images/1_lobster.png",
-            "link": "shopify://collections/cycling-gloves",
-            "text_position": "bottom",
+            "image": "shopify://shop_images/2_neckwarmer.png",
+            "link": "",
             "line": "BLACK FRIDAY",
-            "heading": "Gloves",
+            "heading": "Up to 60%",
+            "text_position": "middle",
             "overlay": 10
+          }
+        },
+        "grid_banner_bjifjK": {
+          "type": "grid_banner",
+          "settings": {
+            "image": "shopify://shop_images/6_knwu_AERO_Shoes_Cover_Del_Crosso_White_1_OUTSIDE_R_3D_87452800-bfb9-4da0-9dfe-9bc8ddf3d6b2_1.png",
+            "link": "",
+            "line": "sockeloen",
+            "heading": "WORN BY CHAMPIONS",
+            "text_position": "middle",
+            "overlay": 20
+          }
+        },
+        "grid_banner_rEpWjT": {
+          "type": "grid_banner",
+          "settings": {
+            "image": "shopify://shop_images/5_entry_glove_4b9e9e9f-2a28-4234-92c4-e150f7ecc0bb.png",
+            "link": "",
+            "line": "last year some products sold out in 5 minutes",
+            "heading": "BLACK FRIDAY",
+            "text_position": "middle",
+            "overlay": 0
           }
         },
         "grid_banner_overshoes": {
           "type": "grid_banner",
           "settings": {
-            "image": "shopify://shop_images/2_rain_shoecover_90cee20c-bafa-4c9c-9750-6c799829c1c9.png",
+            "image": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23876.jpg",
             "link": "shopify://collections/cycling-overshoes",
+            "line": "UP TO 60% OFF",
+            "heading": "BLACK FRIDAY",
             "text_position": "middle",
-            "line": "BLACK FRIDAY",
-            "heading": "Overshoes",
             "overlay": 10
           }
         }
       },
-      "block_order": ["grid_banner_gloves", "grid_banner_overshoes"],
+      "block_order": [
+        "grid_banner_gloves",
+        "grid_banner_bjifjK",
+        "grid_banner_rEpWjT",
+        "grid_banner_overshoes"
+      ],
       "settings": {
         "navigation": "",
         "products_per_page": 24,
@@ -95,6 +122,8 @@
         "show_sold_out": true,
         "blur_sold_out": true,
         "sold_out_blur": 14,
+        "grid_banner_first": 4,
+        "grid_banner_every": 8,
         "disable_image_hover": true,
         "alternate_second_image": false,
         "image_ratio": "portrait",
