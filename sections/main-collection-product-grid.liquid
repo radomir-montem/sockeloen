@@ -22,7 +22,7 @@
       #shopify-section-{{ section.id }} .grid-banner--left { grid-column: 1 / span {{ gb_span }}; }
       #shopify-section-{{ section.id }} .grid-banner--right { grid-column: {{ gb_right }} / span {{ gb_span }}; }
       #shopify-section-{{ section.id }} .grid-banner__line { font-size: 20px; }
-      #shopify-section-{{ section.id }} .grid-banner__heading { font-size: 96px; }
+      #shopify-section-{{ section.id }} .grid-banner__heading { font-size: min(96px, 6.4vw); } /* 96px like the top banner, smaller when the tile is narrower */
     }
   {%- endstyle -%}
 {%- endif -%}
