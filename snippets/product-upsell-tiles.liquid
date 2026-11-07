@@ -8,6 +8,12 @@
                                         the size closest to the main product's size.
   - custom.upsell_labels               optional display names, same order (e.g. "Merino cycling
                                         socks", "Under-helmet cap"); empty = product title
+  - custom.upsell_backups_1 / _2       optional backups for piece 1 / piece 2, in order of
+                                        preference. When the piece (every size of it) is sold out,
+                                        the first in-stock backup takes its place on the tiles, in
+                                        the cart and in the discount (e.g. the Neckwarmer for the
+                                        skull cap, another colour for the Merino sock). A backup
+                                        from another product shows its own title, not the label.
   - custom.upsell_discount_percentages [10, 20]: discount on 1 piece, on 2 pieces, ...;
                                         the list's length is the maximum quantity offered
   - custom.upsell_label                short name on the tiles (empty = product title)
@@ -41,26 +47,57 @@
   assign choice_labels = ''
   if upsell_choices != blank
     for v in upsell_choices
-      if v.product.available == false
+      comment
+        Piece n is choice n. When it is sold out (every size of it), the first
+        in-stock backup from custom.upsell_backups_n takes its place.
+      endcomment
+      assign piece = v
+      capture piece_ok
+        render 'product-upsell-variant-usable', variant: v
+      endcapture
+      assign piece_ok = piece_ok | strip
+      if piece_ok != 'y'
+        assign backups_key = 'upsell_backups_' | append: forloop.index
+        assign backups = product.metafields.custom[backups_key].value
+        if backups != blank
+          for b in backups
+            capture backup_ok
+              render 'product-upsell-variant-usable', variant: b
+            endcapture
+            assign backup_ok = backup_ok | strip
+            if backup_ok == 'y'
+              assign piece = b
+              break
+            endif
+          endfor
+        endif
+      endif
+      if piece.product.available == false
         continue
       endif
       if forloop.first
-        assign upsell = v.product
+        assign upsell = piece.product
       endif
       capture one
-        render 'product-upsell-choice-json', variant: v
+        render 'product-upsell-choice-json', variant: piece
       endcapture
       if choices_json != ''
         assign choices_json = choices_json | append: ','
       endif
       assign choices_json = choices_json | append: one
-      assign img = v.image | default: v.product.featured_image
+      assign img = piece.image | default: piece.product.featured_image
       assign choice_imgs = choice_imgs | append: img | image_url: width: 96 | append: '|'
       assign custom_label = upsell_label_list[forloop.index0]
+      if piece.product.id != v.product.id
+        comment
+          a backup from another product is named after itself
+        endcomment
+        assign custom_label = blank
+      endif
       if custom_label != blank
         assign choice_labels = choice_labels | append: custom_label | append: '|'
       else
-        assign choice_labels = choice_labels | append: v.product.title | append: '|'
+        assign choice_labels = choice_labels | append: piece.product.title | append: '|'
       endif
     endfor
   endif
