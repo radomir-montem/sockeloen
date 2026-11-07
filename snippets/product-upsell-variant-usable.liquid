@@ -1,0 +1,35 @@
+{%- comment -%}
+  Prints "y" when an add-on variant can be offered on the upsell tiles
+  (snippets/product-upsell-tiles.liquid): the variant itself, or another size
+  of it (same product, same non-size options such as the colour), is in stock.
+  Prints nothing when it is sold out, so the tiles fall back to a backup from
+  custom.upsell_backups_1 / custom.upsell_backups_2.
+  Parameter: variant
+{%- endcomment -%}
+{%- liquid
+  assign usable = false
+  assign p = variant.product
+  if p.available
+    for pv in p.variants
+      if pv.available
+        assign same = true
+        for opt in p.options_with_values
+          assign opt_name = opt.name | downcase
+          unless opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe'
+            assign oi = forloop.index0
+            if pv.options[oi] != variant.options[oi]
+              assign same = false
+            endif
+          endunless
+        endfor
+        if same
+          assign usable = true
+          break
+        endif
+      endif
+    endfor
+  endif
+  if usable
+    echo 'y'
+  endif
+-%}
