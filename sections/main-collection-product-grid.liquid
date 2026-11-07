@@ -15,19 +15,19 @@
     #shopify-section-{{ section.id }} .grid-banner__text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; text-align: center; }
     #shopify-section-{{ section.id }} .grid-banner__text--top { justify-content: flex-start; padding-top: 32px; }
     #shopify-section-{{ section.id }} .grid-banner__text--bottom { justify-content: flex-end; padding-bottom: 32px; }
-    #shopify-section-{{ section.id }} .grid-banner__line { font-family: 'Roboto Mono', monospace; font-weight: 700; font-size: 13px; line-height: 1.25; letter-spacing: 0; text-transform: uppercase; } /* same text styles as the poster banner at the top */
+    #shopify-section-{{ section.id }} .grid-banner__line { font-family: 'Roboto Mono', monospace; font-weight: 700; font-size: 13px; line-height: 1.25; text-transform: uppercase; }
     #shopify-section-{{ section.id }} .grid-banner__heading { font-family: var(--font-heading-family); font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: -0.01em; }
     @media screen and (min-width: 768px) {
       #shopify-section-{{ section.id }} .grid-banner { aspect-ratio: auto; grid-row: span 2; }
       #shopify-section-{{ section.id }} .grid-banner--left { grid-column: 1 / span {{ gb_span }}; }
       #shopify-section-{{ section.id }} .grid-banner--right { grid-column: {{ gb_right }} / span {{ gb_span }}; }
-      #shopify-section-{{ section.id }} .grid-banner__line { font-size: 20px; }
-      #shopify-section-{{ section.id }} .grid-banner__heading { font-size: min(96px, 6.4vw); } /* 96px like the top banner, smaller when the tile is narrower */
+      #shopify-section-{{ section.id }} .grid-banner__line { font-size: 18px; }
+      #shopify-section-{{ section.id }} .grid-banner__heading { font-size: 72px; }
     }
   {%- endstyle -%}
 {%- endif -%}
 {%- if section.settings.blur_sold_out -%}
-  {%- comment -%} Sold-out cards with the Black Friday banner look: blurred photo + grain, no hover, only the normal sold-out badge {%- endcomment -%}
+  {%- comment -%} Sold-out cards with the Black Friday banner look: blurred photo + grain, no hover, no quick add. Only the theme's normal Sold out badge stays (sale / new badges are hidden). {%- endcomment -%}
   {%- style -%}
     #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__inner { overflow: hidden; }
     #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card__media img {
@@ -48,8 +48,9 @@
       mix-blend-mode: overlay;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
-    #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card-badge .badge:not(.badge--sold-out),
     #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card-bottom-badge { display: none !important; }
+    #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card-badge .badge:not(.badge--sold-out) { display: none !important; }
+    #shopify-section-{{ section.id }} .card-wrapper:has(.badge--sold-out) .card-badge { z-index: 3; }
   {%- endstyle -%}
 {%- endif -%}
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
@@ -389,6 +390,55 @@
                   {%- assign grid_products = grid_products | concat: hit -%}
                 {%- endfor -%}
               {%- endif -%}
+              {%- comment -%}
+                Sold-out placement: move `soldout_early_count` sold-out products forward so they sit,
+                spread out, within the first `soldout_early_within` products (e.g. 2 within 8 =
+                positions 3 and 6). The rest keeps the collection's own order. Off when 0, when
+                sold-out products are hidden, or for smart lists.
+              {%- endcomment -%}
+              {%- assign so_count = section.settings.soldout_early_count | default: 0 -%}
+              {%- if so_count > 0 and section.settings.show_sold_out and smart_mode == 'none' and grid_products.size > 0 -%}
+                {%- assign so_within = section.settings.soldout_early_within | default: 8 -%}
+                {%- assign in_stock = grid_products | where: 'available' -%}
+                {%- assign sold_out = '' | split: '' -%}
+                {%- for p in grid_products -%}
+                  {%- unless p.available -%}
+                    {%- assign hit = grid_products | where: 'handle', p.handle -%}
+                    {%- assign sold_out = sold_out | concat: hit -%}
+                  {%- endunless -%}
+                {%- endfor -%}
+                {%- if sold_out.size > 0 and in_stock.size > 0 -%}
+                  {%- if so_count > sold_out.size -%}{%- assign so_count = sold_out.size -%}{%- endif -%}
+                  {%- assign so_slots = ',' -%}
+                  {%- assign so_step = so_count | plus: 1 -%}
+                  {%- for i in (1..so_count) -%}
+                    {%- assign slot = so_within | times: i | divided_by: so_step | plus: 1 -%}
+                    {%- assign so_slots = so_slots | append: slot | append: ',' -%}
+                  {%- endfor -%}
+                  {%- assign ordered = '' | split: '' -%}
+                  {%- assign si = 0 -%}
+                  {%- assign ai = 0 -%}
+                  {%- for p in grid_products -%}
+                    {%- assign key = ',' | append: forloop.index | append: ',' -%}
+                    {%- assign pick = nil -%}
+                    {%- if so_slots contains key and si < sold_out.size -%}
+                      {%- assign pick = sold_out[si] -%}
+                      {%- assign si = si | plus: 1 -%}
+                    {%- elsif ai < in_stock.size -%}
+                      {%- assign pick = in_stock[ai] -%}
+                      {%- assign ai = ai | plus: 1 -%}
+                    {%- elsif si < sold_out.size -%}
+                      {%- assign pick = sold_out[si] -%}
+                      {%- assign si = si | plus: 1 -%}
+                    {%- endif -%}
+                    {%- if pick -%}
+                      {%- assign hit = grid_products | where: 'handle', pick.handle -%}
+                      {%- assign ordered = ordered | concat: hit -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- assign grid_products = ordered -%}
+                {%- endif -%}
+              {%- endif -%}
               {%- capture grid_items -%}
               {%- for product in grid_products -%}
                 {% assign lazy_load = false %}
@@ -689,7 +739,7 @@
       "id": "blur_sold_out",
       "label": "Blur sold-out cards",
       "default": false,
-      "info": "Blurs the photo with grain, turns off hover and shows only the sold-out badge."
+      "info": "Blurs the photo with grain and turns off hover and quick add. Only the normal Sold out badge stays."
     },
     {
       "type": "range",
@@ -700,6 +750,26 @@
       "unit": "px",
       "label": "Sold-out card blur",
       "default": 14
+    },
+    {
+      "type": "range",
+      "id": "soldout_early_count",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "label": "Sold-out products among the first cards",
+      "default": 0,
+      "info": "Moves this many sold-out products forward so they always appear among the first cards (spread out, never the very first card). Needs 'Also show sold-out products' on. 0 = off."
+    },
+    {
+      "type": "range",
+      "id": "soldout_early_within",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "label": "... within the first",
+      "default": 8,
+      "info": "The sold-out products above are placed within this many products."
     },
     {
       "type": "header",
