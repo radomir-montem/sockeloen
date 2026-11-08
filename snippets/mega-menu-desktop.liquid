@@ -341,11 +341,18 @@
           {%- endcomment -%}
           {%- assign bs_coll = blank -%}
           {%- assign has_coll = false -%}
-          {%- if link.type == 'collection_link' and link.object.products.size > 0 -%}
+          {%- comment -%} Black Friday mode: the Black Friday collection link is a plain link (no hover panel), bold and underlined {%- endcomment -%}
+          {%- assign is_bf_link = false -%}
+          {%- if settings.bf_enabled -%}
+            {%- assign bf_handle = settings.bf_collection_handle | default: 'black-friday-sale' -%}
+            {%- assign bf_needle = '/collections/' | append: bf_handle -%}
+            {%- if link.url contains bf_needle -%}{%- assign is_bf_link = true -%}{%- endif -%}
+          {%- endif -%}
+          {%- if is_bf_link == false and link.type == 'collection_link' and link.object.products.size > 0 -%}
             {%- assign bs_coll = link.object -%}
             {%- assign has_coll = true -%}
           {%- endif -%}
-          {%- if has_coll == false and link.url contains '/collections/' -%}
+          {%- if has_coll == false and is_bf_link == false and link.url contains '/collections/' -%}
             {%- assign handle_chunk = link.url | split: '/collections/' | last -%}
             {%- assign handle_chunk = handle_chunk | split: '?' | first -%}
             {%- assign handle_chunk = handle_chunk | split: '#' | first -%}
@@ -422,7 +429,7 @@
             </div>
           {%- else -%}
             {%- comment -%} Not a collection link (or collection has no products) — plain anchor {%- endcomment -%}
-            <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset link-only{% if link.current %} active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+            <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset link-only{% if link.current %} active{% endif %}{% if is_bf_link %} mega-menu-v2-bf-link{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
               <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
             </a>
           {%- endif -%}

@@ -164,10 +164,17 @@
       <a href="{{ bf_link }}" class="announcement-bar__link link link--text focus-inset">
         <div class="page-width">
           <p class="announcement-bar__message center h5 bf-bar" style="color: #fff;">
-            <span class="bf-bar__title">{{ settings.bf_title | escape }}</span>
+            {%- assign bf_title_m = settings.bf_title_mobile | default: settings.bf_title -%}
+            {%- assign bf_msg_m = settings.bf_message_mobile | default: settings.bf_message -%}
+            <span class="bf-bar__title bf-bar__desktop">{{ settings.bf_title | escape }}</span>
+            <span class="bf-bar__title bf-bar__mobile">{{ bf_title_m | escape }}</span>
             {%- if settings.bf_message != blank -%}
-              <span class="bf-bar__sep" aria-hidden="true">·</span>
-              <span class="bf-bar__msg">{{ settings.bf_message | escape }}</span>
+              <span class="bf-bar__sep bf-bar__desktop" aria-hidden="true">·</span>
+              <span class="bf-bar__msg bf-bar__desktop">{{ settings.bf_message | escape }}</span>
+            {%- endif -%}
+            {%- if bf_msg_m != blank -%}
+              <span class="bf-bar__sep bf-bar__mobile" aria-hidden="true">·</span>
+              <span class="bf-bar__msg bf-bar__mobile">{{ bf_msg_m | escape }}</span>
             {%- endif -%}
             <span class="bf-bar__sep" aria-hidden="true">·</span>
             {%- render 'bf-countdown' -%}
