@@ -125,6 +125,26 @@ body.template--product .product-v2 .pdp-upsell__badge.pdp-upsell__badge--bf { ba
   text-transform: none !important;
 }
 #MainContent .card-wrapper .badge.badge--bf::first-letter { text-transform: none !important; }
+/* deal label, top right, white: '+1 free', '-40%' (Black Friday collection page only) */
+.card-deal-badge { top: 20px; right: 18px; z-index: 3; pointer-events: none; }
+.badge.badge--bf-deal,
+#MainContent .card-wrapper .card-deal-badge .badge.badge--bf-deal {
+  display: inline-block !important;
+  background: #fff !important;
+  background-color: #fff !important;
+  color: #000 !important;
+  text-transform: none !important;
+  border-radius: 0 !important;
+  padding: 4px 7px !important;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.4px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+#MainContent .card-wrapper .badge.badge--bf-deal::first-letter { text-transform: none !important; }
+
 /* six (or five) cards across on desktop: cards are small, so the badge shrinks with them */
 @media screen and (min-width: 990px) {
   .product-grid--6 .badge.badge--bf,
@@ -132,7 +152,9 @@ body.template--product .product-v2 .pdp-upsell__badge.pdp-upsell__badge--bf { ba
   .bot-cols-5 .badge.badge--bf,
   #MainContent .product-grid--6 .card-wrapper .badge.badge--bf,
   #MainContent .bot-cols-6 .card-wrapper .badge.badge--bf,
-  #MainContent .bot-cols-5 .card-wrapper .badge.badge--bf {
+  #MainContent .bot-cols-5 .card-wrapper .badge.badge--bf,
+  .product-grid--6 .badge.badge--bf-deal,
+  #MainContent .product-grid--6 .card-wrapper .badge.badge--bf-deal {
     font-size: 8px !important;
     line-height: 1.2 !important;
     padding: 3px 5px !important;
