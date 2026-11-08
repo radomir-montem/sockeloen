@@ -300,6 +300,32 @@
           name/flag were removed on legal request from the UCI (2026-07)
           and the raw metafield texts must never resurface.
         {%- endcomment -%}
+
+          {%- comment -%}
+            Black Friday deal label (top right, white): only on the Black Friday collection page.
+            Text = custom.bf_deal; empty = '-NN%' from the compare-at price, else '+N free' from a
+            badge like '3 + 1 free'. Nothing when no deal can be worked out.
+          {%- endcomment -%}
+          {%- if bf_in and collection.handle == bf_handle -%}
+            {%- assign bf_deal = card_product.metafields.custom.bf_deal | strip -%}
+            {%- if bf_deal == blank and card_product.compare_at_price > card_product.price -%}
+              {%- assign bf_off = card_product.compare_at_price | minus: card_product.price | times: 100.0 | divided_by: card_product.compare_at_price | round -%}
+              {%- if bf_off >= 5 -%}{%- assign bf_deal = '-' | append: bf_off | append: '%' -%}{%- endif -%}
+            {%- endif -%}
+            {%- if bf_deal == blank -%}
+              {%- for bf_b in card_product.metafields.custom.badge.value -%}
+                {%- assign bf_bl = bf_b | downcase -%}
+                {%- if bf_bl contains 'free' -%}
+                  {%- assign bf_n = bf_bl | split: 'free' | first | strip | split: ' ' | last | strip -%}
+                  {%- assign bf_n_num = bf_n | plus: 0 -%}
+                  {%- if bf_n_num > 0 -%}{%- assign bf_deal = '+' | append: bf_n_num | append: ' free' -%}{%- break -%}{%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+            {%- if bf_deal != blank -%}
+              <div class="absolute card-deal-badge"><span class="badge badge--bf-deal">{{ bf_deal | escape }}</span></div>
+            {%- endif -%}
+          {%- endif -%}
         <div class="absolute top-[15px] left-[12px] card-badge">
           {%- if bf_in -%}
             {%- comment -%} Black Friday badge: black, white text, and the only badge on this card {%- endcomment -%}
