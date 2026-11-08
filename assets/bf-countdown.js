@@ -52,6 +52,7 @@
       init(el);
     });
   }
+  window.bfCountdownScan = scan;
   scan();
   document.addEventListener('shopify:section:load', scan);
   document.addEventListener('DOMContentLoaded', scan);

@@ -32,5 +32,16 @@
 .pdp-upsell__timer { font-size: 12px; line-height: 1.3; color: #1a1a1a; margin-top: 2px; }
 .pdp-upsell__timer .bf-countdown__label { color: #666; font-weight: 400; }
 
+/* Avada volume widget header (dark glass): the countdown under the title */
+.product-v2 .Avada-Volume__Header .avada-bf-timer {
+  display: flex;
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 1.3;
+  color: #fff;
+}
+.product-v2 .Avada-Volume__Header .avada-bf-timer[hidden] { display: none; }
+.product-v2 .Avada-Volume__Header .avada-bf-timer .bf-countdown__label { color: rgba(255, 255, 255, 0.7); font-weight: 400; }
+
 /* product-card badge */
 .badge.badge--bottom-left.badge--bf, .badge.badge--bf { background-color: #000 !important; color: #fff !important; }

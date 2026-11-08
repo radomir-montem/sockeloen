@@ -463,12 +463,62 @@ if (!customElements.get('sticky-atc-v2')) {
     });
   }
 
+  /* Black Friday mode (theme settings > Black Friday): the Avada widget's own
+     header title (configured inside the app, e.g. "Winter sale") is replaced by
+     the Black Friday title, and a countdown line is added under it. The data
+     comes from the section's data-bf-* attributes; the timer itself is run by
+     bf-countdown.js (window.bfCountdownScan). Re-applied after Avada re-renders. */
+  function bfSection() {
+    return document.querySelector('.product-v2[data-bf-title], .product-section[data-bf-title]');
+  }
+  function bfNeedsWork() {
+    var s = bfSection();
+    if (!s) return false;
+    var title = document.querySelector('.product-v2 .Avada-Volume__HeaderTitle-Text');
+    if (!title) return false;
+    if (title.textContent.trim() !== (s.dataset.bfTitle || '').trim()) return true;
+    var header = title.closest('.Avada-Volume__Header');
+    return !!header && !header.querySelector('.avada-bf-timer');
+  }
+  function enhanceBlackFriday() {
+    var s = bfSection();
+    if (!s) return;
+    var bfTitle = (s.dataset.bfTitle || '').trim();
+    document.querySelectorAll('.product-v2 .Avada-Volume__HeaderTitle-Text').forEach(function(title) {
+      if (bfTitle && title.textContent.trim() !== bfTitle) title.textContent = bfTitle;
+      var header = title.closest('.Avada-Volume__Header');
+      if (!header || header.querySelector('.avada-bf-timer')) return;
+      var timer = document.createElement('span');
+      timer.className = 'bf-countdown avada-bf-timer';
+      timer.setAttribute('data-bf-countdown', '');
+      timer.setAttribute('data-d1', s.dataset.bfD1 || '');
+      timer.setAttribute('data-d2', s.dataset.bfD2 || '');
+      timer.setAttribute('data-d3', s.dataset.bfD3 || '');
+      timer.setAttribute('data-tz', s.dataset.bfTz || '');
+      timer.setAttribute('hidden', '');
+      var label = (s.dataset.bfLabel || '').trim();
+      if (label) {
+        var l = document.createElement('span');
+        l.className = 'bf-countdown__label';
+        l.textContent = label;
+        timer.appendChild(l);
+      }
+      var t = document.createElement('span');
+      t.className = 'bf-countdown__time';
+      t.setAttribute('data-bf-time', '');
+      timer.appendChild(t);
+      header.appendChild(timer);
+      if (window.bfCountdownScan) window.bfCountdownScan();
+    });
+  }
+
   function enhance() {
     fixAvadaPrices();
     injectRadioDots();
     injectImageStacks();
     fixBadgeText();
     enhanceTierLabels();
+    enhanceBlackFriday();
   }
 
   function needsEnhancement() {
@@ -478,7 +528,7 @@ if (!customElements.get('sticky-atc-v2')) {
     for (var i = 0; i < items.length; i++) {
       if (!items[i].querySelector('.avada-radio-dot')) return true;
     }
-    return false;
+    return bfNeedsWork();
   }
 
   function init() {
