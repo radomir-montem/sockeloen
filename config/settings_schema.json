@@ -1494,6 +1494,84 @@
     ]
   },
   {
+    "name": "Black Friday",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "bf_enabled",
+        "label": "Black Friday mode",
+        "default": true,
+        "info": "One switch for everything below: the announcement bar becomes one fixed Black Friday line with a countdown, the bundle tiles on product pages are titled 'Black Friday Sale' and get the countdown, and every product in the Black Friday collection gets a black badge. Off = the normal theme."
+      },
+      {
+        "type": "text",
+        "id": "bf_title",
+        "label": "Title",
+        "default": "Black Friday Sale",
+        "info": "Used in the announcement bar and as the title of every bundle tile."
+      },
+      {
+        "type": "text",
+        "id": "bf_message",
+        "label": "Message",
+        "default": "Up to 60% off or +1 free deals",
+        "info": "Announcement bar, after the title."
+      },
+      {
+        "type": "url",
+        "id": "bf_link",
+        "label": "Announcement bar link",
+        "info": "Empty = the Black Friday collection below."
+      },
+      {
+        "type": "header",
+        "content": "Countdown",
+        "info": "Dates in the shop's time zone, as YYYY-MM-DD HH:MM. The timer counts down to the first date that is still ahead and then moves to the next; after the last one it disappears. Empty dates are skipped."
+      },
+      {
+        "type": "text",
+        "id": "bf_deadline_1",
+        "label": "Deadline 1",
+        "default": "2026-11-09 17:00"
+      },
+      {
+        "type": "text",
+        "id": "bf_deadline_2",
+        "label": "Deadline 2",
+        "default": "2026-11-16 17:00"
+      },
+      {
+        "type": "text",
+        "id": "bf_deadline_3",
+        "label": "Deadline 3 (Black Friday)",
+        "default": "2026-11-27 00:00"
+      },
+      {
+        "type": "text",
+        "id": "bf_timer_label",
+        "label": "Text before the timer",
+        "default": "Ends in"
+      },
+      {
+        "type": "header",
+        "content": "Badge"
+      },
+      {
+        "type": "text",
+        "id": "bf_collection_handle",
+        "label": "Black Friday collection (handle)",
+        "default": "black-friday-sale",
+        "info": "Every product in this collection shows the badge on its product cards, everywhere on the site."
+      },
+      {
+        "type": "text",
+        "id": "bf_badge_text",
+        "label": "Badge text",
+        "default": "Black Friday"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.badges.name",
     "settings": [
       {

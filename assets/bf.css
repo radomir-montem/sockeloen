@@ -1,0 +1,36 @@
+/* Black Friday mode (theme settings > Black Friday): announcement bar,
+   countdown and product-card badge. Deliberately plain: the theme's own
+   type, black and white, tabular digits so the timer does not jitter. */
+.bf-countdown {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.bf-countdown[hidden] { display: none; }
+.bf-countdown__time { font-weight: 600; letter-spacing: 0.02em; }
+
+/* announcement bar: one line, centred, wraps on narrow phones */
+.announcement-bar--bf { background-color: #000 !important; }
+.announcement-bar--bf .bf-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0 0.6em;
+  margin: 0;
+  color: #fff;
+  line-height: 1.5;
+}
+.announcement-bar--bf .bf-bar__title { font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.announcement-bar--bf .bf-bar__sep { opacity: 0.5; }
+.announcement-bar--bf .bf-bar .bf-countdown { color: #fff; }
+.announcement-bar--bf .announcement-bar__close path { fill: #fff !important; }
+
+/* bundle tiles on the product page: a quiet line under the set contents */
+.pdp-upsell__timer { font-size: 12px; line-height: 1.3; color: #1a1a1a; margin-top: 2px; }
+.pdp-upsell__timer .bf-countdown__label { color: #666; font-weight: 400; }
+
+/* product-card badge */
+.badge.badge--bottom-left.badge--bf, .badge.badge--bf { background-color: #000 !important; color: #fff !important; }
