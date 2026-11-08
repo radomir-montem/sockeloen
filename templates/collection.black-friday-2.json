@@ -121,7 +121,7 @@
         "variant_first_only": false,
         "show_sold_out": true,
         "blur_sold_out": true,
-        "sold_out_blur": 14,
+        "sold_out_blur": 8,
         "soldout_early_count": 2,
         "soldout_early_within": 8,
         "grid_banner_first": 4,
