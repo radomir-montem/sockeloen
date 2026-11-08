@@ -75,16 +75,11 @@ body.template--product .product-v2 .Avada-VolumeBoxBadge.avada-bf-badge { backgr
 .pdp-upsell__badge.pdp-upsell__badge--bf { background: #000; }
 
 /* header menu: the Black Friday link is a plain link, bold and underlined */
+/* the plain link has no trigger wrapper, so it gets the wrapper's 14px inset itself:
+   text-to-text spacing then matches the items with an arrow */
 .mega-menu-v2-bf-link span,
-.header__menu-item.mega-menu-v2-bf-link { font-weight: 700 !important; text-decoration: underline !important; text-underline-offset: 3px; }
-.mobile-menu__top-link {
-  display: block;
-  padding: 14px 24px;
-  color: #111;
-  font-size: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-.mobile-menu__top-link--bf { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.header__menu-item.mega-menu-v2-bf-link { font-weight: 700 !important; text-decoration: none !important; }
+.header__menu-item.mega-menu-v2-bf-link { padding: 0 14px !important; }
 
 /* Avada volume widget header: solid black in Black Friday mode, countdown on the right */
 .product-section[data-bf-title] .Avada-Volume__Header {

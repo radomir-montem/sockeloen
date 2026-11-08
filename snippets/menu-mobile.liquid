@@ -65,16 +65,10 @@
     @drawer:back.window="closeSubMenu()"
     x-transition.scale>
 
-  {%- comment -%} ============ TOP-LEVEL LINKS WITHOUT CHILDREN (e.g. Black Friday Sale) ============ {%- endcomment -%}
-  {%- assign bf_handle = settings.bf_collection_handle | default: 'black-friday-sale' -%}
-  {%- assign bf_needle = '/collections/' | append: bf_handle -%}
-  {%- for link in menu.links -%}
-    {%- if link.links.size == 0 -%}
-      {%- assign is_bf_link = false -%}
-      {%- if settings.bf_enabled and link.url contains bf_needle -%}{%- assign is_bf_link = true -%}{%- endif -%}
-      <a class="mobile-menu__top-link{% if is_bf_link %} mobile-menu__top-link--bf{% endif %}" href="{{ link.url }}">{{ link.title | escape }}</a>
-    {%- endif -%}
-  {%- endfor -%}
+  {%- comment -%}
+    Top-level links without children are not shown in the phone menu (the Black
+    Friday Sale link lives in the announcement bar and the desktop menu).
+  {%- endcomment -%}
 
   {%- comment -%} ============ TAB BAR ============ {%- endcomment -%}
   {%- assign tab_count = 0 -%}
