@@ -463,6 +463,17 @@
           and the raw metafield texts must never resurface.
         {%- endcomment -%}
         <div class="absolute top-[15px] left-[12px] card-badge product-variant">
+          {%- comment -%} Black Friday badge (theme settings > Black Friday): every product in the Black Friday collection, black with white text. Replaces the 'sale' tag badge while on. {%- endcomment -%}
+          {%- assign bf_in = false -%}
+          {%- if settings.bf_enabled -%}
+            {%- assign bf_handle = settings.bf_collection_handle | default: 'black-friday-sale' -%}
+            {%- for bf_c in product.collections -%}
+              {%- if bf_c.handle == bf_handle -%}{%- assign bf_in = true -%}{%- break -%}{%- endif -%}
+            {%- endfor -%}
+            {%- if bf_in -%}
+              <span class="badge badge--bottom-left uppercase mr-[6px] badge--bf">{{ settings.bf_badge_text | default: 'Black Friday' | escape }}</span>
+            {%- endif -%}
+          {%- endif -%}
           {%- comment -%} "New" badge: tag from theme settings, OR published in the last settings.new_badge_days days {%- endcomment -%}
           {%- assign is_new = false -%}
           {%- if settings.new_badge_days > 0 and coming_soon != true and product.published_at != blank -%}
@@ -499,7 +510,7 @@
               </span>
           {%- else -%}
             {% for tag in tags %}
-              {% if tag == 'sale' %}
+              {% if tag == 'sale' and bf_in != true %}
                 <span
                   id="Badge-{{ section_id }}-{{ card_product.id }}"
                   class="badge badge--bottom-left"

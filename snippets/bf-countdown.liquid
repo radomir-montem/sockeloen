@@ -1,0 +1,14 @@
+{%- comment -%}
+  Black Friday countdown (theme settings > Black Friday). Counts down to the
+  first of the three deadlines that is still ahead (weekly deals, then Black
+  Friday itself); hides itself once all have passed. The dates are entered in
+  the shop's time zone; the shop's current UTC offset travels along so the
+  browser gets the exact moment. Needs assets/bf-countdown.js and assets/bf.css,
+  which the announcement bar and the upsell tiles load.
+  Parameter: class (optional extra class)
+{%- endcomment -%}
+{%- assign bf_tz = 'now' | date: '%z' -%}
+<span class="bf-countdown{% if class != blank %} {{ class }}{% endif %}" data-bf-countdown data-d1="{{ settings.bf_deadline_1 | escape }}" data-d2="{{ settings.bf_deadline_2 | escape }}" data-d3="{{ settings.bf_deadline_3 | escape }}" data-tz="{{ bf_tz }}" hidden>
+  {%- if settings.bf_timer_label != blank -%}<span class="bf-countdown__label">{{ settings.bf_timer_label | escape }}</span>{%- endif -%}
+  <span class="bf-countdown__time" data-bf-time></span>
+</span>

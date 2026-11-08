@@ -147,6 +147,42 @@
   </style>
 {% endif %}
 
+{%- if settings.bf_enabled -%}
+  {%- comment -%}
+    Black Friday mode (theme settings > Black Friday): one fixed line, no
+    rotation, no block texts: title · message · countdown, linking to the
+    Black Friday collection. The blocks above stay as they are for afterwards.
+  {%- endcomment -%}
+  {{ 'bf.css' | asset_url | stylesheet_tag }}
+  {%- assign bf_link = settings.bf_link -%}
+  {%- if bf_link == blank -%}
+    {%- assign bf_handle = settings.bf_collection_handle | default: 'black-friday-sale' -%}
+    {%- assign bf_link = collections[bf_handle].url | default: '/collections/black-friday-sale' -%}
+  {%- endif -%}
+  <div id="announcement-bar">
+    <div class="announcement-bar announcement-bar--bf" style="background-color: #000;" role="region" aria-label="{{ 'sections.header.announcement' | t }}">
+      <a href="{{ bf_link }}" class="announcement-bar__link link link--text focus-inset">
+        <div class="page-width">
+          <p class="announcement-bar__message center h5 bf-bar" style="color: #fff;">
+            <span class="bf-bar__title">{{ settings.bf_title | escape }}</span>
+            {%- if settings.bf_message != blank -%}
+              <span class="bf-bar__sep" aria-hidden="true">·</span>
+              <span class="bf-bar__msg">{{ settings.bf_message | escape }}</span>
+            {%- endif -%}
+            <span class="bf-bar__sep" aria-hidden="true">·</span>
+            {%- render 'bf-countdown' -%}
+          </p>
+        </div>
+      </a>
+      <div class="announcement-bar__close absolute cursor-pointer">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path style="fill: #fff;" fill-rule="evenodd" clip-rule="evenodd" d="M4.00394 4.71056L6.65039 7.35701L7.3575 6.6499L4.71105 4.00346L7.3575 1.35701L6.65039 0.649902L4.00394 3.29635L1.3575 0.649902L0.650391 1.35701L3.29684 4.00346L0.650391 6.6499L1.3575 7.35701L4.00394 4.71056Z" fill="white"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <script src="{{ 'bf-countdown.js' | asset_url }}" defer></script>
+{%- else -%}
 <div id="announcement-bar"{% unless section.settings.sale_mode %} class="ann-rotator" data-delay="{{ section.settings.autoplay_speed | times: 1000 }}"{% endunless %}>
   <div class="ann-rotator__track">
   {%- for block in section.blocks -%}
@@ -211,6 +247,7 @@
   {%- endfor -%}
   </div>
 </div>
+{%- endif -%}
 
 <script>
   var announcementBarInterval = undefined;
@@ -223,7 +260,7 @@
     cycling entirely in sale mode: the first bar stays permanently
     visible and its marquee scrolls without ever being interrupted.
   {%- endcomment -%}
-  {%- unless section.settings.sale_mode -%}
+  {%- unless section.settings.sale_mode or settings.bf_enabled -%}
     (function(){
       var root = document.getElementById('announcement-bar');
       var track = root && root.querySelector('.ann-rotator__track');
@@ -278,7 +315,7 @@
       "id": "sale_mode",
       "label": "Warehouse Sale mode",
       "default": false,
-      "info": "Enables black background with the Warehouse Clearance marquee"
+      "info": "Enables black background with the Warehouse Clearance marquee. Black Friday mode (theme settings > Black Friday) overrides this bar entirely while it is on."
     },
     {
       "type": "range",

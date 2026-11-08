@@ -122,6 +122,15 @@
     assign upsell_title_small = 'products.v2.upsell_set_title' | t
   endif
   comment
+    Black Friday mode (theme settings > Black Friday): every set tile is titled with
+    the Black Friday title and carries the countdown; the per-product titles return
+    when the mode is switched off.
+  endcomment
+  if settings.bf_enabled and settings.bf_title != blank
+    assign upsell_title_full = settings.bf_title
+    assign upsell_title_small = settings.bf_title
+  endif
+  comment
     Free-shipping threshold of the market (same rule as the shipping row):
     tiles whose total reaches it show "Free shipping".
   endcomment
@@ -139,6 +148,7 @@
 -%}
 {%- if upsell != blank and choices_json != '' and upsell_pcts.size > 0 -%}
   {{ 'pdp-upsell.css' | asset_url | stylesheet_tag }}
+  {%- if settings.bf_enabled -%}{{ 'bf.css' | asset_url | stylesheet_tag }}{%- endif -%}
   <div class="pdp-upsell" data-pdp-upsell data-host-gid="gid://shopify/Product/{{ product.id }}" data-form="{{ product_form_id }}" data-label="{{ upsell_label | escape }}" data-url="{{ upsell.url }}" data-money="{{ cart.currency.symbol | default: '€' }}" data-host-size="{{ host_size | escape }}" data-host-options='{{ product.options | json }}' data-ship-threshold="{{ ship_threshold }}">
     <div class="pdp-upsell__tiles" role="radiogroup" aria-label="{{ 'products.v2.upsell_group' | t: label: upsell_label }}">
       <button type="button" class="pdp-upsell__tile{% if upsell_default_qty == 0 %} is-selected{% endif %}" role="radio" aria-checked="{% if upsell_default_qty == 0 %}true{% else %}false{% endif %}" data-qty="0">
@@ -191,6 +201,7 @@
               <span class="pdp-upsell__sub">{{ 'products.v2.upsell_add' | t: count: forloop.index, label: upsell_label }}</span>
             {%- endif -%}
             <span class="pdp-upsell__ship" data-upsell-ship hidden>{{ 'products.v2.upsell_free_shipping' | t }}</span>
+            {%- if settings.bf_enabled -%}{%- render 'bf-countdown', class: 'pdp-upsell__timer' -%}{%- endif -%}
           </span>
           <span class="pdp-upsell__price">
             <span class="pdp-upsell__total" data-upsell-total></span>
@@ -206,4 +217,5 @@
     </script>
   </div>
   <script src="{{ 'pdp-upsell.js' | asset_url }}" defer></script>
+  {%- if settings.bf_enabled -%}<script src="{{ 'bf-countdown.js' | asset_url }}" defer></script>{%- endif -%}
 {%- endif -%}
