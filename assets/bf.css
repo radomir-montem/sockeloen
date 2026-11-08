@@ -63,7 +63,15 @@
 .pdp-upsell__bf-sub { font-size: 13px; line-height: 1.3; color: rgba(255, 255, 255, 0.7); margin-top: 2px; }
 .pdp-upsell__bf-timer { flex: none; font-size: 13px; color: #fff; }
 .pdp-upsell__bf-timer .bf-countdown__label { color: rgba(255, 255, 255, 0.7); font-weight: 400; }
-.pdp-upsell__bf + .pdp-upsell__tiles { padding-top: 20px; }
+/* header edge-to-content inset = the tiles' border + padding (15px), so the title lines up with the
+   photos and the timer with the prices; the gap under it = the gap between the tiles (20px, 16px on phones) */
+.pdp-upsell__bf { padding: 12px 15px; }
+body.template--product .product-v2 .pdp-tile .pdp-upsell__bf + .pdp-upsell__tiles,
+.pdp-upsell__bf + .pdp-upsell__tiles { padding-top: 20px !important; }
+@media screen and (max-width: 989px) {
+  body.template--product .product-v2 .pdp-tile .pdp-upsell__bf + .pdp-upsell__tiles,
+  .pdp-upsell__bf + .pdp-upsell__tiles { padding-top: 16px !important; }
+}
 @media (max-width: 400px) {
   .pdp-upsell__bf-timer .bf-countdown__label { display: none; }
 }
@@ -72,7 +80,8 @@
 .product-v2 .Avada-VolumeBoxBadge.avada-bf-badge,
 body.template--product .product-v2 .Avada-VolumeBoxBadge.avada-bf-badge { background: #000 !important; color: #fff !important; border-color: #000 !important; }
 /* same for the label on the metafield bundle tiles */
-.pdp-upsell__badge.pdp-upsell__badge--bf { background: #000; }
+.pdp-upsell__badge.pdp-upsell__badge--bf,
+body.template--product .product-v2 .pdp-upsell__badge.pdp-upsell__badge--bf { background: #000 !important; color: #fff !important; }
 
 /* header menu: the Black Friday link is a plain link, bold and underlined */
 /* the plain link has no trigger wrapper, so it gets the wrapper's 14px inset itself:
