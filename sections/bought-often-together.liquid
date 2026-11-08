@@ -429,7 +429,7 @@
 {%- endstyle -%}
 
 {%- if is_recently_viewed or combined_handle_array != blank and combined_handle_array.size > 0 -%}
-<div class="bot-section-{{ section.id }}">
+<div class="bot-section-{{ section.id }} bot-cols-{{ section.settings.desktop_columns }}">
   {%- if section.settings.heading != blank -%}
     <h4 class="bot-heading">
       {{- section.settings.heading -}}
