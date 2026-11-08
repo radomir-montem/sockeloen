@@ -58,17 +58,6 @@
     "product-grid": {
       "type": "main-collection-product-grid",
       "blocks": {
-        "grid_banner_rEpWjT": {
-          "type": "grid_banner",
-          "settings": {
-            "image": "shopify://shop_images/5_entry_glove_4b9e9e9f-2a28-4234-92c4-e150f7ecc0bb.png",
-            "link": "",
-            "line": "last year some products sold out in 5 minutes",
-            "heading": "BLACK FRIDAY",
-            "text_position": "middle",
-            "overlay": 0
-          }
-        },
         "grid_banner_gloves": {
           "type": "grid_banner",
           "settings": {
@@ -91,6 +80,17 @@
             "overlay": 20
           }
         },
+        "grid_banner_rEpWjT": {
+          "type": "grid_banner",
+          "settings": {
+            "image": "shopify://shop_images/5_entry_glove_4b9e9e9f-2a28-4234-92c4-e150f7ecc0bb.png",
+            "link": "",
+            "line": "last year some products sold out in 5 minutes",
+            "heading": "BLACK FRIDAY",
+            "text_position": "middle",
+            "overlay": 0
+          }
+        },
         "grid_banner_overshoes": {
           "type": "grid_banner",
           "settings": {
@@ -101,37 +101,13 @@
             "text_position": "middle",
             "overlay": 10
           }
-        },
-        "grid_banner_JWMgMe": {
-          "type": "grid_banner",
-          "settings": {
-            "image": "shopify://shop_images/1_white_rain_shoecover.png",
-            "link": "",
-            "line": "",
-            "heading": "",
-            "text_position": "middle",
-            "overlay": 0
-          }
-        },
-        "grid_banner_XxQ8aP": {
-          "type": "grid_banner",
-          "settings": {
-            "image": "shopify://shop_images/3_white_rain_shoecover.png",
-            "link": "",
-            "line": "",
-            "heading": "",
-            "text_position": "middle",
-            "overlay": 0
-          }
         }
       },
       "block_order": [
-        "grid_banner_rEpWjT",
         "grid_banner_gloves",
         "grid_banner_bjifjK",
-        "grid_banner_overshoes",
-        "grid_banner_JWMgMe",
-        "grid_banner_XxQ8aP"
+        "grid_banner_rEpWjT",
+        "grid_banner_overshoes"
       ],
       "settings": {
         "navigation": "",
@@ -145,7 +121,7 @@
         "variant_first_only": false,
         "show_sold_out": true,
         "blur_sold_out": true,
-        "sold_out_blur": 14,
+        "sold_out_blur": 8,
         "soldout_early_count": 2,
         "soldout_early_within": 8,
         "grid_banner_first": 4,
