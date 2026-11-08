@@ -69,7 +69,10 @@
 }
 
 /* Avada volume widget: "Black Friday offer" label in black */
-.product-v2 .Avada-VolumeBoxBadge.avada-bf-badge { background: #000 !important; color: #fff !important; border-color: #000 !important; }
+.product-v2 .Avada-VolumeBoxBadge.avada-bf-badge,
+body.template--product .product-v2 .Avada-VolumeBoxBadge.avada-bf-badge { background: #000 !important; color: #fff !important; border-color: #000 !important; }
+/* same for the label on the metafield bundle tiles */
+.pdp-upsell__badge.pdp-upsell__badge--bf { background: #000; }
 
 /* header menu: the Black Friday link is a plain link, bold and underlined */
 .mega-menu-v2-bf-link span,
@@ -109,7 +112,15 @@
 .product-v2 .Avada-Volume__Header .avada-bf-timer .bf-countdown__label { color: rgba(255, 255, 255, 0.7); font-weight: 400; }
 
 /* product-card badge: black, white text, as typed; the card snippets render no other badge next to it */
-.badge.badge--bottom-left.badge--bf, .badge.badge--bf { background-color: #000 !important; color: #fff !important; text-transform: none !important; }
+.badge.badge--bottom-left.badge--bf, .badge.badge--bf,
+#MainContent .card-wrapper .card-badge .badge.badge--bf,
+#MainContent .card-wrapper .badge.badge--bf {
+  background: #000 !important;
+  background-color: #000 !important;
+  color: #fff !important;
+  text-transform: none !important;
+}
+#MainContent .card-wrapper .badge.badge--bf::first-letter { text-transform: none !important; }
 .card-badge .badge--bf ~ .badge,
 .card-badge .badge--bf ~ * { display: none !important; }
 .card-wrapper:has(.badge--bf) .card-bottom-badge { display: none !important; }

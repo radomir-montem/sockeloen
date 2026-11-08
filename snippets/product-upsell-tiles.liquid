@@ -180,9 +180,9 @@
       {%- for pct in upsell_pcts -%}
         <button type="button" class="pdp-upsell__tile{% if upsell_default_qty == forloop.index %} is-selected{% endif %}" role="radio" aria-checked="{% if upsell_default_qty == forloop.index %}true{% else %}false{% endif %}" data-qty="{{ forloop.index }}" data-pct="{{ pct }}">
           {%- if forloop.index == 1 -%}
-            <span class="pdp-upsell__badge">{{ tile_badge_popular }}</span>
+            <span class="pdp-upsell__badge{% if settings.bf_enabled %} pdp-upsell__badge--bf{% endif %}">{{ tile_badge_popular }}</span>
           {%- elsif forloop.last -%}
-            <span class="pdp-upsell__badge">{{ tile_badge_value }}</span>
+            <span class="pdp-upsell__badge{% if settings.bf_enabled %} pdp-upsell__badge--bf{% endif %}">{{ tile_badge_value }}</span>
           {%- endif -%}
           <span class="pdp-upsell__dot" aria-hidden="true"></span>
           <span class="pdp-upsell__img" aria-hidden="true">
