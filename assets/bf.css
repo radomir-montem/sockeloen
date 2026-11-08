@@ -127,6 +127,8 @@ body.template--product .product-v2 .pdp-upsell__badge.pdp-upsell__badge--bf { ba
 #MainContent .card-wrapper .badge.badge--bf::first-letter { text-transform: none !important; }
 /* deal label, top right, white: '+1 free', '-40%' (Black Friday collection page only) */
 .card-deal-badge { top: 20px; right: 18px; z-index: 3; pointer-events: none; }
+/* in the grids the left badge sits at 8px/8px (header-overrides): mirror that on the right */
+#MainContent .card-wrapper .card-deal-badge { top: 8px !important; right: 8px !important; }
 .badge.badge--bf-deal,
 #MainContent .card-wrapper .card-deal-badge .badge.badge--bf-deal {
   display: inline-block !important;
