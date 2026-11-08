@@ -1508,7 +1508,7 @@
         "id": "bf_title",
         "label": "Title",
         "default": "Black Friday Sale",
-        "info": "Used in the announcement bar and as the title of every bundle tile."
+        "info": "Announcement bar, and the title of the Avada bundle widget on product pages."
       },
       {
         "type": "text",
@@ -1522,6 +1522,20 @@
         "id": "bf_link",
         "label": "Announcement bar link",
         "info": "Empty = the Black Friday collection below."
+      },
+      {
+        "type": "text",
+        "id": "bf_pdp_title",
+        "label": "Title of the black tile above the bundle tiles",
+        "default": "Black Friday Deals",
+        "info": "Product page. The message above is shown under it, the countdown on the right."
+      },
+      {
+        "type": "text",
+        "id": "bf_offer_badge_text",
+        "label": "Label on the bundle tiles",
+        "default": "Black Friday offer",
+        "info": "Replaces 'Most popular' and 'Best value' while Black Friday mode is on."
       },
       {
         "type": "header",

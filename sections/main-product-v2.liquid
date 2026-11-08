@@ -7,6 +7,15 @@
   class="page-width section-{{ section.id }}-padding product-section"
   data-section="{{ section.id }}"
   data-uci-badge-text="{{ 'uci_sale.badge_text' | t | escape }}"
+  {%- if settings.bf_enabled -%}
+    {%- comment -%} Black Friday mode: product-v2.js retitles the Avada volume widget and gives it the countdown (see enhanceBlackFriday) {%- endcomment -%}
+    data-bf-title="{{ settings.bf_title | escape }}"
+    data-bf-label="{{ settings.bf_timer_label | escape }}"
+    data-bf-d1="{{ settings.bf_deadline_1 | escape }}"
+    data-bf-d2="{{ settings.bf_deadline_2 | escape }}"
+    data-bf-d3="{{ settings.bf_deadline_3 | escape }}"
+    data-bf-tz="{{ 'now' | date: '%z' }}"
+  {%- endif -%}
 >
   {{ 'section-main-product-v2.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
@@ -34,6 +43,10 @@
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-v2.js' | asset_url }}" defer="defer"></script>
+  {%- if settings.bf_enabled -%}
+    {{ 'bf.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'bf-countdown.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
 
   {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
   {%- if first_3d_model -%}
