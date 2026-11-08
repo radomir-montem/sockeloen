@@ -11,17 +11,34 @@
 .bf-countdown[hidden] { display: none; }
 .bf-countdown__time { font-weight: 600; letter-spacing: 0.02em; }
 
-/* announcement bar: one line, centred, wraps on narrow phones */
-.announcement-bar--bf { background-color: #000 !important; }
+/* announcement bar: solid black (overrides the theme's dark-glass bar), one line */
+#shopify-section-announcement-bar #announcement-bar .announcement-bar--bf,
+#shopify-section-announcement-bar #announcement-bar .announcement-bar--bf.gradient {
+  background: #000 !important;
+  background-color: #000 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+#shopify-section-announcement-bar #announcement-bar .announcement-bar--bf::before { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 .announcement-bar--bf .bf-bar {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: baseline;
   gap: 0 0.6em;
   margin: 0;
   color: #fff;
   line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+}
+.bf-bar__mobile { display: none; }
+@media (max-width: 749px) {
+  .bf-bar__desktop { display: none; }
+  .bf-bar__mobile { display: inline; }
+  .announcement-bar--bf .bf-bar { font-size: clamp(10px, 3.1vw, 12px); gap: 0 0.5em; }
+  .announcement-bar--bf .bf-bar .bf-countdown__label { display: none; }
 }
 .announcement-bar--bf .bf-bar__title { font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
 .announcement-bar--bf .bf-bar__sep { opacity: 0.5; }
@@ -51,6 +68,24 @@
   .pdp-upsell__bf-timer .bf-countdown__label { display: none; }
 }
 
+/* Avada volume widget: "Black Friday offer" label in black */
+.product-v2 .Avada-VolumeBoxBadge.avada-bf-badge,
+body.template--product .product-v2 .Avada-VolumeBoxBadge.avada-bf-badge { background: #000 !important; color: #fff !important; border-color: #000 !important; }
+/* same for the label on the metafield bundle tiles */
+.pdp-upsell__badge.pdp-upsell__badge--bf { background: #000; }
+
+/* header menu: the Black Friday link is a plain link, bold and underlined */
+.mega-menu-v2-bf-link span,
+.header__menu-item.mega-menu-v2-bf-link { font-weight: 700 !important; text-decoration: underline !important; text-underline-offset: 3px; }
+.mobile-menu__top-link {
+  display: block;
+  padding: 14px 24px;
+  color: #111;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.mobile-menu__top-link--bf { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
 /* Avada volume widget header: solid black in Black Friday mode, countdown on the right */
 .product-section[data-bf-title] .Avada-Volume__Header {
   position: relative;
@@ -76,8 +111,16 @@
 }
 .product-v2 .Avada-Volume__Header .avada-bf-timer .bf-countdown__label { color: rgba(255, 255, 255, 0.7); font-weight: 400; }
 
-/* product-card badge: black, white text, and the only badge on that card */
-.badge.badge--bottom-left.badge--bf, .badge.badge--bf { background-color: #000 !important; color: #fff !important; }
+/* product-card badge: black, white text, as typed; the card snippets render no other badge next to it */
+.badge.badge--bottom-left.badge--bf, .badge.badge--bf,
+#MainContent .card-wrapper .card-badge .badge.badge--bf,
+#MainContent .card-wrapper .badge.badge--bf {
+  background: #000 !important;
+  background-color: #000 !important;
+  color: #fff !important;
+  text-transform: none !important;
+}
+#MainContent .card-wrapper .badge.badge--bf::first-letter { text-transform: none !important; }
 .card-badge .badge--bf ~ .badge,
 .card-badge .badge--bf ~ * { display: none !important; }
 .card-wrapper:has(.badge--bf) .card-bottom-badge { display: none !important; }

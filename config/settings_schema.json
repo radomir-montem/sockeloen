@@ -1514,8 +1514,21 @@
         "type": "text",
         "id": "bf_message",
         "label": "Message",
-        "default": "Up to 60% off or +1 free deals",
-        "info": "Announcement bar, after the title."
+        "default": "Up to 60% off · +1 free deals",
+        "info": "Announcement bar (desktop) and the black tile on product pages."
+      },
+      {
+        "type": "text",
+        "id": "bf_title_mobile",
+        "label": "Title on phones",
+        "default": "Black Friday",
+        "info": "The announcement bar is one line on phones: this short title, the short message and the timer."
+      },
+      {
+        "type": "text",
+        "id": "bf_message_mobile",
+        "label": "Message on phones",
+        "default": "Up to 60% off"
       },
       {
         "type": "url",

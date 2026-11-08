@@ -354,6 +354,12 @@ if (!customElements.get('sticky-atc-v2')) {
          language instead of hardcoded English. */
       var section = badge.closest('[data-uci-badge-text]');
       badge.textContent = (section && section.dataset.uciBadgeText) || 'Most popular';
+      /* Black Friday mode: the label reads "Black Friday offer" in black */
+      var bf = bfSection();
+      if (bf && (bf.dataset.bfOffer || '').trim()) {
+        badge.textContent = bf.dataset.bfOffer.trim();
+        badge.classList.add('avada-bf-badge');
+      }
     });
 
     /* The AOV app's own header title is configured inside the Avada app
