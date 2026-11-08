@@ -1599,6 +1599,56 @@
     ]
   },
   {
+    "name": "Stock signals",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Product page: 'Almost gone' / 'Selling fast'",
+        "info": "Shown for the chosen size and colour. Stock is live; the sales pace comes from the daily stock-signals job (variant metafield custom.sales_pace). A set 'Re-stock date' on the product drops 'Selling fast' and the sell-out wording."
+      },
+      {
+        "type": "range",
+        "id": "stock_low_units",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "label": "'Almost gone, only N left' at this many pieces or fewer",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "stock_almost_days",
+        "min": 0,
+        "max": 14,
+        "step": 1,
+        "unit": "d",
+        "label": "'Almost gone' when the stock runs out within",
+        "default": 5,
+        "info": "Days of stock at the recent pace (last 7 days; last 30 when fewer than 3 sold this week). 0 = off."
+      },
+      {
+        "type": "range",
+        "id": "stock_fast_days",
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "unit": "d",
+        "label": "'Selling fast' when the stock runs out within",
+        "default": 21,
+        "info": "0 = off."
+      },
+      {
+        "type": "range",
+        "id": "stock_fast_min_week",
+        "min": 1,
+        "max": 50,
+        "step": 1,
+        "label": "... and at least this many sold in the last 7 days",
+        "default": 7
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.badges.name",
     "settings": [
       {
