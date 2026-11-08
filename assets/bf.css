@@ -125,6 +125,20 @@ body.template--product .product-v2 .pdp-upsell__badge.pdp-upsell__badge--bf { ba
   text-transform: none !important;
 }
 #MainContent .card-wrapper .badge.badge--bf::first-letter { text-transform: none !important; }
+/* six (or five) cards across on desktop: cards are small, so the badge shrinks with them */
+@media screen and (min-width: 990px) {
+  .product-grid--6 .badge.badge--bf,
+  .bot-cols-6 .badge.badge--bf,
+  .bot-cols-5 .badge.badge--bf,
+  #MainContent .product-grid--6 .card-wrapper .badge.badge--bf,
+  #MainContent .bot-cols-6 .card-wrapper .badge.badge--bf,
+  #MainContent .bot-cols-5 .card-wrapper .badge.badge--bf {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+    padding: 3px 5px !important;
+    letter-spacing: 0.3px !important;
+  }
+}
 .card-badge .badge--bf ~ .badge,
 .card-badge .badge--bf ~ * { display: none !important; }
 .card-wrapper:has(.badge--bf) .card-bottom-badge { display: none !important; }
