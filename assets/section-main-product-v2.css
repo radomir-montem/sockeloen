@@ -2054,11 +2054,16 @@ sticky-atc-v2.hidden {
   margin-bottom: 10px;
 }
 
+/* tier 2 "Selling fast": the same line in neutral grey (the orange stays for "Almost gone") */
+.product-v2__low-stock--fast { background: #f4f4f4; border-color: #e3e3e3; }
+.product-v2__low-stock--fast svg circle, .product-v2__low-stock--fast svg path { stroke: #1a1a1a; }
+.product-v2__low-stock--fast svg circle[fill] { fill: #1a1a1a; }
 .product-v2__low-stock span {
   font-size: 14px;
   font-weight: 500;
   color: #c2410c;
 }
+.product-v2__low-stock--fast span { color: #1a1a1a; }
 
 /* Shipping & secure checkout rows — shared icon + text style */
 .product-v2__trust-row {

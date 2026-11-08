@@ -1396,10 +1396,22 @@
                           value="{{ product.selected_or_first_available_variant.id }}"
                           disabled
                         >
-                        {%- comment -%} Low stock warning — shows when inventory <= threshold {%- endcomment -%}
+                        {%- comment -%}
+                          Stock signal for the chosen size/colour (theme settings > Stock signals).
+                          Tier 1 "Almost gone": stock <= low_units (with the count), or the stock
+                          runs out within almost_days at the recent pace (no count).
+                          Tier 2 "Selling fast, N sold this week": runs out within fast_days and at
+                          least fast_min_week sold in the last 7 days.
+                          Pace = variant metafield custom.sales_pace (written daily by
+                          scripts/stock-signals), stock = live inventory. A set re-stock date drops
+                          tier 2 and the sell-out claim.
+                        {%- endcomment -%}
                         <div class="product-v2__low-stock" style="display:none;" id="low-stock-{{ section.id }}"
                           data-low-stock-singular="{{ 'products.v2.low_stock_singular' | t | escape }}"
-                          data-low-stock-plural="{{ 'products.v2.low_stock_plural' | t: qty: '[qty]' | escape }}">
+                          data-low-stock-plural="{{ 'products.v2.low_stock_plural' | t: qty: '[qty]' | escape }}"
+                          data-almost-gone="{{ 'products.v2.stock_almost_gone' | t | escape }}"
+                          data-almost-gone-plain="{{ 'products.v2.stock_almost_gone_plain' | t | escape }}"
+                          data-selling-fast="{{ 'products.v2.stock_selling_fast' | t: qty: '[qty]' | escape }}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <circle cx="8" cy="8" r="7" stroke="#F76503" stroke-width="1.5"/>
                             <path d="M8 4.5V9" stroke="#F76503" stroke-width="1.5" stroke-linecap="round"/>
@@ -1409,12 +1421,55 @@
                         </div>
                         <script>
                           (function() {
+                            {%- liquid
+                              assign ss_low_units = settings.stock_low_units | default: 10
+                              assign ss_almost_days = settings.stock_almost_days | default: 5
+                              assign ss_fast_days = settings.stock_fast_days | default: 21
+                              assign ss_fast_min = settings.stock_fast_min_week | default: 7
+                              assign ss_restock = false
+                              if product.metafields.custom.re_stock_date != blank
+                                assign ss_restock = true
+                              endif
+                            -%}
+                            /* per variant: { tier: 'almost' | 'fast', n: count or null } */
                             var stockData = {};
                             {%- for variant in product.variants -%}
-                              {%- if variant.inventory_management == 'shopify' and variant.inventory_quantity > 0 and variant.inventory_quantity <= 10 -%}
-                                stockData['{{ variant.id }}'] = {{ variant.inventory_quantity }};
+                              {%- liquid
+                                assign ss_tier = ''
+                                assign ss_n = 'null'
+                                if variant.inventory_management == 'shopify' and variant.inventory_quantity > 0
+                                  if variant.inventory_quantity <= ss_low_units
+                                    assign ss_tier = 'almost'
+                                    assign ss_n = variant.inventory_quantity
+                                  else
+                                    assign ss_pace = variant.metafields.custom.sales_pace | default: ''
+                                    if ss_pace != blank
+                                      assign ss_sold7 = ss_pace | split: 'sold7:' | last | split: ';' | first | plus: 0
+                                      assign ss_sold30 = ss_pace | split: 'sold30:' | last | split: ';' | first | plus: 0
+                                      assign ss_rate = 0.0
+                                      if ss_sold7 >= 3
+                                        assign ss_rate = ss_sold7 | times: 1.0 | divided_by: 7.0
+                                      elsif ss_sold30 > 0
+                                        assign ss_rate = ss_sold30 | times: 1.0 | divided_by: 30.0
+                                      endif
+                                      if ss_rate > 0
+                                        assign ss_days = variant.inventory_quantity | times: 1.0 | divided_by: ss_rate
+                                        if ss_days <= ss_almost_days
+                                          assign ss_tier = 'almost'
+                                        elsif ss_days <= ss_fast_days and ss_sold7 >= ss_fast_min and ss_restock == false
+                                          assign ss_tier = 'fast'
+                                          assign ss_n = ss_sold7
+                                        endif
+                                      endif
+                                    endif
+                                  endif
+                                endif
+                              -%}
+                              {%- if ss_tier != '' -%}
+                                stockData['{{ variant.id }}'] = { tier: '{{ ss_tier }}', n: {{ ss_n }} };
                               {%- endif -%}
                             {%- endfor -%}
+                            var restock = {{ ss_restock }};
                             var el = document.getElementById('low-stock-{{ section.id }}');
                             var txt = document.getElementById('low-stock-text-{{ section.id }}');
                             function updateStock() {
@@ -1425,9 +1480,18 @@
                               var match = variants.find(function(v) {
                                 return v.options.every(function(o, i) { return o === opts[i]; });
                               });
-                              if (match && stockData[match.id]) {
-                                var qty = stockData[match.id];
-                                txt.textContent = qty === 1 ? el.getAttribute('data-low-stock-singular') : el.getAttribute('data-low-stock-plural').replace('[qty]', qty);
+                              var s = match && stockData[match.id];
+                              if (s) {
+                                var t;
+                                if (s.tier === 'almost' && s.n !== null) {
+                                  t = s.n === 1 ? el.getAttribute('data-low-stock-singular') : el.getAttribute('data-low-stock-plural').replace('[qty]', s.n);
+                                } else if (s.tier === 'almost') {
+                                  t = el.getAttribute(restock ? 'data-almost-gone-plain' : 'data-almost-gone');
+                                } else {
+                                  t = el.getAttribute('data-selling-fast').replace('[qty]', s.n);
+                                }
+                                txt.textContent = t;
+                                el.classList.toggle('product-v2__low-stock--fast', s.tier === 'fast');
                                 el.style.display = 'flex';
                               } else {
                                 el.style.display = 'none';
