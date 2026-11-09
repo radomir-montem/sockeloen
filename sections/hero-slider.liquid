@@ -466,6 +466,12 @@
         {%- assign url_key = 'cat_' | append: i | append: '_link' -%}
         {%- assign lbl = s[lbl_key] -%}
         {%- assign url = s[url_key] -%}
+        {%- comment -%} Black Friday mode (theme settings): the first pill becomes the Black Friday collection {%- endcomment -%}
+        {%- if i == 1 and settings.bf_enabled and s.bf_first_cat -%}
+          {%- assign lbl = settings.bf_title_mobile | default: settings.bf_title | default: 'Black Friday' -%}
+          {%- assign bf_cat_handle = settings.bf_collection_handle | default: 'black-friday-sale' -%}
+          {%- assign url = collections[bf_cat_handle].url | default: '/collections/black-friday-sale' -%}
+        {%- endif -%}
         {%- if lbl != blank -%}
           <a class="banner-cats__item" href="{{ url | default: '#' }}">{{ lbl | escape }}</a>
         {%- endif -%}
@@ -805,6 +811,7 @@
     { "type": "select", "id": "mobile_content_alignment", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left", "label": "Content alignment (mobile)" },
     { "type": "header", "content": "Mobile category bar", "info": "Three text links shown under the header on mobile only." },
     { "type": "checkbox", "id": "show_mobile_cats", "label": "Show mobile category bar", "default": true },
+    { "type": "checkbox", "id": "bf_first_cat", "label": "Black Friday mode: first pill becomes the Black Friday collection", "default": true, "info": "Only while Black Friday mode (theme settings) is on. Off = category 1 below stays as it is." },
     { "type": "text", "id": "cat_1_label", "label": "Category 1 label", "default": "Socks" },
     { "type": "url", "id": "cat_1_link", "label": "Category 1 link" },
     { "type": "text", "id": "cat_2_label", "label": "Category 2 label", "default": "Overshoes" },

@@ -80,7 +80,7 @@
       assign size_index = nil
       for opt in product.options_with_values
         assign opt_name = opt.name | downcase
-        if opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe'
+        if opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe' or opt_name contains 'grootte' or opt_name contains 'taille'
           assign size_index = forloop.index0
         endif
       endfor
@@ -1256,7 +1256,7 @@
                         ];
                         var optionNames = {{ product.options | json }};
                         var sizeIdx = -1;
-                        optionNames.forEach(function (n, i) { if (/size|maat|größe/i.test(n)) sizeIdx = i; });
+                        optionNames.forEach(function (n, i) { if (/size|maat|größe|groesse|grootte|taille/i.test(n)) sizeIdx = i; });
                         if (sizeIdx < 0) return;
                         function run() {
                           var picker = document.querySelector('#MainProduct-{{ section.id }} variant-radios');

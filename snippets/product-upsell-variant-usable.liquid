@@ -15,7 +15,7 @@
         assign same = true
         for opt in p.options_with_values
           assign opt_name = opt.name | downcase
-          unless opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe'
+          unless opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe' or opt_name contains 'grootte' or opt_name contains 'taille'
             assign oi = forloop.index0
             if pv.options[oi] != variant.options[oi]
               assign same = false
