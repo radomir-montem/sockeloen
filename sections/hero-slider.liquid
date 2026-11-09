@@ -468,12 +468,13 @@
         {%- assign url = s[url_key] -%}
         {%- comment -%} Black Friday mode (theme settings): the first pill becomes the Black Friday collection {%- endcomment -%}
         {%- if i == 1 and settings.bf_enabled and s.bf_first_cat -%}
-          {%- assign lbl = settings.bf_title_mobile | default: settings.bf_title | default: 'Black Friday' -%}
+          {%- capture lbl -%}{%- render 'bf-text', key: 'title_mobile' -%}{%- endcapture -%}
+          {%- assign lbl = lbl | default: 'Black Friday' -%}
           {%- assign bf_cat_handle = settings.bf_collection_handle | default: 'black-friday-sale' -%}
           {%- assign url = collections[bf_cat_handle].url | default: '/collections/black-friday-sale' -%}
         {%- endif -%}
         {%- if lbl != blank -%}
-          <a class="banner-cats__item" href="{{ url | default: '#' }}">{{ lbl | escape }}</a>
+          <a class="banner-cats__item" href="{{ url | default: '#' }}">{{ lbl | escape_once }}</a>
         {%- endif -%}
       {%- endfor -%}
     </nav>

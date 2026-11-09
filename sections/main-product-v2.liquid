@@ -9,9 +9,12 @@
   data-uci-badge-text="{{ 'uci_sale.badge_text' | t | escape }}"
   {%- if settings.bf_enabled -%}
     {%- comment -%} Black Friday mode: product-v2.js retitles the Avada volume widget and gives it the countdown (see enhanceBlackFriday) {%- endcomment -%}
-    data-bf-title="{{ settings.bf_title | escape }}"
-    data-bf-label="{{ settings.bf_timer_label | escape }}"
-    data-bf-offer="{{ settings.bf_offer_badge_text | escape }}"
+    {%- capture bf_dt -%}{%- render 'bf-text', key: 'title' -%}{%- endcapture -%}
+    {%- capture bf_dl -%}{%- render 'bf-text', key: 'timer_label' -%}{%- endcapture -%}
+    {%- capture bf_do -%}{%- render 'bf-text', key: 'offer_badge' -%}{%- endcapture -%}
+    data-bf-title="{{ bf_dt | escape_once }}"
+    data-bf-label="{{ bf_dl | escape_once }}"
+    data-bf-offer="{{ bf_do | escape_once }}"
     data-bf-d1="{{ settings.bf_deadline_1 | escape }}"
     data-bf-d2="{{ settings.bf_deadline_2 | escape }}"
     data-bf-d3="{{ settings.bf_deadline_3 | escape }}"

@@ -1,0 +1,50 @@
+{%- comment -%}
+  Black Friday texts per storefront language. The theme settings (Theme settings >
+  Black Friday) hold the English texts; the other languages come from the locale
+  files (products.v2.bf_*), so the Dutch, German and French storefronts never show
+  English. Parameter: key = title | title_mobile | message | message_mobile |
+  timer_label | pdp_title | offer_badge
+{%- endcomment -%}
+{%- liquid
+  assign v = ''
+  if request.locale.iso_code != 'en'
+    case key
+      when 'title'
+        assign v = 'products.v2.bf_title' | t
+      when 'title_mobile'
+        assign v = 'products.v2.bf_title_mobile' | t
+      when 'message'
+        assign v = 'products.v2.bf_message' | t
+      when 'message_mobile'
+        assign v = 'products.v2.bf_message_mobile' | t
+      when 'timer_label'
+        assign v = 'products.v2.bf_timer_label' | t
+      when 'pdp_title'
+        assign v = 'products.v2.bf_pdp_title' | t
+      when 'offer_badge'
+        assign v = 'products.v2.bf_offer_badge' | t
+    endcase
+    if v contains 'translation missing'
+      assign v = ''
+    endif
+  endif
+  if v == blank
+    case key
+      when 'title'
+        assign v = settings.bf_title
+      when 'title_mobile'
+        assign v = settings.bf_title_mobile | default: settings.bf_title
+      when 'message'
+        assign v = settings.bf_message
+      when 'message_mobile'
+        assign v = settings.bf_message_mobile | default: settings.bf_message
+      when 'timer_label'
+        assign v = settings.bf_timer_label
+      when 'pdp_title'
+        assign v = settings.bf_pdp_title | default: settings.bf_title
+      when 'offer_badge'
+        assign v = settings.bf_offer_badge_text
+    endcase
+  endif
+  echo v | strip
+-%}
