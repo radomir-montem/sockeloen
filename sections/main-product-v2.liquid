@@ -12,9 +12,9 @@
     {%- capture bf_dt -%}{%- render 'bf-text', key: 'title' -%}{%- endcapture -%}
     {%- capture bf_dl -%}{%- render 'bf-text', key: 'timer_label' -%}{%- endcapture -%}
     {%- capture bf_do -%}{%- render 'bf-text', key: 'offer_badge' -%}{%- endcapture -%}
-    data-bf-title="{{ bf_dt | escape }}"
-    data-bf-label="{{ bf_dl | escape }}"
-    data-bf-offer="{{ bf_do | escape }}"
+    data-bf-title="{{ bf_dt | escape_once }}"
+    data-bf-label="{{ bf_dl | escape_once }}"
+    data-bf-offer="{{ bf_do | escape_once }}"
     data-bf-d1="{{ settings.bf_deadline_1 | escape }}"
     data-bf-d2="{{ settings.bf_deadline_2 | escape }}"
     data-bf-d3="{{ settings.bf_deadline_3 | escape }}"

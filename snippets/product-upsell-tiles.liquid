@@ -181,14 +181,14 @@
 {%- if upsell != blank and choices_json != '' and upsell_pcts.size > 0 -%}
   {{ 'pdp-upsell.css' | asset_url | stylesheet_tag }}
   {%- if settings.bf_enabled -%}{{ 'bf.css' | asset_url | stylesheet_tag }}{%- endif -%}
-  <div class="pdp-upsell" data-pdp-upsell data-host-gid="gid://shopify/Product/{{ product.id }}" data-form="{{ product_form_id }}" data-label="{{ upsell_label | escape }}" data-url="{{ upsell.url }}" data-money="{{ cart.currency.symbol | default: '€' }}" data-host-size="{{ host_size | escape }}" data-host-options='{{ product.options | json }}' data-ship-threshold="{{ ship_threshold }}" data-piece-labels='{{ choice_labels | json }}' data-default-size="{{ settings.upsell_default_size | escape }}" data-size-label="{{ 'products.v2.upsell_size_label' | t: label: '__LABEL__' | escape }}" data-most-chosen="{{ 'products.v2.upsell_most_chosen' | t | escape }}" data-size-guide="{{ 'products.v2.size_guide_link' | t | escape }}" data-guide-ids='{{ guide_ids | json }}'>
+  <div class="pdp-upsell" data-pdp-upsell data-host-gid="gid://shopify/Product/{{ product.id }}" data-form="{{ product_form_id }}" data-label="{{ upsell_label | escape }}" data-url="{{ upsell.url }}" data-money="{{ cart.currency.symbol | default: '€' }}" data-host-size="{{ host_size | escape }}" data-host-options='{{ product.options | json }}' data-ship-threshold="{{ ship_threshold }}" data-piece-labels="{{ choice_labels | json | escape }}" data-default-size="{{ settings.upsell_default_size | escape }}" data-size-label="{{ 'products.v2.upsell_size_label' | t: label: '__LABEL__' | escape }}" data-most-chosen="{{ 'products.v2.upsell_most_chosen' | t | escape }}" data-size-guide="{{ 'products.v2.size_guide_link' | t | escape }}" data-guide-ids="{{ guide_ids | json | escape }}">
     {%- if settings.bf_enabled -%}
       <div class="pdp-upsell__bf">
         <span class="pdp-upsell__bf-text">
           {%- capture bf_pdp_title -%}{%- render 'bf-text', key: 'pdp_title' -%}{%- endcapture -%}
           {%- capture bf_pdp_message -%}{%- render 'bf-text', key: 'message' -%}{%- endcapture -%}
-          <span class="pdp-upsell__bf-title">{{ bf_pdp_title | escape }}</span>
-          {%- if bf_pdp_message != blank -%}<span class="pdp-upsell__bf-sub">{{ bf_pdp_message | escape }}</span>{%- endif -%}
+          <span class="pdp-upsell__bf-title">{{ bf_pdp_title | escape_once }}</span>
+          {%- if bf_pdp_message != blank -%}<span class="pdp-upsell__bf-sub">{{ bf_pdp_message | escape_once }}</span>{%- endif -%}
         </span>
         {%- render 'bf-countdown', class: 'pdp-upsell__bf-timer' -%}
       </div>
