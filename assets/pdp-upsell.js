@@ -209,6 +209,22 @@
     var mostChosenText = root.getAttribute('data-most-chosen') || '';
     var sizeGuideText = root.getAttribute('data-size-guide') || '';
     var defaultSize = (root.getAttribute('data-default-size') || '').trim();
+    var guideIds = [];
+    try { guideIds = JSON.parse(root.getAttribute('data-guide-ids') || '[]'); } catch (e) {}
+    /* open an add-on's size guide: moved to <body> (a tile's backdrop-filter would otherwise pin the
+       fixed overlay to the tile), closed by its X, a click on the backdrop or Escape */
+    function openGuide(id) {
+      var overlay = document.getElementById(id);
+      if (!overlay) return;
+      if (overlay.parentElement !== document.body) document.body.appendChild(overlay);
+      overlay.style.display = 'flex';
+      document.body.classList.add('noscroll');
+      if (!overlay.dataset.upsellWired) {
+        overlay.dataset.upsellWired = '1';
+        overlay.addEventListener('click', function (e) { if (e.target === overlay) { overlay.style.display = 'none'; document.body.classList.remove('noscroll'); } });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.style.display !== 'none') { overlay.style.display = 'none'; document.body.classList.remove('noscroll'); } });
+      }
+    }
     function pieceLabel(i) {
       var labels = [];
       try { labels = JSON.parse(root.getAttribute('data-piece-labels') || '[]'); } catch (e) {}
@@ -247,16 +263,20 @@
           lab.className = 'pdp-upsell__sizes-label';
           lab.textContent = sizeLabelTpl.replace('__LABEL__', pieceLabel(i));
           head.appendChild(lab);
-          if (sizeGuideText && document.querySelector('.size-guide-link')) {
+          /* the add-on's own size guide (rendered by the tiles snippet per sized add-on, data-guide-ids) */
+          var guideId = guideIds[pick.choice] || '';
+          if (sizeGuideText && guideId && document.getElementById(guideId)) {
             var guide = document.createElement('a');
             guide.href = '#';
             guide.className = 'pdp-upsell__sizes-guide';
             guide.textContent = sizeGuideText;
-            guide.addEventListener('click', function (e) {
-              e.preventDefault();
-              var link = document.querySelector('.size-guide-link');
-              if (link) link.click();
-            });
+            (function (id) {
+              guide.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openGuide(id);
+              });
+            })(guideId);
             head.appendChild(guide);
           }
           row.appendChild(head);
