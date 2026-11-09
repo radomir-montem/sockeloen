@@ -227,6 +227,8 @@
       "upsell_you_save": "Je bespaart {{ amount }}",
       "upsell_badge_popular": "Meest gekozen",
       "upsell_badge_value": "Beste deal",
+      "upsell_size_label": "Maat {{ label }}",
+      "upsell_most_chosen": "Meest gekozen",
       "size_guide_socks_intro": "Vind je sokmaat op basis van je EU-schoenmaat. Onze sokken vallen strak, zodat ze niet opkruipen, knellen of blaren geven.",
       "size_guide_gloves_intro": "Meet de lengte van je wijsvinger, van de aanzet tot de vingertop, om je handschoenmaat te vinden.",
       "size_guide_baselayer_intro": "Alle maten in centimeters (cm).",

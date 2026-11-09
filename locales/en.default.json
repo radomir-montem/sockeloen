@@ -228,6 +228,8 @@
       "upsell_you_save": "You save {{ amount }}",
       "upsell_badge_popular": "Most popular",
       "upsell_badge_value": "Best value",
+      "upsell_size_label": "{{ label }} size",
+      "upsell_most_chosen": "Most chosen",
       "size_guide_socks_intro": "Find your sock size based on your EU shoe size. Our socks are cut snug so they do not bunch, pinch or cause blisters.",
       "size_guide_gloves_intro": "Measure the length of your index finger, from the base to the fingertip, to find your glove size.",
       "size_guide_baselayer_intro": "All measurements in centimetres (cm).",

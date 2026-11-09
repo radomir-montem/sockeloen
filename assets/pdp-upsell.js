@@ -201,9 +201,103 @@
       });
     }
 
-    /* No pickers: piece n is choice n (the shop owner lists one-size products);
-       a sized product silently gets the size closest to the main product's. */
-    function renderPickers() {}
+    /* Size pills for a sized add-on (e.g. gloves): shown under the selected tile, one row per piece
+       that has sizes. Preselected: the main product's own size when the labels match (glove host ->
+       glove add-on), else the size that overlaps the main product's size most, else the shop's default
+       size (data-default-size, marked "Most chosen"). One tap changes it; prices follow. */
+    var sizeLabelTpl = root.getAttribute('data-size-label') || '__LABEL__ size';
+    var mostChosenText = root.getAttribute('data-most-chosen') || '';
+    var sizeGuideText = root.getAttribute('data-size-guide') || '';
+    var defaultSize = (root.getAttribute('data-default-size') || '').trim();
+    function pieceLabel(i) {
+      var labels = [];
+      try { labels = JSON.parse(root.getAttribute('data-piece-labels') || '[]'); } catch (e) {}
+      var c = choices[Math.min(i, choices.length - 1)];
+      return labels[i] || (c && c.label) || '';
+    }
+    function removePickers() {
+      root.querySelectorAll('.pdp-upsell__sizes').forEach(function (el) { el.parentNode.removeChild(el); });
+    }
+    function renderPickers() {
+      removePickers();
+      if (!state.qty) return;
+      var tile = tiles.find(function (t) { return parseInt(t.getAttribute('data-qty'), 10) === state.qty; });
+      if (!tile) return;
+      var rows = [];
+      for (var i = 0; i < state.qty; i++) {
+        var pick = state.picks[i] || defaultPick(i);
+        var c = choices[pick.choice] || choices[0];
+        if (!c.sizeOptions.length) continue;
+        c.sizeOptions.forEach(function (o) {
+          var idx = c.options.indexOf(o);
+          var hostLabel = currentHostSize();
+          var hostMatch = hostLabel && c.variants.some(function (v) { return v.available && v.options[idx] === hostLabel; });
+          var current = pick.sizes[o.name];
+          /* no host match: the shop's default size wins over the overlap guess when it is in stock */
+          if (!hostMatch && defaultSize && !state.picks[i]) {
+            var def = o.values.find(function (val) { return val.toLowerCase() === defaultSize.toLowerCase() && c.variants.some(function (v) { return v.available && v.options[idx] === val; }); });
+            if (def) { current = def; pick.sizes[o.name] = def; state.picks[i] = pick; }
+          }
+          var row = document.createElement('div');
+          row.className = 'pdp-upsell__sizes';
+          row.setAttribute('role', 'radiogroup');
+          var head = document.createElement('div');
+          head.className = 'pdp-upsell__sizes-head';
+          var lab = document.createElement('span');
+          lab.className = 'pdp-upsell__sizes-label';
+          lab.textContent = sizeLabelTpl.replace('__LABEL__', pieceLabel(i));
+          head.appendChild(lab);
+          if (sizeGuideText && document.querySelector('.size-guide-link')) {
+            var guide = document.createElement('a');
+            guide.href = '#';
+            guide.className = 'pdp-upsell__sizes-guide';
+            guide.textContent = sizeGuideText;
+            guide.addEventListener('click', function (e) {
+              e.preventDefault();
+              var link = document.querySelector('.size-guide-link');
+              if (link) link.click();
+            });
+            head.appendChild(guide);
+          }
+          row.appendChild(head);
+          var list = document.createElement('div');
+          list.className = 'pdp-upsell__pills';
+          o.values.forEach(function (val) {
+            var inStock = c.variants.some(function (v) { return v.available && v.options[idx] === val; });
+            var pill = document.createElement('button');
+            pill.type = 'button';
+            pill.className = 'pdp-upsell__pill' + (val === current ? ' is-selected' : '') + (inStock ? '' : ' is-soldout');
+            pill.setAttribute('role', 'radio');
+            pill.setAttribute('aria-checked', val === current ? 'true' : 'false');
+            pill.disabled = !inStock;
+            pill.textContent = val;
+            if (mostChosenText && !hostMatch && defaultSize && val.toLowerCase() === defaultSize.toLowerCase() && inStock) {
+              var tag = document.createElement('span');
+              tag.className = 'pdp-upsell__pill-tag';
+              tag.textContent = mostChosenText;
+              pill.appendChild(tag);
+            }
+            (function (value, pieceIndex, optionName, choiceIndex) {
+              pill.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var p = state.picks[pieceIndex] || defaultPick(pieceIndex);
+                p.choice = choiceIndex;
+                p.sizes[optionName] = value;
+                state.picks[pieceIndex] = p;
+                renderPickers();
+                renderPrices();
+              });
+            })(val, i, o.name, pick.choice);
+            list.appendChild(pill);
+          });
+          row.appendChild(list);
+          rows.push(row);
+        });
+      }
+      /* the rows sit right under the selected tile */
+      var anchor = tile;
+      rows.forEach(function (r) { anchor.parentNode.insertBefore(r, anchor.nextSibling); anchor = r; });
+    }
 
     tiles.forEach(function (tile) {
       tile.addEventListener('click', function () {
