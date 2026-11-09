@@ -45,6 +45,8 @@
   assign choices_json = ''
   assign choice_imgs = ''
   assign choice_labels = ''
+  assign upsell_guides = ''
+  assign guide_ids = ''
   if upsell_choices != blank
     for v in upsell_choices
       comment
@@ -87,6 +89,28 @@
       assign choices_json = choices_json | append: one
       assign img = piece.image | default: piece.product.featured_image
       assign choice_imgs = choice_imgs | append: img | image_url: width: 96 | append: '|'
+      comment
+        a sized add-on (gloves, overshoes) gets its own size guide pop-up, keyed by the choice index
+      endcomment
+      assign piece_sized = false
+      for popt in piece.product.options_with_values
+        assign popt_name = popt.name | downcase
+        if popt_name contains 'size' or popt_name contains 'maat' or popt_name contains 'größe'
+          if popt.values.size > 1
+            assign piece_sized = true
+          endif
+        endif
+      endfor
+      if piece_sized
+        assign guide_id = 'size-guide-overlay-upsell-' | append: forloop.index
+        capture guide_modal
+          render 'size-guide-modal', product: piece.product, overlay_id: guide_id
+        endcapture
+        assign upsell_guides = upsell_guides | append: guide_modal
+        assign guide_ids = guide_ids | append: guide_id | append: '|'
+      else
+        assign guide_ids = guide_ids | append: '|'
+      endif
       assign custom_label = upsell_label_list[forloop.index0]
       if piece.product.id != v.product.id
         comment
@@ -103,6 +127,7 @@
   endif
   assign choice_imgs = choice_imgs | split: '|'
   assign choice_labels = choice_labels | split: '|'
+  assign guide_ids = guide_ids | split: '|'
   assign upsell_pcts = product.metafields.custom.upsell_discount_percentages.value
   assign upsell_label = product.metafields.custom.upsell_label | default: upsell.title
   assign upsell_default_qty = product.metafields.custom.upsell_default_qty.value | default: upsell_pcts.size
@@ -151,7 +176,7 @@
 {%- if upsell != blank and choices_json != '' and upsell_pcts.size > 0 -%}
   {{ 'pdp-upsell.css' | asset_url | stylesheet_tag }}
   {%- if settings.bf_enabled -%}{{ 'bf.css' | asset_url | stylesheet_tag }}{%- endif -%}
-  <div class="pdp-upsell" data-pdp-upsell data-host-gid="gid://shopify/Product/{{ product.id }}" data-form="{{ product_form_id }}" data-label="{{ upsell_label | escape }}" data-url="{{ upsell.url }}" data-money="{{ cart.currency.symbol | default: '€' }}" data-host-size="{{ host_size | escape }}" data-host-options='{{ product.options | json }}' data-ship-threshold="{{ ship_threshold }}" data-piece-labels='{{ choice_labels | json }}' data-default-size="{{ settings.upsell_default_size | escape }}" data-size-label="{{ 'products.v2.upsell_size_label' | t: label: '__LABEL__' | escape }}" data-most-chosen="{{ 'products.v2.upsell_most_chosen' | t | escape }}" data-size-guide="{{ 'products.v2.size_guide_link' | t | escape }}">
+  <div class="pdp-upsell" data-pdp-upsell data-host-gid="gid://shopify/Product/{{ product.id }}" data-form="{{ product_form_id }}" data-label="{{ upsell_label | escape }}" data-url="{{ upsell.url }}" data-money="{{ cart.currency.symbol | default: '€' }}" data-host-size="{{ host_size | escape }}" data-host-options='{{ product.options | json }}' data-ship-threshold="{{ ship_threshold }}" data-piece-labels='{{ choice_labels | json }}' data-default-size="{{ settings.upsell_default_size | escape }}" data-size-label="{{ 'products.v2.upsell_size_label' | t: label: '__LABEL__' | escape }}" data-most-chosen="{{ 'products.v2.upsell_most_chosen' | t | escape }}" data-size-guide="{{ 'products.v2.size_guide_link' | t | escape }}" data-guide-ids='{{ guide_ids | json }}'>
     {%- if settings.bf_enabled -%}
       <div class="pdp-upsell__bf">
         <span class="pdp-upsell__bf-text">
@@ -221,6 +246,7 @@
         </button>
       {%- endfor -%}
     </div>
+    {{ upsell_guides }}
     <script type="application/json" data-upsell-choices>[{{ choices_json }}]</script>
     <script type="application/json" data-host-variants>
       [{%- for v in product.variants -%}{ "id": {{ v.id }}, "price": {{ v.price }}, "compare": {{ v.compare_at_price | default: 0 }}, "options": {{ v.options | json }} }{% unless forloop.last %},{% endunless %}{%- endfor -%}]
