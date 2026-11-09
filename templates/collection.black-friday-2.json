@@ -25,6 +25,13 @@
       ],
       "custom_css": [],
       "settings": {
+        "show_mobile_cats": true,
+        "cat_1_label": "Socks",
+        "cat_1_link": "/collections/all-socks/1-pair",
+        "cat_2_label": "Overshoes",
+        "cat_2_link": "shopify://collections/cycling-overshoes",
+        "cat_3_label": "Gloves",
+        "cat_3_link": "shopify://collections/cycling-gloves",
         "video": "shopify://files/videos/SOCKELOEN_Beanie3_FULL_4K.mov",
         "poster_style": true,
         "poster_blur": 32,

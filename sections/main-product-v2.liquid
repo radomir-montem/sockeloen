@@ -80,7 +80,7 @@
       assign size_index = nil
       for opt in product.options_with_values
         assign opt_name = opt.name | downcase
-        if opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe'
+        if opt_name contains 'size' or opt_name contains 'maat' or opt_name contains 'größe' or opt_name contains 'grootte' or opt_name contains 'taille'
           assign size_index = forloop.index0
         endif
       endfor
@@ -1237,6 +1237,52 @@
                       })();
                     </script>
                   </variant-radios>
+                  {%- comment -%}
+                    Preselect the best-selling size (last 30 days, variant metafield custom.sales_pace written by
+                    the stock-signals job) within the colour shown, unless the URL names a variant. The bundle
+                    tiles' add-on size follows the main product's size, so it moves along.
+                  {%- endcomment -%}
+                  {%- unless product.has_only_default_variant -%}
+                    <script>
+                      (function () {
+                        if (/[?&]variant=/.test(location.search)) return;
+                        var variants = [
+                          {%- for variant in product.variants -%}
+                            {%- assign vp = variant.metafields.custom.sales_pace | default: '' -%}
+                            {%- assign vs30 = 0 -%}
+                            {%- if vp != blank -%}{%- assign vs30 = vp | split: 'sold30:' | last | split: ';' | first | plus: 0 -%}{%- endif -%}
+                            { options: {{ variant.options | json }}, available: {{ variant.available }}, sold30: {{ vs30 }} }{% unless forloop.last %},{% endunless %}
+                          {%- endfor -%}
+                        ];
+                        var optionNames = {{ product.options | json }};
+                        var sizeIdx = -1;
+                        optionNames.forEach(function (n, i) { if (/size|maat|größe|groesse|grootte|taille/i.test(n)) sizeIdx = i; });
+                        if (sizeIdx < 0) return;
+                        function run() {
+                          var picker = document.querySelector('#MainProduct-{{ section.id }} variant-radios');
+                          if (!picker) return;
+                          var checked = optionNames.map(function (n) {
+                            var r = picker.querySelector('input[type="radio"][name="' + CSS.escape(n) + '"]:checked');
+                            return r ? r.value : null;
+                          });
+                          var best = null;
+                          variants.forEach(function (v) {
+                            if (!v.available) return;
+                            var sameColour = v.options.every(function (o, i) { return i === sizeIdx || checked[i] === null || o === checked[i]; });
+                            if (!sameColour) return;
+                            if (!best || v.sold30 > best.sold30) best = v;
+                          });
+                          if (!best || best.sold30 <= 0 || best.options[sizeIdx] === checked[sizeIdx]) return;
+                          var radio = Array.prototype.find.call(picker.querySelectorAll('input[type="radio"][name="' + CSS.escape(optionNames[sizeIdx]) + '"]'), function (r) { return r.value === best.options[sizeIdx]; });
+                          if (!radio || radio.classList.contains('disabled')) return;
+                          radio.checked = true;
+                          radio.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(run, 0); });
+                        else setTimeout(run, 0);
+                      })();
+                    </script>
+                  {%- endunless -%}
                 {%- else -%}
                   <variant-selects
                     class="no-js-hidden"

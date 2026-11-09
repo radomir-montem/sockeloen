@@ -24,7 +24,7 @@
     var symbol = root.getAttribute('data-money') || '€';
     var shipThreshold = parseFloat(root.getAttribute('data-ship-threshold')) || 0;
     var tiles = Array.prototype.slice.call(root.querySelectorAll('.pdp-upsell__tile'));
-    var isSizeName = function (name) { return /size|maat|größe/i.test(name); };
+    var isSizeName = function (name) { return /size|maat|größe|groesse|grootte|taille/i.test(name); };
     /* Each choice is an offered variant: it fixes every option except the size,
        so only the variants sharing its non-size options stay, and a size is
        asked only when more than one is available. */
