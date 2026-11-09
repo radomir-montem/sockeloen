@@ -1599,6 +1599,18 @@
     ]
   },
   {
+    "name": "Bundle tiles",
+    "settings": [
+      {
+        "type": "text",
+        "id": "upsell_default_size",
+        "label": "Preselected size for sized add-ons",
+        "default": "L",
+        "info": "Product page bundle tiles: when the add-on has sizes (e.g. gloves) and the main product's size does not match, this size is preselected and marked 'Most chosen'. Empty = the size closest to the main product's."
+      }
+    ]
+  },
+  {
     "name": "Stock signals",
     "settings": [
       {

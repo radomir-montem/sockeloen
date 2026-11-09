@@ -260,6 +260,8 @@
       "upsell_you_save": "Du sparst {{ amount }}",
       "upsell_badge_popular": "Am beliebtesten",
       "upsell_badge_value": "Bester Preis",
+      "upsell_size_label": "Größe {{ label }}",
+      "upsell_most_chosen": "Meistgewählt",
       "size_guide_socks_intro": "Finde deine Sockengröße anhand deiner EU-Schuhgröße. Unsere Socken sitzen eng, damit nichts verrutscht, drückt oder Blasen verursacht.",
       "size_guide_gloves_intro": "Miss die Länge deines Zeigefingers vom Fingeransatz bis zur Fingerspitze, um deine Handschuhgröße zu finden.",
       "size_guide_baselayer_intro": "Alle Größen in Zentimetern (cm).",
