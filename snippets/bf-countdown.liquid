@@ -9,6 +9,7 @@
 {%- endcomment -%}
 {%- assign bf_tz = 'now' | date: '%z' -%}
 <span class="bf-countdown{% if class != blank %} {{ class }}{% endif %}" data-bf-countdown data-d1="{{ settings.bf_deadline_1 | escape }}" data-d2="{{ settings.bf_deadline_2 | escape }}" data-d3="{{ settings.bf_deadline_3 | escape }}" data-tz="{{ bf_tz }}" hidden>
-  {%- if settings.bf_timer_label != blank -%}<span class="bf-countdown__label">{{ settings.bf_timer_label | escape }}</span>{%- endif -%}
+  {%- capture bf_timer_label -%}{%- render 'bf-text', key: 'timer_label' -%}{%- endcapture -%}
+  {%- if bf_timer_label != blank -%}<span class="bf-countdown__label">{{ bf_timer_label | escape }}</span>{%- endif -%}
   <span class="bf-countdown__time" data-bf-time></span>
 </span>

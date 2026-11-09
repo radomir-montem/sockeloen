@@ -164,13 +164,15 @@
       <a href="{{ bf_link }}" class="announcement-bar__link link link--text focus-inset">
         <div class="page-width">
           <p class="announcement-bar__message center h5 bf-bar" style="color: #fff;">
-            {%- assign bf_title_m = settings.bf_title_mobile | default: settings.bf_title -%}
-            {%- assign bf_msg_m = settings.bf_message_mobile | default: settings.bf_message -%}
-            <span class="bf-bar__title bf-bar__desktop">{{ settings.bf_title | escape }}</span>
+            {%- capture bf_title_d -%}{%- render 'bf-text', key: 'title' -%}{%- endcapture -%}
+            {%- capture bf_title_m -%}{%- render 'bf-text', key: 'title_mobile' -%}{%- endcapture -%}
+            {%- capture bf_msg_d -%}{%- render 'bf-text', key: 'message' -%}{%- endcapture -%}
+            {%- capture bf_msg_m -%}{%- render 'bf-text', key: 'message_mobile' -%}{%- endcapture -%}
+            <span class="bf-bar__title bf-bar__desktop">{{ bf_title_d | escape }}</span>
             <span class="bf-bar__title bf-bar__mobile">{{ bf_title_m | escape }}</span>
-            {%- if settings.bf_message != blank -%}
+            {%- if bf_msg_d != blank -%}
               <span class="bf-bar__sep bf-bar__desktop" aria-hidden="true">·</span>
-              <span class="bf-bar__msg bf-bar__desktop">{{ settings.bf_message | escape }}</span>
+              <span class="bf-bar__msg bf-bar__desktop">{{ bf_msg_d | escape }}</span>
             {%- endif -%}
             {%- if bf_msg_m != blank -%}
               <span class="bf-bar__sep bf-bar__mobile" aria-hidden="true">·</span>

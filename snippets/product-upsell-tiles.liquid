@@ -153,9 +153,14 @@
   endcomment
   assign tile_badge_popular = 'products.v2.upsell_badge_popular' | t
   assign tile_badge_value = 'products.v2.upsell_badge_value' | t
-  if settings.bf_enabled and settings.bf_offer_badge_text != blank
-    assign tile_badge_popular = settings.bf_offer_badge_text
-    assign tile_badge_value = settings.bf_offer_badge_text
+  if settings.bf_enabled
+    capture bf_offer_badge
+      render 'bf-text', key: 'offer_badge'
+    endcapture
+    if bf_offer_badge != blank
+      assign tile_badge_popular = bf_offer_badge
+      assign tile_badge_value = bf_offer_badge
+    endif
   endif
   comment
     Free-shipping threshold of the market (same rule as the shipping row):
@@ -180,8 +185,10 @@
     {%- if settings.bf_enabled -%}
       <div class="pdp-upsell__bf">
         <span class="pdp-upsell__bf-text">
-          <span class="pdp-upsell__bf-title">{{ settings.bf_pdp_title | default: settings.bf_title | escape }}</span>
-          {%- if settings.bf_message != blank -%}<span class="pdp-upsell__bf-sub">{{ settings.bf_message | escape }}</span>{%- endif -%}
+          {%- capture bf_pdp_title -%}{%- render 'bf-text', key: 'pdp_title' -%}{%- endcapture -%}
+          {%- capture bf_pdp_message -%}{%- render 'bf-text', key: 'message' -%}{%- endcapture -%}
+          <span class="pdp-upsell__bf-title">{{ bf_pdp_title | escape }}</span>
+          {%- if bf_pdp_message != blank -%}<span class="pdp-upsell__bf-sub">{{ bf_pdp_message | escape }}</span>{%- endif -%}
         </span>
         {%- render 'bf-countdown', class: 'pdp-upsell__bf-timer' -%}
       </div>
