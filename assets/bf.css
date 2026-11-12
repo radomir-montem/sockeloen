@@ -166,3 +166,14 @@ body.template--product .product-v2 .pdp-upsell__badge.pdp-upsell__badge--bf { ba
 .card-badge .badge--bf ~ .badge,
 .card-badge .badge--bf ~ * { display: none !important; }
 .card-wrapper:has(.badge--bf) .card-bottom-badge { display: none !important; }
+
+/* Black Friday bar rotating with the shipping-delay note (announcement bar
+   section setting): one slide visible, slides stacked, the track slides up */
+#announcement-bar.bf-rotator { overflow: hidden; }
+#announcement-bar.bf-rotator .ann-rotator__track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+#announcement-bar.bf-rotator .announcement-bar { flex: 0 0 auto; }
+.announcement-bar--bf .bf-bar--ship { font-weight: 600; letter-spacing: 0.02em; }

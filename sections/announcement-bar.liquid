@@ -159,7 +159,22 @@
     {%- assign bf_handle = settings.bf_collection_handle | default: 'black-friday-sale' -%}
     {%- assign bf_link = collections[bf_handle].url | default: '/collections/black-friday-sale' -%}
   {%- endif -%}
-  <div id="announcement-bar">
+  {%- liquid
+    assign bf_ship_d = 'products.v2.bf_shipping_message' | t
+    assign bf_ship_m = 'products.v2.bf_shipping_message_mobile' | t
+    if bf_ship_d contains 'translation missing'
+      assign bf_ship_d = ''
+    endif
+    if bf_ship_m contains 'translation missing' or bf_ship_m == blank
+      assign bf_ship_m = bf_ship_d
+    endif
+    assign bf_rotate = false
+    if section.settings.bf_shipping_message and bf_ship_d != blank
+      assign bf_rotate = true
+    endif
+  -%}
+  <div id="announcement-bar"{% if bf_rotate %} class="bf-rotator" data-delay="5000"{% endif %}>
+    {%- if bf_rotate -%}<div class="ann-rotator__track">{%- endif -%}
     <div class="announcement-bar announcement-bar--bf" style="background-color: #000;" role="region" aria-label="{{ 'sections.header.announcement' | t }}">
       <a href="{{ bf_link }}" class="announcement-bar__link link link--text focus-inset">
         <div class="page-width">
@@ -189,6 +204,29 @@
         </svg>
       </div>
     </div>
+    {%- if bf_rotate -%}
+      {%- comment -%}
+        Second slide in Black Friday mode: the shipping-delay note (locale key
+        products.v2.bf_shipping_message, per storefront language). Turn it off
+        under the announcement bar section settings.
+      {%- endcomment -%}
+      <div class="announcement-bar announcement-bar--bf" style="background-color: #000;" role="region" aria-label="{{ 'sections.header.announcement' | t }}">
+        <div class="announcement-bar__link">
+          <div class="page-width">
+            <p class="announcement-bar__message center h5 bf-bar bf-bar--ship" style="color: #fff;">
+              <span class="bf-bar__desktop">{{ bf_ship_d | escape_once }}</span>
+              <span class="bf-bar__mobile">{{ bf_ship_m | escape_once }}</span>
+            </p>
+          </div>
+        </div>
+        <div class="announcement-bar__close absolute cursor-pointer">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path style="fill: #fff;" fill-rule="evenodd" clip-rule="evenodd" d="M4.00394 4.71056L6.65039 7.35701L7.3575 6.6499L4.71105 4.00346L7.3575 1.35701L6.65039 0.649902L4.00394 3.29635L1.3575 0.649902L0.650391 1.35701L3.29684 4.00346L0.650391 6.6499L1.3575 7.35701L4.00394 4.71056Z" fill="white"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
   </div>
   <script src="{{ 'bf-countdown.js' | asset_url }}" defer></script>
 {%- else -%}
@@ -269,7 +307,7 @@
     cycling entirely in sale mode: the first bar stays permanently
     visible and its marquee scrolls without ever being interrupted.
   {%- endcomment -%}
-  {%- unless section.settings.sale_mode or settings.bf_enabled -%}
+  {%- if settings.bf_enabled or section.settings.sale_mode == false -%}
     (function(){
       var root = document.getElementById('announcement-bar');
       var track = root && root.querySelector('.ann-rotator__track');
@@ -299,7 +337,7 @@
       announcementBarInterval = setInterval(go, Number(root.getAttribute('data-delay')) || 3500);
       window.addEventListener('resize', function(){ track.style.transition='none'; track.style.transform='translateY(-' + (i * h()) + 'px)'; });
     })();
-  {%- endunless -%}
+  {%- endif -%}
 
   document.querySelectorAll('.announcement-bar__close').forEach(btn => {
     btn.addEventListener('click', function(){
@@ -335,6 +373,13 @@
       "max": 10,
       "step": 0.5,
       "unit": "s"
+    },
+    {
+      "type": "checkbox",
+      "id": "bf_shipping_message",
+      "label": "Black Friday: rotate a shipping-delay message",
+      "default": true,
+      "info": "While Black Friday mode is on, the bar switches every 5 seconds between the Black Friday line and 'Packing as fast as we can. Delivery may take longer.' (translated per language in the locale files)."
     },
     {
       "type": "checkbox",
