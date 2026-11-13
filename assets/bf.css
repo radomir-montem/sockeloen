@@ -177,3 +177,13 @@ body.template--product .product-v2 .pdp-upsell__badge.pdp-upsell__badge--bf { ba
 }
 #announcement-bar.bf-rotator .announcement-bar { flex: 0 0 auto; }
 .announcement-bar--bf .bf-bar--ship { font-weight: 600; letter-spacing: 0.02em; }
+/* the frame carries the black + rounded top corners; the moving slides are
+   square, so no light corners flash between them while they slide */
+#shopify-section-announcement-bar #announcement-bar.bf-rotator {
+  background: #000 !important;
+  border-radius: 8px 8px 0 0;
+}
+#shopify-section-announcement-bar #announcement-bar.bf-rotator .announcement-bar--bf,
+#shopify-section-announcement-bar #announcement-bar.bf-rotator .announcement-bar--bf::before {
+  border-radius: 0 !important;
+}
