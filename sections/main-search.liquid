@@ -75,7 +75,15 @@
     font-size: 13px;
     color: rgba(0, 0, 0, 0.6);
   }
-  .template-search #ProductGridContainer { background: #fff; margin-top: 8px; }
+  /* the drawer's own trigger row stays in the page (the pill clicks it) but takes no room */
+  .template-search #main-search-filters,
+  .template-search #main-search-filters .facets-container-drawer {
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: visible;
+  }
+  .template-search #ProductGridContainer { background: #fff; margin-top: 4px; }
   .template-search #product-grid.template-search__results {
     padding: 12px;
     max-width: none;
