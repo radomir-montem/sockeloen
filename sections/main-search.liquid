@@ -38,12 +38,69 @@
   .search__button .icon {
     height: 1.8rem;
   }
+
+  /* Search page in the site's look (white sheet, 8px radius, 12px grid
+     gaps, floating "Filter and sort" pill), matching the collection pages */
+  .template-search { background: #fff; }
+  .template-search .template-search__header { margin-bottom: 0; padding: 0 12px; }
+  .template-search .template-search__header h1 {
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    margin: 0 0 14px;
+  }
+  .template-search .template-search__search { max-width: 560px; margin: 0 auto 12px; }
+  .template-search .template-search__search .search { margin-top: 0; }
+  .template-search .template-search__search .field::before,
+  .template-search .template-search__search .field::after { display: none !important; }
+  .template-search .template-search__search .field {
+    background: #f2f2f2;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .template-search .template-search__search .field:focus-within {
+    background: #fff;
+    border-color: #111;
+  }
+  .template-search .template-search__search .field__input {
+    border-radius: 8px;
+    box-shadow: none !important;
+    font-size: 16px;
+  }
+  .template-search .template-search__search .field__input:focus { outline: none; box-shadow: none !important; }
+  .template-search .predictive-search { border-radius: 8px; overflow: hidden; }
+  .template-search .template-search__count {
+    margin: 0 0 4px;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .template-search #ProductGridContainer { background: #fff; margin-top: 8px; }
+  .template-search #product-grid.template-search__results {
+    padding: 12px;
+    max-width: none;
+  }
+  .template-search #product-grid.template-search__results > ul.grid {
+    column-gap: 12px;
+    row-gap: 12px;
+    margin: 0;
+    padding: 0;
+  }
+  .template-search #ProductGridContainer facets-open-button { margin-bottom: 24px; }
+  @media screen and (min-width: 750px) {
+    .template-search .template-search__header h1 { font-size: 28px; margin-bottom: 18px; }
+  }
 </style>
 
 {%- liquid
   assign sort_by = search.sort_by | default: search.default_sort_by
   assign terms = search.terms | escape
   assign search_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
+  comment
+    Filters always open from the floating "Filter and sort" pill (drawer), the
+    same as on the collection pages, whatever the editor's filter layout says.
+  endcomment
+  assign filter_type = 'drawer'
 -%}
 
 {%- style -%}
@@ -60,7 +117,7 @@
   }
 {%- endstyle -%}
 
-<div class="template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section-{{ section.id }}-padding bg-[#e2e2e2]">
+<div class="template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section-{{ section.id }}-padding">
   <div class="template-search__header page-width center">
     {%- if search.performed -%}
       <h1 class="h2">{{ 'templates.search.title' | t }}</h1>
@@ -122,18 +179,16 @@
 
     </div>
     {%- if search.performed -%}
-      {%- unless section.settings.enable_filtering or section.settings.enable_sorting -%}
-        {%- if search.results_count > 0 -%}
-          <p role="status">{{ 'templates.search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}</p>
-        {%- endif -%}
-      {%- endunless -%}
+      {%- if search.results_count > 0 -%}
+        <p class="template-search__count" role="status">{{ 'templates.search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}</p>
+      {%- endif -%}
       {%- if search.results_count == 0 and search.filters == empty -%}
         <p role="status">{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
       {%- endif -%}
     {%- endif -%}
   </div>
   {%- if search.performed -%}
-    {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' and search.filters != empty -%}
+    {%- if section.settings.enable_sorting and filter_type == 'vertical' and search.filters != empty -%}
       <facet-filters-form class="facets facets-vertical-sort page-width small-hide no-js-hidden">
         <form class="facets-vertical-form" id="FacetSortForm">
           <div class="facet-filters sorting caption">
@@ -177,17 +232,17 @@
         </form>
       </facet-filters-form>
     {%- endif -%}
-    <div{% if section.settings.filter_type == 'vertical' %} class="facets-vertical page-width"{% endif %}>
+    <div{% if filter_type == 'vertical' %} class="facets-vertical page-width"{% endif %}>
       {%- if search.filters != empty -%}
         {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-          <aside aria-labelledby="verticalTitle" class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}" id="main-search-filters" data-id="{{ section.id }}">
-            {% render 'facets', results: search, enable_filtering: section.settings.enable_filtering, enable_sorting: section.settings.enable_sorting, filter_type: section.settings.filter_type %}
+          <aside aria-labelledby="verticalTitle" class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if filter_type != 'vertical' %} page-width{% endif %}" id="main-search-filters" data-id="{{ section.id }}">
+            {% render 'facets', results: search, enable_filtering: section.settings.enable_filtering, enable_sorting: section.settings.enable_sorting, filter_type: filter_type %}
           </aside>
         {%- endif -%}
       {%- endif -%}
       <div class="product-grid-container" id="ProductGridContainer">
         {%- if search.results.size == 0 and search.filters != empty -%}
-          <div class="template-search__results collection collection--empty{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}" id="product-grid" data-id="{{ section.id }}">
+          <div class="template-search__results collection collection--empty{% if filter_type != 'vertical' %} page-width{% endif %}" id="product-grid" data-id="{{ section.id }}">
             <div class="loading-overlay gradient"></div>
             <div class="title-wrapper center">
               <h2 class="title title--primary">
@@ -198,7 +253,7 @@
           </div>
         {%- else -%}
           {% paginate search.results by 24 %}
-            <div class="template-search__results collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}" id="product-grid" data-id="{{ section.id }}">
+            <div class="template-search__results collection{% if filter_type != 'vertical' %} page-width{% endif %}" id="product-grid" data-id="{{ section.id }}">
               <div class="loading-overlay gradient"></div>
               <ul class="grid grid-cols-2 md:grid-cols-4" role="list">
                 {%- for item in search.results -%}
@@ -255,6 +310,18 @@
               {%- endif -%}
             </div>
           {% endpaginate %}
+        {%- endif -%}
+
+        {%- if section.settings.enable_filtering and search.filters != empty -%}
+          <facets-open-button>
+            <button class="open-facet-drawer" type="button">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M3 14L3 13L11 13L11 14L3 14ZM12 17L12 10L14 10L14 13L17 13L17 14L14 14L14 17L12 17Z" fill="black"></path>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M3 7L3 6L6 6L6 7L3 7ZM7 10L7 3L9 3L9 6L17 6L17 7L9 7L9 10L7 10Z" fill="black"></path>
+              </svg>
+              {{ 'products.facets.filter_and_sort' | t }}
+            </button>
+          </facets-open-button>
         {%- endif -%}
       </div>
     </div>
