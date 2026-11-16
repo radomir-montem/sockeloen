@@ -15,14 +15,14 @@
     #shopify-section-{{ section.id }} .grid-banner__text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; text-align: center; }
     #shopify-section-{{ section.id }} .grid-banner__text--top { justify-content: flex-start; padding-top: 32px; }
     #shopify-section-{{ section.id }} .grid-banner__text--bottom { justify-content: flex-end; padding-bottom: 32px; }
-    #shopify-section-{{ section.id }} .grid-banner__line { font-family: 'Roboto Mono', monospace; font-weight: 700; font-size: 13px; line-height: 1.25; text-transform: uppercase; }
+    #shopify-section-{{ section.id }} .grid-banner__line { font-family: 'Roboto Mono', monospace; font-weight: 700; font-size: 13px; line-height: 1.25; letter-spacing: 0; text-transform: uppercase; } /* same text styles as the poster banner at the top */
     #shopify-section-{{ section.id }} .grid-banner__heading { font-family: var(--font-heading-family); font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: -0.01em; }
     @media screen and (min-width: 768px) {
       #shopify-section-{{ section.id }} .grid-banner { aspect-ratio: auto; grid-row: span 2; }
       #shopify-section-{{ section.id }} .grid-banner--left { grid-column: 1 / span {{ gb_span }}; }
       #shopify-section-{{ section.id }} .grid-banner--right { grid-column: {{ gb_right }} / span {{ gb_span }}; }
-      #shopify-section-{{ section.id }} .grid-banner__line { font-size: 18px; }
-      #shopify-section-{{ section.id }} .grid-banner__heading { font-size: 72px; }
+      #shopify-section-{{ section.id }} .grid-banner__line { font-size: 20px; }
+      #shopify-section-{{ section.id }} .grid-banner__heading { font-size: min(96px, 6.4vw); } /* 96px like the top banner, smaller when the tile is narrower */
     }
   {%- endstyle -%}
 {%- endif -%}
@@ -514,9 +514,34 @@
                     {%- comment -%} variant_first_only: the matched colour is the product's only card, without swatches {%- endcomment -%}
                     {%- assign vf_only = false -%}
                     {%- if section.settings.variant_first_only and vf_needle != blank -%}{%- assign vf_only = true -%}{%- endif -%}
+                    {%- comment -%}
+                      In-stock colour: when the product gets a single card (colour swatches, or variant_first_only),
+                      that card skips sold-out variants as long as another variant has stock, so a colour that is
+                      sold out in every size never becomes the card while another colour is in stock. A variant_first
+                      colour (not "only") that is sold out in every size gives way to the first in-stock colour too.
+                      All colours sold out: nothing is skipped and the sold-out card style shows as before.
+                    {%- endcomment -%}
+                    {%- assign live_any = false -%}
+                    {%- assign vf_live = false -%}
+                    {%- for lv in product.variants -%}
+                      {%- if lv.available and lv.metafields.custom.disable != true -%}
+                        {%- assign live_any = true -%}
+                        {%- if vf_needle != blank -%}
+                          {%- assign lv_title = lv.title | downcase -%}
+                          {%- if lv_title contains vf_needle -%}{%- assign vf_live = true -%}{%- endif -%}
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endfor -%}
                     {% for vf_pass in (1..2) %}
                     {% if vf_done %}{% break %}{% endif %}
                     {% if vf_pass == 1 and vf_needle == blank %}{% continue %}{% endif %}
+                    {%- if vf_pass == 1 and vf_only == false and show_color_swatches_for_collection and vf_live == false and live_any -%}{% continue %}{%- endif -%}
+                    {%- assign one_card = show_color_swatches_for_collection -%}
+                    {%- assign skip_sold = live_any -%}
+                    {%- if vf_pass == 1 -%}
+                      {%- if vf_only -%}{%- assign one_card = true -%}{%- endif -%}
+                      {%- assign skip_sold = vf_live -%}
+                    {%- endif -%}
                     {% for variant in product.variants %}
                       {%- comment -%} variant metafield custom.disable = true hides the colour from the grid, like it hides it on the product page {%- endcomment -%}
                       {%- if variant.metafields.custom.disable -%}{% continue %}{%- endif -%}
@@ -524,6 +549,7 @@
                         {%- assign vf_title = variant.title | downcase -%}
                         {%- unless vf_title contains vf_needle -%}{% continue %}{%- endunless -%}
                       {%- endif -%}
+                      {%- if one_card and skip_sold and variant.available == false and coming_soon == false -%}{% continue %}{%- endif -%}
                       {% if shop.metafields.soldout_variants.enable or variant.available or coming_soon or section.settings.show_sold_out %}
                         {% capture color %}
                           {{ variant.options[index] }}

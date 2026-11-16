@@ -60,8 +60,47 @@
     if ratio == 0 or ratio == null
       assign ratio = 1
     endif
+
+    comment
+      In-stock colour: when the product's first colour is sold out in every size but another colour
+      still has stock, the card shows that colour instead (photo, hover photo, link and colour name).
+      card_pick = the first available variant (variant metafield custom.disable skipped).
+      When every colour is sold out nothing changes, so the sold-out card style still applies.
+    endcomment
+    assign card_pick = nil
+    assign card_url = card_product.url
+    if card_product.available and coming_soon == false and card_product.variants.size > 1
+      assign cp_index = -1
+      for opt in card_product.options
+        assign opt_dc = opt | downcase
+        if opt_dc == 'color' or opt_dc == 'colour' or opt_dc contains 'kleur'
+          assign cp_index = forloop.index0
+          break
+        endif
+      endfor
+      if cp_index > -1
+        assign cp_first_colour = card_product.variants.first.options[cp_index]
+        assign cp_first_live = false
+        assign cp_live = nil
+        for v in card_product.variants
+          if v.available and v.metafields.custom.disable != true
+            if cp_live == nil
+              assign cp_live = v
+            endif
+            if v.options[cp_index] == cp_first_colour
+              assign cp_first_live = true
+              break
+            endif
+          endif
+        endfor
+        if cp_first_live == false and cp_live != nil
+          assign card_pick = cp_live
+          assign card_url = cp_live.url
+        endif
+      endif
+    endif
   -%}
-  <a href="{{ card_product.url }}" class="card-wrapper product-card-wrapper underline-links-hover">
+  <a href="{{ card_url }}" class="card-wrapper product-card-wrapper underline-links-hover">
     <div
       class="
         card
@@ -89,6 +128,36 @@
             endcomment
             assign card_main = card_product.featured_media
             assign card_hover = card_product.media[1]
+            if card_pick != nil and card_pick.featured_media != null
+              comment
+                In-stock colour: its own photo, and as hover the next photo with the same alt text (photos are
+                grouped per colour by alt), otherwise the photo right after it
+              endcomment
+              assign card_main = card_pick.featured_media
+              assign card_hover = nil
+              assign cp_alt = card_main.alt | downcase | strip
+              assign cp_seen = false
+              assign cp_next = nil
+              for m in card_product.media
+                if m.id == card_main.id
+                  assign cp_seen = true
+                  continue
+                endif
+                if cp_seen
+                  if cp_next == nil
+                    assign cp_next = m
+                  endif
+                  assign m_alt = m.alt | downcase | strip
+                  if cp_alt != blank and m_alt == cp_alt
+                    assign card_hover = m
+                    break
+                  endif
+                endif
+              endfor
+              if card_hover == nil
+                assign card_hover = cp_next
+              endif
+            endif
             if swap_images and card_hover != null
               assign card_main = card_product.media[1]
               assign card_hover = card_product.featured_media
@@ -172,6 +241,9 @@
               {% if color_options.values.size > 0 %}
                 {% assign color = color_options.values[0] %}
               {% endif %}
+              {% if card_pick != nil and cp_index > -1 %}
+                {% assign color = card_pick.options[cp_index] %}
+              {% endif %}
               <span class="medium-hide large-up-hide">{{ card_product.title | escape | truncate: 25 }}</span><span class="small-hide">{{ card_product.title | escape }}</span>{% if color != blank %}<span class="card-title-color">{{ color }}</span>{% endif %}
             </div>
           </h2>
@@ -188,7 +260,7 @@
             {% endunless %}
           </div>
         </div>
-        {% unless hide_color_row %}{% render 'card-color-row', product: card_product, current_variant: card_product.selected_or_first_available_variant %}{% endunless %}
+        {% unless hide_color_row %}{% assign cp_current = card_pick | default: card_product.selected_or_first_available_variant %}{% render 'card-color-row', product: card_product, current_variant: cp_current %}{% endunless %}
         {%- if show_quick_add -%}
           <div class="quick-add no-js-hidden">
             {%- assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id -%}
