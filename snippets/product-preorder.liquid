@@ -6,10 +6,10 @@
     together, that you can cancel before shipping, and the 30-day returns
   - the order line gets the property "Pre-order: ships on 8 December", so it
     shows in the cart, checkout, the confirmation email and the admin order
-  - scarcity: the normal stock signal is replaced by "Sold out now · only 12
-    left from the next batch" (stock <= 20, the stock you set is the batch on
-    its way) or "Sold out now · the next batch is limited" (more than 20),
-    in the same orange row above the button
+  - urgency without numbers, in the orange stock-signal row above the button:
+    "Sold out · the next batch is limited, reserve yours now", and from 10
+    left in that size (the stock you set is the batch on its way)
+    "Almost gone · last pairs from the next batch"
   - the normal stock signal ("only 3 left") is hidden, the shipping line in the trust
     tile shows the pre-order date instead of "ships today" (main-product-v2)
   Only variants that can be bought switch to pre-order: while a pre-order
@@ -40,11 +40,18 @@
     assign po_ids = po_ids | split: ','
   -%}
   <style>
+    /* the template's glass (gradient, blur, hairline, soft shadow, 8px
+       corners), lighter than the dark-tinted bundle tiles so it reads as
+       information, not as another option to pick */
     .pdp-preorder {
       margin: 12px 0 0;
       padding: 14px 16px;
       border-radius: 8px;
-      background: #f4f4f4;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.55));
+      -webkit-backdrop-filter: blur(21px) saturate(180%);
+              backdrop-filter: blur(21px) saturate(180%);
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
       color: #121212;
     }
     .pdp-preorder[hidden] { display: none; }
@@ -134,9 +141,9 @@
       var cfg = {
         variants: { {%- for id in po_ids -%}"{{ id }}": true{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} },
         stock: { {%- for v in product.variants -%}"{{ v.id }}": {{ v.inventory_quantity | default: 0 }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} },
-        scarcityMax: 20,
-        scarcityCount: {{ 'products.v2.preorder_scarcity_count' | t | json }},
-        scarcityPlain: {{ 'products.v2.preorder_scarcity_plain' | t | json }},
+        scarcityLowMax: 10,
+        scarcityLow: {{ 'products.v2.preorder_scarcity_low' | t | json }},
+        scarcityHigh: {{ 'products.v2.preorder_scarcity_high' | t | json }},
         button: {{ 'products.v2.preorder_button' | t | json }},
         shipLine: {{ po_label | append: ': ' | json }} + '<span class="ship-date">' + {{ po_ships | json }} + '</span>'
       };
@@ -176,9 +183,7 @@
         if (scarcity) {
           var qty = cfg.stock[currentId()] || 0;
           scarcity.hidden = !on || qty <= 0;
-          scarcity.querySelector('span').textContent = qty <= cfg.scarcityMax
-            ? cfg.scarcityCount.replace('[qty]', qty)
-            : cfg.scarcityPlain;
+          scarcity.querySelector('span').textContent = qty <= cfg.scarcityLowMax ? cfg.scarcityLow : cfg.scarcityHigh;
         }
         labels().forEach(function (span) {
           var button = span.parentElement;
