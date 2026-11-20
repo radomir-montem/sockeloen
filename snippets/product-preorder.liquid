@@ -6,7 +6,11 @@
     together, that you can cancel before shipping, and the 30-day returns
   - the order line gets the property "Pre-order: ships on 8 December", so it
     shows in the cart, checkout, the confirmation email and the admin order
-  - the stock signal ("only 3 left") is hidden, the shipping line in the trust
+  - scarcity: the normal stock signal is replaced by "Sold out now · only 12
+    left from the next batch" (stock <= 20, the stock you set is the batch on
+    its way) or "Sold out now · the next batch is limited" (more than 20),
+    in the same orange row above the button
+  - the normal stock signal ("only 3 left") is hidden, the shipping line in the trust
     tile shows the pre-order date instead of "ships today" (main-product-v2)
   Only variants that can be bought switch to pre-order: while a pre-order
   colour is still sold out (stock 0) the page shows the normal sold-out /
@@ -91,7 +95,8 @@
       transform: rotate(-45deg);
     }
     .pdp-preorder__list strong { color: #121212; }
-    .product-v2.is-preorder .product-v2__low-stock { display: none !important; }
+    .product-v2.is-preorder .product-v2__low-stock:not(.pdp-preorder-scarcity) { display: none !important; }
+    .pdp-preorder-scarcity[hidden] { display: none !important; }
   </style>
 
   <input
@@ -102,6 +107,15 @@
     value="{{ po_ships | escape }}"
     disabled
   >
+
+  <div class="product-v2__low-stock pdp-preorder-scarcity" id="PreorderScarcity-{{ section_id }}" style="display:flex;" hidden>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <circle cx="8" cy="8" r="7" stroke="#F76503" stroke-width="1.5"/>
+      <path d="M8 4.5V9" stroke="#F76503" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="8" cy="11.5" r="0.75" fill="#F76503"/>
+    </svg>
+    <span></span>
+  </div>
 
   <div class="pdp-preorder" id="Preorder-{{ section_id }}" hidden>
     <p class="pdp-preorder__title">
@@ -119,6 +133,10 @@
     (function () {
       var cfg = {
         variants: { {%- for id in po_ids -%}"{{ id }}": true{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} },
+        stock: { {%- for v in product.variants -%}"{{ v.id }}": {{ v.inventory_quantity | default: 0 }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} },
+        scarcityMax: 20,
+        scarcityCount: {{ 'products.v2.preorder_scarcity_count' | t | json }},
+        scarcityPlain: {{ 'products.v2.preorder_scarcity_plain' | t | json }},
         button: {{ 'products.v2.preorder_button' | t | json }},
         shipLine: {{ po_label | append: ': ' | json }} + '<span class="ship-date">' + {{ po_ships | json }} + '</span>'
       };
@@ -128,6 +146,10 @@
       var prop = document.getElementById('PreorderProperty-{{ section_id }}');
       if (!form || !box || !prop) return;
       var root = form.closest('.product-v2') || document.body;
+      /* the scarcity row sits where the normal stock signal sits: above the buttons */
+      var scarcity = document.getElementById('PreorderScarcity-{{ section_id }}');
+      var buttonsRow = form.querySelector('.product-form__buttons');
+      if (scarcity && buttonsRow) buttonsRow.parentNode.insertBefore(scarcity, buttonsRow);
 
       function currentId() {
         var input = form.querySelector('input[name="id"]');
@@ -151,6 +173,13 @@
         box.hidden = !on;
         prop.disabled = !on;
         root.classList.toggle('is-preorder', on);
+        if (scarcity) {
+          var qty = cfg.stock[currentId()] || 0;
+          scarcity.hidden = !on || qty <= 0;
+          scarcity.querySelector('span').textContent = qty <= cfg.scarcityMax
+            ? cfg.scarcityCount.replace('[qty]', qty)
+            : cfg.scarcityPlain;
+        }
         labels().forEach(function (span) {
           var button = span.parentElement;
           if (on) {
