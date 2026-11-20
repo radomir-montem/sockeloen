@@ -1,0 +1,187 @@
+{%- comment -%}
+  Pre-order on the product page (switch: see snippets/preorder-check.liquid).
+  For a pre-order variant:
+  - the add-to-cart button (and the sticky bar button) reads "Pre-order"
+  - a box under the button says when it ships, that the whole order ships
+    together, that you can cancel before shipping, and the 30-day returns
+  - the order line gets the property "Pre-order: ships on 8 December", so it
+    shows in the cart, checkout, the confirmation email and the admin order
+  - the stock signal ("only 3 left") is hidden, the shipping line in the trust
+    tile shows the pre-order date instead of "ships today" (main-product-v2)
+  Only variants that can be bought switch to pre-order: while a pre-order
+  colour is still sold out (stock 0) the page shows the normal sold-out /
+  notify-me state. Variants that are not a pre-order are untouched.
+  Parameters: product, product_form_id, section_id
+{%- endcomment -%}
+{%- liquid
+  assign po_date = ''
+  assign po_ids = ''
+  for po_variant in product.variants
+    capture po_check
+      render 'preorder-check', product: product, variant: po_variant
+    endcapture
+    if po_check != blank and po_variant.available
+      assign po_date = po_check
+      assign po_ids = po_ids | append: po_variant.id | append: ','
+    endif
+  endfor
+-%}
+{%- if po_date != blank -%}
+  {%- liquid
+    capture po_date_text
+      render 'preorder-date', date: po_date
+    endcapture
+    assign po_label = 'products.v2.preorder_label' | t
+    assign po_ships = 'products.v2.preorder_ships' | t | replace: '[date]', po_date_text
+    assign po_ids = po_ids | split: ','
+  -%}
+  <style>
+    .pdp-preorder {
+      margin: 12px 0 0;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: #f4f4f4;
+      color: #121212;
+    }
+    .pdp-preorder[hidden] { display: none; }
+    .pdp-preorder__title {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 10px;
+      font-size: 15px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+    .pdp-preorder__tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: #000;
+      color: #fff;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .pdp-preorder__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: rgba(18, 18, 18, 0.8);
+    }
+    .pdp-preorder__list li {
+      position: relative;
+      padding-left: 20px;
+    }
+    .pdp-preorder__list li::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 6px;
+      width: 9px;
+      height: 5px;
+      border-left: 1.5px solid #121212;
+      border-bottom: 1.5px solid #121212;
+      transform: rotate(-45deg);
+    }
+    .pdp-preorder__list strong { color: #121212; }
+    .product-v2.is-preorder .product-v2__low-stock { display: none !important; }
+  </style>
+
+  <input
+    type="hidden"
+    id="PreorderProperty-{{ section_id }}"
+    form="{{ product_form_id }}"
+    name="properties[{{ po_label | escape }}]"
+    value="{{ po_ships | escape }}"
+    disabled
+  >
+
+  <div class="pdp-preorder" id="Preorder-{{ section_id }}" hidden>
+    <p class="pdp-preorder__title">
+      <span class="pdp-preorder__tag">{{ po_label }}</span>
+      <span>{{ po_ships | capitalize }}</span>
+    </p>
+    <ul class="pdp-preorder__list">
+      <li>{{ 'products.v2.preorder_point_1_html' | t | replace: '[date]', po_date_text }}</li>
+      <li>{{ 'products.v2.preorder_point_2_html' | t }}</li>
+      <li>{{ 'products.v2.preorder_point_3_html' | t }}</li>
+    </ul>
+  </div>
+
+  <script>
+    (function () {
+      var cfg = {
+        variants: { {%- for id in po_ids -%}"{{ id }}": true{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} },
+        button: {{ 'products.v2.preorder_button' | t | json }},
+        shipLine: {{ po_label | append: ': ' | json }} + '<span class="ship-date">' + {{ po_ships | json }} + '</span>'
+      };
+      window.sockeloenPreorder = cfg;
+      var form = document.getElementById({{ product_form_id | json }});
+      var box = document.getElementById('Preorder-{{ section_id }}');
+      var prop = document.getElementById('PreorderProperty-{{ section_id }}');
+      if (!form || !box || !prop) return;
+      var root = form.closest('.product-v2') || document.body;
+
+      function currentId() {
+        var input = form.querySelector('input[name="id"]');
+        return input ? input.value : '';
+      }
+      cfg.isPreorder = function (id) { return !!cfg.variants[id || currentId()]; };
+
+      function labels() {
+        return [
+          form.querySelector('[name="add"] > span'),
+          document.querySelector('.product-v2-sticky-bar__atc-btn > span')
+        ].filter(Boolean);
+      }
+
+      var busy = false;
+      var lastOn = null;
+      function apply() {
+        if (busy) return;
+        busy = true;
+        var on = cfg.isPreorder();
+        box.hidden = !on;
+        prop.disabled = !on;
+        root.classList.toggle('is-preorder', on);
+        labels().forEach(function (span) {
+          var button = span.parentElement;
+          if (on) {
+            if (!button.disabled && span.textContent.trim() !== cfg.button) {
+              span.setAttribute('data-preorder-original', span.innerHTML);
+              span.textContent = cfg.button;
+            }
+          } else if (span.textContent.trim() === cfg.button && span.hasAttribute('data-preorder-original')) {
+            span.innerHTML = span.getAttribute('data-preorder-original');
+            span.removeAttribute('data-preorder-original');
+          }
+        });
+        busy = false;
+        if (on !== lastOn) {
+          lastOn = on;
+          document.dispatchEvent(new CustomEvent('preorder:change', { detail: { preorder: on } }));
+        }
+      }
+
+      var timer = null;
+      function schedule() { clearTimeout(timer); timer = setTimeout(apply, 60); }
+
+      apply();
+      document.addEventListener('change', schedule, true);
+      document.addEventListener('DOMContentLoaded', apply);
+      window.addEventListener('load', apply);
+      /* the theme rewrites the button text on every variant change: re-apply after it */
+      new MutationObserver(function () { if (!busy) schedule(); })
+        .observe(form, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['value', 'disabled'] });
+      var sticky = document.querySelector('.product-v2-sticky-bar__atc-btn');
+      if (sticky) new MutationObserver(function () { if (!busy) schedule(); }).observe(sticky, { subtree: true, childList: true, characterData: true });
+    })();
+  </script>
+{%- endif -%}
