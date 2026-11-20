@@ -106,7 +106,7 @@
   <div class="pdp-preorder" id="Preorder-{{ section_id }}" hidden>
     <p class="pdp-preorder__title">
       <span class="pdp-preorder__tag">{{ po_label }}</span>
-      <span>{{ po_ships | capitalize }}</span>
+      <span>{{ po_ships | slice: 0 | upcase }}{{ po_ships | slice: 1, 200 }}</span>
     </p>
     <ul class="pdp-preorder__list">
       <li>{{ 'products.v2.preorder_point_1_html' | t | replace: '[date]', po_date_text }}</li>
