@@ -1608,6 +1608,7 @@
                         </div>
                       {%- endform -%}
                     </product-form>
+                    {%- render 'product-preorder', product: product, product_form_id: product_form_id, section_id: section.id -%}
 
                     {{ 'component-pickup-availability.css' | asset_url | stylesheet_tag }}
 
@@ -1966,6 +1967,15 @@
                   function render() {
                     var el = document.getElementById('ship-date-text');
                     if (!el) return;
+                    /* pre-order variant (snippets/product-preorder.liquid): the ship date, not "ships today" */
+                    var po = window.sockeloenPreorder;
+                    var poOn = !!(po && po.isPreorder && po.isPreorder());
+                    if (box) box.classList.toggle('is-preorder', poOn);
+                    if (poOn) {
+                      el.innerHTML = po.shipLine;
+                      el.style.display = '';
+                      return;
+                    }
                     var info = getShipInfo();
                     var free = freeShipping();
                     if (box) box.classList.toggle('is-free-shipping', free);
@@ -2023,6 +2033,7 @@
                   render();
                   /* re-evaluate when the variant, the quantity or the bundle offer changes */
                   document.addEventListener('change', scheduleRender, true);
+                  document.addEventListener('preorder:change', scheduleRender);
                   document.addEventListener('input', function (e) {
                     if (e.target && e.target.name === 'quantity') scheduleRender();
                   }, true);

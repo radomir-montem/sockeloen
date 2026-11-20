@@ -1,0 +1,28 @@
+{%- comment -%}
+  Pre-order switch, per product (Shopify admin > product > Metafields):
+    custom.preorder_ship_date  date   filled = pre-order, empty = normal selling
+    custom.preorder_option     text   option value that is the pre-order (e.g. "White");
+                                      empty = every variant of the product
+  Outputs the ship date as YYYY-MM-DD when this variant is a pre-order, else nothing.
+  Parameters: product, variant
+{%- endcomment -%}
+{%- liquid
+  assign pc_out = ''
+  assign pc_date = product.metafields.custom.preorder_ship_date.value
+  if pc_date != blank and variant != blank
+    assign pc_date = pc_date | date: '%Y-%m-%d'
+    assign pc_option = product.metafields.custom.preorder_option.value | strip | downcase
+    if pc_option == blank
+      assign pc_out = pc_date
+    else
+      for pc_value in variant.options
+        assign pc_v = pc_value | strip | downcase
+        if pc_v == pc_option
+          assign pc_out = pc_date
+          break
+        endif
+      endfor
+    endif
+  endif
+  echo pc_out
+-%}

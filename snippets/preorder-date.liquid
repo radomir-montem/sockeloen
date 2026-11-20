@@ -1,0 +1,15 @@
+{%- comment -%}
+  Pre-order: the ship date in the storefront language ("8 December",
+  "8 december", "8. Dezember", "8 décembre"). Month names and the order of
+  day/month come from the locale files (products.v2.preorder_months /
+  preorder_date_format), so no English month leaks into NL/DE/FR.
+  Parameter: date = 'YYYY-MM-DD'
+{%- endcomment -%}
+{%- liquid
+  assign pd_parts = date | split: '-'
+  assign pd_months = 'products.v2.preorder_months' | t | split: ','
+  assign pd_day = pd_parts[2] | plus: 0
+  assign pd_month_index = pd_parts[1] | plus: 0 | minus: 1
+  assign pd_format = 'products.v2.preorder_date_format' | t
+  echo pd_format | replace: '[day]', pd_day | replace: '[month]', pd_months[pd_month_index]
+-%}

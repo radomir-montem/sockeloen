@@ -110,6 +110,32 @@
         </div>
       {% endif %}
 
+      {%- comment -%}
+        Pre-order (snippets/preorder-check.liquid): when the cart holds a
+        pre-order item, say that the whole order ships together on that date,
+        and keep the cart attribute "Pre-order" in sync (script below the
+        drawer) so the order is recognisable in the admin.
+      {%- endcomment -%}
+      {%- liquid
+        assign cart_po_date = ''
+        for po_item in cart.items
+          capture po_item_date
+            render 'preorder-check', product: po_item.product, variant: po_item.variant
+          endcapture
+          if po_item_date != blank
+            assign cart_po_date = po_item_date
+          endif
+        endfor
+      -%}
+      <span hidden data-preorder-state data-want="{{ cart_po_date }}" data-has="{{ cart.attributes['Pre-order'] | escape }}"></span>
+      {%- if cart_po_date != blank -%}
+        {%- capture cart_po_text -%}{%- render 'preorder-date', date: cart_po_date -%}{%- endcapture -%}
+        <div class="cart-drawer__preorder" role="status">
+          <span class="cart-drawer__preorder-tag">{{ 'products.v2.preorder_label' | t }}</span>
+          <p class="cart-drawer__preorder-text">{{ 'products.v2.preorder_cart_notice' | t | replace: '[date]', cart_po_text }}</p>
+        </div>
+      {%- endif -%}
+
       {%- comment -%} ===== CART ITEMS ===== {%- endcomment -%}
       <cart-drawer-items
         class="{% if cart == empty %} is-empty {% endif %}"
@@ -177,9 +203,19 @@
                               {%- endfor -%}
                             </p>
                           {%- endif -%}
+                          {%- liquid
+                            assign item_po_label = 'products.v2.preorder_label' | t
+                            capture item_po_date
+                              render 'preorder-check', product: item.product, variant: item.variant
+                            endcapture
+                          -%}
+                          {%- if item_po_date != blank -%}
+                            {%- capture item_po_text -%}{%- render 'preorder-date', date: item_po_date -%}{%- endcapture -%}
+                            <p class="cart-drawer-item__options cart-drawer-item__preorder"><strong>{{ item_po_label }}</strong> · {{ 'products.v2.preorder_ships' | t | replace: '[date]', item_po_text }}</p>
+                          {%- endif -%}
                           {%- for property in item.properties -%}
                             {%- assign property_first_char = property.first | slice: 0 -%}
-                            {%- if property.last != blank and property_first_char != '_' -%}
+                            {%- if property.last != blank and property_first_char != '_' and property.first != item_po_label -%}
                               <p class="cart-drawer-item__options">
                                 {% if property.first contains 'customization reference' %}
                                   <a href="#" class="colorlab-open-personalisation" data-colorlab="{{ property.last }}">Change customization</a>
@@ -376,6 +412,60 @@
     </div>
   </div>
 </cart-drawer>
+
+<style>
+  .cart-drawer__preorder {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0.75rem 1.5rem 0.75rem;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: #fff;
+    color: #121212;
+  }
+  .cart-drawer__preorder-tag {
+    flex: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #000;
+    color: #fff;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .cart-drawer__preorder-text { margin: 0; font-size: 13px; line-height: 1.4; }
+  .cart-drawer-item__preorder strong { color: #121212; }
+</style>
+<script>
+  /* Pre-order: keep the cart attribute "Pre-order" equal to what the drawer
+     says (it is re-rendered after every cart change), so orders with a
+     pre-order show "Hold – ship complete order on <date>" in the admin. */
+  (function () {
+    if (window.__sockeloenPreorderCartSync) return;
+    window.__sockeloenPreorderCartSync = true;
+    var sent = null;
+    function sync() {
+      var state = document.querySelector('[data-preorder-state]');
+      if (!state) return;
+      var want = state.getAttribute('data-want') || '';
+      var value = want ? 'Hold – ship complete order on ' + want : '';
+      var has = state.getAttribute('data-has') || '';
+      if (value === has || value === sent) return;
+      sent = value;
+      var root = (window.Shopify && Shopify.routes && Shopify.routes.root) || '/';
+      fetch(root + 'cart/update.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ attributes: { 'Pre-order': value } })
+      }).catch(function () { sent = null; });
+    }
+    sync();
+    var drawer = document.querySelector('cart-drawer');
+    if (drawer) new MutationObserver(function () { setTimeout(sync, 50); }).observe(drawer, { childList: true, subtree: true });
+  })();
+</script>
 
 {%- comment -%} Size picker popup — rendered once outside scroll area {%- endcomment -%}
 {% render 'cart-size-picker' %}
