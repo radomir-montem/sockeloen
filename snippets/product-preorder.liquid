@@ -6,10 +6,9 @@
     together, that you can cancel before shipping, and the 30-day returns
   - the order line gets the property "Pre-order: ships on 8 December", so it
     shows in the cart, checkout, the confirmation email and the admin order
-  - urgency without numbers, in the orange stock-signal row above the button:
-    "Sold out · the next batch is limited, reserve yours now", and from 10
-    left in that size (the stock you set is the batch on its way)
-    "Almost gone · last pairs from the next batch"
+  - urgency without numbers, as a second line inside the button:
+    "Limited batch · reserve yours now", and from 10 left in that size (the
+    stock you set is the batch on its way) "Last pairs from this batch"
   - the normal stock signal ("only 3 left") is hidden, the shipping line in the trust
     tile shows the pre-order date instead of "ships today" (main-product-v2)
   Only variants that can be bought switch to pre-order: while a pre-order
@@ -102,8 +101,23 @@
       transform: rotate(-45deg);
     }
     .pdp-preorder__list strong { color: #121212; }
-    .product-v2.is-preorder .product-v2__low-stock:not(.pdp-preorder-scarcity) { display: none !important; }
-    .pdp-preorder-scarcity[hidden] { display: none !important; }
+    .product-v2.is-preorder .product-v2__low-stock { display: none !important; }
+    /* button: "Pre-order" with the urgency line under it */
+    .pdp-preorder-btn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      line-height: 1.15;
+    }
+    .pdp-preorder-btn__sub {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      opacity: 0.9;
+    }
+    .product-v2-sticky-bar__atc-btn .pdp-preorder-btn__sub { font-size: 10px; }
   </style>
 
   <input
@@ -114,15 +128,6 @@
     value="{{ po_ships | escape }}"
     disabled
   >
-
-  <div class="product-v2__low-stock pdp-preorder-scarcity" id="PreorderScarcity-{{ section_id }}" style="display:flex;" hidden>
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="8" r="7" stroke="#F76503" stroke-width="1.5"/>
-      <path d="M8 4.5V9" stroke="#F76503" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="8" cy="11.5" r="0.75" fill="#F76503"/>
-    </svg>
-    <span></span>
-  </div>
 
   <div class="pdp-preorder" id="Preorder-{{ section_id }}" hidden>
     <p class="pdp-preorder__title">
@@ -153,10 +158,6 @@
       var prop = document.getElementById('PreorderProperty-{{ section_id }}');
       if (!form || !box || !prop) return;
       var root = form.closest('.product-v2') || document.body;
-      /* the scarcity row sits where the normal stock signal sits: above the buttons */
-      var scarcity = document.getElementById('PreorderScarcity-{{ section_id }}');
-      var buttonsRow = form.querySelector('.product-form__buttons');
-      if (scarcity && buttonsRow) buttonsRow.parentNode.insertBefore(scarcity, buttonsRow);
 
       function currentId() {
         var input = form.querySelector('input[name="id"]');
@@ -180,20 +181,20 @@
         box.hidden = !on;
         prop.disabled = !on;
         root.classList.toggle('is-preorder', on);
-        if (scarcity) {
-          var qty = cfg.stock[currentId()] || 0;
-          scarcity.hidden = !on || qty <= 0;
-          scarcity.querySelector('span').textContent = qty <= cfg.scarcityLowMax ? cfg.scarcityLow : cfg.scarcityHigh;
-        }
+        var qty = cfg.stock[currentId()] || 0;
+        var sub = qty <= cfg.scarcityLowMax ? cfg.scarcityLow : cfg.scarcityHigh;
+        var label = '<span class="pdp-preorder-btn"><span class="pdp-preorder-btn__main">' + cfg.button +
+          '</span><span class="pdp-preorder-btn__sub">' + sub + '</span></span>';
         labels().forEach(function (span) {
           var button = span.parentElement;
+          var ours = !!span.querySelector('.pdp-preorder-btn');
           if (on) {
-            if (!button.disabled && span.textContent.trim() !== cfg.button) {
-              span.setAttribute('data-preorder-original', span.innerHTML);
-              span.textContent = cfg.button;
+            if (!button.disabled && span.innerHTML !== label) {
+              if (!ours) span.setAttribute('data-preorder-original', span.innerHTML);
+              span.innerHTML = label;
             }
-          } else if (span.textContent.trim() === cfg.button && span.hasAttribute('data-preorder-original')) {
-            span.innerHTML = span.getAttribute('data-preorder-original');
+          } else if (ours) {
+            span.innerHTML = span.getAttribute('data-preorder-original') || '';
             span.removeAttribute('data-preorder-original');
           }
         });
