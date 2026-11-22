@@ -40,20 +40,32 @@
           "settings": {
             "text": "<p>You already ride in Sockeloen. Now your followers can too: your own 10% code and link, 10% commission on every order, and first access to new gear and creator campaigns.</p>"
           }
+        },
+        "btn": {
+          "type": "button",
+          "settings": {
+            "button_label": "Apply now",
+            "button_link": "https://api.collabs.shopify.com/creator/signup/community_application/12a73388d48dc974?origin=THEME_EXTENSION",
+            "button_style_secondary": false,
+            "button_label_2": "Log in",
+            "button_link_2": "https://api.collabs.shopify.com/creator/login/community_application/12a73388d48dc974?origin=THEME_EXTENSION",
+            "button_style_secondary_2": true
+          }
         }
       },
       "block_order": [
         "cap",
         "h",
-        "t"
+        "t",
+        "btn"
       ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
         "color_scheme": "background-1",
         "full_width": true,
-        "padding_top": 48,
-        "padding_bottom": 16
+        "padding_top": 40,
+        "padding_bottom": 8
       }
     },
     "benefits": {
@@ -72,7 +84,7 @@
         "collabs_application_page_rEA3qd": {
           "type": "shopify://apps/collabs/blocks/application-page/54758706-9f25-4fa9-a553-64720a4c998b",
           "settings": {
-            "heading": "Apply to the Sockeloen creator programme",
+            "heading": "Ready to join?",
             "show_square_logo": false,
             "show_partnership_info": false,
             "button_text": "Apply now",
