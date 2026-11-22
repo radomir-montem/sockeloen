@@ -77,9 +77,9 @@
         "f4"
       ],
       "settings": {
-        "image": "shopify://shop_images/roos.banner2.png",
-        "image_position": "center 30%",
-        "overlay_opacity": 30,
+        "image": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23501.jpg",
+        "image_position": "center center",
+        "overlay_opacity": 35,
         "min_height": 92,
         "kicker": "Sockeloen creator programme",
         "heading": "Let's start earning together.",
