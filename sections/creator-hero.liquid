@@ -1,0 +1,94 @@
+{%- liquid
+  assign s = section.settings
+  assign sid = section.id
+-%}
+{%- style -%}
+  body:has(#CrHero-{{ sid }}) main#MainContent, body:has(#CrHero-{{ sid }}) #MainContent { padding-top: 0 !important; }
+  #CrHero-{{ sid }} { position: relative; min-height: {{ s.min_height }}svh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #0b0b0b; color: #fff; font-family: Roboto, sans-serif; }
+  #CrHero-{{ sid }} .cr-hero__media { position: absolute; inset: 0; }
+  #CrHero-{{ sid }} .cr-hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{ s.image_position }}; display: block; }
+  #CrHero-{{ sid }} .cr-hero__shade { position: absolute; inset: 0; display: block !important; pointer-events: none;
+    background: linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 32%, rgba(0,0,0,0) 60%, rgba(0,0,0,.55) 100%), rgba(0,0,0,{{ s.overlay_opacity | divided_by: 100.0 }}); }
+  #CrHero-{{ sid }} .cr-hero__content { position: relative; z-index: 1; width: 100%; max-width: 820px; margin: 0 auto; padding: 150px 16px 90px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  #CrHero-{{ sid }} .cr-hero__kicker { margin: 0; font-size: 12px; font-weight: 700; color: rgba(255,255,255,.8); }
+  #CrHero-{{ sid }} .cr-hero__heading { margin: 0; font-size: clamp(38px, 6vw, 72px); font-weight: 700; line-height: 1.02; letter-spacing: -.01em; color: #fff; text-wrap: balance; }
+  #CrHero-{{ sid }} .cr-hero__sub { margin: 0; max-width: 560px; font-size: clamp(15px, 1.6vw, 19px); line-height: 1.45; color: rgba(255,255,255,.88); text-wrap: balance; }
+  #CrHero-{{ sid }} .cr-hero__cta { margin-top: 8px; padding: 15px 28px; font-size: 12px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; color: #fff; background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.28); border-radius: 8px; backdrop-filter: blur(21px) saturate(180%); -webkit-backdrop-filter: blur(21px) saturate(180%); box-shadow: 0 2px 2px rgba(0,0,0,.1); text-decoration: none; transition: background-color .2s ease, border-color .2s ease; }
+  #CrHero-{{ sid }} .cr-hero__cta:hover { background: rgba(255,255,255,.34); border-color: rgba(255,255,255,.45); color: #fff; }
+  #CrHero-{{ sid }} .cr-hero__note { margin: 0; font-size: 12px; color: rgba(255,255,255,.7); } #CrHero-{{ sid }} .cr-hero__note a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+  #CrHero-{{ sid }} .cr-hero__trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 13px; font-weight: 500; color: rgba(255,255,255,.92); }
+  #CrHero-{{ sid }} .cr-hero__trust li { display: flex; align-items: center; gap: 7px; } #CrHero-{{ sid }} .cr-hero__trust svg { width: 16px; height: 16px; fill: none; stroke: #abcc15; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  #CrFaq-{{ sid }} { font-family: Roboto, sans-serif; color: #1a1a1a; max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+  #CrFaq-{{ sid }} h2 { font-size: 30px; font-weight: 800; line-height: 1.1; letter-spacing: -.02em; margin: 0 0 14px; }
+  #CrFaq-{{ sid }} details { border-bottom: 1px solid #e5e5e5; } #CrFaq-{{ sid }} summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 0; font-size: 16px; font-weight: 600; }
+  #CrFaq-{{ sid }} summary::-webkit-details-marker { display: none; } #CrFaq-{{ sid }} summary::after { content: '+'; font-size: 22px; font-weight: 300; color: rgba(0,0,0,.6); flex: none; } #CrFaq-{{ sid }} details[open] summary::after { content: '−'; }
+  #CrFaq-{{ sid }} .cr-faq__a { margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #1a1a1a; } #CrFaq-{{ sid }} .cr-faq__a p { margin: 0 0 10px; }
+  #CrFaq-{{ sid }} .cr-faq__end { text-align: center; padding: 36px 0 0; }
+  #CrFaq-{{ sid }} .cr-faq__cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 28px; background: #111; color: #fff; border-radius: 8px; font-size: 12px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; text-decoration: none; } #CrFaq-{{ sid }} .cr-faq__cta:hover { background: #333; color: #fff; }
+  @media (max-width: 749px) { #CrHero-{{ sid }} .cr-hero__content { padding: 130px 16px 60px; } #CrHero-{{ sid }} .cr-hero__cta { width: 100%; } #CrHero-{{ sid }} .cr-hero__trust { flex-direction: column; align-items: flex-start; } #CrFaq-{{ sid }} { padding: 36px 20px 48px; } #CrFaq-{{ sid }} h2 { font-size: 26px; } #CrFaq-{{ sid }} .cr-faq__cta { width: 100%; } }
+{%- endstyle -%}
+<section id="CrHero-{{ sid }}" class="cr-hero">
+  <div class="cr-hero__media">
+    {%- if s.image -%}{{ s.image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', alt: s.image.alt | default: '', sizes: '100vw', widths: '750, 1100, 1500, 2000, 2400' }}{%- endif -%}
+  </div>
+  <div class="cr-hero__shade"></div>
+  <div class="cr-hero__content">
+    {%- if s.kicker != blank -%}<p class="cr-hero__kicker">{{ s.kicker }}</p>{%- endif -%}
+    <h1 class="cr-hero__heading">{{ s.heading }}</h1>
+    {%- if s.subheading != blank -%}<p class="cr-hero__sub">{{ s.subheading }}</p>{%- endif -%}
+    <a class="cr-hero__cta" href="{{ s.button_link }}">{{ s.button_label }}</a>
+    {%- if s.login_label != blank -%}<p class="cr-hero__note">{{ s.login_prefix }} <a href="{{ s.login_link }}">{{ s.login_label }}</a></p>{%- endif -%}
+    {%- assign has_trust = false -%}
+    {%- for block in section.blocks -%}{%- if block.type == 'trust' -%}{%- assign has_trust = true -%}{%- endif -%}{%- endfor -%}
+    {%- if has_trust -%}<ul class="cr-hero__trust">
+      {%- for block in section.blocks -%}{%- if block.type == 'trust' -%}<li {{ block.shopify_attributes }}><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9"/></svg>{{ block.settings.text }}</li>{%- endif -%}{%- endfor -%}
+    </ul>{%- endif -%}
+  </div>
+</section>
+{%- assign has_faq = false -%}
+{%- for block in section.blocks -%}{%- if block.type == 'faq' -%}{%- assign has_faq = true -%}{%- endif -%}{%- endfor -%}
+{%- if has_faq or s.bottom_button_label != blank -%}
+<div id="CrFaq-{{ sid }}" class="cr-faq">
+  {%- if has_faq -%}
+    {%- if s.faq_heading != blank -%}<h2>{{ s.faq_heading }}</h2>{%- endif -%}
+    {%- assign i = 0 -%}
+    {%- for block in section.blocks -%}{%- if block.type == 'faq' -%}{%- assign i = i | plus: 1 -%}
+      <details {% if i == 1 and s.faq_open_first %}open{% endif %} {{ block.shopify_attributes }}><summary>{{ block.settings.question }}</summary><div class="cr-faq__a">{{ block.settings.answer }}</div></details>
+    {%- endif -%}{%- endfor -%}
+  {%- endif -%}
+  {%- if s.bottom_button_label != blank -%}<div class="cr-faq__end"><a class="cr-faq__cta" href="{{ s.button_link }}">{{ s.bottom_button_label }}</a></div>{%- endif -%}
+</div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Creator programme hero",
+  "tag": "section",
+  "class": "section-creator-hero",
+  "settings": [
+    { "type": "header", "content": "Achtergrond" },
+    { "type": "image_picker", "id": "image", "label": "Achtergrondafbeelding" },
+    { "type": "select", "id": "image_position", "label": "Uitsnede", "default": "center 30%", "options": [ { "value": "center top", "label": "Boven" }, { "value": "center 30%", "label": "Hoog" }, { "value": "center center", "label": "Midden" }, { "value": "center bottom", "label": "Onder" } ] },
+    { "type": "range", "id": "overlay_opacity", "label": "Donkere waas (%)", "min": 0, "max": 80, "step": 5, "default": 30 },
+    { "type": "range", "id": "min_height", "label": "Hoogte (% van het scherm)", "min": 60, "max": 100, "step": 2, "default": 92 },
+    { "type": "header", "content": "Tekst" },
+    { "type": "text", "id": "kicker", "label": "Kleine regel boven de kop", "default": "Sockeloen creator programme" },
+    { "type": "text", "id": "heading", "label": "Kop", "default": "Let's start earning together." },
+    { "type": "textarea", "id": "subheading", "label": "Tekst onder de kop", "default": "Your own 10% code and link for your followers, 10% commission on every order, and first access to new gear and creator campaigns." },
+    { "type": "header", "content": "Knoppen" },
+    { "type": "text", "id": "button_label", "label": "Knoptekst", "default": "Apply now" },
+    { "type": "url", "id": "button_link", "label": "Knoplink (Collabs-aanmelding)" },
+    { "type": "text", "id": "login_prefix", "label": "Tekst voor de inloglink", "default": "Already a member?" },
+    { "type": "text", "id": "login_label", "label": "Inloglink tekst", "default": "Log in" },
+    { "type": "url", "id": "login_link", "label": "Inloglink (Collabs)" },
+    { "type": "header", "content": "Veelgestelde vragen" },
+    { "type": "text", "id": "faq_heading", "label": "Kop", "default": "Good to know" },
+    { "type": "checkbox", "id": "faq_open_first", "label": "Eerste vraag open tonen", "default": true },
+    { "type": "text", "id": "bottom_button_label", "label": "Knop onder de vragen (leeg = geen knop)", "default": "Apply now" }
+  ],
+  "blocks": [
+    { "type": "trust", "name": "Vinkje-regel", "settings": [ { "type": "text", "id": "text", "label": "Tekst", "default": "10% for your followers" } ] },
+    { "type": "faq", "name": "Vraag", "settings": [ { "type": "text", "id": "question", "label": "Vraag", "default": "How does it work?" }, { "type": "richtext", "id": "answer", "label": "Antwoord", "default": "<p>Apply with your Instagram or TikTok account.</p>" } ] }
+  ],
+  "presets": [ { "name": "Creator programme hero" } ]
+}
+{% endschema %}
