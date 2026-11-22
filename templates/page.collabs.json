@@ -1,0 +1,189 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "hero": {
+      "type": "rich-text",
+      "blocks": {
+        "cap": {
+          "type": "caption",
+          "settings": {
+            "caption": "SOCKELOEN CREATOR PROGRAMME",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Ride with us. Earn with every order.</p>",
+            "heading_size": "h0"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>You already ride in Sockeloen. Now your followers can too: your own 10% code and link, 10% commission on every order, and first access to new gear and creator campaigns.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "cap",
+        "h",
+        "t"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 48,
+        "padding_bottom": 16
+      }
+    },
+    "benefits": {
+      "type": "multicolumn",
+      "blocks": {
+        "b1": {
+          "type": "column",
+          "settings": {
+            "column_svg": "",
+            "heading": "10% for your followers",
+            "column_content": "Your personal code and link give new customers 10% off the full collection. The discount is built into your link, so sharing it is enough."
+          }
+        },
+        "b2": {
+          "type": "column",
+          "settings": {
+            "column_svg": "",
+            "heading": "10% commission",
+            "column_content": "You earn 10% on every order through your code or link, paid out automatically via Shopify Collabs. Track your orders and earnings in your own dashboard."
+          }
+        },
+        "b3": {
+          "type": "column",
+          "settings": {
+            "column_svg": "",
+            "heading": "Gear, early access & campaigns",
+            "column_content": "Top performers get invited to our seeding campaigns, paid partnership ads and the Sockeloen Tribe: a fixed monthly collaboration."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "settings": {}
+    },
+    "apply": {
+      "type": "apps",
+      "blocks": {
+        "collabs_application_page_rEA3qd": {
+          "type": "shopify://apps/collabs/blocks/application-page/54758706-9f25-4fa9-a553-64720a4c998b",
+          "settings": {
+            "heading": "Apply to the Sockeloen creator programme",
+            "show_square_logo": false,
+            "show_partnership_info": false,
+            "button_text": "Apply now",
+            "number_of_images": "4",
+            "logo_position": "above",
+            "corner_style": "square",
+            "button_background_color": "#000000",
+            "button_label_color": "#ffffff",
+            "link_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "collabs_application_page_rEA3qd"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "name": "FAQ",
+      "blocks": {
+        "fh": {
+          "type": "heading",
+          "settings": {
+            "heading": "Good to know"
+          }
+        },
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "question": "How does it work?",
+            "answer": "<p>Apply with your Instagram or TikTok account. Once approved you get your personal code and link straight away. Share the link in your stories, reels and captions; every order through it counts.</p>"
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "question": "Where should I share my code?",
+            "answer": "<p>In your videos, stories and captions, not in your bio. Codes in bios get picked up by coupon sites and AI search engines and used by people who never saw your content. Keeping it in your posts keeps the code, and your commission, with your own followers. Your link is always safe to share.</p>"
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "question": "Who can use my code?",
+            "answer": "<p>New Sockeloen customers, once per customer. That keeps the programme fair for you and for other creators.</p>"
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "question": "When and how do I get paid?",
+            "answer": "<p>Commission is tracked per order in Shopify Collabs and paid out automatically after the return period. You see every order in your Collabs dashboard.</p>"
+          }
+        },
+        "f5": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I get to the next level?",
+            "answer": "<p>Consistent orders through your code and strong content put you in line for our seeding campaigns, paid partnership ads and the Sockeloen Tribe. We reach out when you qualify.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "fh",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5"
+      ],
+      "settings": {
+        "padding_top": 40,
+        "padding_bottom": 60,
+        "padding_top_mob": 40,
+        "padding_bottom_mob": 50
+      }
+    }
+  },
+  "order": [
+    "main",
+    "hero",
+    "benefits",
+    "apply",
+    "faq"
+  ]
+}
