@@ -20,29 +20,35 @@
     "creator_hero": {
       "type": "creator-hero",
       "blocks": {
-        "t1": {
-          "type": "trust",
-          "settings": {
-            "text": "10% for your followers"
-          }
-        },
         "t2": {
           "type": "trust",
           "settings": {
-            "text": "10% commission, paid via Shopify Collabs"
+            "text": "10% commission for you"
+          }
+        },
+        "t1": {
+          "type": "trust",
+          "settings": {
+            "text": "10% discount for your followers"
+          }
+        },
+        "trust_YXUMdG": {
+          "type": "trust",
+          "settings": {
+            "text": "Paid via Shopify Collabs"
           }
         },
         "t3": {
           "type": "trust",
           "settings": {
-            "text": "Seeding, partnership ads & Tribe for top creators"
+            "text": "Seeding, partnership ads & Trybe for top creators"
           }
         },
         "f1": {
           "type": "faq",
           "settings": {
             "question": "How does it work?",
-            "answer": "<p>Apply with your Instagram or TikTok account. Once approved, your personal code and link are ready right away in your Collabs dashboard. Share the link in reels, stories and captions; every order counts and commission is paid automatically.</p>"
+            "answer": "<p>Apply with your Instagram or TikTok account. Once approved, you will start earning 10% commission on your sales.<br/><br/>Share your personal code and link in reels, stories and captions; every order counts and commission is paid automatically through this platform.</p>"
           }
         },
         "f2": {
@@ -68,8 +74,9 @@
         }
       },
       "block_order": [
-        "t1",
         "t2",
+        "t1",
+        "trust_YXUMdG",
         "t3",
         "f1",
         "f2",
@@ -80,10 +87,10 @@
         "image": "shopify://shop_images/260911_SOCKELOEN_AW26_ANGUSFRASER_23501.jpg",
         "image_position": "center center",
         "overlay_opacity": 35,
-        "min_height": 92,
+        "min_height": 76,
         "kicker": "Sockeloen creator programme",
         "heading": "Let's start earning together.",
-        "subheading": "Your own 10% code and link for your followers, 10% commission on every order, and first access to new gear and creator campaigns.",
+        "subheading": "",
         "button_label": "Apply now",
         "button_link": "https://api.collabs.shopify.com/creator/signup/community_application/12a73388d48dc974?origin=THEME_EXTENSION",
         "login_prefix": "Already a member?",
