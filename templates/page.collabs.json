@@ -17,62 +17,11 @@
         "padding_bottom": 28
       }
     },
-    "hero": {
-      "type": "rich-text",
-      "blocks": {
-        "cap": {
-          "type": "caption",
-          "settings": {
-            "caption": "SOCKELOEN CREATOR PROGRAMME",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
-          }
-        },
-        "h": {
-          "type": "heading",
-          "settings": {
-            "heading": "<p>Ride with us. Earn with every order.</p>",
-            "heading_size": "h0"
-          }
-        },
-        "t": {
-          "type": "text",
-          "settings": {
-            "text": "<p>You already ride in Sockeloen. Now your followers can too: your own 10% code and link, 10% commission on every order, and first access to new gear and creator campaigns.</p>"
-          }
-        },
-        "btn": {
-          "type": "button",
-          "settings": {
-            "button_label": "Apply now",
-            "button_link": "https://api.collabs.shopify.com/creator/signup/community_application/12a73388d48dc974?origin=THEME_EXTENSION",
-            "button_style_secondary": false,
-            "button_label_2": "Log in",
-            "button_link_2": "https://api.collabs.shopify.com/creator/login/community_application/12a73388d48dc974?origin=THEME_EXTENSION",
-            "button_style_secondary_2": true
-          }
-        }
-      },
-      "block_order": [
-        "cap",
-        "h",
-        "t",
-        "btn"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "background-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 8
-      }
-    },
-    "benefits": {
+    "collabs_v2": {
       "type": "custom-liquid",
       "settings": {
         "heading": "",
-        "custom_liquid": "<style>.sk-ben{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;background:#E2E2E2;padding:32px 24px;margin:16px 0}.sk-ben .c{display:flex;gap:18px;align-items:flex-start}.sk-ben svg{width:44px;height:44px;flex:none}.sk-ben h3{font-family:Roboto,sans-serif;font-size:18px;font-weight:500;line-height:20px;margin:0 0 12px;text-transform:uppercase;color:#121212}.sk-ben p{font-family:Roboto,sans-serif;font-weight:300;font-size:16px;line-height:26px;margin:0;color:#121212}@media(max-width:749px){.sk-ben{grid-template-columns:1fr;gap:28px;padding:28px 20px}}</style><div class=\"sk-ben\"><div class=\"c\"><svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"#121212\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"12\" y1=\"36\" x2=\"36\" y2=\"12\"/><circle cx=\"15\" cy=\"15\" r=\"5\"/><circle cx=\"33\" cy=\"33\" r=\"5\"/></svg><div><h3>10% for your followers</h3><p>Your personal code and link give new customers 10% off the full collection. The discount is built into your link, so sharing it is enough.</p></div></div><div class=\"c\"><svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"#121212\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><ellipse cx=\"24\" cy=\"13\" rx=\"14\" ry=\"5\"/><path d=\"M10 13v8c0 2.8 6.3 5 14 5s14-2.2 14-5v-8\"/><path d=\"M10 21v8c0 2.8 6.3 5 14 5s14-2.2 14-5v-8\"/><path d=\"M10 29v6c0 2.8 6.3 5 14 5s14-2.2 14-5v-6\"/></svg><div><h3>10% commission</h3><p>You earn 10% on every order through your code or link, paid out automatically via Shopify Collabs. Track your orders and earnings in your own dashboard.</p></div></div><div class=\"c\"><svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"#121212\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M24 6l5.6 11.4 12.6 1.8-9.1 8.9 2.2 12.5L24 34.7l-11.3 5.9 2.2-12.5-9.1-8.9 12.6-1.8z\"/></svg><div><h3>Gear, early access & campaigns</h3><p>Top performers get invited to our seeding campaigns, paid partnership ads and the Sockeloen Tribe: a fixed monthly collaboration.</p></div></div></div>",
+        "custom_liquid": "<style>\n.skc{--blue:#0395F6;--orange:#F76503;--ink:#1a1a1a;--muted:rgba(0,0,0,.6);--line:#e5e5e5;--soft:#F4F4F1;font-family:inherit;color:var(--ink);max-width:1200px;margin:0 auto;padding:0 20px}\n.skc *{box-sizing:border-box}\n.skc .hero{text-align:center;padding:44px 0 28px;max-width:760px;margin:0 auto}\n.skc .eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}\n.skc h1{font-size:38px;font-weight:800;line-height:1.05;letter-spacing:-.02em;margin:0 0 16px}\n.skc .lead{font-size:16px;line-height:1.7;color:var(--muted);margin:0 auto 24px;max-width:620px}\n.skc .cta{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 36px;background:var(--blue);color:#fff;border-radius:6px;font-size:15px;font-weight:500;letter-spacing:.01em;text-decoration:none;transition:background .15s}\n.skc .cta:hover{background:var(--orange);color:#fff}\n.skc .login{display:block;margin-top:12px;font-size:14px;color:var(--muted)} .skc .login a{color:var(--ink);font-weight:500;text-decoration:underline;text-underline-offset:3px}\n.skc .trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin:22px 0 0;padding:0;list-style:none;font-size:14px;color:var(--ink)}\n.skc .trust li{display:flex;align-items:center;gap:7px} .skc .ck{width:18px;height:18px;fill:none;stroke:#5a9a00;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;flex:none}\n.skc .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0 0}\n.skc .card{background:var(--soft);border-radius:10px;padding:24px 22px}\n.skc .card svg{width:34px;height:34px;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;margin-bottom:14px;display:block}\n.skc .card h3{font-size:18px;font-weight:700;line-height:1.2;margin:0 0 8px;text-transform:capitalize}\n.skc .card p{font-size:15px;line-height:1.7;color:var(--muted);margin:0}\n.skc h2{font-size:30px;font-weight:800;line-height:1.1;letter-spacing:-.02em;margin:56px 0 22px;text-align:center}\n.skc .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}\n.skc .step{border:1px solid var(--line);border-radius:10px;padding:22px}\n.skc .step b{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px;font-weight:700;margin-bottom:12px}\n.skc .step h3{font-size:16px;font-weight:700;margin:0 0 6px;text-transform:capitalize} .skc .step p{font-size:15px;line-height:1.6;color:var(--muted);margin:0}\n.skc .faq{max-width:760px;margin:0 auto}\n.skc details{border-bottom:1px solid var(--line)} .skc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;font-size:16px;font-weight:600}\n.skc summary::-webkit-details-marker{display:none} .skc summary::after{content:'+';font-size:22px;font-weight:300;color:var(--muted);flex:none} .skc details[open] summary::after{content:'\u2212'}\n.skc details p{margin:0 0 16px;font-size:16px;line-height:1.6;color:var(--ink)}\n.skc .end{text-align:center;padding:44px 0 56px} .skc .end p{font-size:15px;color:var(--muted);margin:0 0 18px}\n@media(max-width:749px){.skc h1{font-size:30px}.skc .hero{padding:32px 0 20px}.skc .cta{width:100%}.skc .cards,.skc .steps{grid-template-columns:1fr}.skc h2{font-size:26px;margin:40px 0 18px;text-align:left}.skc .trust{justify-content:flex-start}}\n</style>\n<div class=\"skc\">\n <section class=\"hero\">\n  <p class=\"eyebrow\">Sockeloen creator programme</p>\n  <h1>Ride with us.<br>Earn with every order.</h1>\n  <p class=\"lead\">You already ride in Sockeloen. Now your followers can too: your own 10% code and link, 10% commission on every order, and first access to new gear and creator campaigns.</p>\n  <a class=\"cta\" href=\"https://api.collabs.shopify.com/creator/signup/community_application/12a73388d48dc974?origin=THEME_EXTENSION\">Apply now</a>\n  <span class=\"login\">Already a member? <a href=\"https://api.collabs.shopify.com/creator/login/community_application/12a73388d48dc974?origin=THEME_EXTENSION\">Log in</a></span>\n  <ul class=\"trust\"><li><svg viewBox=\"0 0 20 20\" class=\"ck\"><path d=\"M4 10.5l4 4 8-9\"/></svg>10% for your followers</li><li><svg viewBox=\"0 0 20 20\" class=\"ck\"><path d=\"M4 10.5l4 4 8-9\"/></svg>10% commission on every order</li><li><svg viewBox=\"0 0 20 20\" class=\"ck\"><path d=\"M4 10.5l4 4 8-9\"/></svg>Paid out via Shopify Collabs</li></ul>\n </section>\n <section class=\"cards\">\n  <div class=\"card\"><svg viewBox=\"0 0 48 48\"><line x1=\"12\" y1=\"36\" x2=\"36\" y2=\"12\"/><circle cx=\"15\" cy=\"15\" r=\"5\"/><circle cx=\"33\" cy=\"33\" r=\"5\"/></svg><h3>10% for your followers</h3><p>Your personal code and link give new customers 10% off the full collection. The discount is built into your link, so sharing it is enough.</p></div>\n  <div class=\"card\"><svg viewBox=\"0 0 48 48\"><ellipse cx=\"24\" cy=\"13\" rx=\"14\" ry=\"5\"/><path d=\"M10 13v8c0 2.8 6.3 5 14 5s14-2.2 14-5v-8\"/><path d=\"M10 21v8c0 2.8 6.3 5 14 5s14-2.2 14-5v-8\"/><path d=\"M10 29v6c0 2.8 6.3 5 14 5s14-2.2 14-5v-6\"/></svg><h3>10% commission</h3><p>You earn 10% on every order through your code or link, paid out automatically via Shopify Collabs. Track your orders and earnings in your own dashboard.</p></div>\n  <div class=\"card\"><svg viewBox=\"0 0 48 48\"><path d=\"M24 6l5.6 11.4 12.6 1.8-9.1 8.9 2.2 12.5L24 34.7l-11.3 5.9 2.2-12.5-9.1-8.9 12.6-1.8z\"/></svg><h3>Gear, early access &amp; campaigns</h3><p>Top performers get invited to our seeding campaigns, paid partnership ads and the Sockeloen Tribe: a fixed monthly collaboration.</p></div>\n </section>\n <h2>How it works</h2>\n <section class=\"steps\">\n  <div class=\"step\"><b>1</b><h3>Apply</h3><p>Sign up with your Instagram or TikTok account. Takes a minute.</p></div>\n  <div class=\"step\"><b>2</b><h3>Get your code and link</h3><p>Approved? Your personal code and link are ready right away in your Collabs dashboard.</p></div>\n  <div class=\"step\"><b>3</b><h3>Share and earn</h3><p>Share your link in reels, stories and captions. Every order counts, and commission is paid automatically.</p></div>\n </section>\n <h2>Good to know</h2>\n <section class=\"faq\">\n  <details open><summary>Where should I share my code?</summary><p>In your videos, stories and captions, not in your bio. Codes in bios get picked up by coupon sites and AI search engines and used by people who never saw your content. Keeping it in your posts keeps the code, and your commission, with your own followers. Your link is always safe to share.</p></details>\n  <details><summary>Who can use my code?</summary><p>New Sockeloen customers, once per customer. That keeps the programme fair for you and for other creators.</p></details>\n  <details><summary>When and how do I get paid?</summary><p>Commission is tracked per order in Shopify Collabs and paid out automatically after the return period. You see every order in your Collabs dashboard.</p></details>\n  <details><summary>How do I get to the next level?</summary><p>Consistent orders through your code and strong content put you in line for our seeding campaigns, paid partnership ads and the Sockeloen Tribe. We reach out when you qualify.</p></details>\n </section>\n <section class=\"end\"><p>Ready to ride with us?</p><a class=\"cta\" href=\"https://api.collabs.shopify.com/creator/signup/community_application/12a73388d48dc974?origin=THEME_EXTENSION\">Apply now</a></section>\n</div>",
         "color_scheme": "background-1",
         "padding_top": 0,
         "padding_bottom": 0
@@ -84,14 +33,14 @@
         "collabs_application_page_rEA3qd": {
           "type": "shopify://apps/collabs/blocks/application-page/54758706-9f25-4fa9-a553-64720a4c998b",
           "settings": {
-            "heading": "Ready to join?",
+            "heading": "",
             "show_square_logo": false,
             "show_partnership_info": false,
             "button_text": "Apply now",
             "number_of_images": "4",
             "logo_position": "above",
-            "corner_style": "square",
-            "button_background_color": "#000000",
+            "corner_style": "rounded",
+            "button_background_color": "#0395F6",
             "button_label_color": "#ffffff",
             "link_color": "#000000"
           }
@@ -103,74 +52,11 @@
       "settings": {
         "include_margins": true
       }
-    },
-    "faq": {
-      "type": "faq",
-      "name": "FAQ",
-      "blocks": {
-        "fh": {
-          "type": "heading",
-          "settings": {
-            "heading": "Good to know"
-          }
-        },
-        "f1": {
-          "type": "faq",
-          "settings": {
-            "question": "How does it work?",
-            "answer": "<p>Apply with your Instagram or TikTok account. Once approved you get your personal code and link straight away. Share the link in your stories, reels and captions; every order through it counts.</p>"
-          }
-        },
-        "f2": {
-          "type": "faq",
-          "settings": {
-            "question": "Where should I share my code?",
-            "answer": "<p>In your videos, stories and captions, not in your bio. Codes in bios get picked up by coupon sites and AI search engines and used by people who never saw your content. Keeping it in your posts keeps the code, and your commission, with your own followers. Your link is always safe to share.</p>"
-          }
-        },
-        "f3": {
-          "type": "faq",
-          "settings": {
-            "question": "Who can use my code?",
-            "answer": "<p>New Sockeloen customers, once per customer. That keeps the programme fair for you and for other creators.</p>"
-          }
-        },
-        "f4": {
-          "type": "faq",
-          "settings": {
-            "question": "When and how do I get paid?",
-            "answer": "<p>Commission is tracked per order in Shopify Collabs and paid out automatically after the return period. You see every order in your Collabs dashboard.</p>"
-          }
-        },
-        "f5": {
-          "type": "faq",
-          "settings": {
-            "question": "How do I get to the next level?",
-            "answer": "<p>Consistent orders through your code and strong content put you in line for our seeding campaigns, paid partnership ads and the Sockeloen Tribe. We reach out when you qualify.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "fh",
-        "f1",
-        "f2",
-        "f3",
-        "f4",
-        "f5"
-      ],
-      "settings": {
-        "padding_top": 40,
-        "padding_bottom": 60,
-        "padding_top_mob": 40,
-        "padding_bottom_mob": 50
-      }
     }
   },
   "order": [
     "main",
-    "hero",
-    "benefits",
-    "apply",
-    "faq"
+    "collabs_v2",
+    "apply"
   ]
 }
