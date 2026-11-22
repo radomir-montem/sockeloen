@@ -57,39 +57,14 @@
       }
     },
     "benefits": {
-      "type": "multicolumn",
-      "blocks": {
-        "b1": {
-          "type": "column",
-          "settings": {
-            "column_svg": "",
-            "heading": "10% for your followers",
-            "column_content": "Your personal code and link give new customers 10% off the full collection. The discount is built into your link, so sharing it is enough."
-          }
-        },
-        "b2": {
-          "type": "column",
-          "settings": {
-            "column_svg": "",
-            "heading": "10% commission",
-            "column_content": "You earn 10% on every order through your code or link, paid out automatically via Shopify Collabs. Track your orders and earnings in your own dashboard."
-          }
-        },
-        "b3": {
-          "type": "column",
-          "settings": {
-            "column_svg": "",
-            "heading": "Gear, early access & campaigns",
-            "column_content": "Top performers get invited to our seeding campaigns, paid partnership ads and the Sockeloen Tribe: a fixed monthly collaboration."
-          }
-        }
-      },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3"
-      ],
-      "settings": {}
+      "type": "custom-liquid",
+      "settings": {
+        "heading": "",
+        "custom_liquid": "<style>.sk-ben{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;background:#E2E2E2;padding:32px 24px;margin:16px 0}.sk-ben .c{display:flex;gap:18px;align-items:flex-start}.sk-ben svg{width:44px;height:44px;flex:none}.sk-ben h3{font-family:Roboto,sans-serif;font-size:18px;font-weight:500;line-height:20px;margin:0 0 12px;text-transform:uppercase;color:#121212}.sk-ben p{font-family:Roboto,sans-serif;font-weight:300;font-size:16px;line-height:26px;margin:0;color:#121212}@media(max-width:749px){.sk-ben{grid-template-columns:1fr;gap:28px;padding:28px 20px}}</style><div class=\"sk-ben\"><div class=\"c\"><svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"#121212\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"12\" y1=\"36\" x2=\"36\" y2=\"12\"/><circle cx=\"15\" cy=\"15\" r=\"5\"/><circle cx=\"33\" cy=\"33\" r=\"5\"/></svg><div><h3>10% for your followers</h3><p>Your personal code and link give new customers 10% off the full collection. The discount is built into your link, so sharing it is enough.</p></div></div><div class=\"c\"><svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"#121212\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><ellipse cx=\"24\" cy=\"13\" rx=\"14\" ry=\"5\"/><path d=\"M10 13v8c0 2.8 6.3 5 14 5s14-2.2 14-5v-8\"/><path d=\"M10 21v8c0 2.8 6.3 5 14 5s14-2.2 14-5v-8\"/><path d=\"M10 29v6c0 2.8 6.3 5 14 5s14-2.2 14-5v-6\"/></svg><div><h3>10% commission</h3><p>You earn 10% on every order through your code or link, paid out automatically via Shopify Collabs. Track your orders and earnings in your own dashboard.</p></div></div><div class=\"c\"><svg viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"#121212\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M24 6l5.6 11.4 12.6 1.8-9.1 8.9 2.2 12.5L24 34.7l-11.3 5.9 2.2-12.5-9.1-8.9 12.6-1.8z\"/></svg><div><h3>Gear, early access & campaigns</h3><p>Top performers get invited to our seeding campaigns, paid partnership ads and the Sockeloen Tribe: a fixed monthly collaboration.</p></div></div></div>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     },
     "apply": {
       "type": "apps",
