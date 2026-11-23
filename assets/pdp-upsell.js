@@ -34,6 +34,30 @@
         return c.options.every(function (o, i) { return isSizeName(o.name) || v.options[i] === c.fixed.options[i]; });
       });
       if (!c.variants.length) c.variants = [c.fixed];
+      /* Per-size fallback: a size that is sold out here comes from the first
+         backup (same colour as that backup's offered variant) that has it in
+         stock. Its own id and price go to the cart and the totals; the size row
+         names it ("L: Winter Gloves High Performance"). */
+      (c.fallbacks || []).forEach(function (f) {
+        var fIdx = f.options.findIndex(function (o) { return isSizeName(o.name); });
+        var fFixed = f.variants.find(function (v) { return v.id === f.id; }) || f.variants[0];
+        if (fIdx < 0 || !fFixed) return;
+        c.options.forEach(function (o, i) {
+          if (!isSizeName(o.name)) return;
+          f.variants.forEach(function (fv) {
+            if (!fv.available) return;
+            var sameColour = f.options.every(function (fo, k) { return k === fIdx || fv.options[k] === fFixed.options[k]; });
+            if (!sameColour) return;
+            var size = fv.options[fIdx];
+            if (o.values.indexOf(size) === -1) return;
+            if (c.variants.some(function (v) { return v.available && v.options[i] === size; })) return;
+            var opts = c.fixed.options.slice();
+            opts[i] = size;
+            c.variants = c.variants.filter(function (v) { return v.options[i] !== size; });
+            c.variants.push({ id: fv.id, price: fv.price, available: true, options: opts, fallbackLabel: f.label });
+          });
+        });
+      });
       c.sizeOptions = c.options.filter(function (o, i) {
         if (!isSizeName(o.name)) return false;
         var values = {};
@@ -311,6 +335,14 @@
             list.appendChild(pill);
           });
           row.appendChild(list);
+          /* the chosen size comes from a backup product: say which one */
+          var chosen = c.variants.find(function (v) { return v.available && v.options[idx] === current; });
+          if (chosen && chosen.fallbackLabel) {
+            var note = document.createElement('p');
+            note.className = 'pdp-upsell__sizes-note';
+            note.textContent = current + ': ' + chosen.fallbackLabel;
+            row.appendChild(note);
+          }
           rows.push(row);
         });
       }
