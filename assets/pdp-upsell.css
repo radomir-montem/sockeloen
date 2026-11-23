@@ -168,3 +168,6 @@ body.template--product .product-v2--gallery .pdp-tile .pdp-upsell__pill.is-selec
 }
 .pdp-upsell__select:focus { outline: none; border-color: #0395F6; }
 .pdp-upsell__saving:has(> :empty) { display: none; }
+
+/* per-size fallback: which product the chosen size comes from */
+.pdp-upsell__sizes-note { margin: 6px 0 0; font-size: 12px; line-height: 1.3; color: rgba(18, 18, 18, 0.65); }

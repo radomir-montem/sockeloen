@@ -3,7 +3,8 @@
   as JSON: the offered variant, its product's options and variants. The script
   keeps the variants sharing the choice's non-size options and lets the
   customer pick a size when the product has more than one.
-  Parameters: variant (the offered variant), host_label (fallback label)
+  Parameters: variant (the offered variant), host_label (fallback label),
+  fallbacks (optional: the backups' choice JSON, comma-separated, used per size)
 {%- endcomment -%}
 {%- liquid
   assign p = variant.product
@@ -23,6 +24,7 @@
   "label": {{ choice_label | json }},
   "image": {{ choice_img | image_url: width: 96 | json }},
   "url": {{ p.url | json }},
+  "fallbacks": [{{ fallbacks }}],
   "options": {{ p.options_with_values | json }},
   "variants": [
     {%- for v in p.variants -%}

@@ -80,8 +80,31 @@
       if forloop.first
         assign upsell = piece.product
       endif
+      comment
+        Per-size fallback: the other backups of this piece travel along, so a
+        size that is sold out in the piece is taken from the first backup that
+        has that size in stock (pdp-upsell.js). E.g. gloves Classic in S/M/XL,
+        Performance or High Performance in L.
+      endcomment
+      assign fb_key = 'upsell_backups_' | append: forloop.index
+      assign fb_list = product.metafields.custom[fb_key].value
+      assign fb_json = ''
+      if fb_list != blank
+        for fb in fb_list
+          if fb.product.id == piece.product.id or fb.product.available == false
+            continue
+          endif
+          capture fb_one
+            render 'product-upsell-choice-json', variant: fb
+          endcapture
+          if fb_json != ''
+            assign fb_json = fb_json | append: ','
+          endif
+          assign fb_json = fb_json | append: fb_one
+        endfor
+      endif
       capture one
-        render 'product-upsell-choice-json', variant: piece
+        render 'product-upsell-choice-json', variant: piece, fallbacks: fb_json
       endcapture
       if choices_json != ''
         assign choices_json = choices_json | append: ','
