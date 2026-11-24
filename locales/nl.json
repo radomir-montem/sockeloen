@@ -421,7 +421,8 @@
       "free_shipping_and_gift_reached_html": "<strong>Gratis Verzending</strong> + <strong>Black Friday cadeau</strong> ontgrendeld!",
       "free_shipping_and_express_reached_html": "<strong>Gratis Expresverzending</strong> ontgrendeld!",
       "free_gift_chosen": "Je Black Friday cadeau:",
-      "free_gift_change": "Wijzig"
+      "free_gift_change": "Wijzig",
+      "uk_import_notice_html": "<strong>Levering in het VK:</strong> je bestelling is hoger dan £135, daarom betaal je bij aflevering Britse invoer-btw (20%) en £8 afhandelingskosten van Royal Mail."
     },
     "footer": {
       "payment": "Betaalmethoden"

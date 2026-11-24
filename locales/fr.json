@@ -428,7 +428,8 @@
       "free_shipping_and_gift_reached_html": "<strong>Livraison gratuite + cadeau Black Friday</strong> débloqués !",
       "free_shipping_and_express_reached_html": "<strong>Livraison Express Gratuite</strong> débloquée !",
       "free_gift_chosen": "Votre cadeau Black Friday :",
-      "free_gift_change": "Modifier"
+      "free_gift_change": "Modifier",
+      "uk_import_notice_html": "<strong>Livraison au Royaume-Uni :</strong> votre commande dépasse 135 £, la TVA britannique à l’importation (20 %) et 8 £ de frais de traitement Royal Mail sont donc à payer à la livraison."
     },
     "footer": {
       "payment": "Moyens de paiement"
