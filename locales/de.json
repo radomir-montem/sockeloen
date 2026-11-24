@@ -421,7 +421,8 @@
       "free_shipping_and_gift_reached_html": "<strong>Gratis Versand</strong> + <strong>Black-Friday-Geschenk</strong> freigeschaltet!",
       "free_shipping_and_express_reached_html": "<strong>Gratis Expressversand</strong> freigeschaltet!",
       "free_gift_chosen": "Dein Black-Friday-Geschenk:",
-      "free_gift_change": "Ändern"
+      "free_gift_change": "Ändern",
+      "uk_import_notice_html": "<strong>Lieferung ins Vereinigte Königreich:</strong> Deine Artikel haben zusammen einen Wert von über £135 (vor Rabatt), daher fallen bei der Zustellung britische Einfuhrumsatzsteuer (20%) und £8 Bearbeitungsgebühr von Royal Mail an."
     },
     "footer": {
       "payment": "Zahlungsmethoden"
