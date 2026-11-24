@@ -391,8 +391,9 @@
                 <span class="cart-drawer__total-label">{{ 'sections.cart.subtotal' | t }}</span>
                 <span class="cart-drawer__total-value">{{ cart.total_price | money_without_currency }}</span>
               </div>
-              <div class="cart-drawer__total-row cart-drawer__total-row--shipping">
-                {% assign free_shipping_cents = settings.free_shipping | times: 100 %}
+              {%- capture free_shipping_cents -%}{%- render 'free-shipping-threshold' -%}{%- endcapture -%}
+              {%- assign free_shipping_cents = free_shipping_cents | strip | plus: 0 -%}
+              <div class="cart-drawer__total-row cart-drawer__total-row--shipping" data-ship-row data-total="{{ cart.total_price }}" data-ship-base="{{ free_shipping_cents }}">
                 <span class="cart-drawer__total-label small-text">{{ 'sections.cart.shipping' | t }}</span>
                 <span class="cart-drawer__total-value small-text">
                   <span class="money {% if cart.total_price >= free_shipping_cents %}hidden{% endif %}" x-text="shipping_value != null ? shipping_value.toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : ''"></span>
@@ -450,6 +451,78 @@
   </div>
 </cart-drawer>
 
+<script>
+  /* Free-shipping threshold in the visitor's currency: the progress bar and the
+     "Shipping: Free" row are drawn with the threshold in euro
+     (snippets/free-shipping-threshold.liquid); for another currency this
+     converts it at Shopify's rate and redraws them. Runs after every drawer
+     re-render. */
+  (function () {
+    if (window.__sockeloenRewardFx) return;
+    window.__sockeloenRewardFx = true;
+    function rate() {
+      var r = window.Shopify && Shopify.currency && parseFloat(Shopify.currency.rate);
+      return r && !isNaN(r) ? r : 1;
+    }
+    function fmt(cents, sample) {
+      var comma = /,\d{2}$/.test(sample || '');
+      var v = (Math.max(0, cents) / 100).toFixed(2);
+      var parts = v.split('.');
+      var whole = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, comma ? '.' : ',');
+      return whole + (comma ? ',' : '.') + parts[1];
+    }
+    function pct(value, baseline, max, low, top) {
+      var p;
+      if (value <= baseline) p = value / baseline * low;
+      else if (value <= max) p = (value - baseline) / (max - baseline) * (top - low) + low;
+      else p = (value - max) / 3000 * (100 - top) + top;
+      return Math.max(0, Math.min(100, p));
+    }
+    function fixBar(box) {
+      if (box.getAttribute('data-convert') !== 'true') return;
+      var total = parseInt(box.getAttribute('data-total'), 10) || 0;
+      var ship = Math.round((parseInt(box.getAttribute('data-ship-base'), 10) || 0) * rate());
+      var gift = parseInt(box.getAttribute('data-gift-cents'), 10) || 0;
+      var hasGift = box.getAttribute('data-has-free-gift') === 'true';
+      var sym = box.getAttribute('data-symbol') || '';
+      var sample = box.getAttribute('data-money-sample') || '';
+      var shipOk = total >= ship;
+      var giftOk = hasGift && total >= gift;
+      var headline = giftOk ? 'gift-reached' : (shipOk && hasGift ? 'gift-away' : (shipOk ? 'ship-reached' : 'ship-away'));
+      box.querySelectorAll('[data-headline]').forEach(function (el) { el.hidden = el.getAttribute('data-headline') !== headline; });
+      var rs = box.querySelector('[data-remaining="ship"]');
+      if (rs && rs.textContent !== sym + fmt(ship - total, sample)) rs.textContent = sym + fmt(ship - total, sample);
+      var la = box.querySelector('[data-amount="ship"]');
+      if (la && la.textContent !== sym + fmt(ship, sample)) la.textContent = sym + fmt(ship, sample);
+      var max = hasGift ? gift : ship, low = 15, top = 90;
+      var bar = box.querySelector('.progressive_bar_shipping_price');
+      if (bar) { bar.style.width = pct(total, 5000, max, low, top) + '%'; bar.classList.toggle('is-reached', shipOk); }
+      var markerP = pct(ship, 5000, max, low, top) + '%';
+      box.querySelectorAll('.progress_bar_milestone--shipping, .progress_bar_label--shipping').forEach(function (el) {
+        el.style.left = markerP;
+        el.classList.toggle('is-reached', shipOk);
+      });
+      box.className = box.className.replace(/reward-state--\S+/, 'reward-state--' + (giftOk ? 'gift' : (shipOk ? 'shipping' : 'none')));
+    }
+    function fixRow(row) {
+      if (!window.Shopify || !Shopify.currency || Shopify.currency.active === 'EUR') return;
+      var total = parseInt(row.getAttribute('data-total'), 10) || 0;
+      var ship = Math.round((parseInt(row.getAttribute('data-ship-base'), 10) || 0) * rate());
+      var free = row.querySelector('#its_free');
+      var paid = row.querySelector('.money');
+      if (free) free.classList.toggle('hidden', total < ship);
+      if (paid) paid.classList.toggle('hidden', total >= ship);
+    }
+    function run() {
+      document.querySelectorAll('.free_shipping_container[data-convert="true"]').forEach(fixBar);
+      document.querySelectorAll('[data-ship-row]').forEach(fixRow);
+    }
+    run();
+    document.addEventListener('DOMContentLoaded', run);
+    var drawer = document.querySelector('cart-drawer');
+    if (drawer) new MutationObserver(function () { clearTimeout(window.__srfxT); window.__srfxT = setTimeout(run, 30); }).observe(drawer, { childList: true, subtree: true });
+  })();
+</script>
 <style>
   .cart-drawer__preorder {
     display: flex;

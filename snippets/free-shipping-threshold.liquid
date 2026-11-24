@@ -1,0 +1,24 @@
+{%- comment -%}
+  Free-shipping threshold for the visitor's country, in the SHOP currency
+  (euro cents). Mirrors the shipping rates in Settings > Shipping and delivery
+  (general profile); keep both in sync when a rate changes:
+  - Netherlands, Belgium, rest of the EU: theme setting "Free Shipping" (€80)
+  - UK / Switzerland / Norway, USA / Canada: €150
+  - rest of the world: €200
+  For a visitor shopping in another currency the theme converts this amount at
+  Shopify's rate in the browser (Shopify.currency.rate), the same way Shopify
+  converts the shipping rate condition at checkout.
+{%- endcomment -%}
+{%- liquid
+  assign fst_country = ',' | append: localization.country.iso_code | append: ','
+  assign fst_eu = ',AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE,'
+  assign fst_150 = ',GB,CH,NO,US,CA,'
+  if fst_eu contains fst_country
+    assign fst = settings.free_shipping | times: 100
+  elsif fst_150 contains fst_country
+    assign fst = 15000
+  else
+    assign fst = 20000
+  endif
+  echo fst
+-%}
