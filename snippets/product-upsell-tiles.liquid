@@ -186,13 +186,15 @@
     endif
   endif
   comment
-    Free-shipping threshold of the market (same rule as the shipping row):
-    tiles whose total reaches it show "Free shipping".
+    Free-shipping threshold for the visitor's country, in euro (same rule as
+    the shipping row and the cart, snippets/free-shipping-threshold.liquid):
+    tiles whose total reaches it show "Free shipping". pdp-upsell.js converts
+    it to the visitor's currency at Shopify's rate.
   endcomment
-  assign ship_threshold = settings.free_shipping
-  if cart.currency.iso_code == 'USD'
-    assign ship_threshold = settings.free_shipping_usd | default: 100
-  endif
+  capture ship_threshold
+    render 'free-shipping-threshold'
+  endcapture
+  assign ship_threshold = ship_threshold | strip | plus: 0 | divided_by: 100.0
   assign host_size = ''
   for opt in product.options_with_values
     assign opt_name = opt.name | downcase

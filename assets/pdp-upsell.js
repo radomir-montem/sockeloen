@@ -22,7 +22,9 @@
     var form = document.getElementById(root.getAttribute('data-form'));
     if (!form || !choices.length) return;
     var symbol = root.getAttribute('data-money') || '€';
-    var shipThreshold = parseFloat(root.getAttribute('data-ship-threshold')) || 0;
+    /* threshold in euro -> the visitor's currency (Shopify's rate) */
+    var fxRate = (window.Shopify && Shopify.currency && parseFloat(Shopify.currency.rate)) || 1;
+    var shipThreshold = (parseFloat(root.getAttribute('data-ship-threshold')) || 0) * fxRate;
     var tiles = Array.prototype.slice.call(root.querySelectorAll('.pdp-upsell__tile'));
     var isSizeName = function (name) { return /size|maat|größe|groesse|grootte|taille/i.test(name); };
     /* Each choice is an offered variant: it fixes every option except the size,
