@@ -1,5 +1,19 @@
+{%- comment -%}
+  Amounts: the cart total is in the visitor's currency. The free-shipping
+  threshold comes from snippets/free-shipping-threshold.liquid (per country, in
+  euro); for a visitor in another currency the script in cart-drawer.liquid
+  converts it at Shopify's rate and redraws this bar (data-convert). The gift
+  threshold is the same number in every currency, as the Free gift discount
+  function compares it with the cart in the visitor's currency.
+{%- endcomment -%}
+{%- capture free_shipping -%}{%- render 'free-shipping-threshold' -%}{%- endcapture -%}
 {% liquid
-  assign free_shipping = settings.free_shipping | times: 100
+  assign free_shipping = free_shipping | strip | plus: 0
+  assign fsp_convert = false
+  if cart.currency.iso_code != shop.currency
+    assign fsp_convert = true
+  endif
+  assign fsp_symbol = cart.currency.symbol | default: '€'
   assign second_tier_type = settings.second_tier_type | default: 'gift'
   assign second_tier = settings.second_tier_threshold | times: 100
 
@@ -84,21 +98,39 @@
 <div class="mb-8 free_shipping_container reward-state--{{ reward_state }}{% if has_second_tier %} has-free-gift{% endif %}"
   data-total="{{ cart.total_price }}"
   data-gift-limit="{{ settings.second_tier_threshold }}"
-  data-has-free-gift="{{ has_second_tier }}">
+  data-has-free-gift="{{ has_second_tier }}"
+  data-ship-base="{{ free_shipping }}"
+  data-gift-cents="{{ second_tier }}"
+  data-convert="{{ fsp_convert }}"
+  data-symbol="{{ fsp_symbol | escape }}"
+  data-money-sample="{{ 123456 | money_without_currency | escape }}">
   <h4 class="progress_bar_headline text-[14px] leading-6 tracking-wider font-light text-base-text mb-3 {{ classes }}">
-    {% if second_tier_reached %}
+    {%- liquid
+      assign headline = 'ship-away'
+      if second_tier_reached
+        assign headline = 'gift-reached'
+      elsif shipping_reached and has_second_tier
+        assign headline = 'gift-away'
+      elsif shipping_reached
+        assign headline = 'ship-reached'
+      endif
+    -%}
+    <span data-headline="gift-reached"{% unless headline == 'gift-reached' %} hidden{% endunless %}>
       <span class="free_shipping_text ml-0">{{ both_reached_key | t }}</span>
-    {% elsif shipping_reached and has_second_tier %}
+    </span>
+    <span data-headline="gift-away"{% unless headline == 'gift-away' %} hidden{% endunless %}>
       <span class="free_shipping_prev_text">{{ second_tier_away_prefix_key | t: amount: '' | split: '<strong>' | first }}</span>
-      <span data-limit="{{ settings.second_tier_threshold }}" class="free_shipping free_gift_amount font-bold text-black">€{{ second_tier_remaining }}</span>
+      <span data-limit="{{ settings.second_tier_threshold }}" data-remaining="gift" class="free_shipping free_gift_amount font-bold text-black">{{ fsp_symbol }}{{ second_tier_remaining }}</span>
       <span class="free_shipping_text">{{ second_tier_away_suffix_key | t }}</span>
-    {% elsif shipping_reached %}
+    </span>
+    <span data-headline="ship-reached"{% unless headline == 'ship-reached' %} hidden{% endunless %}>
       <span class="free_shipping_text ml-0">✓ {{ 'sections.cart.free_shipping_reached' | t }}</span>
-    {% else %}
+    </span>
+    <span data-headline="ship-away"{% unless headline == 'ship-away' %} hidden{% endunless %}>
       <span class="free_shipping_prev_text">{{ 'sections.cart.free_shipping_away_html' | t: amount: '' | split: '<strong>' | first }}</span>
-      <span data-limit="{{ settings.free_shipping }}" class="free_shipping font-bold text-black">€{{ free_shipping | minus: cart.total_price | money_without_currency }}</span>
+      <span data-limit="{{ settings.free_shipping }}" data-remaining="ship" class="free_shipping font-bold text-black">{{ fsp_symbol }}{{ free_shipping | minus: cart.total_price | money_without_currency }}</span>
       <span class="free_shipping_text">{{ 'sections.cart.free_shipping_away_suffix_html' | t }}</span>
-    {% endif %}
+    </span>
   </h4>
   <div class="progress_bar_track">
     <div class="progressive_bar_shipping_price{% if shipping_reached %} is-reached{% endif %}" style="width: {{ percent }}%"></div>
@@ -118,11 +150,11 @@
   {% if has_second_tier %}
     <div class="progress_bar_labels">
       <span class="progress_bar_label progress_bar_label--shipping{% if shipping_reached %} is-reached{% endif %}" style="left: {{ shipping_marker_percent }}%;">
-        <span class="progress_bar_label__amount">€{{ settings.free_shipping | times: 100 | money_without_currency }}</span>
+        <span class="progress_bar_label__amount" data-amount="ship">{{ fsp_symbol }}{{ free_shipping | money_without_currency }}</span>
         <span class="progress_bar_label__name">{{ 'sections.cart.free_shipping_label' | t }}</span>
       </span>
       <span class="progress_bar_label progress_bar_label--gift{% if second_tier_reached %} is-reached{% endif %}" style="left: {{ bar_top_percent }}%;">
-        <span class="progress_bar_label__amount">€{{ settings.second_tier_threshold | times: 100 | money_without_currency }}</span>
+        <span class="progress_bar_label__amount" data-amount="gift">{{ fsp_symbol }}{{ second_tier | money_without_currency }}</span>
         <span class="progress_bar_label__name">{{ second_tier_label_key | t }}</span>
       </span>
     </div>
