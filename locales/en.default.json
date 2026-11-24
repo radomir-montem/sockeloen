@@ -423,7 +423,7 @@
       "free_shipping_and_express_reached_html": "<strong>Free Express Shipping</strong> unlocked!",
       "free_gift_chosen": "Your Black Friday gift:",
       "free_gift_change": "Change",
-      "uk_import_notice_html": "<strong>Delivery to the UK:</strong> your order is over £135, so UK import VAT (20%) and a £8 Royal Mail handling fee are payable on delivery."
+      "uk_import_notice_html": "<strong>Delivery to the UK:</strong> your items are worth over £135 (before discounts), so UK import VAT (20%) and a £8 Royal Mail handling fee are payable on delivery."
     },
     "footer": {
       "payment": "Payment methods"

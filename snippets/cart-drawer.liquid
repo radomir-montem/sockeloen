@@ -137,11 +137,14 @@
       {%- endif -%}
 
       {%- comment -%}
-        UK import charges: only for UK shoppers whose cart (goods after
-        discounts, excluding shipping) is over £135. Up to £135 nothing is
-        collected on delivery; above it the customer pays UK import VAT and the
-        carrier's fee (Royal Mail £8). Threshold in the cart currency: £135 in
-        GBP, an approximate €158 when the UK shopper sees euros.
+        UK import charges: only for UK shoppers whose goods are worth over
+        £135 at their normal price (before discounts, free gift included,
+        excluding shipping). By law the £135 test uses the price paid, but the
+        customs declaration (MyParcel) currently states the normal prices, so
+        that is what Royal Mail charges on. Switch to cart.total_price once the
+        declaration uses the paid price. Above £135 the customer pays UK import
+        VAT and the carrier's fee (Royal Mail £8). Threshold in the cart
+        currency: £135 in GBP, an approximate €158 when the UK shopper sees euros.
       {%- endcomment -%}
       {%- liquid
         assign uk_limit = 0
@@ -153,7 +156,13 @@
           endif
         endif
       -%}
-      {%- if uk_limit > 0 and cart.total_price > uk_limit -%}
+      {%- liquid
+        assign uk_value = 0
+        for uk_item in cart.items
+          assign uk_value = uk_value | plus: uk_item.original_line_price
+        endfor
+      -%}
+      {%- if uk_limit > 0 and uk_value > uk_limit -%}
         <div class="cart-drawer__uk-notice" role="status">
           <svg class="cart-drawer__uk-notice-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
             <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/>
