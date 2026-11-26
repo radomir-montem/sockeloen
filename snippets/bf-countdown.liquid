@@ -5,10 +5,12 @@
   the shop's time zone; the shop's current UTC offset travels along so the
   browser gets the exact moment. Needs assets/bf-countdown.js and assets/bf.css,
   which the announcement bar and the upsell tiles load.
+  With "Daily countdown to midnight" on, it counts down to the next 00:00
+  in the shop's time zone every day instead (until the optional end date).
   Parameter: class (optional extra class)
 {%- endcomment -%}
 {%- assign bf_tz = 'now' | date: '%z' -%}
-<span class="bf-countdown{% if class != blank %} {{ class }}{% endif %}" data-bf-countdown data-d1="{{ settings.bf_deadline_1 | escape }}" data-d2="{{ settings.bf_deadline_2 | escape }}" data-d3="{{ settings.bf_deadline_3 | escape }}" data-tz="{{ bf_tz }}" hidden>
+<span class="bf-countdown{% if class != blank %} {{ class }}{% endif %}" data-bf-countdown data-d1="{{ settings.bf_deadline_1 | escape }}" data-d2="{{ settings.bf_deadline_2 | escape }}" data-d3="{{ settings.bf_deadline_3 | escape }}" data-tz="{{ bf_tz }}"{% if settings.bf_daily %} data-daily="true" data-daily-end="{{ settings.bf_daily_end | escape }}"{% endif %} hidden>
   {%- capture bf_timer_label -%}{%- render 'bf-text', key: 'timer_label' -%}{%- endcapture -%}
   {%- if bf_timer_label != blank -%}<span class="bf-countdown__label">{{ bf_timer_label | escape_once }}</span>{%- endif -%}
   <span class="bf-countdown__time" data-bf-time></span>

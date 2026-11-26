@@ -1556,6 +1556,19 @@
         "info": "Dates in the shop's time zone, as YYYY-MM-DD HH:MM. The timer counts down to the first date that is still ahead and then moves to the next; after the last one it disappears. Empty dates are skipped."
       },
       {
+        "type": "checkbox",
+        "id": "bf_daily",
+        "label": "Daily countdown to midnight",
+        "default": true,
+        "info": "On: the timer counts down to 00:00 (shop time zone) and starts again every day; the deadlines below are ignored. Off: the timer uses the deadlines."
+      },
+      {
+        "type": "text",
+        "id": "bf_daily_end",
+        "label": "Stop the daily countdown after (optional)",
+        "info": "YYYY-MM-DD HH:MM in the shop's time zone. Empty = the daily timer keeps running as long as Black Friday mode is on."
+      },
+      {
         "type": "text",
         "id": "bf_deadline_1",
         "label": "Deadline 1",

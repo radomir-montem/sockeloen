@@ -3,7 +3,8 @@
    "YYYY-MM-DD HH:MM" in the shop's time zone, data-tz = the shop's UTC
    offset). The first deadline still in the future is counted down to;
    when it passes the next one takes over, and when all have passed the
-   element hides itself. Format: "1d 04:12:33", or "04:12:33" on the last day. */
+   element hides itself. With data-daily="true" it counts down to the next
+   midnight in the shop's time zone instead, every day, until data-daily-end. Format: "1d 04:12:33", or "04:12:33" on the last day. */
 (function () {
   if (window.__bfCountdown) return;
   window.__bfCountdown = true;
@@ -27,11 +28,26 @@
       .filter(function (t) { return t !== null; })
       .sort(function (a, b) { return a - b; });
     var out = el.querySelector('[data-bf-time]');
-    if (!out || !deadlines.length) { el.setAttribute('hidden', ''); return; }
+    var daily = el.getAttribute('data-daily') === 'true';
+    var dailyEnd = daily ? parse(el.getAttribute('data-daily-end'), tz) : null;
+    if (!out || (!daily && !deadlines.length)) { el.setAttribute('hidden', ''); return; }
+
+    /* Next 00:00 in the shop's time zone (offset from data-tz). */
+    var offMin = 0;
+    var om = (tz || '').match(/^([+-])(\d{2})(\d{2})$/);
+    if (om) offMin = (om[1] === '-' ? -1 : 1) * (+om[2] * 60 + +om[3]);
+    function nextMidnight(now) {
+      var local = now + offMin * 60000;
+      return (Math.floor(local / 86400000) + 1) * 86400000 - offMin * 60000;
+    }
 
     function tick() {
       var now = Date.now(), target = null;
-      for (var i = 0; i < deadlines.length; i++) { if (deadlines[i] > now) { target = deadlines[i]; break; } }
+      if (daily) {
+        if (dailyEnd === null || now < dailyEnd) target = nextMidnight(now);
+      } else {
+        for (var i = 0; i < deadlines.length; i++) { if (deadlines[i] > now) { target = deadlines[i]; break; } }
+      }
       if (target === null) { el.setAttribute('hidden', ''); return false; }
       var s = Math.floor((target - now) / 1000);
       var d = Math.floor(s / 86400); s -= d * 86400;
